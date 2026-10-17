@@ -245,3 +245,17 @@ mutation checks. This is a scoped proof, not whole-system or fiscal certificatio
 This first native register has **no offline sale sync, cash-drawer/shift accounting,
 receipt-printer driver, card-terminal SDK or fiscal-hardware certification**. Normal
 PDF documents work; jurisdiction-specific fiscal registration remains separate work.
+
+### Native PDF character coverage
+
+The compact native invoice renderer declares Helvetica with WinAnsi encoding.
+It preserves Latin-1 accents and the Windows-1252 punctuation repertoire, including
+`–`, `—`, `„…“`, `’`, `•`, `…` and `€`. The registered `merchant_operations` journey
+issues a real invoice over HTTP and parses its downloaded bytes with the existing
+bounded Rust PDF extractor; the renderer regression also checks typographic text.
+Escaping of parentheses/backslashes, native snapshot ownership and invoice
+idempotency stay unchanged. This is not a general Unicode font renderer: characters
+outside that repertoire retain the explicit `?` fallback, while the immutable
+snapshot retains their original Unicode text. Historical hosted receipts describe
+the exact image they tested; implementation coverage alone does not certify a new
+public deployment or physical receipt printer.
