@@ -259,3 +259,5 @@ outside that repertoire retain the explicit `?` fallback, while the immutable
 snapshot retains their original Unicode text. Historical hosted receipts describe
 the exact image they tested; implementation coverage alone does not certify a new
 public deployment or physical receipt printer.
+
+[Hosted punctuation follow-up](evidence/receipt-pdf-hosted-2026-10-17.md) verifies the actual original invoice after the corrected encoder was deployed; invoice identity, issue time, issuer and amounts are preserved.

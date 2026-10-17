@@ -2,6 +2,7 @@
 
 ## Native receipt PDF punctuation — 2026-10-17
 
+- [Public release and original-invoice comparison](docs/evidence/receipt-pdf-hosted-2026-10-17.md): full required CI, fresh snapshot, healthy new Core and actual parsed PDF preserve the existing invoice/order while correcting the lost dashes.
 - Encode the declared WinAnsi font correctly: typographic quotes, en/em dashes, bullets, ellipses and Windows-1252 letters now survive PDF text extraction alongside euro signs and Latin-1 accents. PDF string escaping and pagination remain shared by merchant, customer and B2B document downloads.
 - Add an actual renderer regression and extend the registered HTTP/PostgreSQL receipt journey to parse the issued PDF through the native bounded extractor. This preserves authorization, invoice identity and duplicate protection; it does not add arbitrary Unicode fonts or fiscal printer certification.
 

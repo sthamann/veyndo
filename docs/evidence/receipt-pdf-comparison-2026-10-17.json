@@ -1,0 +1,23 @@
+{
+  "source": "25b354e3009159c562652fb7963e25f4799ea1ca",
+  "invoice": "INV-00000001",
+  "order": "RAC-5e78c602",
+  "sha256": "d38465b5e5a6975d82c8ae10bcb19cbfae2547ed2bf8aafdf2edfa6269625937",
+  "previousSha256": "cb94295dffa58841ac568f92c1b3cf8fad24b7613c981117156e2451330dc419",
+  "bytes": 1153,
+  "pages": 1,
+  "preserved": [
+    "2026-10-17 16:31:00.452004+00",
+    "Fiktive Veyndo Testwerkstatt",
+    "Testweg 17, 10115 Berlin, DE",
+    "Netto: 108.40 EUR",
+    "Steuer: 20.60 EUR",
+    "Gesamt: 129.00 EUR"
+  ],
+  "corrected": [
+    "Fiktiver Demo-Hocker – ergonomisches Formkonzept, Waldgrün",
+    "Synthetic release acceptance — simulated payments"
+  ],
+  "remainingQuestionMarks": 0,
+  "newInvoiceIssued": false
+}
