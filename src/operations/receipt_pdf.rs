@@ -35,11 +35,7 @@ pub(super) fn render(lines: &[String]) -> Vec<u8> {
         for line in chunk {
             stream.push(b'(');
             for ch in line.chars() {
-                let byte = match ch {
-                    '€' => 128,
-                    c if (32..=255).contains(&(c as u32)) => c as u8,
-                    _ => b'?',
-                };
+                let byte = winansi(ch);
                 if b"()\\".contains(&byte) {
                     stream.push(b'\\');
                 }
@@ -126,8 +122,30 @@ startxref
     );
     pdf
 }
+
+// PDF WinAnsi uses Windows-1252, not Unicode code points, in the 0x80–0x9f range.
+// Undefined controls and characters outside this font's repertoire stay explicit fallbacks.
+fn winansi(ch: char) -> u8 {
+    const SPECIAL: &str = "€\0‚ƒ„…†‡ˆ‰Š‹Œ\0Ž\0\0‘’“”•–—˜™š›œ\0žŸ";
+    match ch {
+        '\u{20}'..='\u{7e}' | '\u{a0}'..='\u{ff}' => ch as u8,
+        '\0' => b'?',
+        _ => SPECIAL
+            .chars()
+            .position(|value| value == ch)
+            .map_or(b'?', |index| 0x80 + index as u8),
+    }
+}
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn winansi_punctuation_round_trips_in_receipt() {
+        let original = "Rechnung – Möbel — „Größe“: 129,00 € • l’été … œ Œ Š š Ž ž Ÿ ™";
+        let pdf = super::render(&[original.into()]);
+        let text = pdf_extract::extract_text_from_mem(&pdf).unwrap();
+        assert!(text.contains(original), "Extracted receipt: {text:?}");
+    }
+
     #[test]
     fn valid_document() {
         let pdf = super::render(&vec!["Rechnung (Test) München".into(); 85]);

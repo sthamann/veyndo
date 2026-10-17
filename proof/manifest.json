@@ -3069,8 +3069,8 @@
     },
     "src/operations/receipt_pdf.rs": {
       "status": "unproved",
-      "sha256": "008da6de419ad14c88c27ca582ab7f82aca692b09c706990aa6ea7191cc43ccc",
-      "review": "Initial extraction of 13 production policies; surrounding Rust explicitly unproved; existing HTTP regression suites retained"
+      "sha256": "3066f24a9a89000c794370fe36d54eef66942565a38b4c0c9fa7471c3c371dcb",
+      "review": "Reviewed receipt PDF WinAnsi character mapping and real PDF extraction regression; native snapshot, permissions, invoice identity, money and extracted policies unchanged. Typographic regression failed on original serializer and passes with correct CP1252 mapping."
     },
     "src/operations/receipt_text.rs": {
       "status": "unproved",

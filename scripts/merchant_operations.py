@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Real HTTP/PostgreSQL CRM, receipt, scoped-access and paid-download regressions. No PSP traffic."""
 from testing.app_approval import consent
-import json,os,uuid,urllib.request,urllib.error,concurrent.futures,pathlib,time,copy
+import json,os,uuid,urllib.request,urllib.error,concurrent.futures,pathlib,time,copy,subprocess
 BASE=os.getenv('BASE_URL','http://127.0.0.1:8787');suffix=uuid.uuid4().hex[:10];password='Synthetic-operation-2026!';checks=[]
 def req(path,body=None,h=None,method=None,expected=200,binary=False):
     if path == "/api/apps" and isinstance(body,dict): body=consent(body)
@@ -104,11 +104,14 @@ audited=req('/api/merchant/orders/'+id,h=h)
 assert audited['state']=='in_progress'
 assert len([event for event in audited['activity'] if event['kind']=='transition' and event['data']['state']=='in_progress' and event['actor']==support['user']['id']])==1
 check('revision-bound notes/status mutations are audited and stale changes fail')
-req('/api/merchant/receipts/settings',{'revision':3,'data':{'name':'Synthetic Seller GmbH','address':'Teststrasse 1, Berlin','taxId':'TEST-ONLY'}},h,'PUT')
+seller_name='Synthetic Seller – „Möbel“ — l’été • 129,00 €'
+req('/api/merchant/receipts/settings',{'revision':3,'data':{'name':seller_name,'address':'Teststrasse 1, Berlin','taxId':'TEST-ONLY'}},h,'PUT')
 body={'revision':order['revision'],'kind':'invoice','locale':'de','requestKey':'receipt-'+suffix}
 with concurrent.futures.ThreadPoolExecutor(max_workers=2) as ex:receipts=list(ex.map(lambda _:req('/api/merchant/orders/'+id+'/receipts',body,h),range(2)))
 assert receipts[0]['id']==receipts[1]['id'];receipt=receipts[0]
 pdf=req('/api/merchant/receipts/'+receipt['id']+'/pdf',h=h,binary=True);assert pdf.startswith(b'%PDF-1.4') and b'Rechnung' in pdf
+extracted=subprocess.run([str(pathlib.Path(__file__).resolve().parents[1]/'target/debug/veyndo'),'--extract-pdf'],input=pdf,stdout=subprocess.PIPE,check=True,timeout=15).stdout.decode()
+assert seller_name in extracted,extracted
 req('/api/merchant/receipts/'+receipt['id']+'/pdf',h=sh,expected=403)
 req('/api/merchant/orders/'+id+'/receipts',{**body,'locale':'fr'},h,expected=409)
 req('/api/merchant/orders/'+id+'/receipts',{**body,'requestKey':'second-'+suffix},h,expected=409)
