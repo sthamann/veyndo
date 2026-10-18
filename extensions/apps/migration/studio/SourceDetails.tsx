@@ -1,4 +1,5 @@
 /** Source business evidence stays visible before approval; imported claims never become native purchase or activation authority. */
+import ProductDetails from "./ProductDetails";
 import { useLocale } from "../../../../frontend/src/shared/i18n/i18n";
 import { useFeedbackText } from "./feedback-i18n";
 import type { SourceRecord } from "./model";
@@ -6,6 +7,7 @@ export default function SourceDetails({ row }: { row: SourceRecord }) {
   const t = useFeedbackText();
   const { locale } = useLocale();
   const d = row.data;
+  if (row.kind === "products") return <ProductDetails row={row} />;
   if (row.kind === "reviews") {
     const date = d.createdAt ? new Date(d.createdAt) : null;
     return (

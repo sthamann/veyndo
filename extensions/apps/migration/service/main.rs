@@ -13,6 +13,7 @@ mod server;
 mod shopify;
 mod slices;
 mod transport;
+mod woo;
 use contract::*;
 use serde_json::{Value, json};
 use std::io::{BufRead, Read, Write};

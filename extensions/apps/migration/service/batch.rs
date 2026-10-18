@@ -10,14 +10,35 @@ pub async fn run(config: &config::Config, t: &str, job: &Value) -> Result<Value>
         .as_str()
         .ok_or("Source connection required")?;
     let c = config.connection(t, source_id, &job["_appSettings"])?;
-    let page = extract::page(
+    let inspecting = job["action"]
+        .as_str()
+        .and_then(|name| name.strip_prefix("review_"));
+    let kind = inspecting
+        .or_else(|| input["kind"].as_str())
+        .ok_or("Source domain required")?;
+    let mut page = extract::page(
         &c,
         source_id,
-        input["kind"].as_str().ok_or("Source domain required")?,
+        kind,
         input["cursor"].as_str(),
         config.fixture,
     )
     .await?;
+    if inspecting.is_some() {
+        let state = core::callback(
+            callback,
+            t,
+            "job_progress",
+            &json!({"id":job["id"],"lease":job["lease"],"status":"running"}),
+            config.fixture,
+        )
+        .await?;
+        if state["cancelRequested"] == true {
+            return Err("Migration cancelled; no source inspection was adopted".into());
+        }
+        page["cursor"] = input["cursor"].clone();
+        return Ok(page);
+    }
     if page["recordDigests"] != input["recordDigests"] {
         return Err("Source changed after review; inspect this page again before importing".into());
     }

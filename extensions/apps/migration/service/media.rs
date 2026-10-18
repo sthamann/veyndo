@@ -7,9 +7,6 @@ pub fn descriptors(mut page: Value, fixture: bool) -> Result<Value> {
         .ok_or("Source products missing")?;
     let mut records = vec![];
     for product in products {
-        if !product["data"]["parentSourceId"].is_null() {
-            continue;
-        }
         let value = &product["data"]["sourceImages"];
         if value.is_null() {
             continue;

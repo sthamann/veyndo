@@ -963,8 +963,8 @@
     },
     "extensions/apps/migration/adapters/mod.rs": {
       "status": "unproved",
-      "sha256": "d59cafa48861b77079dc43fb99d49b07ec1f23d27cc1b43b612746a372186108",
-      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
+      "sha256": "78010582ede30c2cee7edeb4c5af464cc329e7c032c398ae58bc9dd1f09a38b4",
+      "review": "Reviewed optional grouped native job events, unchanged per-action compatibility and package/current actor/lease fences; bounded 32KiB stored rich documents retain strict APP metadata/checkpoints. Actual five-second slow-source RED and native document-depth RED fixed; running cancellation RED fixed with final native progress fence; complete concrete Woo families and private visibility verified through native selected publication and simulated checkout. Focused independent async review found no remaining Important/Critical defects. SQL/network/source parity remain outside pure proof."
     },
     "extensions/apps/migration/adapters/order_lines.rs": {
       "status": "unproved",
@@ -978,8 +978,8 @@
     },
     "extensions/apps/migration/adapters/products.rs": {
       "status": "unproved",
-      "sha256": "3e4823dbb019594ad8ed1159e0f6ceb34f302b063d9408481c04a64dcad09a19",
-      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+      "sha256": "9f9e12f0d9dfc161466d484a56ebe6e37fc6319f8f7c877484b8cb1a4affcd46",
+      "review": "Reviewed optional grouped native job events, unchanged per-action compatibility and package/current actor/lease fences; bounded 32KiB stored rich documents retain strict APP metadata/checkpoints. Actual five-second slow-source RED and native document-depth RED fixed; running cancellation RED fixed with final native progress fence; complete concrete Woo families and private visibility verified through native selected publication and simulated checkout. Focused independent async review found no remaining Important/Critical defects. SQL/network/source parity remain outside pure proof."
     },
     "extensions/apps/migration/adapters/records.rs": {
       "status": "unproved",
@@ -990,6 +990,11 @@
       "status": "unproved",
       "sha256": "c9483641a7b1c0f518318dec9ed39c7cc22c809abf9f7691fc997c8a88d0e384",
       "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+    },
+    "extensions/apps/migration/adapters/woo.rs": {
+      "status": "unproved",
+      "sha256": "2f38b5edf26af803ad20a9e65ea9ca97af731c6ddb7a1b7f84c5f908a3fc0e7d",
+      "review": "Reviewed optional grouped native job events, unchanged per-action compatibility and package/current actor/lease fences; bounded 32KiB stored rich documents retain strict APP metadata/checkpoints. Actual five-second slow-source RED and native document-depth RED fixed; running cancellation RED fixed with final native progress fence; complete concrete Woo families and private visibility verified through native selected publication and simulated checkout. Focused independent async review found no remaining Important/Critical defects. SQL/network/source parity remain outside pure proof."
     },
     "extensions/apps/migration/contract/mod.rs": {
       "status": "unproved",
@@ -1003,8 +1008,8 @@
     },
     "extensions/apps/migration/service/batch.rs": {
       "status": "unproved",
-      "sha256": "ea63360fe6b1504316d51defaf5f8a18f19375417c353972e2b9f08b0c072b24",
-      "review": "Independent review of native imported immutable image boundaries and selected parent/product-before-asset publication; exact persisted product baseline, attachment-only guard, source-position ordering and recoverable two-step association verified through real HTTP/PostgreSQL regressions. Pure extracted policies unchanged."
+      "sha256": "8eece5260d0176150e81428a09e84d4b6df3392887f236b4a32070ec1f917c7c",
+      "review": "Reviewed optional grouped native job events, unchanged per-action compatibility and package/current actor/lease fences; bounded 32KiB stored rich documents retain strict APP metadata/checkpoints. Actual five-second slow-source RED and native document-depth RED fixed; running cancellation RED fixed with final native progress fence; complete concrete Woo families and private visibility verified through native selected publication and simulated checkout. Focused independent async review found no remaining Important/Critical defects. SQL/network/source parity remain outside pure proof."
     },
     "extensions/apps/migration/service/config.rs": {
       "status": "unproved",
@@ -1018,23 +1023,23 @@
     },
     "extensions/apps/migration/service/events.rs": {
       "status": "unproved",
-      "sha256": "efaef442bf6832b0a09d0dfc5fe721dc5110ec8546c5f0cde43bc5d1061e4255",
-      "review": "Independent review of native imported immutable image boundaries and selected parent/product-before-asset publication; exact persisted product baseline, attachment-only guard, source-position ordering and recoverable two-step association verified through real HTTP/PostgreSQL regressions. Pure extracted policies unchanged."
+      "sha256": "43677278d7429b263c9993dfeb4c2616e5d838db899817a2b642e96d20308837",
+      "review": "Reviewed optional grouped native job events, unchanged per-action compatibility and package/current actor/lease fences; bounded 32KiB stored rich documents retain strict APP metadata/checkpoints. Actual five-second slow-source RED and native document-depth RED fixed; running cancellation RED fixed with final native progress fence; complete concrete Woo families and private visibility verified through native selected publication and simulated checkout. Focused independent async review found no remaining Important/Critical defects. SQL/network/source parity remain outside pure proof."
     },
     "extensions/apps/migration/service/extract.rs": {
       "status": "unproved",
-      "sha256": "7efb8c8519d383e3a99bd5fe79f6bc1b079151a7c98ce381b2e303d6773e1c83",
-      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+      "sha256": "a2ca80e9810e4c749d4b79d25951b71cd32e7a6ae4cb6d102086ae57ce9b482b",
+      "review": "Reviewed optional grouped native job events, unchanged per-action compatibility and package/current actor/lease fences; bounded 32KiB stored rich documents retain strict APP metadata/checkpoints. Actual five-second slow-source RED and native document-depth RED fixed; running cancellation RED fixed with final native progress fence; complete concrete Woo families and private visibility verified through native selected publication and simulated checkout. Focused independent async review found no remaining Important/Critical defects. SQL/network/source parity remain outside pure proof."
     },
     "extensions/apps/migration/service/main.rs": {
       "status": "unproved",
-      "sha256": "0ca9d0a673e897eeb89a0f265ad6b5d1617d30b77117e2331cee4d89b13cbc6b",
-      "review": "Independent review of native imported immutable image boundaries and selected parent/product-before-asset publication; exact persisted product baseline, attachment-only guard, source-position ordering and recoverable two-step association verified through real HTTP/PostgreSQL regressions. Pure extracted policies unchanged."
+      "sha256": "4bb26ede86f75b659d6e30c3b2f49576d42bb29c87944182680fc9a01fae506c",
+      "review": "Reviewed optional grouped native job events, unchanged per-action compatibility and package/current actor/lease fences; bounded 32KiB stored rich documents retain strict APP metadata/checkpoints. Actual five-second slow-source RED and native document-depth RED fixed; running cancellation RED fixed with final native progress fence; complete concrete Woo families and private visibility verified through native selected publication and simulated checkout. Focused independent async review found no remaining Important/Critical defects. SQL/network/source parity remain outside pure proof."
     },
     "extensions/apps/migration/service/media.rs": {
       "status": "unproved",
-      "sha256": "50ed98b94fffa7b7640642a81730dfba788b48084ab6ae9c992748aedeef7db0",
-      "review": "Reviewed native immutable image intake and exact selected publication after independent image/authority and product-phase review; regressions prove large binary transfer, partial association recovery, interleaved order, protected-download denial and exact-baseline repeat release. App image collections reject unknown shapes and filenames bind source position. Existing pure extracted policies unchanged."
+      "sha256": "c03ea0be3e68414052cb980ab2c8e4109f28785701b649f8d01fac3fc86f357d",
+      "review": "Reviewed optional grouped native job events, unchanged per-action compatibility and package/current actor/lease fences; bounded 32KiB stored rich documents retain strict APP metadata/checkpoints. Actual five-second slow-source RED and native document-depth RED fixed; running cancellation RED fixed with final native progress fence; complete concrete Woo families and private visibility verified through native selected publication and simulated checkout. Focused independent async review found no remaining Important/Critical defects. SQL/network/source parity remain outside pure proof."
     },
     "extensions/apps/migration/service/server.rs": {
       "status": "unproved",
@@ -1048,13 +1053,18 @@
     },
     "extensions/apps/migration/service/slices.rs": {
       "status": "unproved",
-      "sha256": "74aacb29a39d9e61b75938567ec6a45e67ad3b35a6b4954920bb2e5a152356b0",
-      "review": "Independent review of native imported immutable image boundaries and selected parent/product-before-asset publication; exact persisted product baseline, attachment-only guard, source-position ordering and recoverable two-step association verified through real HTTP/PostgreSQL regressions. Pure extracted policies unchanged."
+      "sha256": "34586ef793760823dabfe149d151863a3215a176b08b27d928bdecde2681af04",
+      "review": "Reviewed optional grouped native job events, unchanged per-action compatibility and package/current actor/lease fences; bounded 32KiB stored rich documents retain strict APP metadata/checkpoints. Actual five-second slow-source RED and native document-depth RED fixed; running cancellation RED fixed with final native progress fence; complete concrete Woo families and private visibility verified through native selected publication and simulated checkout. Focused independent async review found no remaining Important/Critical defects. SQL/network/source parity remain outside pure proof."
     },
     "extensions/apps/migration/service/transport.rs": {
       "status": "unproved",
       "sha256": "51302972b9deb6e61af7713452c7b5f0e17661b08414bb3e6ad3b8fc833f3f46",
       "review": "Migration intake reviewed: native private catalogue/category/page owners, exact historical provenance without purchase effects, current package/creator/lease/hash fences and native replay lock order; independent Rust package uses shared money/network policy only; new HTML rich blocks preserve text and list structure. Real source/Core HTTP, signed roles, cancellation, replay, concurrent callbacks and simulated purchase regressions passed. External source completeness and SQL are not claimed proved."
+    },
+    "extensions/apps/migration/service/woo.rs": {
+      "status": "unproved",
+      "sha256": "e42f382e45876e9dce70cb7534b1ecfb0cf658d30475e8e2c453d19290e51704",
+      "review": "Reviewed optional grouped native job events, unchanged per-action compatibility and package/current actor/lease fences; bounded 32KiB stored rich documents retain strict APP metadata/checkpoints. Actual five-second slow-source RED and native document-depth RED fixed; running cancellation RED fixed with final native progress fence; complete concrete Woo families and private visibility verified through native selected publication and simulated checkout. Focused independent async review found no remaining Important/Critical defects. SQL/network/source parity remain outside pure proof."
     },
     "extensions/apps/paypal/src/adapter.rs": {
       "status": "unproved",
@@ -1493,8 +1503,8 @@
     },
     "src/apps/job_callbacks.rs": {
       "status": "unproved",
-      "sha256": "a33ae029f264ac4f573ead0bbf09b77ee7259b0a147f1f0a5f4c7fb63883e0e3",
-      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+      "sha256": "0c350eaaaac948e6e790351509de4843ccc2a29f68fa467be9962d62e2534bfd",
+      "review": "Reviewed optional grouped native job events, unchanged per-action compatibility and package/current actor/lease fences; bounded 32KiB stored rich documents retain strict APP metadata/checkpoints. Actual five-second slow-source RED and native document-depth RED fixed; running cancellation RED fixed with final native progress fence; complete concrete Woo families and private visibility verified through native selected publication and simulated checkout. Focused independent async review found no remaining Important/Critical defects. SQL/network/source parity remain outside pure proof."
     },
     "src/apps/job_import.rs": {
       "status": "unproved",
@@ -1503,8 +1513,8 @@
     },
     "src/apps/jobs.rs": {
       "status": "unproved",
-      "sha256": "228fdd960012b6456e9e7b51608cb5ae96b962cf9fed1dbe0f21d3cbc2c317f1",
-      "review": "Review provider-neutral split quantities, original app-bound PDF acknowledgement, native booking intent, aggregate storage and current Flow/job disclosure; provider effects remain unproved"
+      "sha256": "fa2800f1caaaae5f59a8b066ba9e726241c3a7120f097f573df72b33f45c1be8",
+      "review": "Reviewed optional grouped native job events, unchanged per-action compatibility and package/current actor/lease fences; bounded 32KiB stored rich documents retain strict APP metadata/checkpoints. Actual five-second slow-source RED and native document-depth RED fixed; running cancellation RED fixed with final native progress fence; complete concrete Woo families and private visibility verified through native selected publication and simulated checkout. Focused independent async review found no remaining Important/Critical defects. SQL/network/source parity remain outside pure proof."
     },
     "src/apps/manifest.rs": {
       "status": "unproved",
@@ -1513,8 +1523,8 @@
     },
     "src/apps/manifest_validation.rs": {
       "status": "unproved",
-      "sha256": "c793a5e6449cfadd3192707d21d17a9a4a3f67bdb90a18fcae6c0f1d58b23905",
-      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
+      "sha256": "d481e36f588f68065d4b8a99446e3db39bc42addf21420dbaea621862117d765",
+      "review": "Reviewed optional grouped native job events, unchanged per-action compatibility and package/current actor/lease fences; bounded 32KiB stored rich documents retain strict APP metadata/checkpoints. Actual five-second slow-source RED and native document-depth RED fixed; running cancellation RED fixed with final native progress fence; complete concrete Woo families and private visibility verified through native selected publication and simulated checkout. Focused independent async review found no remaining Important/Critical defects. SQL/network/source parity remain outside pure proof."
     },
     "src/apps/mod.rs": {
       "status": "unproved",
@@ -3228,8 +3238,8 @@
     },
     "src/operations/imports/products.rs": {
       "status": "unproved",
-      "sha256": "3e85c418f58a37d4f908c6a6db96451a90497906cf8ebdb5c3e92dc890417323",
-      "review": "Follow-up migration fix reviewed: product source identity retains bounded version/digest/known stock while descriptions stay in native translations; observed multilingual import 400 identity overflow before fix. Cargo package remains independent with shared money/network policy. Existing native permission, job fence, no-purchase history and SQL proof boundaries unchanged."
+      "sha256": "ad5eca61f202257bd3a95b722266cb51f33febe18c98a96c07e49f0031e964ff",
+      "review": "Reviewed optional grouped native job events, unchanged per-action compatibility and package/current actor/lease fences; bounded 32KiB stored rich documents retain strict APP metadata/checkpoints. Actual five-second slow-source RED and native document-depth RED fixed; running cancellation RED fixed with final native progress fence; complete concrete Woo families and private visibility verified through native selected publication and simulated checkout. Focused independent async review found no remaining Important/Critical defects. SQL/network/source parity remain outside pure proof."
     },
     "src/operations/imports/relations.rs": {
       "status": "unproved",

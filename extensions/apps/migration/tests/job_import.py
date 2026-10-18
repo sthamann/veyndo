@@ -31,6 +31,16 @@ e=call(prefix+'/jobs/'+j2,h=h)
 call(prefix+'/jobs/'+j2,{'operation':'retry','revision':e['revision'],'approveUnknownOutcome':True},h)
 cl2=call(prefix+'/core/job_claim',{'id':j2},kh)
 assert cl2['checkpoint']=={'completed':1,'digest':rd}
+# Stored native documents retain a bounded result budget without relaxing callback metadata/checkpoints.
+document={'type':'paragraph','text':'Synthetic rich page'}
+for _ in range(10):document={'content':[document]}
+too_deep=document
+for _ in range(20):too_deep={'content':[too_deep]}
+for result in ({'large':'X'*33000}, {'deep':too_deep}, [], 'wrong-type'):
+    call(prefix+'/core/job_progress',{'id':j2,'lease':cl2['lease'],'status':'running','result':result},kh,400)
+call(prefix+'/core/job_progress',{'id':j2,'lease':cl2['lease'],'status':'running','checkpoint':{'document':document}},kh,400)
+call(prefix+'/core/job_progress',{'id':j2,'lease':cl2['lease'],'status':'succeeded','result':{'document':document}},kh)
+assert call(prefix+'/jobs/'+j2,h=h)['result']['document']==document
 print('PASS resumed job retains coarse checkpoint after explicit uncertain-outcome review')
 
 # Eight actual concurrent callbacks must make progress even with the strict small pool.

@@ -8,6 +8,7 @@ mod pages;
 mod products;
 mod records;
 mod relations;
+pub mod woo;
 use crate::contract::*;
 use serde_json::{Value, json};
 pub fn normalize(c: &Context, kind: &str, v: &Value) -> Result<Vec<Record>> {

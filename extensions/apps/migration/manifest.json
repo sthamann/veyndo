@@ -142,12 +142,12 @@
     {
       "name": "review_products",
       "description": "Inspect source products and exact adapter limitations",
-      "handler": "service",
+      "handler": "job",
       "permission": "catalog.read",
       "requiredPermissions": [
         "apps.manage"
       ],
-      "readOnly": true,
+      "readOnly": false,
       "mcp": true,
       "flowAllowed": false,
       "inputSchema": {
@@ -256,13 +256,13 @@
     {
       "name": "review_customers",
       "description": "Inspect source customers and exact adapter limitations",
-      "handler": "service",
+      "handler": "job",
       "permission": "customers.read",
       "requiredPermissions": [
         "apps.manage",
         "customers.pii"
       ],
-      "readOnly": true,
+      "readOnly": false,
       "mcp": true,
       "flowAllowed": false,
       "inputSchema": {
@@ -371,13 +371,13 @@
     {
       "name": "review_orders",
       "description": "Inspect source orders and exact adapter limitations",
-      "handler": "service",
+      "handler": "job",
       "permission": "orders.read",
       "requiredPermissions": [
         "apps.manage",
         "customers.pii"
       ],
-      "readOnly": true,
+      "readOnly": false,
       "mcp": true,
       "flowAllowed": false,
       "inputSchema": {
@@ -486,12 +486,12 @@
     {
       "name": "review_categories",
       "description": "Inspect source categories and exact adapter limitations",
-      "handler": "service",
+      "handler": "job",
       "permission": "catalog.read",
       "requiredPermissions": [
         "apps.manage"
       ],
-      "readOnly": true,
+      "readOnly": false,
       "mcp": true,
       "flowAllowed": false,
       "inputSchema": {
@@ -600,12 +600,12 @@
     {
       "name": "review_pages",
       "description": "Inspect source pages and exact adapter limitations",
-      "handler": "service",
+      "handler": "job",
       "permission": "channels.read",
       "requiredPermissions": [
         "apps.manage"
       ],
-      "readOnly": true,
+      "readOnly": false,
       "mcp": true,
       "flowAllowed": false,
       "inputSchema": {
@@ -722,12 +722,12 @@
     {
       "name": "review_assets",
       "description": "Inspect source images with immutable byte digests",
-      "handler": "service",
+      "handler": "job",
       "permission": "catalog.read",
       "requiredPermissions": [
         "apps.manage"
       ],
-      "readOnly": true,
+      "readOnly": false,
       "mcp": true,
       "flowAllowed": false,
       "inputSchema": {
@@ -837,13 +837,13 @@
     {
       "name": "review_reviews",
       "description": "Inspect source reviews",
-      "handler": "service",
+      "handler": "job",
       "permission": "catalog.read",
       "requiredPermissions": [
         "apps.manage",
         "customers.pii"
       ],
-      "readOnly": true,
+      "readOnly": false,
       "mcp": true,
       "flowAllowed": false,
       "inputSchema": {
@@ -952,12 +952,12 @@
     {
       "name": "review_coupons",
       "description": "Inspect source coupons",
-      "handler": "service",
+      "handler": "job",
       "permission": "automation.read",
       "requiredPermissions": [
         "apps.manage"
       ],
-      "readOnly": true,
+      "readOnly": false,
       "mcp": true,
       "flowAllowed": false,
       "inputSchema": {
@@ -1064,14 +1064,7 @@
     }
   ],
   "events": [
-    "app.migration.job_import_products",
-    "app.migration.job_import_customers",
-    "app.migration.job_import_orders",
-    "app.migration.job_import_categories",
-    "app.migration.job_import_pages",
-    "app.migration.job_import_assets",
-    "app.migration.job_import_reviews",
-    "app.migration.job_import_coupons"
+    "app.migration.job_queued"
   ],
   "slots": [],
   "entities": [],

@@ -11,6 +11,13 @@ class SourceFixture(BaseHTTPRequestHandler):
         if self.path.startswith('/source-cup.png'):
             assert self.headers.get('Authorization') is None
             self.send_response(200);self.send_header('Content-Type','image/png');self.end_headers();self.wfile.write(png);return
+        if self.headers.get('Authorization') in ('Bearer variable-source-synthetic','Bearer slow-source-synthetic'):
+            path=self.path.split('?')[0]
+            if self.headers.get('Authorization')=='Bearer slow-source-synthetic' and path=='/wp-json/wc/v3/products':time.sleep(6)
+            if path=='/wp-json/wc/v3/products':body=[{'id':200,'name':'Variable source cup','type':'variable','status':'publish','attributes':[{'name':'Colour','variation':True,'options':['Blue','Red']}],'variations':[201,202],'images':[{'src':f'http://127.0.0.1:{source.server_port}/source-cup.png'}]}]
+            elif path=='/wp-json/wc/v3/products/200/variations':body=[{'id':201,'price':'19.90','sku':'SOURCE-BLUE-201','status':'publish','stock_quantity':3,'attributes':[{'name':'Colour','option':'Blue'}],'image':{'src':f'http://127.0.0.1:{source.server_port}/source-cup.png'}},{'id':202,'price':'21.50','sku':'SOURCE-RED-202','status':'private','stock_quantity':4,'attributes':[{'name':'Colour','option':'Red'}]}]
+            else:self.send_error(404);return
+            self.send_response(200);self.send_header('X-WP-TotalPages','1');self.end_headers();self.wfile.write(json.dumps(body).encode());return
         if self.headers.get('Authorization')!='Bearer source-read-synthetic':self.send_error(403);return
         if self.path.split('?')[0]=='/wp-json/wc/v3/products':body=[{'id':90,'name':'Source ceramic cup','sku':'SOURCE-CUP-90','price':'19.90','description':'Original source text','stock_quantity':9,'images':[{'src':f'http://127.0.0.1:{source.server_port}/source-cup.png'}]}]
         elif self.path.startswith('/wp-json/wc/v3/products/reviews'):body=[{'id':96,'product_id':90,'review':'Original source review','rating':5,'reviewer':'Source reviewer','verified':True,'date_created_gmt':'2020-01-02T03:04:05'}]
@@ -36,7 +43,7 @@ original_base=BASE
 binding=call('/api/apps/migration/settings',h=h)
 call('/api/apps/migration/settings',{'approve':True,'digest':binding['digest'],'revision':binding['revision'],'values':{'system':'woocommerce','origin':source_origin,'token':'source-read-synthetic','version':'wc/v3','currency':'EUR','scale':2,'locale':'en-GB'}},h,method='PUT')
 assert 'source-read-synthetic' not in json.dumps(call('/api/apps/migration/settings',h=h))
-env={**os.environ,'MIGRATION_ALLOW_FIXTURE':'1','MIGRATION_BIND':f'127.0.0.1:{port}','MIGRATION_GATEWAY_TOKEN':gateway,'MIGRATION_CALLBACKS':json.dumps({a['workspace']:{'coreUrl':core_url,'token':key}}),'MIGRATION_SOURCES':json.dumps({a['workspace']:{'fixture':{'system':'woocommerce','origin':source_origin,'token':'source-read-synthetic','version':'wc/v3','currency':'EUR','scale':2,'locale':'en-GB'}}})}
+env={**os.environ,'MIGRATION_ALLOW_FIXTURE':'1','MIGRATION_BIND':f'127.0.0.1:{port}','MIGRATION_GATEWAY_TOKEN':gateway,'MIGRATION_CALLBACKS':json.dumps({a['workspace']:{'coreUrl':core_url,'token':key}}),'MIGRATION_SOURCES':json.dumps({a['workspace']:{'fixture':{'system':'woocommerce','origin':source_origin,'token':'source-read-synthetic','version':'wc/v3','currency':'EUR','scale':2,'locale':'en-GB'},'slow':{'system':'woocommerce','origin':source_origin,'token':'slow-source-synthetic','version':'wc/v3','currency':'EUR','scale':2,'locale':'en-GB'},'variable':{'system':'woocommerce','origin':source_origin,'token':'variable-source-synthetic','version':'wc/v3','currency':'EUR','scale':2,'locale':'en-GB'}}})}
 log=open(ROOT/'artifacts/migration-live-service.log','w');process=subprocess.Popen([str(ROOT/'target/debug/migration-assistant'),'serve'],env=env,stdout=log,stderr=log)
 def service_call(path,value):
     req=urllib.request.Request(service+path,data=json.dumps(value).encode(),headers={'Content-Type':'application/json','Authorization':'Bearer '+gateway,'x-tenant':a['workspace']})
@@ -51,7 +58,39 @@ try:
         except OSError:time.sleep(.1)
     core_process=serve(core_env,core_url,core_log)
     BASE=core_url
-    page=call('/api/apps/migration/actions/review_products',{'sourceId':'installed'},h)
+    started=time.monotonic()
+    pending=call('/api/apps/migration/actions/review_products',{'sourceId':'slow'}, {**h,'Idempotency-Key':'slow-source-inspection'})
+    assert pending.get('jobId') and time.monotonic()-started<3,pending
+    for _ in range(160):
+        inspection=call('/api/apps/migration/jobs/'+pending['jobId'],h=h)
+        if inspection['status'] not in ('queued','running'):break
+        time.sleep(.1)
+    assert inspection['status']=='succeeded',inspection
+    assert inspection['result']['records'] and len(json.dumps(inspection['result']).encode())<32768
+    print('PASS slow source inspection returns immediately through the real Core gateway and completes in its durable native job')
+    cancelled=call('/api/apps/migration/actions/review_products',{'sourceId':'slow'}, {**h,'Idempotency-Key':'cancelled-source-inspection'})['jobId']
+    for _ in range(50):
+        pending_cancel=call('/api/apps/migration/jobs/'+cancelled,h=h)
+        if pending_cancel['status']=='running':break
+        time.sleep(.1)
+    assert pending_cancel['status']=='running',pending_cancel
+    call('/api/apps/migration/jobs/'+cancelled,{'operation':'cancel','revision':pending_cancel['revision']},h)
+    for _ in range(160):
+        stopped=call('/api/apps/migration/jobs/'+cancelled,h=h)
+        if stopped['status'] not in ('queued','running','cancel_requested'):break
+        time.sleep(.1)
+    assert stopped['status']=='cancelled' and not stopped.get('result'),stopped
+    print('PASS cancelled source inspection never presents records as approved/completed')
+    def inspect_source(domain,source_id='installed',cursor=None):
+        pending=call('/api/apps/migration/actions/review_'+domain,{'sourceId':source_id,**({'cursor':cursor} if cursor else {})},{**h,'Idempotency-Key':uuid.uuid4().hex})
+        for _ in range(160):
+            result=call('/api/apps/migration/jobs/'+pending['jobId'],h=h)
+            if result['status'] not in ('queued','running'):break
+            time.sleep(.1)
+        assert result['status']=='succeeded',(domain,result)
+        assert 'target' not in result['result'] and len(json.dumps(result['result']).encode())<32768
+        return result['result']
+    page=inspect_source('products')
     assert 'source-read-synthetic' not in json.dumps(page)
     call('/api/apps',consent({'builtIn':'site_builder'}),h)
     target=call('/api/environments',{'name':'Source service preview'},h)['id']
@@ -73,7 +112,7 @@ try:
     destination_digest=next(p['digest'] for p in call('/api/apps',h=h)['packages'] if p['id']=='site_builder')
     for domain,options in [('assets',{}),('categories',{}),('pages',{'destinationDigest':destination_digest}),('customers',{'customerGroup':'consumer'}),('orders',{'channelId':'default','locale':'en-GB'}),('reviews',{}),('coupons',{})]:
         if domain=='reviews':exec(compile((ROOT/'extensions/apps/migration/tests/purchase.py').read_text(),'purchase.py','exec'))
-        source_page=call('/api/apps/migration/actions/review_'+domain,{'sourceId':'installed'},h)
+        source_page=inspect_source(domain)
         dest=target if domain in ('categories','pages','assets') else a['workspace']
         command={'sourceId':'installed','kind':domain,'target':dest,'options':options,'recordDigests':source_page['recordDigests']}
         jid=call('/api/apps/migration/actions/import_'+domain,command,{**h,'Idempotency-Key':'service-flow-'+domain})['jobId']
@@ -99,7 +138,22 @@ try:
         elif domain=='pages':assert call('/api/apps/site_builder/actions/editor_pages',{'id':dest_id},{**h,'x-tenant':target})['elements'][0]['status']=='draft'
         elif domain=='customers':assert call('/api/merchant/customers/'+source_row['data']['email'],h=h)['id']==dest_id
         else:assert call('/api/merchant/orders/'+dest_id,h=h)['payment']['realMoneyCharged'] is False
+    permissions=['apps.read','apps.manage','customers.read','customers.pii']
+    role='migration_reader'
+    call('/api/workspace/roles/'+role,{'revision':0,'data':{'name':{'en-GB':role},'active':True,'permissions':permissions}},h,method='PUT')
+    invitation=call('/api/workspace/invitations',{'role':role,'email':uuid.uuid4().hex+'@example.test'},h)
+    reader=call('/api/auth/accept',{'name':'Migration reader','password':'Migration-fixture-2026!','invitationToken':invitation['token']})
+    reader_h={'Authorization':'Bearer '+reader['token'],'x-tenant':a['workspace']}
+    customer_job=next(j for j in call('/api/apps/migration/jobs',h=reader_h)['jobs'] if j['action']=='review_customers')
+    assert customer_job['result']['records'][0]['data']['email']
+    assert call('/api/apps/migration/jobs/'+customer_job['id'],h=reader_h)['result']['records']
+    call('/api/apps/migration/jobs/'+customer_job['id'],h=fh,status=404)
+    call('/api/workspace/roles/'+role,{'revision':1,'data':{'name':{'en-GB':role},'active':True,'permissions':['apps.read','apps.manage','customers.read']}},h,method='PUT')
+    assert next(j for j in call('/api/apps/migration/jobs',h=reader_h)['jobs'] if j['id']==customer_job['id'])['result'] is None
+    call('/api/apps/migration/jobs/'+customer_job['id'],h=reader_h,status=403)
+    print('PASS saved source PII requires current paired rights; revocation redacts list and denies detail, foreign access denied')
     print('PASS all eight implemented source domains traverse the real gateway/service/outbox/native-write path')
+    exec(compile((ROOT/'extensions/apps/migration/tests/variable_flow.py').read_text(),'variable_flow.py','exec'))
     if os.environ.get('MIGRATION_BROWSER')=='1':
         import signal
         metadata={'url':BASE+'/?shop='+a['workspace']+'&studio=channels#merchant','email':EMAILS[0],'workspace':a['workspace']}

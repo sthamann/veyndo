@@ -84,7 +84,7 @@ pub async fn source_page(
         _ => request.bearer_auth(&c.token),
     };
     let (value, headers) = transport::json(request).await?;
-    let list = if let Some(xs) = value.as_array() {
+    let mut list = if let Some(xs) = value.as_array() {
         xs.clone()
     } else {
         value
@@ -118,6 +118,9 @@ pub async fn source_page(
     } else {
         list.len() == 50
     };
+    if c.system == Source::Woocommerce && kind == "products" {
+        super::woo::enrich(c, &mut list, fixture).await?;
+    }
     finish(
         c,
         source_id,

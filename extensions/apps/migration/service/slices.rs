@@ -28,7 +28,6 @@ pub async fn page(
             let value: Cursor = serde_json::from_slice(&raw).map_err(|_| "Invalid slice cursor")?;
             if value.offset == 0
                 || value.offset > 5000
-                || !value.offset.is_multiple_of(size)
                 || value.digest.len() != 64
                 || !value.digest.bytes().all(|b| b.is_ascii_hexdigit())
                 || value
@@ -69,7 +68,19 @@ pub async fn page(
     if offset > rows.len() {
         return Err("Slice no longer exists in source page".into());
     }
-    let end = (offset + size).min(rows.len());
+    let mut end = offset;
+    let mut bytes = 0;
+    for row in rows.iter().skip(offset).take(size) {
+        let cost = row.to_string().len() + 200;
+        if bytes + cost > 20 * 1024 {
+            break;
+        }
+        bytes += cost;
+        end += 1;
+    }
+    if end == offset && offset < rows.len() {
+        return Err("A source record exceeds the bounded review result; split its content/export before continuing".into());
+    }
     if end < rows.len() {
         let next = Cursor {
             source_cursor: source_cursor.map(str::to_owned),
@@ -87,8 +98,8 @@ pub async fn page(
     if kind == "assets" {
         media::prepare(&mut value, fixture).await?;
     }
-    if value.to_string().len() > 1024 * 1024 {
-        return Err("Reviewed batch exceeds 1 MiB; use a narrower source/export profile".into());
+    if value.to_string().len() > 28 * 1024 {
+        return Err("Reviewed batch exceeds the bounded native job result; use a narrower source/export profile".into());
     }
     Ok(value)
 }

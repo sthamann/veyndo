@@ -37,6 +37,10 @@ export type SourceRecord = {
     price?: { currency: string; scale: number; minor: number };
     total?: { currency: string; scale: number; minor: number };
     stock?: number;
+    parentSourceId?: string | null;
+    variantGroup?: boolean;
+    catalogActive?: boolean | null;
+    options?: Record<string, string>;
     url?: string;
     byteLength?: number;
     priceDisplay?: string;
@@ -51,6 +55,7 @@ export type Review = {
   kind: Kind;
   nextCursor?: string;
   adapterVersion: number;
+  cursor?: string;
 };
 export type Job = {
   id: string;
@@ -67,17 +72,22 @@ export type Job = {
   revision: number;
   message: Record<string, string>;
   result?: {
-    target: string;
+    target?: string;
     kind: Kind;
     sourceId: string;
-    imported: number;
-    reviewed: number;
+    imported?: number;
+    reviewed?: number;
     nextCursor?: string;
-    reconciled: boolean;
+    reconciled?: boolean;
+    records?: SourceRecord[];
+    recordDigests?: string[];
+    sourceVersion?: string;
+    adapterVersion?: number;
+    cursor?: string;
   };
 };
 export function jobKind(job: Job): Kind | undefined {
-  const kind = job.result?.kind ?? job.action?.replace(/^import_/, "");
+  const kind = job.result?.kind ?? job.action?.replace(/^(import|review)_/, "");
   return [
     "products",
     "assets",

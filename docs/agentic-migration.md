@@ -16,7 +16,9 @@ See [current status](status.md) for deployed journeys.
    encrypted app settings. Credentials are write-only in the browser and never
    form part of the agent prompt. Pin the applicable API profile/version.
 3. Choose products, product images, categories, content pages, customers, original historical orders, reviews or coupons. Inspect the actual
-   bounded source records and any mapping limitations. Source language IDs require
+   bounded source records and any mapping limitations. Source inspection itself is a
+   saved background job: the page stays usable during slow reads, and completed
+   source evidence can be reopened after reload without importing or approving it. Source language IDs require
    explicit locale mapping. Local historical dates require a confirmed IANA zone.
 4. Review destination tax or customer-group choices and explicitly approve the
    exact returned records. Products, images, categories and content pages share a selected
@@ -42,7 +44,7 @@ automatic semantic equivalence for arbitrary third-party plugins or theme code.
 
 | Domain | Implemented path | Boundary |
 | --- | --- | --- |
-| Products | Shopify variants, WooCommerce simple products, PrestaShop/Magento/Shopware 5 source projections; native private product creation | Retains original price, known source stock and source metadata; active target stock starts at zero. Multiple Shopify/Shopware variants use native parents/options; category source IDs resolve to the native category tree. Complex/bundle/combinations still need complete domain mapping. Variable WooCommerce parents are rejected rather than treated as complete variants. |
+| Products | Shopify variants, WooCommerce simple and concrete variable products, PrestaShop/Magento/Shopware 5 source projections; native private product creation | Retains original price, known source stock and source metadata; active target stock starts at zero. Multiple Shopify/Shopware variants use native parents/options; category source IDs resolve to the native category tree. Complex/bundle/combinations still need complete domain mapping. WooCommerce families retain their original parent/child IDs, declared axes/options, explicit published/private status and child images. Missing/duplicate/foreign children, wildcard combinations, standalone variations, and separate hidden/search-only/catalog-only visibility require explicit mapping rather than silent simplification. |
 | Product images | Public source URLs → frozen original-byte digests → native private asset store and ordered product media | PNG/JPEG/WebP, 1 byte–8 MiB each, up to 20 images/product and 10 images/reviewed slice. Source credentials are never forwarded to CDNs; unsupported signed URLs, private/relative source paths and unknown collection profiles require an explicit mapping/export. |
 | Customers | Source profile/address normalization → native CRM owner | No password/account credential, marketing consent, verified identity or email-based historical ownership is invented. Existing email conflicts require a reviewed resolution. |
 | Historical orders | Canonical source lines, exact minor-unit total, original timestamp/number → immutable native history | No repricing, new payment attempt, ordinary purchase event, stock consumption or invoice allocation. Source payment status is a historical claim, never native PSP confirmation. |
@@ -60,6 +62,33 @@ against arbitrary installed versions, private plugins or real merchant credentia
 Shopify protected customer data/older orders, third-party reviews and discounts can
 need additional access or explicit exports. API errors and nested pagination gaps
 remain visible; they are not counted as a completed extraction.
+
+## Slow sources and variable families
+
+Source inspection and import both use the existing native `app_jobs` and outbox.
+The generic app request still keeps its five-second transport timeout; it returns
+a job acknowledgement immediately rather than holding a browser request open for
+source pagination. The merchant can reopen a saved inspection, review exact records
+and then separately approve an import. Current domain/PII rights also protect saved
+results: revocation redacts the job list and denies its detail. Cancellation is
+checked again before returning inspected records, as well as before import writes.
+
+WooCommerce variation reads use fixed positive-ID paths and the same admitted,
+authenticated source connection. At most four families are read concurrently;
+each family has at most 100 declared variations, fetched in pages of 50. The
+complete delivered ID set and every concrete axis/option must match its parent.
+An incomplete family never becomes an apparently complete simple product. Private
+parents dominate child visibility; explicitly private children remain inactive
+through native selected publication. Separate source search/direct visibility is
+not flattened into this active/inactive model.
+
+Native review pages have adaptive byte bounds, not a promise of exactly 100 rows.
+There are at most 100 records (10 images), 20 KiB estimated record payload, 28 KiB
+returned evidence and 32 KiB stored job result. Native rich-document result depth
+uses the existing bounded document validator; callback metadata/checkpoints retain
+the stricter app-input budget. A single oversized record stops with an explicit
+split-export requirement. Source cursor, offset and full-page digest bind every
+slice, so following pages neither silently omit variants nor shift after a change.
 
 ## Original images and selected publication
 

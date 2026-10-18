@@ -2,7 +2,19 @@
 use super::*;
 pub fn normalize(c: &Context, v: &Value) -> Result<Vec<Record>> {
     let parent = id(v, &["id", "sku"])?;
+    if c.source == Source::Woocommerce
+        && v["type"]
+            .as_str()
+            .is_some_and(|kind| !["simple", "variable"].contains(&kind))
+    {
+        return Err("Source product type needs an explicit native behavior mapping".into());
+    }
+    if c.source == Source::Woocommerce && v["parent_id"].as_u64().is_some_and(|n| n > 0) {
+        return Err("Standalone variations require a complete parent snapshot".into());
+    }
+    let woo_variable = c.source == Source::Woocommerce && v["type"] == "variable";
     let variants = match c.source {
+        Source::Woocommerce if woo_variable => super::woo::variants(v)?,
         Source::Shopify => list(&v["variants"]),
         Source::Shopware5 => {
             let mut ds = list(&v["details"]);
@@ -17,8 +29,12 @@ pub fn normalize(c: &Context, v: &Value) -> Result<Vec<Record>> {
         if variants.len() > 100 {
             return Err("Variant export exceeds bounded profile".into());
         }
-        let grouped = variants.len() > 1;
-        let group_id = format!("group:{parent}");
+        let grouped = variants.len() > 1 || woo_variable;
+        let group_id = if woo_variable {
+            parent.clone()
+        } else {
+            format!("group:{parent}")
+        };
         let mut rows = vec![];
         if grouped {
             let mut group = product(c, v, &variants[0], None)?;
@@ -91,16 +107,35 @@ fn product(c: &Context, parent: &Value, v: &Value, pid: Option<&str>) -> Result<
     if !stock.is_null() && stock.as_i64().is_none_or(|n| n < 0 || n > i32::MAX.into()) {
         return Err("invalid source inventory; reconcile reservations before activation".into());
     }
-    let images = field(parent, &["images", "media_gallery_entries"]);
+    let visible = if c.source == Source::Woocommerce {
+        let base = super::woo::visibility(parent)?;
+        let own = if pid.is_some() {
+            super::woo::visibility(v)?
+        } else {
+            base
+        };
+        match (base, own) {
+            (Some(false), _) => Some(false),
+            (_, value) => value.or(base),
+        }
+    } else {
+        None
+    };
+    let images = if pid.is_some() {
+        if v["image"].is_object() {
+            json!([v["image"]])
+        } else {
+            Value::Null
+        }
+    } else {
+        field(parent, &["images", "media_gallery_entries"])
+    };
     let mut r = Record::new(
         c,
         "products",
         source_id,
-        json!({"name":translated(c,&name)?,"description":translated(c,&description)?,"sku":field(v,&["sku","reference","number"]),"parentSourceId":pid,"variantTitle":field(v,&["title"]),"price":amount,"priceDisplay":amount.decimal(),"stock":stock,"sourceImages":images,"options":super::relations::options(v)?,"categorySourceIds":super::relations::categories(c,parent)?,"sourceCategory":field(parent,&["id_category_default","categories"]),"sourceType":field(parent,&["type","type_id"])}),
+        json!({"name":translated(c,&name)?,"description":translated(c,&description)?,"sku":field(v,&["sku","reference","number"]),"parentSourceId":pid,"variantTitle":field(v,&["title"]),"price":amount,"priceDisplay":amount.decimal(),"stock":stock,"sourceImages":images,"options":super::relations::options(v)?,"categorySourceIds":super::relations::categories(c,parent)?,"sourceCategory":field(parent,&["id_category_default","categories"]),"sourceType":field(parent,&["type","type_id"]),"catalogActive":visible}),
     )?;
-    if parent["type"].as_str() == Some("variable") {
-        return Err("Variable products require the variations export; parent price is not a complete variant snapshot".into());
-    }
     if c.source == Source::Magento2
         && parent["type_id"]
             .as_str()

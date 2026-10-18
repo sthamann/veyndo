@@ -9,6 +9,7 @@ import Target from "./Target";
 import MigrationSteps from "./MigrationSteps";
 import ReviewPanel from "./ReviewPanel";
 import Agent from "./Agent";
+import useSourceReview from "./useSourceReview";
 import { useMigrationText } from "./i18n";
 import {
   isPrivate,
@@ -57,7 +58,7 @@ export default function MigrationWorkspace({
       { id: string; name: Record<string, string> }[]
     >([]),
     [jobs, setJobs] = useState<Job[]>([]),
-    [busy, setBusy] = useState(false),
+    [working, setBusy] = useState(false),
     [error, setError] = useState("");
   const canRead = rights.includes("apps.read"),
     canManage = rights.includes("apps.manage"),
@@ -116,34 +117,20 @@ export default function MigrationWorkspace({
       active = false;
     };
   }, [kind, request, rights]);
-  const inspect = async (
-    next?: string,
-    selectedKind: Kind = kind,
-    profile: string = sourceId,
-  ) => {
-    const owner = request;
-    setBusy(true);
-    setError("");
-    setReview(undefined);
+  const adoptReview = (value?: Review) => {
+    setReview(value);
     setApproved(false);
-    try {
-      const v = await owner(
-        "/api/apps/migration/actions/review_" + selectedKind,
-        {
-          sourceId: profile,
-          ...(next ? { cursor: next } : {}),
-        },
-      );
-      if (current.current === owner) {
-        setReview(v);
-        setCursor(next);
-      }
-    } catch (e) {
-      if (current.current === owner) setError((e as Error).message);
-    } finally {
-      if (current.current === owner) setBusy(false);
-    }
+    setCursor(value?.cursor);
   };
+  const { inspect, inspecting } = useSourceReview({
+    request,
+    jobs,
+    kind,
+    sourceId,
+    onReview: adoptReview,
+    onError: setError,
+  });
+  const busy = working || inspecting;
   const start = async () => {
     if (
       !review ||
@@ -355,10 +342,16 @@ export default function MigrationWorkspace({
                 onBusy={setBusy}
                 onError={setError}
                 onJobs={setJobs}
+                onReview={(value) => {
+                  setKind(value.kind);
+                  setSourceId(value.sourceId);
+                  adoptReview(value);
+                }}
                 onNext={async (result) => {
                   setKind(result.kind);
                   setSourceId(result.sourceId);
-                  if (isPrivate(result.kind)) setTarget(result.target);
+                  if (isPrivate(result.kind) && result.target)
+                    setTarget(result.target);
                   await inspect(
                     result.nextCursor,
                     result.kind,

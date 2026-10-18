@@ -36,6 +36,9 @@ the larger assistant remains in development and is not part of public acceptance
 Public original-image copying and selected product/image publication have local acceptance.
 Reviews retain native moderation and never gain purchase verification; WooCommerce
 coupons require activation review and remain bound to their original currency.
+WooCommerce concrete variable families now preserve native options, original parent IDs,
+private status and child images. Slow source inspection uses saved jobs, with reopening,
+cancellation and current PII revocation controls. These additions have local acceptance.
 Complex source variants, private/provider-specific media and coupon mappings, full mapping/cutover and
 large-scale throughput remain incomplete. The guide distinguishes normalization
 from an accepted native target write.

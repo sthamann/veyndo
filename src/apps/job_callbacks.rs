@@ -7,12 +7,21 @@ pub(super) async fn execute(
     op: &str,
     v: &Value,
 ) -> Result<Value> {
+    let mut metadata = v.clone();
+    metadata
+        .as_object_mut()
+        .ok_or(bad("App job callback must be an object"))?
+        .remove("result");
     input_schema::validate(
         &json!({"type":"object","properties":{"id":{"type":"string","maxLength":100},"lease":{"type":"string","maxLength":100},"progress":{"type":"integer","minimum":0,"maximum":100},"status":{"type":"string","enum":["running","succeeded","failed","cancelled"]},"message":{"type":"object"},"result":{"type":"object"},"checkpoint":{"type":"object"}},"required":["id"],"additionalProperties":false}),
-        v,
+        &metadata,
     )?;
     if v["result"].to_string().len() > 32768 || v["checkpoint"].to_string().len() > 32768 {
         return Err(bad("App job result exceeds 32 KiB"));
+    }
+    // Results are bounded stored documents, not executable action arguments.
+    if let Some(result) = v.get("result") {
+        input_schema::validate_native(&json!({"type":"object"}), result)?;
     }
     let t = merchant(a, h)?;
     let id = v["id"].as_str().unwrap();

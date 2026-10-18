@@ -13,7 +13,7 @@ private destination before invoking the original native domain writer.
 
 Products, images, categories, editable content pages, CRM customers, immutable
 historical orders, moderated reviews and inactive coupons all traverse that real service/gateway/job/write path. Five
-source-platform HTTP fixtures and 23 normalization cases exercise implemented
+source-platform HTTP fixtures and 27 normalization cases exercise implemented
 provider profiles. Three Rust package tests cover the shared exact-money, safe
 transport and explicit unknown-image-profile boundaries.
 
@@ -71,6 +71,47 @@ The independent focused review found the malformed-limit, private review project
 and currency-boundary defects. Each was reproduced before repair and its actual
 CLI/member/checkout countercase now passes. SQL/HTTP remains outside the pure proof.
 
+## Complete concrete WooCommerce families and durable inspection
+
+Actual local HTTP reads fetch 61 variations over two pages, split the expanded
+family into byte-bounded review slices and retain every original ID exactly once.
+Parent axes/options, complete declared variation IDs, duplicate/foreign identities,
+wildcard combinations, standalone variations and unsupported separate catalogue
+visibility have explicit Rust CLI rejection controls. Child images remain bound
+to their own native product; private source status survives native publication.
+
+The full source → Rust service → native job → private family/images → selected
+publication → simulated variant purchase path passes. One hidden variant returns
+404; buying the visible one and repeating the same order request decrements stock
+once, and a fresh cart is empty. An original review still resolves the original
+variable parent identity.
+
+A six-second source read reproduced the five-second gateway failure. Inspection
+now returns an immediate native job acknowledgement and later delivers bounded
+source evidence. Native rich-page results also reproduced the former depth12
+failure; they now use the existing bounded native document validator while keeping
+32 KiB result, strict callback metadata and checkpoint limits. Wrong type, excessive
+depth, oversized result and deep checkpoint controls remain rejected. Source review
+uses adaptive slices up to 100 rows/10 images, 20 KiB estimated row budget and 28 KiB
+response budget, rather than assuming every source page fits in one browser reply.
+
+A running source inspection cancelled during its six-second read initially still
+reported succeeded. The final native progress/authority fence fixes that actual
+RED case. Current PII revocation redacts saved source-job results from lists and
+returns 403 on detail; a foreign shop receives 404. Independent focused review of the
+new grouped-event/current-actor/lease/result-budget/UI path found no remaining
+Important/Critical issues after that cancellation fix. SQL/network orchestration
+is not part of the extracted pure proof.
+
+Chrome opened saved variable evidence after reload, then started another six-second
+source inspection through the real Studio. Its returned review showed Blue/Red,
+original parent, SKU, stock and hidden status; the import remained unapproved and
+disabled. The first browser inspection exposed indistinguishable variant rows;
+missing-evidence UI RED→GREEN controls cover the added readable details.
+Screenshots: `artifacts/migration-variable-source-review.png` and
+`artifacts/migration-slow-source-completed.png`. The owned test tab/process/database
+were cleaned up; the user's original port 8802 process was preserved.
+
 ## Browser and general checks
 
 Actual Chrome exercised source review, explicit approval, a successful image
@@ -84,7 +125,7 @@ screenshots: `artifacts/migration-reviews-preview.png` and
 `artifacts/migration-coupons-preview.png`. Owned disposable fixtures are cleaned up
 after each pass; the user's existing server on port 8802 remains untouched.
 
-Frontend: 119 files / 671 tests, production build, formatting and EN/DE/FR/ES
+Frontend: 119 files / 675 tests, production build, formatting and EN/DE/FR/ES
 localization pass. Workspace Rust tests, warning-denying clippy, source/API/image
 ownership checks and documentation generation/checking pass. Existing formal
 mutation controls reject 172 broken policies; this does not prove all migration

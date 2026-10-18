@@ -104,6 +104,9 @@ pub async fn receive(
 }
 
 fn job_event(kind: &str) -> bool {
+    if kind == "app.migration.job_queued" {
+        return true;
+    }
     static EVENTS: std::sync::OnceLock<Vec<String>> = std::sync::OnceLock::new();
     EVENTS
         .get_or_init(|| {

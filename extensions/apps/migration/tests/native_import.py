@@ -42,6 +42,13 @@ call('/api/merchant/products/'+pid,h=h,status=404)
 stage2=call('/api/environments',{'name':'Second migration preview'},h)['id']
 assert call('/api/merchant/imports',pbody,{**h,'x-tenant':stage2})['id']==pid
 print('PASS native product migration: private-only draft, exact price, zero active stock and stable replay')
+# Explicit source catalogue visibility must survive the generic native import owner.
+inactive=json.loads(json.dumps(pbody));inactive['record']['sourceId']='hidden-source-product';inactive['record']['data'].update({'sku':'MIG-HIDDEN','catalogActive':False})
+hidden=call('/api/merchant/imports',inactive,sh)['id']
+assert call('/api/merchant/products/'+hidden,h=sh)['catalog']['active'] is False
+malformed=json.loads(json.dumps(inactive));malformed['record']['sourceId']='bad-visibility';malformed['record']['data']['catalogActive']='false'
+call('/api/merchant/imports',malformed,sh,400)
+print('PASS original explicit catalogue visibility is preserved; malformed visibility is rejected')
 # A realistic multilingual record must not duplicate full text inside bounded identity metadata.
 multilingual=json.loads(json.dumps(pbody));multilingual['record']['sourceId']='multilingual-product';multilingual['record']['data']['sku']='MIG-MULTI'
 multilingual['record']['data']['name']={'en-GB':'Imported guide','de-DE':'Importierter Ratgeber','fr-FR':'Guide importe'}

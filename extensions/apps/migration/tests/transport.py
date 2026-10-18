@@ -3,6 +3,7 @@ import base64,hashlib
 import json,os,subprocess,time,unittest,urllib.request,urllib.error,threading
 from http.server import ThreadingHTTPServer,BaseHTTPRequestHandler
 from pathlib import Path
+from urllib.parse import urlsplit,parse_qs
 ROOT=Path(__file__).resolve().parents[4];BIN=ROOT/'target/debug/migration-assistant'
 class Source(BaseHTTPRequestHandler):
     def log_message(self,*args):pass
@@ -16,6 +17,19 @@ class Source(BaseHTTPRequestHandler):
             self.send_response(200);self.end_headers();self.wfile.write(json.dumps({'data':[{'id':4,'name':'SW cup','mainDetail':{'id':44,'number':'SW-4','inStock':5,'prices':[{'price':'29.90'}]}}],'total':1}).encode());return
         if self.path.startswith('/rest/V1/products'):
             self.send_response(200);self.end_headers();self.wfile.write(json.dumps({'items':[{'id':3,'sku':'MAG-3','name':'Magento cup','price':'15.25','type_id':'simple'}],'total_count':1}).encode());return
+        token=self.headers.get('authorization')
+        if token in ('Bearer variants-secret','Bearer drift-secret'):
+            if urlsplit(self.path).path=='/wp-json/wc/v3/products':
+                body=[{'id':800,'name':'Variable source cup','type':'variable','attributes':[{'name':'Size','variation':True,'options':[str(i) for i in range(801,862)]}],'variations':list(range(801,862)), 'images':[{'src':f'http://127.0.0.1:{self.server.server_port}/source.png'}]}]
+                pages=1
+            elif urlsplit(self.path).path=='/wp-json/wc/v3/products/800/variations':
+                query=parse_qs(urlsplit(self.path).query)
+                assert query['per_page']==['50'] and query['orderby']==['id'] and query['order']==['asc']
+                page=int(query['page'][0]); ids=list(range(801,862 if token=='Bearer variants-secret' else 861))
+                body=[{'id':i,'price':'19.90','sku':'VAR-'+str(i),'stock_quantity':2,'attributes':[{'name':'Size','option':str(i)}],**({'image':{'src':f'http://127.0.0.1:{self.server.server_port}/source.png'}} if i==801 else {})} for i in ids[(page-1)*50:page*50]]
+                pages=2
+            else:self.send_error(404);return
+            self.send_response(200);self.send_header('X-WP-TotalPages',str(pages));self.end_headers();self.wfile.write(json.dumps(body).encode());return
         if self.headers.get('authorization')!='Bearer source-secret':self.send_error(401);return
         if self.path.startswith('/wp-json/wc/v3/products'):
             body=[{'id':1,'name':'Ceramic','price':'19.90','stock_quantity':7,'images':[{'src':f'http://127.0.0.1:{self.server.server_port}/source.png'}]}];self.send_response(200);self.send_header('X-WP-TotalPages','1');self.end_headers();self.wfile.write(json.dumps(body).encode());return
@@ -40,6 +54,8 @@ class Transport(unittest.TestCase):
         for system in ['prestashop','magento2','shopware5','shopify']:
             connections['tenant-a'][system]={'system':system,'origin':cls.origin,'token':'source-secret','version':'2026-10' if system=='shopify' else 'fixture-version','currency':'EUR','scale':2,'locale':'de-DE'}
         connections['tenant-a']['many']={**connections['tenant-a']['shopify'],'token':'many-secret'}
+        connections['tenant-a']['woo_variants']={**connections['tenant-a']['source-a'],'token':'variants-secret'}
+        connections['tenant-a']['woo_drift']={**connections['tenant-a']['source-a'],'token':'drift-secret'}
         env['MIGRATION_SOURCES']=json.dumps(connections)
         cls.log=open(ROOT/'artifacts/migration-transport-service.log','w');cls.p=subprocess.Popen([str(BIN),'serve'],env=env,stdout=cls.log,stderr=cls.log)
         for _ in range(30):
@@ -62,9 +78,29 @@ class Transport(unittest.TestCase):
             with self.subTest(system=system):
                 code,v=self.call(sourceId=system);self.assertEqual(code,200,v);self.assertEqual(v['records'][0]['data']['price']['minor'],minor)
     def test_variant_expansion_is_split_into_complete_reviewable_batches(self):
-        code,a=self.call(sourceId='many');self.assertEqual(code,200,a);self.assertEqual(len(a['records']),100)
-        code,b=self.call(sourceId='many',cursor=a['nextCursor']);self.assertEqual(code,200,b);self.assertEqual(len(b['records']),100);self.assertIsNone(b['nextCursor'])
-        rows=a['records']+b['records'];self.assertEqual(len({r['sourceId'] for r in rows}),200);self.assertEqual(sum(not r['data'].get('variantGroup') for r in rows),150)
+        rows=[];cursor=None
+        for _ in range(20):
+            code,page=self.call(sourceId='many',**({'cursor':cursor} if cursor else {}));self.assertEqual(code,200,page)
+            self.assertLessEqual(len(page['records']),100);self.assertLessEqual(len(json.dumps(page,ensure_ascii=False).encode()),28*1024)
+            rows.extend(page['records']);cursor=page['nextCursor']
+            if not cursor:break
+        self.assertIsNone(cursor);self.assertEqual(len(rows),200)
+        self.assertEqual(len({r['sourceId'] for r in rows}),200);self.assertEqual(sum(not r['data'].get('variantGroup') for r in rows),150)
+    def test_woo_variants_fetch_all_bounded_pages_and_child_images(self):
+        rows=[];cursor=None
+        for _ in range(20):
+            code,v=self.call(sourceId='woo_variants',**({'cursor':cursor} if cursor else {}));self.assertEqual(code,200,v)
+            self.assertLessEqual(len(v['records']),100);self.assertLessEqual(len(json.dumps(v,ensure_ascii=False).encode()),28*1024)
+            rows.extend(v['records']);cursor=v['nextCursor']
+            if not cursor:break
+        self.assertIsNone(cursor);self.assertEqual(len(rows),62);self.assertEqual(len({r['sourceId'] for r in rows}),62)
+        self.assertEqual(rows[0]['sourceId'],'800');self.assertTrue(all(r['data']['parentSourceId']=='800' for r in rows[1:]))
+        code,images=self.call(sourceId='woo_variants',kind='assets');self.assertEqual(code,200,images)
+        self.assertEqual({r['data']['productSourceId'] for r in images['records']},{'800','801'})
+        self.assertNotIn('variants-secret',json.dumps(v))
+    def test_woo_missing_variation_stops_the_entire_review(self):
+        code,v=self.call(sourceId='woo_drift');self.assertEqual(code,400,v)
+        self.assertNotIn('records',v)
     def test_images_freeze_exact_bytes_without_source_credentials(self):
         code,v=self.call(kind='assets');self.assertEqual(code,200,v)
         image=v['records'][0]['data'];self.assertEqual(image['mime'],'image/png');self.assertEqual(image['byteLength'],68);self.assertEqual(len(image['digest']),64)

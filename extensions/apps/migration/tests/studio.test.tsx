@@ -1,4 +1,5 @@
 /** Real migration workflow controls require readable source data and explicit import review. */
+import { inspectionTests } from "./inspection.test";
 import { feedbackTests } from "./feedback.test";
 import MigrationWorkspace from "../studio/MigrationWorkspace";
 import { LocaleProvider } from "../../../../frontend/src/shared/i18n/i18n";
@@ -19,6 +20,7 @@ export function migrationStudioTests(deps: any) {
     );
   }
   feedbackTests(deps, mount);
+  inspectionTests(deps, mount);
   it("does not read installed apps without current app access", () => {
     const request = vi.fn();
     mount(request, []);

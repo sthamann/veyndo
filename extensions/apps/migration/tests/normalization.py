@@ -29,6 +29,34 @@ class Normalization(unittest.TestCase):
     def test_woocommerce_decimal_and_variation_identity(self):
         r=self.read('woocommerce','products',{'id':9,'name':'Tasse','type':'simple','sku':'CUP','regular_price':'21.95','stock_quantity':3})[0]
         self.assertEqual(r['data']['price']['minor'],2195);self.assertEqual(r['sourceId'],'9')
+    def test_woo_variable_export_keeps_original_parent_and_variation_evidence(self):
+        source={'id':80,'name':'Variable cup','type':'variable','attributes':[{'name':'Colour','variation':True,'options':['Blue','Red']}],'variations':[81,82], '_migrationVariations':[{'id':81,'price':'19.90','sku':'BLUE','stock_quantity':3,'attributes':[{'name':'Colour','option':'Blue'}],'image':{'src':'https://source.example/blue.png'}},{'id':82,'price':'21.50','sku':'RED','stock_quantity':4,'attributes':[{'name':'Colour','option':'Red'}]}]}
+        rows=self.read('woocommerce','products',source)
+        self.assertEqual([r['sourceId'] for r in rows],['80','81','82'])
+        self.assertTrue(rows[0]['data']['variantGroup']);self.assertEqual(rows[1]['data']['parentSourceId'],'80')
+        self.assertEqual(rows[1]['data']['options'],{'Colour':'Blue'});self.assertEqual(rows[2]['data']['price']['minor'],2150)
+        self.assertEqual(rows[1]['data']['sourceImages'],[{'src':'https://source.example/blue.png'}]);self.assertIsNone(rows[2]['data']['sourceImages'])
+        for changes in ({'_migrationVariations':source['_migrationVariations'][:1]}, {'variations':[81,81]}, {'_migrationVariations':[]}, {'_migrationVariations':[{**source['_migrationVariations'][0],'attributes':[{'name':'Colour','option':''}]},source['_migrationVariations'][1]]}):
+            self.assertNotEqual(normalize('woocommerce','products',{**source,**changes}).returncode,0)
+    def test_woo_variation_axes_and_visibility_are_not_guessed(self):
+        axes=[{'name':'Colour','variation':True,'options':['Blue','Red']},{'name':'Size','variation':True,'options':['M','L']}]
+        source={'id':80,'name':'Cup','type':'variable','status':'publish','attributes':axes,'variations':[81], '_migrationVariations':[{'id':81,'status':'publish','price':'19.90','attributes':[{'name':'Colour','option':'Blue'},{'name':'Size','option':'M'}]}]}
+        self.assertEqual(len(self.read('woocommerce','products',source)),2)
+        for attributes in ([{'name':'Colour','option':'Blue'}],[{'name':'Colour','option':'Green'},{'name':'Size','option':'M'}],[{'name':'Colour','option':'Blue'},{'name':'Fit','option':'M'}]):
+            row={**source,'_migrationVariations':[{**source['_migrationVariations'][0],'attributes':attributes}]}
+            self.assertNotEqual(normalize('woocommerce','products',row).returncode,0)
+        for visibility in ('hidden','search','catalog'):
+            self.assertNotEqual(normalize('woocommerce','products',{'id':80,'name':'Cup','type':'simple','status':'publish','price':'19.90','catalog_visibility':visibility}).returncode,0)
+        standalone={'id':81,'type':'variation','parent_id':80,'price':'19.90','attributes':[{'name':'Colour','option':'Blue'}]}
+        self.assertNotEqual(normalize('woocommerce','products',standalone).returncode,0)
+    def test_woo_parent_visibility_dominates_published_children(self):
+        source={'id':80,'name':'Hidden family','type':'variable','status':'private','attributes':[{'name':'Colour','variation':True,'options':['Blue']}],'variations':[81], '_migrationVariations':[{'id':81,'status':'publish','price':'19.90','attributes':[{'name':'Colour','option':'Blue'}]}]}
+        rows=self.read('woocommerce','products',source)
+        self.assertFalse(rows[0]['data']['catalogActive']);self.assertFalse(rows[1]['data']['catalogActive'])
+        for changes in ({'status':[]},{'type':'external'},{'type':'grouped'}):
+            self.assertNotEqual(normalize('woocommerce','products',{'id':10,'name':'Product','price':'10',**changes}).returncode,0)
+    def test_woo_incomplete_variation_parent_is_not_a_simple_product(self):
+        self.assertNotEqual(normalize('woocommerce','products',{'id':80,'name':'Cup','price':'10','type':'variable','variations':[81]}).returncode,0)
     def test_prestashop_multilingual_source(self):
         r=self.read('prestashop','products',{'id':7,'name':[{'id':'1','value':'Tasse'}],'price':'12.50','reference':'PRE-7','id_category_default':'3'})[0]
         self.assertEqual(r['data']['name']['de-DE'],'Tasse');self.assertEqual(r['data']['price']['minor'],1250)

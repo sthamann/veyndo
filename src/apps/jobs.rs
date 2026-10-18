@@ -40,20 +40,26 @@ pub(super) async fn enqueue(
     }
     let id = uid();
     sqlx::query("INSERT INTO app_jobs(tenant,app,id,action,actor,permission,package_digest,request_key,input_digest,input) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)").bind(&t).bind(&m.id).bind(&id).bind(&action.name).bind(actor).bind(action.permission.as_deref().unwrap_or("apps.manage")).bind(package_digest).bind(key).bind(digest).bind(v).execute(&mut *tx).await?;
-    signal(&mut tx, &t, &m.id, &id, &action.name).await?;
+    signal(&mut tx, &t, m, &id, &action.name).await?;
     tx.commit().await?;
     Ok(json!({"jobId":id,"accepted":true,"reused":false}))
 }
 async fn signal(
     tx: &mut sqlx::Transaction<'_, sqlx::Postgres>,
     t: &str,
-    app: &str,
+    m: &Manifest,
     id: &str,
     action: &str,
 ) -> Result<()> {
+    let grouped = format!("app.{}.job_queued", m.id);
+    let event = if m.events.contains(&grouped) {
+        grouped
+    } else {
+        format!("app.{}.job_{action}", m.id)
+    };
     sqlx::query("INSERT INTO outbox(tenant,kind,data) VALUES($1,$2,$3)")
         .bind(t)
-        .bind(format!("app.{app}.job_{action}"))
+        .bind(event)
         .bind(json!({"jobId":id}))
         .execute(&mut **tx)
         .await?;
@@ -171,7 +177,7 @@ async fn control(
             auth::permit(&h, action.permission.as_deref().unwrap_or("apps.manage"))?;
             gateway::additional_permissions(&h, action)?;
             validate_input(&action.input_schema, &row.get::<Value, _>("input"))?;
-            signal(&mut tx, &t, &app, &id, &action.name).await?;
+            signal(&mut tx, &t, &m, &id, &action.name).await?;
         }
         sqlx::query("UPDATE app_jobs SET status=$4,lease=CASE WHEN $4='cancel_requested' THEN lease ELSE NULL END,lease_until=CASE WHEN $4='cancel_requested' THEN lease_until ELSE NULL END,actor=CASE WHEN $4='queued' THEN $5 ELSE actor END,package_digest=CASE WHEN $4='queued' THEN $6 ELSE package_digest END,progress=CASE WHEN $4='queued' THEN 0 ELSE progress END,started_at=CASE WHEN $4='queued' THEN NULL ELSE started_at END,revision=revision+1,updated_at=now() WHERE tenant=$1 AND app=$2 AND id=$3").bind(&t).bind(&app).bind(&id).bind(next).bind(h.principal.user.as_deref().ok_or(bad("Personal account required"))?).bind(approval::canonical_digest(&m)).execute(&mut *tx).await?;
     }
