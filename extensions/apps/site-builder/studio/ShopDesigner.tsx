@@ -308,7 +308,7 @@ function DesignerView({
               onEdit={() => setMode("edit")}
             />
           </section>
-          <DesignerInspector
+          <DesignerInspector onViewport={setDevice}
             scopeKey={`${workspace}:${d.channel}`}
             d={d}
             request={request}

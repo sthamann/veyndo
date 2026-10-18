@@ -1,5 +1,35 @@
 /** Catalogue intake diagnostics retain source-line metadata while all transport clients show actionable localized guidance. */
 export const catalogIntakeErrors: Record<string, readonly string[]> = {
+  "Supplier price currency differs from the Veyndo shop; upload explicitly converted prices instead": [
+    "The supplier returned prices in a different currency. No products were created. Choose a supplier using your shop currency or upload an export with reviewed prices.",
+    "Der Anbieter liefert Preise in einer anderen Währung. Es wurde nichts angelegt. Wähle einen Anbieter mit deiner Shop-Währung oder lade einen Export mit geprüften Preisen hoch.",
+    "Le fournisseur renvoie une autre devise. Aucun produit créé. Choisissez un fournisseur dans la devise de la boutique ou importez des prix vérifiés.",
+    "El proveedor devuelve otra moneda. No se crearon productos. Elige un proveedor en la moneda de tu tienda o carga precios revisados.",
+  ],
+  "Shop catalogue returned warnings; review directly with the supplier or upload an export": [
+    "The catalogue reported restrictions. No products were created. Review them with the supplier or upload a verified export.",
+    "Der Katalog meldet Einschränkungen. Es wurde nichts angelegt. Kläre sie mit dem Anbieter oder lade einen geprüften Export hoch.",
+    "Le catalogue signale des restrictions. Aucun produit créé. Vérifiez-les avec le fournisseur ou importez un export contrôlé.",
+    "El catálogo indica restricciones. No se crearon productos. Revísalas con el proveedor o carga una exportación verificada.",
+  ],
+  "No bounded Shop catalogue result": [
+    "No usable products were returned. Narrow the query, choose a shop domain or upload a product export. No products were created.",
+    "Es wurden keine verwendbaren Produkte geliefert. Grenze die Suche ein, wähle eine Shop-Domain oder lade einen Produktexport hoch. Es wurde nichts angelegt.",
+    "Aucun produit utilisable. Précisez la recherche, choisissez un domaine ou importez un export. Aucun produit créé.",
+    "No hay productos utilizables. Concreta la búsqueda, elige un dominio o carga un export. No se creó ningún producto.",
+  ],
+  "Shop catalogue is unavailable; retry explicitly or upload an export": [
+    "The supplier catalogue is unavailable. Your drafts are unchanged. Retry later or upload a CSV.",
+    "Der Anbieterkatalog ist nicht erreichbar. Deine Entwürfe bleiben erhalten. Versuche es später oder lade eine CSV hoch.",
+    "Le catalogue est indisponible. Vos brouillons sont conservés. Réessayez ou importez un CSV.",
+    "El catálogo no está disponible. Tus borradores se conservan. Reintenta o carga un CSV.",
+  ],
+  "Shopify export requires unique Handle, Title and Variant Price columns": [
+    "Upload Shopify’s product export with one Handle, Title and Variant Price column. Duplicate or missing headers cannot be mapped safely.",
+    "Lade den Shopify-Produktexport mit je einer Spalte Handle, Title und Variant Price hoch. Doppelte oder fehlende Überschriften lassen sich nicht sicher zuordnen.",
+    "Importez l’export Shopify avec une colonne Handle, Title et Variant Price. Les en-têtes manquants ou doublés ne sont pas sûrs.",
+    "Carga el export Shopify con una columna Handle, Title y Variant Price. Los encabezados repetidos o ausentes no se pueden asignar de forma segura.",
+  ],
   "App destination resolves to a disallowed address": [
     "This address is blocked by the network policy. Use a public HTTPS product URL or a CSV.",
     "Diese Adresse ist durch die Netzwerkschutzregeln gesperrt. Verwende eine öffentliche HTTPS-Produkt-URL oder eine CSV.",

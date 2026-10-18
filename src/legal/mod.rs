@@ -3,7 +3,11 @@ use crate::*;
 mod model;
 pub(crate) use model::{Config, validate};
 mod consent;
-pub(crate) use consent::{policy, require, require_locked};
+pub(crate) use consent::{
+    policy, read as consent_receipt, require, require_locked, write_locked as consent_locked,
+};
+mod buyer_consent;
+pub(crate) use buyer_consent::missing_contact;
 mod checkout;
 pub(crate) use checkout::snapshot;
 mod product;

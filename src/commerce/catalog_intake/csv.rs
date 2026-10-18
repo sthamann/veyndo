@@ -1,6 +1,6 @@
 //! Bounded UTF-8 CSV parser accepts quoted delimiters, escaped quotes and multiline fields; no formula evaluation or silent row loss.
 use super::*;
-pub(super) fn parse(source: &str) -> Result<Vec<Draft>> {
+pub(super) fn rows(source: &str) -> Result<Vec<Vec<String>>> {
     let source = source.trim_start_matches('\u{feff}');
     let line = source.lines().next().unwrap_or_default();
     let sep = if line.matches(';').count() > line.matches(',').count() {
@@ -41,8 +41,10 @@ pub(super) fn parse(source: &str) -> Result<Vec<Draft>> {
                 } else {
                     cells.clear();
                 }
-                if rows.len() > 51 {
-                    return Err(bad("CSV supports at most 50 products per reviewed batch"));
+                if rows.len() > 501 {
+                    return Err(bad(
+                        "CSV supports at most 500 source rows per reviewed batch",
+                    ));
                 }
             }
         } else if closed {
@@ -58,8 +60,15 @@ pub(super) fn parse(source: &str) -> Result<Vec<Draft>> {
     if cells.iter().any(|c| !c.trim().is_empty()) {
         rows.push(cells);
     }
-    if rows.len() < 2 || rows.len() > 51 {
-        return Err(bad("CSV needs a header and 1..50 products"));
+    if rows.len() < 2 || rows.len() > 501 {
+        return Err(bad("CSV needs a header and 1..500 source rows"));
+    }
+    Ok(rows)
+}
+pub(super) fn parse(source: &str) -> Result<Vec<Draft>> {
+    let mut rows = rows(source)?;
+    if rows.len() > 51 {
+        return Err(bad("CSV supports at most 50 products per reviewed batch"));
     }
     let headers = rows
         .remove(0)
@@ -110,6 +119,7 @@ pub(super) fn parse(source: &str) -> Result<Vec<Draft>> {
                 price,
                 product_number: get("productNumber"),
                 image_url: get("imageUrl"),
+                source: None,
             };
             d.validate().map_err(|e| {
                 Error::validation(&format!("/catalogIntake/rows/{}", index + 2), e.1)

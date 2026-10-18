@@ -1,6 +1,43 @@
 /** Merchant-only catalogue setup copy; shopper recommendation prompts remain separate. */
 import { useLocale } from "./i18n";
 export const catalogIntakeWords = {
+  shopify_csv: ["Shopify CSV", "Shopify CSV", "Shopify CSV", "Shopify CSV"],
+  shop_mcp: [
+    "Supplier catalogue",
+    "Anbieterkatalog",
+    "Catalogue fournisseur",
+    "Catálogo del proveedor",
+  ],
+  shopifyHint: [
+    "Upload a Shopify product export. Variants become separate drafts. Confirm prices are in your Veyndo currency. Stock starts at zero.",
+    "Lade einen Shopify-Produktexport hoch. Varianten werden einzelne Entwürfe. Bestätige Preise in deiner Veyndo-Währung. Bestand startet bei null.",
+    "Importez un export Shopify. Les variantes deviennent des brouillons distincts. Vérifiez la devise Veyndo. Le stock démarre à zéro.",
+    "Importa un archivo Shopify. Las variantes serán borradores separados. Confirma la moneda Veyndo. El stock empieza en cero.",
+  ],
+  supplierQuery: [
+    "Find products to import",
+    "Produkte zum Übernehmen suchen",
+    "Rechercher des produits à importer",
+    "Buscar productos para importar",
+  ],
+  supplierPlaceholder: [
+    "For example: ceramic coffee dripper",
+    "Zum Beispiel: Kaffeefilter aus Keramik",
+    "Par exemple : filtre à café en céramique",
+    "Por ejemplo: filtro de café de cerámica",
+  ],
+  supplierShop: [
+    "Supplier shop domain (optional)",
+    "Domain des Anbieter-Shops (optional)",
+    "Domaine du fournisseur (facultatif)",
+    "Dominio del proveedor (opcional)",
+  ],
+  supplierHint: [
+    "Read-only Shop MCP search. Review ownership, image rights, language and currency before importing into Veyndo. No supplier purchase or stock sync.",
+    "Nur lesende Shop-MCP-Suche. Prüfe Berechtigung, Bildrechte, Sprache und Währung vor der Übernahme nach Veyndo. Kein Einkauf und kein Bestandsabgleich beim Anbieter.",
+    "Recherche Shop MCP en lecture seule. Vérifiez les droits, images, langue et devise avant import dans Veyndo. Aucun achat ni synchronisation de stock.",
+    "Búsqueda Shop MCP de solo lectura. Revisa permisos, imágenes, idioma y moneda antes de importar a Veyndo. Sin compras ni sincronización de stock.",
+  ],
   title: [
     "Build your catalogue",
     "Sortiment aufbauen",

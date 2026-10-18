@@ -1,11 +1,16 @@
 /** Review state carries stable native IDs; source changes discard the entire prior proposal, never overwrite existing products. */
-export type IntakeMode = "csv" | "url" | "demo";
+export type IntakeMode = "csv" | "url" | "demo" | "shopify_csv" | "shop_mcp";
 export type IntakeDraft = {
   name: string;
   description: string;
   price: number;
   productNumber?: string;
   imageUrl?: string;
+  source?: {
+    provider: "shopify_csv" | "shop_mcp";
+    externalId: string;
+    url?: string;
+  };
 };
 export type IntakeRow = {
   id: string;
@@ -34,3 +39,6 @@ export async function readCatalogFile(file: File) {
     throw new Error("fileInvalid");
   }
 }
+
+export const needsCatalogModel = (mode: IntakeMode) =>
+  mode === "url" || mode === "demo";

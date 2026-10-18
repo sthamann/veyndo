@@ -8,6 +8,10 @@ import { useChannelText } from "./channel-i18n";
 import Icon from "../../shared/ui/Icon";
 import { freshChannel, type Channel } from "./channel-model";
 import ChannelEditor from "./ChannelEditor";
+import AgenticChannels from "./AgenticChannels";
+import { useAgenticChannelText } from "./agentic-channel-i18n";
+import CatalogIntake from "../catalog/CatalogIntake";
+import type { IntakeMode } from "../catalog/catalog-intake-model";
 import MarketplaceWorkspace from "../../../../extensions/apps/marketplaces/studio/MarketplaceWorkspace";
 import "../styles/sales-channels.css";
 export default function SalesChannelsWorkspace({
@@ -21,6 +25,10 @@ export default function SalesChannelsWorkspace({
   onTeam: () => void;
   onDesign?: (id: string) => void;
 }) {
+  const ai = useAgenticChannelText();
+  const [agenticChannel, setAgenticChannel] = useState("default");
+  const [agentic, setAgentic] = useState(false),
+    [intake, setIntake] = useState<IntakeMode>();
   const t = useChannelText(),
     { locale } = useLocale();
   const [channels, setChannels] = useState<Channel[]>([]),
@@ -38,6 +46,9 @@ export default function SalesChannelsWorkspace({
   useEffect(() => {
     let active = true;
     setSelected(null);
+    setAgentic(false);
+    setAgenticChannel("default");
+    setIntake(undefined);
     setMarketplace(false);
     setManage(false);
     setError("");
@@ -70,6 +81,26 @@ export default function SalesChannelsWorkspace({
     setChannels((old) => [...old.filter((c) => c.id !== channel.id), channel]);
     setSelected(channel);
   };
+  if (agentic)
+    return (
+      <div className="studio-page">
+        <AgenticChannels selectedChannel={agenticChannel} onChannel={setAgenticChannel}
+          request={request}
+          canRead={rights.includes("catalog.read")}
+          canImport={rights.includes("catalog.write")}
+          onImport={setIntake}
+          onBack={() => setAgentic(false)}
+          channels={channels}
+          mainLocale={settings?.mainLocale ?? locale}
+        />
+        {intake && (
+          <CatalogIntake
+            initialMode={intake}
+            onClose={() => setIntake(undefined)}
+          />
+        )}
+      </div>
+    );
   if (marketplace && selected && settings)
     return (
       <MarketplaceWorkspace
@@ -86,6 +117,16 @@ export default function SalesChannelsWorkspace({
       <div className="page-intro">
         <h1>{t("title")}</h1>
         <p>{t("hint")}</p>
+        {!selected && (
+          <button
+            type="button"
+            className="studio-secondary"
+            onClick={() => setAgentic(true)}
+          >
+            <Icon name="spark" />
+            {ai("title")}
+          </button>
+        )}
         {!selected && (
           <button
             className="studio-primary"

@@ -387,7 +387,7 @@ export default function DeveloperView({
                 />
               )}
               {section === "versions" && (
-                <AppVersions studio={studio} onEdit={openForEditing} />
+                <AppVersions studio={studio} onEdit={openForEditing} onNavigate={setSection} onAssist={agent.show} />
               )}
             </ContentLanguage>
           </fieldset>

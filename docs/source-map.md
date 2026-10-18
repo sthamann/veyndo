@@ -635,3 +635,13 @@ See the [illustrated workbench guide](app-studio-workspace.md) for multiple plac
 ### Native app lifecycles
 
 `apps/native_lifecycle` owns bounded declarations, compilation, accepted snapshots and policy facts. `commerce/fulfillment` and `b2b/quote_lifecycle` retain native transition admission; quote offer/accept/checkout stay with their existing owners. `b2b/contract` owns the shared native operation catalogue. The example vocabulary stays in `extensions/apps/production-review`. See [the workflow guide](app-native-lifecycles.md).
+
+## Inward agentic commerce
+
+`src/ucp/` adapts native carts, single-use handoff and native privacy receipts;
+`src/legal/buyer_consent.rs` protects contact requirements in every checkout.
+`extensions/apps/catalog-import/` owns provider parsers and read-only Shop MCP
+egress; the existing native catalogue intake owns review, private save and release.
+`frontend/src/admin/channels/AgenticChannels.tsx` owns readiness presentation,
+and `frontend/src/storefront/shell/storefront-actions.ts` shares actual UI and
+optional browser-agent cart commands. [Workflow and boundaries](agentic-commerce.md).

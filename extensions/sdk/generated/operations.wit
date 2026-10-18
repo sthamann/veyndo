@@ -684,7 +684,13 @@ interface inputs {
     %count: s64,
     %inference: option<option<merchant-catalog-prepare-input-inference>>,
     %mode: string,
+    %shop-domain: option<string>,
     %source: string,
+  }
+  record merchant-catalog-save-input-draft-source {
+    %external-id: string,
+    %provider: string,
+    %url: option<string>,
   }
   record merchant-catalog-save-input-draft {
     %description: string,
@@ -692,6 +698,7 @@ interface inputs {
     %name: string,
     %price: float64,
     %product-number: option<string>,
+    %source: option<merchant-catalog-save-input-draft-source>,
   }
   record merchant-catalog-save-input {
     %approve: bool,

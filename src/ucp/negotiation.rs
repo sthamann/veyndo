@@ -31,7 +31,8 @@ pub(crate) async fn command(
     Json(v): Json<Value>,
 ) -> Result<Json<Value>> {
     let name = operation(&op)?;
-    if !profile::selected(&h).await? {
+    let selection = profile::select(&h, false).await?;
+    if !selection.b2b {
         return Err(conflict(
             "capabilities_incompatible: negotiate ai.veyndo.app.shopping.b2b_negotiation first",
         ));
@@ -59,7 +60,7 @@ pub(crate) async fn command(
         Box::pin(b2b::invoke(&a, &h, &name, &v)).await?
     };
     let current = ucp_load(&a, &h, &id).await?;
-    let mut doc = response(&a, &h, &current, true).await?;
+    let mut doc = response(&a, &h, &current, profile::select(&h, false).await?).await?;
     if name == "checkout.handoff" {
         let origin = shop_domains::links(&c.tenant)["studioUrl"]
             .as_str()
@@ -77,14 +78,19 @@ pub(super) async fn response(
     a: &App,
     h: &RequestContext,
     c: &StoredCart,
-    selected: bool,
+    selected: profile::Selection,
 ) -> Result<Value> {
     let mut quote = cart_json(a, c).await?;
     // Completed price snapshots stay immutable; purchasing metadata describes current policy.
-    if selected && c.data.b2b.is_some() && quote["b2b"].is_null() {
+    if selected.b2b && c.data.b2b.is_some() && quote["b2b"].is_null() {
         b2b::preview(a, c, &mut quote).await?;
     }
     let mut doc = ucp_document(c, &quote);
+    if selected.consent {
+        consent::project(a, h, c, &mut doc).await?;
+    } else if let Some(buyer) = doc["buyer"].as_object_mut() {
+        buyer.remove("consent");
+    }
     // Keep canonical tenant/channel links instead of localhost-only continuation URLs.
     let mut url = reqwest::Url::parse(
         shop_domains::links(&c.tenant)["storefrontUrl"]
@@ -109,7 +115,7 @@ pub(super) async fn response(
             doc["continue_url"] = json!(url.as_str());
         }
     }
-    if !selected {
+    if !selected.b2b {
         return Ok(doc);
     }
     doc["ucp"]["capabilities"][profile::B2B] = json!([{"version":profile::VERSION}]);

@@ -4,6 +4,11 @@ import copy,uuid
 def check_catalog_intake(req, merchant, foreign):
     context=req('/api/merchant/catalog/intake',h=merchant)
     assert not context['sandbox']
+    imported=req('/api/merchant/catalog/intake',{'mode':'shopify_csv','source':'Handle,Title,Body (HTML),Option1 Name,Option1 Value,Variant SKU,Variant Price,Image Src\nchair,Oak chair,<p>Solid oak</p>,Size,Small,CHAIR-S,19.90,\nchair,,,Size,Large,CHAIR-L,29.90,\n','count':3},merchant)
+    assert len(imported['drafts'])==2 and imported['drafts'][1]['name']=='Oak chair · Large'
+    assert imported['drafts'][1]['price']==29.9 and imported['drafts'][0]['description']=='Solid oak'
+    assert imported['drafts'][1]['source']['provider']=='shopify_csv'
+
     preview=req('/api/merchant/catalog/intake',{'mode':'csv','source':'\ufeffname;price;description\r\n"Oak; chair";"19,90";"Line 1\nLine ""2"""\r\n','count':3},merchant)
     assert preview['drafts'][0]['price']==19.9 and preview['drafts'][0]['name']=='Oak; chair' and not preview['saved']
     assert preview['mainLocale']==context['mainLocale']

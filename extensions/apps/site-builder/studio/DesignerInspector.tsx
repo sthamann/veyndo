@@ -29,9 +29,10 @@ export default function DesignerInspector({
   mode,
   onMode,
   onPrepare,
-  scopeKey,
+  scopeKey, onViewport,
 }: {
   scopeKey: string;
+  onViewport: (device: "desktop" | "mobile") => void;
   setup?: ReactNode;
   d: Designer;
   request: RequestFn;
@@ -107,6 +108,7 @@ export default function DesignerInspector({
               page={d.draft}
               selected={d.selected}
               disabled={!writable || !rights.includes("assistant.use")}
+              onViewport={onViewport}
               onPreview={onPreview}
               onPrepare={onPrepare}
               onApplied={async () => {

@@ -1,6 +1,8 @@
 //! Merchant catalogue intake prepares bounded drafts; approved saves reuse native products, history and outbox in a private stage.
 use crate::*;
 mod csv;
+#[path = "../../../extensions/apps/catalog-import/mod.rs"]
+mod inbound;
 mod prepare;
 mod save;
 mod schema;
@@ -57,7 +59,7 @@ pub(crate) async fn invoke(a: &App, h: &RequestContext, name: &str, v: &Value) -
     let (settings, settings_revision) = commerce::config(a, &t).await?;
     match name {
         "merchant.catalog.context" => Ok(
-            json!({"mainLocale":settings.main_locale,"locales":settings.locales,"currency":settings.currencies.base_currency,"taxes":settings.taxes,"sandbox":staging::parent(a,&t).await?.is_some(),"settingsRevision":settings_revision}),
+            json!({"mainLocale":settings.main_locale,"locales":settings.locales,"currency":settings.currencies.base_currency,"taxes":settings.taxes,"sandbox":staging::parent(a,&t).await?.is_some(),"settingsRevision":settings_revision,"agentic":crate::ucp::readiness(a,h).await?}),
         ),
         "merchant.catalog.prepare" => {
             prepare::prepare(a, h, &t, &settings, settings_revision, v).await
@@ -76,9 +78,14 @@ pub(super) struct Draft {
     pub product_number: String,
     #[serde(default)]
     pub image_url: String,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub source: Option<inbound::Source>,
 }
 impl Draft {
     fn validate(&self) -> Result<()> {
+        if let Some(source) = &self.source {
+            source.validate()?;
+        }
         if self.name.trim().is_empty()
             || self.name.len() > 200
             || self.description.len() > 4000

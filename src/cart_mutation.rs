@@ -26,6 +26,41 @@ pub(crate) async fn set_configured_cart(
     buyer: Option<Option<Value>>,
     selections: Option<&[apps::ConfigurationSelection]>,
 ) -> Result<StoredCart> {
+    set_cart_transaction(a, h, items, expected, buyer, selections, None, None).await
+}
+/// Protocol consent and cart contents commit together through the native owners.
+pub(crate) async fn set_consented_cart(
+    a: &App,
+    h: &RequestContext,
+    items: Vec<Item>,
+    expected: i64,
+    buyer: Option<Value>,
+    consent: Option<(String, HashMap<String, bool>)>,
+    currency: Option<&str>,
+) -> Result<StoredCart> {
+    set_cart_transaction(
+        a,
+        h,
+        items,
+        Some(expected),
+        Some(buyer),
+        None,
+        consent,
+        currency,
+    )
+    .await
+}
+#[allow(clippy::too_many_arguments)]
+async fn set_cart_transaction(
+    a: &App,
+    h: &RequestContext,
+    items: Vec<Item>,
+    expected: Option<i64>,
+    buyer: Option<Option<Value>>,
+    selections: Option<&[apps::ConfigurationSelection]>,
+    consent: Option<(String, HashMap<String, bool>)>,
+    currency: Option<&str>,
+) -> Result<StoredCart> {
     validate_items(&items)?;
     for i in &items {
         marketing::admit_product(a, h, &i.id).await?;
@@ -34,6 +69,10 @@ pub(crate) async fn set_configured_cart(
     // pool: holding one connection per edit while requesting another can exhaust
     // the pool and deadlock concurrent edits. The revision is checked again below.
     let mut c = load_cart(a, h).await?;
+    if let Some(currency) = currency {
+        let (settings, _) = commerce::scoped_config(a, &c.tenant, &c.data.sales_channel).await?;
+        c.data.currency = settings.currencies.selected(currency)?.code.clone();
+    }
     let before = selections.map(|_| c.data.app_configurations.clone());
     if c.status != "open" {
         return Err(conflict("Cart is terminal"));
@@ -94,6 +133,9 @@ pub(crate) async fn set_configured_cart(
         .await?;
     if let Some(before) = &before {
         apps::configuration_events(&mut tx, &c, before).await?;
+    }
+    if let Some((policy, choices)) = consent {
+        legal::consent_locked(&mut tx, &c, &policy, choices, true).await?;
     }
     tx.commit().await?;
     Ok(c)
