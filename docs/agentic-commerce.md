@@ -5,7 +5,8 @@ its own native commerce workflow. **The merchant retains the checkout, prices,
 stock, order, permissions and publication decision.** There is no automatic
 export into Shopify and no purchase at a supplier’s checkout.
 
-Implementation status and hosted acceptance are separate: see [current status](status.md).
+See [current status](status.md) and the [18 October public acceptance](evidence/agentic-commerce-hosted-2026-10-18.md)
+for actual cart-transfer, embedded checkout, private import and simulation results.
 
 ## Merchant entry
 
