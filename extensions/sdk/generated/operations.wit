@@ -657,6 +657,7 @@ interface inputs {
   }
   record merchant-import-record-input {
     %approve: bool,
+    %asset-chunks: option<list<string>>,
     %options: merchant-import-record-input-options,
     %record: merchant-import-record-input-record,
   }

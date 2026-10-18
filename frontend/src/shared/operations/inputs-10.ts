@@ -33,6 +33,7 @@ export interface Inputs10 {
   "studio.workspace.save": { data: JsonValue; revision: number };
   "merchant.import.record": {
     approve: boolean;
+    assetChunks?: Array<string>;
     options: {
       acknowledgedWarnings?: Array<string>;
       channelId?: string;
@@ -43,7 +44,8 @@ export interface Inputs10 {
     };
     record: {
       data: JsonValue;
-      kind: "products" | "categories" | "pages" | "customers" | "orders";
+      kind:
+        "products" | "categories" | "pages" | "customers" | "orders" | "assets";
       source: string;
       sourceId: string;
       sourceShop: string;

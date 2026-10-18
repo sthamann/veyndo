@@ -21,7 +21,8 @@
     "orders.import",
     "settings.read",
     "events:self",
-    "data.write"
+    "data.write",
+    "assets.write"
   ],
   "settings": [
     {
@@ -715,6 +716,121 @@
         ],
         "additionalProperties": false
       }
+    },
+    {
+      "name": "review_assets",
+      "description": "Inspect source images with immutable byte digests",
+      "handler": "service",
+      "permission": "catalog.read",
+      "requiredPermissions": [
+        "apps.manage"
+      ],
+      "readOnly": true,
+      "mcp": true,
+      "flowAllowed": false,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "sourceId": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "cursor": {
+            "type": "string",
+            "maxLength": 2000
+          }
+        },
+        "required": [
+          "sourceId"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "import_assets",
+      "description": "Copy reviewed images into the private native product asset store",
+      "handler": "job",
+      "permission": "catalog.write",
+      "requiredPermissions": [
+        "catalog.read",
+        "environments.manage",
+        "apps.manage"
+      ],
+      "mcp": true,
+      "readOnly": false,
+      "flowAllowed": false,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "sourceId": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "cursor": {
+            "type": "string",
+            "maxLength": 2000
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "assets"
+            ]
+          },
+          "target": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "recordDigests": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 10,
+            "items": {
+              "type": "string",
+              "minLength": 64,
+              "maxLength": 64
+            }
+          },
+          "options": {
+            "type": "object",
+            "properties": {
+              "channelId": {
+                "type": "string",
+                "maxLength": 100
+              },
+              "taxRate": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 50
+              },
+              "customerGroup": {
+                "type": "string",
+                "maxLength": 100
+              },
+              "locale": {
+                "type": "string",
+                "maxLength": 35
+              },
+              "acknowledgedWarnings": {
+                "type": "array",
+                "maxItems": 20,
+                "items": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "sourceId",
+          "kind",
+          "target",
+          "recordDigests",
+          "options"
+        ],
+        "additionalProperties": false
+      }
     }
   ],
   "events": [
@@ -722,7 +838,8 @@
     "app.migration.job_import_customers",
     "app.migration.job_import_orders",
     "app.migration.job_import_categories",
-    "app.migration.job_import_pages"
+    "app.migration.job_import_pages",
+    "app.migration.job_import_assets"
   ],
   "slots": [],
   "entities": [],
@@ -787,6 +904,18 @@
       "method": "POST",
       "scope": "admin",
       "action": "import_pages"
+    },
+    {
+      "path": "review_assets",
+      "method": "POST",
+      "scope": "admin",
+      "action": "review_assets"
+    },
+    {
+      "path": "import_assets",
+      "method": "POST",
+      "scope": "admin",
+      "action": "import_assets"
     }
   ],
   "intelligence": {

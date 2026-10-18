@@ -121,6 +121,7 @@ pub(crate) async fn release(
         }
     }
     categories::publish(&mut tx, &t, &current, &keys).await?;
+    products::publish(&mut tx, &t, &current, &keys).await?;
     for key in &keys {
         let s = req.selections.iter().find(|s| s.key == *key).unwrap();
         let value = &current[&s.key];
@@ -149,7 +150,7 @@ pub(crate) async fn release(
         } else if s.key.starts_with("document:") {
             documents::publish(&mut tx, &t, &id, &s.key[9..], value).await?;
         } else if s.key.starts_with("product:") {
-            product_content(&mut tx, &t, value).await?;
+            // Product parents and content were published above, before dependent assets.
         } else if s.key.starts_with("app:") {
             let m: apps::Manifest = serde_json::from_value(value["manifest"].clone())
                 .map_err(|_| bad("Invalid app package"))?;
@@ -240,7 +241,9 @@ pub(crate) async fn release(
                 .await?;
         }
         base["stage"][&s.key] = value.clone();
-        base["live"][&s.key] = if s.key == "company" || s.key.starts_with("company-channel:") {
+        base["live"][&s.key] = if s.key.starts_with("product:") {
+            super::snapshot::product_snapshot(&mut tx, &t, &s.key[8..]).await?
+        } else if s.key == "company" || s.key.starts_with("company-channel:") {
             company::live_value(&mut tx, &t, &s.key).await?
         } else if s.key.starts_with("flow:") {
             sqlx::query_scalar("SELECT data FROM commerce_flows WHERE tenant=$1 AND id=$2")
@@ -252,6 +255,7 @@ pub(crate) async fn release(
             value.clone()
         };
     }
+    assets::validate_product_media(&mut tx, &t, &keys).await?;
     crate::b2b::publish_configuration(&mut tx, &t, &keys, &current).await?;
     final_config::validate(&mut tx, &t, &h, &keys, &current, &actual, &mut base).await?;
     let release = uid();

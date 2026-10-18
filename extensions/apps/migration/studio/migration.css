@@ -163,3 +163,31 @@
     grid-template-columns: 1fr;
   }
 }
+
+.migration-image {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  margin-right: 12px;
+  vertical-align: middle;
+}
+.migration-image-fallback {
+  display: inline-grid;
+  place-items: center;
+  width: 100px;
+  min-height: 72px;
+  padding: 8px;
+  margin-right: 12px;
+  background: var(--surface-alt, #eff6ff);
+  color: var(--muted, #60758b);
+  border-radius: 8px;
+  text-align: center;
+}
+.migration-source-id code {
+  display: block;
+  margin-top: 8px;
+  font-size: 11px;
+  max-width: 220px;
+}

@@ -15,11 +15,11 @@ See [current status](status.md) for deployed journeys.
 2. Select the original platform. Save its read-only connection in the existing
    encrypted app settings. Credentials are write-only in the browser and never
    form part of the agent prompt. Pin the applicable API profile/version.
-3. Choose products, categories, content pages, customers or original historical orders. Inspect the actual
+3. Choose products, product images, categories, content pages, customers or original historical orders. Inspect the actual
    bounded source records and any mapping limitations. Source language IDs require
    explicit locale mapping. Local historical dates require a confirmed IANA zone.
 4. Review destination tax or customer-group choices and explicitly approve the
-   exact returned records. Products, categories and content pages share a selected
+   exact returned records. Products, images, categories and content pages share a selected
    private environment; products start with stock zero. Select the same environment
    across domains and after reloading. Content pages require the installed Shop design
    package; its exact destination digest is frozen in the reviewed job.
@@ -42,7 +42,8 @@ automatic semantic equivalence for arbitrary third-party plugins or theme code.
 
 | Domain | Implemented path | Boundary |
 | --- | --- | --- |
-| Products | Shopify variants, WooCommerce simple products, PrestaShop/Magento/Shopware 5 source projections; native private product creation | Retains original price, known source stock and source metadata; active target stock starts at zero. Multiple Shopify/Shopware variants use native parents/options; category source IDs resolve to the native category tree. Media copying and complex/bundle/combinations still need complete domain mapping. Variable WooCommerce parents are rejected rather than treated as complete variants. |
+| Products | Shopify variants, WooCommerce simple products, PrestaShop/Magento/Shopware 5 source projections; native private product creation | Retains original price, known source stock and source metadata; active target stock starts at zero. Multiple Shopify/Shopware variants use native parents/options; category source IDs resolve to the native category tree. Complex/bundle/combinations still need complete domain mapping. Variable WooCommerce parents are rejected rather than treated as complete variants. |
+| Product images | Public source URLs → frozen original-byte digests → native private asset store and ordered product media | PNG/JPEG/WebP, 1 byte–8 MiB each, up to 20 images/product and 10 images/reviewed slice. Source credentials are never forwarded to CDNs; unsupported signed URLs, private/relative source paths and unknown collection profiles require an explicit mapping/export. |
 | Customers | Source profile/address normalization → native CRM owner | No password/account credential, marketing consent, verified identity or email-based historical ownership is invented. Existing email conflicts require a reviewed resolution. |
 | Historical orders | Canonical source lines, exact minor-unit total, original timestamp/number → immutable native history | No repricing, new payment attempt, ordinary purchase event, stock consumption or invoice allocation. Source payment status is a historical claim, never native PSP confirmation. |
 | Categories | Native private tree with stable IDs, localized names/slugs and explicit parent references | Parents must exist before children; missing parents stop the write instead of flattening the tree. |
@@ -58,6 +59,27 @@ against arbitrary installed versions, private plugins or real merchant credentia
 Shopify protected customer data/older orders, third-party reviews and discounts can
 need additional access or explicit exports. API errors and nested pagination gaps
 remain visible; they are not counted as a completed extraction.
+
+## Original images and selected publication
+
+Image review downloads bounded bytes to freeze their digest, MIME and length. A job
+refetches and verifies those exact bytes before sending bounded chunks to the native
+asset owner. Images use the existing asset quota/table; there is no migration file
+store or source token in the browser. Source image positions survive interleaved
+batches while existing manual media keep their slots.
+
+The native owner commits immutable bytes before the ordinary product-media CAS.
+A failed association therefore may leave one known, private, unassociated asset.
+After resolving the native media limit or edit conflict, explicit replay attaches
+the same asset rather than duplicating bytes. This is recoverable two-step behavior,
+not an atomic claim across both writes.
+
+Selected publication writes product parents before variants and images. A product
+with a local image cannot publish unless its public attachment already exists live
+or is included in that same transaction. A protected download cannot masquerade
+as a product image. Live delivery URLs and actual database defaults are captured
+in the publication baseline, so a later content release still compares correctly.
+Stock is never copied by image or content publication.
 
 ## Run the Rust application
 
@@ -114,7 +136,7 @@ A reviewed job contains source profile/cursor, target/options and canonical row
 hashes. IDs are scoped to the admitted live shop, including private imports; separate
 private environments retain the same source IDs without sharing their stored rows.
 Selected publication preserves those IDs. Variant-expanded pages are sliced into batches of at most 100 native
-records. A slice binds the original source cursor, offset and full-page digest;
+records (10 for images). A slice binds the original source cursor, offset and full-page digest;
 changed source pages cannot silently shift the next slice. Expanded normalization
 and returned batches have explicit byte bounds. This is bounded execution, **not
 a measured claim of arbitrary catalogue size or whole-shop snapshot consistency**.
@@ -145,11 +167,15 @@ TEST_SIGNED_HTTP_SUITES=migration_assistant python3 scripts/verify_integration.p
 
 Tests use isolated synthetic shops, local HTTP sources and actual Rust/Core/
 PostgreSQL writes. They cover source money/identity, all five protocol fixtures,
-private products/categories/pages, native variant/category relations, CRM addresses,
+private products/images/categories/pages, native variant/category relations, CRM addresses,
 immutable historical orders, replay/conflicts,
 foreign denial, frozen hashes, cancellation, resume checkpoints and concurrent
-callbacks. Studio regressions exercise approval, target reuse and PII gating.
-The real service/outbox test also publishes one selected imported product, explicitly
+callbacks. Image checks include a 3 MiB transfer, failure after binary persistence,
+explicit replay recovery, unchanged manual image slots and atomic rejection of
+missing image assets or protected downloads. Variant publication rejects a missing
+parent and accepts jointly selected parents/categories regardless of input order. Studio regressions exercise approval, target reuse and PII gating.
+The real service/outbox test also publishes one selected imported product and its original image, reads the
+public bytes, repeats a later content release, explicitly
 activates its stock and completes/replays a simulated native buyer purchase. Stock
 decrements once and a fresh buyer cart is empty; the original completed cart remains
 immutable evidence. This API acceptance does not replace a Storyfront browser test.

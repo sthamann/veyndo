@@ -7,6 +7,7 @@ mod clone;
 mod company;
 mod documents;
 mod final_config;
+mod products;
 mod release;
 mod snapshot;
 pub(crate) use clone::create_preview;

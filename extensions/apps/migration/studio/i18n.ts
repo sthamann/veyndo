@@ -1,6 +1,18 @@
 /** Migration controls use the same four interface locales; source content keeps its own explicit locale. */
 import { useLocale } from "../../../../frontend/src/shared/i18n/i18n";
 const words = {
+  imageSize: [
+    "Original bytes",
+    "Originalgröße in Byte",
+    "Octets originaux",
+    "Bytes originales",
+  ],
+  imagePreviewUnavailable: [
+    "Preview unavailable",
+    "Vorschau nicht verfügbar",
+    "Aperçu indisponible",
+    "Vista previa no disponible",
+  ],
   connectDesigner: [
     "Review and connect Shop design",
     "Shop gestalten prüfen und verbinden",
@@ -181,6 +193,12 @@ const words = {
     "Inhaltsseiten",
     "Pages de contenu",
     "Páginas de contenido",
+  ],
+  assets: [
+    "Product images",
+    "Produktbilder",
+    "Images des produits",
+    "Imágenes de productos",
   ],
   products: ["Products", "Produkte", "Produits", "Productos"],
   customers: [

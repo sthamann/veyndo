@@ -33,14 +33,7 @@ pub async fn receive(
             .ok_or_else(|| fail("Event identity required"))?;
         let kind = e["kind"].as_str().unwrap_or("");
         if e["tenant"] != t
-            || ![
-                "app.migration.job_import_products",
-                "app.migration.job_import_categories",
-                "app.migration.job_import_pages",
-                "app.migration.job_import_customers",
-                "app.migration.job_import_orders",
-            ]
-            .contains(&kind)
+            || !job_event(kind)
             || e["idempotencyKey"] != format!("{t}:migration:{n}")
         {
             return Err(fail("Invalid migration event"));
@@ -108,4 +101,28 @@ pub async fn receive(
         });
     }
     Ok(Json(json!({"accepted":true})))
+}
+
+fn job_event(kind: &str) -> bool {
+    static EVENTS: std::sync::OnceLock<Vec<String>> = std::sync::OnceLock::new();
+    EVENTS
+        .get_or_init(|| {
+            serde_json::from_str::<Value>(include_str!("../manifest.json"))
+                .ok()
+                .and_then(|m| {
+                    m["actions"].as_array().map(|xs| {
+                        xs.iter()
+                            .filter(|a| a["handler"] == "job")
+                            .filter_map(|a| {
+                                a["name"]
+                                    .as_str()
+                                    .map(|name| format!("app.migration.job_{name}"))
+                            })
+                            .collect()
+                    })
+                })
+                .unwrap_or_default()
+        })
+        .iter()
+        .any(|s| s == kind)
 }

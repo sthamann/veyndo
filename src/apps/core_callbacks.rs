@@ -4,7 +4,7 @@ pub(super) fn router() -> Router<App> {
     Router::new().secure_route(
         "/api/apps/{id}/core/{operation}",
         &[("POST", "read")],
-        post(invoke),
+        post(invoke).layer(axum::extract::DefaultBodyLimit::max(12 * 1024 * 1024)),
     )
 }
 async fn invoke(

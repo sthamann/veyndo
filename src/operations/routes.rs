@@ -5,7 +5,7 @@ pub(crate) fn router() -> Router<App> {
         .secure_route(
             "/api/merchant/imports",
             &[("POST", "apps.manage")],
-            post(imports::route),
+            post(imports::route).layer(axum::extract::DefaultBodyLimit::max(12 * 1024 * 1024)),
         )
         .secure_route(
             "/api/merchant/grid/plan",

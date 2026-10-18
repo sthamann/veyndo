@@ -15,6 +15,7 @@ pub async fn page(
     cursor: Option<&str>,
     fixture: bool,
 ) -> Result<Value> {
+    let size = if kind == "assets" { 10 } else { 100 };
     let slice = cursor
         .and_then(|s| s.strip_prefix("slice:"))
         .map(|s| {
@@ -27,7 +28,7 @@ pub async fn page(
             let value: Cursor = serde_json::from_slice(&raw).map_err(|_| "Invalid slice cursor")?;
             if value.offset == 0
                 || value.offset > 5000
-                || !value.offset.is_multiple_of(100)
+                || !value.offset.is_multiple_of(size)
                 || value.digest.len() != 64
                 || !value.digest.bytes().all(|b| b.is_ascii_hexdigit())
                 || value
@@ -44,7 +45,14 @@ pub async fn page(
         .as_ref()
         .and_then(|s| s.source_cursor.as_deref())
         .or(if slice.is_none() { cursor } else { None });
-    let mut value = extract::source_page(c, id, kind, source_cursor, fixture).await?;
+    let mut value = if kind == "assets" {
+        media::descriptors(
+            extract::source_page(c, id, "products", source_cursor, fixture).await?,
+            fixture,
+        )?
+    } else {
+        extract::source_page(c, id, kind, source_cursor, fixture).await?
+    };
     let digest = format!(
         "{:x}",
         sha2::Sha256::digest(value["recordDigests"].to_string().as_bytes())
@@ -61,7 +69,7 @@ pub async fn page(
     if offset > rows.len() {
         return Err("Slice no longer exists in source page".into());
     }
-    let end = (offset + 100).min(rows.len());
+    let end = (offset + size).min(rows.len());
     if end < rows.len() {
         let next = Cursor {
             source_cursor: source_cursor.map(str::to_owned),
@@ -75,6 +83,9 @@ pub async fn page(
     }
     for key in ["records", "recordDigests", "sourceKeys"] {
         value[key] = json!(&value[key].as_array().ok_or("Source projection missing")?[offset..end]);
+    }
+    if kind == "assets" {
+        media::prepare(&mut value, fixture).await?;
     }
     if value.to_string().len() > 1024 * 1024 {
         return Err("Reviewed batch exceeds 1 MiB; use a narrower source/export profile".into());

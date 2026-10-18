@@ -3,7 +3,7 @@ import type { RequestFn } from "../../../../frontend/src/shared/api/types";
 import { useLocale } from "../../../../frontend/src/shared/i18n/i18n";
 import { contentText } from "../../../../frontend/src/shared/i18n/content-language";
 import { useMigrationText } from "./i18n";
-import type { Job } from "./model";
+import { jobKind, type Job } from "./model";
 export default function Jobs({
   request,
   jobs,
@@ -30,6 +30,7 @@ export default function Jobs({
       {jobs.map((job) => (
         <article className="migration-job" key={job.id}>
           <strong>
+            {jobKind(job) && <>{t(jobKind(job)!)} · </>}
             {t(("status_" + job.status) as Parameters<typeof t>[0])}
           </strong>
           <progress value={job.progress} max={100} />

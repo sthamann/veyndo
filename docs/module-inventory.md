@@ -117,6 +117,7 @@ This lists every checked-in source module in these roots, including files with n
 | [src/assets/download.rs](../src/assets/download.rs) | Public attachments honor sales-channel visibility; downloads require a paid, owned order snapshot. |
 | [src/assets/image_jobs.rs](../src/assets/image_jobs.rs) | Durable image jobs: tenant admission, revision-bound private previews and explicit publication, without automatic paid retries. |
 | [src/assets/image_provider.rs](../src/assets/image_provider.rs) | Optional OpenAI Images adapter; bounded responses and decoded PNG output, no remote user URLs or leaked provider errors. |
+| [src/assets/import.rs](../src/assets/import.rs) | Immutable imported product images reuse the native asset table, product lock, byte validation and publication lifecycle. |
 | [src/assets/ingestion.rs](../src/assets/ingestion.rs) | Shared bounded multipart parser for product uploads and scoped app uploads; file validation/persistence stays in the asset owner. |
 | [src/assets/mod.rs](../src/assets/mod.rs) | Product attachments and paid digital downloads: bounded binary persistence and tenant/account ACL. |
 | [src/assets/rich.rs](../src/assets/rich.rs) | Safe structured rich content, never executable HTML. Same schema for merchant API and frontend. |
@@ -403,6 +404,7 @@ This lists every checked-in source module in these roots, including files with n
 | [src/operations/grid_plan.rs](../src/operations/grid_plan.rs) | Read-only filter planning through the central provider and fleet leases; execution remains native list APIs. |
 | [src/operations/grid_schema.rs](../src/operations/grid_schema.rs) | One allowlisted list-filter schema for model plans and MCP; no model-supplied SQL or tenant identity. |
 | [src/operations/guest_customers.rs](../src/operations/guest_customers.rs) | Merchant-only guest contact projection; order snapshots never create account authority. |
+| [src/operations/imports/assets.rs](../src/operations/imports/assets.rs) | Reviewed source image intake resolves its native product and delegates immutable binary storage and media edits to their existing owners. |
 | [src/operations/imports/categories.rs](../src/operations/imports/categories.rs) | Source-neutral category intake preserves stable hierarchy and uses the revisioned native category owner privately. |
 | [src/operations/imports/customers.rs](../src/operations/imports/customers.rs) | Historical CRM import reuses native validation and addresses, without credentials or ordinary new-customer events. |
 | [src/operations/imports/historical_orders.rs](../src/operations/imports/historical_orders.rs) | Immutable native historical orders preserve exact amounts and provenance without purchase, stock, account or payment effects. |
@@ -503,6 +505,7 @@ This lists every checked-in source module in these roots, including files with n
 | [src/staging/documents.rs](../src/staging/documents.rs) | Knowledge documents/chunks clone and publish with their source provenance; publication visibility is a reviewed unit. |
 | [src/staging/final_config.rs](../src/staging/final_config.rs) | Validate the final published channel/automation aggregate and initialize native POS defaults. |
 | [src/staging/mod.rs](../src/staging/mod.rs) | Private cloned shops, scope admission and selective atomic release of reviewed changes. |
+| [src/staging/products.rs](../src/staging/products.rs) | Selected products publish before their image assets and in native parent-before-variant order, without copying stock. |
 | [src/staging/release.rs](../src/staging/release.rs) | Selected units publish in one transaction with staged digests and live baseline conflict checks. |
 | [src/staging/snapshot.rs](../src/staging/snapshot.rs) | Fixed publishable units: product content/translations, settings, experience and app packages. |
 | [src/storefront_pages.rs](../src/storefront_pages.rs) | Deep-link HTML transport for stable SKU URLs with optional localized SEO slugs. |
@@ -1330,6 +1333,7 @@ This lists every checked-in source module in these roots, including files with n
 | [extensions/apps/migration/service/events.rs](../extensions/apps/migration/service/events.rs) | The native outbox delivers job IDs; the service claims current Core leases before acknowledging work. |
 | [extensions/apps/migration/service/extract.rs](../extensions/apps/migration/service/extract.rs) | Versioned source pages keep cursors separate from URLs; unsupported plugin domains remain explicit. |
 | [extensions/apps/migration/service/main.rs](../extensions/apps/migration/service/main.rs) | Independent Rust migration entry: bounded streaming source normalization and app gateway service. |
+| [extensions/apps/migration/service/media.rs](../extensions/apps/migration/service/media.rs) | Source media descriptors remain app-owned; review freezes bounded image digests and imports refetch identical bytes without forwarding source credentials. |
 | [extensions/apps/migration/service/server.rs](../extensions/apps/migration/service/server.rs) | Private gateway authentication binds every source to its configured tenant and bounds concurrent source reads. |
 | [extensions/apps/migration/service/shopify.rs](../extensions/apps/migration/service/shopify.rs) | Shopify GraphQL preserves scope errors and nested pagination instead of dropping undisclosed records. |
 | [extensions/apps/migration/service/slices.rs](../extensions/apps/migration/service/slices.rs) | Variant-expanded source pages are sliced into native-sized immutable batches; changed parent pages cannot shift offsets silently. |
@@ -1345,10 +1349,12 @@ This lists every checked-in source module in these roots, including files with n
 | [extensions/apps/migration/studio/i18n.ts](../extensions/apps/migration/studio/i18n.ts) | Migration controls use the same four interface locales; source content keeps its own explicit locale. |
 | [extensions/apps/migration/studio/migration.css](../extensions/apps/migration/studio/migration.css) | App-owned migration workspace: compact stable steps, clear review canvas and contained tables. |
 | [extensions/apps/migration/studio/model.ts](../extensions/apps/migration/studio/model.ts) | Review projections retain exact minor units and source IDs; UI never invents native purchase or identity authority. |
+| [extensions/apps/migration/tests/assets.py](../extensions/apps/migration/tests/assets.py) | Native imported image bytes are immutable, private, replayable and use the original catalogue/release owners. |
 | [extensions/apps/migration/tests/job_import.py](../extensions/apps/migration/tests/job_import.py) | Reviewed native job writes are fenced by digests, lease, current actor and cancellation. |
 | [extensions/apps/migration/tests/native_import.py](../extensions/apps/migration/tests/native_import.py) | Native historical intake must preserve money/identity without purchase effects or account inference. |
 | [extensions/apps/migration/tests/normalization.py](../extensions/apps/migration/tests/normalization.py) | Exercise the actual Rust migration CLI; literal source fixtures pin money and source identity. |
 | [extensions/apps/migration/tests/pages.py](../extensions/apps/migration/tests/pages.py) | Imported pages use the real installed editor, current rights, private storage and replay fences. |
+| [extensions/apps/migration/tests/publication.py](../extensions/apps/migration/tests/publication.py) | Selected publication preserves variant dependencies and refuses protected downloads as public product images. |
 | [extensions/apps/migration/tests/purchase.py](../extensions/apps/migration/tests/purchase.py) | A source-imported private product must survive deliberate native publication and a real simulated buyer checkout. |
 | [extensions/apps/migration/tests/service_flow.py](../extensions/apps/migration/tests/service_flow.py) | Actual Rust HTTP source -> reviewed native job -> scoped callback -> native private product. |
 | [extensions/apps/migration/tests/studio.test.tsx](../extensions/apps/migration/tests/studio.test.tsx) | Real migration workflow controls require readable source data and explicit import review. |

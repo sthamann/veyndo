@@ -984,8 +984,8 @@
     },
     "extensions/apps/migration/service/batch.rs": {
       "status": "unproved",
-      "sha256": "ab53e4adee2a0cf8a2ae1ed6fa7ceea680264198ccae4f565663ba725366c767",
-      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+      "sha256": "ea63360fe6b1504316d51defaf5f8a18f19375417c353972e2b9f08b0c072b24",
+      "review": "Independent review of native imported immutable image boundaries and selected parent/product-before-asset publication; exact persisted product baseline, attachment-only guard, source-position ordering and recoverable two-step association verified through real HTTP/PostgreSQL regressions. Pure extracted policies unchanged."
     },
     "extensions/apps/migration/service/config.rs": {
       "status": "unproved",
@@ -999,8 +999,8 @@
     },
     "extensions/apps/migration/service/events.rs": {
       "status": "unproved",
-      "sha256": "15580ed450cf7c99c59062ef8270dc474f8a5707e0fd86aa0a3c824e1ecfaac4",
-      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+      "sha256": "efaef442bf6832b0a09d0dfc5fe721dc5110ec8546c5f0cde43bc5d1061e4255",
+      "review": "Independent review of native imported immutable image boundaries and selected parent/product-before-asset publication; exact persisted product baseline, attachment-only guard, source-position ordering and recoverable two-step association verified through real HTTP/PostgreSQL regressions. Pure extracted policies unchanged."
     },
     "extensions/apps/migration/service/extract.rs": {
       "status": "unproved",
@@ -1009,8 +1009,13 @@
     },
     "extensions/apps/migration/service/main.rs": {
       "status": "unproved",
-      "sha256": "fab6c6981fcb1a3bc45a4ddfcd78389d565ce3160c06bb6ce363cd6bb0c77aae",
-      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+      "sha256": "0ca9d0a673e897eeb89a0f265ad6b5d1617d30b77117e2331cee4d89b13cbc6b",
+      "review": "Independent review of native imported immutable image boundaries and selected parent/product-before-asset publication; exact persisted product baseline, attachment-only guard, source-position ordering and recoverable two-step association verified through real HTTP/PostgreSQL regressions. Pure extracted policies unchanged."
+    },
+    "extensions/apps/migration/service/media.rs": {
+      "status": "unproved",
+      "sha256": "50ed98b94fffa7b7640642a81730dfba788b48084ab6ae9c992748aedeef7db0",
+      "review": "Reviewed native immutable image intake and exact selected publication after independent image/authority and product-phase review; regressions prove large binary transfer, partial association recovery, interleaved order, protected-download denial and exact-baseline repeat release. App image collections reject unknown shapes and filenames bind source position. Existing pure extracted policies unchanged."
     },
     "extensions/apps/migration/service/server.rs": {
       "status": "unproved",
@@ -1024,8 +1029,8 @@
     },
     "extensions/apps/migration/service/slices.rs": {
       "status": "unproved",
-      "sha256": "4b01acdc86121e502b2c89b601b01d9916c7be1426fc0026c39fc1a936c2633b",
-      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+      "sha256": "74aacb29a39d9e61b75938567ec6a45e67ad3b35a6b4954920bb2e5a152356b0",
+      "review": "Independent review of native imported immutable image boundaries and selected parent/product-before-asset publication; exact persisted product baseline, attachment-only guard, source-position ordering and recoverable two-step association verified through real HTTP/PostgreSQL regressions. Pure extracted policies unchanged."
     },
     "extensions/apps/migration/service/transport.rs": {
       "status": "unproved",
@@ -1354,8 +1359,8 @@
     },
     "src/apps/core_callbacks.rs": {
       "status": "unproved",
-      "sha256": "f321070d8805474a8e1548142a2573a1aeaef4ef2d858bcc4a94f9669d814ed9",
-      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+      "sha256": "724a016e7450dd8ed7bab14632e8549945508545221bee2908aea4f987fe9a15",
+      "review": "Independent review of native imported immutable image boundaries and selected parent/product-before-asset publication; exact persisted product baseline, attachment-only guard, source-position ordering and recoverable two-step association verified through real HTTP/PostgreSQL regressions. Pure extracted policies unchanged."
     },
     "src/apps/core_documents.rs": {
       "status": "unproved",
@@ -1474,8 +1479,8 @@
     },
     "src/apps/job_import.rs": {
       "status": "unproved",
-      "sha256": "b432e6a5744a285988b528360134ef651145d3c2a8395dacaeb70b4bb2269f84",
-      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+      "sha256": "9c31f1591a75ec8cbe2a47c485e0bff12f350546f4d1c91d29764a6a912b8107",
+      "review": "Independent review of native imported immutable image boundaries and selected parent/product-before-asset publication; exact persisted product baseline, attachment-only guard, source-position ordering and recoverable two-step association verified through real HTTP/PostgreSQL regressions. Pure extracted policies unchanged."
     },
     "src/apps/jobs.rs": {
       "status": "unproved",
@@ -1727,6 +1732,11 @@
       "sha256": "10ae93a5e3d9b9b4a6118f09c477630a58f4c6f3a9212adba9ec4988773e5c49",
       "review": "Reviewed eighteen core findings: typed trusted identity and explicit route rights; consolidated current grants; durable auth and fenced shared limits; scoped transactions and one-backend PgBouncer including nested borrow fixes; bounded Wasm/PNG work; notified workers, savepoint quarantine and conservative retention; separate runtime roles and startup configuration. Real PostgreSQL/provider regressions preserve current tenant/customer/payment behavior. SQL/network adapters remain unproved."
     },
+    "src/assets/import.rs": {
+      "status": "unproved",
+      "sha256": "63ec0a49bb425e28e7c23da52339b4cfbf22cac6587c7a105370ce4ea55cbb10",
+      "review": "Independent review of native imported immutable image boundaries and selected parent/product-before-asset publication; exact persisted product baseline, attachment-only guard, source-position ordering and recoverable two-step association verified through real HTTP/PostgreSQL regressions. Pure extracted policies unchanged."
+    },
     "src/assets/ingestion.rs": {
       "status": "unproved",
       "sha256": "935ca68eb7e01eeebbe4bf495e82012f45f21f0f40fc094be6c7ac6ac24037df",
@@ -1734,8 +1744,8 @@
     },
     "src/assets/mod.rs": {
       "status": "unproved",
-      "sha256": "0ab087033b3c4137f0ce81537ed290aa4feb49bab08c9de2cac4e1c9692c6446",
-      "review": "Reviewed app authority and current creator rights, isolated schemas/RLS and atomic migration rollback, fenced job/event leases, minimized payloads, signature/digest pins, opaque UI grants, pinned DNS egress and bounded Wasm/WIT quote adapters. Actual isolated PostgreSQL own/foreign callback, schema, jobs, events, assets, export, distribution and production-foundation regressions passed. Added extracted package, surface, resource and exact callback-consent policies with negative Lean claims; async/network/UI and general Rust modules remain explicitly unproved."
+      "sha256": "7b4d96c7913bea849d5fa743da596227117535247526fcb18c04941c8f4e9740",
+      "review": "Independent review of native imported immutable image boundaries and selected parent/product-before-asset publication; exact persisted product baseline, attachment-only guard, source-position ordering and recoverable two-step association verified through real HTTP/PostgreSQL regressions. Pure extracted policies unchanged."
     },
     "src/assets/rich.rs": {
       "status": "unproved",
@@ -1749,8 +1759,8 @@
     },
     "src/assets/upload.rs": {
       "status": "unproved",
-      "sha256": "181bc757db81a6f032340926c56d77d43e37f15231a0593686955fa4a018f310",
-      "review": "Reviewed app authority and current creator rights, isolated schemas/RLS and atomic migration rollback, fenced job/event leases, minimized payloads, signature/digest pins, opaque UI grants, pinned DNS egress and bounded Wasm/WIT quote adapters. Actual isolated PostgreSQL own/foreign callback, schema, jobs, events, assets, export, distribution and production-foundation regressions passed. Added extracted package, surface, resource and exact callback-consent policies with negative Lean claims; async/network/UI and general Rust modules remain explicitly unproved."
+      "sha256": "5bc143e5c1fe459ea700a4cd45ad6a1798ac6d08d4ebb1cc118fb03fe5948c7b",
+      "review": "Independent review of native imported immutable image boundaries and selected parent/product-before-asset publication; exact persisted product baseline, attachment-only guard, source-position ordering and recoverable two-step association verified through real HTTP/PostgreSQL regressions. Pure extracted policies unchanged."
     },
     "src/auth/abuse.rs": {
       "status": "unproved",
@@ -3157,6 +3167,11 @@
       "sha256": "bd869ddd890c92e4a4be70d44b8451e3d54b3b1c6a7ae455bb438562e5770aca",
       "review": "Reviewed tenant-scoped guest CRM projection and indexed historical order reads; account enrollment, checkout ownership and authenticated order access are unchanged. Guest snapshots cannot be saved as account profiles; SQL and UI remain unproved adapters."
     },
+    "src/operations/imports/assets.rs": {
+      "status": "unproved",
+      "sha256": "3fe9b57d16713d6c54cdf1bc3613cd1bfe53752b10f701674679a1cc990a79f1",
+      "review": "Independent review of native imported immutable image boundaries and selected parent/product-before-asset publication; exact persisted product baseline, attachment-only guard, source-position ordering and recoverable two-step association verified through real HTTP/PostgreSQL regressions. Pure extracted policies unchanged."
+    },
     "src/operations/imports/categories.rs": {
       "status": "unproved",
       "sha256": "70650642331b67d82c138845c23b869dcd3ce8e8a00296b890a5d58f241cf2ab",
@@ -3174,8 +3189,8 @@
     },
     "src/operations/imports/mod.rs": {
       "status": "unproved",
-      "sha256": "75cfeafe0b0f2d0945109f10f7a18a4112fb619866a2ff47ebec937a23c60809",
-      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+      "sha256": "2c19956c5d79b1a9e25fd1deea2d93cd624bf45f92dde84a9bfd936f27d426a4",
+      "review": "Independent review of native imported immutable image boundaries and selected parent/product-before-asset publication; exact persisted product baseline, attachment-only guard, source-position ordering and recoverable two-step association verified through real HTTP/PostgreSQL regressions. Pure extracted policies unchanged."
     },
     "src/operations/imports/products.rs": {
       "status": "unproved",
@@ -3249,8 +3264,8 @@
     },
     "src/operations/routes.rs": {
       "status": "unproved",
-      "sha256": "9b4ec6a5428f36f5a48f2f6848dd24ebca1ffa70d7a1f990107f88cefd8fb947",
-      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+      "sha256": "dc9e19b0d82874cd204816db34638bac2305fa956b672d6de0078f9f4b7b94e7",
+      "review": "Independent review of native imported immutable image boundaries and selected parent/product-before-asset publication; exact persisted product baseline, attachment-only guard, source-position ordering and recoverable two-step association verified through real HTTP/PostgreSQL regressions. Pure extracted policies unchanged."
     },
     "src/operations/workflow.rs": {
       "status": "unproved",
@@ -3624,8 +3639,8 @@
     },
     "src/staging/assets.rs": {
       "status": "unproved",
-      "sha256": "239496fafab8086b3618e9caa369fa34931f46a299052b1ca600567785526254",
-      "review": "Initial extraction of 13 production policies; surrounding Rust explicitly unproved; existing HTTP regression suites retained"
+      "sha256": "56ad0e92f2170555ff42ee6c8ee7a363b3e8d8991add31d21f4b0e6c5b8a764e",
+      "review": "Independent review of native imported immutable image boundaries and selected parent/product-before-asset publication; exact persisted product baseline, attachment-only guard, source-position ordering and recoverable two-step association verified through real HTTP/PostgreSQL regressions. Pure extracted policies unchanged."
     },
     "src/staging/categories.rs": {
       "status": "unproved",
@@ -3654,18 +3669,23 @@
     },
     "src/staging/mod.rs": {
       "status": "unproved",
-      "sha256": "00da10f1417a9d83875b01c191d31387999e4200d18282451bf72b87615719f7",
-      "review": "Personal workspace and app-owned site design review: trusted personal sessions and actor RLS; public status/time/channel projection; original read-scope and current-field history; append-only cart-bound inbox/outbox with PII rights; package-before-record release fences. Independent security review and actual PostgreSQL own/foreign/CAS/history/form/model fixtures plus existing app/commerce/checkout/role/strict-runtime suites. New pure intake conjunction has exact Lean claims/conformance/negative mutations. SQL, UI, inference and providers remain unproved."
+      "sha256": "e1ba314ed046971e53226d6e612fabc33b5886584a6bdeb198c20d9cdbe1059f",
+      "review": "Independent review of native imported immutable image boundaries and selected parent/product-before-asset publication; exact persisted product baseline, attachment-only guard, source-position ordering and recoverable two-step association verified through real HTTP/PostgreSQL regressions. Pure extracted policies unchanged."
+    },
+    "src/staging/products.rs": {
+      "status": "unproved",
+      "sha256": "42b63ed7ffca5e9bda2540ffa3e5c0e89e3a64fb35e9bffdd6f47be62024ca09",
+      "review": "Independent review of native imported immutable image boundaries and selected parent/product-before-asset publication; exact persisted product baseline, attachment-only guard, source-position ordering and recoverable two-step association verified through real HTTP/PostgreSQL regressions. Pure extracted policies unchanged."
     },
     "src/staging/release.rs": {
       "status": "unproved",
-      "sha256": "54c92b1037b2aea4d9e94965736e231c2e5ba5a9cd8a3e73ca9ba4932d3d0299",
-      "review": "Reviewed native extension identity/private/unique anchors and current read/write/PII scopes; native projections use bounded fixed-store queries, exact indexed filters bind all input and fence the admitted package digest. Real four-object HTTP/MCP, role revocation, foreign reference, immutable upgrade, product/company clone and selected release tests passed. Added extracted configuration-only release predicate and operational false property; SQL and UI remain explicitly unproved. Reviewed canonical schema, preserved AI bindings and versioned grid prompt provenance without changing existing prompt revisions."
+      "sha256": "dc05a782ec62ef35f975189f394ffd1593353be10d5305a7d4d03bf2b71e1af6",
+      "review": "Independent review of native imported immutable image boundaries and selected parent/product-before-asset publication; exact persisted product baseline, attachment-only guard, source-position ordering and recoverable two-step association verified through real HTTP/PostgreSQL regressions. Pure extracted policies unchanged."
     },
     "src/staging/snapshot.rs": {
       "status": "unproved",
-      "sha256": "4647280acb0037efa6cfb8244cd37a189c87dc18a4e5d0b52bb16e23fc12db32",
-      "review": "Reviewed native extension identity/private/unique anchors and current read/write/PII scopes; native projections use bounded fixed-store queries, exact indexed filters bind all input and fence the admitted package digest. Real four-object HTTP/MCP, role revocation, foreign reference, immutable upgrade, product/company clone and selected release tests passed. Added extracted configuration-only release predicate and operational false property; SQL and UI remain explicitly unproved. Reviewed canonical schema, preserved AI bindings and versioned grid prompt provenance without changing existing prompt revisions."
+      "sha256": "9a7aa3367ad460f716f13b76301a9c98fafc20d785b4f5bba7c7465e001ee71d",
+      "review": "Independently reviewed imported image bounds, current native owner authorization and selected product/image publication; actual native regression covers original bytes, source order, 3MiB request, partial association recovery, protected-download denial, parent ordering and later exact-baseline content release. Move helper declarations before test module to satisfy unchanged lint. Pure extracted decisions unchanged."
     },
     "src/storefront_pages.rs": {
       "status": "unproved",

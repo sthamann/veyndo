@@ -112,6 +112,14 @@ export function migrationStudioTests(deps: any) {
         return {
           jobs: [
             {
+              id: "queued-images",
+              action: "import_assets",
+              status: "queued",
+              progress: 0,
+              revision: 1,
+              message: {},
+            },
+            {
               id: "done",
               status: "succeeded",
               progress: 100,
@@ -143,6 +151,8 @@ export function migrationStudioTests(deps: any) {
       "catalog.write",
       "environments.manage",
     ]);
+    expect(await screen.findByText("Products · Page reconciled")).toBeVisible();
+    expect(screen.getByText("Product images · Queued")).toBeVisible();
     fireEvent.click(
       await screen.findByRole("button", { name: "Review next source page" }),
     );
@@ -291,5 +301,78 @@ export function migrationStudioTests(deps: any) {
         ([path, body]: [string, any]) => path === "/api/environments" && body,
       ),
     ).toBe(false);
+  });
+  it("reviews frozen image records and queues them into the same private target without a fabricated product tax", async () => {
+    const request = vi.fn(async (path: string) => {
+      if (path === "/api/apps")
+        return { packages: [{ id: "migration", active: true }] };
+      if (path.endsWith("/jobs")) return { jobs: [] };
+      if (path === "/api/environments")
+        return {
+          environments: [{ id: "pictures-preview", name: "Pictures preview" }],
+        };
+      if (path.endsWith("/review_assets"))
+        return {
+          sourceVersion: "wc/v3",
+          kind: "assets",
+          records: [
+            {
+              sourceId: "image:1",
+              kind: "assets",
+              warnings: [],
+              data: {
+                title: { "en-GB": "Original cup" },
+                url: "https://source.example/cup.png",
+                byteLength: 68,
+              },
+            },
+          ],
+          recordDigests: ["d".repeat(64)],
+        };
+      return { jobId: "picture-import" };
+    });
+    mount(request, [
+      "apps.read",
+      "apps.manage",
+      "catalog.read",
+      "catalog.write",
+      "environments.read",
+      "environments.manage",
+    ]);
+    fireEvent.click(
+      await screen.findByRole("button", { name: "Product images" }),
+    );
+    await screen.findByRole("option", { name: "Pictures preview" });
+    fireEvent.change(screen.getByLabelText(/Private import destination/), {
+      target: { value: "pictures-preview" },
+    });
+    fireEvent.click(
+      screen.getByRole("button", { name: "Inspect source page" }),
+    );
+    expect(
+      await screen.findByRole("img", { name: "Original cup" }),
+    ).toHaveAttribute("referrerpolicy", "no-referrer");
+    fireEvent.error(screen.getByRole("img", { name: "Original cup" }));
+    expect(screen.getByText("Preview unavailable")).toBeVisible();
+    expect(screen.queryByRole("img", { name: "Original cup" })).toBeNull();
+    expect(
+      screen.queryByLabelText("Reviewed destination tax rate (%)"),
+    ).toBeNull();
+    fireEvent.click(screen.getByRole("checkbox"));
+    fireEvent.click(
+      screen.getByRole("button", { name: "Import reviewed page" }),
+    );
+    await waitFor(() =>
+      expect(request).toHaveBeenCalledWith(
+        "/api/apps/migration/actions/import_assets",
+        expect.objectContaining({
+          kind: "assets",
+          target: "pictures-preview",
+          options: {},
+        }),
+        "POST",
+        expect.anything(),
+      ),
+    );
   });
 }

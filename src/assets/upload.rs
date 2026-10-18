@@ -65,7 +65,7 @@ pub(crate) async fn persist(
     tx.commit().await?;
     Ok(json!({"id":id,"shop":t,"digest":digest,"public":false}))
 }
-fn validate_bytes(mime: &str, b: &[u8]) -> Result<()> {
+pub(super) fn validate_bytes(mime: &str, b: &[u8]) -> Result<()> {
     let ok = match mime {
         "application/pdf" => b.starts_with(b"%PDF-"),
         "image/png" => b.starts_with(b"\x89PNG\r\n\x1a\n"),

@@ -13,6 +13,7 @@ import { useMigrationText } from "./i18n";
 import {
   isPrivate,
   importRights,
+  importOptions,
   type Kind,
   type Review,
   type Job,
@@ -161,16 +162,12 @@ export default function MigrationWorkspace({
         : workspace;
       if (current.current !== owner) return;
       if (isPrivate(kind)) setTarget(destination);
-      const options =
-        kind === "products"
-          ? { channelId: "default", taxRate: Number(tax) }
-          : kind === "pages"
-            ? { destinationDigest: designerPackage?.digest }
-            : kind === "categories"
-              ? {}
-              : kind === "customers"
-                ? { customerGroup: group }
-                : { channelId: "default", locale: mainLocale };
+      const options = importOptions(kind, {
+        tax,
+        group,
+        mainLocale,
+        destinationDigest: designerPackage?.digest,
+      });
       await owner(
         "/api/apps/migration/actions/import_" + kind,
         {

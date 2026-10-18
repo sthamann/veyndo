@@ -1,5 +1,6 @@
 //! Generic source-record admission; adapters own source formats, native domain owners retain every write.
 use crate::*;
+mod assets;
 mod categories;
 mod customers;
 mod historical_orders;
@@ -51,7 +52,7 @@ pub(super) async fn identity_namespace(a: &App, t: &str) -> Result<String> {
     Ok(staging::parent(a, t).await?.unwrap_or_else(|| t.into()))
 }
 pub(crate) fn schema(name: &str) -> Option<Value> {
-    (name=="merchant.import.record").then(||json!({"type":"object","properties":{"approve":{"type":"boolean"},"record":{"type":"object","properties":{"version":{"type":"integer","enum":[1]},"source":{"type":"string","minLength":1,"maxLength":200},"sourceShop":{"type":"string","minLength":1,"maxLength":200},"kind":{"type":"string","enum":["products","categories","pages","customers","orders"]},"sourceId":{"type":"string","minLength":1,"maxLength":200},"data":{"type":"object"},"warnings":{"type":"array","maxItems":20,"items":{"type":"string","maxLength":2000}}},"required":["version","source","sourceShop","kind","sourceId","data","warnings"],"additionalProperties":false},"options":{"type":"object","properties":{"channelId":{"type":"string","maxLength":100},"taxRate":{"type":"number","minimum":0,"maximum":50},"customerGroup":{"type":"string","maxLength":100},"locale":{"type":"string","maxLength":35},"destinationDigest":{"type":"string","minLength":64,"maxLength":64},"acknowledgedWarnings":{"type":"array","maxItems":20,"items":{"type":"string","maxLength":2000}}},"additionalProperties":false}},"required":["approve","record","options"],"additionalProperties":false}))
+    (name=="merchant.import.record").then(||json!({"type":"object","properties":{"assetChunks":{"type":"array","maxItems":172,"items":{"type":"string","maxLength":65536}},"approve":{"type":"boolean"},"record":{"type":"object","properties":{"version":{"type":"integer","enum":[1]},"source":{"type":"string","minLength":1,"maxLength":200},"sourceShop":{"type":"string","minLength":1,"maxLength":200},"kind":{"type":"string","enum":["products","categories","pages","customers","orders","assets"]},"sourceId":{"type":"string","minLength":1,"maxLength":200},"data":{"type":"object"},"warnings":{"type":"array","maxItems":20,"items":{"type":"string","maxLength":2000}}},"required":["version","source","sourceShop","kind","sourceId","data","warnings"],"additionalProperties":false},"options":{"type":"object","properties":{"channelId":{"type":"string","maxLength":100},"taxRate":{"type":"number","minimum":0,"maximum":50},"customerGroup":{"type":"string","maxLength":100},"locale":{"type":"string","maxLength":35},"destinationDigest":{"type":"string","minLength":64,"maxLength":64},"acknowledgedWarnings":{"type":"array","maxItems":20,"items":{"type":"string","maxLength":2000}}},"additionalProperties":false}},"required":["approve","record","options"],"additionalProperties":false}))
 }
 pub(crate) async fn route(
     State(a): State<App>,
@@ -63,7 +64,16 @@ pub(crate) async fn route(
 pub(crate) async fn invoke(a: &App, h: &RequestContext, v: &Value) -> Result<Value> {
     merchant(a, h)?;
     auth::permit(h, "apps.manage")?;
-    apps::validate_native_input(&schema("merchant.import.record").unwrap(), v)?;
+    // Binary chunks have the existing asset byte budget, separate from the unchanged 64 KiB native metadata budget.
+    let mut metadata = v.clone();
+    metadata
+        .as_object_mut()
+        .ok_or(bad("Import object required"))?
+        .remove("assetChunks");
+    apps::validate_native_input(&schema("merchant.import.record").unwrap(), &metadata)?;
+    if v.get("assetChunks").is_some() && v["record"]["kind"] != "assets" {
+        return Err(bad("Binary import requires an asset record"));
+    }
     if v["approve"] != true {
         return Err(bad("Review and explicitly approve the source record"));
     }
@@ -75,6 +85,7 @@ pub(crate) async fn invoke(a: &App, h: &RequestContext, v: &Value) -> Result<Val
         return Err(bad("Review all source limitations before importing"));
     }
     match record.kind.as_str() {
+        "assets" => assets::import(a, h, &record, &v["assetChunks"]).await,
         "pages" => {
             apps::import_record(
                 a,

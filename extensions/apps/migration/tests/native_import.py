@@ -50,6 +50,7 @@ mid=call('/api/merchant/imports',multilingual,sh)['id']
 ms=call('/api/merchant/products/'+mid,h=sh)
 assert ms['translations']['en']['description']=='A'*3900 and len(json.dumps(ms['extra']['identity']))<8000
 print('PASS multilingual product text uses native translations without unbounded duplicated identity snapshots')
+exec(compile(open(__file__.replace('native_import.py','assets.py')).read(),'assets.py','exec'))
 # Categories keep their real native hierarchy, exact source identity and private release ownership.
 category={'version':1,'source':'woocommerce','sourceShop':'source-woo','kind':'categories','sourceId':'cat-10','data':{'title':{'en-GB':'Ceramics'},'body':{'en-GB':'Original category'},'slug':{'en-GB':'ceramics'},'parentSourceId':None},'warnings':[]}
 kbody={'approve':True,'record':category,'options':{}}
@@ -73,6 +74,7 @@ ve=call('/api/merchant/products/'+vid,h=sh)
 assert ve['catalog']['parentId']==pid and ve['catalog']['options']=={'Colour':'Blue'},ve['catalog']
 assert ve['catalog']['categoryIds']==[child_id]
 print('PASS native product associations: variant parent, option combination and imported category')
+exec(compile(open(__file__.replace('native_import.py','publication.py')).read(),'publication.py','exec'))
 customer={'version':1,'source':'woocommerce','sourceShop':'source-woo','kind':'customers','sourceId':'customer-4','data':{'email':'migration-customer-'+uuid.uuid4().hex[:8]+'@example.test','firstName':'Migration','lastName':'Buyer','billingAddress':{'name':'Migration Buyer','firstName':'Migration','lastName':'Buyer','street':'Test Street 1','city':'Berlin','postalCode':'10115','country':'DE'}},'warnings':[]}
 cbody={'approve':True,'record':customer,'options':{'customerGroup':'consumer'}}
 c=call('/api/merchant/imports',cbody,h);assert call('/api/merchant/imports',cbody,h)['id']==c['id']

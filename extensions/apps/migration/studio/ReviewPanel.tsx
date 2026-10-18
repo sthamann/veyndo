@@ -1,8 +1,29 @@
 /** Exact source review keeps unacknowledged gaps and missing target choices from starting a write. */
+import { useState } from "react";
+import Icon from "../../../../frontend/src/shared/ui/Icon";
 import { useLocale } from "../../../../frontend/src/shared/i18n/i18n";
 import { contentText } from "../../../../frontend/src/shared/i18n/content-language";
 import { useMigrationText } from "./i18n";
 import { rowName, rowAmount, type Review, type Kind } from "./model";
+function SourceImage({ url, name }: { url: string; name: string }) {
+  const [failed, setFailed] = useState(false);
+  const t = useMigrationText();
+  return failed ? (
+    <span className="migration-image-fallback">
+      <Icon name="image" />
+      <small>{t("imagePreviewUnavailable")}</small>
+    </span>
+  ) : (
+    <img
+      className="migration-image"
+      src={url}
+      alt={name}
+      referrerPolicy="no-referrer"
+      loading="lazy"
+      onError={() => setFailed(true)}
+    />
+  );
+}
 export default function ReviewPanel({
   review,
   kind,
@@ -45,16 +66,36 @@ export default function ReviewPanel({
             <tr>
               <th>{t("sourceKey")}</th>
               <th>{t("name")}</th>
-              <th>{t("amount")}</th>
+              <th>{t(kind === "assets" ? "imageSize" : "amount")}</th>
               <th>{t("limitations")}</th>
             </tr>
           </thead>
           <tbody>
             {review.records.map((row) => (
               <tr key={row.sourceId}>
-                <td>{row.sourceId}</td>
-                <td>{rowName(row)}</td>
-                <td>{rowAmount(row)}</td>
+                <td>
+                  <details className="migration-source-id">
+                    <summary>
+                      {row.sourceId.length > 32
+                        ? row.sourceId.slice(0, 20) + "…"
+                        : row.sourceId}
+                    </summary>
+                    <code>{row.sourceId}</code>
+                  </details>
+                </td>
+                <td>
+                  {kind === "assets" && row.data.url && (
+                    <SourceImage
+                      key={row.data.url}
+                      url={row.data.url}
+                      name={rowName(row)}
+                    />
+                  )}{" "}
+                  {rowName(row)}
+                </td>
+                <td>
+                  {kind === "assets" ? row.data.byteLength : rowAmount(row)}
+                </td>
                 <td>{row.warnings.join(" · ")}</td>
               </tr>
             ))}

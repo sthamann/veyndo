@@ -7718,6 +7718,14 @@
                               "approve": {
                                 "type": "boolean"
                               },
+                              "assetChunks": {
+                                "items": {
+                                  "maxLength": 65536,
+                                  "type": "string"
+                                },
+                                "maxItems": 172,
+                                "type": "array"
+                              },
                               "options": {
                                 "additionalProperties": false,
                                 "properties": {
@@ -7766,7 +7774,8 @@
                                       "categories",
                                       "pages",
                                       "customers",
-                                      "orders"
+                                      "orders",
+                                      "assets"
                                     ],
                                     "type": "string"
                                   },

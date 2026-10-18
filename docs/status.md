@@ -30,10 +30,11 @@ synchronisation are separate and are not claimed by this work.
 ## Migration Assistant: implementation in progress
 
 The new [migration workflow](agentic-migration.md) has a separate Rust application,
-five source protocol fixtures, private product/category/page intake and native CRM/history,
-reviewed native jobs and a Studio entry. Local acceptance and security review are
-in progress on its feature branch; it is not part of the public acceptance below.
-Media copying, complex source variants, reviews/coupons, full mapping/cutover and
+five source protocol fixtures, private product/image/category/page intake and native CRM/history,
+reviewed native jobs and a Studio entry. [Local acceptance and focused independent review](evidence/migration-assistant-local-2026-10-18.md) cover this connected scope;
+the larger assistant remains in development and is not part of public acceptance below.
+Public original-image copying and selected product/image publication have local acceptance.
+Complex source variants, private/provider-specific media mappings, reviews/coupons, full mapping/cutover and
 large-scale throughput remain incomplete. The guide distinguishes normalization
 from an accepted native target write.
 

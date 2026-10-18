@@ -27,7 +27,14 @@ export default function MigrationSteps({
       <strong>{t("review")}</strong>
       <div className="migration-domain-picker">
         {(
-          ["products", "categories", "pages", "customers", "orders"] as const
+          [
+            "products",
+            "assets",
+            "categories",
+            "pages",
+            "customers",
+            "orders",
+          ] as const
         ).map((k) => (
           <button
             key={k}

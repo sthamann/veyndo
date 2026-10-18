@@ -4,9 +4,14 @@ use super::*;
 // This is process admission, not a claim of fleet-wide throughput isolation.
 static IMPORT_WRITE: tokio::sync::Semaphore = tokio::sync::Semaphore::const_new(1);
 pub(super) async fn execute(a: &App, h: &RequestContext, m: &Manifest, v: &Value) -> Result<Value> {
+    let mut metadata = v.clone();
+    metadata
+        .as_object_mut()
+        .ok_or(bad("Import object required"))?
+        .remove("assetChunks");
     input_schema::validate_native(
         &json!({"type":"object","properties":{"id":{"type":"string","maxLength":100},"lease":{"type":"string","maxLength":100},"record":{"type":"object"}},"required":["id","lease","record"],"additionalProperties":false}),
-        v,
+        &metadata,
     )?;
     let live = merchant(a, h)?;
     if staging::parent(a, &live).await?.is_some() {
@@ -17,6 +22,7 @@ pub(super) async fn execute(a: &App, h: &RequestContext, m: &Manifest, v: &Value
         .ok_or(bad("Import kind required"))?;
     let capability = match kind {
         "products" | "categories" => "products.write",
+        "assets" => "assets.write",
         "pages" => "data.write",
         "customers" => "customers.write",
         "orders" => "orders.import",
@@ -110,7 +116,7 @@ pub(super) async fn execute(a: &App, h: &RequestContext, m: &Manifest, v: &Value
     let target = intent["target"]
         .as_str()
         .ok_or(bad("Reviewed target required"))?;
-    if ["products", "categories", "pages"].contains(&kind) {
+    if ["products", "categories", "pages", "assets"].contains(&kind) {
         auth::permit(&identity, "environments.manage")?;
         sqlx::query("SELECT tenant FROM shop_environments WHERE tenant=$1 AND live_tenant=$2 AND preview_owner IS NULL FOR SHARE").bind(target).bind(&live).fetch_optional(&mut *tx).await?.ok_or(Error(StatusCode::FORBIDDEN,"Job target is not an admitted private environment".into()))?;
     } else if target != live {
@@ -125,7 +131,10 @@ pub(super) async fn execute(a: &App, h: &RequestContext, m: &Manifest, v: &Value
         target.parse().map_err(|_| bad("Invalid reviewed target"))?,
     );
     identity.principal.tenant = Some(target.into());
-    let input = json!({"approve":true,"record":v["record"],"options":intent["options"]});
+    let mut input = json!({"approve":true,"record":v["record"],"options":intent["options"]});
+    if let Some(chunks) = v.get("assetChunks") {
+        input["assetChunks"] = chunks.clone();
+    }
     // Native scope switch is limited to a job-locked target in this same admitted workspace.
     let result = veyndo::tenant_scope::scoped(
         veyndo::tenant_scope::Scope::Personal {

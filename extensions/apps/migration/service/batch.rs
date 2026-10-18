@@ -40,14 +40,26 @@ pub async fn run(config: &config::Config, t: &str, job: &Value) -> Result<Value>
         if state["cancelRequested"] == true {
             return Err("Migration cancelled; completed records remain identifiable".into());
         }
-        core::callback(
-            callback,
-            t,
-            "job_import",
-            &serde_json::json!({"id":job["id"],"lease":job["lease"],"record":row}),
-            config.fixture,
-        )
-        .await?;
+        let mut write = serde_json::json!({"id":job["id"],"lease":job["lease"],"record":row});
+        if row["kind"] == "assets" {
+            use base64::Engine as _;
+            use sha2::Digest;
+            let (bytes, mime) = media::bytes(row, config.fixture).await?;
+            if row["data"]["digest"] != format!("{:x}", sha2::Sha256::digest(&bytes))
+                || row["data"]["mime"] != mime
+            {
+                return Err("Source image changed after review; no new bytes were imported".into());
+            }
+            let encoded = base64::engine::general_purpose::STANDARD.encode(bytes);
+            write["assetChunks"] = json!(
+                encoded
+                    .as_bytes()
+                    .chunks(65536)
+                    .map(|s| std::str::from_utf8(s).unwrap())
+                    .collect::<Vec<_>>()
+            );
+        }
+        core::callback(callback, t, "job_import", &write, config.fixture).await?;
         completed += 1;
         core::callback(callback,t,"job_progress",&serde_json::json!({"id":job["id"],"lease":job["lease"],"status":"running","progress":completed*99/rows.len().max(1),"checkpoint":{"completed":completed}}),config.fixture).await?;
     }

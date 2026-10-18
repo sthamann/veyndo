@@ -8,6 +8,7 @@ mod contract;
 mod core;
 mod events;
 mod extract;
+mod media;
 mod server;
 mod shopify;
 mod slices;

@@ -1,4 +1,5 @@
 """Actual source HTTP -> Rust service -> canonical records; authentication and cursor failure controls."""
+import base64,hashlib
 import json,os,subprocess,time,unittest,urllib.request,urllib.error,threading
 from http.server import ThreadingHTTPServer,BaseHTTPRequestHandler
 from pathlib import Path
@@ -6,6 +7,9 @@ ROOT=Path(__file__).resolve().parents[4];BIN=ROOT/'target/debug/migration-assist
 class Source(BaseHTTPRequestHandler):
     def log_message(self,*args):pass
     def do_GET(self):
+        if self.path.startswith('/source.png'):
+            assert self.headers.get('authorization') is None
+            self.send_response(200);self.send_header('Content-Type','image/png');self.end_headers();self.wfile.write(base64.b64decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+j6ckAAAAASUVORK5CYII='));return
         if self.path.startswith('/api/products'):
             self.send_response(200);self.end_headers();self.wfile.write(json.dumps({'products':[{'id':7,'name':'Presta cup','price':'12.50'}]}).encode());return
         if self.path.startswith('/api/articles'):
@@ -14,7 +18,7 @@ class Source(BaseHTTPRequestHandler):
             self.send_response(200);self.end_headers();self.wfile.write(json.dumps({'items':[{'id':3,'sku':'MAG-3','name':'Magento cup','price':'15.25','type_id':'simple'}],'total_count':1}).encode());return
         if self.headers.get('authorization')!='Bearer source-secret':self.send_error(401);return
         if self.path.startswith('/wp-json/wc/v3/products'):
-            body=[{'id':1,'name':'Ceramic','price':'19.90','stock_quantity':7}];self.send_response(200);self.send_header('X-WP-TotalPages','1');self.end_headers();self.wfile.write(json.dumps(body).encode());return
+            body=[{'id':1,'name':'Ceramic','price':'19.90','stock_quantity':7,'images':[{'src':f'http://127.0.0.1:{self.server.server_port}/source.png'}]}];self.send_response(200);self.send_header('X-WP-TotalPages','1');self.end_headers();self.wfile.write(json.dumps(body).encode());return
         self.send_error(404)
     def do_POST(self):
         token=self.headers.get('X-Shopify-Access-Token')
@@ -22,12 +26,14 @@ class Source(BaseHTTPRequestHandler):
         self.rfile.read(int(self.headers.get('Content-Length','0')))
         parents=[]
         for p in range(50 if token=='many-secret' else 1):
-            parents.append({'id':f'gid://shopify/Product/{p}','title':'Shopify cup','variants':{'nodes':[{'id':p*3+i,'title':f'Variant {i}','sku':f'SHOP-{p}-{i}','price':'19.90','inventory_quantity':2} for i in range(3 if token=='many-secret' else 1)],'pageInfo':{'hasNextPage':False}},'images':{'nodes':[],'pageInfo':{'hasNextPage':False}}})
+            parents.append({'id':f'gid://shopify/Product/{p}','title':'Shopify cup','variants':{'nodes':[{'id':p*3+i,'title':f'Variant {i}','sku':f'SHOP-{p}-{i}','price':'19.90','inventory_quantity':2} for i in range(3 if token=='many-secret' else 1)],'pageInfo':{'hasNextPage':False}},'images':{'nodes':[{'url':f'http://127.0.0.1:{self.server.server_port}/source.png'}],'pageInfo':{'hasNextPage':False}}})
         self.send_response(200);self.end_headers();self.wfile.write(json.dumps({'data':{'products':{'nodes':parents,'pageInfo':{'hasNextPage':False,'endCursor':None}}}}).encode())
+class SourceServer(ThreadingHTTPServer):
+    request_queue_size=32
 class Transport(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.source=ThreadingHTTPServer(('127.0.0.1',0),Source);threading.Thread(target=cls.source.serve_forever,daemon=True).start()
+        cls.source=SourceServer(('127.0.0.1',0),Source);threading.Thread(target=cls.source.serve_forever,daemon=True).start()
         cls.origin=f'http://127.0.0.1:{cls.source.server_port}'
         env={**os.environ,'MIGRATION_BIND':'127.0.0.1:8819','MIGRATION_GATEWAY_TOKEN':'synthetic-gateway-token-32-characters','MIGRATION_ALLOW_FIXTURE':'1','MIGRATION_SOURCES':json.dumps({'tenant-a':{'source-a':{'system':'woocommerce','origin':cls.origin,'token':'source-secret','version':'wc/v3','currency':'EUR','scale':2,'locale':'de-DE'}}})}
         connections=json.loads(env['MIGRATION_SOURCES'])
@@ -59,6 +65,17 @@ class Transport(unittest.TestCase):
         code,a=self.call(sourceId='many');self.assertEqual(code,200,a);self.assertEqual(len(a['records']),100)
         code,b=self.call(sourceId='many',cursor=a['nextCursor']);self.assertEqual(code,200,b);self.assertEqual(len(b['records']),100);self.assertIsNone(b['nextCursor'])
         rows=a['records']+b['records'];self.assertEqual(len({r['sourceId'] for r in rows}),200);self.assertEqual(sum(not r['data'].get('variantGroup') for r in rows),150)
+    def test_images_freeze_exact_bytes_without_source_credentials(self):
+        code,v=self.call(kind='assets');self.assertEqual(code,200,v)
+        image=v['records'][0]['data'];self.assertEqual(image['mime'],'image/png');self.assertEqual(image['byteLength'],68);self.assertEqual(len(image['digest']),64)
+        self.assertNotIn('base64',json.dumps(v));self.assertNotIn('source-secret',json.dumps(v))
+    def test_single_and_grouped_shopify_images_reach_the_native_product_owner(self):
+        code,single=self.call(sourceId='shopify',kind='assets');self.assertEqual(code,200,single);self.assertEqual(len(single['records']),1)
+        self.assertEqual(single['records'][0]['data']['productSourceId'],'0')
+        code,many=self.call(sourceId='many',kind='assets');self.assertEqual(code,200,many);self.assertEqual(len(many['records']),10)
+        self.assertTrue(all(r['data']['productSourceId'].startswith('group:') for r in many['records']))
+        code,next_page=self.call(sourceId='many',kind='assets',cursor=many['nextCursor']);self.assertEqual(code,200,next_page)
+        self.assertFalse({r['sourceId'] for r in many['records']} & {r['sourceId'] for r in next_page['records']})
     def test_foreign_source_denied(self):self.assertEqual(self.call(tenant='foreign')[0],403)
     def test_unauthenticated_denied(self):self.assertEqual(self.call(token='wrong')[0],401)
     def test_cursor_cannot_supply_an_arbitrary_url(self):self.assertEqual(self.call(cursor='http://169.254.169.254/latest')[0],400)
