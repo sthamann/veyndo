@@ -12,11 +12,11 @@ class Source(BaseHTTPRequestHandler):
             assert self.headers.get('authorization') is None
             self.send_response(200);self.send_header('Content-Type','image/png');self.end_headers();self.wfile.write(base64.b64decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+j6ckAAAAASUVORK5CYII='));return
         if self.path.startswith('/api/products'):
-            self.send_response(200);self.end_headers();self.wfile.write(json.dumps({'products':[{'id':7,'name':'Presta cup','price':'12.50'}]}).encode());return
+            self.send_response(200);self.end_headers();self.wfile.write(json.dumps({'products':[{'id':7,'name':'Presta cup','price':'12.50','active':'0','visibility':'both'}]}).encode());return
         if self.path.startswith('/api/articles'):
-            self.send_response(200);self.end_headers();self.wfile.write(json.dumps({'data':[{'id':4,'name':'SW cup','mainDetail':{'id':44,'number':'SW-4','inStock':5,'prices':[{'price':'29.90'}]}}],'total':1}).encode());return
+            self.send_response(200);self.end_headers();self.wfile.write(json.dumps({'data':[{'id':4,'name':'SW cup','active':False,'mainDetail':{'id':44,'number':'SW-4','inStock':5,'prices':[{'price':'29.90'}]}}],'total':1}).encode());return
         if self.path.startswith('/rest/V1/products'):
-            self.send_response(200);self.end_headers();self.wfile.write(json.dumps({'items':[{'id':3,'sku':'MAG-3','name':'Magento cup','price':'15.25','type_id':'simple'}],'total_count':1}).encode());return
+            self.send_response(200);self.end_headers();self.wfile.write(json.dumps({'items':[{'id':3,'sku':'MAG-3','name':'Magento cup','price':'15.25','type_id':'simple','status':2,'visibility':4}],'total_count':1}).encode());return
         token=self.headers.get('authorization')
         if token in ('Bearer variants-secret','Bearer drift-secret'):
             if urlsplit(self.path).path=='/wp-json/wc/v3/products':
@@ -37,10 +37,11 @@ class Source(BaseHTTPRequestHandler):
     def do_POST(self):
         token=self.headers.get('X-Shopify-Access-Token')
         if token not in ['source-secret','many-secret']:self.send_error(401);return
-        self.rfile.read(int(self.headers.get('Content-Length','0')))
+        request=json.loads(self.rfile.read(int(self.headers.get('Content-Length','0'))))
+        assert 'status onlineStoreUrl' in request['query']
         parents=[]
         for p in range(50 if token=='many-secret' else 1):
-            parents.append({'id':f'gid://shopify/Product/{p}','title':'Shopify cup','variants':{'nodes':[{'id':p*3+i,'title':f'Variant {i}','sku':f'SHOP-{p}-{i}','price':'19.90','inventory_quantity':2} for i in range(3 if token=='many-secret' else 1)],'pageInfo':{'hasNextPage':False}},'images':{'nodes':[{'url':f'http://127.0.0.1:{self.server.server_port}/source.png'}],'pageInfo':{'hasNextPage':False}}})
+            parents.append({'id':f'gid://shopify/Product/{p}','title':'Shopify cup','status':'DRAFT','onlineStoreUrl':None,'variants':{'nodes':[{'id':p*3+i,'title':f'Variant {i}','sku':f'SHOP-{p}-{i}','price':'19.90','inventory_quantity':2} for i in range(3 if token=='many-secret' else 1)],'pageInfo':{'hasNextPage':False}},'images':{'nodes':[{'url':f'http://127.0.0.1:{self.server.server_port}/source.png'}],'pageInfo':{'hasNextPage':False}}})
         self.send_response(200);self.end_headers();self.wfile.write(json.dumps({'data':{'products':{'nodes':parents,'pageInfo':{'hasNextPage':False,'endCursor':None}}}}).encode())
 class SourceServer(ThreadingHTTPServer):
     request_queue_size=32
@@ -76,7 +77,7 @@ class Transport(unittest.TestCase):
     def test_all_other_source_transports_reach_their_native_profiles(self):
         for system,minor in [('prestashop',1250),('magento2',1525),('shopware5',2990),('shopify',1990)]:
             with self.subTest(system=system):
-                code,v=self.call(sourceId=system);self.assertEqual(code,200,v);self.assertEqual(v['records'][0]['data']['price']['minor'],minor)
+                code,v=self.call(sourceId=system);self.assertEqual(code,200,v);self.assertEqual(v['records'][0]['data']['price']['minor'],minor);self.assertIs(v['records'][0]['data']['catalogActive'],False)
     def test_variant_expansion_is_split_into_complete_reviewable_batches(self):
         rows=[];cursor=None
         for _ in range(20):

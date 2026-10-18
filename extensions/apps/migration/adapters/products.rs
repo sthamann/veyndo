@@ -43,6 +43,7 @@ pub fn normalize(c: &Context, v: &Value) -> Result<Vec<Record>> {
             group.data["options"] = json!({});
             group.data["sourceProductId"] = json!(parent);
             group.data["variantGroup"] = json!(true);
+            group.data["catalogActive"] = json!(super::visibility::product(c, v, v)?);
             rows.push(group);
         }
         let mut bytes = 0;
@@ -107,20 +108,7 @@ fn product(c: &Context, parent: &Value, v: &Value, pid: Option<&str>) -> Result<
     if !stock.is_null() && stock.as_i64().is_none_or(|n| n < 0 || n > i32::MAX.into()) {
         return Err("invalid source inventory; reconcile reservations before activation".into());
     }
-    let visible = if c.source == Source::Woocommerce {
-        let base = super::woo::visibility(parent)?;
-        let own = if pid.is_some() {
-            super::woo::visibility(v)?
-        } else {
-            base
-        };
-        match (base, own) {
-            (Some(false), _) => Some(false),
-            (_, value) => value.or(base),
-        }
-    } else {
-        None
-    };
+    let visible = super::visibility::product(c, parent, v)?;
     let images = if pid.is_some() {
         if v["image"].is_object() {
             json!([v["image"]])

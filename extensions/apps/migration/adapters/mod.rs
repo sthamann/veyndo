@@ -8,6 +8,7 @@ mod pages;
 mod products;
 mod records;
 mod relations;
+mod visibility;
 pub mod woo;
 use crate::contract::*;
 use serde_json::{Value, json};

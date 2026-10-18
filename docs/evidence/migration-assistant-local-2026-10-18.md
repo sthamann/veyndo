@@ -13,7 +13,7 @@ private destination before invoking the original native domain writer.
 
 Products, images, categories, editable content pages, CRM customers, immutable
 historical orders, moderated reviews and inactive coupons all traverse that real service/gateway/job/write path. Five
-source-platform HTTP fixtures and 27 normalization cases exercise implemented
+source-platform HTTP fixtures and 27 normalization cases plus four publication-state cases exercise implemented
 provider profiles. Three Rust package tests cover the shared exact-money, safe
 transport and explicit unknown-image-profile boundaries.
 
@@ -111,6 +111,15 @@ missing-evidence UI RED→GREEN controls cover the added readable details.
 Screenshots: `artifacts/migration-variable-source-review.png` and
 `artifacts/migration-slow-source-completed.png`. The owned test tab/process/database
 were cleaned up; the user's original port 8802 process was preserved.
+
+The subsequent cross-provider publication controls reproduced 29 failing assertions
+against the old binary: Shopify drafts/archived/unpublished status, typed active/status
+flags, disabled Shopware variant families and unsupported separate visibility. Four
+source-state cases now pass through the Rust CLI; actual HTTP transport fixtures
+also return inactive canonical products for each non-Woo source and assert that
+Shopify requests both status and online-store publication. Focused independent
+source-visibility review found no Important/Critical findings. Real source stores
+and additional source channel semantics remain outside this local evidence.
 
 ## Browser and general checks
 

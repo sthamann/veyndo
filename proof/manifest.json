@@ -963,8 +963,8 @@
     },
     "extensions/apps/migration/adapters/mod.rs": {
       "status": "unproved",
-      "sha256": "78010582ede30c2cee7edeb4c5af464cc329e7c032c398ae58bc9dd1f09a38b4",
-      "review": "Reviewed optional grouped native job events, unchanged per-action compatibility and package/current actor/lease fences; bounded 32KiB stored rich documents retain strict APP metadata/checkpoints. Actual five-second slow-source RED and native document-depth RED fixed; running cancellation RED fixed with final native progress fence; complete concrete Woo families and private visibility verified through native selected publication and simulated checkout. Focused independent async review found no remaining Important/Critical defects. SQL/network/source parity remain outside pure proof."
+      "sha256": "42febf22f06192057bf13e2f056d54407e0ceb4a496a4930c329aeb7875cafc6",
+      "review": "Reviewed app-owned source status preservation against primary schemas: Shopify status and online-store publication, Presta typed active flag, Magento status/visibility and Shopware boolean parent/child status. Actual prior CLI29 assertion failures are fixed by four source-state cases plus real transport projections; native eight-domain and variant checkout remain green. Independent focused source-visibility review found no Important/Critical findings; source orchestration remains outside pure proof."
     },
     "extensions/apps/migration/adapters/order_lines.rs": {
       "status": "unproved",
@@ -978,8 +978,8 @@
     },
     "extensions/apps/migration/adapters/products.rs": {
       "status": "unproved",
-      "sha256": "9f9e12f0d9dfc161466d484a56ebe6e37fc6319f8f7c877484b8cb1a4affcd46",
-      "review": "Reviewed optional grouped native job events, unchanged per-action compatibility and package/current actor/lease fences; bounded 32KiB stored rich documents retain strict APP metadata/checkpoints. Actual five-second slow-source RED and native document-depth RED fixed; running cancellation RED fixed with final native progress fence; complete concrete Woo families and private visibility verified through native selected publication and simulated checkout. Focused independent async review found no remaining Important/Critical defects. SQL/network/source parity remain outside pure proof."
+      "sha256": "c219d7ef4078604045cf9b74e79f78ad57951171bcda855544644da4b8c0183d",
+      "review": "Reviewed app-owned source status preservation against primary schemas: Shopify status and online-store publication, Presta typed active flag, Magento status/visibility and Shopware boolean parent/child status. Actual prior CLI29 assertion failures are fixed by four source-state cases plus real transport projections; native eight-domain and variant checkout remain green. Independent focused source-visibility review found no Important/Critical findings; source orchestration remains outside pure proof."
     },
     "extensions/apps/migration/adapters/records.rs": {
       "status": "unproved",
@@ -990,6 +990,11 @@
       "status": "unproved",
       "sha256": "c9483641a7b1c0f518318dec9ed39c7cc22c809abf9f7691fc997c8a88d0e384",
       "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+    },
+    "extensions/apps/migration/adapters/visibility.rs": {
+      "status": "unproved",
+      "sha256": "adfeeeb89b5e0d4a1fa47f213be40bcccd29e21b970a31b716213275a570143d",
+      "review": "Reviewed app-owned source status preservation against primary schemas: Shopify status and online-store publication, Presta typed active flag, Magento status/visibility and Shopware boolean parent/child status. Actual prior CLI29 assertion failures are fixed by four source-state cases plus real transport projections; native eight-domain and variant checkout remain green. Independent focused source-visibility review found no Important/Critical findings; source orchestration remains outside pure proof."
     },
     "extensions/apps/migration/adapters/woo.rs": {
       "status": "unproved",
@@ -1048,8 +1053,8 @@
     },
     "extensions/apps/migration/service/shopify.rs": {
       "status": "unproved",
-      "sha256": "192ee036db0573eab51d1f42701ac2c874e0103f88e4c29d233644e41c3c2522",
-      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+      "sha256": "107f742e8b480aba305aaf2d33a6d5e0c564681ccf26b954270413004fd9ce1a",
+      "review": "Reviewed app-owned source status preservation against primary schemas: Shopify status and online-store publication, Presta typed active flag, Magento status/visibility and Shopware boolean parent/child status. Actual prior CLI29 assertion failures are fixed by four source-state cases plus real transport projections; native eight-domain and variant checkout remain green. Independent focused source-visibility review found no Important/Critical findings; source orchestration remains outside pure proof."
     },
     "extensions/apps/migration/service/slices.rs": {
       "status": "unproved",

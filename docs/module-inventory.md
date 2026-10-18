@@ -1331,6 +1331,7 @@ This lists every checked-in source module in these roots, including files with n
 | [extensions/apps/migration/adapters/products.rs](../extensions/apps/migration/adapters/products.rs) | Preserve source variant identity, decimal price and known stock; never invent available inventory. |
 | [extensions/apps/migration/adapters/records.rs](../extensions/apps/migration/adapters/records.rs) | Historical facts remain source claims, without synthesized account, payment, consent or verified-purchase authority. |
 | [extensions/apps/migration/adapters/relations.rs](../extensions/apps/migration/adapters/relations.rs) | Provider relation shapes become explicit source IDs and native option labels, never guessed target IDs. |
+| [extensions/apps/migration/adapters/visibility.rs](../extensions/apps/migration/adapters/visibility.rs) | Source publication/status is distinct from inventory; unsupported direct/search/catalogue visibility must be mapped explicitly. |
 | [extensions/apps/migration/adapters/woo.rs](../extensions/apps/migration/adapters/woo.rs) | A WooCommerce variation snapshot must cover exactly the declared source IDs and concrete attribute combinations. |
 | [extensions/apps/migration/contract/mod.rs](../extensions/apps/migration/contract/mod.rs) | Versioned source identities and exact historical money shared by migration transport and admission. |
 | [extensions/apps/migration/contract/money.rs](../extensions/apps/migration/contract/money.rs) | Decimal source amounts become checked integer minor units without a floating-point intermediate. |
@@ -1377,6 +1378,7 @@ This lists every checked-in source module in these roots, including files with n
 | [extensions/apps/migration/tests/studio.test.tsx](../extensions/apps/migration/tests/studio.test.tsx) | Real migration workflow controls require readable source data and explicit import review. |
 | [extensions/apps/migration/tests/transport.py](../extensions/apps/migration/tests/transport.py) | Actual source HTTP -> Rust service -> canonical records; authentication and cursor failure controls. |
 | [extensions/apps/migration/tests/variable_flow.py](../extensions/apps/migration/tests/variable_flow.py) | Variable source products keep original parent/child identities, visibility and images through native release and checkout. |
+| [extensions/apps/migration/tests/visibility.py](../extensions/apps/migration/tests/visibility.py) | Original source publication status must never silently become an active target product. |
 | [extensions/apps/paypal/src/adapter.rs](../extensions/apps/paypal/src/adapter.rs) | Legacy PayPal admission/account wiring belongs to the PayPal package, not a second pricing owner. |
 | [extensions/apps/paypal/src/compatibility.rs](../extensions/apps/paypal/src/compatibility.rs) | Native PayPal Orders v2 sandbox wire adapter; credentials never enter prompts or browser responses. |
 | [extensions/apps/paypal/src/receipts.rs](../extensions/apps/paypal/src/receipts.rs) | PayPal receipt interpretation; shared payment storage owns order and inventory effects. |

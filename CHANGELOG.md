@@ -4,6 +4,7 @@
 
 - Preserve original WooCommerce variable parent/child identities, complete declared axes/options, child images and explicit private visibility through native selected publication and simulated checkout. Missing/foreign/duplicate/wildcard families and unsupported visibility stop explicitly.
 - Move source inspection onto existing permission-fenced native jobs/outbox. Slow sources no longer wait in the five-second app gateway request. Saved evidence can reopen after reload; inspection remains separate from import approval. Current PII revocation, cancellation during source reads and byte-bounded rich-document results have actual HTTP controls.
+- Preserve explicit source publication/active status across Shopify, PrestaShop, Magento and Shopware 5. Shopify requests online-store publication separately from ACTIVE; unsupported direct/search/catalogue visibility stops before import.
 - Keep both original per-action job events and an opt-in generic queued event; callback metadata/checkpoints retain their original limits. No new runtime, queue, provider role or per-shop table. [Coverage and remaining work](docs/agentic-migration.md).
 
 

@@ -13,7 +13,7 @@ pub async fn page(
         return Err("invalid Shopify cursor".into());
     }
     let (connection,fields)=match kind {
-        "products"=>("products","id title descriptionHtml variants(first:100){nodes{id title sku price selectedOptions{name value} inventory_quantity:inventoryQuantity} pageInfo{hasNextPage}} images(first:100){nodes{url altText} pageInfo{hasNextPage}}"),
+        "products"=>("products","id title status onlineStoreUrl descriptionHtml variants(first:100){nodes{id title sku price selectedOptions{name value} inventory_quantity:inventoryQuantity} pageInfo{hasNextPage}} images(first:100){nodes{url altText} pageInfo{hasNextPage}}"),
         "customers"=>("customers","id email first_name:firstName last_name:lastName default_address:defaultAddress{address1 address2 city countryCodeV2 provinceCode zip company}"),
         "orders"=>("orders","id name currency:currencyCode totalPriceSet{shopMoney{amount currencyCode}} financial_status:displayFinancialStatus fulfillment_status:displayFulfillmentStatus created_at:createdAt customer{id} lineItems(first:100){nodes{id title quantity originalUnitPriceSet{shopMoney{amount currencyCode}}} pageInfo{hasNextPage}}"),
         "pages"=>("pages","id title handle body_html:body"),

@@ -90,6 +90,25 @@ the stricter app-input budget. A single oversized record stops with an explicit
 split-export requirement. Source cursor, offset and full-page digest bind every
 slice, so following pages neither silently omit variants nor shift after a change.
 
+## Publication state in every source profile
+
+Product visibility is read separately from inventory and remains part of the frozen
+record digest. Shopify drafts/archived products and products with no online-store
+publication remain inactive. `ACTIVE` alone does not prove publication; the direct
+GraphQL query includes `onlineStoreUrl`. `UNLISTED` needs a separate mapping rather
+than becoming discoverable in the target. This follows the provider's distinction
+between [product status and channel publication](https://shopify.dev/docs/api/admin-graphql/latest/enums/ProductStatus).
+
+PrestaShop active flags accept explicit JSON booleans or 0/1; Magento uses enabled 1 /
+disabled 2, and Shopware 5 uses explicit boolean parent/child flags. A false parent or
+child stays false. Separate PrestaShop catalogue/search visibility and Magento
+visibility 1–3 stop instead of being flattened into native active=true. Source
+schemas remain authoritative: [PrestaShop products](https://devdocs.prestashop-project.org/8/webservice/resources/products/),
+[Magento status](https://github.com/magento/magento2/blob/2.4-develop/app/code/Magento/Catalog/Model/Product/Attribute/Source/Status.php)
+and [Magento visibility](https://github.com/magento/magento2/blob/2.4-develop/app/code/Magento/Catalog/Model/Product/Visibility.php).
+Missing source publication data is shown as unknown in review; it is not claimed
+as proof of original public availability. Public target stock still starts at zero.
+
 ## Original images and selected publication
 
 Image review downloads bounded bytes to freeze their digest, MIME and length. A job
