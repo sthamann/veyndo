@@ -44,6 +44,11 @@ All 263 Markdown sources / 270 pages / 26,907 links and assets passed locally.
 
 ## Original Storyfront boundary
 
+The [18 October follow-up](storyfront-checkout-hosted-2026-10-18.md) subsequently
+completed the full controlled-Chrome embedded purchase, return and persistent
+original-bag clearing on these same public Core/Experience images. The observations
+below retain their original 17 October scope.
+
 A fresh CE5 Core / original Experience attempt again showed an empty iframe.
 Ordinary DOM inspection exposed no checkout fields; raw diagnosis explicitly
 reported Browser Use resolving a paused document response. No interception,

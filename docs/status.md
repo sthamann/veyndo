@@ -1,7 +1,7 @@
 # Veyndo: current status
 
 This is the single starting point for what works, what is implemented but not
-publicly accepted, and what still needs development. Updated 17 October 2026.
+publicly accepted, and what still needs development. Updated 18 October 2026.
 A green test, merged code and a completed public business journey are different evidence.
 
 ## Start with a complete journey
@@ -21,7 +21,7 @@ A green test, merged code and a completed public business journey are different 
 | Shared app storage | [15 October hosted migration](evidence/shared-app-storage-hosted-2026-10-15.json): four fixed physical tables, checked data migration and simulated purchases. This does not establish unbounded capacity. |
 | Restricted database runtime | [Hosted enforcement record](evidence/database-enforcement-2026-10-15.json): separate roles and strict restart. Authorization and SQL isolation are both required. |
 | Native checkout | Dated acceptance covers simulated purchases. It does not prove a real provider payment, mail delivery, invoice and refund journey. |
-| Storyfront embedded checkout | [16 October original Storyfront acceptance](evidence/storyfront-checkout-2026-10-16.json): embedded contact/address, simulated order RAC-b359e75d, German receipt and cleared original bag passed in a fresh Chrome session. The earlier controlled tab remained paused at about:blank; real provider redirects/3DS remain unaccepted. |
+| Storyfront embedded checkout | [18 October controlled-Chrome acceptance](evidence/storyfront-checkout-hosted-2026-10-18.md): the current public original Experience opens the native iframe, saves simulated order RAC-3b2e5dfc with its German product name, verifies completion and clears the original bag. The receipt's return closes the iframe on the same Experience; the bag stays empty after reload. Earlier paused-document attempts remain historical evidence; real provider redirects/3DS remain unaccepted. |
 | Browser login | HttpOnly implementation and registered session tests exist. Public Google sign-in, reload and logout passed on 16 October. Fresh SaaS creation and its one-use Studio handoff also passed. Public password sign-in, reload persistence, logout and denied protected-route return also passed in a separate incognito session on 16 October. Apple currently returns `invalid_request: Invalid web redirect url` for the new start.veyndo.ai callback; the Apple Service ID configuration is not repaired. |
 | Legacy domains | 16 October public DNS/TLS/redirect checks passed for vendune.ai and team.vendune.ai, ending at www.veyndo.ai and team.veyndo.ai respectively. No DNS change was made. Authoritative-provider configuration and filtering-provider delisting remain separate checks. |
 | Recovery and real providers | Restore drill and real payment/mail/refund acceptance require their own recorded outcomes. No current whole-system production certification. |
@@ -44,7 +44,7 @@ A green test, merged code and a completed public business journey are different 
 
 ## Public delivery and current work
 
-The current Core is `25b354e`, image `wise-authority-6674`. The [public PDF follow-up](evidence/receipt-pdf-hosted-2026-10-17.md) records full required CI, exact candidate/CI/main tree equality, a fresh snapshot and one healthy Core. Re-downloading the original invoice fixes the lost dashes while preserving its number, issue time, issuer, amounts and completed order. No new invoice or migration was created. The separate original Experience already runs `b40b386`; a fresh CE5 embedded recheck was still held by the browser controller, so no new embedded purchase is accepted on this image.
+The current Core is `25b354e`, image `wise-authority-6674`. The [public PDF follow-up](evidence/receipt-pdf-hosted-2026-10-17.md) records full required CI, exact candidate/CI/main tree equality, a fresh snapshot and one healthy Core. Re-downloading the original invoice fixes the lost dashes while preserving its number, issue time, issuer, amounts and completed order. No new invoice or migration was created. The separate original Experience runs `b40b386`, image `educated-sort-2532`. The [18 October follow-up](evidence/storyfront-checkout-hosted-2026-10-18.md) accepts the complete embedded purchase, return and persistent original-bag clearing on these currently deployed images. It required no user-operated test, security bypass, additional runtime patch or redundant service rollout.
 
 The preceding Core was `ce5a710`, image `busy-machine-7486`. Its
 [buyer/POS receipt](evidence/buyer-pos-hosted-2026-10-17.md) records the full required
