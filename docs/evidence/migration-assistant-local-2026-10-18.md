@@ -234,3 +234,50 @@ whole-shop snapshot consistency or final cutover. Evidence:
 `artifacts/migration-incomplete-pagination-red.log`,
 `artifacts/migration-incomplete-pagination-green.log`,
 `artifacts/migration-pagination-native.log`, `artifacts/migration-pagination-clippy.log`.
+
+## Frozen domain-export intake
+
+The independent Rust `pack` command streams original expanded JSON lines into
+private immutable source files, followed by a checksum-pinned manifest. The
+actual HTTP reader checks original context, counts, page bytes and continuation.
+Six export test cases exercise all five product adapters, expanded Presta history,
+malformed/truncated references, duplicate IDs, tampered manifests/pages, explicit
+legacy HTTP source identity without fetching that host, and separate export
+credentials. See the guide for hard bounds and incomplete source profiles.
+
+Actual independent-service/Core acceptance imports all 52 products from a frozen
+two-page export into a private native target, preserves original source identity,
+prices and zero stock, and replays without duplicates. Tampered page bytes fail
+before native creation. Saved results retain the same export hash/counts; current
+roles/package/creator/lease and exact reviewed digest admission remain unchanged.
+This is domain-export coverage, not a full-source transaction fence or current
+whole-shop field reconciliation/cutover.
+
+The browser reopened encrypted export settings with both secrets empty, performed
+a fresh saved inspection, reloaded and reopened its original digest/count evidence,
+and explicitly imported 29 reviewed rows into a new private preview. The actual
+UI finished 29/29. A first browser replay selected an existing target
+with different earlier options and correctly conflicted; that exposed misleading
+source-error wording. The actual changed-options regression reproduced it. Callback
+errors now identify Veyndo and supply four-language recovery guidance while hiding
+response bodies/credentials. Native conflicts continue to leave original records
+unchanged. The own fixture/tab were cleaned; user process PID55412/8802 stayed live.
+
+![Actual local saved export review](images/migration-2026-10-18/export-review.png)
+
+A separate local synthetic Debug packaging probe processed 200,000 product rows
+into 4,000 fixed export pages (20,270,675 raw page bytes, 896,258-byte manifest):
+46.007 seconds and 31,113,216 bytes maximum child RSS. It measured packaging only,
+not source API speed, native 200k-row import or hosted/fleet throughput. Disk
+synchronization and Debug mode are part of that measurement. Temporary source
+artifacts were removed after the probe. Evidence:
+`artifacts/migration-export-200k-pack.json`.
+
+Additional evidence: `migration-export-red.log`, `migration-export-green.log`,
+`migration-export-unexpanded-red.log`, `migration-export-http-identity-red.log`,
+`migration-export-native-red.log`, `migration-export-conflict-red.log`,
+`migration-export-signed-runtime-final.log`, `migration-export-ui-red.log`,
+`migration-export-ui-green.log`, actual `migration-export-review.png` and
+`migration-export-completed.png` under the local artifacts directory. These are
+local development results; the complete assistant remains a draft, not a public
+rollout or admission of arbitrary live source stores.

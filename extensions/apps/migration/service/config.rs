@@ -6,6 +6,7 @@ use std::collections::HashMap;
 pub struct Connection {
     pub system: Source,
     pub origin: String,
+    #[serde(default)]
     pub token: String,
     #[serde(default)]
     pub username: String,
@@ -17,6 +18,15 @@ pub struct Connection {
     pub languages: HashMap<String, String>,
     #[serde(default)]
     pub timezone: Option<String>,
+    #[serde(default)]
+    #[serde(alias = "export_manifest")]
+    pub export_manifest: Option<String>,
+    #[serde(default)]
+    #[serde(alias = "export_digest")]
+    pub export_digest: Option<String>,
+    #[serde(default)]
+    #[serde(alias = "export_token")]
+    pub export_token: Option<String>,
 }
 pub struct Config {
     pub gateway: String,
@@ -38,12 +48,23 @@ impl Config {
                         .map_err(|_| "Invalid explicit source language mapping")?;
                 }
             }
-            if values["timezone"].as_str() == Some("") {
-                values.as_object_mut().unwrap().remove("timezone");
+            for key in [
+                "timezone",
+                "exportManifest",
+                "exportDigest",
+                "exportToken",
+                "export_manifest",
+                "export_digest",
+                "export_token",
+            ] {
+                if values[key].as_str() == Some("") {
+                    values.as_object_mut().unwrap().remove(key);
+                }
             }
             let c: Connection = serde_json::from_value(values)
                 .map_err(|_| "Complete the encrypted source settings in Apps first")?;
-            transport::admit_url(&c.origin, self.fixture)?;
+            c.validate_origin(self.fixture)?;
+            c.validate_export(self.fixture)?;
             return Ok(c);
         }
         self.sources
@@ -83,14 +104,15 @@ impl Config {
             }
             for (id, c) in cs {
                 if id.is_empty()
-                    || c.token.is_empty()
+                    || c.export_manifest.is_none() && c.token.is_empty()
                     || c.token.len() > 8192
                     || c.version.is_empty()
                     || c.version.len() > 30
                 {
                     return Err("source identity, credential and version required".into());
                 }
-                transport::admit_url(&c.origin, fixture)?;
+                c.validate_origin(fixture)?;
+                c.validate_export(fixture)?;
                 Context {
                     source: c.system,
                     shop: id.clone(),
@@ -111,5 +133,46 @@ impl Config {
             fixture,
             callbacks,
         })
+    }
+}
+
+// An offline source identity is never an egress destination. Legacy HTTP shops can export privately over a separate admitted HTTPS endpoint.
+pub fn original_identity(origin: &str) -> Result<()> {
+    let u = reqwest::Url::parse(origin).map_err(|_| "Invalid original source identity")?;
+    if origin.len() > 200
+        || !["http", "https"].contains(&u.scheme())
+        || u.host_str().is_none()
+        || !u.username().is_empty()
+        || u.password().is_some()
+        || u.query().is_some()
+        || u.fragment().is_some()
+    {
+        return Err("Original source identity needs a credential-free HTTP(S) shop URL".into());
+    }
+    Ok(())
+}
+impl Connection {
+    fn validate_origin(&self, fixture: bool) -> Result<()> {
+        if self.export_manifest.is_some() {
+            original_identity(&self.origin)
+        } else {
+            transport::admit_url(&self.origin, fixture).map(|_| ())
+        }
+    }
+    fn validate_export(&self, fixture: bool) -> Result<()> {
+        match (&self.export_manifest, &self.export_digest) {
+            (None, None) if !self.token.is_empty() && self.token.len() <= 8192 => Ok(()),
+            (Some(url), Some(hash))
+                if export_manifest::valid_digest(hash)
+                    && self
+                        .export_token
+                        .as_ref()
+                        .is_some_and(|s| !s.is_empty() && s.len() <= 8192) =>
+            {
+                transport::admit_url(url, fixture)?;
+                Ok(())
+            }
+            _ => Err("Export requires both an admitted manifest URL and SHA-256 pin".into()),
+        }
     }
 }

@@ -1,4 +1,5 @@
 /** Real migration workflow controls require readable source data and explicit import review. */
+import { exportTests } from "./exports.test";
 import { priceBasisTests } from "./price_basis.test";
 import { crmTests } from "./crm.test";
 import { inspectionTests } from "./inspection.test";
@@ -21,6 +22,7 @@ export function migrationStudioTests(deps: any) {
       </LocaleProvider>,
     );
   }
+  exportTests(deps, mount);
   feedbackTests(deps, mount);
   inspectionTests(deps, mount);
   priceBasisTests(deps, mount);

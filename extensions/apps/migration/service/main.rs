@@ -2,11 +2,16 @@
 #[path = "../adapters/mod.rs"]
 mod adapters;
 mod batch;
+mod callback_errors;
 mod config;
 #[path = "../contract/mod.rs"]
 mod contract;
 mod core;
 mod events;
+mod export_manifest;
+mod export_pack;
+mod export_readiness;
+mod export_source;
 mod extract;
 mod media;
 mod presta;
@@ -75,6 +80,8 @@ async fn main() {
     let args = std::env::args().skip(1).collect::<Vec<_>>();
     let result = if args.first().map(String::as_str) == Some("serve") {
         server::run().await
+    } else if args.first().map(String::as_str) == Some("pack") {
+        export_pack::run(&args)
     } else if args.first().map(String::as_str) == Some("normalize") {
         normalize(&args)
     } else {

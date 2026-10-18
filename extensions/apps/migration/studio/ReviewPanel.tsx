@@ -1,4 +1,5 @@
 /** Exact source review keeps unacknowledged gaps and missing target choices from starting a write. */
+import ExportEvidence from "./ExportEvidence";
 import PriceOptions from "./PriceOptions";
 import { usePriceText } from "./price-i18n";
 import SourceDetails from "./SourceDetails";
@@ -77,6 +78,7 @@ export default function ReviewPanel({
   const hasWarnings = review.records.some((row) => row.warnings.length > 0);
   return (
     <>
+      {review.sourceExport && <ExportEvidence source={review.sourceExport} />}
       <p>
         {review.sourceVersion} · {review.records.length}
       </p>

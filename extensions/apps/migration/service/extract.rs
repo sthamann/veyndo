@@ -8,6 +8,9 @@ pub async fn source_page(
     cursor: Option<&str>,
     fixture: bool,
 ) -> Result<Value> {
+    if c.export_manifest.is_some() {
+        return super::export_source::page(c, source_id, kind, cursor, fixture).await;
+    }
     if c.system == Source::Shopify {
         return super::shopify::page(c, source_id, kind, cursor, fixture).await;
     }

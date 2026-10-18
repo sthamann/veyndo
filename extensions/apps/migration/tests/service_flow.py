@@ -1,5 +1,6 @@
 """Actual Rust HTTP source -> reviewed native job -> scoped callback -> native private product."""
-import subprocess,threading,time,socket,base64
+import subprocess,threading,time,socket,base64,tempfile
+export_files={}
 from http.server import BaseHTTPRequestHandler,ThreadingHTTPServer
 from pathlib import Path
 from testing.runtime import ROOT,serve,stop
@@ -9,6 +10,10 @@ exec(compile((ROOT/'extensions/apps/migration/tests/crm_sources.py').read_text()
 class SourceFixture(BaseHTTPRequestHandler):
     def log_message(self,*args):pass
     def do_GET(self):
+        if self.path.startswith('/frozen/'):
+            assert self.headers.get('Authorization')=='Bearer frozen-export-synthetic'
+            if self.path not in export_files:self.send_error(404);return
+            self.send_response(200);self.end_headers();self.wfile.write(export_files[self.path]);return
         crm=crm_get(self.path,self.headers.get('Authorization'),a['workspace'])
         if crm is not None:
             self.send_response(200);self.end_headers();self.wfile.write(json.dumps(crm).encode());return
@@ -70,6 +75,15 @@ env={**os.environ,'MIGRATION_ALLOW_FIXTURE':'1','MIGRATION_BIND':f'127.0.0.1:{po
 profiles=json.loads(env['MIGRATION_SOURCES'])
 for system in ('prestashop','magento2','shopware5','shopify'):
     profiles[a['workspace']][system]={'system':system,'origin':source_origin,'token':'provider-source-synthetic','username':'fixture' if system=='shopware5' else '', 'version':'2026-10' if system=='shopify' else 'explicit-fixture-profile','currency':'EUR','scale':2,'locale':'en-GB'}
+export_directory=tempfile.TemporaryDirectory()
+export_path=Path(export_directory.name)/'snapshot'
+raw=''.join(json.dumps({'id':2000+i,'name':'Frozen export cup '+str(i),'sku':'FROZEN-'+str(i),'price':'12.50','stock_quantity':9})+'\n' for i in range(52))
+packed=subprocess.run([str(ROOT/'target/debug/migration-assistant'),'pack','woocommerce','products','EUR','en-GB','https://frozen-source.example','wc/v3',str(export_path)],input=raw,text=True,capture_output=True)
+assert packed.returncode==0,packed.stderr
+frozen_bytes=(export_path/'manifest.json').read_bytes();frozen_manifest=json.loads(frozen_bytes);frozen_digest=hashlib.sha256(frozen_bytes).hexdigest()
+export_files['/frozen/manifest.json']=frozen_bytes
+for frozen_page in frozen_manifest['pages']:export_files['/frozen/'+frozen_page['path']]=(export_path/frozen_page['path']).read_bytes()
+profiles[a['workspace']]['frozen']={'system':'woocommerce','origin':'https://frozen-source.example','token':'api-must-not-forward','version':'wc/v3','currency':'EUR','scale':2,'locale':'en-GB','exportManifest':source_origin+'/frozen/manifest.json','exportDigest':frozen_digest,'exportToken':'frozen-export-synthetic'}
 env['MIGRATION_SOURCES']=json.dumps(profiles)
 log=open(ROOT/'artifacts/migration-live-service.log','w');process=subprocess.Popen([str(ROOT/'target/debug/migration-assistant'),'serve'],env=env,stdout=log,stderr=log)
 def service_call(path,value):
@@ -183,6 +197,7 @@ try:
     exec(compile((ROOT/'extensions/apps/migration/tests/variable_flow.py').read_text(),'variable_flow.py','exec'))
     exec(compile((ROOT/'extensions/apps/migration/tests/provider_flow.py').read_text(),'provider_flow.py','exec'))
     exec(compile((ROOT/'extensions/apps/migration/tests/provider_crm_flow.py').read_text(),'provider_crm_flow.py','exec'))
+    exec(compile((ROOT/'extensions/apps/migration/tests/export_flow.py').read_text(),'export_flow.py','exec'))
     if os.environ.get('MIGRATION_BROWSER')=='1':
         import signal
         metadata={'url':BASE+'/?shop='+a['workspace']+'&studio=channels#merchant','email':EMAILS[0],'workspace':a['workspace']}
@@ -194,4 +209,4 @@ finally:
     BASE=original_base
     if core_process:stop(core_process)
     core_log.close()
-    process.terminate();process.wait(timeout=10);log.close();source.shutdown();source.server_close()
+    process.terminate();process.wait(timeout=10);log.close();source.shutdown();source.server_close();export_directory.cleanup()

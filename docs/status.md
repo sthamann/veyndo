@@ -4,6 +4,13 @@ This is the single starting point for what works, what is implemented but not
 publicly accepted, and what still needs development. Updated 18 October 2026.
 A green test, merged code and a completed public business journey are different evidence.
 
+Local migration follow-up (18 October): frozen domain export packaging and pinned
+HTTPS intake now reuse native reviewed jobs, with separate export credentials,
+source-reference checks and visible original counts/digests. Two-page native
+product intake/replay and tamper rejection are locally tested. This remains
+an open draft implementation; it is not a public deployment or complete shop
+migration/cutover. [Scope and evidence](agentic-migration.md).
+
 ## Start with a complete journey
 
 1. [Create and explore a synthetic shop](first-tour.md).

@@ -71,6 +71,14 @@ export type SourceRecord = {
   };
 };
 export type Review = {
+  sourceExport?: {
+    digest: string;
+    sourceRecords: number;
+    normalizedRecords: number;
+    pages: number;
+    page: number;
+    scope: "domain-export";
+  };
   records: SourceRecord[];
   recordDigests: string[];
   sourceId: string;

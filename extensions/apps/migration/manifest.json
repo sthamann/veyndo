@@ -63,7 +63,7 @@
     {
       "key": "token",
       "kind": "secret",
-      "required": true,
+      "required": false,
       "label": {
         "en": "Source read credential",
         "de": "Lesezugang der Quelle",
@@ -135,6 +135,39 @@
         "de": "Quellzeitzone (IANA, zum Beispiel Europe/Berlin)",
         "fr": "Fuseau source (IANA, par exemple Europe/Berlin)",
         "es": "Zona horaria origen (IANA, por ejemplo Europe/Berlin)"
+      }
+    },
+    {
+      "key": "export_manifest",
+      "kind": "string",
+      "required": false,
+      "label": {
+        "en": "Frozen export manifest HTTPS URL (optional)",
+        "de": "HTTPS-Adresse des eingefrorenen Exports (optional)",
+        "fr": "URL HTTPS du manifeste figé (facultatif)",
+        "es": "URL HTTPS del manifiesto congelado (opcional)"
+      }
+    },
+    {
+      "key": "export_digest",
+      "kind": "string",
+      "required": false,
+      "label": {
+        "en": "Frozen export manifest SHA-256",
+        "de": "SHA-256 des eingefrorenen Export-Manifests",
+        "fr": "SHA-256 du manifeste figé",
+        "es": "SHA-256 del manifiesto congelado"
+      }
+    },
+    {
+      "key": "export_token",
+      "kind": "secret",
+      "required": false,
+      "label": {
+        "en": "Separate export read credential",
+        "de": "Separater Lesezugang zum Export",
+        "fr": "Identifiant de lecture distinct pour l’export",
+        "es": "Credencial separada de lectura de exportación"
       }
     }
   ],

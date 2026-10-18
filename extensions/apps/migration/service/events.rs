@@ -94,7 +94,7 @@ pub async fn receive(
                         "failed"
                     },
                     json!({}),
-                    json!({"en":e.clone(),"de":e.clone(),"fr":e.clone(),"es":e}),
+                    callback_errors::message(&e),
                 ),
             };
             let _=core::callback(c,&tenant,"job_progress",&json!({"id":job["id"],"lease":job["lease"],"status":status,"result":result,"message":message}),cfg.fixture).await;

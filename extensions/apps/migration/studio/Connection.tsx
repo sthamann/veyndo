@@ -1,6 +1,7 @@
 /** Source credentials are edited in memory and saved through the existing encrypted installed-settings owner. */
 import { useEffect, useState } from "react";
 import type { RequestFn } from "../../../../frontend/src/shared/api/types";
+import ExportFields from "./ExportFields";
 import LanguageMap from "./LanguageMap";
 import { useMigrationText } from "./i18n";
 const sources = [
@@ -39,7 +40,11 @@ export default function Connection({ request }: { request: RequestFn }) {
       .then((v) => {
         if (active) {
           setBinding(v);
-          setValues((old) => ({ ...old, ...v.values, token: "" }));
+          setValues((old) => {
+            const next = { ...old, ...v.values, token: "", export_token: "" };
+            if (!next.export_manifest) delete next.export_manifest;
+            return next;
+          });
         }
       })
       .catch((e) => {
@@ -61,6 +66,11 @@ export default function Connection({ request }: { request: RequestFn }) {
         try {
           const input = { ...values };
           if (!input.token) delete input.token;
+          if (!input.export_token) delete input.export_token;
+          if (input.export_manifest === undefined) {
+            input.export_manifest = "";
+            input.export_digest = "";
+          }
           const result = await request(
             "/api/apps/migration/settings",
             {
@@ -72,7 +82,7 @@ export default function Connection({ request }: { request: RequestFn }) {
             "PUT",
           );
           setBinding({ ...binding, revision: result.revision });
-          setValues((v) => ({ ...v, token: "" }));
+          setValues((v) => ({ ...v, token: "", export_token: "" }));
           setSaved(true);
         } catch (e) {
           setError((e as Error).message);
@@ -146,6 +156,7 @@ export default function Connection({ request }: { request: RequestFn }) {
             </label>
           ))}
         </div>
+        <ExportFields values={values} onChange={setValues} />
         {values.system === "prestashop" && (
           <LanguageMap
             value={String(values.language_map ?? "{}")}

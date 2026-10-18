@@ -84,7 +84,9 @@ pub async fn run(config: &config::Config, t: &str, job: &Value) -> Result<Value>
         completed += 1;
         core::callback(callback,t,"job_progress",&serde_json::json!({"id":job["id"],"lease":job["lease"],"status":"running","progress":completed*99/rows.len().max(1),"checkpoint":{"completed":completed}}),config.fixture).await?;
     }
-    Ok(
-        serde_json::json!({"target":input["target"],"kind":input["kind"],"sourceId":input["sourceId"],"imported":completed,"reviewed":rows.len(),"nextCursor":page["nextCursor"],"sourceVersion":page["sourceVersion"],"adapterVersion":1,"snapshotConsistent":false,"cutoverReady":false,"reconciled":completed==rows.len()}),
-    )
+    let mut result = serde_json::json!({"target":input["target"],"kind":input["kind"],"sourceId":input["sourceId"],"imported":completed,"reviewed":rows.len(),"nextCursor":page["nextCursor"],"sourceVersion":page["sourceVersion"],"adapterVersion":1,"snapshotConsistent":false,"cutoverReady":false,"reconciled":completed==rows.len()});
+    if let Some(source) = page.get("sourceExport") {
+        result["sourceExport"] = source.clone();
+    }
+    Ok(result)
 }

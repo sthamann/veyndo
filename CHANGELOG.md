@@ -1,5 +1,11 @@
 # Changelog
 
+## Frozen source-export intake — 2026-10-18
+
+- Add independent Rust streaming export packages with original source context, immutable page hashes and exact counts. Protect export files, reject duplicates/shallow references, and preserve original identities across export hosting.
+- Add separately encrypted export credentials and pinned HTTPS intake to the existing migration settings, review UI and saved native jobs. No source API secret is forwarded to an export server and no parallel queue/table is introduced.
+- Verify actual two-page 52-product private native import, stable replay, tampered-page failure before writes and retained result evidence. Full-shop orchestration/reconciliation/final delta/cutover and hosted acceptance remain open. [Guide](docs/agentic-migration.md).
+
 ## Source pagination completeness — 2026-10-18
 
 - Stop on malformed or contradictory source totals, short nonterminal offset pages and missing Shopify root/nested completeness metadata. Preserve the cursor rather than silently skip source records.

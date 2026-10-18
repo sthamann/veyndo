@@ -13,7 +13,9 @@ pub async fn callback(
     v: &Value,
     fixture: bool,
 ) -> Result<Value> {
-    let client = transport::client(&c.core_url, fixture).await?;
+    let client = transport::client(&c.core_url, fixture)
+        .await
+        .map_err(|error| callback_errors::classify(&error))?;
     let url = format!(
         "{}/api/apps/migration/core/{operation}",
         c.core_url.trim_end_matches('/')
@@ -25,6 +27,7 @@ pub async fn callback(
             .header("x-tenant", tenant)
             .json(v),
     )
-    .await?;
+    .await
+    .map_err(|error| callback_errors::classify(&error))?;
     Ok(result)
 }

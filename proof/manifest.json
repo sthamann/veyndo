@@ -1013,33 +1013,58 @@
     },
     "extensions/apps/migration/service/batch.rs": {
       "status": "unproved",
-      "sha256": "8eece5260d0176150e81428a09e84d4b6df3392887f236b4a32070ec1f917c7c",
-      "review": "Reviewed optional grouped native job events, unchanged per-action compatibility and package/current actor/lease fences; bounded 32KiB stored rich documents retain strict APP metadata/checkpoints. Actual five-second slow-source RED and native document-depth RED fixed; running cancellation RED fixed with final native progress fence; complete concrete Woo families and private visibility verified through native selected publication and simulated checkout. Focused independent async review found no remaining Important/Critical defects. SQL/network/source parity remain outside pure proof."
+      "sha256": "130e119bed9cf007a4f2cc0090073969119bc9f76a54127f0c4ea40db11c39f1",
+      "review": "Reviewed independent frozen-export transport/package boundaries, separate export-only credential, pinned manifest/context/count/digest and bounded source-reference readiness. Actual pack/HTTP counterexamples and 52-product native intake/replay/tamper stop pass, no native authority or extracted pure business policy changed; source JSON, files, crypto/provider/async remain outside Lean proof."
+    },
+    "extensions/apps/migration/service/callback_errors.rs": {
+      "status": "unproved",
+      "sha256": "27050780ec2cab6023ab6822c7d05b77f513dd5705760ff24d6f0d692017bc90",
+      "review": "Final review of frozen-export implementation and native callback error-origin recovery: exact manifest/source/context/page bytes/counts, bounded offline pack/readiness and HTTP identity without source egress; separate export credential, current reviewed native job admission unchanged. Independent boundary reviews found no Important/Critical issues. Actual six export tests, native two-page 52-product/replay/tamper and browser29/29 pass; native changed-options conflict reproduced and localized guidance tested. Only reviewed provider/input/file/network boundaries changed, no extracted pure business policy."
     },
     "extensions/apps/migration/service/config.rs": {
       "status": "unproved",
-      "sha256": "abc911d5ebcc1e962c8147b6beb03183b65fb93c79e9cc4895e5f6852232fbb0",
-      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+      "sha256": "5c1bd2aa253e90f81873dc1d00babb2a44558e684e7ddfe2a84b3165c8783904",
+      "review": "Final review of frozen-export implementation and native callback error-origin recovery: exact manifest/source/context/page bytes/counts, bounded offline pack/readiness and HTTP identity without source egress; separate export credential, current reviewed native job admission unchanged. Independent boundary reviews found no Important/Critical issues. Actual six export tests, native two-page 52-product/replay/tamper and browser29/29 pass; native changed-options conflict reproduced and localized guidance tested. Only reviewed provider/input/file/network boundaries changed, no extracted pure business policy."
     },
     "extensions/apps/migration/service/core.rs": {
       "status": "unproved",
-      "sha256": "516bbeb26ef2b7846ca15663268b6777f10ba49eb5bded0e879ca21972306359",
-      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+      "sha256": "b933eb1d3c1172e1940bea35f388ed8c8794e045c5886470f0f8d3e0b4f4501e",
+      "review": "Reviewed final frozen-export and native callback error paths including DNS/client failures: origin-only offline HTTP identity, admitted actual egress, separate export credential, immutable pages and current native approval fences. All source/export/native/browser controls and signed runtime pass; error-origin classifier carries no provider/native bodies; no extracted pure business policy changed. Independent focused reviews found no Important/Critical defects."
     },
     "extensions/apps/migration/service/events.rs": {
       "status": "unproved",
-      "sha256": "43677278d7429b263c9993dfeb4c2616e5d838db899817a2b642e96d20308837",
-      "review": "Reviewed optional grouped native job events, unchanged per-action compatibility and package/current actor/lease fences; bounded 32KiB stored rich documents retain strict APP metadata/checkpoints. Actual five-second slow-source RED and native document-depth RED fixed; running cancellation RED fixed with final native progress fence; complete concrete Woo families and private visibility verified through native selected publication and simulated checkout. Focused independent async review found no remaining Important/Critical defects. SQL/network/source parity remain outside pure proof."
+      "sha256": "321d40e63c9b2cd4b2e10e9079785019684459d19c397f99f0e6c622e32a9fdf",
+      "review": "Final review of frozen-export implementation and native callback error-origin recovery: exact manifest/source/context/page bytes/counts, bounded offline pack/readiness and HTTP identity without source egress; separate export credential, current reviewed native job admission unchanged. Independent boundary reviews found no Important/Critical issues. Actual six export tests, native two-page 52-product/replay/tamper and browser29/29 pass; native changed-options conflict reproduced and localized guidance tested. Only reviewed provider/input/file/network boundaries changed, no extracted pure business policy."
+    },
+    "extensions/apps/migration/service/export_manifest.rs": {
+      "status": "unproved",
+      "sha256": "29cf15730929d204b059f1c7ca05d92d0618e9400967d74771dde7c67312cdad",
+      "review": "Reviewed independent frozen-export transport/package boundaries, separate export-only credential, pinned manifest/context/count/digest and bounded source-reference readiness. Actual pack/HTTP counterexamples and 52-product native intake/replay/tamper stop pass, no native authority or extracted pure business policy changed; source JSON, files, crypto/provider/async remain outside Lean proof."
+    },
+    "extensions/apps/migration/service/export_pack.rs": {
+      "status": "unproved",
+      "sha256": "0d732a2872eac43b6c4eb6d43df1753295daf455e07dc651d30e7350a77ba951",
+      "review": "Final review of frozen-export implementation and native callback error-origin recovery: exact manifest/source/context/page bytes/counts, bounded offline pack/readiness and HTTP identity without source egress; separate export credential, current reviewed native job admission unchanged. Independent boundary reviews found no Important/Critical issues. Actual six export tests, native two-page 52-product/replay/tamper and browser29/29 pass; native changed-options conflict reproduced and localized guidance tested. Only reviewed provider/input/file/network boundaries changed, no extracted pure business policy."
+    },
+    "extensions/apps/migration/service/export_readiness.rs": {
+      "status": "unproved",
+      "sha256": "d1663209afc77611a80f7f3be93bfce88bcd64f01943d033f6ad913a0bc9a470",
+      "review": "Reviewed independent frozen-export transport/package boundaries, separate export-only credential, pinned manifest/context/count/digest and bounded source-reference readiness. Actual pack/HTTP counterexamples and 52-product native intake/replay/tamper stop pass, no native authority or extracted pure business policy changed; source JSON, files, crypto/provider/async remain outside Lean proof."
+    },
+    "extensions/apps/migration/service/export_source.rs": {
+      "status": "unproved",
+      "sha256": "fc68e5e198d4cfd0f72abdb7c44d5a43fea6e39412ab485a2bee72ff7fbd9950",
+      "review": "Reviewed independent frozen-export transport/package boundaries, separate export-only credential, pinned manifest/context/count/digest and bounded source-reference readiness. Actual pack/HTTP counterexamples and 52-product native intake/replay/tamper stop pass, no native authority or extracted pure business policy changed; source JSON, files, crypto/provider/async remain outside Lean proof."
     },
     "extensions/apps/migration/service/extract.rs": {
       "status": "unproved",
-      "sha256": "a9ccdf6bea05d6c4bf8cb0fe2b828b7a3de924dbaf06667cbb91b1ff8af91c69",
-      "review": "Reviewed source pagination typed evidence, exact offset page occupancy and Shopify requested connection completeness; four actual HTTP RED to GREEN cases plus complete native migration and clippy pass. SQL/provider boundaries remain unproved."
+      "sha256": "317c51a3bbb6a4a387c9ab64ae9742810ba26499d5f2357cabd567c353f1bba7",
+      "review": "Reviewed independent frozen-export transport/package boundaries, separate export-only credential, pinned manifest/context/count/digest and bounded source-reference readiness. Actual pack/HTTP counterexamples and 52-product native intake/replay/tamper stop pass, no native authority or extracted pure business policy changed; source JSON, files, crypto/provider/async remain outside Lean proof."
     },
     "extensions/apps/migration/service/main.rs": {
       "status": "unproved",
-      "sha256": "a5186174d9a0ff7c3fcd36a31281c8787a9f667fe1a4ccf7d64ca85cc89b7773",
-      "review": "Reviewed original CRM address-book and historical source joins: independent review caught region loss, five-provider US-CA controls now pass; native address import shares tenant-locked storage and suppresses only ordinary address events; all five source transports reach immutable native CRM/history with replay and denial tests. Existing kernel proof boundary unchanged; source JSON, provider reads and SQL/async effects remain unproved."
+      "sha256": "2f5aa287c2a70bcd0cb39500bacee7aa4b0ac7d4c3e9bea3067feb21cb8d55e8",
+      "review": "Final review of frozen-export implementation and native callback error-origin recovery: exact manifest/source/context/page bytes/counts, bounded offline pack/readiness and HTTP identity without source egress; separate export credential, current reviewed native job admission unchanged. Independent boundary reviews found no Important/Critical issues. Actual six export tests, native two-page 52-product/replay/tamper and browser29/29 pass; native changed-options conflict reproduced and localized guidance tested. Only reviewed provider/input/file/network boundaries changed, no extracted pure business policy."
     },
     "extensions/apps/migration/service/media.rs": {
       "status": "unproved",
@@ -1073,8 +1098,8 @@
     },
     "extensions/apps/migration/service/transport.rs": {
       "status": "unproved",
-      "sha256": "51302972b9deb6e61af7713452c7b5f0e17661b08414bb3e6ad3b8fc833f3f46",
-      "review": "Migration intake reviewed: native private catalogue/category/page owners, exact historical provenance without purchase effects, current package/creator/lease/hash fences and native replay lock order; independent Rust package uses shared money/network policy only; new HTML rich blocks preserve text and list structure. Real source/Core HTTP, signed roles, cancellation, replay, concurrent callbacks and simulated purchase regressions passed. External source completeness and SQL are not claimed proved."
+      "sha256": "5da82170ca99f8c2306e494a423a99a19e54934c73850ab8413f7f6dfcd8689e",
+      "review": "Reviewed independent frozen-export transport/package boundaries, separate export-only credential, pinned manifest/context/count/digest and bounded source-reference readiness. Actual pack/HTTP counterexamples and 52-product native intake/replay/tamper stop pass, no native authority or extracted pure business policy changed; source JSON, files, crypto/provider/async remain outside Lean proof."
     },
     "extensions/apps/migration/service/woo.rs": {
       "status": "unproved",

@@ -44,6 +44,7 @@ automatic semantic equivalence for arbitrary third-party plugins or theme code.
 
 | Domain | Implemented path | Boundary |
 | --- | --- | --- |
+| Frozen export intake | Streamed original JSON lines → private immutable pages → separately authenticated pinned HTTPS reader → existing reviewed native jobs | Exact context/digest/count/cursor checks; one domain per package. Shallow references and truncated children stop. Immutable bytes are not a complete source transaction fence or whole-shop target parity. |
 | Products | Shopify variants, WooCommerce simple and concrete variable products, PrestaShop/Magento/Shopware 5 source projections; native private product creation | Retains original amount/basis, known source stock and source metadata; active target stock starts at zero. Multiple Shopify/Shopware variants use native parents/options; category source IDs resolve to the native category tree. Complex/bundle/combinations still need complete domain mapping. WooCommerce families retain their original parent/child IDs, declared axes/options, explicit published/private status and child images. Missing/duplicate/foreign children, wildcard combinations, standalone variations, and separate hidden/search-only/catalog-only visibility require explicit mapping rather than silent simplification. |
 | Product images | Public source URLs → frozen original-byte digests → native private asset store and ordered product media | PNG/JPEG/WebP, 1 byte–8 MiB each, up to 20 images/product and 10 images/reviewed slice. Source credentials are never forwarded to CDNs; unsupported signed URLs, private/relative source paths and unknown collection profiles require an explicit mapping/export. |
 | Customers | All five local provider protocols → native billing/shipping/additional address books (up to 50 addresses) | Explicit country/subdivision codes, original contact fields and distinct defaults are retained. No password/account credential, marketing consent, verified identity or email-based historical ownership is invented. Existing email conflicts require a reviewed resolution. |
@@ -65,6 +66,75 @@ remain visible; they are not counted as a completed extraction. REST page/count
 evidence must be typed and agree with the requested offset and returned records.
 A short nonterminal page cannot silently skip rows. Shopify root and requested
 nested connections require explicit boolean pagination evidence.
+
+## Frozen exports and interrupted large reads
+
+The same Rust binary can stream original, expanded source JSON lines into a
+private, immutable export package. It does not collect a full catalogue in memory:
+only a bounded page plus the bounded set of source identities is retained. An
+export is a source artifact, not a new job queue, SQL table or runtime spool.
+
+```sh
+cargo build --locked --package veyndo-migration --bin migration-assistant
+# The directory must be new. JSON lines contain original source records,
+# expanded with the references/children required by the selected adapter.
+target/debug/migration-assistant pack woocommerce products EUR de-DE \
+  https://original-shop.example wc/v3 ./new-private-export < products.jsonl
+```
+
+The command prints the SHA-256 of `manifest.json` after all records validate.
+Source files are created with `0600`, the new directory with `0700` on Unix;
+existing packages are never overwritten. Duplicate source identities or invalid
+rows prevent manifest publication. Partial files after an interrupted preparation
+are not an admitted package; prepare a new directory. Protect and remove source
+PII according to the merchant's retention policy.
+
+Serve this directory through a private HTTPS export endpoint with its **own**
+read credential. In the existing encrypted migration settings, select **Read a
+frozen source export**, enter its manifest URL, SHA-256 and separate credential.
+Keep the original source system/URL/API version/currency/language above: exporting
+through another host must not change native source identity. The original identity may be a legacy HTTP/on-prem URL; it is never fetched in
+export mode. The actual export endpoint still requires admitted HTTPS. An export-only
+connection does not require the original shop API secret. Its secret is never
+forwarded to the export server. Settings keys are `export_manifest`,
+`export_digest`, `export_token`; operator `MIGRATION_SOURCES` profiles accept the
+corresponding camelCase fields. Public/source-provided links cannot choose these
+credentials or redirect the reader.
+
+Before a review or write the service checks:
+
+- The exact manifest bytes, complete original source context and selected domain.
+- Every page's fixed name, SHA-256, size, source count and normalized count;
+  listed pages must add up to the manifest totals.
+- The original page bytes and adapter output count before any native intake.
+- The cursor's pinned manifest digest; another export cannot silently reuse it.
+
+The reader remains on the admitted export origin, without proxies/redirects,
+through the existing pinned public-address transport. A changed/missing page,
+mismatched language/currency/source or changed manifest stops at the current
+cursor. Expanded pages still use native byte-bounded review slices and exact
+reviewed record digests. The saved inspection and import result retain the export
+hash/counts. The Studio shows this evidence before approval. Current app rights,
+private destination, package/creator/lease fences and explicit per-page approval
+are unchanged.
+
+The package profile admits at most 500,000 original rows, 2,000,000 normalized
+rows and 10,000 pages; each page has at most 50 original rows, 1 MiB raw data and
+bounded expanded content. These are configured software bounds, **not measured
+full-migration throughput or an assurance that every source row fits native review**.
+Images continue to use their separately reviewed original bytes. One package is
+one domain. A content checksum establishes immutable artifact bytes; it does not
+prove the source database was transactionally frozen, that all domains were
+exported, that the native target still matches, or that final cutover is ready.
+
+Offline exports must already contain complete children and original references.
+Shallow order summaries, missing Presta customer address lists/order geography or
+currency references, and truncated Shopify nested connections are rejected before
+manifest publication and again before reading a package. Export preparation is
+not an implicit read of private on-prem databases or a generic provider-plugin
+converter. Unsupported source profiles still require an explicit adapter.
+
+![Frozen export evidence in the actual local Studio](evidence/images/migration-2026-10-18/export-review.png)
 
 ## Original customers, addresses and order history
 
@@ -102,6 +172,12 @@ Provider contracts: [Shopware 5 orders](https://developers.shopware.com/develope
 [PrestaShop orders](https://devdocs.prestashop-project.org/8/webservice/resources/orders/),
 [Shopify customers](https://shopify.dev/docs/api/admin-graphql/latest/objects/Customer)
 and [Shopify original-order access](https://shopify.dev/docs/api/admin-graphql/latest/objects/Order).
+
+Native callback errors are distinct from source API failures. Import conflicts
+name Veyndo and explain how to reuse original options/destination or review an
+explicit change; they never suggest changing source access for a native conflict.
+Saved recovery guidance ships in English, German, French and Spanish. Response
+bodies and credentials are not copied into diagnostic messages.
 
 ## Slow sources and variable families
 

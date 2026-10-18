@@ -6,7 +6,7 @@ App-specific code stays here; Core contains only generic native import/job admis
 
 - `contract/`: stable versioned source identities and exact source money.
 - `adapters/`: source-owned normalization, languages, addresses, historical lines/dates.
-- `service/`: bounded HTTPS extraction, complete concrete WooCommerce families, byte-bounded variant slices and native inspection/import jobs.
+- `service/`: bounded immutable export packaging/HTTPS reads, separate export credentials, complete source-page evidence, complete concrete WooCommerce families, byte-bounded variant slices and native inspection/import jobs.
 - `studio/`: source setup, review, saved jobs and the shared agent drawer.
 - `tests/`: real Rust protocol/Core fixtures and app-owned UI acceptance.
 
@@ -24,3 +24,8 @@ are expanded through bounded detail reads; Presta ownership/geography/currency
 references are checked; Shopify full-history access is explicitly required. Source
 PII stays behind current paired rights, with no new login or ordinary address-change
 workflow. See the main guide for provider shapes and remaining acceptance.
+
+`migration-assistant pack` produces a private checksum-bound package from original
+expanded JSON lines; configured HTTPS readers use the same reviewed native jobs.
+See the guide for the command, encrypted export settings, source-reference checks
+and explicit distinction between immutable domain bytes and whole-shop cutover.

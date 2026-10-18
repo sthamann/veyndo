@@ -242,3 +242,28 @@
 .migration-source-detail dl {
   grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
 }
+
+.migration-source-export {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+  margin: 20px 0;
+  padding: 18px 20px;
+  border: 1px solid var(--line, #d6e2ef);
+  border-left: 3px solid #008cdd;
+  border-radius: 12px;
+  background: var(--surface-alt, #eff6ff);
+}
+.migration-source-export p {
+  margin: 0;
+  line-height: 1.6;
+}
+.migration-source-export p:last-child {
+  color: var(--muted, #60758b);
+  font-size: 12px;
+}
+.migration-source-export code {
+  font-size: 11px;
+  overflow-wrap: anywhere;
+  user-select: all;
+}

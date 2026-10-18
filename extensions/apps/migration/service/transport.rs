@@ -48,6 +48,15 @@ pub async fn client(origin: &str, fixture: bool) -> Result<reqwest::Client> {
         .map_err(|_| "source transport unavailable".into())
 }
 pub async fn json(request: reqwest::RequestBuilder) -> Result<(Value, reqwest::header::HeaderMap)> {
+    let (body, headers) = bytes(request).await?;
+    Ok((
+        serde_json::from_slice(&body).map_err(|_| "source returned invalid JSON")?,
+        headers,
+    ))
+}
+pub async fn bytes(
+    request: reqwest::RequestBuilder,
+) -> Result<(Vec<u8>, reqwest::header::HeaderMap)> {
     let mut r = request
         .send()
         .await
@@ -76,8 +85,5 @@ pub async fn json(request: reqwest::RequestBuilder) -> Result<(Value, reqwest::h
         }
         body.extend_from_slice(&chunk);
     }
-    Ok((
-        serde_json::from_slice(&body).map_err(|_| "source returned invalid JSON")?,
-        headers,
-    ))
+    Ok((body, headers))
 }
