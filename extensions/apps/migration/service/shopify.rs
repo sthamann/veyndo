@@ -77,9 +77,21 @@ pub async fn page(
     if nodes.len() > 50 {
         return Err("Shopify page exceeded requested limit".into());
     }
+    let has_next = data["pageInfo"]["hasNextPage"]
+        .as_bool()
+        .ok_or("Shopify source page is missing typed pagination evidence")?;
     for n in &mut nodes {
-        for nested in ["variants", "images", "lineItems", "addressesV2"] {
-            if n[nested]["pageInfo"]["hasNextPage"] == true {
+        let nested: &[&str] = match kind {
+            "products" => &["variants", "images"],
+            "customers" => &["addressesV2"],
+            "orders" => &["lineItems"],
+            _ => &[],
+        };
+        for &nested in nested {
+            if n[nested]["pageInfo"]["hasNextPage"]
+                .as_bool()
+                .ok_or("Shopify nested connection is missing typed completeness evidence")?
+            {
                 return Err(format!(
                     "Shopify nested {nested} exceeds this page profile; use a bulk export, no record was dropped"
                 ));
@@ -103,7 +115,7 @@ pub async fn page(
                 .into();
         }
     }
-    let next = if data["pageInfo"]["hasNextPage"] == true {
+    let next = if has_next {
         Some(
             data["pageInfo"]["endCursor"]
                 .as_str()

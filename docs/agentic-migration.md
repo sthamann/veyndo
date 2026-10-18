@@ -61,7 +61,10 @@ Their local HTTP fixtures prove the implemented protocol paths, **not admission
 against arbitrary installed versions, private plugins or real merchant credentials**.
 Shopify protected customer data/older orders, third-party reviews and discounts can
 need additional access or explicit exports. API errors and nested pagination gaps
-remain visible; they are not counted as a completed extraction.
+remain visible; they are not counted as a completed extraction. REST page/count
+evidence must be typed and agree with the requested offset and returned records.
+A short nonterminal page cannot silently skip rows. Shopify root and requested
+nested connections require explicit boolean pagination evidence.
 
 ## Original customers, addresses and order history
 

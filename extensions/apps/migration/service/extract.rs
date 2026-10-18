@@ -103,21 +103,57 @@ pub async fn source_page(
     if list.len() > 50 {
         return Err("source ignored requested page limit".into());
     }
-    let more = if let Some(n) = headers
+    let pages = headers
         .get("x-wp-totalpages")
-        .and_then(|v| v.to_str().ok())
-        .and_then(|n| n.parse::<u32>().ok())
-    {
-        page < n
-    } else if let Some(n) = value
-        .get("total_count")
-        .or_else(|| value.get("total"))
-        .and_then(Value::as_u64)
-    {
-        u64::from(page) * 50 < n
-    } else {
-        list.len() == 50
+        .map(|value| {
+            value
+                .to_str()
+                .ok()
+                .and_then(|s| s.parse::<u32>().ok())
+                .ok_or("Invalid source page-count evidence")
+        })
+        .transpose()?;
+    let count = headers
+        .get("x-wp-total")
+        .map(|value| {
+            value
+                .to_str()
+                .ok()
+                .and_then(|s| s.parse::<u64>().ok())
+                .ok_or("Invalid source record-count evidence")
+        })
+        .transpose()?;
+    let count = match (
+        count,
+        value.get("total_count").or_else(|| value.get("total")),
+    ) {
+        (Some(n), _) => Some(n),
+        (None, Some(value)) => Some(value.as_u64().ok_or("Invalid source record count")?),
+        _ => None,
     };
+    if let Some(count) = count {
+        let expected = count.saturating_sub(u64::from(page - 1) * 50).min(50);
+        if list.len() as u64 != expected
+            || pages.is_some_and(|n| u64::from(n) != count.div_ceil(50))
+        {
+            return Err("Source record/page counts changed or source ignored pagination; no cursor advanced".into());
+        }
+    }
+    let more = match pages {
+        Some(0) if !list.is_empty() => {
+            return Err("Source reports zero pages with nonempty records".into());
+        }
+        Some(n) if n > 0 && page > n => {
+            return Err("Source cursor exceeds declared page count".into());
+        }
+        Some(n) => page < n,
+        None => count.map_or(list.len() == 50, |n| u64::from(page) * 50 < n),
+    };
+    if more && list.len() != 50 {
+        return Err(
+            "Source returned a short nonterminal page; no source records were skipped".into(),
+        );
+    }
     if c.system == Source::Woocommerce && kind == "products" {
         super::woo::enrich(c, &mut list, fixture).await?;
     }

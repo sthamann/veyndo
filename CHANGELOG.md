@@ -1,5 +1,10 @@
 # Changelog
 
+## Source pagination completeness — 2026-10-18
+
+- Stop on malformed or contradictory source totals, short nonterminal offset pages and missing Shopify root/nested completeness metadata. Preserve the cursor rather than silently skip source records.
+- Four actual HTTP counterexamples now reject; complete native migration and five-provider CRM/history fixtures continue to pass. Whole-shop reconciliation/cutover remains open.
+
 ## Original CRM and historical source fidelity — 2026-10-18
 
 - Carry billing, shipping and additional original addresses through one native CRM transaction, including source subdivisions/contact fields, exact replay and rollback on an invalid address. Historical intake suppresses ordinary address-change events; manual editing retains them.

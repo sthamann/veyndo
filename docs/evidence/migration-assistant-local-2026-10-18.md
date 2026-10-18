@@ -13,7 +13,7 @@ private destination before invoking the original native domain writer.
 
 Products, images, categories, editable content pages, CRM customers, immutable
 historical orders, moderated reviews and inactive coupons all traverse that real service/gateway/job/write path. Five
-source-platform HTTP fixtures, 27 normalization cases, eight CRM evidence cases, 13 transport cases and four publication-state cases exercise implemented
+source-platform HTTP fixtures, 27 normalization cases, eight CRM evidence cases, 14 transport cases and four publication-state cases exercise implemented
 provider profiles. Three Rust package tests cover the shared exact-money, safe
 transport and explicit unknown-image-profile boundaries.
 
@@ -220,3 +220,17 @@ Screenshots: `artifacts/migration-crm-customer-review.png` and
 `artifacts/migration-crm-order-review.png`. Both were visually inspected. The owned
 Chrome tab, fixture processes and disposable database were cleaned up; port 8802
 and the two pre-existing disposable databases were preserved.
+
+## Source pagination completeness follow-up
+
+Four real HTTP counterexamples previously accepted malformed REST page counts,
+a short nonterminal offset page, and missing Shopify root/nested page evidence.
+These now fail before returning records or advancing a cursor. REST count/page
+occupancy must agree; queried Shopify connections require boolean completeness.
+The complete registered native migration path passes, including five-provider
+CRM/history and simulated checkout. Independent focused review found no Important
+or Critical defects. This protects individual source pages; it does not establish
+whole-shop snapshot consistency or final cutover. Evidence:
+`artifacts/migration-incomplete-pagination-red.log`,
+`artifacts/migration-incomplete-pagination-green.log`,
+`artifacts/migration-pagination-native.log`, `artifacts/migration-pagination-clippy.log`.

@@ -26,6 +26,8 @@ class Source(BaseHTTPRequestHandler):
         if self.path.startswith('/rest/V1/products'):
             self.send_response(200);self.end_headers();self.wfile.write(json.dumps({'items':[{'id':3,'sku':'MAG-3','name':'Magento cup','price':'15.25','type_id':'simple','status':2,'visibility':4}],'total_count':1}).encode());return
         token=self.headers.get('authorization')
+        if token in ('Bearer malformed-pagination','Bearer short-pagination'):
+            self.send_response(200);self.send_header('X-WP-TotalPages','broken' if token.endswith('malformed-pagination') else '2');self.end_headers();self.wfile.write(json.dumps([{'id':1,'name':'Incomplete source','price':'1.00'}]).encode());return
         if token in ('Bearer variants-secret','Bearer drift-secret'):
             if urlsplit(self.path).path=='/wp-json/wc/v3/products':
                 body=[{'id':800,'name':'Variable source cup','type':'variable','attributes':[{'name':'Size','variation':True,'options':[str(i) for i in range(801,862)]}],'variations':list(range(801,862)), 'images':[{'src':f'http://127.0.0.1:{self.server.server_port}/source.png'}]}]
@@ -44,7 +46,7 @@ class Source(BaseHTTPRequestHandler):
         self.send_error(404)
     def do_POST(self):
         token=self.headers.get('X-Shopify-Access-Token')
-        if token not in ['source-secret','many-secret','missing-order-scope']:self.send_error(401);return
+        if token not in ['source-secret','many-secret','missing-order-scope','bad-graph-page','bad-nested-page']:self.send_error(401);return
         request=json.loads(self.rfile.read(int(self.headers.get('Content-Length','0'))))
         if 'orders(first:' in request['query']:
             body=crm_shopify(request['query'],'transport-fixture')
@@ -54,7 +56,10 @@ class Source(BaseHTTPRequestHandler):
         parents=[]
         for p in range(50 if token=='many-secret' else 1):
             parents.append({'id':f'gid://shopify/Product/{p}','title':'Shopify cup','status':'DRAFT','onlineStoreUrl':None,'variants':{'nodes':[{'id':p*3+i,'title':f'Variant {i}','sku':f'SHOP-{p}-{i}','price':'19.90','inventory_quantity':2} for i in range(3 if token=='many-secret' else 1)],'pageInfo':{'hasNextPage':False}},'images':{'nodes':[{'url':f'http://127.0.0.1:{self.server.server_port}/source.png'}],'pageInfo':{'hasNextPage':False}}})
-        self.send_response(200);self.end_headers();self.wfile.write(json.dumps({'data':{'products':{'nodes':parents,'pageInfo':{'hasNextPage':False,'endCursor':None}}}}).encode())
+        body={'data':{'products':{'nodes':parents,'pageInfo':{'hasNextPage':False,'endCursor':None}}}}
+        if token=='bad-graph-page':body['data']['products']['pageInfo']={}
+        if token=='bad-nested-page':body['data']['products']['nodes'][0]['images']['pageInfo']={}
+        self.send_response(200);self.end_headers();self.wfile.write(json.dumps(body).encode())
 class SourceServer(ThreadingHTTPServer):
     request_queue_size=32
 class Transport(unittest.TestCase):
@@ -71,6 +76,10 @@ class Transport(unittest.TestCase):
         connections['tenant-a']['woo_drift']={**connections['tenant-a']['source-a'],'token':'drift-secret'}
         connections['tenant-a']['sw_order_drift']={**connections['tenant-a']['shopware5'],'token':'drift-order-secret'}
         connections['tenant-a']['shopify_no_history']={**connections['tenant-a']['shopify'],'token':'missing-order-scope'}
+        for name in ('malformed-pagination','short-pagination'):
+            connections['tenant-a'][name]={**connections['tenant-a']['source-a'],'token':name}
+        for name in ('bad-graph-page','bad-nested-page'):
+            connections['tenant-a'][name]={**connections['tenant-a']['shopify'],'token':name}
         env['MIGRATION_SOURCES']=json.dumps(connections)
         cls.log=open(ROOT/'artifacts/migration-transport-service.log','w');cls.p=subprocess.Popen([str(BIN),'serve'],env=env,stdout=cls.log,stderr=cls.log)
         for _ in range(30):
@@ -103,6 +112,11 @@ class Transport(unittest.TestCase):
         self.assertEqual(v['records'][0]['data']['lines'][0]['unitPrice']['minor'],625)
         code,v=self.call(sourceId='shopify_no_history',kind='orders');self.assertEqual(code,400,v)
         self.assertNotIn('records',v)
+    def test_incomplete_pagination_never_claims_a_complete_source_page(self):
+        for source in ('malformed-pagination','short-pagination','bad-graph-page','bad-nested-page'):
+            with self.subTest(source=source):
+                code,v=self.call(sourceId=source);self.assertEqual(code,400,v)
+                self.assertNotIn('records',v)
     def test_variant_expansion_is_split_into_complete_reviewable_batches(self):
         rows=[];cursor=None
         for _ in range(20):
