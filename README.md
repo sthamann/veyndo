@@ -32,6 +32,7 @@ public acceptance are recorded separately.
 | Work | What connects it |
 | --- | --- |
 | **Ask, review, act** | The merchant assistant reads authorized shop context and prepares native changes for review. [Intelligence](docs/cognitive-commerce.md). |
+| **Bring your shop** | The [Migration Assistant](docs/agentic-migration.md) connects versioned source profiles, private review and native imports. Current implementation and open domains are documented separately. |
 | **Build the business** | App Studio, visual editing and coding agents share versioned app definitions, typed records and bounded actions. [App Studio](docs/app-studio.md), [native object extensions](docs/app-core-extensions.md), [order and quote workflows](docs/app-native-lifecycles.md). |
 | **Shape the shop** | Design standard storefront pages on the actual preview; use original Storyfront for connected Experiences. [Visual design](docs/personal-workspace-and-shop-design.md). |
 | **Automate the work** | Rules, events, durable Flows and app actions reuse native business operations. [Automation](docs/automation.md). |

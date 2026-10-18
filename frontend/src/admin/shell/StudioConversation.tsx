@@ -17,9 +17,11 @@ import { useStudio } from "./StudioContext";
 
 export default function StudioConversation({
   compact = false,
+  context,
   onProviderSettings,
 }: {
   compact?: boolean;
+  context?: string;
   onProviderSettings?: () => void;
 }) {
   const { u } = useExperienceUIText();
@@ -238,7 +240,7 @@ export default function StudioConversation({
         )}
         <div ref={bottom} />
       </div>
-      <StudioComposer />
+      <StudioComposer context={context} />
     </section>
   );
 }

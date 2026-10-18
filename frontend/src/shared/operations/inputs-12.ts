@@ -2,6 +2,12 @@
 /** Native input DTOs; opaque JSON fields remain explicit. */
 import type { JsonValue } from "./value";
 export interface Inputs12 {
+  "pos.detail": {
+    after?: string;
+    cartToken?: string;
+    channelId: string;
+    productId: string;
+  };
   "pos.currency": {
     cartToken: string;
     channelId: string;
@@ -46,21 +52,6 @@ export interface Inputs12 {
   "pos.held": { channelId: string };
   "pos.sales": { channelId: string };
   "b2b.company.create": {
-    cartRevision?: number;
-    companyId?: string;
-    customerId?: string;
-    data?: JsonValue;
-    id?: string;
-    lines?: Array<{ quantity: number; sku: string }>;
-    message?: string;
-    parentId?: string | null;
-    productIds?: Array<string>;
-    purchaseOrder?: string;
-    revision?: number;
-    state?: "approved" | "rejected";
-    unitId?: string;
-  };
-  "b2b.settings.save": {
     cartRevision?: number;
     companyId?: string;
     customerId?: string;

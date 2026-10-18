@@ -109,10 +109,10 @@ export function useChatTurns(options: Options) {
     setSaved(undefined);
     o.onNew();
   };
-  const send = async () => {
+  const send = async (context?: string) => {
     const o = latest.current;
     if (!o.draft.trim() || o.busy || active || !o.connected) return;
-    const text = o.draft;
+    const text = context ? `${context}\n\n${o.draft}` : o.draft;
     const scope = o.scope;
     const originalId = o.id;
     const fingerprint = JSON.stringify([

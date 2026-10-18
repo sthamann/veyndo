@@ -25,6 +25,8 @@ pub(super) fn scope(permission: &str) -> Option<&'static str> {
         "channels.read" => "settings.read",
         "documents.read" => "documents.read",
         "customers.read" => "customers.read",
+        "customers.write" => "customers.write",
+        "settings.read" => "team.manage",
         "customers.pii" => "customers.pii",
         "products.read" => "catalog.read",
         "products.write" => "catalog.write",

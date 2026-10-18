@@ -12,6 +12,7 @@ import "../styles/operations.css";
 import "../styles/studio.css";
 import type { Message, Overview, Provider } from "./studio-types";
 
+import { useDesignHandoff } from "./useDesignHandoff";
 import { useEntityNavigation } from "./useEntityNavigation";
 import { canOpenStudio, firstStudioTab } from "./permissions";
 import { useStudioNavigation } from "./navigation";
@@ -52,6 +53,7 @@ export function useStudioController({
       history.replaceState(null, "", url);
     }
   }, [token, workspace]);
+  const designHandoff = useDesignHandoff(workspace, token);
   const [workspaceName, setWorkspaceName] = useState(workspace);
   const [connectionEstablished, setConnected] = useState(false);
   const [connectionPending, setConnectionPending] = useState(false);
@@ -87,7 +89,7 @@ export function useStudioController({
       (n) => n.id,
     ),
   );
-  const { tab, setTab, entityTarget, openEntity, entityBack } = navigation;
+  const { tab } = navigation;
   const [appSurface, setAppSurface] = useState<AppSurface | null>(null);
   const selectTab = (id: Parameters<typeof navigation.selectTab>[0]) => {
     setAppSurface(null);
@@ -301,6 +303,8 @@ export function useStudioController({
     (!focus ? data?.products[0] : undefined);
 
   return {
+    ...navigation,
+    ...designHandoff,
     onExit,
     onChanged,
     locale,
@@ -359,14 +363,9 @@ export function useStudioController({
     setSettings,
     previewOpen,
     setPreviewOpen,
-    tab,
-    setTab,
     appSurface,
     setAppSurface,
     selectTab,
-    entityTarget,
-    openEntity,
-    entityBack,
     data,
     setData,
     focus,

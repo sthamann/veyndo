@@ -67,6 +67,9 @@ pub(crate) async fn list(State(a): State<App>, h: RequestContext) -> Result<Json
         json!({"mainLocale":settings.main_locale,"elements":rows.iter().map(|r|json!({"id":r.get::<String,_>("id"),"parentId":r.get::<Option<String>,_>("parent_id"),"position":r.get::<i32,_>("position"),"revision":r.get::<i64,_>("revision"),"data":r.get::<Value,_>("data")})).collect::<Vec<_>>()}),
     ))
 }
+pub(crate) async fn import(a: App, h: RequestContext, id: String, v: Value) -> Result<Json<Value>> {
+    write(a, h, id, v, true).await
+}
 pub(crate) async fn create(
     State(a): State<App>,
     h: RequestContext,

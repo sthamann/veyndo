@@ -31,8 +31,10 @@ export default function DesignerInspector({
   onPrepare,
   scopeKey,
   onViewport,
+  initialReference,
 }: {
   scopeKey: string;
+  initialReference?: string;
   onViewport: (device: "desktop" | "mobile") => void;
   setup?: ReactNode;
   d: Designer;
@@ -104,6 +106,7 @@ export default function DesignerInspector({
         {
           <div hidden={mode !== "agent"}>
             <DesignAgent
+              initialReference={initialReference}
               key={scopeKey}
               request={request}
               page={d.draft}

@@ -932,6 +932,106 @@
       "sha256": "526a93fb242b4db514af6d88bd123766517a9125fbdbe3ee34d0e655e51c2180",
       "review": "Identity-only Veyndo namespace and canonical-domain rename; reviewed migration checksum compatibility for six historical SQL versions, unchanged checkout predicates, 42 library and 169 binary tests pass; native component legacy boundary remains configured and guarded."
     },
+    "extensions/apps/migration/adapters/contacts.rs": {
+      "status": "unproved",
+      "sha256": "2278e3fde03481a3cff01cdb6f3df819e69f8e53ed5100f6ce552f7263da8dbe",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+    },
+    "extensions/apps/migration/adapters/dates.rs": {
+      "status": "unproved",
+      "sha256": "9eaa506d126142b0f010edcc0f21e2048b81e99e4de51b914bfd6f99f6fcdf9a",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+    },
+    "extensions/apps/migration/adapters/mod.rs": {
+      "status": "unproved",
+      "sha256": "68e8cc058ce531ac3c3d9524dbd1a28ca23816d5ec0f41ac150b85a61d2f11fb",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+    },
+    "extensions/apps/migration/adapters/order_lines.rs": {
+      "status": "unproved",
+      "sha256": "742c4a6a47d22f75690dc5b488c2ec50cca7720ecae87f37ea97e4ac944ef27a",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+    },
+    "extensions/apps/migration/adapters/pages.rs": {
+      "status": "unproved",
+      "sha256": "3a612458e50fb4d898ebb76a92e2ff874f79d9a80d1e5c752e0e37e202bccb6c",
+      "review": "Migration intake reviewed: native private catalogue/category/page owners, exact historical provenance without purchase effects, current package/creator/lease/hash fences and native replay lock order; independent Rust package uses shared money/network policy only; new HTML rich blocks preserve text and list structure. Real source/Core HTTP, signed roles, cancellation, replay, concurrent callbacks and simulated purchase regressions passed. External source completeness and SQL are not claimed proved."
+    },
+    "extensions/apps/migration/adapters/products.rs": {
+      "status": "unproved",
+      "sha256": "3e4823dbb019594ad8ed1159e0f6ceb34f302b063d9408481c04a64dcad09a19",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+    },
+    "extensions/apps/migration/adapters/records.rs": {
+      "status": "unproved",
+      "sha256": "b66a16465a0c20492ff8c28dc458e50d104ffedef168bdb42dc6b633242966cc",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+    },
+    "extensions/apps/migration/adapters/relations.rs": {
+      "status": "unproved",
+      "sha256": "c9483641a7b1c0f518318dec9ed39c7cc22c809abf9f7691fc997c8a88d0e384",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+    },
+    "extensions/apps/migration/contract/mod.rs": {
+      "status": "unproved",
+      "sha256": "587ee130b908e7a7ac86d369647f092aa6257db64d237d4bd9708b074e98885e",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+    },
+    "extensions/apps/migration/contract/money.rs": {
+      "status": "unproved",
+      "sha256": "cb699ebe38bc137881c330fc2a3cd7d15bb9a52fa221faaaeda37d59b799bc63",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+    },
+    "extensions/apps/migration/service/batch.rs": {
+      "status": "unproved",
+      "sha256": "ab53e4adee2a0cf8a2ae1ed6fa7ceea680264198ccae4f565663ba725366c767",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+    },
+    "extensions/apps/migration/service/config.rs": {
+      "status": "unproved",
+      "sha256": "abc911d5ebcc1e962c8147b6beb03183b65fb93c79e9cc4895e5f6852232fbb0",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+    },
+    "extensions/apps/migration/service/core.rs": {
+      "status": "unproved",
+      "sha256": "516bbeb26ef2b7846ca15663268b6777f10ba49eb5bded0e879ca21972306359",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+    },
+    "extensions/apps/migration/service/events.rs": {
+      "status": "unproved",
+      "sha256": "15580ed450cf7c99c59062ef8270dc474f8a5707e0fd86aa0a3c824e1ecfaac4",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+    },
+    "extensions/apps/migration/service/extract.rs": {
+      "status": "unproved",
+      "sha256": "7efb8c8519d383e3a99bd5fe79f6bc1b079151a7c98ce381b2e303d6773e1c83",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+    },
+    "extensions/apps/migration/service/main.rs": {
+      "status": "unproved",
+      "sha256": "fab6c6981fcb1a3bc45a4ddfcd78389d565ce3160c06bb6ce363cd6bb0c77aae",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+    },
+    "extensions/apps/migration/service/server.rs": {
+      "status": "unproved",
+      "sha256": "27d6dc4ebac9c59d76e3090c4403e84e3ee165ac07d370021763cc53fdb45726",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+    },
+    "extensions/apps/migration/service/shopify.rs": {
+      "status": "unproved",
+      "sha256": "192ee036db0573eab51d1f42701ac2c874e0103f88e4c29d233644e41c3c2522",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+    },
+    "extensions/apps/migration/service/slices.rs": {
+      "status": "unproved",
+      "sha256": "4b01acdc86121e502b2c89b601b01d9916c7be1426fc0026c39fc1a936c2633b",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+    },
+    "extensions/apps/migration/service/transport.rs": {
+      "status": "unproved",
+      "sha256": "51302972b9deb6e61af7713452c7b5f0e17661b08414bb3e6ad3b8fc833f3f46",
+      "review": "Migration intake reviewed: native private catalogue/category/page owners, exact historical provenance without purchase effects, current package/creator/lease/hash fences and native replay lock order; independent Rust package uses shared money/network policy only; new HTML rich blocks preserve text and list structure. Real source/Core HTTP, signed roles, cancellation, replay, concurrent callbacks and simulated purchase regressions passed. External source completeness and SQL are not claimed proved."
+    },
     "extensions/apps/paypal/src/adapter.rs": {
       "status": "unproved",
       "sha256": "e779979cf45e5d38957f76b6c0d8aeaf0c4c39943c625487691d35701349ddee",
@@ -1179,8 +1279,8 @@
     },
     "src/apps/approval.rs": {
       "status": "reviewed-binding",
-      "sha256": "29fcc53d5eadea476dcbcdd9d73657d6e9b9b65dbe098457a122fc54373d502c",
-      "review": "Personal workspace and app-owned site design review: trusted personal sessions and actor RLS; public status/time/channel projection; original read-scope and current-field history; append-only cart-bound inbox/outbox with PII rights; package-before-record release fences. Independent security review and actual PostgreSQL own/foreign/CAS/history/form/model fixtures plus existing app/commerce/checkout/role/strict-runtime suites. New pure intake conjunction has exact Lean claims/conformance/negative mutations. SQL, UI, inference and providers remain unproved."
+      "sha256": "085ec1656d6691f0a3197f68ddeea0979ac28fa9f1a57e394dbe1cb716a5a273",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
     },
     "src/apps/asset_surfaces.rs": {
       "status": "unproved",
@@ -1254,8 +1354,8 @@
     },
     "src/apps/core_callbacks.rs": {
       "status": "unproved",
-      "sha256": "a849bff72c8fc2beda1941c54b537f21e4b6f879f0d488dff598b929fb246506",
-      "review": "Review 2026-10-14: bounded modular fulfillment predicates; native carrier intent freezes allocation/dispatch across unknown effects and cross-provider calls, confirmed rejection releases its own intent, exact PDFs acknowledge the original intent. Reviewed split/machine binding, tenant/package/CAS/quota checks and local paid-effect negative fixtures; SQL, crypto and carrier protocols remain unproved."
+      "sha256": "f321070d8805474a8e1548142a2573a1aeaef4ef2d858bcc4a94f9669d814ed9",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
     },
     "src/apps/core_documents.rs": {
       "status": "unproved",
@@ -1274,13 +1374,13 @@
     },
     "src/apps/credentials.rs": {
       "status": "reviewed-binding",
-      "sha256": "169ece39f79db70cbdd50e0fbe68b70d90fae1ef16092da7dcacc836b4c6cac1",
-      "review": "Review 2026-10-14: native conserved strict-subset shipment binding, unchanged transition replay/quote snapshots, tenant/package/current-right document admission and immutable quota accounting; DHL stays app-owned with local protocol/restart/PII denial fixtures. Carrier effects, SQL and runtime remain unproved."
+      "sha256": "831253da0bcd462155f41bbb75ffe614340b1523a53528abbdbb68fcd31b9b02",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
     },
     "src/apps/data.rs": {
       "status": "unproved",
-      "sha256": "442da554977ecf5e6bc934e39a9aa354bed6a2dac19032783dd1010dbce1af05",
-      "review": "Reviewed native extension identity/private/unique anchors and current read/write/PII scopes; native projections use bounded fixed-store queries, exact indexed filters bind all input and fence the admitted package digest. Real four-object HTTP/MCP, role revocation, foreign reference, immutable upgrade, product/company clone and selected release tests passed. Added extracted configuration-only release predicate and operational false property; SQL and UI remain explicitly unproved. Reviewed canonical schema, preserved AI bindings and versioned grid prompt provenance without changing existing prompt revisions."
+      "sha256": "6384764c81e121be079c464dc29cc569dcaf6eeb2ca0a06b8d299f2889f51ff1",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
     },
     "src/apps/distribution.rs": {
       "status": "unproved",
@@ -1369,8 +1469,13 @@
     },
     "src/apps/job_callbacks.rs": {
       "status": "unproved",
-      "sha256": "bc0ae8cd12bf8545eb57a0f8506d65a025e83feb5343f1929223674d553ff0de",
-      "review": "Retain role-bound scope, separate pools, restrictive policies and TEMP denial. App job callbacks now lock scoped memberships and workspace role base rows before reading the canonical security-invoker grants view; no UPDATE grant on the view or wider system scope is needed. Complete registered signed HTTP flows and two separate real PgBouncer pools pass with worker restart, revocation, native app jobs and key rotation. Each signed cutover fixture owns a separate disposable database."
+      "sha256": "a33ae029f264ac4f573ead0bbf09b77ee7259b0a147f1f0a5f4c7fb63883e0e3",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+    },
+    "src/apps/job_import.rs": {
+      "status": "unproved",
+      "sha256": "b432e6a5744a285988b528360134ef651145d3c2a8395dacaeb70b4bb2269f84",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
     },
     "src/apps/jobs.rs": {
       "status": "unproved",
@@ -1379,18 +1484,18 @@
     },
     "src/apps/manifest.rs": {
       "status": "unproved",
-      "sha256": "f974154d251378c5bf8c081c0d4fcbc7dcb33571232b6afd4b697918c38e4400",
-      "review": "Native lifecycle review: bounded namespaced app graphs preserve native terminal/payment/stock/buyer admission, per-object immutable accepted definitions, current compound scopes, same HTTP MCP Flow owners and operational history; SQL snapshots and migration 105 are regression-tested adapters, not proved."
+      "sha256": "d4c0233e1d46daa25392eb968d1ae0a1b9d137093cf37529a4840e6ab6af7d9f",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
     },
     "src/apps/manifest_validation.rs": {
       "status": "unproved",
-      "sha256": "a3e84acbaa19e7a3498ff503ebcb7b8ec8e7ee9d372b36d7ad6359f2fe12c0a0",
-      "review": "Native lifecycle review: bounded namespaced app graphs preserve native terminal/payment/stock/buyer admission, per-object immutable accepted definitions, current compound scopes, same HTTP MCP Flow owners and operational history; SQL snapshots and migration 105 are regression-tested adapters, not proved."
+      "sha256": "94a59ef32213c3fd61e2dd6aeff7bdf652c7a9877ed8c1a4b946afd3427d3742",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
     },
     "src/apps/mod.rs": {
       "status": "unproved",
-      "sha256": "150d7115227644e5f006c005a2641a5a20724ad80a7ebce355d22a7fd9e8c8e5",
-      "review": "Native lifecycle review: bounded namespaced app graphs preserve native terminal/payment/stock/buyer admission, per-object immutable accepted definitions, current compound scopes, same HTTP MCP Flow owners and operational history; SQL snapshots and migration 105 are regression-tested adapters, not proved."
+      "sha256": "cda330f917b6d49a56d05f1a048ea5fbf8e3ae72e29e23b0fdbf766919267947",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
     },
     "src/apps/native_data.rs": {
       "status": "unproved",
@@ -1462,6 +1567,11 @@
       "sha256": "33642f79985b534e7c9776143c0a047c8eef06cd96aaa6f74e76cd56bc9b2f16",
       "review": "Personal workspace and app-owned site design review: trusted personal sessions and actor RLS; public status/time/channel projection; original read-scope and current-field history; append-only cart-bound inbox/outbox with PII rights; package-before-record release fences. Independent security review and actual PostgreSQL own/foreign/CAS/history/form/model fixtures plus existing app/commerce/checkout/role/strict-runtime suites. New pure intake conjunction has exact Lean claims/conformance/negative mutations. SQL, UI, inference and providers remain unproved."
     },
+    "src/apps/record_import.rs": {
+      "status": "unproved",
+      "sha256": "9fd7a949c531692d8d8d75b67e969e84bbeb874ecd4d897411c2b1039ad9e842",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+    },
     "src/apps/record_lifecycle.rs": {
       "status": "unproved",
       "sha256": "46896a3c27e88a804f2f15cf11208a9c2c4efa06eee2d5d2c2b935eeb3e855c8",
@@ -1484,8 +1594,8 @@
     },
     "src/apps/routes.rs": {
       "status": "unproved",
-      "sha256": "67f037aea3e35783f597b45517f46e06d912900acbf4b76750de4de004e3740a",
-      "review": "Native lifecycle review: bounded namespaced app graphs preserve native terminal/payment/stock/buyer admission, per-object immutable accepted definitions, current compound scopes, same HTTP MCP Flow owners and operational history; SQL snapshots and migration 105 are regression-tested adapters, not proved."
+      "sha256": "dddc19e9b51dfb3375f52636f46cb6f4dac0d1bd4a5aa9ac476b38b2790c1f66",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
     },
     "src/apps/runtime.rs": {
       "status": "unproved",
@@ -1994,8 +2104,8 @@
     },
     "src/capabilities/schema.rs": {
       "status": "unproved",
-      "sha256": "a6394944bac0de00bf02c85d54aa40213b6b2373179e5ba120d143c38ad51485",
-      "review": "Codex source review 2026-10-16: native catalogue intake CSV/HTTPS/model preparation and explicit stage-only creation reuse current permissions, stable IDs, locked settings CAS, product/history/outbox and bounded image jobs; native catalog_management, durable_agents and image_jobs checks recorded for this branch. Connected guardrail UI keeps the extracted pricing/autonomy predicates unchanged; authorized paged commerce policy read and merchant instructions verified by users, knowledge_workspace and providers plus 192 Rust tests. All changed transport/SQL/provider adapters remain unproved; no new formal correctness claim."
+      "sha256": "428d2c5975edbe8584b8bbe16ba64cb3164966231bd974b4d46b99d4b45705a6",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
     },
     "src/capabilities.rs": {
       "status": "unproved",
@@ -2044,8 +2154,8 @@
     },
     "src/categories/admin.rs": {
       "status": "unproved",
-      "sha256": "df060c39c465f88e6eba13a6132e08bc2fb9a3386d0c02e89d42a68dbae647bc",
-      "review": "Reviewed bounded native directory criteria, constant allowlisted SQL sorts and tenant tuple cursors, localized product-name ordering, read-only central model planning with current domain and PII grants, and HTTP/MCP discovery parity. Isolated PostgreSQL/provider suites cover native checkout-created records, denied foreign tenant/cursor access, stage boundaries and provider failures. Existing pure financial policies remain unchanged; SQL, model semantics and UI remain unproved adapters."
+      "sha256": "9ef1f57f98ab2ad3a58387591dbb5c6d88f632041f6e66b97dda677d81207362",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
     },
     "src/categories/graph_query.rs": {
       "status": "unproved",
@@ -2054,8 +2164,8 @@
     },
     "src/categories/mod.rs": {
       "status": "unproved",
-      "sha256": "5db2820081a36caf2576eecab14debd16a65b471a8697d11228401fcd7f9f7f8",
-      "review": "Reviewed saved category fact schema, tenant-bound current-source SQL, partial candidate indexes and shared MCP planning quota. Native catalog tests cover review/privacy/revision withdrawal, locale inheritance, confidence, channels, foreign tenants, literal wildcard semantics, CAS and selective staging; provider tests use the centrally encrypted shared replica configuration and quota rejection before model invocation."
+      "sha256": "36d90dd59b4196568ac7b896a291548db057b4ee6feba1d45d6173d2df473bf4",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
     },
     "src/categories/navigation.rs": {
       "status": "unproved",
@@ -2344,8 +2454,8 @@
     },
     "src/commerce/mod.rs": {
       "status": "unproved",
-      "sha256": "4168f837fc3ddd70c46bf39805a53fb473f7c9c19436b62c46bd1a1b5724b83e",
-      "review": "Codex source review 2026-10-16: native catalogue intake CSV/HTTPS/model preparation and explicit stage-only creation reuse current permissions, stable IDs, locked settings CAS, product/history/outbox and bounded image jobs; native catalog_management, durable_agents and image_jobs checks recorded for this branch. Connected guardrail UI keeps the extracted pricing/autonomy predicates unchanged; authorized paged commerce policy read and merchant instructions verified by users, knowledge_workspace and providers plus 192 Rust tests. All changed transport/SQL/provider adapters remain unproved; no new formal correctness claim."
+      "sha256": "d87d39e636202787e5afc20c1b7a9a11fda158294e9cfd9c291ade6c4997886b",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
     },
     "src/commerce/order_fields.rs": {
       "status": "unproved",
@@ -2359,8 +2469,8 @@
     },
     "src/commerce/order_mutation.rs": {
       "status": "unproved",
-      "sha256": "f8acbbd81dfac312c3b33b30e982b9f0d902360545278e79cb4ed24d3b90d80a",
-      "review": "Review 2026-10-14: native conserved strict-subset shipment binding, unchanged transition replay/quote snapshots, tenant/package/current-right document admission and immutable quota accounting; DHL stays app-owned with local protocol/restart/PII denial fixtures. Carrier effects, SQL and runtime remain unproved."
+      "sha256": "84be0215ccf3e73ed3d08073510da89f3779fd71b705931a6419c4d5b977cc65",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
     },
     "src/commerce/order_workflow.rs": {
       "status": "reviewed-binding",
@@ -2394,8 +2504,8 @@
     },
     "src/commerce/product_languages.rs": {
       "status": "unproved",
-      "sha256": "f6c1c5fa42c18468c242313d0b4514fef3e1247231ee2ec0ae1821076eb4caf8",
-      "review": "Separate signed role-bound SQL authority preserves old row/domain policies; bound short-lived tickets, personal actor fences, guarded native app DDL, fixed snapshot ordering and narrow language registry. Reviewed additive 099 and runtime pools; actual login attacks, two replicas, restart, app release and real PgBouncer/key rotation pass. SQL/HMAC/transport remain tested adapters outside pure Lean proofs."
+      "sha256": "a369218680eb572372ee3d790ab5db4623583550cb081be48a10e157398470ab",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
     },
     "src/commerce/product_metadata.rs": {
       "status": "unproved",
@@ -3009,13 +3119,13 @@
     },
     "src/operations/creation_schema.rs": {
       "status": "unproved",
-      "sha256": "90b741c69c1fd659647899ce46fa5bbb56d6968d15465bd0e0f9d0635b456757",
-      "review": "Reviewed native admin customer/order ownership, compound permissions, actor-private cart and direct-token consumers, channel/settings/customer lock ordering, final extracted manual-payment admission, MCP schemas and local isolation/concurrency regressions; SQL and async effects remain outside Lean proof."
+      "sha256": "16ed3461b1223f66ccc1522a541d65311308077a11d0998d8c0e0c941c15fbf1",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
     },
     "src/operations/customer_create.rs": {
       "status": "unproved",
-      "sha256": "c10051d032afac0fe2d6a2cb1a9923028d9ed5df136103e1874c0f7f1c000e77",
-      "review": "Reviewed native admin customer/order ownership, compound permissions, actor-private cart and direct-token consumers, channel/settings/customer lock ordering, final extracted manual-payment admission, MCP schemas and local isolation/concurrency regressions; SQL and async effects remain outside Lean proof."
+      "sha256": "429fb03a613b38e47e88b42857acdda43d2c65810c3a48373482d9855abb7f65",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
     },
     "src/operations/customer_lookup.rs": {
       "status": "unproved",
@@ -3047,6 +3157,36 @@
       "sha256": "bd869ddd890c92e4a4be70d44b8451e3d54b3b1c6a7ae455bb438562e5770aca",
       "review": "Reviewed tenant-scoped guest CRM projection and indexed historical order reads; account enrollment, checkout ownership and authenticated order access are unchanged. Guest snapshots cannot be saved as account profiles; SQL and UI remain unproved adapters."
     },
+    "src/operations/imports/categories.rs": {
+      "status": "unproved",
+      "sha256": "70650642331b67d82c138845c23b869dcd3ce8e8a00296b890a5d58f241cf2ab",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+    },
+    "src/operations/imports/customers.rs": {
+      "status": "unproved",
+      "sha256": "fd86606b871ac4e8e172f41756160426b7cacd54b92e836fc6d7fa3bd1d7323c",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+    },
+    "src/operations/imports/historical_orders.rs": {
+      "status": "unproved",
+      "sha256": "fc111801c987d4cbd19ec2442d65e6151ee3e3c2c5067a394a117db96f551de0",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+    },
+    "src/operations/imports/mod.rs": {
+      "status": "unproved",
+      "sha256": "75cfeafe0b0f2d0945109f10f7a18a4112fb619866a2ff47ebec937a23c60809",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+    },
+    "src/operations/imports/products.rs": {
+      "status": "unproved",
+      "sha256": "3e85c418f58a37d4f908c6a6db96451a90497906cf8ebdb5c3e92dc890417323",
+      "review": "Follow-up migration fix reviewed: product source identity retains bounded version/digest/known stock while descriptions stay in native translations; observed multilingual import 400 identity overflow before fix. Cargo package remains independent with shared money/network policy. Existing native permission, job fence, no-purchase history and SQL proof boundaries unchanged."
+    },
+    "src/operations/imports/relations.rs": {
+      "status": "unproved",
+      "sha256": "6b5cd1ee3c76bb7183770542be78c5856eb47a94ad25596cc1cf389d70bf8d65",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+    },
     "src/operations/list_criteria.rs": {
       "status": "unproved",
       "sha256": "5355f1e250f493387910f03e33109d81958538662f781b71ae44d440e1e26655",
@@ -3069,8 +3209,8 @@
     },
     "src/operations/mod.rs": {
       "status": "unproved",
-      "sha256": "b3bbe9aae6eebf29eaa6e604b97e739f7b376e10678c1ea1cc2a1fa3d84a7bb5",
-      "review": "Reviewed native admin customer/order ownership, compound permissions, actor-private cart and direct-token consumers, channel/settings/customer lock ordering, final extracted manual-payment admission, MCP schemas and local isolation/concurrency regressions; SQL and async effects remain outside Lean proof."
+      "sha256": "0e26bcf421def4e0c1f5106f00185eba2315cbfbed7d47c20425ad75ac054708",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
     },
     "src/operations/order_documents.rs": {
       "status": "unproved",
@@ -3099,8 +3239,8 @@
     },
     "src/operations/receipts.rs": {
       "status": "unproved",
-      "sha256": "b4ed32b3cc52a979598c2c3dda940d9f04605514a0251d17ef071ff72426acd4",
-      "review": "Review 2026-10-14: native conserved strict-subset shipment binding, unchanged transition replay/quote snapshots, tenant/package/current-right document admission and immutable quota accounting; DHL stays app-owned with local protocol/restart/PII denial fixtures. Carrier effects, SQL and runtime remain unproved."
+      "sha256": "a04b3f5f4b049404ddfdf179ac6b11d543d5993aff7e8ee8fbcd6b6ec5961ffa",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
     },
     "src/operations/redacted_reads.rs": {
       "status": "unproved",
@@ -3109,8 +3249,8 @@
     },
     "src/operations/routes.rs": {
       "status": "unproved",
-      "sha256": "4c07904dc4ae6c890a6f4ee671029c02896abc6d09315150ce9c10bdf2bc486b",
-      "review": "Native admin creation uses existing CRM address and cart/checkout owners; independently reviewed tenant/actor tokens, final manual payment guard, channel/customer/cart lock order, replay and explicit customer acknowledgement; new SQL/HTTP adapters remain unproved and have real state regressions."
+      "sha256": "9b4ec6a5428f36f5a48f2f6848dd24ebca1ffa70d7a1f990107f88cefd8fb947",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
     },
     "src/operations/workflow.rs": {
       "status": "unproved",
@@ -3639,12 +3779,12 @@
       "review": "Reviewed CI-only change: add exact source inventory and existing reviewed source/build-input registry checks before compilation, while preserving all scope classification, full Lean/conformance/mutation, integration and coverage steps unchanged. The registry gate is fail-fast only; no production policy, adapter, threshold or runtime artifact is changed."
     },
     "Cargo.lock": {
-      "sha256": "b64d49ee406819898babd77f3a2fc667a68f78b06db0cde18002f8408113ed3c",
-      "review": "Reviewed migration 104 and all changed Rust/build owners: existing-key planning-only scope, trusted distinct agent identity, live-root lock before budget key, checked integer allocation with existing kernel guard, no network transaction, typed nonretryable quota errors, current credentials and lease-fenced late worker results; actual two-replica allocation/restart and in-flight-stop fixtures plus 623 UI tests pass. SQL/auth/provider integration is not formally proved."
+      "sha256": "de01e9cdb5d3e16ec81ce7ce92898ab67d72f00f582fb0e658daf00f62f460c3",
+      "review": "Migration intake reviewed: native private catalogue/category/page owners, exact historical provenance without purchase effects, current package/creator/lease/hash fences and native replay lock order; independent Rust package uses shared money/network policy only; new HTML rich blocks preserve text and list structure. Real source/Core HTTP, signed roles, cancellation, replay, concurrent callbacks and simulated purchase regressions passed. External source completeness and SQL are not claimed proved."
     },
     "Cargo.toml": {
-      "sha256": "6a4e74848c4e6f9d391c804f4a1ab68c4fcb27d29ff165bd0fcfeb181d215dac",
-      "review": "Review compiler-enforced foundation crates with unchanged native owners; native provider read-tool aliases and current authorization, private checkpoint continuation and versioned prompt evidence; fixed subscriber acknowledgements preserve commit gaps, independent quarantine and explicit replay; traced requests/tasks/outbox without payloads; exact decimal-to-minor-unit rounding retains legacy price boundary; real SQL poison-isolation regression passes and workspace unit/clippy checks pass"
+      "sha256": "c8d3a7dd743e6e24f8b1af7c96034a46f3e273c3493d44ec872734fd7df3c6a9",
+      "review": "Follow-up migration fix reviewed: product source identity retains bounded version/digest/known stock while descriptions stay in native translations; observed multilingual import 400 identity overflow before fix. Cargo package remains independent with shared money/network policy. Existing native permission, job fence, no-purchase history and SQL proof boundaries unchanged."
     },
     "crates/apps/Cargo.toml": {
       "sha256": "496067ed6a47c2778baed402bd51378c139687fbb3b36f8f965bf880129de013",

@@ -1,5 +1,12 @@
 # Changelog
 
+## Reviewed inward migration foundation — 2026-10-18
+
+- Add an independent Rust migration application with Shopify, WooCommerce, PrestaShop, Magento 2 and Shopware 5 source profiles, exact canonical money, explicit locale/timezone mapping and bounded variant slices.
+- Add generic native intake for private products, credential-free CRM profiles and immutable historical orders without payment, stock, ordinary-purchase or new-invoice effects.
+- Reuse native app jobs, encrypted installed settings, package/creator/lease fences and exact reviewed record hashes. Persist coarse checkpoints, retain private targets across source pages and protect small connection pools. Add an app-owned EN/DE/FR/ES Studio workflow and contextual shared agent drawer.
+- [Current coverage](docs/agentic-migration.md) explicitly excludes complete media/variant mapping, target migration of additional domains and automatic final cutover. Local implementation is not public whole-shop acceptance.
+
 ## Inward agentic commerce — 2026-10-18
 
 - Add UCP Cart Transfer through the native expiring single-use checkout handoff and independent optional buyer-consent negotiation. Native cart, consent and currency changes commit together; current privacy policy, revocation, required contact data and immutable order snapshots remain shared across transports.

@@ -2,6 +2,7 @@
 /** Native input DTOs; opaque JSON fields remain explicit. */
 import type { JsonValue } from "./value";
 export interface Inputs11 {
+  "merchant.catalog.context": JsonValue;
   "merchant.catalog.prepare": {
     count: number;
     inference?: {
@@ -58,10 +59,4 @@ export interface Inputs11 {
     query?: string;
   };
   "pos.context": { channelId: string };
-  "pos.detail": {
-    after?: string;
-    cartToken?: string;
-    channelId: string;
-    productId: string;
-  };
 }

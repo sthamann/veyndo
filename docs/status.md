@@ -27,6 +27,16 @@ browser purchases used the explicitly simulated native demo-card.
 Google enrolment, Muse partnerships, real PSP settlement and continuous supplier
 synchronisation are separate and are not claimed by this work.
 
+## Migration Assistant: implementation in progress
+
+The new [migration workflow](agentic-migration.md) has a separate Rust application,
+five source protocol fixtures, private product/category/page intake and native CRM/history,
+reviewed native jobs and a Studio entry. Local acceptance and security review are
+in progress on its feature branch; it is not part of the public acceptance below.
+Media copying, complex source variants, reviews/coupons, full mapping/cutover and
+large-scale throughput remain incomplete. The guide distinguishes normalization
+from an accepted native target write.
+
 ## Public acceptance
 
 | Journey or boundary | Evidence and present limitation |

@@ -63,6 +63,9 @@ async fn execute(
         credentials::permit(h, "assets.read")?;
         return assets::app_file_callback(a, h, operation, &v).await;
     }
+    if operation == "job_import" {
+        return job_import::execute(a, h, &m, &v).await;
+    }
     if ["job_claim", "job_progress"].contains(&operation) {
         if !m.permissions.iter().any(|p| p == "jobs.write") {
             return Err(Error(
@@ -72,7 +75,18 @@ async fn execute(
         }
         credentials::permit(h, "jobs.write")?;
         auth::permit(h, "apps.manage")?;
-        return job_callbacks::execute(a, h, &m, operation, &v).await;
+        let settings_allowed = operation == "job_claim"
+            && h.principal.app.as_deref() == Some(m.id.as_str())
+            && m.permissions.iter().any(|p| p == "settings.read");
+        if settings_allowed {
+            credentials::permit(h, "settings.read")?;
+            auth::permit(h, "team.manage")?;
+        }
+        let mut result = job_callbacks::execute(a, h, &m, operation, &v).await?;
+        if settings_allowed {
+            result["_appSettings"] = settings::resolve(a, &t, &m).await?;
+        }
+        return Ok(result);
     }
     if operation == "delivery_snapshot" {
         return core_documents::snapshot(a, h, &m, &v).await;

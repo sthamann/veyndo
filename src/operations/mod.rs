@@ -7,6 +7,7 @@ mod company_public;
 mod creation_schema;
 pub(crate) use creation_schema::CAPABILITIES as CREATION_CAPABILITIES;
 mod customer_create;
+pub(crate) mod imports;
 pub(crate) use creation_schema::schema as creation_schema;
 mod customer_lookup;
 mod customers;
@@ -46,6 +47,7 @@ mod grid_plan;
 pub(crate) use grid_plan::visible as grid_visible;
 pub(crate) fn permission(name: &str) -> Option<&'static str> {
     Some(match name {
+        "merchant.import.record" => "apps.manage",
         "merchant.grid.plan" => "assistant.use",
         "merchant.company" => "settings.read",
         "merchant.company.save" => "settings.write",
@@ -130,6 +132,7 @@ pub(crate) async fn invoke(a: &App, h: &RequestContext, name: &str, v: &Value) -
     };
     let criteria = || serde_json::from_value(v.clone()).map_err(|_| bad("Invalid search criteria"));
     let Json(result) = match name {
+        "merchant.import.record" => Json(imports::invoke(a, h, v).await?),
         "merchant.customer.creation" => {
             customer_create::context(State(a.clone()), h.clone()).await?
         }

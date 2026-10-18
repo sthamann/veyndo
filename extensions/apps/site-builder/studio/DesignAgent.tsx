@@ -26,8 +26,10 @@ export default function DesignAgent({
   onApplied,
   onPrepare,
   onViewport,
+  initialReference,
 }: {
   request: RequestFn;
+  initialReference?: string;
   onViewport?: (device: "desktop" | "mobile") => void;
   page?: Page;
   selected: string;
@@ -42,7 +44,7 @@ export default function DesignAgent({
   const [instruction, setInstruction] = useState(""),
     [engine, setEngine] = useState<AgentEngine>("platform"),
     [task, setTask] = useState<unknown>(),
-    [urls, setUrls] = useState(""),
+    [urls, setUrls] = useState(initialReference ?? ""),
     [images, setImages] = useState<string[]>([]);
   const [style, setStyle] = useState(true),
     [structure, setStructure] = useState(true),

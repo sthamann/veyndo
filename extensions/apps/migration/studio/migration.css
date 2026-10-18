@@ -1,0 +1,165 @@
+/* App-owned migration workspace: compact stable steps, clear review canvas and contained tables. */
+.migration-workspace .page-intro {
+  max-width: none;
+}
+.migration-layout {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+.migration-layout main {
+  min-width: 0;
+  display: grid;
+  gap: 22px;
+}
+.migration-steps {
+  position: sticky;
+  top: 12px;
+  background: var(--surface, #fff);
+  border: 1px solid var(--line, #d6e2ef);
+  border-radius: 18px;
+  padding: 22px;
+  display: grid;
+  gap: 14px;
+}
+.migration-steps strong:not(:first-child) {
+  border-top: 1px solid var(--line, #d6e2ef);
+  padding-top: 22px;
+}
+.migration-steps p,
+.migration-steps small {
+  color: var(--muted, #60758b);
+  font-size: 13px;
+  line-height: 1.6;
+}
+.migration-domain-picker,
+.migration-sources {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.migration-domain-picker button,
+.migration-sources button {
+  border: 1px solid var(--line, #d6e2ef);
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+.migration-domain-picker button[aria-pressed="true"],
+.migration-sources button[aria-pressed="true"] {
+  background: #e0f3ff;
+  border-color: #008cdd;
+  color: #125a9b;
+}
+.migration-domain-picker button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.migration-table {
+  overflow: auto;
+  margin: 22px 0;
+}
+.migration-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.migration-table td,
+.migration-table th {
+  text-align: left;
+  padding: 12px;
+  border-bottom: 1px solid var(--line, #d6e2ef);
+  max-width: 320px;
+  overflow-wrap: anywhere;
+}
+.migration-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin: 22px 0;
+}
+.migration-fields label,
+.migration-layout main > section > label {
+  display: grid;
+  gap: 8px;
+}
+.migration-fields input,
+.migration-layout main input:not([type="checkbox"]),
+.migration-layout select {
+  padding: 12px;
+  border: 1px solid var(--line, #d6e2ef);
+  border-radius: 10px;
+  max-width: 100%;
+  background: var(--surface, #fff);
+  color: inherit;
+}
+.migration-connection fieldset {
+  border: 0;
+  padding: 0;
+}
+.migration-layout .migration-approval {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 24px 0;
+}
+.migration-job {
+  padding: 18px 0;
+  display: grid;
+  gap: 12px;
+  border-bottom: 1px solid var(--line, #d6e2ef);
+}
+.migration-job progress {
+  width: 100%;
+  accent-color: #008cdd;
+}
+.migration-job button {
+  justify-self: start;
+}
+.migration-agent {
+  position: fixed;
+  margin: 0 0 0 auto;
+  inset: 0;
+  width: min(800px, 95vw);
+  height: 100dvh;
+  max-height: 100dvh;
+  border: 0;
+  border-left: 1px solid #d6e2ef;
+  padding: 20px;
+  background: var(--surface, #fff);
+  color: inherit;
+}
+.migration-agent::backdrop {
+  background: #102a4655;
+}
+.migration-agent > header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+.migration-agent .studio-conversation {
+  height: calc(100dvh - 100px);
+}
+@media (max-width: 1000px) {
+  .migration-layout {
+    grid-template-columns: 1fr;
+  }
+  .migration-steps {
+    position: static;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .migration-steps strong:not(:first-child) {
+    border: 0;
+    padding: 0;
+  }
+}
+@media (max-width: 600px) {
+  .migration-fields,
+  .migration-steps {
+    grid-template-columns: 1fr;
+  }
+}

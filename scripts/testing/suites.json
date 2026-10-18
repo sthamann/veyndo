@@ -60,7 +60,8 @@
     "b2b_ucp",
     "behavior_intelligence",
     "admin_creation",
-    "agentic_commerce"
+    "agentic_commerce",
+    "migration_assistant"
   ],
   "providers": [
     "outbox_subscribers",

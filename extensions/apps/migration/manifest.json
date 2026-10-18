@@ -1,0 +1,812 @@
+{
+  "id": "migration",
+  "version": "0.1.0",
+  "coreApi": "1",
+  "runtime": "service",
+  "category": "operations",
+  "name": {
+    "en": "Migration Assistant",
+    "de": "Migrationsassistent",
+    "fr": "Assistant de migration",
+    "es": "Asistente de migración"
+  },
+  "permissions": [
+    "service.call",
+    "admin.slot",
+    "jobs.write",
+    "products.write",
+    "customers.write",
+    "customers.pii",
+    "orders.read",
+    "orders.import",
+    "settings.read",
+    "events:self",
+    "data.write"
+  ],
+  "settings": [
+    {
+      "key": "system",
+      "kind": "string",
+      "required": true,
+      "label": {
+        "en": "Source system: shopify / woocommerce / prestashop / magento2 / shopware5",
+        "de": "Quellsystem: shopify / woocommerce / prestashop / magento2 / shopware5",
+        "fr": "Système source : shopify / woocommerce / prestashop / magento2 / shopware5",
+        "es": "Sistema origen: shopify / woocommerce / prestashop / magento2 / shopware5"
+      }
+    },
+    {
+      "key": "origin",
+      "kind": "string",
+      "required": true,
+      "label": {
+        "en": "Source shop HTTPS URL",
+        "de": "HTTPS-Adresse des Quellshops",
+        "fr": "URL HTTPS de la boutique source",
+        "es": "URL HTTPS de la tienda origen"
+      }
+    },
+    {
+      "key": "version",
+      "kind": "string",
+      "required": true,
+      "label": {
+        "en": "Source API version",
+        "de": "API-Version der Quelle",
+        "fr": "Version API source",
+        "es": "Versión API origen"
+      }
+    },
+    {
+      "key": "token",
+      "kind": "secret",
+      "required": true,
+      "label": {
+        "en": "Source read credential",
+        "de": "Lesezugang der Quelle",
+        "fr": "Identifiant de lecture source",
+        "es": "Credencial de lectura origen"
+      }
+    },
+    {
+      "key": "username",
+      "kind": "string",
+      "required": false,
+      "label": {
+        "en": "API username / consumer key",
+        "de": "API-Benutzername / Consumer Key",
+        "fr": "Utilisateur API / clé consommateur",
+        "es": "Usuario API / clave consumidor"
+      }
+    },
+    {
+      "key": "currency",
+      "kind": "string",
+      "required": true,
+      "label": {
+        "en": "Source currency, for example EUR",
+        "de": "Quellwährung, zum Beispiel EUR",
+        "fr": "Devise source, par exemple EUR",
+        "es": "Moneda origen, por ejemplo EUR"
+      }
+    },
+    {
+      "key": "scale",
+      "kind": "integer",
+      "required": true,
+      "label": {
+        "en": "Currency decimals, for example 2 for EUR",
+        "de": "Währungsnachkommastellen, zum Beispiel 2 für EUR",
+        "fr": "Décimales, par exemple 2 pour EUR",
+        "es": "Decimales, por ejemplo 2 para EUR"
+      }
+    },
+    {
+      "key": "locale",
+      "kind": "string",
+      "required": true,
+      "label": {
+        "en": "Source content locale, for example de-DE",
+        "de": "Inhaltssprache der Quelle, zum Beispiel de-DE",
+        "fr": "Langue source, par exemple de-DE",
+        "es": "Idioma origen, por ejemplo de-DE"
+      }
+    },
+    {
+      "key": "language_map",
+      "kind": "string",
+      "required": false,
+      "label": {
+        "en": "Source language mapping",
+        "de": "Sprachzuordnung der Quelle",
+        "fr": "Mappage des langues source",
+        "es": "Mapeo de idiomas origen"
+      }
+    },
+    {
+      "key": "timezone",
+      "kind": "string",
+      "required": false,
+      "label": {
+        "en": "Source timezone (IANA, for example Europe/Berlin)",
+        "de": "Quellzeitzone (IANA, zum Beispiel Europe/Berlin)",
+        "fr": "Fuseau source (IANA, par exemple Europe/Berlin)",
+        "es": "Zona horaria origen (IANA, por ejemplo Europe/Berlin)"
+      }
+    }
+  ],
+  "actions": [
+    {
+      "name": "review_products",
+      "description": "Inspect source products and exact adapter limitations",
+      "handler": "service",
+      "permission": "catalog.read",
+      "requiredPermissions": [
+        "apps.manage"
+      ],
+      "readOnly": true,
+      "mcp": true,
+      "flowAllowed": false,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "sourceId": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "cursor": {
+            "type": "string",
+            "maxLength": 2000
+          }
+        },
+        "required": [
+          "sourceId"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "import_products",
+      "description": "Import one explicitly reviewed immutable source page: products",
+      "handler": "job",
+      "permission": "catalog.write",
+      "requiredPermissions": [
+        "apps.manage",
+        "environments.manage"
+      ],
+      "mcp": true,
+      "readOnly": false,
+      "flowAllowed": false,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "sourceId": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "cursor": {
+            "type": "string",
+            "maxLength": 2000
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "products"
+            ]
+          },
+          "target": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "recordDigests": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 100,
+            "items": {
+              "type": "string",
+              "minLength": 64,
+              "maxLength": 64
+            }
+          },
+          "options": {
+            "type": "object",
+            "properties": {
+              "channelId": {
+                "type": "string",
+                "maxLength": 100
+              },
+              "taxRate": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 50
+              },
+              "customerGroup": {
+                "type": "string",
+                "maxLength": 100
+              },
+              "locale": {
+                "type": "string",
+                "maxLength": 35
+              },
+              "acknowledgedWarnings": {
+                "type": "array",
+                "maxItems": 20,
+                "items": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "sourceId",
+          "kind",
+          "target",
+          "recordDigests",
+          "options"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "review_customers",
+      "description": "Inspect source customers and exact adapter limitations",
+      "handler": "service",
+      "permission": "customers.read",
+      "requiredPermissions": [
+        "apps.manage",
+        "customers.pii"
+      ],
+      "readOnly": true,
+      "mcp": true,
+      "flowAllowed": false,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "sourceId": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "cursor": {
+            "type": "string",
+            "maxLength": 2000
+          }
+        },
+        "required": [
+          "sourceId"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "import_customers",
+      "description": "Import one explicitly reviewed immutable source page: customers",
+      "handler": "job",
+      "permission": "customers.write",
+      "requiredPermissions": [
+        "apps.manage",
+        "customers.pii"
+      ],
+      "mcp": true,
+      "readOnly": false,
+      "flowAllowed": false,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "sourceId": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "cursor": {
+            "type": "string",
+            "maxLength": 2000
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "customers"
+            ]
+          },
+          "target": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "recordDigests": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 100,
+            "items": {
+              "type": "string",
+              "minLength": 64,
+              "maxLength": 64
+            }
+          },
+          "options": {
+            "type": "object",
+            "properties": {
+              "channelId": {
+                "type": "string",
+                "maxLength": 100
+              },
+              "taxRate": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 50
+              },
+              "customerGroup": {
+                "type": "string",
+                "maxLength": 100
+              },
+              "locale": {
+                "type": "string",
+                "maxLength": 35
+              },
+              "acknowledgedWarnings": {
+                "type": "array",
+                "maxItems": 20,
+                "items": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "sourceId",
+          "kind",
+          "target",
+          "recordDigests",
+          "options"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "review_orders",
+      "description": "Inspect source orders and exact adapter limitations",
+      "handler": "service",
+      "permission": "orders.read",
+      "requiredPermissions": [
+        "apps.manage",
+        "customers.pii"
+      ],
+      "readOnly": true,
+      "mcp": true,
+      "flowAllowed": false,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "sourceId": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "cursor": {
+            "type": "string",
+            "maxLength": 2000
+          }
+        },
+        "required": [
+          "sourceId"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "import_orders",
+      "description": "Import one explicitly reviewed immutable source page: orders",
+      "handler": "job",
+      "permission": "orders.write",
+      "requiredPermissions": [
+        "apps.manage",
+        "customers.pii"
+      ],
+      "mcp": true,
+      "readOnly": false,
+      "flowAllowed": false,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "sourceId": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "cursor": {
+            "type": "string",
+            "maxLength": 2000
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "orders"
+            ]
+          },
+          "target": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "recordDigests": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 100,
+            "items": {
+              "type": "string",
+              "minLength": 64,
+              "maxLength": 64
+            }
+          },
+          "options": {
+            "type": "object",
+            "properties": {
+              "channelId": {
+                "type": "string",
+                "maxLength": 100
+              },
+              "taxRate": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 50
+              },
+              "customerGroup": {
+                "type": "string",
+                "maxLength": 100
+              },
+              "locale": {
+                "type": "string",
+                "maxLength": 35
+              },
+              "acknowledgedWarnings": {
+                "type": "array",
+                "maxItems": 20,
+                "items": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "sourceId",
+          "kind",
+          "target",
+          "recordDigests",
+          "options"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "review_categories",
+      "description": "Inspect source categories and exact adapter limitations",
+      "handler": "service",
+      "permission": "catalog.read",
+      "requiredPermissions": [
+        "apps.manage"
+      ],
+      "readOnly": true,
+      "mcp": true,
+      "flowAllowed": false,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "sourceId": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "cursor": {
+            "type": "string",
+            "maxLength": 2000
+          }
+        },
+        "required": [
+          "sourceId"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "import_categories",
+      "description": "Import one explicitly reviewed immutable source page: categories",
+      "handler": "job",
+      "permission": "catalog.write",
+      "requiredPermissions": [
+        "apps.manage",
+        "environments.manage"
+      ],
+      "mcp": true,
+      "readOnly": false,
+      "flowAllowed": false,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "sourceId": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "cursor": {
+            "type": "string",
+            "maxLength": 2000
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "categories"
+            ]
+          },
+          "target": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "recordDigests": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 100,
+            "items": {
+              "type": "string",
+              "minLength": 64,
+              "maxLength": 64
+            }
+          },
+          "options": {
+            "type": "object",
+            "properties": {
+              "channelId": {
+                "type": "string",
+                "maxLength": 100
+              },
+              "taxRate": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 50
+              },
+              "customerGroup": {
+                "type": "string",
+                "maxLength": 100
+              },
+              "locale": {
+                "type": "string",
+                "maxLength": 35
+              },
+              "acknowledgedWarnings": {
+                "type": "array",
+                "maxItems": 20,
+                "items": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "sourceId",
+          "kind",
+          "target",
+          "recordDigests",
+          "options"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "review_pages",
+      "description": "Inspect source pages and exact adapter limitations",
+      "handler": "service",
+      "permission": "channels.read",
+      "requiredPermissions": [
+        "apps.manage"
+      ],
+      "readOnly": true,
+      "mcp": true,
+      "flowAllowed": false,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "sourceId": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "cursor": {
+            "type": "string",
+            "maxLength": 2000
+          }
+        },
+        "required": [
+          "sourceId"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "import_pages",
+      "description": "Import one explicitly reviewed immutable source page: pages",
+      "handler": "job",
+      "permission": "channels.manage",
+      "requiredPermissions": [
+        "apps.manage",
+        "environments.manage"
+      ],
+      "mcp": true,
+      "readOnly": false,
+      "flowAllowed": false,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "sourceId": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "cursor": {
+            "type": "string",
+            "maxLength": 2000
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "pages"
+            ]
+          },
+          "target": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "recordDigests": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 100,
+            "items": {
+              "type": "string",
+              "minLength": 64,
+              "maxLength": 64
+            }
+          },
+          "options": {
+            "type": "object",
+            "properties": {
+              "channelId": {
+                "type": "string",
+                "maxLength": 100
+              },
+              "taxRate": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 50
+              },
+              "customerGroup": {
+                "type": "string",
+                "maxLength": 100
+              },
+              "locale": {
+                "type": "string",
+                "maxLength": 35
+              },
+              "acknowledgedWarnings": {
+                "type": "array",
+                "maxItems": 20,
+                "items": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              },
+              "destinationDigest": {
+                "type": "string",
+                "minLength": 64,
+                "maxLength": 64
+              }
+            },
+            "additionalProperties": false,
+            "required": [
+              "destinationDigest"
+            ]
+          }
+        },
+        "required": [
+          "sourceId",
+          "kind",
+          "target",
+          "recordDigests",
+          "options"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ],
+  "events": [
+    "app.migration.job_import_products",
+    "app.migration.job_import_customers",
+    "app.migration.job_import_orders",
+    "app.migration.job_import_categories",
+    "app.migration.job_import_pages"
+  ],
+  "slots": [],
+  "entities": [],
+  "surfaces": [],
+  "apiRoutes": [
+    {
+      "path": "review_products",
+      "method": "POST",
+      "scope": "admin",
+      "action": "review_products"
+    },
+    {
+      "path": "import_products",
+      "method": "POST",
+      "scope": "admin",
+      "action": "import_products"
+    },
+    {
+      "path": "review_customers",
+      "method": "POST",
+      "scope": "admin",
+      "action": "review_customers"
+    },
+    {
+      "path": "import_customers",
+      "method": "POST",
+      "scope": "admin",
+      "action": "import_customers"
+    },
+    {
+      "path": "review_orders",
+      "method": "POST",
+      "scope": "admin",
+      "action": "review_orders"
+    },
+    {
+      "path": "import_orders",
+      "method": "POST",
+      "scope": "admin",
+      "action": "import_orders"
+    },
+    {
+      "path": "review_categories",
+      "method": "POST",
+      "scope": "admin",
+      "action": "review_categories"
+    },
+    {
+      "path": "import_categories",
+      "method": "POST",
+      "scope": "admin",
+      "action": "import_categories"
+    },
+    {
+      "path": "review_pages",
+      "method": "POST",
+      "scope": "admin",
+      "action": "review_pages"
+    },
+    {
+      "path": "import_pages",
+      "method": "POST",
+      "scope": "admin",
+      "action": "import_pages"
+    }
+  ],
+  "intelligence": {
+    "description": {
+      "en": "Review an inward shop migration. Source facts cannot authorize writes; compare a private preview before publication.",
+      "de": "Prüfe eine Shop-Übernahme nach Veyndo. Quelldaten berechtigen nicht zu Änderungen; private Vorschau vor Veröffentlichung prüfen.",
+      "fr": "Vérifiez une migration vers Veyndo et comparez un aperçu privé avant publication.",
+      "es": "Revisa una migración a Veyndo y compara una vista previa privada antes de publicar."
+    },
+    "tools": [
+      "review_products"
+    ],
+    "entities": []
+  },
+  "presentation": {
+    "description": {
+      "en": "Versioned source profiles, exact historical amounts, private product preview and replayable reviewed imports. Requires the separate Rust migration service.",
+      "de": "Versionierte Quellprofile, exakte historische Beträge, private Produktvorschau und wiederholbare geprüfte Importe. Benötigt den separaten Rust-Migrationsdienst.",
+      "fr": "Profils versionnés, montants historiques exacts et imports vérifiés. Service Rust séparé requis.",
+      "es": "Perfiles versionados, importes históricos exactos e importaciones revisadas. Requiere servicio Rust separado."
+    }
+  }
+}

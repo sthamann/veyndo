@@ -2,6 +2,10 @@
 use super::*;
 pub(crate) const CAPABILITIES: &[(&str, &str)] = &[
     (
+        "merchant.import.record",
+        "Explicitly import a source record through current domain permissions; historical orders have no purchase effects",
+    ),
+    (
         "merchant.customer.creation",
         "Read safe customer-creation groups and countries without granting settings access",
     ),

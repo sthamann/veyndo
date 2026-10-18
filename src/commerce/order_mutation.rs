@@ -40,6 +40,11 @@ pub(crate) async fn persist(
     o: &mut Value,
     audit: Audit<'_>,
 ) -> Result<()> {
+    if !o["historicalImport"].is_null() {
+        return Err(conflict(
+            "Historical order snapshots cannot execute new operational transitions",
+        ));
+    }
     order_fields(o);
     let id = o["id"].as_str().ok_or(bad("Order identity unavailable"))?;
     sqlx::query(

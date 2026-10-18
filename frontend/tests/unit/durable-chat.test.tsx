@@ -161,3 +161,22 @@ it("never restores an accepted instruction as a retry when only the subsequent r
   expect(o.request).toHaveBeenCalledTimes(1);
   hook.unmount();
 });
+it("adds the current domain context to a turn without replacing the user's draft", async () => {
+  const o = options();
+  o.request.mockResolvedValue({
+    conversationId: "migration-chat",
+    messages: [],
+    run: { taskId: "migration-run", state: "queued", revision: 1 },
+  });
+  const hook = renderHook(() => useChatTurns(o));
+  await act(() =>
+    hook.result.current.send("Merchant migration; source metadata only"),
+  );
+  expect(o.request).toHaveBeenCalledWith(
+    "/api/agent/chat",
+    expect.objectContaining({
+      message: "Merchant migration; source metadata only\n\nPrepare my catalog",
+      background: true,
+    }),
+  );
+});
