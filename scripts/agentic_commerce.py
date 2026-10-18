@@ -62,6 +62,11 @@ with urllib.request.urlopen(updated,timeout=25) as r: updated=json.load(r)
 assert updated['buyer']['consent']['dev.ucp.consent.marketing']['segments']['dev.ucp.consent.marketing.sms']['granted'] is True
 assert updated['buyer']['consent']['dev.ucp.consent.analytics']['granted'] is False
 assert updated['status']=='ready_for_complete'
+omitted=call(path,body,sh,method='PUT')
+assert 'email' not in omitted['buyer'] and 'phone_number' not in omitted['buyer']
+assert omitted['buyer']['consent']['dev.ucp.consent.marketing']['segments']['dev.ucp.consent.marketing.sms']['granted'] is True
+assert omitted['status']=='incomplete' and any(m['code']=='missing_consent_data' for m in omitted['messages'])
+call(path,{**b,'buyer':{'email':email,'phone_number':'+491234567890'}},sh,method='PUT')
 completed=call(path+'/complete',{}, {**sh,'Idempotency-Key':uuid.uuid4().hex})
 assert completed['status']=='completed'
 assert completed['buyer']['consent']['dev.ucp.consent.marketing']['segments']['dev.ucp.consent.marketing.sms']['granted'] is True

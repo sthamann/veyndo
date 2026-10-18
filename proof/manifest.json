@@ -3589,8 +3589,8 @@
     },
     "src/ucp/consent.rs": {
       "status": "unproved",
-      "sha256": "53b76e19ee79fa1049d5ab2805220d06dc3089f9801456565800968fb823f8d3",
-      "review": "Reviewed inbound UCP/native cart and consent transactions, native finalization contact guard, immutable order snapshots, explicit optional negotiation, public HTTPS app-owned catalogue adapters; independent whole-branch review findings repaired and six isolated HTTP/PG suites pass. No extracted kernel policy changed; SQL/provider behavior remains unproved."
+      "sha256": "c560cdc5b732931e9e25d2fd7c6ddc2d7828d6e138de17ee230095eb1a7cb660",
+      "review": "Reviewed UCP PUT compatibility: replace omitted buyer contact fields, preserve only explicit prior consent, and retain native required-contact completion guard; protocols and agentic real HTTP regressions."
     },
     "src/ucp/document.rs": {
       "status": "unproved",
@@ -3609,8 +3609,8 @@
     },
     "src/ucp/negotiation.rs": {
       "status": "unproved",
-      "sha256": "22b80f98927ee2bd5f0a6fae0aa8c197b77aea5090fedc805b0dbd2d3626f2a5",
-      "review": "Reviewed inbound UCP/native cart and consent transactions, native finalization contact guard, immutable order snapshots, explicit optional negotiation, public HTTPS app-owned catalogue adapters; independent whole-branch review findings repaired and six isolated HTTP/PG suites pass. No extracted kernel policy changed; SQL/provider behavior remains unproved."
+      "sha256": "03e1fe3dc8fbf92bb5754cead4cb22e5befb8f36751a41140f7eceedd563b3f8",
+      "review": "Reviewed UCP PUT compatibility and optional projection: omitted contact fields are replaced, only explicit prior consent persists, missing contacts still block completion, and unnegotiated absent buyer is not inserted as null. Existing protocols and agentic HTTP regressions cover both contracts."
     },
     "src/ucp/profile.rs": {
       "status": "unproved",

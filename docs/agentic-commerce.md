@@ -74,7 +74,9 @@ unknown purposes/segments and asserted business grants are rejected. Sale/sharin
 is always disabled because Veyndo has no corresponding processing purpose.
 
 Omitting consent preserves it; replacing an explicit purpose replaces its segment
-choices. An unrelated update cannot revive a withdrawn or expired native grant.
+choices. A PUT without a buyer replaces earlier buyer contact fields while retaining
+explicit consent choices; required missing contacts block completion. An unrelated
+update cannot revive a withdrawn or expired native grant.
 Clearing the buyer revokes native optional processing. Consent and cart mutation
 commit atomically through the native cart/privacy owners. Native merchant policy
 can withhold a purpose even when a platform requests it. Required marketing contact

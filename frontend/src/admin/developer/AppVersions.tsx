@@ -7,7 +7,9 @@ import { useWorkbenchText } from "../../shared/i18n/workbench-i18n";
 import type { AppStudio, Build } from "./useAppStudio";
 export default function AppVersions({
   studio,
-  onEdit, onNavigate, onAssist,
+  onEdit,
+  onNavigate,
+  onAssist,
 }: {
   studio: AppStudio;
   onNavigate?: (tab: AppStudioKey) => void;
@@ -18,7 +20,11 @@ export default function AppVersions({
     { w } = useWorkbenchText();
   return (
     <div className="app-versions">
-      <AppDiagnostics manifest={studio.manifest} onNavigate={onNavigate} onAssist={onAssist} />
+      <AppDiagnostics
+        manifest={studio.manifest}
+        onNavigate={onNavigate}
+        onAssist={onAssist}
+      />
       <section className="app-model-card">
         <h2>{a("versions")}</h2>
         {!studio.builds.length && <p>{w("noBuilds")}</p>}

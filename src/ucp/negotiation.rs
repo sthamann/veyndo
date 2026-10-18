@@ -88,7 +88,7 @@ pub(super) async fn response(
     let mut doc = ucp_document(c, &quote);
     if selected.consent {
         consent::project(a, h, c, &mut doc).await?;
-    } else if let Some(buyer) = doc["buyer"].as_object_mut() {
+    } else if let Some(buyer) = doc.get_mut("buyer").and_then(Value::as_object_mut) {
         buyer.remove("consent");
     }
     // Keep canonical tenant/channel links instead of localhost-only continuation URLs.

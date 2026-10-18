@@ -29,7 +29,8 @@ export default function DesignerInspector({
   mode,
   onMode,
   onPrepare,
-  scopeKey, onViewport,
+  scopeKey,
+  onViewport,
 }: {
   scopeKey: string;
   onViewport: (device: "desktop" | "mobile") => void;

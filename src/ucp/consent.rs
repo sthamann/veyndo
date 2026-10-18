@@ -20,7 +20,9 @@ pub(super) fn admit(v: &Value, negotiated: bool) -> Result<()> {
 }
 pub(super) fn buyer(v: &Value, current: Option<&Value>) -> Result<Option<Value>> {
     let Some(incoming) = v.get("buyer") else {
-        return Ok(current.cloned());
+        return Ok(current
+            .and_then(|buyer| buyer.get("consent"))
+            .map(|consent| json!({"consent":consent})));
     };
     if incoming.is_null() {
         return Ok(None);

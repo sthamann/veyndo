@@ -382,7 +382,3 @@
   font-size: 24px !important;
   margin: 0;
 }
-.app-diagnostic-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:12px; margin:20px 0; }
-.app-diagnostic-grid button { display:flex; flex-direction:column; align-items:flex-start; gap:8px; text-align:left; white-space:normal; }
-.app-diagnostic-grid strong { font-size:1.6rem; color:var(--color-primary,#126bbd); }
-.app-diagnostics ol { line-height:1.7; padding-inline-start:22px; }

@@ -84,7 +84,9 @@ export default function SalesChannelsWorkspace({
   if (agentic)
     return (
       <div className="studio-page">
-        <AgenticChannels selectedChannel={agenticChannel} onChannel={setAgenticChannel}
+        <AgenticChannels
+          selectedChannel={agenticChannel}
+          onChannel={setAgenticChannel}
           request={request}
           canRead={rights.includes("catalog.read")}
           canImport={rights.includes("catalog.write")}

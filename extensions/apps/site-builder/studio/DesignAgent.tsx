@@ -24,7 +24,8 @@ export default function DesignAgent({
   disabled,
   onPreview,
   onApplied,
-  onPrepare, onViewport,
+  onPrepare,
+  onViewport,
 }: {
   request: RequestFn;
   onViewport?: (device: "desktop" | "mobile") => void;
@@ -288,9 +289,15 @@ export default function DesignAgent({
           {plan.variants.map((variant, i) => (
             <article key={variant.taskId}>
               <p>{variant.summary}</p>
-              <DesignReview before={page} after={variant.fields} onPreview={device => {
-                setIndex(i); onPreview({ ...page, ...variant.fields }); onViewport?.(device);
-              }} />
+              <DesignReview
+                before={page}
+                after={variant.fields}
+                onPreview={(device) => {
+                  setIndex(i);
+                  onPreview({ ...page, ...variant.fields });
+                  onViewport?.(device);
+                }}
+              />
               <div className="designer-variant-actions">
                 <button
                   type="button"
