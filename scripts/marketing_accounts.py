@@ -71,7 +71,7 @@ assert call('/store-api/product',{'product_ids':['chair']},channel)['elements'][
 call('/store-api/product/chair',{},channel,expected=404)
 c,hh=cart(channel);call('/store-api/checkout/cart',{'revision':c['revision'],'items':[{'id':'chair','quantity':1}]},hh,expected=404,method='PUT');c=items(c,hh,[('mug-terracotta-500',1)])
 call('/store-api/checkout/cart',h={**hh,'sw-sales-channel-id':'default'},expected=403)
-handoff=call('/store-api/checkout/handoff',{'revision':c['revision']},hh);assert '&channel=cups#checkout/' in handoff['checkoutPath']
+handoff=call('/store-api/checkout/handoff',{'revision':c['revision']},hh);assert '&channel=cups&language=de-DE#checkout/' in handoff['checkoutPath']
 config('channels','only_child',{'name':name,'kind':'headless','active':True,'locales':['de-DE'],'productIds':['mug-terracotta-500']})
 child_h={**sh,'sw-sales-channel-id':'only_child'}
 assert [p['id'] for p in call('/store-api/product/mug-terracotta-500',{},child_h)['variants']]==['mug-terracotta-500']
