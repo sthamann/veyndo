@@ -1,5 +1,10 @@
 # Changelog
 
+## Render Mermaid throughout the public handbook — 2026-10-18
+
+- Load a pinned, self-hosted Mermaid renderer only on diagram pages, with strict SVG rendering, contained scrolling, fit-to-width and an expandable source fallback. Diagram controls share the existing four-language handbook vocabulary. Keep package integrity, bundle digest and upstream MIT attribution with the unchanged browser distribution; build checks reject missing assets or a disconnected loader.
+- Repair invalid semicolons in B2B/UCP and shipping sequence labels. Verify all 33 actual handbook diagrams in the browser, including the visitor-behavior guide; ordinary code examples retain their code formatting.
+
 ## Original embedded checkout accepted on current public images — 2026-10-18
 
 - [Complete controlled-Chrome purchase](docs/evidence/storyfront-checkout-hosted-2026-10-18.md): native iframe review, German simulated order RAC-3b2e5dfc, verified original-bag clearing, same-Experience return and empty bag after reload passed without a manual user test. Confirm current Core/Experience delivery and retain earlier paused-document observations as historical evidence. No additional runtime patch, security bypass or redundant service rollout was needed; real-provider acceptance remains separate.

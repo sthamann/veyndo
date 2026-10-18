@@ -13,6 +13,22 @@ checkout. Older measurements below retain their own source/date and coverage sco
 
 ## Prototype feedback loop
 
+The public handbook renders Markdown Mermaid fences through the shared
+`site/docs-diagrams.js` module. The unmodified Mermaid 11.15.0 browser distribution
+and its MIT notice are stored in `site/vendor/`; its package integrity and bundle
+SHA-256 are recorded in `mermaid.json`. Build and site checks reject a missing or
+changed bundle or a disconnected loader. No CDN or network package installation is
+needed to build or read diagrams, and pages without diagrams do not load Mermaid.
+Strict rendering disables diagram-defined click actions and sanitizes SVG. Readers
+can fit wide diagrams to the article, scroll at full size and inspect the original
+source. Without JavaScript, or when one diagram fails, its source remains readable.
+Diagram controls follow the handbook's EN/DE/FR/ES language selection.
+
+The 18 October browser repeat rendered all 33 actual handbook diagrams as SVG;
+two previously invalid sequence labels were repaired without changing their
+meaning. This real browser check complements the complete static site check:
+`python3 scripts/build_site.py && python3 scripts/check_site.py`.
+
 The required `verify` check selects one of three scopes from the complete Git diff:
 
 | Change | Required verification |

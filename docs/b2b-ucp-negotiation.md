@@ -47,7 +47,7 @@ sequenceDiagram
     Agent->>UCP: Complete checkout with Idempotency-Key
     UCP->>Core: Native locked budget / stock / payment guards
     Core-->>Agent: Same durable order and negotiated total
-    Core-->>B2B: Consume quote and approval; allocate budget once
+    Core-->>B2B: Consume quote and approval, allocate budget once
     Core-->>Seller: Ordinary order, receipt and Flow events
 ```
 

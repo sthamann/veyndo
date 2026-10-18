@@ -103,6 +103,18 @@ def check():
             for neighbor in group['sources'][max(0,index-1):index+2]:
                 assert Path(expected[neighbor]).name in article, 'Reading sequence absent'
     architecture = (SITE / 'docs/production-architecture.html').read_text()
+    diagrams = sum(1 for page in pages.values() for tag, attrs in page.elements
+                   if tag == 'code' and 'language-mermaid' in attrs.get('class', '').split())
+    assert diagrams > 0, 'Expected actual Mermaid sources in the handbook'
+    assert (SITE / 'docs/assets/ui/docs-diagrams.js').is_file(), 'Missing Mermaid renderer'
+    vendor = json.loads((ROOT / 'site/vendor/mermaid.json').read_text())
+    bundle = SITE / 'docs/assets/ui/vendor' / vendor['file']
+    assert bundle.is_file(), 'Missing self-hosted Mermaid bundle'
+    assert hashlib.sha256(bundle.read_bytes()).hexdigest() == vendor['sha256'], 'Mermaid bundle drift'
+    assert (bundle.parent / 'mermaid-LICENSE.txt').is_file(), 'Missing Mermaid attribution'
+    renderer = (SITE / 'docs/assets/ui/docs-diagrams.js').read_text()
+    assert vendor['file'] in renderer, 'Mermaid loader and pinned distribution differ'
+    assert 'docs-diagrams.js' in (SITE / 'docs/assets/ui/docs.js').read_text(), 'Diagram renderer is disconnected'
     for name in ['system', 'checkout', 'security', 'intelligence']:
         diagram = SITE / f'docs/assets/architecture/{name}.svg'
         assert diagram.is_file(), ('Missing rendered architecture diagram', name)

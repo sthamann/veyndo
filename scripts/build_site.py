@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Build marketing pages and the complete Markdown documentation for GitHub Pages."""
 import html
+import hashlib
 import json
 import shutil
 import os
@@ -172,6 +173,12 @@ def build():
         content = re.sub(r'\{\{(\w+)\}\}', lambda match: evidence[match[1]], content)
         write_page(Path(page['file']), page['title'], page['description'], content)
     documents = build_documents(DEST, write_page)
+    # Pin the original browser distribution: no CDN, package install or network at build/read time.
+    vendor = ROOT / 'site/vendor'
+    mermaid = json.loads((vendor / 'mermaid.json').read_text())
+    assert hashlib.sha256((vendor / mermaid['file']).read_bytes()).hexdigest() == mermaid['sha256'], 'Mermaid bundle drift'
+    shutil.copytree(vendor, DEST / 'docs/assets/ui/vendor')
+    shutil.copyfile(ROOT / 'site/docs-diagrams.js', DEST / 'docs/assets/ui/docs-diagrams.js')
     (DEST / 'sitemap.xml').write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n'
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +

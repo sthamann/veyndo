@@ -68,3 +68,10 @@ Promise.all(['docs-copy.json', 'docs-navigation.json'].map(name => fetch(new URL
 }).catch(() => { /* All English content and chapter links work without JavaScript. */ });
 input?.addEventListener('input', search);
 if (matchMedia('(max-width: 980px)').matches) document.querySelector('.docs-menu')?.removeAttribute('open');
+// Only diagram pages load the self-hosted renderer. Navigation/search remain independent.
+if (document.querySelector('pre > code.language-mermaid')) {
+  import(new URL('docs-diagrams.js', assets).href)
+    .then(module => module.renderDiagrams(assets))
+    .then(() => { if (copy && navigation) translate(); })
+    .catch(() => { /* Original readable diagram sources remain available. */ });
+}
