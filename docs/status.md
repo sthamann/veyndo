@@ -11,15 +11,19 @@ A green test, merged code and a completed public business journey are different 
 3. [Review a sandbox and selected publication](workbench.md).
 4. [Understand the connected architecture](production-architecture.md).
 
-## Current implementation under acceptance
+## Latest accepted delivery
 
 The [inward agentic-commerce change](agentic-commerce.md) adds native UCP Cart
 Transfer, optional explicit buyer consent, inward Shopify CSV/Shop MCP catalogue
 preparation, merchant AI-channel controls and shared UI/browser-agent cart actions.
 It also adds structural design comparison and app declaration diagnostics.
-[Local isolated HTTP, frontend, browser and synthetic private Shopware Payments
-checks passed](evidence/agentic-commerce-local-2026-10-18.md). These changes are not yet a new public-delivery acceptance;
-the hosted versions and journeys recorded below retain their own evidence.
+[Public acceptance on 18 October](evidence/agentic-commerce-hosted-2026-10-18.md)
+passed native cart transfer and original embedded Storyfront purchases, return and
+persistent empty carts, inward Shopify import into a private sandbox and app
+declaration diagnostics. Full required CI passed all 101 integration suites and
+657 frontend tests. The actual private Shopware Payments adapter also passed
+[synthetic-provider checks](evidence/agentic-commerce-local-2026-10-18.md); public
+browser purchases used the explicitly simulated native demo-card.
 Google enrolment, Muse partnerships, real PSP settlement and continuous supplier
 synchronisation are separate and are not claimed by this work.
 
@@ -27,13 +31,14 @@ synchronisation are separate and are not claimed by this work.
 
 | Journey or boundary | Evidence and present limitation |
 | --- | --- |
+| Inward agentic commerce | [18 October public acceptance](evidence/agentic-commerce-hosted-2026-10-18.md): UCP transfer purchase RAC-81a64f7e, embedded Storyfront purchase RAC-df45f7f6, return and persistent empty bags, two private Shopify variants and declaration diagnostics passed. No real money, Google admission or continuous supplier sync. |
 | Buyer entry and native POS receipt | [17 October hosted follow-up](evidence/buyer-pos-hosted-2026-10-17.md): own-account sign-in entry, preserved carts across rollout, German simulated purchase RAC-7bd54019, fictional POS sale RAC-5e78c602, actionable seller setup, single native invoice/PDF and guarded app-bound completion passed. Hosted signed-buyer RFQs, real settlement and physical printers remain separate. The [later PDF follow-up](evidence/receipt-pdf-hosted-2026-10-17.md) repairs its Windows-1252 punctuation; arbitrary Unicode fonts remain outside that renderer. |
 | Native app workflows and AI proposals | [17 October public acceptance](evidence/native-app-workflows-hosted-2026-10-17.md): visual creation, private installation, selected publication, guarded completion, 0.1.1 → 0.1.2 upgrade and distinct old/new order workflows passed. The [configured-model follow-up](evidence/agent-native-workflows-hosted-2026-10-17.md#follow-up-accepted-on-d939257) also passed exact preservation, private install and selected publication of a missing quote workflow. Payments remained simulated; hosted RFQ buyer execution is a separate acceptance. |
 | Native app product journey | [17 October hosted acceptance](evidence/native-app-fields-hosted-2026-10-17.md): visual creation, native product writes, compatible upgrade with retained data, optional grid column, exact positive/negative filters and selected live publication passed. Original embedded Storyfront purchase/return/bag clearing also passed on that image; payment remained simulated. |
 | Shared app storage | [15 October hosted migration](evidence/shared-app-storage-hosted-2026-10-15.json): four fixed physical tables, checked data migration and simulated purchases. This does not establish unbounded capacity. |
 | Restricted database runtime | [Hosted enforcement record](evidence/database-enforcement-2026-10-15.json): separate roles and strict restart. Authorization and SQL isolation are both required. |
 | Native checkout | Dated acceptance covers simulated purchases. It does not prove a real provider payment, mail delivery, invoice and refund journey. |
-| Storyfront embedded checkout | [18 October controlled-Chrome acceptance](evidence/storyfront-checkout-hosted-2026-10-18.md): the current public original Experience opens the native iframe, saves simulated order RAC-3b2e5dfc with its German product name, verifies completion and clears the original bag. The receipt's return closes the iframe on the same Experience; the bag stays empty after reload. Earlier paused-document attempts remain historical evidence; real provider redirects/3DS remain unaccepted. |
+| Storyfront embedded checkout | [18 October controlled-Chrome acceptance](evidence/storyfront-checkout-hosted-2026-10-18.md): the then-current public original Experience opens the native iframe, saves simulated order RAC-3b2e5dfc with its German product name, verifies completion and clears the original bag. The receipt's return closes the iframe on the same Experience; the bag stays empty after reload. Earlier paused-document attempts remain historical evidence; real provider redirects/3DS remain unaccepted. |
 | Browser login | HttpOnly implementation and registered session tests exist. Public Google sign-in, reload and logout passed on 16 October. Fresh SaaS creation and its one-use Studio handoff also passed. Public password sign-in, reload persistence, logout and denied protected-route return also passed in a separate incognito session on 16 October. Apple currently returns `invalid_request: Invalid web redirect url` for the new start.veyndo.ai callback; the Apple Service ID configuration is not repaired. |
 | Legacy domains | 16 October public DNS/TLS/redirect checks passed for vendune.ai and team.vendune.ai, ending at www.veyndo.ai and team.veyndo.ai respectively. No DNS change was made. Authoritative-provider configuration and filtering-provider delisting remain separate checks. |
 | Recovery and real providers | Restore drill and real payment/mail/refund acceptance require their own recorded outcomes. No current whole-system production certification. |
@@ -56,7 +61,20 @@ synchronisation are separate and are not claimed by this work.
 
 ## Public delivery and current work
 
-The current Core is `25b354e`, image `wise-authority-6674`. The [public PDF follow-up](evidence/receipt-pdf-hosted-2026-10-17.md) records full required CI, exact candidate/CI/main tree equality, a fresh snapshot and one healthy Core. Re-downloading the original invoice fixes the lost dashes while preserving its number, issue time, issuer, amounts and completed order. No new invoice or migration was created. The separate original Experience runs `b40b386`, image `educated-sort-2532`. The [18 October follow-up](evidence/storyfront-checkout-hosted-2026-10-18.md) accepts the complete embedded purchase, return and persistent original-bag clearing on these currently deployed images. It required no user-operated test, security bypass, additional runtime patch or redundant service rollout.
+The current Core is `d5c4724`, image `smiling-driving-6446`, deployment
+`vendune-core-58f5569684`. The [18 October agentic-commerce acceptance](evidence/agentic-commerce-hosted-2026-10-18.md)
+records the full required CI on `dd19c22`, merged as `1bb2e5e`, and identical
+production input trees. One healthy replica served actual native cart-transfer and
+original embedded Storyfront purchases, return and empty carts after reload.
+Inward Shopify variants remained private. No migration or database privilege
+change was needed. The original Experience remains `b40b386`, image
+`educated-sort-2532`; it was not redeployed.
+
+The preceding Core was `25b354e`, image `wise-authority-6674`. Its
+[PDF follow-up](evidence/receipt-pdf-hosted-2026-10-17.md) preserves the original
+invoice identity while repairing Windows-1252 punctuation. Its separate
+[18 October Storyfront receipt](evidence/storyfront-checkout-hosted-2026-10-18.md)
+retains the earlier order and source boundary.
 
 The preceding Core was `ce5a710`, image `busy-machine-7486`. Its
 [buyer/POS receipt](evidence/buyer-pos-hosted-2026-10-17.md) records the full required
