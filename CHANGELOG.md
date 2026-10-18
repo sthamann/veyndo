@@ -1,5 +1,9 @@
 # Changelog
 
+## Original embedded checkout accepted on current public images — 2026-10-18
+
+- [Complete controlled-Chrome purchase](docs/evidence/storyfront-checkout-hosted-2026-10-18.md): native iframe review, German simulated order RAC-3b2e5dfc, verified original-bag clearing, same-Experience return and empty bag after reload passed without a manual user test. Confirm current Core/Experience delivery and retain earlier paused-document observations as historical evidence. No additional runtime patch, security bypass or redundant service rollout was needed; real-provider acceptance remains separate.
+
 ## Native receipt PDF punctuation — 2026-10-17
 
 - [Public release and original-invoice comparison](docs/evidence/receipt-pdf-hosted-2026-10-17.md): full required CI, fresh snapshot, healthy new Core and actual parsed PDF preserve the existing invoice/order while correcting the lost dashes.
