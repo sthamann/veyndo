@@ -943,8 +943,8 @@
     },
     "extensions/apps/migration/adapters/contacts.rs": {
       "status": "unproved",
-      "sha256": "2278e3fde03481a3cff01cdb6f3df819e69f8e53ed5100f6ce552f7263da8dbe",
-      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+      "sha256": "1da6ba026b681166e35753ce87672f5c68f3aa65fa76fc06bbe6ce92031f0c50",
+      "review": "Reviewed original CRM address-book and historical source joins: independent review caught region loss, five-provider US-CA controls now pass; native address import shares tenant-locked storage and suppresses only ordinary address events; all five source transports reach immutable native CRM/history with replay and denial tests. Existing kernel proof boundary unchanged; source JSON, provider reads and SQL/async effects remain unproved."
     },
     "extensions/apps/migration/adapters/coupons.rs": {
       "status": "unproved",
@@ -968,8 +968,8 @@
     },
     "extensions/apps/migration/adapters/order_lines.rs": {
       "status": "unproved",
-      "sha256": "742c4a6a47d22f75690dc5b488c2ec50cca7720ecae87f37ea97e4ac944ef27a",
-      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+      "sha256": "ba60bd55f7027f5825fb0529acd7a3f1b7bc64fcad5576639f75ef0f98c985bb",
+      "review": "Reviewed original CRM address-book and historical source joins: independent review caught region loss, five-provider US-CA controls now pass; native address import shares tenant-locked storage and suppresses only ordinary address events; all five source transports reach immutable native CRM/history with replay and denial tests. Existing kernel proof boundary unchanged; source JSON, provider reads and SQL/async effects remain unproved."
     },
     "extensions/apps/migration/adapters/pages.rs": {
       "status": "unproved",
@@ -983,8 +983,8 @@
     },
     "extensions/apps/migration/adapters/records.rs": {
       "status": "unproved",
-      "sha256": "7b4054a5e2beee778529184ee7abc76d71c5291e1855e534ab7aad94fbb989f8",
-      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
+      "sha256": "5bb19f6b8a71cb3dab95dd79c0bdfc2546520ccc7de9a8212b850e7fc0c82d4d",
+      "review": "Reviewed original CRM address-book and historical source joins: independent review caught region loss, five-provider US-CA controls now pass; native address import shares tenant-locked storage and suppresses only ordinary address events; all five source transports reach immutable native CRM/history with replay and denial tests. Existing kernel proof boundary unchanged; source JSON, provider reads and SQL/async effects remain unproved."
     },
     "extensions/apps/migration/adapters/relations.rs": {
       "status": "unproved",
@@ -1033,18 +1033,23 @@
     },
     "extensions/apps/migration/service/extract.rs": {
       "status": "unproved",
-      "sha256": "a2ca80e9810e4c749d4b79d25951b71cd32e7a6ae4cb6d102086ae57ce9b482b",
-      "review": "Reviewed optional grouped native job events, unchanged per-action compatibility and package/current actor/lease fences; bounded 32KiB stored rich documents retain strict APP metadata/checkpoints. Actual five-second slow-source RED and native document-depth RED fixed; running cancellation RED fixed with final native progress fence; complete concrete Woo families and private visibility verified through native selected publication and simulated checkout. Focused independent async review found no remaining Important/Critical defects. SQL/network/source parity remain outside pure proof."
+      "sha256": "6802c8a0fb9ec714bb8fe7b64e30154d1585717335e9845a68727ffe18ccd513",
+      "review": "Reviewed original CRM address-book and historical source joins: independent review caught region loss, five-provider US-CA controls now pass; native address import shares tenant-locked storage and suppresses only ordinary address events; all five source transports reach immutable native CRM/history with replay and denial tests. Existing kernel proof boundary unchanged; source JSON, provider reads and SQL/async effects remain unproved."
     },
     "extensions/apps/migration/service/main.rs": {
       "status": "unproved",
-      "sha256": "4bb26ede86f75b659d6e30c3b2f49576d42bb29c87944182680fc9a01fae506c",
-      "review": "Reviewed optional grouped native job events, unchanged per-action compatibility and package/current actor/lease fences; bounded 32KiB stored rich documents retain strict APP metadata/checkpoints. Actual five-second slow-source RED and native document-depth RED fixed; running cancellation RED fixed with final native progress fence; complete concrete Woo families and private visibility verified through native selected publication and simulated checkout. Focused independent async review found no remaining Important/Critical defects. SQL/network/source parity remain outside pure proof."
+      "sha256": "a5186174d9a0ff7c3fcd36a31281c8787a9f667fe1a4ccf7d64ca85cc89b7773",
+      "review": "Reviewed original CRM address-book and historical source joins: independent review caught region loss, five-provider US-CA controls now pass; native address import shares tenant-locked storage and suppresses only ordinary address events; all five source transports reach immutable native CRM/history with replay and denial tests. Existing kernel proof boundary unchanged; source JSON, provider reads and SQL/async effects remain unproved."
     },
     "extensions/apps/migration/service/media.rs": {
       "status": "unproved",
       "sha256": "c03ea0be3e68414052cb980ab2c8e4109f28785701b649f8d01fac3fc86f357d",
       "review": "Reviewed optional grouped native job events, unchanged per-action compatibility and package/current actor/lease fences; bounded 32KiB stored rich documents retain strict APP metadata/checkpoints. Actual five-second slow-source RED and native document-depth RED fixed; running cancellation RED fixed with final native progress fence; complete concrete Woo families and private visibility verified through native selected publication and simulated checkout. Focused independent async review found no remaining Important/Critical defects. SQL/network/source parity remain outside pure proof."
+    },
+    "extensions/apps/migration/service/presta.rs": {
+      "status": "unproved",
+      "sha256": "e08a3f47881c2c52636df01bafe295248eeb56fcc1b9b9fb2e1d6dccedb3f1a9",
+      "review": "Reviewed original CRM address-book and historical source joins: independent review caught region loss, five-provider US-CA controls now pass; native address import shares tenant-locked storage and suppresses only ordinary address events; all five source transports reach immutable native CRM/history with replay and denial tests. Existing kernel proof boundary unchanged; source JSON, provider reads and SQL/async effects remain unproved."
     },
     "extensions/apps/migration/service/server.rs": {
       "status": "unproved",
@@ -1053,8 +1058,13 @@
     },
     "extensions/apps/migration/service/shopify.rs": {
       "status": "unproved",
-      "sha256": "107f742e8b480aba305aaf2d33a6d5e0c564681ccf26b954270413004fd9ce1a",
-      "review": "Reviewed app-owned source status preservation against primary schemas: Shopify status and online-store publication, Presta typed active flag, Magento status/visibility and Shopware boolean parent/child status. Actual prior CLI29 assertion failures are fixed by four source-state cases plus real transport projections; native eight-domain and variant checkout remain green. Independent focused source-visibility review found no Important/Critical findings; source orchestration remains outside pure proof."
+      "sha256": "c5a911a0513765d4e01a2a628e09e0c86c7f3a9d0ffc38ec692b609d711530dd",
+      "review": "Reviewed original CRM address-book and historical source joins: independent review caught region loss, five-provider US-CA controls now pass; native address import shares tenant-locked storage and suppresses only ordinary address events; all five source transports reach immutable native CRM/history with replay and denial tests. Existing kernel proof boundary unchanged; source JSON, provider reads and SQL/async effects remain unproved."
+    },
+    "extensions/apps/migration/service/shopware.rs": {
+      "status": "unproved",
+      "sha256": "a9ff195c6bc7160e9622c758083383b2e6170840e783401a4bf9610565e3695d",
+      "review": "Reviewed original CRM address-book and historical source joins: independent review caught region loss, five-provider US-CA controls now pass; native address import shares tenant-locked storage and suppresses only ordinary address events; all five source transports reach immutable native CRM/history with replay and denial tests. Existing kernel proof boundary unchanged; source JSON, provider reads and SQL/async effects remain unproved."
     },
     "extensions/apps/migration/service/slices.rs": {
       "status": "unproved",
@@ -1228,8 +1238,8 @@
     },
     "src/accounts/address_store.rs": {
       "status": "unproved",
-      "sha256": "b2db107635f9dff5be9cfd41802dc4baa6922da4ac2848ece7633f0bb9507565",
-      "review": "Reviewed eighteen core findings: typed trusted identity and explicit route rights; consolidated current grants; durable auth and fenced shared limits; scoped transactions and one-backend PgBouncer including nested borrow fixes; bounded Wasm/PNG work; notified workers, savepoint quarantine and conservative retention; separate runtime roles and startup configuration. Real PostgreSQL/provider regressions preserve current tenant/customer/payment behavior. SQL/network adapters remain unproved."
+      "sha256": "b380eab487802014f9d773103ec5a4217c7d31d004eb34cd0927c938a9410715",
+      "review": "Reviewed original CRM address-book and historical source joins: independent review caught region loss, five-provider US-CA controls now pass; native address import shares tenant-locked storage and suppresses only ordinary address events; all five source transports reach immutable native CRM/history with replay and denial tests. Existing kernel proof boundary unchanged; source JSON, provider reads and SQL/async effects remain unproved."
     },
     "src/accounts/addresses.rs": {
       "status": "unproved",
@@ -3173,13 +3183,13 @@
     },
     "src/operations/creation_schema.rs": {
       "status": "unproved",
-      "sha256": "16ed3461b1223f66ccc1522a541d65311308077a11d0998d8c0e0c941c15fbf1",
-      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+      "sha256": "92b2a7163a84003a8be3574de2791d2e424707bb3e26b59b0799e0a58bfe59ed",
+      "review": "Reviewed original CRM address-book and historical source joins: independent review caught region loss, five-provider US-CA controls now pass; native address import shares tenant-locked storage and suppresses only ordinary address events; all five source transports reach immutable native CRM/history with replay and denial tests. Existing kernel proof boundary unchanged; source JSON, provider reads and SQL/async effects remain unproved."
     },
     "src/operations/customer_create.rs": {
       "status": "unproved",
-      "sha256": "429fb03a613b38e47e88b42857acdda43d2c65810c3a48373482d9855abb7f65",
-      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+      "sha256": "c455328fbf118399523c43866528e3f2e54be5d58a00be20552481182747480d",
+      "review": "Reviewed original CRM address-book and historical source joins: independent review caught region loss, five-provider US-CA controls now pass; native address import shares tenant-locked storage and suppresses only ordinary address events; all five source transports reach immutable native CRM/history with replay and denial tests. Existing kernel proof boundary unchanged; source JSON, provider reads and SQL/async effects remain unproved."
     },
     "src/operations/customer_lookup.rs": {
       "status": "unproved",
@@ -3228,8 +3238,8 @@
     },
     "src/operations/imports/customers.rs": {
       "status": "unproved",
-      "sha256": "fd86606b871ac4e8e172f41756160426b7cacd54b92e836fc6d7fa3bd1d7323c",
-      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+      "sha256": "09e3199eee67c45313b761dcd08579f93b0df4f364f7266557ac8e9d1dcf90d6",
+      "review": "Reviewed original CRM address-book and historical source joins: independent review caught region loss, five-provider US-CA controls now pass; native address import shares tenant-locked storage and suppresses only ordinary address events; all five source transports reach immutable native CRM/history with replay and denial tests. Existing kernel proof boundary unchanged; source JSON, provider reads and SQL/async effects remain unproved."
     },
     "src/operations/imports/historical_orders.rs": {
       "status": "unproved",

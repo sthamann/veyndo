@@ -1,4 +1,14 @@
 /** Review projections retain exact minor units and source IDs; UI never invents native purchase or identity authority. */
+export type SourceAddress = {
+  name?: string;
+  company?: string;
+  street: string;
+  additionalAddressLine1?: string;
+  postalCode: string;
+  city: string;
+  country: string;
+  countryStateId?: string;
+};
 export type Kind =
   | "products"
   | "categories"
@@ -32,6 +42,18 @@ export type SourceRecord = {
     sourceVerified?: boolean | null;
     firstName?: string;
     lastName?: string;
+    email?: string;
+    billingAddress?: SourceAddress | null;
+    shippingAddress?: SourceAddress | null;
+    additionalAddresses?: SourceAddress[];
+    sourcePaymentStatus?: string | number | null;
+    sourceOrderStatus?: string | number | null;
+    lines?: {
+      sourceId?: string;
+      label: string;
+      quantity: number;
+      unitPrice?: { currency: string; scale: number; minor: number } | null;
+    }[];
     number?: string;
     sku?: string;
     price?: { currency: string; scale: number; minor: number };

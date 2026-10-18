@@ -1,5 +1,6 @@
 /** Real migration workflow controls require readable source data and explicit import review. */
 import { priceBasisTests } from "./price_basis.test";
+import { crmTests } from "./crm.test";
 import { inspectionTests } from "./inspection.test";
 import { feedbackTests } from "./feedback.test";
 import MigrationWorkspace from "../studio/MigrationWorkspace";
@@ -23,6 +24,7 @@ export function migrationStudioTests(deps: any) {
   feedbackTests(deps, mount);
   inspectionTests(deps, mount);
   priceBasisTests(deps, mount);
+  crmTests(deps, mount);
   it("does not read installed apps without current app access", () => {
     const request = vi.fn();
     mount(request, []);

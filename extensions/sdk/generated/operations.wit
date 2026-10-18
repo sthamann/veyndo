@@ -663,6 +663,7 @@ interface inputs {
     %record: merchant-import-record-input-record,
   }
   record merchant-customer-create-input {
+    %additional-addresses: option<list<string>>,
     %billing-address: string,
     %customer-group: string,
     %email: string,

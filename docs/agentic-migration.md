@@ -46,8 +46,8 @@ automatic semantic equivalence for arbitrary third-party plugins or theme code.
 | --- | --- | --- |
 | Products | Shopify variants, WooCommerce simple and concrete variable products, PrestaShop/Magento/Shopware 5 source projections; native private product creation | Retains original amount/basis, known source stock and source metadata; active target stock starts at zero. Multiple Shopify/Shopware variants use native parents/options; category source IDs resolve to the native category tree. Complex/bundle/combinations still need complete domain mapping. WooCommerce families retain their original parent/child IDs, declared axes/options, explicit published/private status and child images. Missing/duplicate/foreign children, wildcard combinations, standalone variations, and separate hidden/search-only/catalog-only visibility require explicit mapping rather than silent simplification. |
 | Product images | Public source URLs → frozen original-byte digests → native private asset store and ordered product media | PNG/JPEG/WebP, 1 byte–8 MiB each, up to 20 images/product and 10 images/reviewed slice. Source credentials are never forwarded to CDNs; unsupported signed URLs, private/relative source paths and unknown collection profiles require an explicit mapping/export. |
-| Customers | Source profile/address normalization → native CRM owner | No password/account credential, marketing consent, verified identity or email-based historical ownership is invented. Existing email conflicts require a reviewed resolution. |
-| Historical orders | Canonical source lines, exact minor-unit total, original timestamp/number → immutable native history | No repricing, new payment attempt, ordinary purchase event, stock consumption or invoice allocation. Source payment status is a historical claim, never native PSP confirmation. |
+| Customers | All five local provider protocols → native billing/shipping/additional address books (up to 50 addresses) | Explicit country/subdivision codes, original contact fields and distinct defaults are retained. No password/account credential, marketing consent, verified identity or email-based historical ownership is invented. Existing email conflicts require a reviewed resolution. |
+| Historical orders | All five local provider protocols → original lines, invoice/delivery addresses, exact minor-unit total and timestamp/number → immutable native history | No repricing, new payment attempt, ordinary purchase event, stock consumption or invoice allocation. Source payment status is a historical claim, never native PSP confirmation. |
 | Categories | Native private tree with stable IDs, localized names/slugs and explicit parent references | Parents must exist before children; missing parents stop the write instead of flattening the tree. |
 | Content pages | Source HTML → editable rich blocks → the installed Shop design model | Same package/schema, field/reference validation, history and private release owner. Unsafe links, executable embeds, unresolved media and unsupported markup stop import. No arbitrary PHP/Liquid/theme conversion. |
 | Reviews | Original author/text/date/rating → native review moderation | Hidden until ordinary moderation; visible source origin, never a fabricated native verified purchase. Original verification is only a typed boolean claim. Private imported author/provenance requires current product-read and PII rights. |
@@ -62,6 +62,43 @@ against arbitrary installed versions, private plugins or real merchant credentia
 Shopify protected customer data/older orders, third-party reviews and discounts can
 need additional access or explicit exports. API errors and nested pagination gaps
 remain visible; they are not counted as a completed extraction.
+
+## Original customers, addresses and order history
+
+Customer imports retain separate billing/delivery addresses and additional source
+addresses through the existing native CRM transaction. Every address uses the
+same geography validation as manual entry. The bounded address book has at most
+50 entries; unknown countries, unresolved subdivisions, absent referenced defaults
+and ambiguous multiple shipping destinations stop before destination intake.
+A malformed additional address rolls back the entire customer creation. Repeated
+imports retain the native fingerprint and do not duplicate the address book.
+Historical address intake emits its migration event without ordinary address-change
+workflows. Manual address creation and editing keep their existing events.
+
+Source-specific reads stay in the migration application:
+
+- Shopware 5 customer/order list summaries are expanded through fixed numeric-ID
+  detail endpoints, four concurrently. Detail identities must match the summary;
+  omitted historical order items cannot appear as a successful complete import.
+- PrestaShop customer addresses are read with customer/deleted filters. Each owner,
+  country, state and order-currency reference is resolved and checked through the
+  same pinned connection. Historical invoice and delivery addresses remain distinct.
+- Magento default address references and the original shipping assignment are
+  retained. Multiple order destinations require a dedicated mapping.
+- Shopify uses the current `defaultEmailAddress` and paginated `addressesV2`
+  fields, and explicitly requests order addresses. Nested truncation is rejected.
+  Full historical intake checks actual `read_all_orders` access: the default
+  recent-order window is not presented as complete source history.
+
+The Studio review exposes original emails, addresses, subdivisions, historical
+positions and amounts before approval, under the same current domain/PII rights
+as the saved job. No imported email becomes a verified login or purchase owner.
+Local five-provider HTTP fixtures demonstrate these implemented shapes; real
+merchant credentials and arbitrary source versions/plugins still need admission.
+Provider contracts: [Shopware 5 orders](https://developers.shopware.com/developers-guide/rest-api/api-resource-orders/),
+[PrestaShop orders](https://devdocs.prestashop-project.org/8/webservice/resources/orders/),
+[Shopify customers](https://shopify.dev/docs/api/admin-graphql/latest/objects/Customer)
+and [Shopify original-order access](https://shopify.dev/docs/api/admin-graphql/latest/objects/Order).
 
 ## Slow sources and variable families
 

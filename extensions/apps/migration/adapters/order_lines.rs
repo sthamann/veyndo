@@ -16,6 +16,15 @@ pub fn lines(c: &Context, v: &Value) -> Result<Value> {
     }
     let mut result = vec![];
     for (i, row) in rows.iter().enumerate() {
+        let currency = field(
+            row,
+            &["originalUnitPriceSet.shopMoney.currencyCode", "currency"],
+        );
+        if !currency.is_null() && currency.as_str() != Some(c.currency.as_str()) {
+            return Err(
+                "Historical item currency differs from the selected source currency".into(),
+            );
+        }
         let quantity = field(row, &["quantity", "qty_ordered", "product_quantity"]);
         let q = Money::parse(&quantity, &c.currency, 0)?.minor;
         if q <= 0 || q > 1_000_000 {
@@ -34,7 +43,7 @@ pub fn lines(c: &Context, v: &Value) -> Result<Value> {
         } else {
             Some(c.money(&price)?)
         };
-        result.push(json!({"sourceId":id(row,&["id","item_id"]).unwrap_or_else(|_|format!("line-{i}")),"label":text(&field(row,&["title","name","articleName","product_name"])),"quantity":q,"unitPrice":unit,"productSourceId":field(row,&["product_id","productId","articleId"])}));
+        result.push(json!({"sourceId":id(row,&["id","item_id"]).unwrap_or_else(|_|format!("line-{i}")),"label":text(&field(row,&["title","name","articleName","product_name"])),"quantity":q,"unitPrice":unit,"productSourceId":field(row,&["variant.id","product_id","productId","articleId","product.id"])}));
     }
     Ok(json!(result))
 }

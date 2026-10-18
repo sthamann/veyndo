@@ -63,6 +63,7 @@ export interface Inputs10 {
   };
   "merchant.customer.creation": JsonValue;
   "merchant.customer.create": {
+    additionalAddresses?: Array<JsonValue>;
     billingAddress: JsonValue;
     customerGroup: string;
     email: string;

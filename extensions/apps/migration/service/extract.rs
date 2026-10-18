@@ -121,6 +121,12 @@ pub async fn source_page(
     if c.system == Source::Woocommerce && kind == "products" {
         super::woo::enrich(c, &mut list, fixture).await?;
     }
+    if c.system == Source::Shopware5 && ["customers", "orders"].contains(&kind) {
+        super::shopware::enrich(c, kind, &mut list, fixture).await?;
+    }
+    if c.system == Source::Prestashop && ["customers", "orders"].contains(&kind) {
+        super::presta::enrich(c, kind, &mut list, fixture).await?;
+    }
     finish(
         c,
         source_id,

@@ -43,7 +43,11 @@ products across the other four source profiles; unsupported separate visibility 
 Complex source variants, private/provider-specific media and coupon mappings, full mapping/cutover and
 large-scale throughput remain incomplete. All five local source HTTP profiles now reach
 native private product creation; net/gross and source-warning choices use the native price owner. The guide distinguishes normalization
-from an accepted native target write.
+from an accepted native target write. All five local provider protocols now also reach
+native CRM address books and immutable historical orders, including source detail/reference
+reads, distinct delivery addresses, subdivisions, replay and absent ordinary address-change flows.
+Shopify full-history intake requires actual all-order access. These are local acceptance
+results; hosted service deployment and whole-shop cutover remain open.
 
 ## Public acceptance
 

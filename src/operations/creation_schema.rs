@@ -30,7 +30,7 @@ pub(crate) fn schema(name: &str) -> Option<Value> {
     let (props, required) = match name {
         "merchant.customer.creation" => (json!({}), vec![]),
         "merchant.customer.create" => (
-            json!({"email":{"type":"string"},"profile":{"type":"object"},"customerGroup":{"type":"string"},"billingAddress":{"type":"object"},"shippingAddress":{"type":["object","null"]},"requestKey":{"type":"string","minLength":8,"maxLength":128}}),
+            json!({"email":{"type":"string"},"profile":{"type":"object"},"customerGroup":{"type":"string"},"billingAddress":{"type":"object"},"shippingAddress":{"type":["object","null"]},"additionalAddresses":{"type":"array","maxItems":50,"items":{"type":"object"}},"requestKey":{"type":"string","minLength":8,"maxLength":128}}),
             vec![
                 "email",
                 "profile",

@@ -41,6 +41,26 @@ pub(crate) async fn address_save_conn(
     v: &Value,
     address: &commerce::Address,
 ) -> Result<Value> {
+    address_store_conn(conn, t, email, id, v, address, true).await
+}
+pub(crate) async fn address_import_conn(
+    conn: &mut sqlx::PgConnection,
+    t: &str,
+    email: &str,
+    v: &Value,
+    address: &commerce::Address,
+) -> Result<Value> {
+    address_store_conn(conn, t, email, None, v, address, false).await
+}
+async fn address_store_conn(
+    conn: &mut sqlx::PgConnection,
+    t: &str,
+    email: &str,
+    id: Option<&str>,
+    v: &Value,
+    address: &commerce::Address,
+    emit_event: bool,
+) -> Result<Value> {
     sqlx::query("SELECT id FROM customers WHERE tenant=$1 AND email=$2 FOR UPDATE")
         .bind(t)
         .bind(email)
@@ -73,11 +93,15 @@ pub(crate) async fn address_save_conn(
             .await?;
     }
     sqlx::query("UPDATE customers SET default_billing_address_id=CASE WHEN $4 OR default_billing_address_id IS NULL THEN $1 ELSE default_billing_address_id END,default_shipping_address_id=CASE WHEN $5 OR default_shipping_address_id IS NULL THEN $1 ELSE default_shipping_address_id END,revision=revision+1 WHERE tenant=$2 AND email=$3").bind(&address_id).bind(t).bind(email).bind(v["defaultBilling"].as_bool().unwrap_or(false)).bind(v["defaultShipping"].as_bool().unwrap_or(false)).execute(&mut *conn).await?;
-    sqlx::query("INSERT INTO outbox(tenant,kind,data) VALUES($1,'customer.address_changed',$2)")
+    if emit_event {
+        sqlx::query(
+            "INSERT INTO outbox(tenant,kind,data) VALUES($1,'customer.address_changed',$2)",
+        )
         .bind(t)
         .bind(json!({"email":email,"addressId":address_id}))
         .execute(&mut *conn)
         .await?;
+    }
     Ok(json!({"id":address_id,"saved":true}))
 }
 pub(crate) async fn address_delete(

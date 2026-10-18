@@ -216,6 +216,11 @@
   margin: 0;
   overflow-wrap: anywhere;
 }
+.migration-address {
+  font-style: normal;
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
 .migration-source-detail blockquote {
   margin: 14px 0;
   padding: 10px 14px;

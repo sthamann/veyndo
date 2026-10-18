@@ -1,6 +1,7 @@
 /** App-owned inward migration workflow: native consent, exact reviewed pages, private product targets and durable jobs. */
 import { useEffect, useRef, useState } from "react";
 import type { RequestFn } from "../../../../frontend/src/shared/api/types";
+import type { CustomerGroup } from "../../../../frontend/src/shared/customer/customer-types";
 import InstallConsent from "./InstallConsent";
 import Icon from "../../../../frontend/src/shared/ui/Icon";
 import Connection from "./Connection";
@@ -56,9 +57,7 @@ export default function MigrationWorkspace({
     [tax, setTax] = useState(""),
     [priceBasis, setPriceBasis] = useState(""),
     [group, setGroup] = useState(""),
-    [groups, setGroups] = useState<
-      { id: string; name: Record<string, string> }[]
-    >([]),
+    [groups, setGroups] = useState<CustomerGroup[]>([]),
     [jobs, setJobs] = useState<Job[]>([]),
     [working, setBusy] = useState(false),
     [error, setError] = useState("");

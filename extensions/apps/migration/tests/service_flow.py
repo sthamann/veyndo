@@ -5,9 +5,13 @@ from pathlib import Path
 from testing.runtime import ROOT,serve,stop
 from testing.database import psql
 from testing.app_approval import consent
+exec(compile((ROOT/'extensions/apps/migration/tests/crm_sources.py').read_text(),'crm_sources.py','exec'))
 class SourceFixture(BaseHTTPRequestHandler):
     def log_message(self,*args):pass
     def do_GET(self):
+        crm=crm_get(self.path,self.headers.get('Authorization'),a['workspace'])
+        if crm is not None:
+            self.send_response(200);self.end_headers();self.wfile.write(json.dumps(crm).encode());return
         provider_rows={
             '/api/products':('Basic '+base64.b64encode(b'provider-source-synthetic:').decode(),{'products':[{'id':501,'name':'Original Presta net cup','price':'12.500000','active':'0','visibility':'both'}]}),
             '/rest/V1/products':('Bearer provider-source-synthetic',{'items':[{'id':601,'sku':'MIG-MAG-601','name':'Original Magento cup','price':'15.25','status':2,'visibility':4,'type_id':'simple'}],'total_count':1}),
@@ -41,6 +45,9 @@ class SourceFixture(BaseHTTPRequestHandler):
         assert self.path.startswith('/admin/api/2026-10/graphql.json')
         assert self.headers.get('X-Shopify-Access-Token')=='provider-source-synthetic'
         query=json.loads(self.rfile.read(int(self.headers.get('Content-Length','0'))))
+        crm=crm_shopify(query['query'],a['workspace'])
+        if crm is not None:
+            self.send_response(200);self.end_headers();self.wfile.write(json.dumps(crm).encode());return
         assert 'status onlineStoreUrl' in query['query']
         body={'data':{'products':{'nodes':[{'id':'gid://shopify/Product/801','title':'Original Shopify draft','status':'DRAFT','onlineStoreUrl':None,'variants':{'nodes':[{'id':'gid://shopify/ProductVariant/811','title':'Default','sku':'MIG-SH-811','price':'19.90'}],'pageInfo':{'hasNextPage':False}},'images':{'nodes':[],'pageInfo':{'hasNextPage':False}}}],'pageInfo':{'hasNextPage':False,'endCursor':None}}}}
         self.send_response(200);self.end_headers();self.wfile.write(json.dumps(body).encode())
@@ -175,6 +182,7 @@ try:
     print('PASS all eight implemented source domains traverse the real gateway/service/outbox/native-write path')
     exec(compile((ROOT/'extensions/apps/migration/tests/variable_flow.py').read_text(),'variable_flow.py','exec'))
     exec(compile((ROOT/'extensions/apps/migration/tests/provider_flow.py').read_text(),'provider_flow.py','exec'))
+    exec(compile((ROOT/'extensions/apps/migration/tests/provider_crm_flow.py').read_text(),'provider_crm_flow.py','exec'))
     if os.environ.get('MIGRATION_BROWSER')=='1':
         import signal
         metadata={'url':BASE+'/?shop='+a['workspace']+'&studio=channels#merchant','email':EMAILS[0],'workspace':a['workspace']}

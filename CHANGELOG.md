@@ -1,5 +1,11 @@
 # Changelog
 
+## Original CRM and historical source fidelity — 2026-10-18
+
+- Carry billing, shipping and additional original addresses through one native CRM transaction, including source subdivisions/contact fields, exact replay and rollback on an invalid address. Historical intake suppresses ordinary address-change events; manual editing retains them.
+- Resolve Shopware 5 detail records and PrestaShop customer/address/country/state/currency dependencies through fixed, owned and bounded source reads. Preserve Magento shipping assignments and current Shopify address/email fields; require actual all-order access for full Shopify history.
+- Show original CRM/address/order-item evidence before approval. Actual five-provider HTTP fixtures reach native CRM/history; this is not real-source admission, hosted deployment or whole-shop final cutover. [Coverage](docs/agentic-migration.md).
+
 ## Reviewed source tax basis and five-provider native intake — 2026-10-18
 
 - Preserve original source amount/basis and convert declared net prices with the existing native tax calculator and currency precision. Known-basis mismatch/missing confirmation is rejected; legacy undeclared requests retain gross compatibility. Studio makes unknown basis explicit and clears approval on change.

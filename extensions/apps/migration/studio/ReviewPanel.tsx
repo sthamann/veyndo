@@ -5,7 +5,8 @@ import SourceDetails from "./SourceDetails";
 import { useState } from "react";
 import Icon from "../../../../frontend/src/shared/ui/Icon";
 import { useLocale } from "../../../../frontend/src/shared/i18n/i18n";
-import { contentText } from "../../../../frontend/src/shared/i18n/content-language";
+import type { CustomerGroup } from "../../../../frontend/src/shared/customer/customer-types";
+import { inheritedText } from "../../../../frontend/src/shared/geography/geography-types";
 import { useMigrationText } from "./i18n";
 import {
   reviewPriceBasis,
@@ -58,7 +59,7 @@ export default function ReviewPanel({
   setTax: (v: string) => void;
   group: string;
   setGroup: (v: string) => void;
-  groups: { id: string; name: Record<string, string> }[];
+  groups: CustomerGroup[];
   approved: boolean;
   setApproved: (v: boolean) => void;
   busy: boolean;
@@ -183,7 +184,8 @@ export default function ReviewPanel({
             <option value="" />
             {groups.map((g) => (
               <option key={g.id} value={g.id}>
-                {contentText(g.name, locale, mainLocale) || g.id}
+                {inheritedText(g.translations, locale, mainLocale, "name") ||
+                  g.id}
               </option>
             ))}
           </select>

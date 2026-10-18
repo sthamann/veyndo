@@ -90,6 +90,38 @@ c=call('/api/merchant/imports',cbody,h);assert call('/api/merchant/imports',cbod
 cd=call('/api/merchant/customers/'+customer['data']['email'],h=h);assert cd['id']==c['id'] and cd['addresses']['elements']
 call('/store-api/account/login',{'email':customer['data']['email'],'password':'Migration-fixture-2026!'}, {'x-tenant':a['workspace']},401)
 print('PASS native customer migration: addresses, stable source ID, no issued credential or account ownership inference')
+book=json.loads(json.dumps(cbody));book['record']['sourceId']='customer-book';book['record']['data']['email']='migration-book-'+uuid.uuid4().hex[:8]+'@example.test'
+book['record']['data']['shippingAddress']={**customer['data']['billingAddress'],'street':'Delivery Street 2'}
+book['record']['data']['additionalAddresses']=[{**customer['data']['billingAddress'],'street':'Warehouse Street 3'}]
+call('/api/merchant/imports',book,h);call('/api/merchant/imports',book,h)
+address_book=call('/api/merchant/customers/'+book['record']['data']['email'],h=h)['addresses'];addresses=address_book['elements']
+assert len(addresses)==3 and {x['address']['street'] for x in addresses}=={'Test Street 1','Delivery Street 2','Warehouse Street 3'},addresses
+assert next(x for x in addresses if x['id']==address_book['defaultBillingAddressId'])['address']['street']=='Test Street 1'
+assert next(x for x in addresses if x['id']==address_book['defaultShippingAddressId'])['address']['street']=='Delivery Street 2'
+print('PASS native imported address book: billing, shipping and additional original addresses; replay creates no duplicates')
+broken_book=json.loads(json.dumps(book));broken_book['record']['sourceId']='invalid-book';broken_book['record']['data']['email']='invalid-book-'+uuid.uuid4().hex[:8]+'@example.test';broken_book['record']['data']['additionalAddresses'][0]['country']='ZZ'
+call('/api/merchant/imports',broken_book,h,status=400)
+call('/api/merchant/customers/'+broken_book['record']['data']['email'],h=h,status=404)
+region_shop=shop();region_h={'Authorization':'Bearer '+region_shop['token'],'x-tenant':region_shop['workspace']}
+region_config=call('/api/merchant/commerce',h=region_h)
+germany=next(c for c in call('/store-api/countries',h={'x-tenant':region_shop['workspace']})['countries'] if c['code']=='DE')
+germany['states']=[{'code':'DE-BE','name':{'en':'Berlin','de':'Berlin','es':'Berlín','fr':'Berlin'}}]
+region_config['data']['countryDefinitions']=[germany]
+call('/api/merchant/commerce',region_config,region_h,method='PUT')
+regional=json.loads(json.dumps(cbody));regional['record']['sourceId']='regional-book';regional['record']['data']['billingAddress']['countryStateId']='DE-BE'
+call('/api/merchant/imports',regional,region_h)
+stored=call('/api/merchant/customers/'+regional['record']['data']['email'],h=region_h)
+assert stored['addresses']['elements'][0]['address']['countryStateId']=='DE-BE'
+print('PASS complete native address validation: invalid additional address rolls back; configured subdivision survives original import')
+from testing.database import psql
+import subprocess
+from urllib.parse import urlsplit
+owner=urlsplit(os.environ['DATABASE_URL']).username or 'commerce'
+query=f"SELECT count(*) FROM outbox WHERE tenant='{a['workspace']}' AND kind='migration.record.imported' AND data->>'customerId'='{c['id']}'"
+assert subprocess.check_output(psql(os.environ.get('TEST_DB_CONTAINER','veyndo-postgres-1'),owner,os.environ['TEST_DATABASE'],'-Atc',query),text=True).strip()=='1'
+query=f"SELECT count(*) FROM outbox WHERE tenant='{a['workspace']}' AND kind IN ('customer.created','customer.address_changed') AND data->>'email'='{book['record']['data']['email']}'"
+assert subprocess.check_output(psql(os.environ.get('TEST_DB_CONTAINER','veyndo-postgres-1'),owner,os.environ['TEST_DATABASE'],'-Atc',query),text=True).strip()=='0'
+print('PASS original CRM import emits its migration event without ordinary address-change workflows')
 exec(compile(open(__file__.replace('native_import.py','pages.py')).read(),'pages.py','exec'))
 exec(compile(open(__file__.replace('native_import.py','job_import.py')).read(),'job_import.py','exec'))
 exec(compile(open(__file__.replace('native_import.py','service_flow.py')).read(),'service_flow.py','exec'))

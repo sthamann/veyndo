@@ -7920,6 +7920,13 @@
                           "arguments": {
                             "additionalProperties": false,
                             "properties": {
+                              "additionalAddresses": {
+                                "items": {
+                                  "type": "object"
+                                },
+                                "maxItems": 50,
+                                "type": "array"
+                              },
                               "billingAddress": {
                                 "type": "object"
                               },

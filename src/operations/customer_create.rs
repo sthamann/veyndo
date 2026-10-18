@@ -8,6 +8,8 @@ struct Input {
     customer_group: String,
     billing_address: Option<commerce::Address>,
     shipping_address: Option<commerce::Address>,
+    #[serde(default)]
+    additional_addresses: Vec<commerce::Address>,
     request_key: String,
 }
 pub(super) async fn create(
@@ -46,6 +48,15 @@ async fn create_inner(
             "Complete customer profile and billing address required",
         ));
     }
+    if input.additional_addresses.len()
+        + usize::from(input.billing_address.is_some())
+        + usize::from(input.shipping_address.is_some())
+        > 50
+    {
+        return Err(bad(
+            "Customer address book supports at most 50 addresses per creation",
+        ));
+    }
     let email = auth::email(&json!({"email":input.email}))?;
     input.profile.validate()?;
     if !(8..=128).contains(&input.request_key.len()) {
@@ -73,6 +84,7 @@ async fn create_inner(
         .billing_address
         .iter_mut()
         .chain(input.shipping_address.iter_mut())
+        .chain(input.additional_addresses.iter_mut())
     {
         address.validate()?;
         commerce::validate_address_geography(address, &settings)?;
@@ -110,26 +122,29 @@ async fn create_inner(
         ));
     }
     if let Some(address) = input.billing_address {
-        accounts::address_save_conn(
+        save_address(
             &mut tx,
             &t,
             &email,
-            None,
+            source.is_some(),
             &json!({"defaultBilling":true,"defaultShipping":input.shipping_address.is_none()}),
             &address,
         )
         .await?;
     }
     if let Some(address) = input.shipping_address {
-        accounts::address_save_conn(
+        save_address(
             &mut tx,
             &t,
             &email,
-            None,
+            source.is_some(),
             &json!({"defaultShipping":true}),
             &address,
         )
         .await?;
+    }
+    for address in input.additional_addresses {
+        save_address(&mut tx, &t, &email, source.is_some(), &json!({}), &address).await?;
     }
     sqlx::query("INSERT INTO outbox(tenant,kind,data) VALUES($1,$2,$3)")
         .bind(&t)
@@ -154,4 +169,20 @@ pub(super) async fn context(State(a): State<App>, h: RequestContext) -> Result<J
     Ok(Json(
         json!({"elements":s.customer_groups,"countries":s.countries,"mainLocale":s.main_locale}),
     ))
+}
+
+// Imported address books share native validation/storage, without ordinary address-change workflows.
+async fn save_address(
+    conn: &mut sqlx::PgConnection,
+    tenant: &str,
+    email: &str,
+    imported: bool,
+    flags: &Value,
+    address: &commerce::Address,
+) -> Result<Value> {
+    if imported {
+        accounts::address_import_conn(conn, tenant, email, flags, address).await
+    } else {
+        accounts::address_save_conn(conn, tenant, email, None, flags, address).await
+    }
 }

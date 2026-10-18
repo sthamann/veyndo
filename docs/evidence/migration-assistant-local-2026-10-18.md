@@ -13,7 +13,7 @@ private destination before invoking the original native domain writer.
 
 Products, images, categories, editable content pages, CRM customers, immutable
 historical orders, moderated reviews and inactive coupons all traverse that real service/gateway/job/write path. Five
-source-platform HTTP fixtures and 27 normalization cases plus four publication-state cases exercise implemented
+source-platform HTTP fixtures, 27 normalization cases, eight CRM evidence cases, 13 transport cases and four publication-state cases exercise implemented
 provider profiles. Three Rust package tests cover the shared exact-money, safe
 transport and explicit unknown-image-profile boundaries.
 
@@ -155,7 +155,7 @@ screenshots: `artifacts/migration-reviews-preview.png` and
 `artifacts/migration-coupons-preview.png`. Owned disposable fixtures are cleaned up
 after each pass; the user's existing server on port 8802 remains untouched.
 
-Frontend: 119 files / 677 tests, production build, formatting and EN/DE/FR/ES
+Frontend: 119 files / 679 tests, production build, formatting and EN/DE/FR/ES
 localization pass. Workspace Rust tests, warning-denying clippy, source/API/image
 ownership checks and documentation generation/checking pass. Existing formal
 mutation controls reject 172 broken policies; this does not prove all migration
@@ -181,3 +181,42 @@ scrolls inside its 600 px wrapper; the document remains 900 px wide.
 Screenshots: `artifacts/migration-presta-net-review-fixed.png` and
 `artifacts/migration-presta-price-options.png`. The owned browser tab, fixture
 processes and disposable database were cleaned up. Port 8802 was preserved.
+
+## Native CRM source fidelity follow-up
+
+CLI counterexamples reproduced missing Woo delivery addresses, unresolved Shopware
+country/postcode aliases, Magento shipping assignments and mismatched historical
+line currencies. Native intake now preserves separate billing/delivery/additional
+addresses within the original CRM transaction. Invalid additional geography rolls
+back the customer; replay leaves exactly one address book. Ordinary manual address
+events remain enabled, while historical address intake emits only its migration
+event. A database-positive control checks event visibility before the absence check.
+
+All five real local source HTTP protocols now reach native customer/address and
+immutable historical-order writes. Four-provider follow-ups resolve Presta customer/
+country/state/currency dependencies, Shopware detail summaries and current Shopify
+email/address fields. Full Shopify historical access requires actual read_all_orders;
+its missing-scope counterexample was observed before the guard was implemented.
+
+Independent focused review found a subdivision-loss defect. Source US/CA examples
+for all five adapters now produce US-CA, foreign-country region prefixes fail and
+a configured native DE-BE customer import retains the region. The reviewer found
+no other Important/Critical issues, including the new import-only event selection.
+The surrounding source joins, JSON parsing and SQL/async behavior remain unproved.
+
+Registered migration/customer-account/company-settings/tenant-isolation checks pass.
+A complete repeat under separate signed System/Tenant logins, ticket rotation and
+restart also passes, including five-provider CRM, original historical amounts and
+positions, private/publication/simulated-purchase regression, replay and current-right
+denials. Original port 8802 remains on the user's unchanged process.
+
+Actual Chrome reopened saved Shopify customer and historical-order evidence, expanded
+additional addresses/positions, selected the real German native customer group and
+completed both reviewed repeats. The first pass exposed a genuine crash: the app
+expected a group `name` map, while the native owner returns translated group fields.
+The app now uses the shared `CustomerGroup` type and inheritance renderer. The same
+native response shape reproduces RED and passes GREEN in the UI regression.
+Screenshots: `artifacts/migration-crm-customer-review.png` and
+`artifacts/migration-crm-order-review.png`. Both were visually inspected. The owned
+Chrome tab, fixture processes and disposable database were cleaned up; port 8802
+and the two pre-existing disposable databases were preserved.

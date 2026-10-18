@@ -4,10 +4,18 @@ import json,os,subprocess,time,unittest,urllib.request,urllib.error,threading
 from http.server import ThreadingHTTPServer,BaseHTTPRequestHandler
 from pathlib import Path
 from urllib.parse import urlsplit,parse_qs
+from crm_sources import crm_shopify
 ROOT=Path(__file__).resolve().parents[4];BIN=ROOT/'target/debug/migration-assistant'
 class Source(BaseHTTPRequestHandler):
     def log_message(self,*args):pass
     def do_GET(self):
+        if self.path.split('?')[0]=='/api/orders':
+            body={'data':[{'id':55,'number':'OLD-55','invoiceAmount':'12.50','currency':'EUR','orderTime':'2020-01-02T03:04:05Z'}],'total':1}
+            self.send_response(200);self.end_headers();self.wfile.write(json.dumps(body).encode());return
+        if self.path.split('?')[0]=='/api/orders/55':
+            body={'data':{'id':55,'number':'OLD-55','invoiceAmount':'12.50','currency':'EUR','orderTime':'2020-01-02T03:04:05Z','details':[{'id':551,'articleName':'Original historical cup','quantity':2,'price':'6.25'}],'billing':{'firstName':'Ada','lastName':'Original','street':'Quellweg 1','zipCode':'10115','city':'Berlin','country':{'iso':'DE'}}},'success':True}
+            if self.headers.get('Authorization')=='Bearer drift-order-secret':body['data']['id']=56
+            self.send_response(200);self.end_headers();self.wfile.write(json.dumps(body).encode());return
         if self.path.startswith('/source.png'):
             assert self.headers.get('authorization') is None
             self.send_response(200);self.send_header('Content-Type','image/png');self.end_headers();self.wfile.write(base64.b64decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+j6ckAAAAASUVORK5CYII='));return
@@ -36,8 +44,12 @@ class Source(BaseHTTPRequestHandler):
         self.send_error(404)
     def do_POST(self):
         token=self.headers.get('X-Shopify-Access-Token')
-        if token not in ['source-secret','many-secret']:self.send_error(401);return
+        if token not in ['source-secret','many-secret','missing-order-scope']:self.send_error(401);return
         request=json.loads(self.rfile.read(int(self.headers.get('Content-Length','0'))))
+        if 'orders(first:' in request['query']:
+            body=crm_shopify(request['query'],'transport-fixture')
+            if token=='missing-order-scope':body['data']['currentAppInstallation']['accessScopes']=[{'handle':'read_orders'}]
+            self.send_response(200);self.end_headers();self.wfile.write(json.dumps(body).encode());return
         assert 'status onlineStoreUrl' in request['query']
         parents=[]
         for p in range(50 if token=='many-secret' else 1):
@@ -57,6 +69,8 @@ class Transport(unittest.TestCase):
         connections['tenant-a']['many']={**connections['tenant-a']['shopify'],'token':'many-secret'}
         connections['tenant-a']['woo_variants']={**connections['tenant-a']['source-a'],'token':'variants-secret'}
         connections['tenant-a']['woo_drift']={**connections['tenant-a']['source-a'],'token':'drift-secret'}
+        connections['tenant-a']['sw_order_drift']={**connections['tenant-a']['shopware5'],'token':'drift-order-secret'}
+        connections['tenant-a']['shopify_no_history']={**connections['tenant-a']['shopify'],'token':'missing-order-scope'}
         env['MIGRATION_SOURCES']=json.dumps(connections)
         cls.log=open(ROOT/'artifacts/migration-transport-service.log','w');cls.p=subprocess.Popen([str(BIN),'serve'],env=env,stdout=cls.log,stderr=cls.log)
         for _ in range(30):
@@ -78,6 +92,17 @@ class Transport(unittest.TestCase):
         for system,minor in [('prestashop',1250),('magento2',1525),('shopware5',2990),('shopify',1990)]:
             with self.subTest(system=system):
                 code,v=self.call(sourceId=system);self.assertEqual(code,200,v);self.assertEqual(v['records'][0]['data']['price']['minor'],minor);self.assertIs(v['records'][0]['data']['catalogActive'],False)
+    def test_shopware_history_uses_original_detail_not_the_summary(self):
+        code,v=self.call(sourceId='shopware5',kind='orders');self.assertEqual(code,200,v)
+        self.assertEqual(v['records'][0]['data']['lines'][0]['unitPrice']['minor'],625)
+        self.assertEqual(v['records'][0]['data']['billingAddress']['country'],'DE')
+        code,v=self.call(sourceId='sw_order_drift',kind='orders');self.assertEqual(code,400,v)
+        self.assertNotIn('records',v)
+    def test_shopify_history_requires_actual_all_order_access(self):
+        code,v=self.call(sourceId='shopify',kind='orders');self.assertEqual(code,200,v)
+        self.assertEqual(v['records'][0]['data']['lines'][0]['unitPrice']['minor'],625)
+        code,v=self.call(sourceId='shopify_no_history',kind='orders');self.assertEqual(code,400,v)
+        self.assertNotIn('records',v)
     def test_variant_expansion_is_split_into_complete_reviewable_batches(self):
         rows=[];cursor=None
         for _ in range(20):

@@ -17,3 +17,10 @@ WooCommerce coupons require explicit native activation review and retain their
 original currency and remaining-use snapshot. Slow source inspections run in the existing saved jobs and can be reopened after reload. Products use real native
 variant/category associations and the existing native tax calculator for explicitly reviewed net source prices; all private domains can share one selected preview. Normalizing other source domains does not implement their target
 migration. Do not advertise complete theme/plugin conversion or zero-downtime cutover.
+
+CRM intake now retains native billing/shipping/additional addresses (maximum 50),
+original subdivisions and historical invoice/delivery addresses. Shopware summaries
+are expanded through bounded detail reads; Presta ownership/geography/currency
+references are checked; Shopify full-history access is explicitly required. Source
+PII stays behind current paired rights, with no new login or ordinary address-change
+workflow. See the main guide for provider shapes and remaining acceptance.
