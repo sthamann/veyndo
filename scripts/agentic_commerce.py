@@ -12,7 +12,7 @@ def shop():
     suffix = uuid.uuid4().hex[:12]
     return call('/api/auth/register', {'workspaceId':'cart-'+suffix,'workspaceName':'UCP cart fixture','name':'Owner','email':suffix+'@example.test','password':'Synthetic-cart-fixture-2026!'})
 u, foreign = shop(), shop()
-h = {'x-tenant':u['workspace']}
+h = {'x-tenant':u['workspace'],'x-commerce-locale':'de-DE'}
 profile = call('/.well-known/ucp', h=h)['ucp']
 assert 'dev.ucp.shopping.cart' in profile['capabilities'], profile['capabilities']
 body = {'line_items':[{'item':{'id':'lamp'}, 'quantity':2}], 'currency':'EUR'}
@@ -22,6 +22,7 @@ assert c['totals'][-1]['amount'] > 0 and c['currency'] == 'EUR'
 url = urllib.parse.urlsplit(c['continue_url'])
 assert url.scheme == 'https' and url.netloc == 'studio.example.test' and url.path == '/checkout', url
 assert urllib.parse.parse_qs(url.query)['shop'] == [u['workspace']]
+assert urllib.parse.parse_qs(url.query).get('language') == ['de-DE'], 'Continuation must preserve the cart content language'
 assert url.fragment.startswith('checkout/') and 'token' not in url.query
 assert 'context_token' not in c
 secret = url.fragment.removeprefix('checkout/')

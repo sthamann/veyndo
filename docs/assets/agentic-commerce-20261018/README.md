@@ -11,6 +11,8 @@ No screenshot establishes public deployment, Google approval or live settlement.
 - `shopify-sandbox.jpg`: both native variant drafts saved in the private sandbox.
 - `purchase.jpg`: native shared UI cart commands, quantity two, simulated order RAC-64dd0223.
 
+- `transfer-purchase.jpg`: actual UCP continuation through native browser review to simulated RAC-fa07ed97, retaining German content language.
+
 Return and browser reload retained an empty cart. Required contact enforcement,
 explicit UCP consent negotiation and currency-update atomicity are separately
 covered by actual isolated HTTP regressions on the final build.

@@ -2074,8 +2074,8 @@
     },
     "src/checkout_handoff.rs": {
       "status": "unproved",
-      "sha256": "01e69c4d4e4d98bd1f01462bf50138885fab573999196cd76ebebcad8d1eee18",
-      "review": "Reviewed native UCP B2B transport: exact public schema only; bounded namespace/version profile selection without authority; current employee and original-cart RFQ reads; unchanged quote CAS, expiry, pricing, budget and separate approval owners; single-use native checkout handoff; shared idempotent order/outbox. New UCP adapters remain unproved."
+      "sha256": "e79157da7089d3e57ac41169df256456624f693f41d5c35fb710957332dbdefe",
+      "review": "Reviewed canonical checkout handoff retains validated native cart locale in language query, no capability moved from fragment; German UCP continuation regression red then green plus native handoff/B2B regression. Existing extracted kernel and SQL authority unchanged."
     },
     "src/checkout_page.rs": {
       "status": "unproved",

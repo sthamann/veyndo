@@ -50,8 +50,8 @@ prices or return origins have no authority.
 The response contains native totals, an expiry and a canonical `continue_url`.
 The browser continuation uses the existing ten-minute, single-use handoff in a
 URL **fragment**, not a query-string bearer. The native consume endpoint rotates
-the cart capability; foreign-tenant consumption and replay fail. The browser
-finishes in Veyndo’s existing checkout and payment lifecycle. Repeated order
+the cart capability; foreign-tenant consumption and replay fail. The continuation pins the cart’s content language, so native names and shipping/payment
+labels survive the handoff. The browser finishes in Veyndo’s existing checkout and payment lifecycle. Repeated order
 submission retains the native idempotency contract.
 
 Discovery is `/.well-known/ucp`. A `UCP-Agent` public HTTPS profile must intersect

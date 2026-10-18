@@ -39,6 +39,14 @@ order name, quantity and amount were correct. Return to the shop and browser rel
 both showed **Warenkorb 0**. [Purchase screenshot](../assets/agentic-commerce-20261018/purchase.jpg).
 This browser round used the native demo method, not a real PSP or a Storyfront iframe.
 
+The additional final-build browser round started from the actual UCP `continue_url`
+with the cart’s `language=de-DE`. Single-use consume opened contact/address fields,
+with German product, shipping and payment names. Native review and simulated order
+**RAC-fa07ed97**, EUR 12.50, passed. Return and reload again retained an empty bag.
+[UCP transfer purchase](../assets/agentic-commerce-20261018/transfer-purchase.jpg).
+The missing-language URL assertion was observed failing before the generic handoff
+owner was repaired; native handoff and B2B regressions passed afterwards.
+
 ## Shopware Payments simulation
 
 The separately held actual private Rust adapter was built and tested against the
