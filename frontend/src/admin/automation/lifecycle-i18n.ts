@@ -1,6 +1,24 @@
 /** Shared lifecycle, starting-process and dependency vocabulary for every automation editor. */
 import { useLocale } from "../../shared/i18n/i18n";
 const words = {
+  sourceCoupon: [
+    "Imported coupon",
+    "Importierter Gutschein",
+    "Code importé",
+    "Cupón importado",
+  ],
+  sourceCouponHint: [
+    "Review the original restrictions, currency and remaining uses before enabling this coupon. This coupon applies only in its original currency. Existing purchases are not new redemptions.",
+    "Prüfe ursprüngliche Bedingungen, Währung und verbleibende Nutzungen, bevor du den Gutschein aktivierst. Der Gutschein gilt nur in seiner ursprünglichen Währung. Alte Käufe werden nicht erneut als Einlösung gezählt.",
+    "Vérifiez les conditions, la devise et les utilisations restantes avant activation. Ce code s’applique uniquement dans sa devise d’origine. Les anciens achats ne sont pas de nouvelles utilisations.",
+    "Revisa condiciones, moneda y usos restantes antes de activar. Este cupón solo se aplica en su moneda original. Las compras anteriores no son nuevos usos.",
+  ],
+  sourceCouponReviewed: [
+    "I reviewed the mapped conditions and remaining uses",
+    "Ich habe die übernommenen Bedingungen und Restnutzungen geprüft",
+    "J’ai vérifié les conditions et utilisations restantes",
+    "He revisado las condiciones y los usos restantes",
+  ],
   formSubmitted: [
     "Form received",
     "Formular eingegangen",

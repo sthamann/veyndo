@@ -1,6 +1,13 @@
 /** Review projections retain exact minor units and source IDs; UI never invents native purchase or identity authority. */
 export type Kind =
-  "products" | "categories" | "pages" | "customers" | "orders" | "assets";
+  | "products"
+  | "categories"
+  | "pages"
+  | "customers"
+  | "orders"
+  | "assets"
+  | "reviews"
+  | "coupons";
 export type SourceRecord = {
   sourceId: string;
   sourceShop?: string;
@@ -8,7 +15,21 @@ export type SourceRecord = {
   warnings: string[];
   data: {
     name?: Record<string, string>;
-    title?: Record<string, string>;
+    title?: Record<string, string> | string;
+    destination?: {
+      amount: number;
+      kind: string;
+      maxUses?: number | null;
+      end?: string | null;
+    };
+    code?: string;
+    currency?: string;
+    sourceRules?: Record<string, string | number | boolean | null>;
+    text?: string;
+    rating?: number;
+    sourceAuthor?: string;
+    createdAt?: string;
+    sourceVerified?: boolean | null;
     firstName?: string;
     lastName?: string;
     number?: string;
@@ -64,19 +85,26 @@ export function jobKind(job: Job): Kind | undefined {
     "pages",
     "customers",
     "orders",
+    "reviews",
+    "coupons",
   ].includes(kind ?? "")
     ? (kind as Kind)
     : undefined;
 }
 export function rowName(row: SourceRecord) {
   return (
-    Object.values(row.data.name ?? row.data.title ?? {})[0] ||
+    (typeof row.data.title === "string"
+      ? row.data.title
+      : Object.values(row.data.name ?? row.data.title ?? {})[0]) ||
+    row.data.code ||
     row.data.number ||
     [row.data.firstName, row.data.lastName].filter(Boolean).join(" ") ||
     row.sourceId
   );
 }
 export function rowAmount(row: SourceRecord) {
+  if (row.kind === "coupons")
+    return `${row.data.destination?.amount ?? ""} ${row.data.destination?.kind === "percentage" ? "%" : (row.data.currency ?? "")}`.trim();
   const a = row.data.price ?? row.data.total;
   if (!a) return "";
   const text = row.data.priceDisplay ?? row.data.totalDisplay;
@@ -88,14 +116,22 @@ export function rowAmount(row: SourceRecord) {
 export function importRights(kind: Kind) {
   return [
     "apps.manage",
-    kind === "pages"
-      ? "channels.manage"
-      : isPrivate(kind)
+    kind === "coupons"
+      ? "automation.manage"
+      : kind === "reviews"
         ? "catalog.write"
-        : kind === "customers"
-          ? "customers.write"
-          : "orders.write",
-    ...(isPrivate(kind) ? ["environments.manage"] : ["customers.pii"]),
+        : kind === "pages"
+          ? "channels.manage"
+          : isPrivate(kind)
+            ? "catalog.write"
+            : kind === "customers"
+              ? "customers.write"
+              : "orders.write",
+    ...(isPrivate(kind)
+      ? ["environments.manage"]
+      : kind === "coupons"
+        ? []
+        : ["customers.pii"]),
   ];
 }
 
@@ -122,6 +158,8 @@ export function importOptions(
       return { channelId: "default", taxRate: Number(values.tax) };
     case "pages":
       return { destinationDigest: values.destinationDigest };
+    case "reviews":
+    case "coupons":
     case "categories":
     case "assets":
       return {};

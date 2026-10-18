@@ -1,6 +1,18 @@
 /** Migration controls use the same four interface locales; source content keeps its own explicit locale. */
 import { useLocale } from "../../../../frontend/src/shared/i18n/i18n";
 const words = {
+  reviews: [
+    "Historical reviews",
+    "Historische Bewertungen",
+    "Avis historiques",
+    "Reseñas históricas",
+  ],
+  coupons: [
+    "Coupons & remaining uses",
+    "Gutscheine & Restnutzungen",
+    "Codes et utilisations restantes",
+    "Cupones y usos restantes",
+  ],
   imageSize: [
     "Original bytes",
     "Originalgröße in Byte",

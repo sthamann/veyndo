@@ -100,7 +100,7 @@ pub(crate) async fn product_detail(
         price_tiers.push(json!({"quantity":qty,"price":q["lineItems"][0]["price"],"discountPercent":q["lineItems"][0]["discountPercent"]}));
     }
     // Review aggregates cover the whole family, independently of variant pagination.
-    let rows=sqlx::query("SELECT r.id,r.author,r.rating,r.title,r.content,r.verified,r.demo,r.created_at::text AS time FROM product_reviews r WHERE r.tenant=$1 AND r.approved AND (r.product_id=$2 OR EXISTS(SELECT 1 FROM products p WHERE p.tenant=r.tenant AND p.id=r.product_id AND p.parent_id=$2)) ORDER BY r.created_at DESC LIMIT 50").bind(&t).bind(&family).fetch_all(&a.db).await?;
+    let rows=sqlx::query("SELECT r.id,r.author,r.rating,r.title,r.content,r.verified,r.demo,(r.source_import IS NOT NULL) AS imported,r.created_at::text AS time FROM product_reviews r WHERE r.tenant=$1 AND r.approved AND (r.product_id=$2 OR EXISTS(SELECT 1 FROM products p WHERE p.tenant=r.tenant AND p.id=r.product_id AND p.parent_id=$2)) ORDER BY r.created_at DESC LIMIT 50").bind(&t).bind(&family).fetch_all(&a.db).await?;
     let stats=sqlx::query("SELECT count(*) AS count,coalesce(avg(r.rating),0)::double precision AS rating FROM product_reviews r WHERE r.tenant=$1 AND r.approved AND (r.product_id=$2 OR EXISTS(SELECT 1 FROM products p WHERE p.tenant=r.tenant AND p.id=r.product_id AND p.parent_id=$2))").bind(&t).bind(&family).fetch_one(&a.db).await?;
     let count = stats.get::<i64, _>("count");
     let rating = stats.get::<f64, _>("rating");
@@ -140,6 +140,6 @@ pub(crate) async fn product_detail(
         })
         .collect::<Result<Vec<_>>>()?;
     Ok(Json(
-        json!({"currencyContext":currencies::context(&config.currencies,currency),"availableCurrencies":config.currencies.enabled,"product":product,"familyId":family,"variants":variants,"variantsPagination":{"nextCursor":next_cursor,"hasMore":next_cursor.is_some(),"limit":criteria.page_size()?},"calculatedPrices":price_tiers,"delivery":delivery,"taxStatus":if config.is_business(group){"net"}else{"gross"},"country":selection.country,"reviews":{"count":count,"average":rating,"elements":rows.iter().map(|r|json!({"id":r.get::<String,_>("id"),"author":r.get::<String,_>("author"),"rating":r.get::<i32,_>("rating"),"title":r.get::<String,_>("title"),"content":r.get::<String,_>("content"),"verifiedPurchase":r.get::<bool,_>("verified"),"demo":r.get::<bool,_>("demo"),"time":r.get::<String,_>("time")})).collect::<Vec<_>>()}}),
+        json!({"currencyContext":currencies::context(&config.currencies,currency),"availableCurrencies":config.currencies.enabled,"product":product,"familyId":family,"variants":variants,"variantsPagination":{"nextCursor":next_cursor,"hasMore":next_cursor.is_some(),"limit":criteria.page_size()?},"calculatedPrices":price_tiers,"delivery":delivery,"taxStatus":if config.is_business(group){"net"}else{"gross"},"country":selection.country,"reviews":{"count":count,"average":rating,"elements":rows.iter().map(|r|json!({"id":r.get::<String,_>("id"),"author":r.get::<String,_>("author"),"rating":r.get::<i32,_>("rating"),"title":r.get::<String,_>("title"),"content":r.get::<String,_>("content"),"verifiedPurchase":r.get::<bool,_>("verified"),"demo":r.get::<bool,_>("demo"),"imported":r.get::<bool,_>("imported"),"time":r.get::<String,_>("time")})).collect::<Vec<_>>()}}),
     ))
 }

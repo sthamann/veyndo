@@ -1,7 +1,7 @@
 # Migration Assistant: local acceptance, 18 October 2026
 
 Scope: `feat/agentic-migration-assistant`, foundation commit `a33a21c9` and its
-reviewed original-image/publication follow-up. This record describes local
+reviewed original-image/publication and native review/coupon follow-ups. This record describes local
 synthetic execution, not public deployment or whole-shop source parity.
 
 ## Connected native journey
@@ -11,9 +11,9 @@ Source review freezes canonical row hashes. Explicit approval queues the existin
 native app job/outbox. Its callback checks current package, creator, lease and
 private destination before invoking the original native domain writer.
 
-Products, images, categories, editable content pages, CRM customers and immutable
-historical orders all traverse that real service/gateway/job/write path. Five
-source-platform HTTP fixtures and 19 normalization cases exercise implemented
+Products, images, categories, editable content pages, CRM customers, immutable
+historical orders, moderated reviews and inactive coupons all traverse that real service/gateway/job/write path. Five
+source-platform HTTP fixtures and 23 normalization cases exercise implemented
 provider profiles. Three Rust package tests cover the shared exact-money, safe
 transport and explicit unknown-image-profile boundaries.
 
@@ -47,6 +47,30 @@ parent ordering, stock preservation and exact live baseline projection. Their
 concrete attachment-kind and source-image-order findings were fixed and covered
 by the regressions above. SQL/HTTP execution is outside the pure Lean proof scope.
 
+## Native reviews and coupons
+
+Original review dates/authors/ratings enter native moderation, initially hidden
+and never native purchase-verified. After ordinary moderation, the public review
+shows only an imported label. Exact replay retains the human moderation decision;
+changed source content and private/foreign product references are rejected.
+Imported private review rows require current `catalog.read` **and** `customers.pii`
+on the settings projection. Real members with either or neither right cannot
+read them; removing PII from an existing role immediately removes the projection.
+Source verification is restricted to boolean/null in both adapter and native intake.
+
+WooCommerce percent/fixed-cart coupons enter native promotions inactive. Source
+usage 2 of 5 becomes three remaining redemptions; past purchases are not inserted
+as native uses. Unreviewed activation is rejected. Deliberate native review enables
+the actual cart discount; replay does not reset an already reviewed promotion.
+Original currency is immutable, visible and enforced on currency changes. A JPY
+cart cannot accidentally satisfy a nominal EUR spend threshold. Negative/wrong-type
+usage limits, malformed restriction fields and unsupported plugin restrictions
+fail at the actual Rust CLI. Only explicit null/integer zero means unlimited.
+
+The independent focused review found the malformed-limit, private review projection
+and currency-boundary defects. Each was reproduced before repair and its actual
+CLI/member/checkout countercase now passes. SQL/HTTP remains outside the pure proof.
+
 ## Browser and general checks
 
 Actual Chrome exercised source review, explicit approval, a successful image
@@ -54,18 +78,22 @@ job, private-target reuse and handoff to the existing Shop design agent with its
 source URL retained. Saved jobs identify their data domain. The synthetic source
 uses HTTP; existing CSP blocks its cross-origin thumbnail. A localized fallback
 is shown, while copied native image bytes are checked separately. CSP was not
-weakened. The disposable browser fixture was stopped and removed afterwards.
+weakened. A further browser pass inspected original review evidence and coupon conditions,
+explicitly approved both native imports and observed completed saved jobs. Preview
+screenshots: `artifacts/migration-reviews-preview.png` and
+`artifacts/migration-coupons-preview.png`. Owned disposable fixtures are cleaned up
+after each pass; the user's existing server on port 8802 remains untouched.
 
-Frontend: 119 files / 666 tests, production build, formatting and EN/DE/FR/ES
+Frontend: 119 files / 671 tests, production build, formatting and EN/DE/FR/ES
 localization pass. Workspace Rust tests, warning-denying clippy, source/API/image
 ownership checks and documentation generation/checking pass. Existing formal
-mutation controls reject 170 broken policies; this does not prove all migration
+mutation controls reject 172 broken policies; this does not prove all migration
 or commerce behavior mathematically.
 
 ## Remaining acceptance
 
 No real merchant source credentials, arbitrary source-version/plugin compatibility,
-complete complex variants, native review/voucher migration, automatic branded
+complete complex variants, other source-provider coupon mappings, automatic branded
 theme parity, whole-shop final delta/cutover or large-catalogue throughput is
 accepted by this record. The independent service needs its own deployment and
 tenant-bound callback configuration before hosted use. See the

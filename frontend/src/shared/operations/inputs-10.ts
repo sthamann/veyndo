@@ -45,7 +45,14 @@ export interface Inputs10 {
     record: {
       data: JsonValue;
       kind:
-        "products" | "categories" | "pages" | "customers" | "orders" | "assets";
+        | "products"
+        | "categories"
+        | "pages"
+        | "customers"
+        | "orders"
+        | "assets"
+        | "reviews"
+        | "coupons";
       source: string;
       sourceId: string;
       sourceShop: string;

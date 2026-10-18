@@ -23,6 +23,8 @@ pub(super) async fn execute(a: &App, h: &RequestContext, m: &Manifest, v: &Value
     let capability = match kind {
         "products" | "categories" => "products.write",
         "assets" => "assets.write",
+        "reviews" => "reviews.write",
+        "coupons" => "promotions.write",
         "pages" => "data.write",
         "customers" => "customers.write",
         "orders" => "orders.import",
@@ -38,7 +40,7 @@ pub(super) async fn execute(a: &App, h: &RequestContext, m: &Manifest, v: &Value
         credentials::permit(h, p)?;
         auth::permit(h, credentials::scope(p).unwrap())?;
     }
-    if ["customers", "orders"].contains(&kind) {
+    if ["customers", "orders", "reviews"].contains(&kind) {
         if !m.permissions.iter().any(|p| p == "customers.pii") {
             return Err(Error(
                 StatusCode::FORBIDDEN,
@@ -88,7 +90,7 @@ pub(super) async fn execute(a: &App, h: &RequestContext, m: &Manifest, v: &Value
     identity.principal.permissions = (!rights.is_null()).then(|| rights.to_string());
     auth::permit(&identity, "apps.manage")?;
     auth::permit(&identity, credentials::scope(capability).unwrap())?;
-    if ["customers", "orders"].contains(&kind) {
+    if ["customers", "orders", "reviews"].contains(&kind) {
         auth::permit(&identity, "customers.pii")?;
     }
     let action = m

@@ -1,4 +1,5 @@
 /** Exact source review keeps unacknowledged gaps and missing target choices from starting a write. */
+import SourceDetails from "./SourceDetails";
 import { useState } from "react";
 import Icon from "../../../../frontend/src/shared/ui/Icon";
 import { useLocale } from "../../../../frontend/src/shared/i18n/i18n";
@@ -55,6 +56,8 @@ export default function ReviewPanel({
 }) {
   const t = useMigrationText(),
     { locale } = useLocale();
+  const hasAmount = ["products", "orders", "assets", "coupons"].includes(kind);
+  const hasWarnings = review.records.some((row) => row.warnings.length > 0);
   return (
     <>
       <p>
@@ -66,8 +69,10 @@ export default function ReviewPanel({
             <tr>
               <th>{t("sourceKey")}</th>
               <th>{t("name")}</th>
-              <th>{t(kind === "assets" ? "imageSize" : "amount")}</th>
-              <th>{t("limitations")}</th>
+              {hasAmount && (
+                <th>{t(kind === "assets" ? "imageSize" : "amount")}</th>
+              )}
+              {hasWarnings && <th>{t("limitations")}</th>}
             </tr>
           </thead>
           <tbody>
@@ -83,7 +88,7 @@ export default function ReviewPanel({
                     <code>{row.sourceId}</code>
                   </details>
                 </td>
-                <td>
+                <td className="migration-content-cell">
                   {kind === "assets" && row.data.url && (
                     <SourceImage
                       key={row.data.url}
@@ -92,11 +97,14 @@ export default function ReviewPanel({
                     />
                   )}{" "}
                   {rowName(row)}
+                  <SourceDetails row={row} />
                 </td>
-                <td>
-                  {kind === "assets" ? row.data.byteLength : rowAmount(row)}
-                </td>
-                <td>{row.warnings.join(" · ")}</td>
+                {hasAmount && (
+                  <td>
+                    {kind === "assets" ? row.data.byteLength : rowAmount(row)}
+                  </td>
+                )}
+                {hasWarnings && <td>{row.warnings.join(" · ")}</td>}
               </tr>
             ))}
           </tbody>

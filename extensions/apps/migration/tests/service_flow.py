@@ -13,6 +13,8 @@ class SourceFixture(BaseHTTPRequestHandler):
             self.send_response(200);self.send_header('Content-Type','image/png');self.end_headers();self.wfile.write(png);return
         if self.headers.get('Authorization')!='Bearer source-read-synthetic':self.send_error(403);return
         if self.path.split('?')[0]=='/wp-json/wc/v3/products':body=[{'id':90,'name':'Source ceramic cup','sku':'SOURCE-CUP-90','price':'19.90','description':'Original source text','stock_quantity':9,'images':[{'src':f'http://127.0.0.1:{source.server_port}/source-cup.png'}]}]
+        elif self.path.startswith('/wp-json/wc/v3/products/reviews'):body=[{'id':96,'product_id':90,'review':'Original source review','rating':5,'reviewer':'Source reviewer','verified':True,'date_created_gmt':'2020-01-02T03:04:05'}]
+        elif self.path.startswith('/wp-json/wc/v3/coupons'):body=[{'id':97,'code':'SOURCE-WELCOME','amount':'10','discount_type':'percent','usage_limit':5,'usage_count':2}]
         elif self.path.startswith('/wp-json/wc/v3/products/categories'):body=[{'id':91,'name':'Source ceramics','slug':'source-ceramics','parent':0}]
         elif self.path.startswith('/wp-json/wc/v3/customers'):body=[{'id':92,'email':'source-'+a['workspace']+'@example.test','first_name':'Source','last_name':'Buyer'}]
         elif self.path.startswith('/wp-json/wc/v3/orders'):body=[{'id':93,'number':'SOURCE-93','currency':'EUR','total':'19.90','date_created_gmt':'2020-01-02T03:04:05','status':'completed','line_items':[{'id':94,'name':'Old cup','quantity':1,'price':'19.90','product_id':90}]}]
@@ -22,7 +24,9 @@ class SourceFixture(BaseHTTPRequestHandler):
 source=ThreadingHTTPServer(('127.0.0.1',0),SourceFixture);threading.Thread(target=source.serve_forever,daemon=True).start()
 call('/api/apps',consent({'builtIn':'migration'}),h)
 package=next(p for p in call('/api/apps',h=h)['packages'] if p['id']=='migration')
-key=call('/api/apps/migration/credentials',{'approve':True,'digest':package['digest'],'permissions':['jobs.write','products.write','orders.read','orders.import','customers.write','customers.pii','settings.read','data.write','assets.write'],'expiresInDays':1},h)['key']
+call('/api/apps/migration/credentials',{'approve':True,'digest':package['digest'],'permissions':['jobs.write']*33,'expiresInDays':1},h,400)
+call('/api/apps/migration/credentials',{'approve':True,'digest':package['digest'],'permissions':['payments.record'],'expiresInDays':1},h,400)
+key=call('/api/apps/migration/credentials',{'approve':True,'digest':package['digest'],'permissions':['jobs.write','products.write','orders.read','orders.import','customers.write','customers.pii','settings.read','data.write','assets.write','reviews.write','promotions.write'],'expiresInDays':1},h)['key']
 with socket.socket() as probe:probe.bind(('127.0.0.1',0));port=probe.getsockname()[1]
 service=f'http://127.0.0.1:{port}';gateway='synthetic-migration-gateway-'+'x'*32
 source_origin=f'http://127.0.0.1:{source.server_port}'
@@ -67,7 +71,8 @@ try:
     call('/api/merchant/products/'+native['id'],h=h,status=404)
     print('PASS source HTTP -> independent Rust service -> exact review digests -> durable native job -> private product, reconciliation and no live catalogue mutation')
     destination_digest=next(p['digest'] for p in call('/api/apps',h=h)['packages'] if p['id']=='site_builder')
-    for domain,options in [('assets',{}),('categories',{}),('pages',{'destinationDigest':destination_digest}),('customers',{'customerGroup':'consumer'}),('orders',{'channelId':'default','locale':'en-GB'})]:
+    for domain,options in [('assets',{}),('categories',{}),('pages',{'destinationDigest':destination_digest}),('customers',{'customerGroup':'consumer'}),('orders',{'channelId':'default','locale':'en-GB'}),('reviews',{}),('coupons',{})]:
+        if domain=='reviews':exec(compile((ROOT/'extensions/apps/migration/tests/purchase.py').read_text(),'purchase.py','exec'))
         source_page=call('/api/apps/migration/actions/review_'+domain,{'sourceId':'installed'},h)
         dest=target if domain in ('categories','pages','assets') else a['workspace']
         command={'sourceId':'installed','kind':domain,'target':dest,'options':options,'recordDigests':source_page['recordDigests']}
@@ -79,15 +84,22 @@ try:
         assert saved['status']=='succeeded',(domain,saved)
         source_row=source_page['records'][0]
         dest_id=str(uuid.UUID(bytes=hashlib.sha256(json.dumps([a['workspace'],source_row['source'],source_row['sourceShop'],domain,source_row['sourceId']],separators=(',',':')).encode()).digest()[:16]))
-        if domain=='assets':
+        if domain=='coupons':
+            import base64
+            dest_id='m_'+base64.b32encode(uuid.UUID(dest_id).bytes).decode().lower().rstrip('=')
+            promo=next(x for x in call('/api/automation',h=h)['promotions'] if x['id']==dest_id)
+            assert not promo['data']['active'] and promo['data']['maxUses']==3
+        elif domain=='reviews':
+            review=next(x for x in call('/api/merchant/commerce',h=h)['reviews'] if x['id']==dest_id)
+            assert not review['approved'] and not review['verifiedPurchase']
+        elif domain=='assets':
             assert len(call('/api/merchant/products/'+native_id+'/assets',h={**h,'x-tenant':target})['elements'])==1
             assert len(call('/api/merchant/products/'+native_id,h={**h,'x-tenant':target})['commerce']['media'])==1
         elif domain=='categories':assert any(x['id']==dest_id for x in call('/api/merchant/categories',h={**h,'x-tenant':target})['elements'])
         elif domain=='pages':assert call('/api/apps/site_builder/actions/editor_pages',{'id':dest_id},{**h,'x-tenant':target})['elements'][0]['status']=='draft'
         elif domain=='customers':assert call('/api/merchant/customers/'+source_row['data']['email'],h=h)['id']==dest_id
         else:assert call('/api/merchant/orders/'+dest_id,h=h)['payment']['realMoneyCharged'] is False
-    print('PASS all six implemented source domains traverse the real gateway/service/outbox/native-write path')
-    exec(compile((ROOT/'extensions/apps/migration/tests/purchase.py').read_text(),'purchase.py','exec'))
+    print('PASS all eight implemented source domains traverse the real gateway/service/outbox/native-write path')
     if os.environ.get('MIGRATION_BROWSER')=='1':
         import signal
         metadata={'url':BASE+'/?shop='+a['workspace']+'&studio=channels#merchant','email':EMAILS[0],'workspace':a['workspace']}

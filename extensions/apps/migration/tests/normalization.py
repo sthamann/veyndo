@@ -48,14 +48,14 @@ class Normalization(unittest.TestCase):
         for source,raw in cases:
             with self.subTest(source=source):self.assertEqual(self.read(source,'orders',raw)[0]['data']['total']['minor'],1990)
     def test_review_and_customer_import_never_invent_authority(self):
-        review=self.read('woocommerce','reviews',{'id':7,'product_id':9,'review':'Original','rating':5,'verified':True})[0]
+        review=self.read('woocommerce','reviews',{'id':7,'product_id':9,'review':'Original','rating':5,'verified':True,'reviewer':'Original reviewer','date_created_gmt':'2020-01-02T03:04:05'})[0]
         self.assertTrue(review['data']['sourceVerified']);self.assertFalse(review['data']['verifiedPurchase'])
         customer=self.read('shopify','customers',{'id':8,'email':'synthetic@example.test','first_name':'A'})[0]
         self.assertIsNone(customer['data']['consentEvidence']);self.assertFalse(customer['data']['credentialMigrated'])
     def test_source_pages_and_coupon_rules_are_retained_for_review(self):
         page=self.read('woocommerce','pages',{'id':1,'title':{'rendered':'About'},'content':{'rendered':'<p>Original</p>'},'slug':'about'})[0]
         self.assertEqual(page['data']['title']['de-DE'],'About')
-        coupon=self.read('woocommerce','coupons',{'id':2,'code':'WELCOME','amount':'10','discount_type':'percent','usage_limit':5})[0]
+        coupon=self.read('woocommerce','coupons',{'id':2,'code':'WELCOME','amount':'10','discount_type':'percent','usage_limit':5,'usage_count':0})[0]
         self.assertEqual(coupon['data']['sourceRules']['usage_limit'],5);self.assertFalse(coupon['data']['activationReviewed'])
     def test_pages_become_native_editable_rich_documents(self):
         row=self.read('woocommerce','pages',{'id':1,'title':{'rendered':'About'},'content':{'rendered':'<h2>Our workshop</h2><p>Made with <strong>care</strong>.</p>'},'slug':'about'})[0]
@@ -85,6 +85,29 @@ class Normalization(unittest.TestCase):
         self.assertEqual(p['data']['createdAt'],'2020-01-02T02:04:05Z')
         ambiguous=normalize('prestashop','orders',{'id':3,'total_paid':'1.00','date_add':'2020-10-25 02:30:00'})
         self.assertNotEqual(ambiguous.returncode,0);self.assertIn('ambiguous',ambiguous.stderr)
+    def test_coupon_mapping_preserves_remaining_uses_and_spend_conditions(self):
+        coupon=self.read('woocommerce','coupons',{'id':3,'code':'TEN','amount':'10.50','discount_type':'percent','usage_limit':5,'usage_count':2,'minimum_amount':'20.00','date_expires_gmt':'2030-01-02T03:04:05'})[0]['data']['destination']
+        self.assertFalse(coupon['active']);self.assertEqual(coupon['maxUses'],3);self.assertEqual(coupon['amount'],10.5)
+        self.assertEqual(coupon['rule']['children'][0]['amount'],20);self.assertEqual(coupon['end'],'2030-01-02T03:04:05Z')
+        unsupported=normalize('woocommerce','coupons',{'id':4,'code':'RESTRICTED','amount':'10','discount_type':'percent','product_ids':[9],'usage_count':0,'usage_limit':5})
+        self.assertNotEqual(unsupported.returncode,0);self.assertIn('not imported as unrestricted',unsupported.stderr)
+    def test_coupon_invalid_limits_and_restriction_types_fail_closed(self):
+        base={'id':3,'code':'TEN','amount':'10','discount_type':'percent','usage_limit':5,'usage_count':2}
+        for key, values in {'usage_limit':[-1,'5',{},[],True], 'usage_limit_per_user':[-1,'5',{}], 'product_ids':[{},'9',False], 'free_shipping':['false',0], 'individual_use':['false',1], 'meta_data':[[{'key':'plugin_limit','value':4}]]}.items():
+            for value in values:
+                with self.subTest(key=key,value=value):
+                    result=normalize('woocommerce','coupons',{**base,key:value})
+                    self.assertNotEqual(result.returncode,0,result.stdout)
+        for unlimited in (None,0):
+            self.assertIsNone(self.read('woocommerce','coupons',{**base,'usage_limit':unlimited})[0]['data']['destination']['maxUses'])
+    def test_review_source_verification_is_a_boolean_claim(self):
+        base={'id':8,'product_id':9,'review':'Original','rating':5,'reviewer':'Original author','date_created_gmt':'2020-01-02T03:04:05'}
+        for value in ({'private':'secret'},'yes',1,[]):
+            result=normalize('woocommerce','reviews',{**base,'verified':value})
+            self.assertNotEqual(result.returncode,0,result.stdout)
+    def test_review_rich_text_and_source_time_remain_unverified(self):
+        review=self.read('woocommerce','reviews',{'id':8,'product_id':9,'review':'<p>Made <strong>well</strong>.</p>','rating':5,'reviewer':'Original author','date_created_gmt':'2020-01-02T03:04:05','verified':True})[0]['data']
+        self.assertEqual(review['productSourceId'],'9');self.assertNotIn('<',review['text']);self.assertEqual(review['createdAt'],'2020-01-02T03:04:05Z');self.assertFalse(review['verifiedPurchase'])
     def test_precise_fraction_is_not_silently_rounded(self):
         r=normalize('woocommerce','products',{'id':9,'name':'Cup','price':'1.999'})
         self.assertNotEqual(r.returncode,0);self.assertIn('precision',r.stderr)

@@ -9,4 +9,6 @@ Shop design entry and its private revision-bound proposal owner.
 Native API and jobs enforce all rights, input digests and target fences. Hiding a
 button is presentation only. Raw source rows are transient and are not app model
 records. Jobs contain only source profile/cursor, approved hashes, target/options
-and small progress checkpoints. EN/DE/FR/ES controls live in `i18n.ts`.
+and small progress checkpoints. EN/DE/FR/ES controls live in `i18n.ts` and `feedback-i18n.ts`.
+`SourceDetails` presents original review evidence and coupon limits before approval;
+current product/PII and automation rights independently gate their source reads.

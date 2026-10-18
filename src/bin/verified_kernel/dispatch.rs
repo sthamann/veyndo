@@ -286,6 +286,11 @@ pub(super) fn eval(j: &Value) -> Result<Value, String> {
             b("rights")?,
             b("guards")?
         ))),
+        Some("source_activation_admissible") => Ok(json!(source_activation_admissible(
+            b("imported")?,
+            b("reviewed")?,
+            b("active")?
+        ))),
         _ => Err("Unknown policy".into()),
     }
 }

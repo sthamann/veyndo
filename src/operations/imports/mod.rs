@@ -2,10 +2,12 @@
 use crate::*;
 mod assets;
 mod categories;
+mod coupons;
 mod customers;
 mod historical_orders;
 mod products;
 mod relations;
+mod reviews;
 #[derive(Deserialize, Serialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub(crate) struct SourceRecord {
@@ -52,7 +54,7 @@ pub(super) async fn identity_namespace(a: &App, t: &str) -> Result<String> {
     Ok(staging::parent(a, t).await?.unwrap_or_else(|| t.into()))
 }
 pub(crate) fn schema(name: &str) -> Option<Value> {
-    (name=="merchant.import.record").then(||json!({"type":"object","properties":{"assetChunks":{"type":"array","maxItems":172,"items":{"type":"string","maxLength":65536}},"approve":{"type":"boolean"},"record":{"type":"object","properties":{"version":{"type":"integer","enum":[1]},"source":{"type":"string","minLength":1,"maxLength":200},"sourceShop":{"type":"string","minLength":1,"maxLength":200},"kind":{"type":"string","enum":["products","categories","pages","customers","orders","assets"]},"sourceId":{"type":"string","minLength":1,"maxLength":200},"data":{"type":"object"},"warnings":{"type":"array","maxItems":20,"items":{"type":"string","maxLength":2000}}},"required":["version","source","sourceShop","kind","sourceId","data","warnings"],"additionalProperties":false},"options":{"type":"object","properties":{"channelId":{"type":"string","maxLength":100},"taxRate":{"type":"number","minimum":0,"maximum":50},"customerGroup":{"type":"string","maxLength":100},"locale":{"type":"string","maxLength":35},"destinationDigest":{"type":"string","minLength":64,"maxLength":64},"acknowledgedWarnings":{"type":"array","maxItems":20,"items":{"type":"string","maxLength":2000}}},"additionalProperties":false}},"required":["approve","record","options"],"additionalProperties":false}))
+    (name=="merchant.import.record").then(||json!({"type":"object","properties":{"assetChunks":{"type":"array","maxItems":172,"items":{"type":"string","maxLength":65536}},"approve":{"type":"boolean"},"record":{"type":"object","properties":{"version":{"type":"integer","enum":[1]},"source":{"type":"string","minLength":1,"maxLength":200},"sourceShop":{"type":"string","minLength":1,"maxLength":200},"kind":{"type":"string","enum":["products","categories","pages","customers","orders","assets","reviews","coupons"]},"sourceId":{"type":"string","minLength":1,"maxLength":200},"data":{"type":"object"},"warnings":{"type":"array","maxItems":20,"items":{"type":"string","maxLength":2000}}},"required":["version","source","sourceShop","kind","sourceId","data","warnings"],"additionalProperties":false},"options":{"type":"object","properties":{"channelId":{"type":"string","maxLength":100},"taxRate":{"type":"number","minimum":0,"maximum":50},"customerGroup":{"type":"string","maxLength":100},"locale":{"type":"string","maxLength":35},"destinationDigest":{"type":"string","minLength":64,"maxLength":64},"acknowledgedWarnings":{"type":"array","maxItems":20,"items":{"type":"string","maxLength":2000}}},"additionalProperties":false}},"required":["approve","record","options"],"additionalProperties":false}))
 }
 pub(crate) async fn route(
     State(a): State<App>,
@@ -85,6 +87,8 @@ pub(crate) async fn invoke(a: &App, h: &RequestContext, v: &Value) -> Result<Val
         return Err(bad("Review all source limitations before importing"));
     }
     match record.kind.as_str() {
+        "reviews" => reviews::import(a, h, &record).await,
+        "coupons" => coupons::import(a, h, &record).await,
         "assets" => assets::import(a, h, &record, &v["assetChunks"]).await,
         "pages" => {
             apps::import_record(

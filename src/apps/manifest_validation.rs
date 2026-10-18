@@ -58,6 +58,8 @@ pub(crate) fn validate(m: &Manifest) -> Result<()> {
             "settings.read",
             "products.read",
             "products.write",
+            "reviews.write",
+            "promotions.write",
             "jobs.read",
             "jobs.write",
             "commerce.hooks",

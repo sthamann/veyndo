@@ -22,3 +22,8 @@ pub fn app_configuration_release_admissible(extension: bool, product: bool, comp
 pub fn native_lifecycle_admissible(native: bool, rights: bool, guards: bool) -> bool {
     native && rights && guards
 }
+
+/// An active imported promotion requires a deliberately reviewed source mapping; ordinary promotions retain native admission.
+pub fn source_activation_admissible(imported: bool, reviewed: bool, active: bool) -> bool {
+    !imported || !active || reviewed
+}

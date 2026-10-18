@@ -181,6 +181,23 @@ pub(crate) async fn save(
     if rev.unwrap_or(0) != expected {
         return Err(conflict("Configuration revision changed"));
     }
+    if kind == "promotions" {
+        let old: Option<Value> =
+            sqlx::query_scalar("SELECT data FROM commerce_promotions WHERE tenant=$1 AND id=$2")
+                .bind(&t)
+                .bind(&id)
+                .fetch_optional(&mut *tx)
+                .await?;
+        preserve_import(&old.unwrap_or(Value::Null), &data)?;
+        if !data["sourceImport"].is_null() {
+            let duplicate:bool=sqlx::query_scalar("SELECT EXISTS(SELECT 1 FROM commerce_promotions WHERE tenant=$1 AND id<>$2 AND data->>'code'=$3)").bind(&t).bind(&id).bind(data["code"].as_str()).fetch_one(&mut *tx).await?;
+            if duplicate {
+                return Err(conflict(
+                    "Coupon code already belongs to another native promotion; review the mapping",
+                ));
+            }
+        }
+    }
     if kind == "rules" {
         sqlx::query("INSERT INTO commerce_rules(tenant,id,name,condition,active) VALUES($1,$2,$3,$4,$5) ON CONFLICT(tenant,id) DO UPDATE SET name=EXCLUDED.name,condition=EXCLUDED.condition,active=EXCLUDED.active,revision=commerce_rules.revision+1").bind(&t).bind(&id).bind(name).bind(&data["condition"]).bind(data["active"].as_bool()).execute(&mut *tx).await?;
     } else {

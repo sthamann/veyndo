@@ -22,6 +22,8 @@ mod detail;
 pub(crate) use detail::*;
 mod reviews;
 pub(crate) use reviews::*;
+mod review_import;
+pub(crate) use review_import::import_review;
 mod settings_routes;
 pub(crate) use settings_routes::*;
 mod settings_validation;

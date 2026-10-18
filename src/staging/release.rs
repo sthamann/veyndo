@@ -208,6 +208,9 @@ pub(crate) async fn release(
                 "channel" => "sales_channels",
                 _ => return Err(bad("Unsupported release unit")),
             };
+            if kind == "promotion" {
+                marketing::preserve_import(&actual[&s.key], value)?;
+            }
             if kind == "rule" {
                 sqlx::query("INSERT INTO commerce_rules(tenant,id,name,condition,active) VALUES($1,$2,$3,$4,$5) ON CONFLICT(tenant,id) DO UPDATE SET name=EXCLUDED.name,condition=EXCLUDED.condition,active=EXCLUDED.active,revision=commerce_rules.revision+1").bind(&t).bind(unit).bind(&value["name"]).bind(&value["condition"]).bind(value["active"].as_bool()).execute(&mut *tx).await?;
             } else {

@@ -33,12 +33,8 @@ pub fn normalize(c: &Context, kind: &str, v: &Value) -> Result<Record> {
             };
             json!({"title":translated(c,&field(v,&["title.rendered","title","name"]))?,"body":translated(c,&field(v,&["body_html","content.rendered","content","description"]))?,"slug":translated(c,&field(v,&["handle","slug","identifier","link_rewrite"]))?,"parentSourceId":parent})
         }
-        "reviews" => {
-            json!({"productSourceId":field(v,&["product_id","entity_pk_value","id_product","articleId"]),"text":field(v,&["review","detail","content"]),"rating":field(v,&["rating","grade","points"]),"sourceAuthor":field(v,&["reviewer","nickname","customer"]),"createdAt":field(v,&["date_created_gmt","created_at","date_add"]),"sourceVerified":field(v,&["verified","verified_purchase"]),"verifiedPurchase":false})
-        }
-        "coupons" => {
-            json!({"code":field(v,&["code","name"]),"amount":field(v,&["amount","reduction_amount","discount_amount"]),"discountType":field(v,&["discount_type","simple_action"]),"expiresAt":field(v,&["date_expires_gmt","date_to","to_date"]),"sourceRules":v,"activationReviewed":false})
-        }
+        "reviews" => super::feedback::review(c, v)?,
+        "coupons" => super::coupons::coupon(c, v)?,
         "branding" | "redirects" => v.clone(),
         _ => return Err("unsupported source domain; no records were silently discarded".into()),
     };

@@ -47,6 +47,7 @@ export default function ProductReviews({
             <p>{r.content}</p>
             {r.verifiedPurchase && <small>{s("verified")}</small>}
             {r.demo && <small>{s("demoReview")}</small>}
+            {r.imported && <small>{s("importedReview")}</small>}
           </article>
         ))}
       </div>

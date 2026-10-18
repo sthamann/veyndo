@@ -213,6 +213,7 @@ export type Review = {
   title: string;
   content: string;
   verifiedPurchase: boolean;
+  imported?: boolean;
   demo: boolean;
   approved?: boolean;
   productId?: string;

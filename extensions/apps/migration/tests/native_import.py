@@ -75,6 +75,7 @@ assert ve['catalog']['parentId']==pid and ve['catalog']['options']=={'Colour':'B
 assert ve['catalog']['categoryIds']==[child_id]
 print('PASS native product associations: variant parent, option combination and imported category')
 exec(compile(open(__file__.replace('native_import.py','publication.py')).read(),'publication.py','exec'))
+exec(compile(open(__file__.replace('native_import.py','reviews_coupons.py')).read(),'reviews_coupons.py','exec'))
 customer={'version':1,'source':'woocommerce','sourceShop':'source-woo','kind':'customers','sourceId':'customer-4','data':{'email':'migration-customer-'+uuid.uuid4().hex[:8]+'@example.test','firstName':'Migration','lastName':'Buyer','billingAddress':{'name':'Migration Buyer','firstName':'Migration','lastName':'Buyer','street':'Test Street 1','city':'Berlin','postalCode':'10115','country':'DE'}},'warnings':[]}
 cbody={'approve':True,'record':customer,'options':{'customerGroup':'consumer'}}
 c=call('/api/merchant/imports',cbody,h);assert call('/api/merchant/imports',cbody,h)['id']==c['id']

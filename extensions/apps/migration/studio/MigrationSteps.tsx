@@ -34,6 +34,8 @@ export default function MigrationSteps({
             "pages",
             "customers",
             "orders",
+            "reviews",
+            "coupons",
           ] as const
         ).map((k) => (
           <button
@@ -41,15 +43,21 @@ export default function MigrationSteps({
             aria-pressed={kind === k}
             disabled={
               !rights.includes(
-                k === "pages"
-                  ? "channels.read"
-                  : isPrivate(k)
+                k === "coupons"
+                  ? "automation.read"
+                  : k === "reviews"
                     ? "catalog.read"
-                    : k === "orders"
-                      ? "orders.read"
-                      : "customers.read",
+                    : k === "pages"
+                      ? "channels.read"
+                      : isPrivate(k)
+                        ? "catalog.read"
+                        : k === "orders"
+                          ? "orders.read"
+                          : "customers.read",
               ) ||
-              (!isPrivate(k) && !rights.includes("customers.pii"))
+              (!isPrivate(k) &&
+                k !== "coupons" &&
+                !rights.includes("customers.pii"))
             }
             onClick={() => onKind(k)}
           >

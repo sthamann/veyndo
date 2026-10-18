@@ -30,11 +30,13 @@ synchronisation are separate and are not claimed by this work.
 ## Migration Assistant: implementation in progress
 
 The new [migration workflow](agentic-migration.md) has a separate Rust application,
-five source protocol fixtures, private product/image/category/page intake and native CRM/history,
+five source protocol fixtures, private product/image/category/page intake and native CRM/history/review/coupon paths,
 reviewed native jobs and a Studio entry. [Local acceptance and focused independent review](evidence/migration-assistant-local-2026-10-18.md) cover this connected scope;
 the larger assistant remains in development and is not part of public acceptance below.
 Public original-image copying and selected product/image publication have local acceptance.
-Complex source variants, private/provider-specific media mappings, reviews/coupons, full mapping/cutover and
+Reviews retain native moderation and never gain purchase verification; WooCommerce
+coupons require activation review and remain bound to their original currency.
+Complex source variants, private/provider-specific media and coupon mappings, full mapping/cutover and
 large-scale throughput remain incomplete. The guide distinguishes normalization
 from an accepted native target write.
 

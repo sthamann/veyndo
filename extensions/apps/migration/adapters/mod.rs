@@ -1,6 +1,8 @@
 //! Source-specific parsing stays app-owned; unknown domains and incomplete records fail explicitly.
 mod contacts;
+mod coupons;
 mod dates;
+mod feedback;
 mod order_lines;
 mod pages;
 mod products;

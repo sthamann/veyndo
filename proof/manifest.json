@@ -554,6 +554,15 @@
         "native_lifecycle_safe",
         "native_lifecycle_exact"
       ]
+    },
+    "source_activation_admissible": {
+      "bindings": [
+        "src/marketing/promotions.rs"
+      ],
+      "theorems": [
+        "source_activation_exact",
+        "source_activation_unreviewed_denied"
+      ]
     }
   },
   "sources": {
@@ -684,8 +693,8 @@
     },
     "crates/kernel/src/verified_kernel/app_intake.rs": {
       "status": "extracted-policy",
-      "sha256": "001b11b33657b0674dbe10afd3f245f47f260c7a4e9bc26e8f14ff442c25bd1a",
-      "review": "Review app-only accepted lifecycle snapshots and private RFQ projection, with native rights/payment/stock/buyer guards; move the extracted lifecycle conjunction into the existing app_intake pure owner and explicitly update its closed extraction registration. No expanded proof boundary."
+      "sha256": "8e9209abde57c14a6902e571c5f7f1c662d2f779219681c5e5aff68d978e3f1f",
+      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
     },
     "crates/kernel/src/verified_kernel/fulfillment.rs": {
       "status": "extracted-policy",
@@ -694,8 +703,8 @@
     },
     "crates/kernel/src/verified_kernel.rs": {
       "status": "extracted-policy",
-      "sha256": "581ae298f1723e7ee2cb8c6bdcb5fd54b2882737fe9e5f647b59b182b11b037e",
-      "review": "Review app-only accepted lifecycle snapshots and private RFQ projection, with native rights/payment/stock/buyer guards; move the extracted lifecycle conjunction into the existing app_intake pure owner and explicitly update its closed extraction registration. No expanded proof boundary."
+      "sha256": "1268771487ccd6891432ca79828de9fda54b104a20e193f1a972db58d8953b7f",
+      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
     },
     "crates/runtime/src/database_scope/provision.rs": {
       "status": "unproved",
@@ -937,15 +946,25 @@
       "sha256": "2278e3fde03481a3cff01cdb6f3df819e69f8e53ed5100f6ce552f7263da8dbe",
       "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
     },
+    "extensions/apps/migration/adapters/coupons.rs": {
+      "status": "unproved",
+      "sha256": "92a70ae559c123d331974475cc15312d920ba1fa8bbd365a7b3f2405d7e964ca",
+      "review": "Finalize formatting-only coupon validation cleanup after independent findings and actual malformed-source, current-role-revocation and currency-switch checkout regressions; native review/coupon rights and immutable provenance are unchanged. SQL/provider operations remain unproved."
+    },
     "extensions/apps/migration/adapters/dates.rs": {
       "status": "unproved",
       "sha256": "9eaa506d126142b0f010edcc0f21e2048b81e99e4de51b914bfd6f99f6fcdf9a",
       "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
     },
+    "extensions/apps/migration/adapters/feedback.rs": {
+      "status": "unproved",
+      "sha256": "1a320debffaf522a7650f84d9e9bf626e5c756bfdc1873d36804d6fa3a647026",
+      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
+    },
     "extensions/apps/migration/adapters/mod.rs": {
       "status": "unproved",
-      "sha256": "68e8cc058ce531ac3c3d9524dbd1a28ca23816d5ec0f41ac150b85a61d2f11fb",
-      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+      "sha256": "d59cafa48861b77079dc43fb99d49b07ec1f23d27cc1b43b612746a372186108",
+      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
     },
     "extensions/apps/migration/adapters/order_lines.rs": {
       "status": "unproved",
@@ -964,8 +983,8 @@
     },
     "extensions/apps/migration/adapters/records.rs": {
       "status": "unproved",
-      "sha256": "b66a16465a0c20492ff8c28dc458e50d104ffedef168bdb42dc6b633242966cc",
-      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+      "sha256": "7b4054a5e2beee778529184ee7abc76d71c5291e1855e534ab7aad94fbb989f8",
+      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
     },
     "extensions/apps/migration/adapters/relations.rs": {
       "status": "unproved",
@@ -1379,8 +1398,8 @@
     },
     "src/apps/credentials.rs": {
       "status": "reviewed-binding",
-      "sha256": "831253da0bcd462155f41bbb75ffe614340b1523a53528abbdbb68fcd31b9b02",
-      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+      "sha256": "b7364cab5acfd095c2e794297580b0b0e5f2939841c674e8765d17496dfb2935",
+      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
     },
     "src/apps/data.rs": {
       "status": "unproved",
@@ -1479,8 +1498,8 @@
     },
     "src/apps/job_import.rs": {
       "status": "unproved",
-      "sha256": "9c31f1591a75ec8cbe2a47c485e0bff12f350546f4d1c91d29764a6a912b8107",
-      "review": "Independent review of native imported immutable image boundaries and selected parent/product-before-asset publication; exact persisted product baseline, attachment-only guard, source-position ordering and recoverable two-step association verified through real HTTP/PostgreSQL regressions. Pure extracted policies unchanged."
+      "sha256": "e507082acb5ca79a5612286ae78397f271b82b3b8dd8778ed0f55359716dc1c6",
+      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
     },
     "src/apps/jobs.rs": {
       "status": "unproved",
@@ -1494,8 +1513,8 @@
     },
     "src/apps/manifest_validation.rs": {
       "status": "unproved",
-      "sha256": "94a59ef32213c3fd61e2dd6aeff7bdf652c7a9877ed8c1a4b946afd3427d3742",
-      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+      "sha256": "c793a5e6449cfadd3192707d21d17a9a4a3f67bdb90a18fcae6c0f1d58b23905",
+      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
     },
     "src/apps/mod.rs": {
       "status": "unproved",
@@ -2064,8 +2083,8 @@
     },
     "src/bin/verified_kernel/dispatch.rs": {
       "status": "unproved",
-      "sha256": "31f8596b79e98083cbdb14b839e69b3fbb42f26150dd05fcf7c5d53aa17e34c4",
-      "review": "Review app-only accepted lifecycle snapshots and private RFQ projection, with native rights/payment/stock/buyer guards; move the extracted lifecycle conjunction into the existing app_intake pure owner and explicitly update its closed extraction registration. No expanded proof boundary."
+      "sha256": "ff504462120cc37357097f3ff70f6a589125e7b38ffbd80b03bd3af4965cf927",
+      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
     },
     "src/bin/verified_kernel.rs": {
       "status": "conformance-driver",
@@ -2414,8 +2433,8 @@
     },
     "src/commerce/detail.rs": {
       "status": "unproved",
-      "sha256": "7123d2b19377bc9e7e5e5d87e55457ef3e0f529c6d91ab384ac2970059fb3c97",
-      "review": "Review combined native business capability and hardening: typed material/dimension guests remain app-owned and bounded; native CAS/FX/current B2B approval and immutable order snapshots; isolated app crate consumer preserves compiler boundary; independent per-event subscriber retry/quarantine preserves healthy events, commit gaps and explicit recovery; signed tenant/system authority, provider-native read tools and real document withdrawal, workspace image closure and source inventory. SQL/async/provider adapters remain tested, not proved."
+      "sha256": "9c8404f38e6fd01127ed8c2e7a84da3fdcb835b2a1de321f86ed59718ec59654",
+      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
     },
     "src/commerce/external_order_input.rs": {
       "status": "reviewed-binding",
@@ -2464,8 +2483,8 @@
     },
     "src/commerce/mod.rs": {
       "status": "unproved",
-      "sha256": "d87d39e636202787e5afc20c1b7a9a11fda158294e9cfd9c291ade6c4997886b",
-      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+      "sha256": "803f0dc01781eec5cabb2f103c2e2e8e68551cc7a45f0e9eb61782979ed91c2b",
+      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
     },
     "src/commerce/order_fields.rs": {
       "status": "unproved",
@@ -2522,6 +2541,11 @@
       "sha256": "71dbafddab190a012c43fc3acfbc2a91018722245f02c7418ceea05b04540824",
       "review": "Codex source review 2026-10-16: native catalogue intake CSV/HTTPS/model preparation and explicit stage-only creation reuse current permissions, stable IDs, locked settings CAS, product/history/outbox and bounded image jobs; native catalog_management, durable_agents and image_jobs checks recorded for this branch. Connected guardrail UI keeps the extracted pricing/autonomy predicates unchanged; authorized paged commerce policy read and merchant instructions verified by users, knowledge_workspace and providers plus 192 Rust tests. All changed transport/SQL/provider adapters remain unproved; no new formal correctness claim."
     },
+    "src/commerce/review_import.rs": {
+      "status": "unproved",
+      "sha256": "cce84aa9f45e0ddfa62c9e89c548047536b8dee4741752fdfd82338d1d75323a",
+      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
+    },
     "src/commerce/review_moderation.rs": {
       "status": "unproved",
       "sha256": "d0d5d7cb524b118d2f8f0afcbd5470c88e1d7c83afd5e5429497c5e52ff2f42a",
@@ -2559,8 +2583,8 @@
     },
     "src/commerce/settings_routes.rs": {
       "status": "unproved",
-      "sha256": "87fa5f263b418b7224c5ee8920882e9c2cf87140f3f17fd8ea9e8554b7a22c88",
-      "review": "Reviewed eighteen core findings: typed trusted identity and explicit route rights; consolidated current grants; durable auth and fenced shared limits; scoped transactions and one-backend PgBouncer including nested borrow fixes; bounded Wasm/PNG work; notified workers, savepoint quarantine and conservative retention; separate runtime roles and startup configuration. Real PostgreSQL/provider regressions preserve current tenant/customer/payment behavior. SQL/network adapters remain unproved."
+      "sha256": "c6e1eb2de860d62c626b948ac3c23a7e8601539640b4364628583ce457610dc1",
+      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
     },
     "src/commerce/settings_scope.rs": {
       "status": "unproved",
@@ -3014,8 +3038,8 @@
     },
     "src/marketing/mod.rs": {
       "status": "unproved",
-      "sha256": "cec494f0bb6d287b385c8014c0b7905e91738600cfc7df24f1ec23a6c7412f97",
-      "review": "Review knowledge-source staging read/write admission against native knowledge scopes; automation import HTTP and MCP discovery now use the native per-operation scopes. Real denied-source, successful knowledge-only release, immutable history and write-only transport regressions pass. No pure decision or theorem is changed."
+      "sha256": "5171c2cdc74ba000721589e89131047c4cf6de763211cc9eeb7f0245e3364569",
+      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
     },
     "src/marketing/pipeline.rs": {
       "status": "reviewed-binding",
@@ -3032,15 +3056,20 @@
       "sha256": "10dfdb6008f17fc188ab2df832735dc79ec6d21e4ae041a45ae3ac8286f846db",
       "review": "Tenant roles and current grants independently reviewed; owner/retained-override/acceptance races repaired and PostgreSQL-blocked regressions passed; PII and Flow projection boundaries documented; B2B feature settings delegate shared CAS/history and preserve financial guards. Existing extracted policies unchanged; SQL/async/UI remain reviewed adapters, not full proofs."
     },
-    "src/marketing/promotions.rs": {
+    "src/marketing/promotion_import.rs": {
       "status": "unproved",
-      "sha256": "6751020d28aaf9afda742be4e795f5f825eab8d2e52f5320de54f2ffa84d1757",
-      "review": "Identity-only Veyndo namespace and canonical-domain rename; reviewed migration checksum compatibility for six historical SQL versions, unchanged checkout predicates, 42 library and 169 binary tests pass; native component legacy boundary remains configured and guarded."
+      "sha256": "288b34928db320fbacdc86298b74ac65c1629b388cefb6c6287c3d61f5d440e8",
+      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
+    },
+    "src/marketing/promotions.rs": {
+      "status": "reviewed-binding",
+      "sha256": "42a7ab865aa102e052039f417ed1822f5f78d5333a851675943b28febdfd4354",
+      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
     },
     "src/marketing/routes.rs": {
       "status": "unproved",
-      "sha256": "e0184fdac1965b1bb577daf1a2184ba74f4f8732542e510302b84e38dda4f241",
-      "review": "Tenant roles and current grants independently reviewed; owner/retained-override/acceptance races repaired and PostgreSQL-blocked regressions passed; PII and Flow projection boundaries documented; B2B feature settings delegate shared CAS/history and preserve financial guards. Existing extracted policies unchanged; SQL/async/UI remain reviewed adapters, not full proofs."
+      "sha256": "ef545a68e4bb1be54a1f4fc5f6692d53d3a2b2b62cab598a50c65765b448b5f2",
+      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
     },
     "src/marketing/rule_fields.rs": {
       "status": "unproved",
@@ -3089,8 +3118,8 @@
     },
     "src/migrations/recent_schema.rs": {
       "status": "unproved",
-      "sha256": "2be007a7856d31ed2f85926b7873289699227da47bec5d5ebe51f1f058dfd5f1",
-      "review": "Native lifecycle review: bounded namespaced app graphs preserve native terminal/payment/stock/buyer admission, per-object immutable accepted definitions, current compound scopes, same HTTP MCP Flow owners and operational history; SQL snapshots and migration 105 are regression-tested adapters, not proved."
+      "sha256": "7a8352e16ef5574da07ebd68d363b94f48a5061f54bb97a1133571e7e9215123",
+      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
     },
     "src/migrations/schema.rs": {
       "status": "unproved",
@@ -3177,6 +3206,11 @@
       "sha256": "70650642331b67d82c138845c23b869dcd3ce8e8a00296b890a5d58f241cf2ab",
       "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
     },
+    "src/operations/imports/coupons.rs": {
+      "status": "unproved",
+      "sha256": "87b70074a4d58ce86d0413b950a94a144d86fbc711b3ef127c5f28411a1c2741",
+      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
+    },
     "src/operations/imports/customers.rs": {
       "status": "unproved",
       "sha256": "fd86606b871ac4e8e172f41756160426b7cacd54b92e836fc6d7fa3bd1d7323c",
@@ -3189,8 +3223,8 @@
     },
     "src/operations/imports/mod.rs": {
       "status": "unproved",
-      "sha256": "2c19956c5d79b1a9e25fd1deea2d93cd624bf45f92dde84a9bfd936f27d426a4",
-      "review": "Independent review of native imported immutable image boundaries and selected parent/product-before-asset publication; exact persisted product baseline, attachment-only guard, source-position ordering and recoverable two-step association verified through real HTTP/PostgreSQL regressions. Pure extracted policies unchanged."
+      "sha256": "60e152e03aa9556ca285722887c05897c76f0d7be99e4fb311679e4f218e275f",
+      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
     },
     "src/operations/imports/products.rs": {
       "status": "unproved",
@@ -3201,6 +3235,11 @@
       "status": "unproved",
       "sha256": "6b5cd1ee3c76bb7183770542be78c5856eb47a94ad25596cc1cf389d70bf8d65",
       "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+    },
+    "src/operations/imports/reviews.rs": {
+      "status": "unproved",
+      "sha256": "7578095875b820a1dfc526d94a27ca5d9d8e4a674d3c58b1cd089ae46ec3887f",
+      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
     },
     "src/operations/list_criteria.rs": {
       "status": "unproved",
@@ -3679,8 +3718,8 @@
     },
     "src/staging/release.rs": {
       "status": "unproved",
-      "sha256": "dc05a782ec62ef35f975189f394ffd1593353be10d5305a7d4d03bf2b71e1af6",
-      "review": "Independent review of native imported immutable image boundaries and selected parent/product-before-asset publication; exact persisted product baseline, attachment-only guard, source-position ordering and recoverable two-step association verified through real HTTP/PostgreSQL regressions. Pure extracted policies unchanged."
+      "sha256": "0b1daf906d6bc2093f684fc9865d5f1f79d03e05c8452fa6e4a122548ecc9241",
+      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
     },
     "src/staging/snapshot.rs": {
       "status": "unproved",
@@ -4326,9 +4365,13 @@
       "sha256": "ee4961ddc2b41d3b3157560b60afbf7a33ab2c87b5a6b07ec22872c36851afb4",
       "review": "Native lifecycle review: bounded namespaced app graphs preserve native terminal/payment/stock/buyer admission, per-object immutable accepted definitions, current compound scopes, same HTTP MCP Flow owners and operational history; SQL snapshots and migration 105 are regression-tested adapters, not proved."
     },
+    "migrations/106-review-source-provenance.sql": {
+      "sha256": "1b22746a6b921d05e99e8d14f85efa52d579f0576bb40c6f312a11a94e8a7404",
+      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
+    },
     "proof/Commerce/Claims.lean": {
-      "sha256": "9d993b6df0c7252330b6ebf49db68f44a2cea939444a003770ae31b34bad7ffc",
-      "review": "Review native lifecycle decision extraction and unchanged native financial owners; accepted definitions, bounded projections, source digest traces, current scopes, migration 105 and B2B catalogue split reviewed with real native positive/negative tests."
+      "sha256": "88fa7c26aacf0fff61d992c9efc77dcf3f580e4e9467757fd2c3bb6d857f5be3",
+      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
     },
     "proof/lakefile.toml": {
       "sha256": "1cda05bac02223024b93388cf858edad4719c46f8d37a826a73a6a6e15d79432",
@@ -4359,12 +4402,12 @@
       "review": "Reviewed marketplace money guard consumers and exact properties, cap-neighbour comparison cases, native stock binding and local regressions; external protocols and tax law remain tested unproved boundaries"
     },
     "scripts/formal/extract.py": {
-      "sha256": "4859f9a538cfcf2f54e2414ed1ed3b0aa4cea7aa4eade07a98f9d8dbed952a6f",
-      "review": "Review app-only accepted lifecycle snapshots and private RFQ projection, with native rights/payment/stock/buyer guards; move the extracted lifecycle conjunction into the existing app_intake pure owner and explicitly update its closed extraction registration. No expanded proof boundary."
+      "sha256": "5e8c196a1eca5128457889e78977debdfabc523ffdfdcff4dd31890e44fe449c",
+      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
     },
     "scripts/formal/mutations.py": {
-      "sha256": "c324c821b26766a8c1a63043c7dc7a6c7ab0a0079217563530e27abf7e28a9d4",
-      "review": "Native lifecycle review: bounded namespaced app graphs preserve native terminal/payment/stock/buyer admission, per-object immutable accepted definitions, current compound scopes, same HTTP MCP Flow owners and operational history; SQL snapshots and migration 105 are regression-tested adapters, not proved."
+      "sha256": "03da298f1ec7c8a65834a8a983a2667dc39d7e6db3b15275272d9652fe046feb",
+      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
     },
     "scripts/formal/registry.py": {
       "sha256": "ed29f96108760ecc2cfd61cd953905a1c092a1fb41519167fc426915b5932004",

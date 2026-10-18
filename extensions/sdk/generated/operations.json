@@ -3692,7 +3692,9 @@
                   "pages",
                   "customers",
                   "orders",
-                  "assets"
+                  "assets",
+                  "reviews",
+                  "coupons"
                 ],
                 "type": "string"
               },

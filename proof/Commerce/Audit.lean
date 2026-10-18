@@ -120,6 +120,8 @@ import Commerce.Claims
 #print axioms CommerceKernel.scope_explicit_no_escalation
 #print axioms CommerceKernel.shop_archived_denied
 #print axioms CommerceKernel.shop_availability_exact
+#print axioms CommerceKernel.source_activation_exact
+#print axioms CommerceKernel.source_activation_unreviewed_denied
 #print axioms CommerceKernel.stock_conservation
 #print axioms CommerceKernel.stock_exact
 #print axioms CommerceKernel.stock_positive_bounded

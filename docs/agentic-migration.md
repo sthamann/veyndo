@@ -15,7 +15,7 @@ See [current status](status.md) for deployed journeys.
 2. Select the original platform. Save its read-only connection in the existing
    encrypted app settings. Credentials are write-only in the browser and never
    form part of the agent prompt. Pin the applicable API profile/version.
-3. Choose products, product images, categories, content pages, customers or original historical orders. Inspect the actual
+3. Choose products, product images, categories, content pages, customers, original historical orders, reviews or coupons. Inspect the actual
    bounded source records and any mapping limitations. Source language IDs require
    explicit locale mapping. Local historical dates require a confirmed IANA zone.
 4. Review destination tax or customer-group choices and explicitly approve the
@@ -48,7 +48,8 @@ automatic semantic equivalence for arbitrary third-party plugins or theme code.
 | Historical orders | Canonical source lines, exact minor-unit total, original timestamp/number → immutable native history | No repricing, new payment attempt, ordinary purchase event, stock consumption or invoice allocation. Source payment status is a historical claim, never native PSP confirmation. |
 | Categories | Native private tree with stable IDs, localized names/slugs and explicit parent references | Parents must exist before children; missing parents stop the write instead of flattening the tree. |
 | Content pages | Source HTML → editable rich blocks → the installed Shop design model | Same package/schema, field/reference validation, history and private release owner. Unsafe links, executable embeds, unresolved media and unsupported markup stop import. No arbitrary PHP/Liquid/theme conversion. |
-| Reviews/coupons | Canonical source/export normalization | Native moderation/provenance presentation and safe voucher activation are not yet implemented. These must not be shown as migrated. |
+| Reviews | Original author/text/date/rating → native review moderation | Hidden until ordinary moderation; visible source origin, never a fabricated native verified purchase. Original verification is only a typed boolean claim. Private imported author/provenance requires current product-read and PII rights. |
+| Coupons | WooCommerce percent/fixed-cart rules → inactive native promotions | Exact remaining-use snapshot; explicit review before activation, original currency only. Product/customer/shipping/plugin restrictions and malformed limits stop instead of becoming unrestricted. Other provider discount profiles still need explicit mapping. |
 | Design | Handoff to the existing visual editor and central reference-design proposals | No copied PHP/Liquid/theme executable and no automatic parity certification. |
 | Cutover | Per-page reconciliation and controlled private publication foundations | No source freeze, final delta, whole-shop cross-object reconciliation, automatic DNS switch or zero-downtime guarantee yet. |
 
@@ -80,6 +81,28 @@ or is included in that same transaction. A protected download cannot masquerade
 as a product image. Live delivery URLs and actual database defaults are captured
 in the publication baseline, so a later content release still compares correctly.
 Stock is never copied by image or content publication.
+
+## Original reviews and coupons
+
+Reviews enter the existing moderation owner with their original timestamp, author,
+content and rating. They start hidden and unverified, even if the original platform
+claims a verified purchase. The normal native moderation UI shows that origin;
+the storefront exposes only an imported label, never the private provenance object.
+Settings-only users cannot read imported review data. Current `catalog.read` and
+`customers.pii` must both be present, including after role changes.
+
+WooCommerce percent/fixed-cart coupons become ordinary versioned native promotions,
+initially inactive. Their original usage count is subtracted from the original limit;
+no historical purchase is inserted into the native redemption ledger. Explicit null
+or integer zero means source-unlimited. Wrong types, negative limits, unsupported
+product/customer/shipping restrictions and plugin metadata are rejected. Review the
+conditions and remaining uses in the native promotion editor before enabling.
+
+Imported coupons apply **only in their original currency**. This immutable source
+restriction prevents nominal minimum/maximum spend amounts from being compared
+against another checkout currency. It is visible in the native editor and retained
+through ordinary edits/publication. Automatic currency conversion of source spend
+rules and arbitrary source-plugin discount semantics are not claimed.
 
 ## Run the Rust application
 
@@ -168,7 +191,9 @@ TEST_SIGNED_HTTP_SUITES=migration_assistant python3 scripts/verify_integration.p
 Tests use isolated synthetic shops, local HTTP sources and actual Rust/Core/
 PostgreSQL writes. They cover source money/identity, all five protocol fixtures,
 private products/images/categories/pages, native variant/category relations, CRM addresses,
-immutable historical orders, replay/conflicts,
+immutable historical orders, moderated reviews, inactive coupons, explicit activation,
+malformed usage-limit controls, current PII role revocation and cross-currency
+coupon denial, replay/conflicts,
 foreign denial, frozen hashes, cancellation, resume checkpoints and concurrent
 callbacks. Image checks include a 3 MiB transfer, failure after binary persistence,
 explicit replay recovery, unchanged manual image slots and atomic rejection of
