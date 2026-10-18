@@ -1,0 +1,81 @@
+/* Inbound catalogue setup keeps actions, permission state and external approval readable at every width. */
+.agentic-channels {
+  display: grid;
+  gap: 1.25rem;
+  min-width: 0;
+}
+.agentic-channels > header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+.agentic-channels > header h2 {
+  margin-top: 1.25rem;
+}
+.agentic-channels > header label {
+  display: grid;
+  gap: 0.5rem;
+  min-width: 14rem;
+}
+.agentic-protocol {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(15rem, 1fr);
+  gap: 2rem;
+}
+.agentic-channels p {
+  line-height: 1.65;
+  max-width: 70ch;
+}
+.agentic-protocol dl {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.75rem;
+}
+.agentic-protocol dd {
+  margin: 0;
+  font-weight: 650;
+}
+.agentic-import-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+.agentic-import-cards article {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+.agentic-import-cards article p {
+  flex: 1;
+  margin: 0 0 0.5rem;
+}
+.agentic-channels .soft-tag {
+  display: inline-flex;
+  white-space: normal;
+  margin: 0.25rem 0.5rem 0.25rem 0;
+}
+@media (max-width: 1000px) {
+  .agentic-import-cards {
+    grid-template-columns: 1fr;
+  }
+  .agentic-protocol {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 650px) {
+  .agentic-channels > header {
+    flex-direction: column;
+  }
+  .agentic-channels > header label {
+    width: 100%;
+    min-width: 0;
+  }
+  .agentic-protocol dl {
+    grid-template-columns: 1fr;
+  }
+  .agentic-protocol dd {
+    margin-bottom: 0.5rem;
+  }
+}

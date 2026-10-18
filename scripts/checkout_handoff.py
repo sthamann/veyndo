@@ -18,7 +18,7 @@ def cart():
     c=call('/store-api/checkout/cart',{'revision':c['revision'],'items':[{'id':'mug-sage-350','quantity':2}]},ch,'PUT');return c,ch
 def issue(c,ch):
     result=call('/store-api/checkout/handoff',{'revision':c['revision']},ch)
-    assert result['checkoutPath'].startswith('/checkout?shop='+u['workspace']+'&channel=default#checkout/'),result
+    assert result['checkoutPath'].startswith('/checkout?shop='+u['workspace']+'&channel=default&language=en-GB#checkout/'),result
     with urllib.request.urlopen(BASE+'/checkout',timeout=20) as page:
         assert page.status==200 and page.headers.get('content-type','').startswith('text/html')
         assert '<div id="root"></div>' in page.read().decode()

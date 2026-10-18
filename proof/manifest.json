@@ -737,6 +737,21 @@
       "sha256": "da3dbe6dfaa083fcdcdff099d1756572ea75baa2ecec7cf499a9b72e42841c53",
       "review": "Review compiler-enforced foundation crates with unchanged native owners; native provider read-tool aliases and current authorization, private checkpoint continuation and versioned prompt evidence; fixed subscriber acknowledgements preserve commit gaps, independent quarantine and explicit replay; traced requests/tasks/outbox without payloads; exact decimal-to-minor-unit rounding retains legacy price boundary; real SQL poison-isolation regression passes and workspace unit/clippy checks pass"
     },
+    "extensions/apps/catalog-import/mod.rs": {
+      "status": "unproved",
+      "sha256": "25a9bcc34fbbaf4e76bd8daa74863ec862d6e811b4601d88fd33617c6fdd59ac",
+      "review": "Reviewed inbound UCP/native cart and consent transactions, native finalization contact guard, immutable order snapshots, explicit optional negotiation, public HTTPS app-owned catalogue adapters; independent whole-branch review findings repaired and six isolated HTTP/PG suites pass. No extracted kernel policy changed; SQL/provider behavior remains unproved."
+    },
+    "extensions/apps/catalog-import/shop_mcp.rs": {
+      "status": "unproved",
+      "sha256": "ac78a57fea357161bfeb639e3c8b2a23e73af9a9ec5d172fc769ea8c648f8b51",
+      "review": "Reviewed final provider locality request and consent lint cleanup after independent whole-branch review; UCP transfer, native locked contact checks, explicit negotiation, atomic currency/cart/consent and six isolated PostgreSQL suites verified. Existing extracted kernel unchanged; no provider or SQL proof claimed."
+    },
+    "extensions/apps/catalog-import/shopify_csv.rs": {
+      "status": "unproved",
+      "sha256": "8cee1f40041d8e4a4a603067916a9349db19675c67e37ca910969719d5802bfb",
+      "review": "Reviewed inbound UCP/native cart and consent transactions, native finalization contact guard, immutable order snapshots, explicit optional negotiation, public HTTPS app-owned catalogue adapters; independent whole-branch review findings repaired and six isolated HTTP/PG suites pass. No extracted kernel policy changed; SQL/provider behavior remains unproved."
+    },
     "extensions/apps/edi/service/callbacks.rs": {
       "status": "unproved",
       "sha256": "26be1b50e11777bfeb227bb77b3a6c2aa03ee2d5f37b539c3db72f5eb5fe178f",
@@ -1994,8 +2009,8 @@
     },
     "src/cart_mutation.rs": {
       "status": "unproved",
-      "sha256": "fcb94aacce214074e5d8ee7a925a6a86d1f0beb9626326d03cec833d90588847",
-      "review": "Review combined native business capability and hardening: typed material/dimension guests remain app-owned and bounded; native CAS/FX/current B2B approval and immutable order snapshots; isolated app crate consumer preserves compiler boundary; independent per-event subscriber retry/quarantine preserves healthy events, commit gaps and explicit recovery; signed tenant/system authority, provider-native read tools and real document withdrawal, workspace image closure and source inventory. SQL/async/provider adapters remain tested, not proved."
+      "sha256": "f4fb45ed9e0e75553b450667a8efd9d4d7affd98641d2c2b92623536fca51870",
+      "review": "Reviewed inbound UCP/native cart and consent transactions, native finalization contact guard, immutable order snapshots, explicit optional negotiation, public HTTPS app-owned catalogue adapters; independent whole-branch review findings repaired and six isolated HTTP/PG suites pass. No extracted kernel policy changed; SQL/provider behavior remains unproved."
     },
     "src/cart_price.rs": {
       "status": "unproved",
@@ -2059,8 +2074,8 @@
     },
     "src/checkout_handoff.rs": {
       "status": "unproved",
-      "sha256": "01e69c4d4e4d98bd1f01462bf50138885fab573999196cd76ebebcad8d1eee18",
-      "review": "Reviewed native UCP B2B transport: exact public schema only; bounded namespace/version profile selection without authority; current employee and original-cart RFQ reads; unchanged quote CAS, expiry, pricing, budget and separate approval owners; single-use native checkout handoff; shared idempotent order/outbox. New UCP adapters remain unproved."
+      "sha256": "e79157da7089d3e57ac41169df256456624f693f41d5c35fb710957332dbdefe",
+      "review": "Reviewed canonical checkout handoff retains validated native cart locale in language query, no capability moved from fragment; German UCP continuation regression red then green plus native handoff/B2B regression. Existing extracted kernel and SQL authority unchanged."
     },
     "src/checkout_page.rs": {
       "status": "unproved",
@@ -2224,28 +2239,28 @@
     },
     "src/commerce/catalog_intake/csv.rs": {
       "status": "unproved",
-      "sha256": "dbd077e9362a830aeeed1b9610266f719ee536520b0ece2244ecb31826232ed0",
-      "review": "Codex source review 2026-10-16: native catalogue intake CSV/HTTPS/model preparation and explicit stage-only creation reuse current permissions, stable IDs, locked settings CAS, product/history/outbox and bounded image jobs; native catalog_management, durable_agents and image_jobs checks recorded for this branch. Connected guardrail UI keeps the extracted pricing/autonomy predicates unchanged; authorized paged commerce policy read and merchant instructions verified by users, knowledge_workspace and providers plus 192 Rust tests. All changed transport/SQL/provider adapters remain unproved; no new formal correctness claim."
+      "sha256": "87d6d9437f849754efb7940543b4c18efb58f8b29f29eba4b95293cc3bf8f584",
+      "review": "Reviewed inbound UCP/native cart and consent transactions, native finalization contact guard, immutable order snapshots, explicit optional negotiation, public HTTPS app-owned catalogue adapters; independent whole-branch review findings repaired and six isolated HTTP/PG suites pass. No extracted kernel policy changed; SQL/provider behavior remains unproved."
     },
     "src/commerce/catalog_intake/mod.rs": {
       "status": "unproved",
-      "sha256": "249205e65048929d4bc562fff3dfee487df7790e9cc4c6bac49dfdcb7ba71da3",
-      "review": "Codex source review 2026-10-16: native catalogue intake CSV/HTTPS/model preparation and explicit stage-only creation reuse current permissions, stable IDs, locked settings CAS, product/history/outbox and bounded image jobs; native catalog_management, durable_agents and image_jobs checks recorded for this branch. Connected guardrail UI keeps the extracted pricing/autonomy predicates unchanged; authorized paged commerce policy read and merchant instructions verified by users, knowledge_workspace and providers plus 192 Rust tests. All changed transport/SQL/provider adapters remain unproved; no new formal correctness claim."
+      "sha256": "c78203a60d06c6f2419043b85128d39ef695c1d33c048903eb952744a1865b6c",
+      "review": "Reviewed inbound UCP/native cart and consent transactions, native finalization contact guard, immutable order snapshots, explicit optional negotiation, public HTTPS app-owned catalogue adapters; independent whole-branch review findings repaired and six isolated HTTP/PG suites pass. No extracted kernel policy changed; SQL/provider behavior remains unproved."
     },
     "src/commerce/catalog_intake/prepare.rs": {
       "status": "unproved",
-      "sha256": "b945b0e4d491d04f295d79ff77ab555910116aa23a1bad87e9cc0f689e8b7819",
-      "review": "Codex source review 2026-10-16: native catalogue intake CSV/HTTPS/model preparation and explicit stage-only creation reuse current permissions, stable IDs, locked settings CAS, product/history/outbox and bounded image jobs; native catalog_management, durable_agents and image_jobs checks recorded for this branch. Connected guardrail UI keeps the extracted pricing/autonomy predicates unchanged; authorized paged commerce policy read and merchant instructions verified by users, knowledge_workspace and providers plus 192 Rust tests. All changed transport/SQL/provider adapters remain unproved; no new formal correctness claim."
+      "sha256": "32ac4be079a9c66a00c776f2ea05e7e82d4b298cd050fe38d0788bb6e624d0ef",
+      "review": "Reviewed inbound UCP/native cart and consent transactions, native finalization contact guard, immutable order snapshots, explicit optional negotiation, public HTTPS app-owned catalogue adapters; independent whole-branch review findings repaired and six isolated HTTP/PG suites pass. No extracted kernel policy changed; SQL/provider behavior remains unproved."
     },
     "src/commerce/catalog_intake/save.rs": {
       "status": "unproved",
-      "sha256": "d475baae2d19800446698bb0a53ea526845eef52a562a8f3988448929f6a1c4d",
-      "review": "Codex source review 2026-10-16: native catalogue intake CSV/HTTPS/model preparation and explicit stage-only creation reuse current permissions, stable IDs, locked settings CAS, product/history/outbox and bounded image jobs; native catalog_management, durable_agents and image_jobs checks recorded for this branch. Connected guardrail UI keeps the extracted pricing/autonomy predicates unchanged; authorized paged commerce policy read and merchant instructions verified by users, knowledge_workspace and providers plus 192 Rust tests. All changed transport/SQL/provider adapters remain unproved; no new formal correctness claim."
+      "sha256": "9d8a6b85054bcd7fac021f5380f365d1f35b6d372b25c64034638bd05c4759d2",
+      "review": "Reviewed inbound UCP/native cart and consent transactions, native finalization contact guard, immutable order snapshots, explicit optional negotiation, public HTTPS app-owned catalogue adapters; independent whole-branch review findings repaired and six isolated HTTP/PG suites pass. No extracted kernel policy changed; SQL/provider behavior remains unproved."
     },
     "src/commerce/catalog_intake/schema.rs": {
       "status": "unproved",
-      "sha256": "fd70aedff98525e4b26f0be1d818ce69550f36e4fac0e88ec8611b30ed340160",
-      "review": "Codex source review 2026-10-16: native catalogue intake CSV/HTTPS/model preparation and explicit stage-only creation reuse current permissions, stable IDs, locked settings CAS, product/history/outbox and bounded image jobs; native catalog_management, durable_agents and image_jobs checks recorded for this branch. Connected guardrail UI keeps the extracted pricing/autonomy predicates unchanged; authorized paged commerce policy read and merchant instructions verified by users, knowledge_workspace and providers plus 192 Rust tests. All changed transport/SQL/provider adapters remain unproved; no new formal correctness claim."
+      "sha256": "052c4c2322680e4a5929be5adb80f74bd3e2b866b7e065994b7b89378190d794",
+      "review": "Reviewed inbound UCP/native cart and consent transactions, native finalization contact guard, immutable order snapshots, explicit optional negotiation, public HTTPS app-owned catalogue adapters; independent whole-branch review findings repaired and six isolated HTTP/PG suites pass. No extracted kernel policy changed; SQL/provider behavior remains unproved."
     },
     "src/commerce/configuration.rs": {
       "status": "unproved",
@@ -2712,6 +2727,11 @@
       "sha256": "52805a36bd625ceb62b0459ec7c0fcf632fda4fac6a79d4e46b5f430bdc23c9f",
       "review": "Veyndo identity review: exact crate/config/schema namespace replacements and six allowlisted historical SQL hashes; explicit Qdrant alias migration validates all names/vector shapes/conflicts before atomic additive aliases, preserves physical points and alias-aware tenant deletion, exercised by registered real managed-search HTTP suite; configured WIT 1.0 compatibility links only existing cart/product/record host calls, preserves snapshot/money/fuel/epoch limits, four real component tests pass; crypto sealing keys and persisted credential formats unchanged."
     },
+    "src/legal/buyer_consent.rs": {
+      "status": "unproved",
+      "sha256": "917053f6b542c16d09ea0afb9cf3b530391552b370e493250ad69270f275c926",
+      "review": "Reviewed inbound UCP/native cart and consent transactions, native finalization contact guard, immutable order snapshots, explicit optional negotiation, public HTTPS app-owned catalogue adapters; independent whole-branch review findings repaired and six isolated HTTP/PG suites pass. No extracted kernel policy changed; SQL/provider behavior remains unproved."
+    },
     "src/legal/capabilities.rs": {
       "status": "unproved",
       "sha256": "b7bd403901ade7ee0f7a14dcd2a5b00a3c1e1cbd61656b5408613b546d3d0a8a",
@@ -2719,18 +2739,18 @@
     },
     "src/legal/checkout.rs": {
       "status": "reviewed-binding",
-      "sha256": "362eb0489acd45c9c3b8d214dd37e4750016db39e2049167fb891de4b37e1ce9",
-      "review": "Native admin creation uses existing CRM address and cart/checkout owners; independently reviewed tenant/actor tokens, final manual payment guard, channel/customer/cart lock order, replay and explicit customer acknowledgement; new SQL/HTTP adapters remain unproved and have real state regressions."
+      "sha256": "bee386aa97678776b8616239f5aae72748c3a2cad89d6d231f25f673162379a3",
+      "review": "Reviewed inbound UCP/native cart and consent transactions, native finalization contact guard, immutable order snapshots, explicit optional negotiation, public HTTPS app-owned catalogue adapters; independent whole-branch review findings repaired and six isolated HTTP/PG suites pass. No extracted kernel policy changed; SQL/provider behavior remains unproved."
     },
     "src/legal/consent.rs": {
       "status": "reviewed-binding",
-      "sha256": "dad5c51fd178dd249e738f3b220dbc8580fe08f66eaa1b40f263303759686f0b",
-      "review": "Reviewed selective-publication domain rights, transactional channel and current installed Flow action admission, shared B2B configuration writers with history and staging, method/currency dependency guards, and inherited consent-bound analytics. PostgreSQL and frontend regressions exercise successful effects, denied access, stale revisions and preserved live state. SQL, async adapters and external providers remain unproved."
+      "sha256": "7e9fc5f88c80b1bdba9d57eb631098c66d7312f7b45c19c638503c024791f03e",
+      "review": "Reviewed inbound UCP/native cart and consent transactions, native finalization contact guard, immutable order snapshots, explicit optional negotiation, public HTTPS app-owned catalogue adapters; independent whole-branch review findings repaired and six isolated HTTP/PG suites pass. No extracted kernel policy changed; SQL/provider behavior remains unproved."
     },
     "src/legal/mod.rs": {
       "status": "unproved",
-      "sha256": "359558ac7e82e4c5a842a505ad01540b2f6614c33b481a49088fb0b8448e3ea8",
-      "review": "Behavior analytics reviewed: existing cart-locked consent predicate reused; purpose-separated withdrawal, tenant/FK scope, typed and bounded observations, private journey permissions and derived reports. New SQL/frontend/proxy adapters remain unproved; no new theorem claim."
+      "sha256": "80fd55b21877aa1e2f85256201465e68c8ab0ed2f3e0dab95400e2248240cd91",
+      "review": "Reviewed inbound UCP/native cart and consent transactions, native finalization contact guard, immutable order snapshots, explicit optional negotiation, public HTTPS app-owned catalogue adapters; independent whole-branch review findings repaired and six isolated HTTP/PG suites pass. No extracted kernel policy changed; SQL/provider behavior remains unproved."
     },
     "src/legal/model.rs": {
       "status": "unproved",
@@ -3562,6 +3582,16 @@
       "sha256": "3a4078d45460790b5298c9627fe5059ec33dd7e2f168f8de89c956f8c09e8b89",
       "review": "Reviewed eighteen core findings: typed trusted identity and explicit route rights; consolidated current grants; durable auth and fenced shared limits; scoped transactions and one-backend PgBouncer including nested borrow fixes; bounded Wasm/PNG work; notified workers, savepoint quarantine and conservative retention; separate runtime roles and startup configuration. Real PostgreSQL/provider regressions preserve current tenant/customer/payment behavior. SQL/network adapters remain unproved."
     },
+    "src/ucp/cart.rs": {
+      "status": "unproved",
+      "sha256": "f2a3f492f7552493857633ed842bb814a5f3ebd1b9f8bb1f53a4b090ceb56903",
+      "review": "Reviewed inbound UCP/native cart and consent transactions, native finalization contact guard, immutable order snapshots, explicit optional negotiation, public HTTPS app-owned catalogue adapters; independent whole-branch review findings repaired and six isolated HTTP/PG suites pass. No extracted kernel policy changed; SQL/provider behavior remains unproved."
+    },
+    "src/ucp/consent.rs": {
+      "status": "unproved",
+      "sha256": "c560cdc5b732931e9e25d2fd7c6ddc2d7828d6e138de17ee230095eb1a7cb660",
+      "review": "Reviewed UCP PUT compatibility: replace omitted buyer contact fields, preserve only explicit prior consent, and retain native required-contact completion guard; protocols and agentic real HTTP regressions."
+    },
     "src/ucp/document.rs": {
       "status": "unproved",
       "sha256": "f9743e0b65bb6849a9d2851c6a2990795156368c9021abb56b06617999c2fcfb",
@@ -3569,23 +3599,28 @@
     },
     "src/ucp/messages.rs": {
       "status": "unproved",
-      "sha256": "c969c7bd0d1c3581923aec9073d8bd809c9bc89b1feb17249b85cc405f0ef89a",
-      "review": "Reviewed native UCP B2B transport: exact public schema only; bounded namespace/version profile selection without authority; current employee and original-cart RFQ reads; unchanged quote CAS, expiry, pricing, budget and separate approval owners; single-use native checkout handoff; shared idempotent order/outbox. New UCP adapters remain unproved."
+      "sha256": "789138dbe5481bafa2203a4ff007bd9c1162a8e7d0f64af567c946c3815bc762",
+      "review": "Reviewed final provider locality request and consent lint cleanup after independent whole-branch review; UCP transfer, native locked contact checks, explicit negotiation, atomic currency/cart/consent and six isolated PostgreSQL suites verified. Existing extracted kernel unchanged; no provider or SQL proof claimed."
     },
     "src/ucp/mod.rs": {
       "status": "unproved",
-      "sha256": "4c5e04e498315aad797232cfc22d105cb7a2128ad737b1d081b5605d448244b6",
-      "review": "Reviewed native UCP B2B transport: exact public schema only; bounded namespace/version profile selection without authority; current employee and original-cart RFQ reads; unchanged quote CAS, expiry, pricing, budget and separate approval owners; single-use native checkout handoff; shared idempotent order/outbox. New UCP adapters remain unproved."
+      "sha256": "e957713bc601f7530e6bff12b1bb8003b6fbe256da05c444b4fe1a2f0fc08f30",
+      "review": "Reviewed inbound UCP/native cart and consent transactions, native finalization contact guard, immutable order snapshots, explicit optional negotiation, public HTTPS app-owned catalogue adapters; independent whole-branch review findings repaired and six isolated HTTP/PG suites pass. No extracted kernel policy changed; SQL/provider behavior remains unproved."
     },
     "src/ucp/negotiation.rs": {
       "status": "unproved",
-      "sha256": "a2493903c6d08cc9bde0353b2725431d2c3f57f8f83f518e08b7df43b8324881",
-      "review": "Identity-only Veyndo namespace and canonical-domain rename; reviewed migration checksum compatibility for six historical SQL versions, unchanged checkout predicates, 42 library and 169 binary tests pass; native component legacy boundary remains configured and guarded."
+      "sha256": "03e1fe3dc8fbf92bb5754cead4cb22e5befb8f36751a41140f7eceedd563b3f8",
+      "review": "Reviewed UCP PUT compatibility and optional projection: omitted contact fields are replaced, only explicit prior consent persists, missing contacts still block completion, and unnegotiated absent buyer is not inserted as null. Existing protocols and agentic HTTP regressions cover both contracts."
     },
     "src/ucp/profile.rs": {
       "status": "unproved",
-      "sha256": "37559f6293524d7568217ec08429ac596f8ab4fd34714c3c102c6de01220aae0",
-      "review": "Identity-only Veyndo namespace and canonical-domain rename; reviewed migration checksum compatibility for six historical SQL versions, unchanged checkout predicates, 42 library and 169 binary tests pass; native component legacy boundary remains configured and guarded."
+      "sha256": "f1b15f47bfd4fad15e67e55566636723ef0326c238bc3940507d09d31bfce9a9",
+      "review": "Reviewed inbound UCP/native cart and consent transactions, native finalization contact guard, immutable order snapshots, explicit optional negotiation, public HTTPS app-owned catalogue adapters; independent whole-branch review findings repaired and six isolated HTTP/PG suites pass. No extracted kernel policy changed; SQL/provider behavior remains unproved."
+    },
+    "src/ucp/readiness.rs": {
+      "status": "unproved",
+      "sha256": "48c67391642123bb928a69305609cd034ae3b2a632a19eb8df71dc7f3bb54a48",
+      "review": "Reviewed inbound UCP/native cart and consent transactions, native finalization contact guard, immutable order snapshots, explicit optional negotiation, public HTTPS app-owned catalogue adapters; independent whole-branch review findings repaired and six isolated HTTP/PG suites pass. No extracted kernel policy changed; SQL/provider behavior remains unproved."
     },
     "src/work_signal.rs": {
       "status": "unproved",

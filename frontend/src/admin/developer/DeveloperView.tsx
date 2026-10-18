@@ -83,19 +83,13 @@ export default function DeveloperView({
     locales: string[];
   } | null>(null);
   const immediate = useAppPreview(m, request);
+  const environment =
+    immediate.active && immediate.result
+      ? immediate.result.environment
+      : studio.env;
   const scoped = useMemo(
-    () =>
-      sandboxRequest(
-        immediate.active && immediate.result
-          ? immediate.result.environment
-          : studio.env,
-      ),
-    [
-      sandboxRequest,
-      studio.env,
-      immediate.active,
-      immediate.result?.environment,
-    ],
+    () => sandboxRequest(environment),
+    [sandboxRequest, environment],
   );
   useEffect(() => {
     if (studio.draftStorage.restored) setAssistant(false);
@@ -387,7 +381,12 @@ export default function DeveloperView({
                 />
               )}
               {section === "versions" && (
-                <AppVersions studio={studio} onEdit={openForEditing} />
+                <AppVersions
+                  studio={studio}
+                  onEdit={openForEditing}
+                  onNavigate={setSection}
+                  onAssist={agent.show}
+                />
               )}
             </ContentLanguage>
           </fieldset>

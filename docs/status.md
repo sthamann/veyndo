@@ -11,6 +11,18 @@ A green test, merged code and a completed public business journey are different 
 3. [Review a sandbox and selected publication](workbench.md).
 4. [Understand the connected architecture](production-architecture.md).
 
+## Current implementation under acceptance
+
+The [inward agentic-commerce change](agentic-commerce.md) adds native UCP Cart
+Transfer, optional explicit buyer consent, inward Shopify CSV/Shop MCP catalogue
+preparation, merchant AI-channel controls and shared UI/browser-agent cart actions.
+It also adds structural design comparison and app declaration diagnostics.
+[Local isolated HTTP, frontend, browser and synthetic private Shopware Payments
+checks passed](evidence/agentic-commerce-local-2026-10-18.md). These changes are not yet a new public-delivery acceptance;
+the hosted versions and journeys recorded below retain their own evidence.
+Google enrolment, Muse partnerships, real PSP settlement and continuous supplier
+synchronisation are separate and are not claimed by this work.
+
 ## Public acceptance
 
 | Journey or boundary | Evidence and present limitation |

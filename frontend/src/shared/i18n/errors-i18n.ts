@@ -12,6 +12,13 @@ import {
   agentAllowanceExhausted,
 } from "./agent-errors-i18n";
 const messages: Record<string, readonly string[]> = {
+  "Consent contact data missing; enter the agreed email or phone, or withdraw marketing consent":
+    [
+      "Enter the email or phone required for your marketing choice, or withdraw optional marketing under Privacy choices before retrying. No order has been placed.",
+      "Trage die für deine Werbeauswahl benötigte E-Mail oder Telefonnummer ein oder widerrufe die optionale Werbung unter Datenschutzauswahl. Danach kannst du erneut abschließen. Es wurde keine Bestellung angelegt.",
+      "Renseignez l’e-mail ou le téléphone requis pour votre choix marketing, ou retirez ce consentement dans les choix de confidentialité, puis réessayez. Aucune commande n’a été créée.",
+      "Introduce el correo o teléfono requerido para tu elección de marketing, o retira ese consentimiento en Privacidad y reintenta. No se ha creado ningún pedido.",
+    ],
   ...agentAdmissionErrors,
   ...configurationErrors,
   ...catalogIntakeErrors,

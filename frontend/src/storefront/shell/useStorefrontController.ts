@@ -1,5 +1,5 @@
 /** Cart lifecycle, authoritative checkout commands and storefront coordination. */
-import { updateCartQuantity } from "./cart-commands";
+import { useStorefrontActions } from "./useStorefrontActions";
 import { routeProductId } from "../catalog/product-url";
 import { shopScope } from "../../shared/api/shop-scope";
 import { useCompanyIdentity } from "./useCompanyIdentity";
@@ -111,6 +111,14 @@ export function useStorefrontController({
         c.price.currency,
       );
   };
+  const actions = useStorefrontActions(
+    cart,
+    save,
+    () => setBag(true),
+    cartKey,
+    session,
+    locale,
+  );
   useEffect(() => {
     const hash = () => {
       setId(productId());
@@ -237,16 +245,7 @@ export function useStorefrontController({
   const add = (pid: string, q: number) =>
     run(async () => {
       if (!cart) return;
-      save(
-        await shopApi<Cart>(
-          "/store-api/checkout/cart/line-item",
-          { items: [{ referencedId: pid, quantity: q }] },
-          (cart.status === "completed"
-            ? await shopApi<Cart>("/store-api/checkout/cart", { session })
-            : cart
-          ).token,
-        ),
-      );
+      await actions.addProduct(pid, q);
       const item = products.find((p) => p.id === pid);
       const actual = cart.lineItems.find((i) => i.id === pid);
       commerceEvent("add_to_cart", {
@@ -269,7 +268,7 @@ export function useStorefrontController({
     });
   const quantity = (pid: string, q: number) =>
     run(async () => {
-      if (cart) save(await updateCartQuantity(cart, pid, q));
+      if (cart) await actions.setQuantity(pid, q);
     });
   const selection = async (checkout: Selection) => {
     if (!cart) throw new Error(s("empty"));
@@ -324,6 +323,7 @@ export function useStorefrontController({
 
   return {
     company,
+    actions,
     openBag,
     onMerchant,
     s,

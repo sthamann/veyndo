@@ -309,6 +309,7 @@ function DesignerView({
             />
           </section>
           <DesignerInspector
+            onViewport={setDevice}
             scopeKey={`${workspace}:${d.channel}`}
             d={d}
             request={request}

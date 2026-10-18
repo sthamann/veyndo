@@ -56,7 +56,7 @@ pub(super) async fn save(
         .await?;
         json!([{"id":format!("intake-{id}"),"url":draft.image_url,"view":"","alt":{}}])
     };
-    let payload = json!({"id":id,"revision":0,"settingsRevision":v["settingsRevision"],"translations":{locale:{"name":draft.name,"description":draft.description}},"extra":{"priceCurrency":s.currencies.base_currency,"demo":v["demo"],"identity":{"catalogIntakeDigest":digest}},"catalog":{"active":true,"productNumber":if draft.product_number.is_empty(){format!("IMPORT-{id}")}else{draft.product_number},"categoryIds":["catalog-root"],"options":{}},"commerce":{"price":draft.price,"taxRate":rate,"stock":if v["demo"]==true{20}else{0},"minPurchase":1,"purchaseSteps":1,"maxPurchase":null,"deliveryDays":0,"listPrice":null,"advancedPrices":[],"media":media,"properties":{}}});
+    let payload = json!({"id":id,"revision":0,"settingsRevision":v["settingsRevision"],"translations":{locale:{"name":draft.name,"description":draft.description}},"extra":{"priceCurrency":s.currencies.base_currency,"demo":v["demo"],"identity":{"catalogIntakeDigest":digest,"importSource":draft.source}},"catalog":{"active":true,"productNumber":if draft.product_number.is_empty(){format!("IMPORT-{id}")}else{draft.product_number},"categoryIds":["catalog-root"],"options":{}},"commerce":{"price":draft.price,"taxRate":rate,"stock":if v["demo"]==true{20}else{0},"minPurchase":1,"purchaseSteps":1,"maxPurchase":null,"deliveryDays":0,"listPrice":null,"advancedPrices":[],"media":media,"properties":{}}});
     let Json(result) = commerce::create_product(State(a.clone()), h.clone(), Json(payload)).await?;
     Ok(result)
 }

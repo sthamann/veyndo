@@ -256,3 +256,15 @@ it("product editor headings inherit the actual main-language name rather than de
     ),
   ).toBe("Regional chair");
 });
+it("offers inbound Shopify exports and supplier catalogue reads without model permission", async () => {
+  request.mockResolvedValue({ taxes: [], configured: false });
+  render(<CatalogIntake initialMode="csv" onClose={() => {}} />, {
+    wrapper: wrapper(studio({ access: ["catalog.read", "catalog.write"] })),
+  });
+  expect(screen.getByRole("button", { name: "Shopify CSV" })).toBeEnabled();
+  expect(
+    screen.getByRole("button", { name: "Supplier catalogue" }),
+  ).toBeEnabled();
+  fireEvent.click(screen.getByRole("button", { name: "Shopify CSV" }));
+  expect(screen.getByLabelText("Shopify CSV")).toHaveAttribute("type", "file");
+});

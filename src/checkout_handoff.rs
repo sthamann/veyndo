@@ -35,7 +35,7 @@ pub(crate) async fn issue(
         .bind(hash(&ticket)).bind(&t).bind(&c.id).execute(&mut *tx).await?;
     tx.commit().await?;
     Ok(Json(
-        json!({"checkoutPath":format!("/checkout?shop={t}&channel={}#checkout/{ticket}",c.data.sales_channel),"expiresInSeconds":600,"singleUse":true}),
+        json!({"checkoutPath":format!("/checkout?shop={t}&channel={}&language={}#checkout/{ticket}",c.data.sales_channel,c.data.locale),"expiresInSeconds":600,"singleUse":true}),
     ))
 }
 async fn consume(

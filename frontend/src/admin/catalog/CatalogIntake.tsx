@@ -5,12 +5,13 @@ import Icon from "../../shared/ui/Icon";
 import { useStudio } from "../shell/StudioContext";
 import { createStudioRequest } from "../shell/requests";
 import {
-  csvTemplate,
+  needsCatalogModel,
   readCatalogFile,
   type IntakeMode,
   type IntakePreview,
   type IntakeRow,
 } from "./catalog-intake-model";
+import CatalogIntakeSource from "./CatalogIntakeSource";
 import CatalogIntakeReview from "./CatalogIntakeReview";
 import "../styles/catalog-intake.css";
 export default function CatalogIntake({
@@ -32,9 +33,12 @@ export default function CatalogIntake({
     liveRequest,
   } = studio;
   const canAi = access.includes("assistant.use");
-  const [mode, setMode] = useState<IntakeMode>(canAi ? initialMode : "csv");
+  const [mode, setMode] = useState<IntakeMode>(
+    canAi || !needsCatalogModel(initialMode) ? initialMode : "csv",
+  );
   const [stage, setStage] = useState(environment);
   const [source, setSource] = useState("");
+  const [shopDomain, setShopDomain] = useState("");
   const [fileName, setFileName] = useState("");
   const [count, setCount] = useState(3);
   const [preview, setPreview] = useState<IntakePreview>();
@@ -115,6 +119,7 @@ export default function CatalogIntake({
         {
           mode,
           source,
+          ...(mode === "shop_mcp" && shopDomain ? { shopDomain } : {}),
           count,
           inference: { provider: studio.provider, model: studio.model || null },
         },
@@ -255,6 +260,8 @@ export default function CatalogIntake({
             {(
               [
                 ["csv", "table"],
+                ["shopify_csv", "table"],
+                ["shop_mcp", "globe"],
                 ["url", "link"],
                 ["demo", "spark"],
               ] as const
@@ -263,11 +270,12 @@ export default function CatalogIntake({
                 type="button"
                 key={value}
                 aria-pressed={mode === value}
-                disabled={busy || (value !== "csv" && !canAi)}
+                disabled={busy || (needsCatalogModel(value) && !canAi)}
                 onClick={() => {
                   revision.current++;
                   setMode(value);
                   setSource("");
+                  setShopDomain("");
                   setFileName("");
                   setError("");
                 }}
@@ -278,74 +286,25 @@ export default function CatalogIntake({
             ))}
           </div>
           {!canAi && <p>{c("noAi")}</p>}
-          {mode === "csv" ? (
-            <section className="catalog-intake-source">
-              <label>
-                {c("csv")}
-                <input
-                  type="file"
-                  accept=".csv,text/csv"
-                  disabled={busy}
-                  onChange={(e) => {
-                    void file(e.target.files?.[0]);
-                    e.target.value = "";
-                  }}
-                />
-              </label>
-              <p>{c("csvHint")}</p>
-              <a
-                download="products.csv"
-                href={`data:text/csv;charset=utf-8,${encodeURIComponent(csvTemplate)}`}
-              >
-                {c("template")}
-              </a>
-              {fileName && <p role="status">{fileName}</p>}
-            </section>
-          ) : (
-            <section className="catalog-intake-source">
-              <label>
-                {c(mode === "demo" ? "brief" : "source")}
-                {mode === "url" ? (
-                  <input
-                    type="url"
-                    value={source}
-                    maxLength={2000}
-                    placeholder={c("urlPlaceholder")}
-                    disabled={busy}
-                    onChange={(e) => setSource(e.target.value)}
-                  />
-                ) : (
-                  <textarea
-                    rows={4}
-                    value={source}
-                    maxLength={8000}
-                    placeholder={c("briefPlaceholder")}
-                    disabled={busy}
-                    onChange={(e) => setSource(e.target.value)}
-                  />
-                )}
-              </label>
-              <p>{c(mode === "demo" ? "demoHint" : "urlHint")}</p>
-              <label>
-                {c("count")}
-                <input
-                  type="number"
-                  min="1"
-                  max="10"
-                  value={count}
-                  disabled={busy}
-                  onChange={(e) => setCount(Number(e.target.value))}
-                />
-              </label>
-            </section>
-          )}
+          <CatalogIntakeSource
+            mode={mode}
+            busy={busy}
+            source={source}
+            setSource={setSource}
+            file={file}
+            fileName={fileName}
+            shopDomain={shopDomain}
+            setShopDomain={setShopDomain}
+            count={count}
+            setCount={setCount}
+          />
           <button
             type="button"
             className="studio-primary"
             disabled={
               busy ||
               !stage ||
-              (!canAi && mode !== "csv") ||
+              (!canAi && needsCatalogModel(mode)) ||
               !source.trim() ||
               !Number.isInteger(count) ||
               count < 1 ||

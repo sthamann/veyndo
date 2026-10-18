@@ -14,7 +14,15 @@ pub(super) async fn prepare(
         return Err(bad("Catalogue source exceeds 200 kB"));
     }
     let count = v["count"].as_u64().unwrap() as usize;
-    let (drafts, model) = if mode == "csv" {
+    let (drafts, model) = if mode == "shopify_csv" {
+        (inbound::shopify_csv(source)?, None)
+    } else if mode == "shop_mcp" {
+        let _admission = apps::service_limits::admit(a, t, "catalog_import").await?;
+        (
+            inbound::shop_mcp(source, v["shopDomain"].as_str(), count, s).await?,
+            None,
+        )
+    } else if mode == "csv" {
         (csv::parse(source)?, None)
     } else {
         auth::permit(h, "assistant.use")?;
@@ -73,6 +81,12 @@ pub(super) async fn prepare(
     };
     for draft in &drafts {
         draft.validate()?;
+        if let Some(source) = draft.source.as_ref().filter(|s| !s.url.is_empty()) {
+            public_client(
+                &reqwest::Url::parse(&source.url).map_err(|_| bad("Invalid supplier URL"))?,
+            )
+            .await?;
+        }
         if !draft.image_url.is_empty() {
             public_client(
                 &reqwest::Url::parse(&draft.image_url).map_err(|_| bad("Invalid image URL"))?,

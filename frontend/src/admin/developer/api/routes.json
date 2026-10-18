@@ -1620,6 +1620,11 @@
     "source": "src/ucp/mod.rs"
   },
   {
+    "path": "/ucp/v1/carts",
+    "method": "POST",
+    "source": "src/ucp/mod.rs"
+  },
+  {
     "path": "/ucp/v1/checkout-sessions",
     "method": "POST",
     "source": "src/ucp/mod.rs"

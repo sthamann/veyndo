@@ -8145,8 +8145,14 @@
                                 "enum": [
                                   "csv",
                                   "url",
-                                  "demo"
+                                  "demo",
+                                  "shopify_csv",
+                                  "shop_mcp"
                                 ],
+                                "type": "string"
+                              },
+                              "shopDomain": {
+                                "maxLength": 253,
                                 "type": "string"
                               },
                               "source": {
@@ -8235,6 +8241,31 @@
                                   "productNumber": {
                                     "maxLength": 100,
                                     "type": "string"
+                                  },
+                                  "source": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "externalId": {
+                                        "maxLength": 500,
+                                        "type": "string"
+                                      },
+                                      "provider": {
+                                        "enum": [
+                                          "shopify_csv",
+                                          "shop_mcp"
+                                        ],
+                                        "type": "string"
+                                      },
+                                      "url": {
+                                        "maxLength": 2000,
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "provider",
+                                      "externalId"
+                                    ],
+                                    "type": "object"
                                   }
                                 },
                                 "required": [

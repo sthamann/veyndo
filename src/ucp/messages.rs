@@ -62,6 +62,41 @@ pub(super) fn content(code: &str, locale: &str) -> &'static str {
         }
     }
 }
+/// Purpose descriptions are server-owned and follow the checkout language.
+pub(super) fn consent(purpose: &str, locale: &str) -> &'static str {
+    let language = locale.split(['-', '_']).next().unwrap_or("en");
+    match (purpose, language) {
+        ("analytics", "de") => "Nutzung des Shops auswerten",
+        ("analytics", "fr") => "Analyser l’utilisation de la boutique",
+        ("analytics", "es") => "Analizar el uso de la tienda",
+        ("analytics", _) => "Analyse shop usage",
+        ("personalization", "de") => "Einkaufserlebnis personalisieren",
+        ("personalization", "fr") => "Personnaliser les achats",
+        ("personalization", "es") => "Personalizar las compras",
+        ("personalization", _) => "Personalise shopping",
+        ("marketing", "de") => "Werbliche Nachrichten erhalten",
+        ("marketing", "fr") => "Recevoir des communications commerciales",
+        ("marketing", "es") => "Recibir comunicaciones comerciales",
+        ("marketing", _) => "Receive marketing communications",
+        ("email", "de") => "Werbung per E-Mail",
+        ("email", "fr") => "Marketing par e-mail",
+        ("email", "es") => "Marketing por correo electrónico",
+        ("email", _) => "Email marketing",
+        ("sms", "de") => "Werbung per SMS",
+        ("sms", "fr") => "Marketing par SMS",
+        ("sms", "es") => "Marketing por SMS",
+        ("sms", _) => "SMS marketing",
+        ("saleOrSharing", "de") => "Verkauf oder Weitergabe von Daten (nicht aktiviert)",
+        ("saleOrSharing", "fr") => "Vente ou partage de données (désactivé)",
+        ("saleOrSharing", "es") => "Venta o cesión de datos (desactivada)",
+        ("saleOrSharing", _) => "Sale or sharing of data (disabled)",
+        (_, "de") => "Ergänze die Kontaktdaten für deine Einwilligung oder widerrufe sie.",
+        (_, "fr") => "Ajoutez les coordonnées nécessaires ou retirez le consentement.",
+        (_, "es") => "Añade los datos de contacto necesarios o retira el consentimiento.",
+        (_, _) => "Provide the contact details required for your consent or withdraw it.",
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

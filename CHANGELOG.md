@@ -1,5 +1,12 @@
 # Changelog
 
+## Inward agentic commerce — 2026-10-18
+
+- Add UCP Cart Transfer through the native expiring single-use checkout handoff and independent optional buyer-consent negotiation. Native cart, consent and currency changes commit together; current privacy policy, revocation, required contact data and immutable order snapshots remain shared across transports.
+- Add app-owned Shopify CSV and read-only Shop MCP catalogue adapters. Review drafts in the existing private catalogue intake, start stock at zero, retain provenance and explicitly publish selected changes. No outward Shopify checkout or automatic supplier stock/order sync.
+- Add permission-scoped AI channels/imports controls, shared storefront UI/WebMCP cart commands, lifecycle cleanup and stale-shop protection. Browser agents can open buyer checkout review but cannot silently place orders.
+- Show structural design comparisons with desktop/mobile preview and actionable app declaration diagnostics using the existing editor and assistant. [Integration and acceptance boundaries](docs/agentic-commerce.md).
+
 ## Render Mermaid throughout the public handbook — 2026-10-18
 
 - Load a pinned, self-hosted Mermaid renderer only on diagram pages, with strict SVG rendering, contained scrolling, fit-to-width and an expandable source fallback. Diagram controls share the existing four-language handbook vocabulary. Keep package integrity, bundle digest and upstream MIT attribution with the unchanged browser distribution; build checks reject missing assets or a disconnected loader.

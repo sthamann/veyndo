@@ -27,28 +27,49 @@ pub(crate) async fn ucp_profile(h: RequestContext) -> Result<Json<Value>> {
     meta["capabilities"][CHECKOUT][0]["schema"] =
         json!("https://ucp.dev/2026-08-25/schemas/shopping/checkout.json");
     meta["capabilities"][B2B] = json!([{"version":VERSION,"extends":[CHECKOUT],"schema":SCHEMA,"spec":"https://sthamann.github.io/veyndo/docs/b2b-ucp-negotiation.html"}]);
+    meta["capabilities"][cart::CAPABILITY] = json!([{"version":UCP_VERSION,"spec":"https://ucp.dev/2026-08-25/specification/shopping/cart/","schema":"https://ucp.dev/2026-08-25/schemas/shopping/cart.json"}]);
+    meta["capabilities"][consent::CAPABILITY] = json!([{"version":UCP_VERSION,"extends":[CHECKOUT,cart::CAPABILITY],"schema":"https://ucp.dev/2026-08-25/schemas/shopping/buyer_consent.json","spec":"https://ucp.dev/2026-08-25/specification/buyer-consent/"}]);
     meta["payment_handlers"] = json!({});
     Ok(Json(json!({"ucp":meta})))
 }
 /// An advertised profile grants protocol compatibility only, never customer or merchant authority.
-pub(super) async fn selected(h: &RequestContext) -> Result<bool> {
+#[derive(Clone, Copy)]
+pub(super) struct Selection {
+    pub b2b: bool,
+    pub consent: bool,
+}
+pub(super) async fn select(h: &RequestContext, cart_only: bool) -> Result<Selection> {
     let inline = header(h, "x-veyndo-ucp-b2b-version");
     let agent = header(h, "ucp-agent");
-    if inline.is_some() && agent.is_some() {
+    let consent = header(h, "x-veyndo-ucp-consent-version");
+    if consent.is_some_and(|v| v != UCP_VERSION) {
+        return Err(conflict(
+            "capabilities_incompatible: unsupported buyer consent version",
+        ));
+    }
+    if (inline.is_some() || consent.is_some()) && agent.is_some() {
         return Err(bad(
             "Choose UCP-Agent profile or pre-negotiated Veyndo extension version",
         ));
     }
     if let Some(v) = inline {
         return if v == VERSION {
-            Ok(true)
+            Ok(Selection {
+                b2b: true,
+                consent: consent.is_some(),
+            })
         } else {
             Err(conflict(
                 "capabilities_incompatible: unsupported Veyndo B2B version",
             ))
         };
     }
-    let Some(agent) = agent else { return Ok(false) };
+    let Some(agent) = agent else {
+        return Ok(Selection {
+            b2b: false,
+            consent: consent.is_some(),
+        });
+    };
     let url = profile_url(agent)?;
     let client = apps::public_https_client(&url).await?;
     // No inherited Authorization, tenant, cart or customer headers. Redirects/proxies/private DNS are denied.
@@ -76,7 +97,7 @@ pub(super) async fn selected(h: &RequestContext) -> Result<bool> {
     }
     let profile: Value =
         serde_json::from_slice(&bytes).map_err(|_| bad("UCP platform profile is not JSON"))?;
-    intersect(&profile)
+    intersect(&profile, cart_only)
 }
 fn profile_url(value: &str) -> Result<reqwest::Url> {
     let raw = value
@@ -100,10 +121,15 @@ fn supports(p: &Value, name: &str, version: &str) -> bool {
         .as_array()
         .is_some_and(|entries| entries.iter().any(|e| e["version"] == version))
 }
-fn intersect(p: &Value) -> Result<bool> {
-    if p["ucp"]["version"] != UCP_VERSION || !supports(p, CHECKOUT, UCP_VERSION) {
+fn intersect(p: &Value, cart_only: bool) -> Result<Selection> {
+    let base = if cart_only {
+        cart::CAPABILITY
+    } else {
+        CHECKOUT
+    };
+    if p["ucp"]["version"] != UCP_VERSION || !supports(p, base, UCP_VERSION) {
         return Err(conflict(
-            "capabilities_incompatible: requires UCP 2026-08-25 checkout",
+            "capabilities_incompatible: requires the requested UCP 2026-08-25 base capability",
         ));
     }
     let selected = supports(p, B2B, VERSION);
@@ -122,7 +148,10 @@ fn intersect(p: &Value) -> Result<bool> {
             "Veyndo B2B schema authority or parent capability mismatch",
         ));
     }
-    Ok(selected)
+    Ok(Selection {
+        b2b: selected && !cart_only,
+        consent: supports(p, consent::CAPABILITY, UCP_VERSION),
+    })
 }
 #[cfg(test)]
 mod tests {
@@ -130,19 +159,27 @@ mod tests {
     #[test]
     fn intersection_requires_exact_parent_version_and_vendor_authority() {
         let mut p = json!({"ucp":{"version":UCP_VERSION,"capabilities":{CHECKOUT:[{"version":UCP_VERSION}],B2B:[{"version":VERSION,"schema":SCHEMA,"extends":[CHECKOUT]}]}}});
-        assert!(intersect(&p).unwrap());
+        assert!(intersect(&p, false).unwrap().b2b);
         p["ucp"]["capabilities"][B2B][0]["schema"] = json!("https://evil.example/schema.json");
-        assert!(intersect(&p).is_err());
+        assert!(intersect(&p, false).is_err());
         p["ucp"]["capabilities"]
             .as_object_mut()
             .unwrap()
             .remove(B2B);
-        assert!(!intersect(&p).unwrap());
+        assert!(!intersect(&p, false).unwrap().b2b);
         p["ucp"]["capabilities"]
             .as_object_mut()
             .unwrap()
             .remove(CHECKOUT);
-        assert!(intersect(&p).is_err());
+        assert!(intersect(&p, false).is_err());
+    }
+    #[test]
+    fn cart_only_platform_and_optional_consent_intersect_independently() {
+        let mut p = json!({"ucp":{"version":UCP_VERSION,"capabilities":{cart::CAPABILITY:[{"version":UCP_VERSION}]}}});
+        assert!(!intersect(&p, true).unwrap().consent);
+        assert!(intersect(&p, false).is_err());
+        p["ucp"]["capabilities"][consent::CAPABILITY] = json!([{"version":UCP_VERSION}]);
+        assert!(intersect(&p, true).unwrap().consent);
     }
     #[test]
     fn profiles_cannot_smuggle_credentials_or_alternate_schemes() {

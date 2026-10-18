@@ -8,7 +8,8 @@ export interface Inputs11 {
       model?: string | null;
       provider?: "platform" | "ollama" | "openai" | "anthropic";
     } | null;
-    mode: "csv" | "url" | "demo";
+    mode: "csv" | "url" | "demo" | "shopify_csv" | "shop_mcp";
+    shopDomain?: string;
     source: string;
   };
   "merchant.catalog.save": {
@@ -21,6 +22,11 @@ export interface Inputs11 {
       name: string;
       price: number;
       productNumber?: string;
+      source?: {
+        externalId: string;
+        provider: "shopify_csv" | "shop_mcp";
+        url?: string;
+      };
     };
     id: string;
     mainLocale: string;

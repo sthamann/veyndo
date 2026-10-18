@@ -42,6 +42,11 @@ req('/store-api/checkout/currency',{'currency':'JPY','revision':c['revision']-1}
 c=req('/store-api/checkout/currency',{'currency':'JPY','revision':c['revision']},h,'PUT');assert c['price']['currencyScale']==0 and c['lineItems'][0]['price']['unitPrice']==round(base*160)
 c=req('/store-api/checkout/currency',{'currency':'USD','revision':c['revision']},h,'PUT')
 u=req('/ucp/v1/checkout-sessions',{'currency':'JPY','line_items':[{'item':{'id':'notebook'},'quantity':1}]},pub);assert u['currency']=='JPY' and u['line_items'][0]['item']['price']==round(base*160)
+uh={**pub,'sw-context-token':u['context_token'],'x-veyndo-ucp-consent-version':'2026-08-25'}
+before=req('/store-api/checkout/cart',h=uh)
+req('/ucp/v1/checkout-sessions/'+u['id'],{'currency':'USD','line_items':[{'item':{'id':'notebook'},'quantity':1}],'buyer':{'consent':{'dev.ucp.consent.analytics':{'granted':True,'source':'business'}}}},uh,'PUT',400)
+after=req('/store-api/checkout/cart',h=uh)
+assert (after['revision'],after['price']['currency'],after['lineItems']) == (before['revision'],before['price']['currency'],before['lineItems'])
 u=req('/ucp/v1/checkout-sessions/'+u['id'],{'currency':'USD','line_items':[{'item':{'id':'notebook'},'quantity':1}]},{**pub,'sw-context-token':u['context_token']},'PUT');assert u['currency']=='USD'
 print('PASS zero-decimal JPY, revision checks, explicit unsupported currency and UCP currency selection')
 channel={'name':{'en':'Dollar channel','de':'Dollar-Kanal','es':'Canal dólar','fr':'Canal dollar'},'kind':'storefront','active':True,'locales':['en-GB','de-DE','es-ES','fr-FR'],'productIds':[],'navigationCategoryId':None}

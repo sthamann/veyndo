@@ -1,4 +1,5 @@
 /** Shop design uses the shared agent workspace and existing native proposal/approval owners. */
+import DesignReview from "./DesignReview";
 import { useEffect, useRef, useState } from "react";
 import type { RequestFn } from "../../../../frontend/src/shared/api/types";
 import AgentComposer, {
@@ -24,8 +25,10 @@ export default function DesignAgent({
   onPreview,
   onApplied,
   onPrepare,
+  onViewport,
 }: {
   request: RequestFn;
+  onViewport?: (device: "desktop" | "mobile") => void;
   page?: Page;
   selected: string;
   disabled: boolean;
@@ -286,6 +289,15 @@ export default function DesignAgent({
           {plan.variants.map((variant, i) => (
             <article key={variant.taskId}>
               <p>{variant.summary}</p>
+              <DesignReview
+                before={page}
+                after={variant.fields}
+                onPreview={(device) => {
+                  setIndex(i);
+                  onPreview({ ...page, ...variant.fields });
+                  onViewport?.(device);
+                }}
+              />
               <div className="designer-variant-actions">
                 <button
                   type="button"

@@ -1,4 +1,6 @@
 /** Saved version inspection, digest-approved stage install and conflict-aware package-only live release. */
+import AppDiagnostics from "./AppDiagnostics";
+import type { AppStudioKey } from "../../shared/i18n/app-studio-i18n";
 import { contentText } from "../../shared/i18n/content-language";
 import { useAppStudioText } from "../../shared/i18n/app-studio-i18n";
 import { useWorkbenchText } from "../../shared/i18n/workbench-i18n";
@@ -6,14 +8,23 @@ import type { AppStudio, Build } from "./useAppStudio";
 export default function AppVersions({
   studio,
   onEdit,
+  onNavigate,
+  onAssist,
 }: {
   studio: AppStudio;
+  onNavigate?: (tab: AppStudioKey) => void;
+  onAssist?: (prompt: string) => void;
   onEdit: (build: Build) => void;
 }) {
   const { a, locale } = useAppStudioText(),
     { w } = useWorkbenchText();
   return (
     <div className="app-versions">
+      <AppDiagnostics
+        manifest={studio.manifest}
+        onNavigate={onNavigate}
+        onAssist={onAssist}
+      />
       <section className="app-model-card">
         <h2>{a("versions")}</h2>
         {!studio.builds.length && <p>{w("noBuilds")}</p>}
