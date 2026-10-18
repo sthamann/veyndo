@@ -35,7 +35,12 @@
     "ownership": "Source available. Merchant control.",
     "contribute": "Contribute",
     "security": "Security & scope",
-    "boundary": "Experimental prototype · Provider transactions unverified · No production-readiness claim"
+    "boundary": "Experimental prototype · Provider transactions unverified · No production-readiness claim",
+    "diagram": "Diagram",
+    "diagramLoading": "Rendering diagram…",
+    "diagramSource": "View diagram source",
+    "diagramFailed": "The diagram could not be rendered. Its source is available below.",
+    "diagramFit": "Fit to width"
   },
   "de": {
     "eyebrow": "DAS VEYNDO HANDBUCH",
@@ -73,7 +78,12 @@
     "ownership": "Quellcode verfügbar. Händler behalten die Kontrolle.",
     "contribute": "Mitwirken",
     "security": "Sicherheit & Umfang",
-    "boundary": "Experimenteller Prototyp · Anbietertransaktionen ungeprüft · Keine Zusage der Produktionsreife"
+    "boundary": "Experimenteller Prototyp · Anbietertransaktionen ungeprüft · Keine Zusage der Produktionsreife",
+    "diagram": "Diagramm",
+    "diagramLoading": "Diagramm wird gezeichnet…",
+    "diagramSource": "Diagramm-Quelltext anzeigen",
+    "diagramFailed": "Das Diagramm konnte nicht gezeichnet werden. Der Quelltext steht darunter.",
+    "diagramFit": "An Breite anpassen"
   },
   "fr": {
     "eyebrow": "LE GUIDE VEYNDO",
@@ -111,7 +121,12 @@
     "ownership": "Code disponible. Contrôle du commerçant.",
     "contribute": "Contribuer",
     "security": "Sécurité et portée",
-    "boundary": "Prototype expérimental · Transactions des fournisseurs non vérifiées · Maturité de production non garantie"
+    "boundary": "Prototype expérimental · Transactions des fournisseurs non vérifiées · Maturité de production non garantie",
+    "diagram": "Diagramme",
+    "diagramLoading": "Création du diagramme…",
+    "diagramSource": "Voir la source du diagramme",
+    "diagramFailed": "Le diagramme ne peut pas être affiché. Sa source est disponible ci-dessous.",
+    "diagramFit": "Adapter à la largeur"
   },
   "es": {
     "eyebrow": "EL MANUAL VEYNDO",
@@ -149,6 +164,11 @@
     "ownership": "Código disponible. Control del comerciante.",
     "contribute": "Contribuir",
     "security": "Seguridad y alcance",
-    "boundary": "Prototipo experimental · Transacciones de proveedores sin verificar · Madurez de producción no garantizada"
+    "boundary": "Prototipo experimental · Transacciones de proveedores sin verificar · Madurez de producción no garantizada",
+    "diagram": "Diagrama",
+    "diagramLoading": "Dibujando el diagrama…",
+    "diagramSource": "Ver el código del diagrama",
+    "diagramFailed": "No se pudo dibujar el diagrama. Su código está disponible debajo.",
+    "diagramFit": "Ajustar al ancho"
   }
 }

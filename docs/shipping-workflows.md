@@ -77,9 +77,9 @@ sequenceDiagram
   participant Carrier as Selected external provider
   Merchant->>Core: create_label + stable Idempotency-Key
   Core-->>App: Scoped self event containing jobId only
-  App->>Core: job_claim; current creator rights + package digest
+  App->>Core: job_claim, current creator rights + package digest
   Core-->>App: Input + expiring lease
-  App->>Core: delivery_snapshot; delivery_reserve
+  App->>Core: delivery_snapshot, delivery_reserve
   Core-->>App: Immutable allocation digest + fresh/reused intent
   Note over App,Carrier: Only a fresh intent may initiate a booking
   App->>Carrier: Provider-specific validation and booking
