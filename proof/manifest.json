@@ -978,8 +978,8 @@
     },
     "extensions/apps/migration/adapters/products.rs": {
       "status": "unproved",
-      "sha256": "c219d7ef4078604045cf9b74e79f78ad57951171bcda855544644da4b8c0183d",
-      "review": "Reviewed app-owned source status preservation against primary schemas: Shopify status and online-store publication, Presta typed active flag, Magento status/visibility and Shopware boolean parent/child status. Actual prior CLI29 assertion failures are fixed by four source-state cases plus real transport projections; native eight-domain and variant checkout remain green. Independent focused source-visibility review found no Important/Critical findings; source orchestration remains outside pure proof."
+      "sha256": "2f65b63f91374df8f0589507913e5d80fa3b57cacabcba88e42a90fa0e5e0076",
+      "review": "Reviewed native source net/gross basis contract, explicit declared-basis equality, existing PHP-compatible PriceInput conversion with configured currency scale and compatibility bounds; original money/basis provenance retained. Mixed reviewed warning union observed400 RED then exact-record reduction GREEN behind unchanged creator/digest/lease/target fences. Actual five-provider HTTP-to-native private imports, missing/mismatched/invalid basis, zero-/three-decimal currency and UI approval controls pass. Independent focused review found no Important findings; SQL/source/network orchestration remain unproved."
     },
     "extensions/apps/migration/adapters/records.rs": {
       "status": "unproved",
@@ -1513,8 +1513,8 @@
     },
     "src/apps/job_import.rs": {
       "status": "unproved",
-      "sha256": "e507082acb5ca79a5612286ae78397f271b82b3b8dd8778ed0f55359716dc1c6",
-      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
+      "sha256": "7ac96f7ed967ce087ebceed715abc5d6f9720a1e65b278640fe994190e83ff21",
+      "review": "Reviewed native source net/gross basis contract, explicit declared-basis equality, existing PHP-compatible PriceInput conversion with configured currency scale and compatibility bounds; original money/basis provenance retained. Mixed reviewed warning union observed400 RED then exact-record reduction GREEN behind unchanged creator/digest/lease/target fences. Actual five-provider HTTP-to-native private imports, missing/mismatched/invalid basis, zero-/three-decimal currency and UI approval controls pass. Independent focused review found no Important findings; SQL/source/network orchestration remain unproved."
     },
     "src/apps/jobs.rs": {
       "status": "unproved",
@@ -3238,13 +3238,13 @@
     },
     "src/operations/imports/mod.rs": {
       "status": "unproved",
-      "sha256": "60e152e03aa9556ca285722887c05897c76f0d7be99e4fb311679e4f218e275f",
-      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
+      "sha256": "ad73078729ab51e51099e0d892453af5670c7576d0f18a5be3db933332b1db0f",
+      "review": "Reviewed native source net/gross basis contract, explicit declared-basis equality, existing PHP-compatible PriceInput conversion with configured currency scale and compatibility bounds; original money/basis provenance retained. Mixed reviewed warning union observed400 RED then exact-record reduction GREEN behind unchanged creator/digest/lease/target fences. Actual five-provider HTTP-to-native private imports, missing/mismatched/invalid basis, zero-/three-decimal currency and UI approval controls pass. Independent focused review found no Important findings; SQL/source/network orchestration remain unproved."
     },
     "src/operations/imports/products.rs": {
       "status": "unproved",
-      "sha256": "ad5eca61f202257bd3a95b722266cb51f33febe18c98a96c07e49f0031e964ff",
-      "review": "Reviewed optional grouped native job events, unchanged per-action compatibility and package/current actor/lease fences; bounded 32KiB stored rich documents retain strict APP metadata/checkpoints. Actual five-second slow-source RED and native document-depth RED fixed; running cancellation RED fixed with final native progress fence; complete concrete Woo families and private visibility verified through native selected publication and simulated checkout. Focused independent async review found no remaining Important/Critical defects. SQL/network/source parity remain outside pure proof."
+      "sha256": "6d8489c3d33825ff30fe5e00579d991f808943fbb28a3185e18e649fa7abd39f",
+      "review": "Native source price-basis and warning acknowledgement reviewed against unchanged domain owners and current job fences. Actual native net/gross/mismatch/invalid/overflow plus JPY0/KWD3 controls, mixed-warning RED-to-GREEN, all-five-provider HTTP/private intake and677 frontend tests pass. Lint-only collapse retains identical predicate. Focused independent review found no Important defects; provider parity and SQL/async execution remain unproved."
     },
     "src/operations/imports/relations.rs": {
       "status": "unproved",

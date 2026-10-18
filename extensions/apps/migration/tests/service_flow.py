@@ -1,5 +1,5 @@
 """Actual Rust HTTP source -> reviewed native job -> scoped callback -> native private product."""
-import subprocess,threading,time,socket
+import subprocess,threading,time,socket,base64
 from http.server import BaseHTTPRequestHandler,ThreadingHTTPServer
 from pathlib import Path
 from testing.runtime import ROOT,serve,stop
@@ -8,6 +8,15 @@ from testing.app_approval import consent
 class SourceFixture(BaseHTTPRequestHandler):
     def log_message(self,*args):pass
     def do_GET(self):
+        provider_rows={
+            '/api/products':('Basic '+base64.b64encode(b'provider-source-synthetic:').decode(),{'products':[{'id':501,'name':'Original Presta net cup','price':'12.500000','active':'0','visibility':'both'}]}),
+            '/rest/V1/products':('Bearer provider-source-synthetic',{'items':[{'id':601,'sku':'MIG-MAG-601','name':'Original Magento cup','price':'15.25','status':2,'visibility':4,'type_id':'simple'}],'total_count':1}),
+            '/api/articles':('Basic '+base64.b64encode(b'fixture:provider-source-synthetic').decode(),{'data':[{'id':701,'active':False,'name':'Original Shopware cup','mainDetail':{'id':711,'number':'MIG-SW-711','active':True,'prices':[{'price':'29.90'}]}}],'total':1}),
+        }
+        if self.path.split('?')[0] in provider_rows:
+            auth,body=provider_rows[self.path.split('?')[0]]
+            assert self.headers.get('Authorization')==auth
+            self.send_response(200);self.end_headers();self.wfile.write(json.dumps(body).encode());return
         if self.path.startswith('/source-cup.png'):
             assert self.headers.get('Authorization') is None
             self.send_response(200);self.send_header('Content-Type','image/png');self.end_headers();self.wfile.write(png);return
@@ -28,6 +37,13 @@ class SourceFixture(BaseHTTPRequestHandler):
         elif self.path.startswith('/wp-json/wp/v2/pages'):body=[{'id':95,'title':{'rendered':'Source workshop'},'content':{'rendered':'<p>Made with <strong>care</strong>.</p>'},'slug':'source-workshop'}]
         else:self.send_error(404);return
         self.send_response(200);self.send_header('X-WP-TotalPages','1');self.end_headers();self.wfile.write(json.dumps(body).encode())
+    def do_POST(self):
+        assert self.path.startswith('/admin/api/2026-10/graphql.json')
+        assert self.headers.get('X-Shopify-Access-Token')=='provider-source-synthetic'
+        query=json.loads(self.rfile.read(int(self.headers.get('Content-Length','0'))))
+        assert 'status onlineStoreUrl' in query['query']
+        body={'data':{'products':{'nodes':[{'id':'gid://shopify/Product/801','title':'Original Shopify draft','status':'DRAFT','onlineStoreUrl':None,'variants':{'nodes':[{'id':'gid://shopify/ProductVariant/811','title':'Default','sku':'MIG-SH-811','price':'19.90'}],'pageInfo':{'hasNextPage':False}},'images':{'nodes':[],'pageInfo':{'hasNextPage':False}}}],'pageInfo':{'hasNextPage':False,'endCursor':None}}}}
+        self.send_response(200);self.end_headers();self.wfile.write(json.dumps(body).encode())
 source=ThreadingHTTPServer(('127.0.0.1',0),SourceFixture);threading.Thread(target=source.serve_forever,daemon=True).start()
 call('/api/apps',consent({'builtIn':'migration'}),h)
 package=next(p for p in call('/api/apps',h=h)['packages'] if p['id']=='migration')
@@ -44,6 +60,10 @@ binding=call('/api/apps/migration/settings',h=h)
 call('/api/apps/migration/settings',{'approve':True,'digest':binding['digest'],'revision':binding['revision'],'values':{'system':'woocommerce','origin':source_origin,'token':'source-read-synthetic','version':'wc/v3','currency':'EUR','scale':2,'locale':'en-GB'}},h,method='PUT')
 assert 'source-read-synthetic' not in json.dumps(call('/api/apps/migration/settings',h=h))
 env={**os.environ,'MIGRATION_ALLOW_FIXTURE':'1','MIGRATION_BIND':f'127.0.0.1:{port}','MIGRATION_GATEWAY_TOKEN':gateway,'MIGRATION_CALLBACKS':json.dumps({a['workspace']:{'coreUrl':core_url,'token':key}}),'MIGRATION_SOURCES':json.dumps({a['workspace']:{'fixture':{'system':'woocommerce','origin':source_origin,'token':'source-read-synthetic','version':'wc/v3','currency':'EUR','scale':2,'locale':'en-GB'},'slow':{'system':'woocommerce','origin':source_origin,'token':'slow-source-synthetic','version':'wc/v3','currency':'EUR','scale':2,'locale':'en-GB'},'variable':{'system':'woocommerce','origin':source_origin,'token':'variable-source-synthetic','version':'wc/v3','currency':'EUR','scale':2,'locale':'en-GB'}}})}
+profiles=json.loads(env['MIGRATION_SOURCES'])
+for system in ('prestashop','magento2','shopware5','shopify'):
+    profiles[a['workspace']][system]={'system':system,'origin':source_origin,'token':'provider-source-synthetic','username':'fixture' if system=='shopware5' else '', 'version':'2026-10' if system=='shopify' else 'explicit-fixture-profile','currency':'EUR','scale':2,'locale':'en-GB'}
+env['MIGRATION_SOURCES']=json.dumps(profiles)
 log=open(ROOT/'artifacts/migration-live-service.log','w');process=subprocess.Popen([str(ROOT/'target/debug/migration-assistant'),'serve'],env=env,stdout=log,stderr=log)
 def service_call(path,value):
     req=urllib.request.Request(service+path,data=json.dumps(value).encode(),headers={'Content-Type':'application/json','Authorization':'Bearer '+gateway,'x-tenant':a['workspace']})
@@ -154,6 +174,7 @@ try:
     print('PASS saved source PII requires current paired rights; revocation redacts list and denies detail, foreign access denied')
     print('PASS all eight implemented source domains traverse the real gateway/service/outbox/native-write path')
     exec(compile((ROOT/'extensions/apps/migration/tests/variable_flow.py').read_text(),'variable_flow.py','exec'))
+    exec(compile((ROOT/'extensions/apps/migration/tests/provider_flow.py').read_text(),'provider_flow.py','exec'))
     if os.environ.get('MIGRATION_BROWSER')=='1':
         import signal
         metadata={'url':BASE+'/?shop='+a['workspace']+'&studio=channels#merchant','email':EMAILS[0],'workspace':a['workspace']}

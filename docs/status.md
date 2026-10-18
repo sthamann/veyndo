@@ -41,7 +41,8 @@ private status and child images. Slow source inspection uses saved jobs, with re
 cancellation and current PII revocation controls. These additions have local acceptance. Publication-state controls also cover drafts/disabled
 products across the other four source profiles; unsupported separate visibility stops explicitly.
 Complex source variants, private/provider-specific media and coupon mappings, full mapping/cutover and
-large-scale throughput remain incomplete. The guide distinguishes normalization
+large-scale throughput remain incomplete. All five local source HTTP profiles now reach
+native private product creation; net/gross and source-warning choices use the native price owner. The guide distinguishes normalization
 from an accepted native target write.
 
 ## Public acceptance

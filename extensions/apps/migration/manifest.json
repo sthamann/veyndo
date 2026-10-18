@@ -238,6 +238,13 @@
                   "type": "string",
                   "maxLength": 200
                 }
+              },
+              "sourcePriceBasis": {
+                "type": "string",
+                "enum": [
+                  "gross",
+                  "net"
+                ]
               }
             },
             "additionalProperties": false

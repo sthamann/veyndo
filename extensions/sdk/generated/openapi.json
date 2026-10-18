@@ -7754,6 +7754,13 @@
                                     "maxLength": 35,
                                     "type": "string"
                                   },
+                                  "sourcePriceBasis": {
+                                    "enum": [
+                                      "gross",
+                                      "net"
+                                    ],
+                                    "type": "string"
+                                  },
                                   "taxRate": {
                                     "maximum": 50,
                                     "minimum": 0,

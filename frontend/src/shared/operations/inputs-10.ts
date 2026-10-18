@@ -40,6 +40,7 @@ export interface Inputs10 {
       customerGroup?: string;
       destinationDigest?: string;
       locale?: string;
+      sourcePriceBasis?: "gross" | "net";
       taxRate?: number;
     };
     record: {

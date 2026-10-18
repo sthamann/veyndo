@@ -54,3 +54,16 @@ with ThreadPoolExecutor(max_workers=8) as executor:
     imported=list(executor.map(lambda r:call(prefix+'/core/job_import',{'id':jp,'lease':cp['lease'],'record':r},kh),rows))
 assert len({v['id'] for v in imported})==8
 print('PASS eight concurrent fenced callbacks complete with the configured small database pool')
+# A batch can acknowledge a visible union, but each native record gets only its own frozen warnings.
+warned=json.loads(json.dumps(product));warned['sourceId']='warning-net-product';warned['data'].update({'sku':'WARN-NET','priceBasis':'net'});warned['warnings']=['source_price_tax_basis_requires_review']
+plain=json.loads(json.dumps(product));plain['sourceId']='warning-plain-product';plain['data']['sku']='WARN-PLAIN';plain['warnings']=['synthetic_other_reviewed_limitation']
+warnings_intent={'kind':'products','target':stage,'options':{**pbody['options'],'sourcePriceBasis':'net'},'recordDigests':[hashlib.sha256(json.dumps(row,sort_keys=True,separators=(',',':'),ensure_ascii=False).encode()).hexdigest() for row in (warned,plain)]}
+wj=call(prefix+'/actions/import',warnings_intent,{**h,'Idempotency-Key':'warning-unapproved'})['jobId'];wc=call(prefix+'/core/job_claim',{'id':wj},kh)
+call(prefix+'/core/job_import',{'id':wj,'lease':wc['lease'],'record':warned},kh,400)
+warnings_intent['options']['acknowledgedWarnings']=warned['warnings']+plain['warnings']
+wj=call(prefix+'/actions/import',warnings_intent,{**h,'Idempotency-Key':'warning-approved'})['jobId'];wc=call(prefix+'/core/job_claim',{'id':wj},kh)
+for row in (warned,plain):
+    result=call(prefix+'/core/job_import',{'id':wj,'lease':wc['lease'],'record':row},kh)
+    assert call('/api/merchant/products/'+result['id'],h=sh)['commerce']['price']==23.68
+    assert call(prefix+'/core/job_import',{'id':wj,'lease':wc['lease'],'record':row},kh)['replayed']
+print('PASS reviewed warning union admits exact per-record warnings and native net conversion; absent acknowledgement is denied')

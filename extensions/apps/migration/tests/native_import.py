@@ -57,6 +57,7 @@ mid=call('/api/merchant/imports',multilingual,sh)['id']
 ms=call('/api/merchant/products/'+mid,h=sh)
 assert ms['translations']['en']['description']=='A'*3900 and len(json.dumps(ms['extra']['identity']))<8000
 print('PASS multilingual product text uses native translations without unbounded duplicated identity snapshots')
+exec(compile(open(__file__.replace('native_import.py','price_basis.py')).read(),'price_basis.py','exec'))
 exec(compile(open(__file__.replace('native_import.py','assets.py')).read(),'assets.py','exec'))
 # Categories keep their real native hierarchy, exact source identity and private release ownership.
 category={'version':1,'source':'woocommerce','sourceShop':'source-woo','kind':'categories','sourceId':'cat-10','data':{'title':{'en-GB':'Ceramics'},'body':{'en-GB':'Original category'},'slug':{'en-GB':'ceramics'},'parentSourceId':None},'warnings':[]}

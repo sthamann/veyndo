@@ -20,7 +20,7 @@ See [current status](status.md) for deployed journeys.
    saved background job: the page stays usable during slow reads, and completed
    source evidence can be reopened after reload without importing or approving it. Source language IDs require
    explicit locale mapping. Local historical dates require a confirmed IANA zone.
-4. Review destination tax or customer-group choices and explicitly approve the
+4. Review destination tax, original net/gross price basis or customer-group choices and explicitly approve the
    exact returned records. Products, images, categories and content pages share a selected
    private environment; products start with stock zero. Select the same environment
    across domains and after reloading. Content pages require the installed Shop design
@@ -44,7 +44,7 @@ automatic semantic equivalence for arbitrary third-party plugins or theme code.
 
 | Domain | Implemented path | Boundary |
 | --- | --- | --- |
-| Products | Shopify variants, WooCommerce simple and concrete variable products, PrestaShop/Magento/Shopware 5 source projections; native private product creation | Retains original price, known source stock and source metadata; active target stock starts at zero. Multiple Shopify/Shopware variants use native parents/options; category source IDs resolve to the native category tree. Complex/bundle/combinations still need complete domain mapping. WooCommerce families retain their original parent/child IDs, declared axes/options, explicit published/private status and child images. Missing/duplicate/foreign children, wildcard combinations, standalone variations, and separate hidden/search-only/catalog-only visibility require explicit mapping rather than silent simplification. |
+| Products | Shopify variants, WooCommerce simple and concrete variable products, PrestaShop/Magento/Shopware 5 source projections; native private product creation | Retains original amount/basis, known source stock and source metadata; active target stock starts at zero. Multiple Shopify/Shopware variants use native parents/options; category source IDs resolve to the native category tree. Complex/bundle/combinations still need complete domain mapping. WooCommerce families retain their original parent/child IDs, declared axes/options, explicit published/private status and child images. Missing/duplicate/foreign children, wildcard combinations, standalone variations, and separate hidden/search-only/catalog-only visibility require explicit mapping rather than silent simplification. |
 | Product images | Public source URLs → frozen original-byte digests → native private asset store and ordered product media | PNG/JPEG/WebP, 1 byte–8 MiB each, up to 20 images/product and 10 images/reviewed slice. Source credentials are never forwarded to CDNs; unsupported signed URLs, private/relative source paths and unknown collection profiles require an explicit mapping/export. |
 | Customers | Source profile/address normalization → native CRM owner | No password/account credential, marketing consent, verified identity or email-based historical ownership is invented. Existing email conflicts require a reviewed resolution. |
 | Historical orders | Canonical source lines, exact minor-unit total, original timestamp/number → immutable native history | No repricing, new payment attempt, ordinary purchase event, stock consumption or invoice allocation. Source payment status is a historical claim, never native PSP confirmation. |
@@ -108,6 +108,37 @@ schemas remain authoritative: [PrestaShop products](https://devdocs.prestashop-p
 and [Magento visibility](https://github.com/magento/magento2/blob/2.4-develop/app/code/Magento/Catalog/Model/Product/Visibility.php).
 Missing source publication data is shown as unknown in review; it is not claimed
 as proof of original public availability. Public target stock still starts at zero.
+
+## Reviewed tax basis and provider-to-native intake
+
+Veyndo's stored base price is gross. The source amount remains exact in its declared
+currency, with original amount and basis retained as provenance. For a declared
+net source, the reviewed native import invokes the existing PHP-compatible tax
+calculator (`gross=true`, `calculated=false`) at the configured currency precision;
+it does not introduce an adapter-side tax engine or a model-generated conversion.
+For example, 12.50 EUR net at reviewed 19% becomes 14.88 EUR gross. Existing native
+B2B presentation then derives net amounts through its ordinary pricing path.
+
+PrestaShop declares its source amount as net. Studio displays that known basis and
+requires an explicit choice if the source projection does not declare one. Changing
+an unknown basis clears approval. A mismatch with a known declaration is refused
+natively. Existing older native requests without a declared basis preserve their
+legacy gross interpretation; that compatibility is not evidence of source-tax
+parity. Amounts with nonzero precision beyond the currency minor unit still stop
+for explicit source-rounding review.
+
+The original PrestaShop tax warning can now be confirmed after its basis/rate are
+visible. Other unresolved warnings still block the Studio import. An explicitly
+reviewed warning union is narrowed to each frozen record's actual warnings inside
+the existing job guard; the native exact-warning check stays in force. This avoids
+one record borrowing another's warning approval or changing replay identity based
+on unrelated rows. There is no blanket warning suppression.
+
+Actual local fixtures now exercise all five HTTP source transports through saved
+review, exact approval, native jobs and private product creation. PrestaShop net
+conversion, preserved disabled publication, missing/mismatched basis, replay and
+configured zero-/three-decimal currencies have native controls. These fixtures do
+not replace real provider credentials, complete field mapping or final cutover.
 
 ## Original images and selected publication
 

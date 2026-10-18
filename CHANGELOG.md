@@ -1,5 +1,12 @@
 # Changelog
 
+## Reviewed source tax basis and five-provider native intake — 2026-10-18
+
+- Preserve original source amount/basis and convert declared net prices with the existing native tax calculator and currency precision. Known-basis mismatch/missing confirmation is rejected; legacy undeclared requests retain gross compatibility. Studio makes unknown basis explicit and clears approval on change.
+- Confirm the resolved source-tax warning while keeping unrelated gaps blocked. The frozen native job narrows a reviewed warning union to exact per-record warnings, preserving the ordinary native validation and replay identity.
+- Exercise all five actual local provider HTTP protocols through saved inspection, reviewed jobs and native private product creation; include zero-/three-decimal price controls. [Coverage and limits](docs/agentic-migration.md).
+
+
 ## Complete concrete variants and durable source inspection — 2026-10-18
 
 - Preserve original WooCommerce variable parent/child identities, complete declared axes/options, child images and explicit private visibility through native selected publication and simulated checkout. Missing/foreign/duplicate/wildcard families and unsupported visibility stop explicitly.

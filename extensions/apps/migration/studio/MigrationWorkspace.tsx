@@ -1,7 +1,7 @@
 /** App-owned inward migration workflow: native consent, exact reviewed pages, private product targets and durable jobs. */
 import { useEffect, useRef, useState } from "react";
 import type { RequestFn } from "../../../../frontend/src/shared/api/types";
-import AppConsent from "../../../../frontend/src/admin/apps/AppConsent";
+import InstallConsent from "./InstallConsent";
 import Icon from "../../../../frontend/src/shared/ui/Icon";
 import Connection from "./Connection";
 import Jobs from "./Jobs";
@@ -15,6 +15,7 @@ import {
   isPrivate,
   importRights,
   importOptions,
+  reviewPriceBasis,
   type Kind,
   type Review,
   type Job,
@@ -53,6 +54,7 @@ export default function MigrationWorkspace({
     [target, setTarget] = useState<string>(),
     [approved, setApproved] = useState(false),
     [tax, setTax] = useState(""),
+    [priceBasis, setPriceBasis] = useState(""),
     [group, setGroup] = useState(""),
     [groups, setGroups] = useState<
       { id: string; name: Record<string, string> }[]
@@ -118,6 +120,7 @@ export default function MigrationWorkspace({
     };
   }, [kind, request, rights]);
   const adoptReview = (value?: Review) => {
+    setPriceBasis("");
     setReview(value);
     setApproved(false);
     setCursor(value?.cursor);
@@ -131,6 +134,7 @@ export default function MigrationWorkspace({
     onError: setError,
   });
   const busy = working || inspecting;
+  const sourcePriceBasis = priceBasis || reviewPriceBasis(review) || "";
   const start = async () => {
     if (
       !review ||
@@ -151,10 +155,16 @@ export default function MigrationWorkspace({
       if (isPrivate(kind)) setTarget(destination);
       const options = importOptions(kind, {
         tax,
+        sourcePriceBasis,
         group,
         mainLocale,
         destinationDigest: designerPackage?.digest,
       });
+      const warnings = [
+        ...new Set(review.records.flatMap((row) => row.warnings)),
+      ];
+      if (warnings.length)
+        Object.assign(options, { acknowledgedWarnings: warnings });
       await owner(
         "/api/apps/migration/actions/import_" + kind,
         {
@@ -317,6 +327,8 @@ export default function MigrationWorkspace({
                   review={review}
                   kind={kind}
                   tax={tax}
+                  priceBasis={sourcePriceBasis}
+                  setPriceBasis={setPriceBasis}
                   setTax={setTax}
                   group={group}
                   setGroup={setGroup}
@@ -325,7 +337,9 @@ export default function MigrationWorkspace({
                   setApproved={setApproved}
                   busy={busy}
                   canImport={
-                    canImport && (kind !== "pages" || !!designerPackage?.active)
+                    canImport &&
+                    (kind !== "products" || !!sourcePriceBasis) &&
+                    (kind !== "pages" || !!designerPackage?.active)
                   }
                   start={start}
                   mainLocale={mainLocale}
@@ -365,20 +379,13 @@ export default function MigrationWorkspace({
       )}
       {error && <p role="alert">{error}</p>}
       {install && (
-        <AppConsent
+        <InstallConsent
           app={install}
           request={request}
           onCancel={() => setInstall(undefined)}
-          onInstall={async (consent) => {
-            await request("/api/apps", {
-              builtIn: install,
-              approve: true,
-              digest: consent.digest,
-              permissions: consent.permissions,
-            });
+          onInstalled={async () => {
             setInstall(undefined);
             await load();
-            dispatchEvent(new Event("commerce.apps.changed"));
           }}
         />
       )}

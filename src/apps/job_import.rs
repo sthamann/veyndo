@@ -134,6 +134,29 @@ pub(super) async fn execute(a: &App, h: &RequestContext, m: &Manifest, v: &Value
     );
     identity.principal.tenant = Some(target.into());
     let mut input = json!({"approve":true,"record":v["record"],"options":intent["options"]});
+    if let Some(approved) = intent["options"]["acknowledgedWarnings"].as_array() {
+        let warnings = v["record"]["warnings"]
+            .as_array()
+            .ok_or(bad("Invalid source warnings"))?;
+        if approved.len() > 20
+            || approved
+                .iter()
+                .any(|value| value.as_str().is_none_or(|s| s.len() > 2000))
+            || warnings.iter().any(|warning| !approved.contains(warning))
+        {
+            return Err(bad(
+                "Review every source limitation before importing this record",
+            ));
+        }
+        if warnings.is_empty() {
+            input["options"]
+                .as_object_mut()
+                .unwrap()
+                .remove("acknowledgedWarnings");
+        } else {
+            input["options"]["acknowledgedWarnings"] = json!(warnings);
+        }
+    }
     if let Some(chunks) = v.get("assetChunks") {
         input["assetChunks"] = chunks.clone();
     }

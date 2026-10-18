@@ -122,7 +122,7 @@ fn product(c: &Context, parent: &Value, v: &Value, pid: Option<&str>) -> Result<
         c,
         "products",
         source_id,
-        json!({"name":translated(c,&name)?,"description":translated(c,&description)?,"sku":field(v,&["sku","reference","number"]),"parentSourceId":pid,"variantTitle":field(v,&["title"]),"price":amount,"priceDisplay":amount.decimal(),"stock":stock,"sourceImages":images,"options":super::relations::options(v)?,"categorySourceIds":super::relations::categories(c,parent)?,"sourceCategory":field(parent,&["id_category_default","categories"]),"sourceType":field(parent,&["type","type_id"]),"catalogActive":visible}),
+        json!({"name":translated(c,&name)?,"description":translated(c,&description)?,"sku":field(v,&["sku","reference","number"]),"parentSourceId":pid,"variantTitle":field(v,&["title"]),"price":amount,"priceDisplay":amount.decimal(),"stock":stock,"sourceImages":images,"options":super::relations::options(v)?,"categorySourceIds":super::relations::categories(c,parent)?,"sourceCategory":field(parent,&["id_category_default","categories"]),"sourceType":field(parent,&["type","type_id"]),"catalogActive":visible,"priceBasis":if c.source==Source::Prestashop{Some("net")}else{None}}),
     )?;
     if c.source == Source::Magento2
         && parent["type_id"]

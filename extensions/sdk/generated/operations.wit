@@ -644,6 +644,7 @@ interface inputs {
     %customer-group: option<string>,
     %destination-digest: option<string>,
     %locale: option<string>,
+    %source-price-basis: option<string>,
     %tax-rate: option<float64>,
   }
   record merchant-import-record-input-record {

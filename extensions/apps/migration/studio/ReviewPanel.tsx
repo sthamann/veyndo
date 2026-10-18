@@ -1,11 +1,19 @@
 /** Exact source review keeps unacknowledged gaps and missing target choices from starting a write. */
+import PriceOptions from "./PriceOptions";
+import { usePriceText } from "./price-i18n";
 import SourceDetails from "./SourceDetails";
 import { useState } from "react";
 import Icon from "../../../../frontend/src/shared/ui/Icon";
 import { useLocale } from "../../../../frontend/src/shared/i18n/i18n";
 import { contentText } from "../../../../frontend/src/shared/i18n/content-language";
 import { useMigrationText } from "./i18n";
-import { rowName, rowAmount, type Review, type Kind } from "./model";
+import {
+  reviewPriceBasis,
+  rowName,
+  rowAmount,
+  type Review,
+  type Kind,
+} from "./model";
 function SourceImage({ url, name }: { url: string; name: string }) {
   const [failed, setFailed] = useState(false);
   const t = useMigrationText();
@@ -29,6 +37,8 @@ export default function ReviewPanel({
   review,
   kind,
   tax,
+  priceBasis,
+  setPriceBasis,
   setTax,
   group,
   setGroup,
@@ -43,6 +53,8 @@ export default function ReviewPanel({
   review: Review;
   kind: Kind;
   tax: string;
+  priceBasis: string;
+  setPriceBasis: (value: string) => void;
   setTax: (v: string) => void;
   group: string;
   setGroup: (v: string) => void;
@@ -56,7 +68,11 @@ export default function ReviewPanel({
 }) {
   const t = useMigrationText(),
     { locale } = useLocale();
+  const priceText = usePriceText();
   const hasAmount = ["products", "orders", "assets", "coupons"].includes(kind);
+  const unresolvedWarnings = review.records.some((row) =>
+    row.warnings.some((w) => w !== "source_price_tax_basis_requires_review"),
+  );
   const hasWarnings = review.records.some((row) => row.warnings.length > 0);
   return (
     <>
@@ -65,6 +81,12 @@ export default function ReviewPanel({
       </p>
       <div className="migration-table">
         <table>
+          <colgroup>
+            <col style={{ width: "16%" }} />
+            <col />
+            {hasAmount && <col style={{ width: "20%" }} />}
+            {hasWarnings && <col style={{ width: "24%" }} />}
+          </colgroup>
           <thead>
             <tr>
               <th>{t("sourceKey")}</th>
@@ -104,12 +126,32 @@ export default function ReviewPanel({
                     {kind === "assets" ? row.data.byteLength : rowAmount(row)}
                   </td>
                 )}
-                {hasWarnings && <td>{row.warnings.join(" · ")}</td>}
+                {hasWarnings && (
+                  <td>
+                    {row.warnings
+                      .map((w) =>
+                        w === "source_price_tax_basis_requires_review"
+                          ? priceText("taxWarning")
+                          : w,
+                      )
+                      .join(" · ")}
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+      {kind === "products" && (
+        <PriceOptions
+          value={priceBasis}
+          locked={!!reviewPriceBasis(review)}
+          onChange={(value) => {
+            setPriceBasis(value);
+            setApproved(false);
+          }}
+        />
+      )}
       {kind === "products" && (
         <label>
           {t("tax")}
@@ -162,7 +204,7 @@ export default function ReviewPanel({
           !approved ||
           !canImport ||
           !review.records.length ||
-          review.records.some((r) => r.warnings.length > 0) ||
+          unresolvedWarnings ||
           (kind === "products" &&
             (!tax ||
               !Number.isFinite(Number(tax)) ||

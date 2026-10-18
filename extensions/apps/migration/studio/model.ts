@@ -36,6 +36,7 @@ export type SourceRecord = {
     sku?: string;
     price?: { currency: string; scale: number; minor: number };
     total?: { currency: string; scale: number; minor: number };
+    priceBasis?: "gross" | "net" | null;
     stock?: number;
     parentSourceId?: string | null;
     variantGroup?: boolean;
@@ -158,6 +159,7 @@ export function importOptions(
   kind: Kind,
   values: {
     tax: string;
+    sourcePriceBasis?: string;
     group: string;
     mainLocale: string;
     destinationDigest?: string;
@@ -165,7 +167,13 @@ export function importOptions(
 ) {
   switch (kind) {
     case "products":
-      return { channelId: "default", taxRate: Number(values.tax) };
+      return {
+        channelId: "default",
+        taxRate: Number(values.tax),
+        ...(values.sourcePriceBasis
+          ? { sourcePriceBasis: values.sourcePriceBasis }
+          : {}),
+      };
     case "pages":
       return { destinationDigest: values.destinationDigest };
     case "reviews":
@@ -178,4 +186,11 @@ export function importOptions(
     case "orders":
       return { channelId: "default", locale: values.mainLocale };
   }
+}
+
+export function reviewPriceBasis(review?: Review) {
+  const basis = review?.records[0]?.data.priceBasis;
+  return basis && review?.records.every((row) => row.data.priceBasis === basis)
+    ? basis
+    : undefined;
 }

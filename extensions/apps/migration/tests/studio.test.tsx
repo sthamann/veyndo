@@ -1,4 +1,5 @@
 /** Real migration workflow controls require readable source data and explicit import review. */
+import { priceBasisTests } from "./price_basis.test";
 import { inspectionTests } from "./inspection.test";
 import { feedbackTests } from "./feedback.test";
 import MigrationWorkspace from "../studio/MigrationWorkspace";
@@ -21,6 +22,7 @@ export function migrationStudioTests(deps: any) {
   }
   feedbackTests(deps, mount);
   inspectionTests(deps, mount);
+  priceBasisTests(deps, mount);
   it("does not read installed apps without current app access", () => {
     const request = vi.fn();
     mount(request, []);
@@ -65,6 +67,9 @@ export function migrationStudioTests(deps: any) {
     expect(await screen.findByText("Source cup")).toBeVisible();
     const start = screen.getByRole("button", { name: "Import reviewed page" });
     expect(start).toBeDisabled();
+    fireEvent.change(screen.getByLabelText("Source price basis"), {
+      target: { value: "gross" },
+    });
     fireEvent.change(
       screen.getByLabelText("Reviewed destination tax rate (%)"),
       { target: { value: "19" } },
@@ -161,6 +166,9 @@ export function migrationStudioTests(deps: any) {
       await screen.findByRole("button", { name: "Review next source page" }),
     );
     expect(await screen.findByText("Next cup")).toBeVisible();
+    fireEvent.change(screen.getByLabelText("Source price basis"), {
+      target: { value: "gross" },
+    });
     fireEvent.change(
       screen.getByLabelText("Reviewed destination tax rate (%)"),
       { target: { value: "19" } },

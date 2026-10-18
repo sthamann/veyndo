@@ -64,6 +64,8 @@
 }
 .migration-table table {
   width: 100%;
+  min-width: 680px;
+  table-layout: fixed;
   border-collapse: collapse;
   font-size: 14px;
 }
@@ -74,6 +76,11 @@
   border-bottom: 1px solid var(--line, #d6e2ef);
   max-width: 320px;
   overflow-wrap: anywhere;
+  vertical-align: top;
+}
+.migration-table th {
+  overflow-wrap: normal;
+  word-break: normal;
 }
 .migration-fields {
   display: grid;
@@ -193,7 +200,7 @@
 }
 
 .migration-source-detail {
-  min-width: 240px;
+  min-width: 0;
   margin-top: 12px;
   font-size: 13px;
 }
@@ -226,8 +233,7 @@
 
 .migration-table .migration-content-cell {
   max-width: none;
-  width: 100%;
 }
 .migration-source-detail dl {
-  grid-template-columns: minmax(130px, 1fr) minmax(120px, 2fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
 }

@@ -121,6 +121,27 @@ Shopify requests both status and online-store publication. Focused independent
 source-visibility review found no Important/Critical findings. Real source stores
 and additional source channel semantics remain outside this local evidence.
 
+## Reviewed net/gross prices and warning acknowledgement
+
+Actual native intake reproduced the missing `sourcePriceBasis` schema contract;
+the reviewed option now uses the existing tax calculator. 12.50 EUR net at 19%
+becomes 14.88 EUR gross, while an explicitly gross 19.90 stays 19.90. Missing or
+mismatched known basis, invalid source basis types and excessive native range are
+refused. Configured JPY scale 0 and KWD scale 3 yield 1488 and 1.488 respectively.
+Original source minor units and basis remain in bounded provenance.
+
+A two-record batch with different acknowledged warnings reproduced the native
+exact-warning rejection. The existing job coordinator now checks the approved
+union and forwards only each frozen row's own warnings. Missing approval still
+fails, and repeated native writes replay. Studio warning controls confirm only the
+now-resolved source-tax warning; unrelated unresolved warnings remain blocking.
+
+All five actual source HTTP protocols now reach saved review and the native private
+product owner, including PrestaShop's net conversion and disabled publication from
+the other four providers. Focused independent review found no Important findings
+in the new price/basis/acknowledgement scope. The calculator's existing compatibility
+boundary remains; no complete provider tax parity or real-store acceptance is implied.
+
 ## Browser and general checks
 
 Actual Chrome exercised source review, explicit approval, a successful image
@@ -134,7 +155,7 @@ screenshots: `artifacts/migration-reviews-preview.png` and
 `artifacts/migration-coupons-preview.png`. Owned disposable fixtures are cleaned up
 after each pass; the user's existing server on port 8802 remains untouched.
 
-Frontend: 119 files / 675 tests, production build, formatting and EN/DE/FR/ES
+Frontend: 119 files / 677 tests, production build, formatting and EN/DE/FR/ES
 localization pass. Workspace Rust tests, warning-denying clippy, source/API/image
 ownership checks and documentation generation/checking pass. Existing formal
 mutation controls reject 172 broken policies; this does not prove all migration
@@ -148,3 +169,15 @@ theme parity, whole-shop final delta/cutover or large-catalogue throughput is
 accepted by this record. The independent service needs its own deployment and
 tenant-bound callback configuration before hosted use. See the
 [workflow and current domain coverage](../agentic-migration.md).
+
+### Source price browser acceptance
+
+Actual Chrome reopened the persisted PrestaShop inspection, retained its declared
+net basis, accepted an explicit 19% target rate and completed the reviewed job.
+The first screenshot exposed a real table layout defect: a 100% content cell
+collapsed the other three columns to 35–36 px. App-owned column proportions now
+keep desktop headers at 144/361/180/216 px. At a 900 px viewport the 680 px table
+scrolls inside its 600 px wrapper; the document remains 900 px wide.
+Screenshots: `artifacts/migration-presta-net-review-fixed.png` and
+`artifacts/migration-presta-price-options.png`. The owned browser tab, fixture
+processes and disposable database were cleaned up. Port 8802 was preserved.

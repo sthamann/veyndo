@@ -15,5 +15,5 @@ pages, CRM customers, immutable historical orders, moderated reviews and inactiv
 native coupons. Reviews never acquire fabricated purchase verification; supported
 WooCommerce coupons require explicit native activation review and retain their
 original currency and remaining-use snapshot. Slow source inspections run in the existing saved jobs and can be reopened after reload. Products use real native
-variant/category associations; all private domains can share one selected preview. Normalizing other source domains does not implement their target
+variant/category associations and the existing native tax calculator for explicitly reviewed net source prices; all private domains can share one selected preview. Normalizing other source domains does not implement their target
 migration. Do not advertise complete theme/plugin conversion or zero-downtime cutover.
