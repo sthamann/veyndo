@@ -1,7 +1,9 @@
 # Migration continuation and current-target acceptance — 19 October 2026
 
-This is **local synthetic acceptance**, not public hosting, a real source shop,
-final delta/cutover, paid settlement or measured fleet capacity.
+The functional journey below is **local synthetic acceptance**, not a real source
+shop, final delta/cutover, paid settlement or measured fleet capacity. The separate
+hosted Core delivery is recorded at the end; it does not establish a public
+end-to-end migration.
 
 ## What was exercised
 
@@ -53,7 +55,7 @@ shortcuts. SQL, AES-GCM, HTTP, service execution and hosted deployment remain
 outside those formal claims.
 
 Frontend: 121 test files / 693 tests, production build and formatting pass.
-Documentation: all 279 Markdown sources render into 286 pages; over 29,000 local
+Documentation rendering, complete Markdown coverage and over 29,000 local
 links/assets pass. See [current status](../status.md) for hosted acceptance.
 
 ## Browser recovery
@@ -78,3 +80,35 @@ a terminal cursor. A local protected/public fixture also proves that a retained
 private token is not forwarded in public mode and that the default private mode
 still authenticates. This is a public-source transport check with a local Rust
 service; it is not Northflank service acceptance.
+
+## Hosted Core delivery boundary
+
+PR [#168](https://github.com/sthamann/veyndo/pull/168) merged on 19 October at
+08:48 UTC as `0aaec00597f104e3170df5c9243baf9d2074d7df` after the
+[full required verification](https://github.com/sthamann/veyndo/actions/runs/39219572633)
+passed. The merged source tree and tested `b13aedb` tree are identical
+(`1db99634b80a058d5ccdf9ba41f8209180effbc4`). This includes real database/provider
+fixtures and the separate restricted-system/tenant connection checks; it is not
+real provider settlement.
+
+The fresh Northflank disk snapshot `migration-assistant-20261019-b13aedb` completed
+successfully before schema changes. Existing `vendune-migrate` ran the same
+`violet-glass-1926` image in migration-only mode, run
+`f45c2dd1-eea6-456b-af23-496e687aaaed`, and logged **Migration-only setup complete**
+and exit code 0. Migration 106 adds review-source provenance; no new database
+role, app table or runtime privilege was introduced.
+
+Core deployment `vendune-core-589c44c658` then reached one ready instance with
+zero restarts. `https://app.veyndo.ai/health` returned `status: ok`. The ordinary
+Google entry created the explicitly empty synthetic shop **Migration Abnahme 19
+Okt**; Studio reopened after the rollout with zero products. Existing separated
+database command/configuration was preserved. The original Experience was not
+redeployed, and no new hosted purchase is claimed here.
+
+The smoke-tested independent image is available at
+`ghcr.io/sthamann/veyndo-migration:sha-0aaec00597f104e3170df5c9243baf9d2074d7df`,
+digest `sha256:4e4754a1ad4016337dd7893795e68b0f0437f23536f4cf9904b6a73860e87479`.
+An anonymous registry manifest read returned 200. Its separate Northflank service,
+private gateway, scoped callbacks and complete public source-to-purchase journey
+remain unconfigured/unaccepted. Core availability and a published image are not
+substitutes for those steps.

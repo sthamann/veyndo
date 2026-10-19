@@ -2,6 +2,8 @@
 
 ## Current migration target checks and durable continuation — 2026-10-19
 
+- Merge PR #168 after full green verification and deploy the identical Core/Studio source after a successful snapshot and additive migration 106. Publish the independent source-pinned Rust image. Keep hosted migration-service configuration and public end-to-end acceptance explicitly open in the status/evidence; a healthy Core is not a completed migration journey.
+
 - Support explicitly public frozen exports without forwarding source/export credentials; protected exports stay authenticated by default. The public synthetic GitHub sample now passes an actual pinned HTTPS read through Rust.
 
 - Atomically store successful native job completion and authenticated private evidence under current creator, package, lease, cancellation and CAS fences. Ordinary saved success flags and edited seals cannot advance migration progress. Preserve evidence across job archival and actual service restart.
