@@ -4,12 +4,15 @@ This is the single starting point for what works, what is implemented but not
 publicly accepted, and what still needs development. Updated 19 October 2026.
 A green test, merged code and a completed public business journey are different evidence.
 
-Local migration follow-up (19 October): saved plans now connect all eight supported
+Migration implementation (19 October): saved plans now connect all eight supported
 domains in a review-gated page sequence. Native current-field comparison detects
 missing records, changed prices/text and image associations. Private page intents
 and bounded reports survive technical job archival and service restart; a changed
 result does not authorize repair or cutover. Local synthetic acceptance is separate
-from the still-pending public service rollout. Native completion evidence is now
+from the still-pending public migration-service acceptance. Core/Studio source
+`b13aedb` is deployed after migration 106; the separate service image is published,
+but its hosted gateway/callback configuration and public migration journey remain
+open. Native completion evidence is now
 atomically sealed under current job/creator/package/lease/CAS checks; raw edited
 success flags cannot advance Studio. [Acceptance evidence](evidence/migration-continuation-2026-10-19.md)
 and [workflow limits](agentic-migration.md).
@@ -18,8 +21,8 @@ Local migration follow-up (18 October): frozen domain export packaging and pinne
 HTTPS intake now reuse native reviewed jobs, with separate export credentials,
 source-reference checks and visible original counts/digests. Two-page native
 product intake/replay and tamper rejection are locally tested. This remains
-an open draft implementation; it is not a public deployment or complete shop
-migration/cutover. [Scope and evidence](agentic-migration.md).
+a historical local checkpoint, now merged in PR #168; it did not establish a
+complete shop migration/cutover. [Scope and evidence](agentic-migration.md).
 
 ## Start with a complete journey
 
@@ -100,7 +103,17 @@ results; hosted service deployment and whole-shop cutover remain open.
 
 ## Public delivery and current work
 
-The current Core is `d5c4724`, image `smiling-driving-6446`, deployment
+The current Core is `b13aedb`, image `violet-glass-1926`, deployment
+`vendune-core-589c44c658`. [19 October delivery evidence](evidence/migration-continuation-2026-10-19.md#hosted-core-delivery-boundary)
+records the full green PR checks, identical source trees after merging as
+`0aaec005`, a fresh successful snapshot, migration 106 through the existing owner
+job and one healthy replica. Google entry, a new empty test shop, retained Studio
+session after rollout and the public health endpoint were checked. The separate
+Rust image is published; the hosted migration service and its complete public
+import/publication/purchase journey are not accepted yet. This does not extend
+the earlier Storyfront purchase acceptance to a new purchase on this image.
+
+The preceding accepted agentic-commerce Core was `d5c4724`, image `smiling-driving-6446`, deployment
 `vendune-core-58f5569684`. The [18 October agentic-commerce acceptance](evidence/agentic-commerce-hosted-2026-10-18.md)
 records the full required CI on `dd19c22`, merged as `1bb2e5e`, and identical
 production input trees. One healthy replica served actual native cart-transfer and
@@ -109,7 +122,7 @@ Inward Shopify variants remained private. No migration or database privilege
 change was needed. The original Experience remains `b40b386`, image
 `educated-sort-2532`; it was not redeployed.
 
-The preceding Core was `25b354e`, image `wise-authority-6674`. Its
+The earlier receipt-PDF Core was `25b354e`, image `wise-authority-6674`. Its
 [PDF follow-up](evidence/receipt-pdf-hosted-2026-10-17.md) preserves the original
 invoice identity while repairing Windows-1252 punctuation. Its separate
 [18 October Storyfront receipt](evidence/storyfront-checkout-hosted-2026-10-18.md)
