@@ -358,3 +358,33 @@ it("never presents a failed or connected workspace before checking the current s
     true,
   );
 });
+
+it("keeps a private design handoff through route remounts, scoped to the current account and live shop", async () => {
+  sessionStorage.setItem("rac-user-token", "unit-token");
+  network();
+  const { result } = renderHook(
+    () => useStudioController({ onChanged: vi.fn(), onExit: vi.fn() }),
+    { wrapper: LocaleProvider },
+  );
+  await waitFor(() =>
+    expect({
+      connected: result.current.connected,
+      error: result.current.error,
+    }).toEqual({ connected: true, error: "" }),
+  );
+  const reference = {
+    workspace: result.current.workspace,
+    environment: "stage",
+    url: "https://source.example",
+  };
+  act(() => result.current.setDesignReference(reference));
+  act(() => {
+    result.current.setEnvironment("stage");
+    result.current.selectTab("design");
+  });
+  await waitFor(() =>
+    expect(result.current.designReference).toEqual(reference),
+  );
+  act(() => result.current.setToken("other-account-token"));
+  expect(result.current.designReference).toBeUndefined();
+});

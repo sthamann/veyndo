@@ -66,6 +66,8 @@ This lists every checked-in source module in these roots, including files with n
 | [src/apps/input_schema.rs](../src/apps/input_schema.rs) | Bounded recursive action-input contract. Untyped managed fields still receive depth/size budgets. |
 | [src/apps/input_schema_tests.rs](../src/apps/input_schema_tests.rs) | Adversarial schema cases exercise bounded inputs, nullable unions, escaped JSON pointers and output values. |
 | [src/apps/job_callbacks.rs](../src/apps/job_callbacks.rs) | Long-job service callbacks disclose input only after current actor consent, package and lease checks. Late callbacks cannot commit. |
+| [src/apps/job_evidence.rs](../src/apps/job_evidence.rs) | Native job completion and authenticated private record evidence share one transaction and current creator/package fences. |
+| [src/apps/job_import.rs](../src/apps/job_import.rs) | Reviewed job records use current creator rights and a locked live package; private targets never become app credentials. |
 | [src/apps/jobs.rs](../src/apps/jobs.rs) | Durable long actions piggyback on the existing outbox. Apps claim a fenced lease; unknown side effects are never retried automatically. |
 | [src/apps/manifest.rs](../src/apps/manifest.rs) | Strict package contract; identifiers and limits are checked before logical model registration. |
 | [src/apps/manifest_validation.rs](../src/apps/manifest_validation.rs) | Package capability, schema and action validation; no executable behavior is inferred from names. |
@@ -84,6 +86,7 @@ This lists every checked-in source module in these roots, including files with n
 | [src/apps/presentation.rs](../src/apps/presentation.rs) | Optional passive app artwork and localized summaries; omitted metadata preserves published legacy digests. |
 | [src/apps/publication.rs](../src/apps/publication.rs) | Optional server-enforced publication window and channel projection for public app records. |
 | [src/apps/record_history.rs](../src/apps/record_history.rs) | Bounded app-record history, current entity rights and restoration through the normal managed save path. |
+| [src/apps/record_import.rs](../src/apps/record_import.rs) | Private source-record intake reuses an installed app's declared native save action, schema, rights and package fence. |
 | [src/apps/record_lifecycle.rs](../src/apps/record_lifecycle.rs) | Generic app-owned record lifecycle contracts. Status vocabulary and transitions belong to the app Manifest. |
 | [src/apps/records.rs](../src/apps/records.rs) | One fixed PostgreSQL record store; every operation retains tenant/app/model identity and original wire values. |
 | [src/apps/registry.rs](../src/apps/registry.rs) | Atomic installation and additive schema upgrades; immutable version digests preserve history. |
@@ -115,6 +118,7 @@ This lists every checked-in source module in these roots, including files with n
 | [src/assets/download.rs](../src/assets/download.rs) | Public attachments honor sales-channel visibility; downloads require a paid, owned order snapshot. |
 | [src/assets/image_jobs.rs](../src/assets/image_jobs.rs) | Durable image jobs: tenant admission, revision-bound private previews and explicit publication, without automatic paid retries. |
 | [src/assets/image_provider.rs](../src/assets/image_provider.rs) | Optional OpenAI Images adapter; bounded responses and decoded PNG output, no remote user URLs or leaked provider errors. |
+| [src/assets/import.rs](../src/assets/import.rs) | Immutable imported product images reuse the native asset table, product lock, byte validation and publication lifecycle. |
 | [src/assets/ingestion.rs](../src/assets/ingestion.rs) | Shared bounded multipart parser for product uploads and scoped app uploads; file validation/persistence stays in the asset owner. |
 | [src/assets/mod.rs](../src/assets/mod.rs) | Product attachments and paid digital downloads: bounded binary persistence and tenant/account ACL. |
 | [src/assets/rich.rs](../src/assets/rich.rs) | Safe structured rich content, never executable HTML. Same schema for merchant API and frontend. |
@@ -272,6 +276,7 @@ This lists every checked-in source module in these roots, including files with n
 | [src/commerce/product_fields.rs](../src/commerce/product_fields.rs) | Native product fields preserve stock unless an explicit absolute quantity passes aggregate CAS. |
 | [src/commerce/product_languages.rs](../src/commerce/product_languages.rs) | Enabled content languages, NULL field inheritance and stable global language registration. |
 | [src/commerce/product_metadata.rs](../src/commerce/product_metadata.rs) | Typed product edit payload and multilingual metadata including exact currency prices. |
+| [src/commerce/review_import.rs](../src/commerce/review_import.rs) | Native historical review admission preserves source provenance, explicit moderation and unverified customer identity. |
 | [src/commerce/review_moderation.rs](../src/commerce/review_moderation.rs) | Merchant authorization and review publication. |
 | [src/commerce/reviews.rs](../src/commerce/reviews.rs) | Customer review submission with server-derived purchase verification. |
 | [src/commerce/selection.rs](../src/commerce/selection.rs) | Recover a quote after configuration changes without losing items or silently committing new choices. |
@@ -374,6 +379,7 @@ This lists every checked-in source module in these roots, including files with n
 | [src/marketing/pipeline.rs](../src/marketing/pipeline.rs) | A bounded acyclic flow graph models source-style true/false branches, ordered actions, delays and stop nodes. |
 | [src/marketing/pipeline_runtime.rs](../src/marketing/pipeline_runtime.rs) | Durable sequence execution records each action before dispatch, persists delay cursors and reports uncertain effects. |
 | [src/marketing/pipeline_tests.rs](../src/marketing/pipeline_tests.rs) | Flow graph and source action schema regression tests reject unsafe graphs before any event dispatch. |
+| [src/marketing/promotion_import.rs](../src/marketing/promotion_import.rs) | Imported promotions use the ordinary revisioned owner and retain immutable provenance until a merchant reviews activation. |
 | [src/marketing/promotions.rs](../src/marketing/promotions.rs) | Server-authoritative coupons and automatic campaigns, with deterministic discounts and atomic usage limits. |
 | [src/marketing/routes.rs](../src/marketing/routes.rs) | Typed configuration CRUD, rule preview and revision-bound coupon edits. |
 | [src/marketing/rule_fields.rs](../src/marketing/rule_fields.rs) | Typed rule fields share the original comparison operators and server-derived checkout/event facts. |
@@ -401,6 +407,18 @@ This lists every checked-in source module in these roots, including files with n
 | [src/operations/grid_plan.rs](../src/operations/grid_plan.rs) | Read-only filter planning through the central provider and fleet leases; execution remains native list APIs. |
 | [src/operations/grid_schema.rs](../src/operations/grid_schema.rs) | One allowlisted list-filter schema for model plans and MCP; no model-supplied SQL or tenant identity. |
 | [src/operations/guest_customers.rs](../src/operations/guest_customers.rs) | Merchant-only guest contact projection; order snapshots never create account authority. |
+| [src/operations/imports/assets.rs](../src/operations/imports/assets.rs) | Reviewed source image intake resolves its native product and delegates immutable binary storage and media edits to their existing owners. |
+| [src/operations/imports/categories.rs](../src/operations/imports/categories.rs) | Source-neutral category intake preserves stable hierarchy and uses the revisioned native category owner privately. |
+| [src/operations/imports/coupons.rs](../src/operations/imports/coupons.rs) | Generic coupon import delegates a reviewed native promotion definition, without pretending original usage is a new purchase. |
+| [src/operations/imports/customers.rs](../src/operations/imports/customers.rs) | Historical CRM import reuses native validation and addresses, without credentials or ordinary new-customer events. |
+| [src/operations/imports/historical_orders.rs](../src/operations/imports/historical_orders.rs) | Immutable native historical orders preserve exact amounts and provenance without purchase, stock, account or payment effects. |
+| [src/operations/imports/inspect.rs](../src/operations/imports/inspect.rs) | Read-only native import reconciliation compares mapped current values, never a successful replay flag. |
+| [src/operations/imports/inspect_history.rs](../src/operations/imports/inspect_history.rs) | Operational history comparison reads actual CRM/address/order/review values with paired current PII rights. |
+| [src/operations/imports/inspect_media.rs](../src/operations/imports/inspect_media.rs) | Current immutable image bytes and the independently editable native media association are both inspected. |
+| [src/operations/imports/mod.rs](../src/operations/imports/mod.rs) | Generic source-record admission; adapters own source formats, native domain owners retain every write. |
+| [src/operations/imports/products.rs](../src/operations/imports/products.rs) | Private native product intake delegates all catalogue validation, history and selected release to the existing owner. |
+| [src/operations/imports/relations.rs](../src/operations/imports/relations.rs) | Canonical import references resolve to tenant-bound native IDs; the existing product owner validates every relation. |
+| [src/operations/imports/reviews.rs](../src/operations/imports/reviews.rs) | Versioned generic review records resolve native product identity and preserve source claims outside native purchase authority. |
 | [src/operations/list_criteria.rs](../src/operations/list_criteria.rs) | Bounded native order/customer filter and sort contracts, reused by HTTP, MCP and reviewed grid plans. |
 | [src/operations/manual_order_admission.rs](../src/operations/manual_order_admission.rs) | Private admin-cart admission and locked final checkout guards; shared pricing and order effects stay native. |
 | [src/operations/manual_orders.rs](../src/operations/manual_orders.rs) | Actor-private manual-order quotes reuse native cart, legal, pricing, inventory and checkout; no second order ledger. |
@@ -495,6 +513,7 @@ This lists every checked-in source module in these roots, including files with n
 | [src/staging/documents.rs](../src/staging/documents.rs) | Knowledge documents/chunks clone and publish with their source provenance; publication visibility is a reviewed unit. |
 | [src/staging/final_config.rs](../src/staging/final_config.rs) | Validate the final published channel/automation aggregate and initialize native POS defaults. |
 | [src/staging/mod.rs](../src/staging/mod.rs) | Private cloned shops, scope admission and selective atomic release of reviewed changes. |
+| [src/staging/products.rs](../src/staging/products.rs) | Selected products publish before their image assets and in native parent-before-variant order, without copying stock. |
 | [src/staging/release.rs](../src/staging/release.rs) | Selected units publish in one transaction with staged digests and live baseline conflict checks. |
 | [src/staging/snapshot.rs](../src/staging/snapshot.rs) | Fixed publishable units: product content/translations, settings, experience and app packages. |
 | [src/storefront_pages.rs](../src/storefront_pages.rs) | Deep-link HTML transport for stable SKU URLs with optional localized SEO slugs. |
@@ -851,6 +870,7 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/admin/shell/resume-browser-session.ts](../frontend/src/admin/shell/resume-browser-session.ts) | Explicit same-account resume reads the existing ledger, without adopting ambient identity or replaying writes. |
 | [frontend/src/admin/shell/studio-types.ts](../frontend/src/admin/shell/studio-types.ts) | studio types: Studio layout, session/workspace controller, authenticated transport and lazy workspace navigation. |
 | [frontend/src/admin/shell/useChatTurns.ts](../frontend/src/admin/shell/useChatTurns.ts) | Durable chat commands reuse native conversations; late responses cannot cross an account/shop/stage boundary. |
+| [frontend/src/admin/shell/useDesignHandoff.ts](../frontend/src/admin/shell/useDesignHandoff.ts) | Ephemeral design navigation survives route remounts without putting reference URLs in browser storage or another identity. |
 | [frontend/src/admin/shell/useEntityNavigation.ts](../frontend/src/admin/shell/useEntityNavigation.ts) | Linked entity navigation keeps native editors, browser deep links and back paths in the same tenant scope. |
 | [frontend/src/admin/shell/useServerHealth.ts](../frontend/src/admin/shell/useServerHealth.ts) | Public server health is independent of the personal Studio session. |
 | [frontend/src/admin/shell/useStudioAccess.ts](../frontend/src/admin/shell/useStudioAccess.ts) | Central Studio identity boundary: initial login, expiry suspension and same-account resume. |
@@ -1305,6 +1325,113 @@ This lists every checked-in source module in these roots, including files with n
 | [extensions/apps/marketplaces/studio/marketplace-setup-i18n.ts](../extensions/apps/marketplaces/studio/marketplace-setup-i18n.ts) | Guided seller setup copy; credentials remain service-side and installation does not imply a live seller connection. |
 | [extensions/apps/marketplaces/studio/marketplaces.css](../extensions/apps/marketplaces/studio/marketplaces.css) | App-owned responsive workspace uses Veyndo surface tokens; no global selectors or provider scripts. |
 | [extensions/apps/marketplaces/tests/integration.py](../extensions/apps/marketplaces/tests/integration.py) | Installed Marketplace app -> independent Rust service -> fixture seller APIs -> native PostgreSQL order effects. No external credentials or requests. |
+| [extensions/apps/migration/adapters/contacts.rs](../extensions/apps/migration/adapters/contacts.rs) | Source address aliases are converted here; the commerce host only receives canonical address fields. |
+| [extensions/apps/migration/adapters/coupons.rs](../extensions/apps/migration/adapters/coupons.rs) | Source coupon rules map to native inactive promotions; unsupported conditions stop instead of widening the original discount. |
+| [extensions/apps/migration/adapters/dates.rs](../extensions/apps/migration/adapters/dates.rs) | Historical timestamps retain their real timezone; ambiguous local DST times require explicit source evidence. |
+| [extensions/apps/migration/adapters/feedback.rs](../extensions/apps/migration/adapters/feedback.rs) | Source reviews become plain original content with explicit dates; source verification never becomes native purchase proof. |
+| [extensions/apps/migration/adapters/mod.rs](../extensions/apps/migration/adapters/mod.rs) | Source-specific parsing stays app-owned; unknown domains and incomplete records fail explicitly. |
+| [extensions/apps/migration/adapters/order_lines.rs](../extensions/apps/migration/adapters/order_lines.rs) | Exact canonical history lines preserve source amounts without making native product or purchase claims. |
+| [extensions/apps/migration/adapters/pages.rs](../extensions/apps/migration/adapters/pages.rs) | Source content becomes editable native page blocks; executable embeds and unresolved media fail before import. |
+| [extensions/apps/migration/adapters/products.rs](../extensions/apps/migration/adapters/products.rs) | Preserve source variant identity, decimal price and known stock; never invent available inventory. |
+| [extensions/apps/migration/adapters/records.rs](../extensions/apps/migration/adapters/records.rs) | Historical facts remain source claims, without synthesized account, payment, consent or verified-purchase authority. |
+| [extensions/apps/migration/adapters/relations.rs](../extensions/apps/migration/adapters/relations.rs) | Provider relation shapes become explicit source IDs and native option labels, never guessed target IDs. |
+| [extensions/apps/migration/adapters/visibility.rs](../extensions/apps/migration/adapters/visibility.rs) | Source publication/status is distinct from inventory; unsupported direct/search/catalogue visibility must be mapped explicitly. |
+| [extensions/apps/migration/adapters/woo.rs](../extensions/apps/migration/adapters/woo.rs) | A WooCommerce variation snapshot must cover exactly the declared source IDs and concrete attribute combinations. |
+| [extensions/apps/migration/contract/mod.rs](../extensions/apps/migration/contract/mod.rs) | Versioned source identities and exact historical money shared by migration transport and admission. |
+| [extensions/apps/migration/contract/money.rs](../extensions/apps/migration/contract/money.rs) | Decimal source amounts become checked integer minor units without a floating-point intermediate. |
+| [extensions/apps/migration/service/batch.rs](../extensions/apps/migration/service/batch.rs) | A reviewed source page is immutable during a job; each native write is replayable and checkpointed in Core. |
+| [extensions/apps/migration/service/callback_errors.rs](../extensions/apps/migration/service/callback_errors.rs) | Native callback failures have their own bounded origin/status and localized recovery guidance, never source credentials/body. |
+| [extensions/apps/migration/service/config.rs](../extensions/apps/migration/service/config.rs) | Operator-bound source identities and credentials; action input cannot choose a network destination. |
+| [extensions/apps/migration/service/core.rs](../extensions/apps/migration/service/core.rs) | Bounded callbacks use only configured Core origins and per-tenant revocable app identities. |
+| [extensions/apps/migration/service/events.rs](../extensions/apps/migration/service/events.rs) | The native outbox delivers job IDs; the service claims current Core leases before acknowledging work. |
+| [extensions/apps/migration/service/export_manifest.rs](../extensions/apps/migration/service/export_manifest.rs) | Immutable export manifests bind bounded original source pages to their context, counts and exact bytes. |
+| [extensions/apps/migration/service/export_pack.rs](../extensions/apps/migration/service/export_pack.rs) | Streaming source-export packaging writes private immutable files; a manifest appears only after all rows validate. |
+| [extensions/apps/migration/service/export_readiness.rs](../extensions/apps/migration/service/export_readiness.rs) | Offline exports must contain expanded original references, not shallow API summaries disguised as complete pages. |
+| [extensions/apps/migration/service/export_source.rs](../extensions/apps/migration/service/export_source.rs) | Same-origin authenticated export reads verify the pinned manifest and each bounded page before native review. |
+| [extensions/apps/migration/service/extract.rs](../extensions/apps/migration/service/extract.rs) | Versioned source pages keep cursors separate from URLs; unsupported plugin domains remain explicit. |
+| [extensions/apps/migration/service/main.rs](../extensions/apps/migration/service/main.rs) | Independent Rust migration entry: bounded streaming source normalization and app gateway service. |
+| [extensions/apps/migration/service/media.rs](../extensions/apps/migration/service/media.rs) | Source media descriptors remain app-owned; review freezes bounded image digests and imports refetch identical bytes without forwarding source credentials. |
+| [extensions/apps/migration/service/presta.rs](../extensions/apps/migration/service/presta.rs) | PrestaShop keeps address/country/currency references separate; resolve exact owned records before normalization. |
+| [extensions/apps/migration/service/receipts.rs](../extensions/apps/migration/service/receipts.rs) | Page evidence lives in the installed app's native private records, separate from bounded technical job retention. |
+| [extensions/apps/migration/service/reconcile.rs](../extensions/apps/migration/service/reconcile.rs) | Read-only native callback comparisons cover every reviewed row, including rows imported before a resumed lease. |
+| [extensions/apps/migration/service/server.rs](../extensions/apps/migration/service/server.rs) | Private gateway authentication binds every source to its configured tenant and bounds concurrent source reads. |
+| [extensions/apps/migration/service/shopify.rs](../extensions/apps/migration/service/shopify.rs) | Shopify GraphQL preserves scope errors and nested pagination instead of dropping undisclosed records. |
+| [extensions/apps/migration/service/shopware.rs](../extensions/apps/migration/service/shopware.rs) | Shopware list summaries omit historical positions and addresses; bounded detail reads retain original identity. |
+| [extensions/apps/migration/service/slices.rs](../extensions/apps/migration/service/slices.rs) | Variant-expanded source pages are sliced into native-sized immutable batches; changed parent pages cannot shift offsets silently. |
+| [extensions/apps/migration/service/transport.rs](../extensions/apps/migration/service/transport.rs) | Shared address classification, pinned DNS, disabled proxies/redirects and bounded streamed source responses. |
+| [extensions/apps/migration/service/woo.rs](../extensions/apps/migration/service/woo.rs) | Bounded parallel WooCommerce variant reads use fixed source paths, pinned transport and exact parent-declared IDs. |
+| [extensions/apps/migration/studio/Agent.tsx](../extensions/apps/migration/studio/Agent.tsx) | A contextual drawer embeds the existing Studio agent; no second chat, inference runtime or approval store. |
+| [extensions/apps/migration/studio/CRMDetails.tsx](../extensions/apps/migration/studio/CRMDetails.tsx) | Original addresses and historical positions stay visible before the merchant approves native intake. |
+| [extensions/apps/migration/studio/Comparison.tsx](../extensions/apps/migration/studio/Comparison.tsx) | Bounded native comparison summaries expose counts, never private source values. |
+| [extensions/apps/migration/studio/Connection.tsx](../extensions/apps/migration/studio/Connection.tsx) | Source credentials are edited in memory and saved through the existing encrypted installed-settings owner. |
+| [extensions/apps/migration/studio/ExportEvidence.tsx](../extensions/apps/migration/studio/ExportEvidence.tsx) | Exact pinned export scope is visible before any page approval; aggregate counts are not native parity claims. |
+| [extensions/apps/migration/studio/ExportFields.tsx](../extensions/apps/migration/studio/ExportFields.tsx) | Optional immutable export settings reuse the existing encrypted app-settings form and separate credential. |
+| [extensions/apps/migration/studio/InstallConsent.tsx](../extensions/apps/migration/studio/InstallConsent.tsx) | Reuse native package consent for migration and its private page-editor destination. |
+| [extensions/apps/migration/studio/JobHistory.tsx](../extensions/apps/migration/studio/JobHistory.tsx) | Native job history remains paged and visibly distinct from a whole-shop completion report. |
+| [extensions/apps/migration/studio/Jobs.tsx](../extensions/apps/migration/studio/Jobs.tsx) | Saved job controls use native CAS, explicit uncertain-outcome acknowledgement and current action permissions. |
+| [extensions/apps/migration/studio/LanguageMap.tsx](../extensions/apps/migration/studio/LanguageMap.tsx) | Explicit source language IDs map to real content locales without relabelling or fabricating translations. |
+| [extensions/apps/migration/studio/MigrationSteps.tsx](../extensions/apps/migration/studio/MigrationSteps.tsx) | Compact migration step navigation keeps source, reviewed domains and the native design handoff together. |
+| [extensions/apps/migration/studio/MigrationWorkspace.tsx](../extensions/apps/migration/studio/MigrationWorkspace.tsx) | App-owned inward migration workflow: native consent, exact reviewed pages, private product targets and durable jobs. |
+| [extensions/apps/migration/studio/PriceOptions.tsx](../extensions/apps/migration/studio/PriceOptions.tsx) | One reviewed tax rate and explicit original basis feed the existing native price owner. |
+| [extensions/apps/migration/studio/ProductDetails.tsx](../extensions/apps/migration/studio/ProductDetails.tsx) | Merchant-readable variant evidence is displayed before the exact source-page approval. |
+| [extensions/apps/migration/studio/ReviewPanel.tsx](../extensions/apps/migration/studio/ReviewPanel.tsx) | Exact source review keeps unacknowledged gaps and missing target choices from starting a write. |
+| [extensions/apps/migration/studio/RunPlans.tsx](../extensions/apps/migration/studio/RunPlans.tsx) | Coarse work plans use existing versioned native app records; source rows and job authority stay with their original owners. |
+| [extensions/apps/migration/studio/RunProgress.tsx](../extensions/apps/migration/studio/RunProgress.tsx) | A saved plan walks reviewed pages in dependency order; truncated history never proves completion. |
+| [extensions/apps/migration/studio/SourceDetails.tsx](../extensions/apps/migration/studio/SourceDetails.tsx) | Source business evidence stays visible before approval; imported claims never become native purchase or activation authority. |
+| [extensions/apps/migration/studio/SourceProfile.tsx](../extensions/apps/migration/studio/SourceProfile.tsx) | Operator profile selection is context only and never a browser-held credential. |
+| [extensions/apps/migration/studio/Target.tsx](../extensions/apps/migration/studio/Target.tsx) | Native private environments can be reused across categories, products and pages; operational records keep their live target. |
+| [extensions/apps/migration/studio/crm-i18n.ts](../extensions/apps/migration/studio/crm-i18n.ts) | Original CRM evidence uses the same Studio locale as the reviewed migration command. |
+| [extensions/apps/migration/studio/export-i18n.ts](../extensions/apps/migration/studio/export-i18n.ts) | Frozen export controls distinguish immutable artifact evidence from unproved whole-shop cutover. |
+| [extensions/apps/migration/studio/feedback-i18n.ts](../extensions/apps/migration/studio/feedback-i18n.ts) | Review and coupon evidence labels share the current Studio interface locale. |
+| [extensions/apps/migration/studio/i18n.ts](../extensions/apps/migration/studio/i18n.ts) | Migration controls use the same four interface locales; source content keeps its own explicit locale. |
+| [extensions/apps/migration/studio/inspection-i18n.ts](../extensions/apps/migration/studio/inspection-i18n.ts) | Source inspection is a durable read, distinct from a reviewed native import. |
+| [extensions/apps/migration/studio/migration.css](../extensions/apps/migration/studio/migration.css) | App-owned migration workspace: compact stable steps, clear review canvas and contained tables. |
+| [extensions/apps/migration/studio/model.ts](../extensions/apps/migration/studio/model.ts) | Review projections retain exact minor units and source IDs; UI never invents native purchase or identity authority. |
+| [extensions/apps/migration/studio/price-i18n.ts](../extensions/apps/migration/studio/price-i18n.ts) | Source tax-basis choices are explicit; conversion belongs to the existing native tax calculator. |
+| [extensions/apps/migration/studio/product-i18n.ts](../extensions/apps/migration/studio/product-i18n.ts) | Original product evidence distinguishes private variants and source inventory from active target stock. |
+| [extensions/apps/migration/studio/run-i18n.ts](../extensions/apps/migration/studio/run-i18n.ts) | Work-plan vocabulary distinguishes saved context from verified migration effects. |
+| [extensions/apps/migration/studio/run-model.ts](../extensions/apps/migration/studio/run-model.ts) | Defensive work-plan projection; metadata cannot select unknown domains or become an import receipt. |
+| [extensions/apps/migration/studio/run-pages.ts](../extensions/apps/migration/studio/run-pages.ts) | Durable page intents use native app records/CAS; they never replace current per-page import admission. |
+| [extensions/apps/migration/studio/run-progress-i18n.ts](../extensions/apps/migration/studio/run-progress-i18n.ts) | Migration vocabulary distinguishes observed comparisons from final cutover. |
+| [extensions/apps/migration/studio/useCustomerGroups.ts](../extensions/apps/migration/studio/useCustomerGroups.ts) | Current native customer group choices; no source-side group or person can create destination authority. |
+| [extensions/apps/migration/studio/useJobPages.ts](../extensions/apps/migration/studio/useJobPages.ts) | Poll bounded native keyset pages for one selected run; never infer completion from a truncated first page. |
+| [extensions/apps/migration/studio/useMigrationDesign.ts](../extensions/apps/migration/studio/useMigrationDesign.ts) | Design continues in the selected native preview and shared agent, without a second publication or inference path. |
+| [extensions/apps/migration/studio/useMigrationImport.ts](../extensions/apps/migration/studio/useMigrationImport.ts) | Reviewed native page submission and explicit resume share current shop/rights fences and persisted CAS intents. |
+| [extensions/apps/migration/studio/useMigrationPackages.ts](../extensions/apps/migration/studio/useMigrationPackages.ts) | Current tenant package state is refetched through native consent owners, never inferred from a saved work plan. |
+| [extensions/apps/migration/studio/useRunPages.ts](../extensions/apps/migration/studio/useRunPages.ts) | Native page evidence survives technical job archival; every load is fenced by current shop, plan and rights. |
+| [extensions/apps/migration/studio/useSourceReview.ts](../extensions/apps/migration/studio/useSourceReview.ts) | Adopt only the current request's durable source evidence; changing identity or source invalidates pending presentation. |
+| [extensions/apps/migration/tests/assets.py](../extensions/apps/migration/tests/assets.py) | Native imported image bytes are immutable, private, replayable and use the original catalogue/release owners. |
+| [extensions/apps/migration/tests/crm.py](../extensions/apps/migration/tests/crm.py) | Original addresses and historical line evidence must survive actual Rust normalization without invented identity. |
+| [extensions/apps/migration/tests/crm.test.tsx](../extensions/apps/migration/tests/crm.test.tsx) | A merchant can inspect original address/line evidence before approving the native CRM command. |
+| [extensions/apps/migration/tests/crm_sources.py](../extensions/apps/migration/tests/crm_sources.py) | Protocol-faithful local CRM source responses; synthetic records exercise separate reference resources. |
+| [extensions/apps/migration/tests/durable_flow.py](../extensions/apps/migration/tests/durable_flow.py) | A connected eight-domain plan retains page evidence independently of native technical job retention. |
+| [extensions/apps/migration/tests/export_flow.py](../extensions/apps/migration/tests/export_flow.py) | Frozen export -> saved source jobs -> reviewed exact digests -> native private records across every page. |
+| [extensions/apps/migration/tests/exports.py](../extensions/apps/migration/tests/exports.py) | Bounded immutable export CLI and actual authenticated HTTP reader; no live source or throughput claim. |
+| [extensions/apps/migration/tests/exports.test.tsx](../extensions/apps/migration/tests/exports.test.tsx) | Frozen export setup and source evidence remain visible and separately reviewed in the native workflow. |
+| [extensions/apps/migration/tests/feedback.test.tsx](../extensions/apps/migration/tests/feedback.test.tsx) | Review and coupon previews expose the business conditions that the merchant is actually approving. |
+| [extensions/apps/migration/tests/inspection.test.tsx](../extensions/apps/migration/tests/inspection.test.tsx) | Durable inspection results reopen after reload and remain explicit, unapproved source evidence. |
+| [extensions/apps/migration/tests/job_import.py](../extensions/apps/migration/tests/job_import.py) | Reviewed native job writes are fenced by digests, lease, current actor and cancellation. |
+| [extensions/apps/migration/tests/job_pages.py](../extensions/apps/migration/tests/job_pages.py) | Real native job keyset/correlation pagination must retain old completed jobs and tenant isolation. |
+| [extensions/apps/migration/tests/native_import.py](../extensions/apps/migration/tests/native_import.py) | Native historical intake must preserve money/identity without purchase effects or account inference. |
+| [extensions/apps/migration/tests/normalization.py](../extensions/apps/migration/tests/normalization.py) | Exercise the actual Rust migration CLI; literal source fixtures pin money and source identity. |
+| [extensions/apps/migration/tests/pages.py](../extensions/apps/migration/tests/pages.py) | Imported pages use the real installed editor, current rights, private storage and replay fences. |
+| [extensions/apps/migration/tests/pii_projection.py](../extensions/apps/migration/tests/pii_projection.py) | The settings read model cannot bypass current order and separate personal-data rights. |
+| [extensions/apps/migration/tests/price_basis.py](../extensions/apps/migration/tests/price_basis.py) | Net source prices use the existing native gross calculator and explicit reviewed basis, never nominal copying. |
+| [extensions/apps/migration/tests/price_basis.test.tsx](../extensions/apps/migration/tests/price_basis.test.tsx) | Explicit tax basis and warnings remain part of the exact reviewed import command. |
+| [extensions/apps/migration/tests/progress.test.tsx](../extensions/apps/migration/tests/progress.test.tsx) | Connected-run regressions cover actual native-record consumption and delayed authorization changes. |
+| [extensions/apps/migration/tests/provider_crm_flow.py](../extensions/apps/migration/tests/provider_crm_flow.py) | Four additional provider CRM protocols reach native address books and immutable history, never purchases. |
+| [extensions/apps/migration/tests/provider_flow.py](../extensions/apps/migration/tests/provider_flow.py) | Every advertised platform traverses its actual Rust source transport, reviewed job and native private product owner. |
+| [extensions/apps/migration/tests/publication.py](../extensions/apps/migration/tests/publication.py) | Selected publication preserves variant dependencies and refuses protected downloads as public product images. |
+| [extensions/apps/migration/tests/purchase.py](../extensions/apps/migration/tests/purchase.py) | A source-imported private product must survive deliberate native publication and a real simulated buyer checkout. |
+| [extensions/apps/migration/tests/reconciliation.py](../extensions/apps/migration/tests/reconciliation.py) | Current native target state, not a source digest/replay, determines mapped-field parity. |
+| [extensions/apps/migration/tests/reviews_coupons.py](../extensions/apps/migration/tests/reviews_coupons.py) | Imported reviews retain source claims without purchase authority; imported coupons require deliberate native activation. |
+| [extensions/apps/migration/tests/run_flow.py](../extensions/apps/migration/tests/run_flow.py) | Saved native plans: shared record CAS/history, separate approval, grouped durable source reads and tenant isolation. |
+| [extensions/apps/migration/tests/runs.test.tsx](../extensions/apps/migration/tests/runs.test.tsx) | Saved migration plans restore only context; they never approve source pages or assert whole-shop completion. |
+| [extensions/apps/migration/tests/service_flow.py](../extensions/apps/migration/tests/service_flow.py) | Actual Rust HTTP source -> reviewed native job -> scoped callback -> native private product. |
+| [extensions/apps/migration/tests/studio.test.tsx](../extensions/apps/migration/tests/studio.test.tsx) | Real migration workflow controls require readable source data and explicit import review. |
+| [extensions/apps/migration/tests/transport.py](../extensions/apps/migration/tests/transport.py) | Actual source HTTP -> Rust service -> canonical records; authentication and cursor failure controls. |
+| [extensions/apps/migration/tests/variable_flow.py](../extensions/apps/migration/tests/variable_flow.py) | Variable source products keep original parent/child identities, visibility and images through native release and checkout. |
+| [extensions/apps/migration/tests/visibility.py](../extensions/apps/migration/tests/visibility.py) | Original source publication status must never silently become an active target product. |
 | [extensions/apps/paypal/src/adapter.rs](../extensions/apps/paypal/src/adapter.rs) | Legacy PayPal admission/account wiring belongs to the PayPal package, not a second pricing owner. |
 | [extensions/apps/paypal/src/compatibility.rs](../extensions/apps/paypal/src/compatibility.rs) | Native PayPal Orders v2 sandbox wire adapter; credentials never enter prompts or browser responses. |
 | [extensions/apps/paypal/src/receipts.rs](../extensions/apps/paypal/src/receipts.rs) | PayPal receipt interpretation; shared payment storage owns order and inventory effects. |
@@ -1508,6 +1635,7 @@ This lists every checked-in source module in these roots, including files with n
 | [scripts/mcp_stdio.py](../scripts/mcp_stdio.py) | Line-delimited MCP stdio bridge for Claude Desktop and other local clients. |
 | [scripts/merchant_operations.py](../scripts/merchant_operations.py) | Real HTTP/PostgreSQL CRM, receipt, scoped-access and paid-download regressions. No PSP traffic. |
 | [scripts/migrate_connector_state.py](../scripts/migrate_connector_state.py) | Explicit offline legacy-state migration; decrypted data crosses stdin only, never logs or temporary files. |
+| [scripts/migration_assistant.py](../scripts/migration_assistant.py) | Registered migration verification; provider fixtures and runtime code remain under the app package. |
 | [scripts/money_boundary_differential.py](../scripts/money_boundary_differential.py) | Gate the exact checkout boundary using totals from original Shopware calculators, never a PHP rewrite. |
 | [scripts/native_lifecycles.py](../scripts/native_lifecycles.py) | Native accepted app lifecycles through real HTTP/PostgreSQL/MCP and selected release. Synthetic shops only. |
 | [scripts/outbox_subscribers.py](../scripts/outbox_subscribers.py) | Real SQL failure/row-lock isolation, quarantine, explicit retry and cold worker continuation for native outbox cursors. |

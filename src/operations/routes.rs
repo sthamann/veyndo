@@ -3,6 +3,16 @@ use super::*;
 pub(crate) fn router() -> Router<App> {
     Router::new()
         .secure_route(
+            "/api/merchant/imports/inspect",
+            &[("POST", "apps.manage")],
+            post(imports::inspect_route),
+        )
+        .secure_route(
+            "/api/merchant/imports",
+            &[("POST", "apps.manage")],
+            post(imports::route).layer(axum::extract::DefaultBodyLimit::max(12 * 1024 * 1024)),
+        )
+        .secure_route(
             "/api/merchant/grid/plan",
             &[("POST", "assistant.use")],
             post(grid_plan::plan),

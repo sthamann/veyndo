@@ -155,6 +155,18 @@ const words = {
     "Modifier les produits avec contrôle de version",
     "Editar productos con control de versión",
   ],
+  "reviews.write": [
+    "Import historical reviews",
+    "Historische Bewertungen übernehmen",
+    "Importer les avis historiques",
+    "Importar reseñas históricas",
+  ],
+  "promotions.write": [
+    "Prepare imported coupons",
+    "Importierte Gutscheine vorbereiten",
+    "Préparer les codes importés",
+    "Preparar cupones importados",
+  ],
   "data.read": [
     "Read this app’s records",
     "App-Datensätze lesen",
@@ -246,6 +258,8 @@ export type CallbackPermission =
   | "customers.pii"
   | "products.read"
   | "products.write"
+  | "reviews.write"
+  | "promotions.write"
   | "data.read"
   | "data.write"
   | "channels.read"

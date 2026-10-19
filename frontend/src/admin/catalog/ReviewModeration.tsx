@@ -10,6 +10,11 @@ type Review = {
   content: string;
   rating: number;
   approved: boolean;
+  sourceImport?: {
+    source: string;
+    sourceId: string;
+    sourceShop: string;
+  } | null;
 };
 export default function ReviewModeration({
   request,
@@ -53,6 +58,18 @@ export default function ReviewModeration({
               {r.author} · {r.rating}/5
             </small>
             <p>{r.content}</p>
+            {r.sourceImport && (
+              <>
+                <small>{s("importedReview")}</small>
+                <details>
+                  <summary>{s("reviewSource")}</summary>
+                  <p>
+                    {r.sourceImport.source} · {r.sourceImport.sourceShop} ·{" "}
+                    {r.sourceImport.sourceId}
+                  </p>
+                </details>
+              </>
+            )}
           </div>
           <button
             className="studio-secondary"

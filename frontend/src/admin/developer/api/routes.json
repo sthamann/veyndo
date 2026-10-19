@@ -760,6 +760,16 @@
     "source": "src/operations/routes.rs"
   },
   {
+    "path": "/api/merchant/imports",
+    "method": "POST",
+    "source": "src/operations/routes.rs"
+  },
+  {
+    "path": "/api/merchant/imports/inspect",
+    "method": "POST",
+    "source": "src/operations/routes.rs"
+  },
+  {
     "path": "/api/merchant/legal/requests",
     "method": "GET",
     "source": "src/legal/mod.rs"

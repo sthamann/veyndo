@@ -131,6 +131,9 @@ export const de = {
   sendReview: "Bewertung einreichen",
   pending: "Danke! Deine Bewertung wird vor Veröffentlichung geprüft.",
   verified: "Verifizierter Kauf",
+  importedReview:
+    "Importierte Bewertung · ursprünglicher Kauf nicht unabhängig verifiziert",
+  reviewSource: "Ursprüngliche Quelle",
   demoReview: "Beispielbewertung",
   front: "Gesamtansicht",
   detail: "Detailansicht",

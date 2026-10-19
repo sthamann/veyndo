@@ -236,4 +236,8 @@ pub(super) const SCHEMA: &[(&str, &str)] = &[
         "105-native-app-lifecycles",
         include_str!("../../migrations/105-native-app-lifecycles.sql"),
     ),
+    (
+        "106-review-source-provenance",
+        include_str!("../../migrations/106-review-source-provenance.sql"),
+    ),
 ];

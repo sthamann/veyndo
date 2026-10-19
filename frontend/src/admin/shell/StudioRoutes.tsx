@@ -56,6 +56,8 @@ import { useStudio } from "./StudioContext";
 export default function StudioRoutes() {
   const {
     auth,
+    designReference,
+    setDesignReference,
     appSurface,
     tab,
     request,
@@ -135,6 +137,12 @@ export default function StudioRoutes() {
       shopName={workspaceName}
       rights={access}
       sandbox={!!environment}
+      initialReference={
+        designReference?.workspace === workspace &&
+        designReference.environment === (environment || undefined)
+          ? designReference.url
+          : undefined
+      }
       onEnvironments={() => selectTab("environments")}
       onSandbox={async (id) => {
         await refreshEnvironments();
@@ -199,7 +207,21 @@ export default function StudioRoutes() {
       request={request}
       workspace={environment || workspace}
       onTeam={() => selectTab("users")}
-      onDesign={(id) => {
+      sandbox={!!environment}
+      onDesign={async (id, target, reference) => {
+        if (target) {
+          await refreshEnvironments();
+          setEnvironment(target);
+        }
+        setDesignReference(
+          reference
+            ? {
+                workspace,
+                environment: target || environment || undefined,
+                url: reference,
+              }
+            : undefined,
+        );
         const url = new URL(location.href);
         url.searchParams.set("designChannel", id);
         history.replaceState(null, "", url);

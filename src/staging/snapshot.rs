@@ -14,13 +14,12 @@ pub(crate) async fn snapshot(tx: &mut Tx<'_>, t: &str) -> Result<Value> {
     commerce::snapshot_scopes(tx, t, &mut result).await?;
     let rows=sqlx::query("SELECT to_jsonb(p)-'tenant'-'stock'-'revision'-'content_revision' AS data FROM products p WHERE tenant=$1 ORDER BY id FOR UPDATE").bind(t).fetch_all(&mut **tx).await?;
     for r in rows {
-        let mut value: Value = r.get("data");
+        let value: Value = r.get("data");
         let id = value["id"].as_str().unwrap().to_string();
-        let trs=sqlx::query("SELECT language_id,name,description FROM product_translations WHERE tenant=$1 AND product_id=$2 ORDER BY language_id FOR UPDATE").bind(t).bind(&id).fetch_all(&mut **tx).await?;
-        value["translations"]=json!(trs.iter().map(|r|json!({"language_id":r.get::<String,_>("language_id"),"name":r.get::<Option<String>,_>("name"),"description":r.get::<Option<String>,_>("description")})).collect::<Vec<_>>());
-        value["categoryIds"]=json!(sqlx::query_scalar::<_,String>("SELECT category_id FROM product_categories WHERE tenant=$1 AND product_id=$2 ORDER BY category_id").bind(t).bind(&id).fetch_all(&mut **tx).await?);
-        value["channelVisibility"]=json!(sqlx::query("SELECT channel_id,visible FROM product_channel_visibility WHERE tenant=$1 AND product_id=$2 ORDER BY channel_id").bind(t).bind(&id).fetch_all(&mut **tx).await?.iter().map(|r|json!({"id":r.get::<String,_>("channel_id"),"visible":r.get::<bool,_>("visible")})).collect::<Vec<_>>());
-        result.insert(format!("product:{id}"), value);
+        result.insert(
+            format!("product:{id}"),
+            product_projection(tx, t, value).await?,
+        );
     }
     categories::snapshot(tx, t, &mut result).await?;
     for (key, table) in [
@@ -200,6 +199,19 @@ fn live_asset_urls(value: &mut Value, tenant: &str) {
         }
         _ => {}
     }
+}
+/// Exact selected-product readback includes database defaults and the live asset delivery URLs, without a whole-shop rescan.
+pub(super) async fn product_snapshot(tx: &mut Tx<'_>, t: &str, id: &str) -> Result<Value> {
+    let value:Value=sqlx::query_scalar("SELECT to_jsonb(p)-'tenant'-'stock'-'revision'-'content_revision' FROM products p WHERE tenant=$1 AND id=$2 FOR UPDATE").bind(t).bind(id).fetch_one(&mut **tx).await?;
+    product_projection(tx, t, value).await
+}
+async fn product_projection(tx: &mut Tx<'_>, t: &str, mut value: Value) -> Result<Value> {
+    let id = value["id"].as_str().unwrap().to_string();
+    let trs=sqlx::query("SELECT language_id,name,description FROM product_translations WHERE tenant=$1 AND product_id=$2 ORDER BY language_id FOR UPDATE").bind(t).bind(&id).fetch_all(&mut **tx).await?;
+    value["translations"]=json!(trs.iter().map(|r|json!({"language_id":r.get::<String,_>("language_id"),"name":r.get::<Option<String>,_>("name"),"description":r.get::<Option<String>,_>("description")})).collect::<Vec<_>>());
+    value["categoryIds"]=json!(sqlx::query_scalar::<_,String>("SELECT category_id FROM product_categories WHERE tenant=$1 AND product_id=$2 ORDER BY category_id").bind(t).bind(&id).fetch_all(&mut **tx).await?);
+    value["channelVisibility"]=json!(sqlx::query("SELECT channel_id,visible FROM product_channel_visibility WHERE tenant=$1 AND product_id=$2 ORDER BY channel_id").bind(t).bind(&id).fetch_all(&mut **tx).await?.iter().map(|r|json!({"id":r.get::<String,_>("channel_id"),"visible":r.get::<bool,_>("visible")})).collect::<Vec<_>>());
+    Ok(value)
 }
 #[cfg(test)]
 mod tests {

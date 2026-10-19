@@ -12,6 +12,8 @@ import AgenticChannels from "./AgenticChannels";
 import { useAgenticChannelText } from "./agentic-channel-i18n";
 import CatalogIntake from "../catalog/CatalogIntake";
 import type { IntakeMode } from "../catalog/catalog-intake-model";
+import MigrationWorkspace from "../../../../extensions/apps/migration/studio/MigrationWorkspace";
+import { useMigrationText } from "../../../../extensions/apps/migration/studio/i18n";
 import MarketplaceWorkspace from "../../../../extensions/apps/marketplaces/studio/MarketplaceWorkspace";
 import "../styles/sales-channels.css";
 export default function SalesChannelsWorkspace({
@@ -19,12 +21,20 @@ export default function SalesChannelsWorkspace({
   workspace,
   onTeam,
   onDesign,
+  sandbox = false,
 }: {
   request: RequestFn;
   workspace: string;
   onTeam: () => void;
-  onDesign?: (id: string) => void;
+  onDesign?: (
+    id: string,
+    target?: string,
+    reference?: string,
+  ) => void | Promise<void>;
+  sandbox?: boolean;
 }) {
+  const migrationText = useMigrationText();
+  const [migration, setMigration] = useState(false);
   const ai = useAgenticChannelText();
   const [agenticChannel, setAgenticChannel] = useState("default");
   const [agentic, setAgentic] = useState(false),
@@ -50,6 +60,7 @@ export default function SalesChannelsWorkspace({
     setAgenticChannel("default");
     setIntake(undefined);
     setMarketplace(false);
+    setMigration(false);
     setManage(false);
     setError("");
     Promise.all([
@@ -81,6 +92,22 @@ export default function SalesChannelsWorkspace({
     setChannels((old) => [...old.filter((c) => c.id !== channel.id), channel]);
     setSelected(channel);
   };
+  if (migration)
+    return (
+      <MigrationWorkspace
+        key={workspace}
+        request={request}
+        workspace={workspace}
+        rights={rights}
+        mainLocale={settings?.mainLocale ?? locale}
+        onBack={() => setMigration(false)}
+        onDesign={
+          onDesign
+            ? (target, reference) => onDesign("default", target, reference)
+            : undefined
+        }
+      />
+    );
   if (agentic)
     return (
       <div className="studio-page">
@@ -119,6 +146,15 @@ export default function SalesChannelsWorkspace({
       <div className="page-intro">
         <h1>{t("title")}</h1>
         <p>{t("hint")}</p>
+        {!sandbox && !selected && rights.includes("apps.read") && (
+          <button
+            className="studio-secondary"
+            onClick={() => setMigration(true)}
+          >
+            <Icon name="layers" />
+            {migrationText("title")}
+          </button>
+        )}
         {!selected && (
           <button
             type="button"

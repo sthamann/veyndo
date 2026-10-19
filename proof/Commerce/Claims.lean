@@ -499,4 +499,17 @@ theorem native_lifecycle_exact (native rights guards : Bool) :
     native_lifecycle_admissible native rights guards =
     (native && rights && guards) := by rfl
 
+/-- Exact admission keeps ordinary promotions unchanged and requires review before imported activation. -/
+theorem source_activation_exact (imported reviewed active : Bool) :
+    source_activation_admissible imported reviewed active = (!imported || !active || reviewed) := by
+  rfl
+/-- An imported active promotion with no reviewed mapping is denied. -/
+theorem source_activation_unreviewed_denied : source_activation_admissible true false true = false := by
+  rfl
+
+theorem job_completion_exact (cancel_requested succeeded : Bool) :
+    job_completion_admissible cancel_requested succeeded = (!cancel_requested || !succeeded) := by rfl
+
+theorem job_cancelled_success_denied : job_completion_admissible true true = false := by rfl
+
 end CommerceKernel

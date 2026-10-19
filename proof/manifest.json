@@ -554,6 +554,24 @@
         "native_lifecycle_safe",
         "native_lifecycle_exact"
       ]
+    },
+    "source_activation_admissible": {
+      "bindings": [
+        "src/marketing/promotions.rs"
+      ],
+      "theorems": [
+        "source_activation_exact",
+        "source_activation_unreviewed_denied"
+      ]
+    },
+    "job_completion_admissible": {
+      "bindings": [
+        "src/apps/job_callbacks.rs"
+      ],
+      "theorems": [
+        "job_completion_exact",
+        "job_cancelled_success_denied"
+      ]
     }
   },
   "sources": {
@@ -684,8 +702,8 @@
     },
     "crates/kernel/src/verified_kernel/app_intake.rs": {
       "status": "extracted-policy",
-      "sha256": "001b11b33657b0674dbe10afd3f245f47f260c7a4e9bc26e8f14ff442c25bd1a",
-      "review": "Review app-only accepted lifecycle snapshots and private RFQ projection, with native rights/payment/stock/buyer guards; move the extracted lifecycle conjunction into the existing app_intake pure owner and explicitly update its closed extraction registration. No expanded proof boundary."
+      "sha256": "994a9268c784ec99fe91fb2685ee564de51723b1e32be7ddcaf98cdaef83d3e4",
+      "review": "2026-10-19 reviewed native read-only import projection against shared product/category/address owners; paired CRM/history PII and private target/package/digest checks; generic completion evidence atomically uses existing job creator/lease/package and record CAS, platform AEAD, native actual-field verification, no new app table or queue. Actual eight-domain migration/archival/restart/tamper and native app callback/jobs/admin creation tests pass; pure cancelled-success policy has exact Lean claim, all boolean cases and a true-return negative mutation. SQL, cryptography, async service correctness and public hosting remain outside formal proof."
     },
     "crates/kernel/src/verified_kernel/fulfillment.rs": {
       "status": "extracted-policy",
@@ -694,8 +712,8 @@
     },
     "crates/kernel/src/verified_kernel.rs": {
       "status": "extracted-policy",
-      "sha256": "581ae298f1723e7ee2cb8c6bdcb5fd54b2882737fe9e5f647b59b182b11b037e",
-      "review": "Review app-only accepted lifecycle snapshots and private RFQ projection, with native rights/payment/stock/buyer guards; move the extracted lifecycle conjunction into the existing app_intake pure owner and explicitly update its closed extraction registration. No expanded proof boundary."
+      "sha256": "ce9da19a9e896df7599c9e8bd0d6a67a1e043924331a0ac9bae907f5a46fd507",
+      "review": "2026-10-19 reviewed native read-only import projection against shared product/category/address owners; paired CRM/history PII and private target/package/digest checks; generic completion evidence atomically uses existing job creator/lease/package and record CAS, platform AEAD, native actual-field verification, no new app table or queue. Actual eight-domain migration/archival/restart/tamper and native app callback/jobs/admin creation tests pass; pure cancelled-success policy has exact Lean claim, all boolean cases and a true-return negative mutation. SQL, cryptography, async service correctness and public hosting remain outside formal proof."
     },
     "crates/runtime/src/database_scope/provision.rs": {
       "status": "unproved",
@@ -932,6 +950,181 @@
       "sha256": "526a93fb242b4db514af6d88bd123766517a9125fbdbe3ee34d0e655e51c2180",
       "review": "Identity-only Veyndo namespace and canonical-domain rename; reviewed migration checksum compatibility for six historical SQL versions, unchanged checkout predicates, 42 library and 169 binary tests pass; native component legacy boundary remains configured and guarded."
     },
+    "extensions/apps/migration/adapters/contacts.rs": {
+      "status": "unproved",
+      "sha256": "1da6ba026b681166e35753ce87672f5c68f3aa65fa76fc06bbe6ce92031f0c50",
+      "review": "Reviewed original CRM address-book and historical source joins: independent review caught region loss, five-provider US-CA controls now pass; native address import shares tenant-locked storage and suppresses only ordinary address events; all five source transports reach immutable native CRM/history with replay and denial tests. Existing kernel proof boundary unchanged; source JSON, provider reads and SQL/async effects remain unproved."
+    },
+    "extensions/apps/migration/adapters/coupons.rs": {
+      "status": "unproved",
+      "sha256": "92a70ae559c123d331974475cc15312d920ba1fa8bbd365a7b3f2405d7e964ca",
+      "review": "Finalize formatting-only coupon validation cleanup after independent findings and actual malformed-source, current-role-revocation and currency-switch checkout regressions; native review/coupon rights and immutable provenance are unchanged. SQL/provider operations remain unproved."
+    },
+    "extensions/apps/migration/adapters/dates.rs": {
+      "status": "unproved",
+      "sha256": "9eaa506d126142b0f010edcc0f21e2048b81e99e4de51b914bfd6f99f6fcdf9a",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+    },
+    "extensions/apps/migration/adapters/feedback.rs": {
+      "status": "unproved",
+      "sha256": "1a320debffaf522a7650f84d9e9bf626e5c756bfdc1873d36804d6fa3a647026",
+      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
+    },
+    "extensions/apps/migration/adapters/mod.rs": {
+      "status": "unproved",
+      "sha256": "42febf22f06192057bf13e2f056d54407e0ceb4a496a4930c329aeb7875cafc6",
+      "review": "Reviewed app-owned source status preservation against primary schemas: Shopify status and online-store publication, Presta typed active flag, Magento status/visibility and Shopware boolean parent/child status. Actual prior CLI29 assertion failures are fixed by four source-state cases plus real transport projections; native eight-domain and variant checkout remain green. Independent focused source-visibility review found no Important/Critical findings; source orchestration remains outside pure proof."
+    },
+    "extensions/apps/migration/adapters/order_lines.rs": {
+      "status": "unproved",
+      "sha256": "ba60bd55f7027f5825fb0529acd7a3f1b7bc64fcad5576639f75ef0f98c985bb",
+      "review": "Reviewed original CRM address-book and historical source joins: independent review caught region loss, five-provider US-CA controls now pass; native address import shares tenant-locked storage and suppresses only ordinary address events; all five source transports reach immutable native CRM/history with replay and denial tests. Existing kernel proof boundary unchanged; source JSON, provider reads and SQL/async effects remain unproved."
+    },
+    "extensions/apps/migration/adapters/pages.rs": {
+      "status": "unproved",
+      "sha256": "3a612458e50fb4d898ebb76a92e2ff874f79d9a80d1e5c752e0e37e202bccb6c",
+      "review": "Migration intake reviewed: native private catalogue/category/page owners, exact historical provenance without purchase effects, current package/creator/lease/hash fences and native replay lock order; independent Rust package uses shared money/network policy only; new HTML rich blocks preserve text and list structure. Real source/Core HTTP, signed roles, cancellation, replay, concurrent callbacks and simulated purchase regressions passed. External source completeness and SQL are not claimed proved."
+    },
+    "extensions/apps/migration/adapters/products.rs": {
+      "status": "unproved",
+      "sha256": "2f65b63f91374df8f0589507913e5d80fa3b57cacabcba88e42a90fa0e5e0076",
+      "review": "Reviewed native source net/gross basis contract, explicit declared-basis equality, existing PHP-compatible PriceInput conversion with configured currency scale and compatibility bounds; original money/basis provenance retained. Mixed reviewed warning union observed400 RED then exact-record reduction GREEN behind unchanged creator/digest/lease/target fences. Actual five-provider HTTP-to-native private imports, missing/mismatched/invalid basis, zero-/three-decimal currency and UI approval controls pass. Independent focused review found no Important findings; SQL/source/network orchestration remain unproved."
+    },
+    "extensions/apps/migration/adapters/records.rs": {
+      "status": "unproved",
+      "sha256": "5bb19f6b8a71cb3dab95dd79c0bdfc2546520ccc7de9a8212b850e7fc0c82d4d",
+      "review": "Reviewed original CRM address-book and historical source joins: independent review caught region loss, five-provider US-CA controls now pass; native address import shares tenant-locked storage and suppresses only ordinary address events; all five source transports reach immutable native CRM/history with replay and denial tests. Existing kernel proof boundary unchanged; source JSON, provider reads and SQL/async effects remain unproved."
+    },
+    "extensions/apps/migration/adapters/relations.rs": {
+      "status": "unproved",
+      "sha256": "c9483641a7b1c0f518318dec9ed39c7cc22c809abf9f7691fc997c8a88d0e384",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+    },
+    "extensions/apps/migration/adapters/visibility.rs": {
+      "status": "unproved",
+      "sha256": "adfeeeb89b5e0d4a1fa47f213be40bcccd29e21b970a31b716213275a570143d",
+      "review": "Reviewed app-owned source status preservation against primary schemas: Shopify status and online-store publication, Presta typed active flag, Magento status/visibility and Shopware boolean parent/child status. Actual prior CLI29 assertion failures are fixed by four source-state cases plus real transport projections; native eight-domain and variant checkout remain green. Independent focused source-visibility review found no Important/Critical findings; source orchestration remains outside pure proof."
+    },
+    "extensions/apps/migration/adapters/woo.rs": {
+      "status": "unproved",
+      "sha256": "2f38b5edf26af803ad20a9e65ea9ca97af731c6ddb7a1b7f84c5f908a3fc0e7d",
+      "review": "Reviewed optional grouped native job events, unchanged per-action compatibility and package/current actor/lease fences; bounded 32KiB stored rich documents retain strict APP metadata/checkpoints. Actual five-second slow-source RED and native document-depth RED fixed; running cancellation RED fixed with final native progress fence; complete concrete Woo families and private visibility verified through native selected publication and simulated checkout. Focused independent async review found no remaining Important/Critical defects. SQL/network/source parity remain outside pure proof."
+    },
+    "extensions/apps/migration/contract/mod.rs": {
+      "status": "unproved",
+      "sha256": "587ee130b908e7a7ac86d369647f092aa6257db64d237d4bd9708b074e98885e",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+    },
+    "extensions/apps/migration/contract/money.rs": {
+      "status": "unproved",
+      "sha256": "cb699ebe38bc137881c330fc2a3cd7d15bb9a52fa221faaaeda37d59b799bc63",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+    },
+    "extensions/apps/migration/service/batch.rs": {
+      "status": "unproved",
+      "sha256": "0a193a00ff544a251b0da43f2e178076cf85aaa9270d7294ddd52f85b6d9db2f",
+      "review": "2026-10-19 reviewed native read-only import projection against shared product/category/address owners; paired CRM/history PII and private target/package/digest checks; generic completion evidence atomically uses existing job creator/lease/package and record CAS, platform AEAD, native actual-field verification, no new app table or queue. Actual eight-domain migration/archival/restart/tamper and native app callback/jobs/admin creation tests pass; pure cancelled-success policy has exact Lean claim, all boolean cases and a true-return negative mutation. SQL, cryptography, async service correctness and public hosting remain outside formal proof."
+    },
+    "extensions/apps/migration/service/callback_errors.rs": {
+      "status": "unproved",
+      "sha256": "179ca34f05a948d86e47f20fb77c8c2c2635f5cbff51e9456f9dd98c16ed88ae",
+      "review": "2026-10-19 reviewed final source-changed recovery messages and explicit fresh-source review; current target read uses shared native mapping, address defaults, PII rights and read-only MCP annotation. Atomic service-only job evidence uses existing current actor/lease/package/CAS/AEAD owners. Native job/callback/admin, full signed migration+restart/isolation/rotation, 692 frontend tests, Rust workspace/clippy and exact cancellation proof/mutation controls pass. No claim of public deployment, source-wide cutover or proof of SQL/crypto/service execution."
+    },
+    "extensions/apps/migration/service/config.rs": {
+      "status": "unproved",
+      "sha256": "9c672f4849f9d605a9c49ddc9540052b16014f1215b9465b90d3e2f233ec5e35",
+      "review": "2026-10-19 public export interoperability fix: explicit opt-in omits authorization on manifest and same-origin page reads, private credential mode remains default; HTTPS, DNS pinning, separate credentials, SHA-256/content bounds and native review unchanged. Actual public immutable GitHub HTTPS export now yields exactly three normalized synthetic records; local protected/public transport controls assert no leaked retained token. Core manifest and Rust source reviewed; no new SQL/table/permission or extracted pure commerce policy."
+    },
+    "extensions/apps/migration/service/core.rs": {
+      "status": "unproved",
+      "sha256": "b933eb1d3c1172e1940bea35f388ed8c8794e045c5886470f0f8d3e0b4f4501e",
+      "review": "Reviewed final frozen-export and native callback error paths including DNS/client failures: origin-only offline HTTP identity, admitted actual egress, separate export credential, immutable pages and current native approval fences. All source/export/native/browser controls and signed runtime pass; error-origin classifier carries no provider/native bodies; no extracted pure business policy changed. Independent focused reviews found no Important/Critical defects."
+    },
+    "extensions/apps/migration/service/events.rs": {
+      "status": "unproved",
+      "sha256": "1d4339076a7a2368fd0eac3281cd70f04dda101f0ff3c95603b9908bbce9bc03",
+      "review": "2026-10-19 reviewed native read-only import projection against shared product/category/address owners; paired CRM/history PII and private target/package/digest checks; generic completion evidence atomically uses existing job creator/lease/package and record CAS, platform AEAD, native actual-field verification, no new app table or queue. Actual eight-domain migration/archival/restart/tamper and native app callback/jobs/admin creation tests pass; pure cancelled-success policy has exact Lean claim, all boolean cases and a true-return negative mutation. SQL, cryptography, async service correctness and public hosting remain outside formal proof."
+    },
+    "extensions/apps/migration/service/export_manifest.rs": {
+      "status": "unproved",
+      "sha256": "29cf15730929d204b059f1c7ca05d92d0618e9400967d74771dde7c67312cdad",
+      "review": "Reviewed independent frozen-export transport/package boundaries, separate export-only credential, pinned manifest/context/count/digest and bounded source-reference readiness. Actual pack/HTTP counterexamples and 52-product native intake/replay/tamper stop pass, no native authority or extracted pure business policy changed; source JSON, files, crypto/provider/async remain outside Lean proof."
+    },
+    "extensions/apps/migration/service/export_pack.rs": {
+      "status": "unproved",
+      "sha256": "a9eb1f03ec173a65b5bef82fdea48e3458a020c75b05267a28d41661a07c136d",
+      "review": "2026-10-19 public export interoperability fix: explicit opt-in omits authorization on manifest and same-origin page reads, private credential mode remains default; HTTPS, DNS pinning, separate credentials, SHA-256/content bounds and native review unchanged. Actual public immutable GitHub HTTPS export now yields exactly three normalized synthetic records; local protected/public transport controls assert no leaked retained token. Core manifest and Rust source reviewed; no new SQL/table/permission or extracted pure commerce policy."
+    },
+    "extensions/apps/migration/service/export_readiness.rs": {
+      "status": "unproved",
+      "sha256": "d1663209afc77611a80f7f3be93bfce88bcd64f01943d033f6ad913a0bc9a470",
+      "review": "Reviewed independent frozen-export transport/package boundaries, separate export-only credential, pinned manifest/context/count/digest and bounded source-reference readiness. Actual pack/HTTP counterexamples and 52-product native intake/replay/tamper stop pass, no native authority or extracted pure business policy changed; source JSON, files, crypto/provider/async remain outside Lean proof."
+    },
+    "extensions/apps/migration/service/export_source.rs": {
+      "status": "unproved",
+      "sha256": "0eca500eeaab88b55cdf84f9fcaf778ef396800324a1b7cf84ee07f7213b2bb9",
+      "review": "2026-10-19 public export interoperability fix: explicit opt-in omits authorization on manifest and same-origin page reads, private credential mode remains default; HTTPS, DNS pinning, separate credentials, SHA-256/content bounds and native review unchanged. Actual public immutable GitHub HTTPS export now yields exactly three normalized synthetic records; local protected/public transport controls assert no leaked retained token. Core manifest and Rust source reviewed; no new SQL/table/permission or extracted pure commerce policy."
+    },
+    "extensions/apps/migration/service/extract.rs": {
+      "status": "unproved",
+      "sha256": "317c51a3bbb6a4a387c9ab64ae9742810ba26499d5f2357cabd567c353f1bba7",
+      "review": "Reviewed independent frozen-export transport/package boundaries, separate export-only credential, pinned manifest/context/count/digest and bounded source-reference readiness. Actual pack/HTTP counterexamples and 52-product native intake/replay/tamper stop pass, no native authority or extracted pure business policy changed; source JSON, files, crypto/provider/async remain outside Lean proof."
+    },
+    "extensions/apps/migration/service/main.rs": {
+      "status": "unproved",
+      "sha256": "3690da5a145f254a34ed6195bb37754f12797d608a02ff95d496bb41d75a63aa",
+      "review": "2026-10-19 reviewed native read-only import projection against shared product/category/address owners; paired CRM/history PII and private target/package/digest checks; generic completion evidence atomically uses existing job creator/lease/package and record CAS, platform AEAD, native actual-field verification, no new app table or queue. Actual eight-domain migration/archival/restart/tamper and native app callback/jobs/admin creation tests pass; pure cancelled-success policy has exact Lean claim, all boolean cases and a true-return negative mutation. SQL, cryptography, async service correctness and public hosting remain outside formal proof."
+    },
+    "extensions/apps/migration/service/media.rs": {
+      "status": "unproved",
+      "sha256": "c03ea0be3e68414052cb980ab2c8e4109f28785701b649f8d01fac3fc86f357d",
+      "review": "Reviewed optional grouped native job events, unchanged per-action compatibility and package/current actor/lease fences; bounded 32KiB stored rich documents retain strict APP metadata/checkpoints. Actual five-second slow-source RED and native document-depth RED fixed; running cancellation RED fixed with final native progress fence; complete concrete Woo families and private visibility verified through native selected publication and simulated checkout. Focused independent async review found no remaining Important/Critical defects. SQL/network/source parity remain outside pure proof."
+    },
+    "extensions/apps/migration/service/presta.rs": {
+      "status": "unproved",
+      "sha256": "e08a3f47881c2c52636df01bafe295248eeb56fcc1b9b9fb2e1d6dccedb3f1a9",
+      "review": "Reviewed original CRM address-book and historical source joins: independent review caught region loss, five-provider US-CA controls now pass; native address import shares tenant-locked storage and suppresses only ordinary address events; all five source transports reach immutable native CRM/history with replay and denial tests. Existing kernel proof boundary unchanged; source JSON, provider reads and SQL/async effects remain unproved."
+    },
+    "extensions/apps/migration/service/receipts.rs": {
+      "status": "unproved",
+      "sha256": "dde655b8037ba21df19e0b89c6a92bde2e3f221e23824e6e518c2367e486a4aa",
+      "review": "2026-10-19 reviewed native read-only import projection against shared product/category/address owners; paired CRM/history PII and private target/package/digest checks; generic completion evidence atomically uses existing job creator/lease/package and record CAS, platform AEAD, native actual-field verification, no new app table or queue. Actual eight-domain migration/archival/restart/tamper and native app callback/jobs/admin creation tests pass; pure cancelled-success policy has exact Lean claim, all boolean cases and a true-return negative mutation. SQL, cryptography, async service correctness and public hosting remain outside formal proof."
+    },
+    "extensions/apps/migration/service/reconcile.rs": {
+      "status": "unproved",
+      "sha256": "7f6655ec7eb20da57b3a72472029b55766947e3ff1f38a223f5f8fc1cb887265",
+      "review": "2026-10-19 reviewed native read-only import projection against shared product/category/address owners; paired CRM/history PII and private target/package/digest checks; generic completion evidence atomically uses existing job creator/lease/package and record CAS, platform AEAD, native actual-field verification, no new app table or queue. Actual eight-domain migration/archival/restart/tamper and native app callback/jobs/admin creation tests pass; pure cancelled-success policy has exact Lean claim, all boolean cases and a true-return negative mutation. SQL, cryptography, async service correctness and public hosting remain outside formal proof."
+    },
+    "extensions/apps/migration/service/server.rs": {
+      "status": "unproved",
+      "sha256": "27d6dc4ebac9c59d76e3090c4403e84e3ee165ac07d370021763cc53fdb45726",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+    },
+    "extensions/apps/migration/service/shopify.rs": {
+      "status": "unproved",
+      "sha256": "2a54de0895d59977331387f395f862bb54f81f8b2d778d8593b2e1e83114706c",
+      "review": "Reviewed source pagination typed evidence, exact offset page occupancy and Shopify requested connection completeness; four actual HTTP RED to GREEN cases plus complete native migration and clippy pass. SQL/provider boundaries remain unproved."
+    },
+    "extensions/apps/migration/service/shopware.rs": {
+      "status": "unproved",
+      "sha256": "a9ff195c6bc7160e9622c758083383b2e6170840e783401a4bf9610565e3695d",
+      "review": "Reviewed original CRM address-book and historical source joins: independent review caught region loss, five-provider US-CA controls now pass; native address import shares tenant-locked storage and suppresses only ordinary address events; all five source transports reach immutable native CRM/history with replay and denial tests. Existing kernel proof boundary unchanged; source JSON, provider reads and SQL/async effects remain unproved."
+    },
+    "extensions/apps/migration/service/slices.rs": {
+      "status": "unproved",
+      "sha256": "34586ef793760823dabfe149d151863a3215a176b08b27d928bdecde2681af04",
+      "review": "Reviewed optional grouped native job events, unchanged per-action compatibility and package/current actor/lease fences; bounded 32KiB stored rich documents retain strict APP metadata/checkpoints. Actual five-second slow-source RED and native document-depth RED fixed; running cancellation RED fixed with final native progress fence; complete concrete Woo families and private visibility verified through native selected publication and simulated checkout. Focused independent async review found no remaining Important/Critical defects. SQL/network/source parity remain outside pure proof."
+    },
+    "extensions/apps/migration/service/transport.rs": {
+      "status": "unproved",
+      "sha256": "5da82170ca99f8c2306e494a423a99a19e54934c73850ab8413f7f6dfcd8689e",
+      "review": "Reviewed independent frozen-export transport/package boundaries, separate export-only credential, pinned manifest/context/count/digest and bounded source-reference readiness. Actual pack/HTTP counterexamples and 52-product native intake/replay/tamper stop pass, no native authority or extracted pure business policy changed; source JSON, files, crypto/provider/async remain outside Lean proof."
+    },
+    "extensions/apps/migration/service/woo.rs": {
+      "status": "unproved",
+      "sha256": "e42f382e45876e9dce70cb7534b1ecfb0cf658d30475e8e2c453d19290e51704",
+      "review": "Reviewed optional grouped native job events, unchanged per-action compatibility and package/current actor/lease fences; bounded 32KiB stored rich documents retain strict APP metadata/checkpoints. Actual five-second slow-source RED and native document-depth RED fixed; running cancellation RED fixed with final native progress fence; complete concrete Woo families and private visibility verified through native selected publication and simulated checkout. Focused independent async review found no remaining Important/Critical defects. SQL/network/source parity remain outside pure proof."
+    },
     "extensions/apps/paypal/src/adapter.rs": {
       "status": "unproved",
       "sha256": "e779979cf45e5d38957f76b6c0d8aeaf0c4c39943c625487691d35701349ddee",
@@ -1089,8 +1282,8 @@
     },
     "src/accounts/address_store.rs": {
       "status": "unproved",
-      "sha256": "b2db107635f9dff5be9cfd41802dc4baa6922da4ac2848ece7633f0bb9507565",
-      "review": "Reviewed eighteen core findings: typed trusted identity and explicit route rights; consolidated current grants; durable auth and fenced shared limits; scoped transactions and one-backend PgBouncer including nested borrow fixes; bounded Wasm/PNG work; notified workers, savepoint quarantine and conservative retention; separate runtime roles and startup configuration. Real PostgreSQL/provider regressions preserve current tenant/customer/payment behavior. SQL/network adapters remain unproved."
+      "sha256": "b380eab487802014f9d773103ec5a4217c7d31d004eb34cd0927c938a9410715",
+      "review": "Reviewed original CRM address-book and historical source joins: independent review caught region loss, five-provider US-CA controls now pass; native address import shares tenant-locked storage and suppresses only ordinary address events; all five source transports reach immutable native CRM/history with replay and denial tests. Existing kernel proof boundary unchanged; source JSON, provider reads and SQL/async effects remain unproved."
     },
     "src/accounts/addresses.rs": {
       "status": "unproved",
@@ -1179,8 +1372,8 @@
     },
     "src/apps/approval.rs": {
       "status": "reviewed-binding",
-      "sha256": "29fcc53d5eadea476dcbcdd9d73657d6e9b9b65dbe098457a122fc54373d502c",
-      "review": "Personal workspace and app-owned site design review: trusted personal sessions and actor RLS; public status/time/channel projection; original read-scope and current-field history; append-only cart-bound inbox/outbox with PII rights; package-before-record release fences. Independent security review and actual PostgreSQL own/foreign/CAS/history/form/model fixtures plus existing app/commerce/checkout/role/strict-runtime suites. New pure intake conjunction has exact Lean claims/conformance/negative mutations. SQL, UI, inference and providers remain unproved."
+      "sha256": "085ec1656d6691f0a3197f68ddeea0979ac28fa9f1a57e394dbe1cb716a5a273",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
     },
     "src/apps/asset_surfaces.rs": {
       "status": "unproved",
@@ -1254,8 +1447,8 @@
     },
     "src/apps/core_callbacks.rs": {
       "status": "unproved",
-      "sha256": "a849bff72c8fc2beda1941c54b537f21e4b6f879f0d488dff598b929fb246506",
-      "review": "Review 2026-10-14: bounded modular fulfillment predicates; native carrier intent freezes allocation/dispatch across unknown effects and cross-provider calls, confirmed rejection releases its own intent, exact PDFs acknowledge the original intent. Reviewed split/machine binding, tenant/package/CAS/quota checks and local paid-effect negative fixtures; SQL, crypto and carrier protocols remain unproved."
+      "sha256": "92a40dc9f3740da323e7699ea23b9895cb32517bca4700657a1d9cb44492fe9b",
+      "review": "2026-10-19 reviewed native read-only import projection against shared product/category/address owners; paired CRM/history PII and private target/package/digest checks; generic completion evidence atomically uses existing job creator/lease/package and record CAS, platform AEAD, native actual-field verification, no new app table or queue. Actual eight-domain migration/archival/restart/tamper and native app callback/jobs/admin creation tests pass; pure cancelled-success policy has exact Lean claim, all boolean cases and a true-return negative mutation. SQL, cryptography, async service correctness and public hosting remain outside formal proof."
     },
     "src/apps/core_documents.rs": {
       "status": "unproved",
@@ -1274,13 +1467,13 @@
     },
     "src/apps/credentials.rs": {
       "status": "reviewed-binding",
-      "sha256": "169ece39f79db70cbdd50e0fbe68b70d90fae1ef16092da7dcacc836b4c6cac1",
-      "review": "Review 2026-10-14: native conserved strict-subset shipment binding, unchanged transition replay/quote snapshots, tenant/package/current-right document admission and immutable quota accounting; DHL stays app-owned with local protocol/restart/PII denial fixtures. Carrier effects, SQL and runtime remain unproved."
+      "sha256": "b7364cab5acfd095c2e794297580b0b0e5f2939841c674e8765d17496dfb2935",
+      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
     },
     "src/apps/data.rs": {
       "status": "unproved",
-      "sha256": "442da554977ecf5e6bc934e39a9aa354bed6a2dac19032783dd1010dbce1af05",
-      "review": "Reviewed native extension identity/private/unique anchors and current read/write/PII scopes; native projections use bounded fixed-store queries, exact indexed filters bind all input and fence the admitted package digest. Real four-object HTTP/MCP, role revocation, foreign reference, immutable upgrade, product/company clone and selected release tests passed. Added extracted configuration-only release predicate and operational false property; SQL and UI remain explicitly unproved. Reviewed canonical schema, preserved AI bindings and versioned grid prompt provenance without changing existing prompt revisions."
+      "sha256": "6384764c81e121be079c464dc29cc569dcaf6eeb2ca0a06b8d299f2889f51ff1",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
     },
     "src/apps/distribution.rs": {
       "status": "unproved",
@@ -1368,29 +1561,39 @@
       "review": "Reviewed native schema budget regression: shared validator retains strict app limits and permits bounded native rich documents; actual catalog MCP regression plus depth and byte counterexamples. No extracted policy changes."
     },
     "src/apps/job_callbacks.rs": {
+      "status": "reviewed-binding",
+      "sha256": "57c90762326cb0b41f691267eff54499f1830527015ed12fb48149f37114aa43",
+      "review": "2026-10-19 reviewed native read-only import projection against shared product/category/address owners; paired CRM/history PII and private target/package/digest checks; generic completion evidence atomically uses existing job creator/lease/package and record CAS, platform AEAD, native actual-field verification, no new app table or queue. Actual eight-domain migration/archival/restart/tamper and native app callback/jobs/admin creation tests pass; pure cancelled-success policy has exact Lean claim, all boolean cases and a true-return negative mutation. SQL, cryptography, async service correctness and public hosting remain outside formal proof."
+    },
+    "src/apps/job_evidence.rs": {
       "status": "unproved",
-      "sha256": "bc0ae8cd12bf8545eb57a0f8506d65a025e83feb5343f1929223674d553ff0de",
-      "review": "Retain role-bound scope, separate pools, restrictive policies and TEMP denial. App job callbacks now lock scoped memberships and workspace role base rows before reading the canonical security-invoker grants view; no UPDATE grant on the view or wider system scope is needed. Complete registered signed HTTP flows and two separate real PgBouncer pools pass with worker restart, revocation, native app jobs and key rotation. Each signed cutover fixture owns a separate disposable database."
+      "sha256": "e3ae172e1ada5e60071840d88f02ddd975f9a7c4d27c9516652d10f22f21abc6",
+      "review": "2026-10-19 reviewed native read-only import projection against shared product/category/address owners; paired CRM/history PII and private target/package/digest checks; generic completion evidence atomically uses existing job creator/lease/package and record CAS, platform AEAD, native actual-field verification, no new app table or queue. Actual eight-domain migration/archival/restart/tamper and native app callback/jobs/admin creation tests pass; pure cancelled-success policy has exact Lean claim, all boolean cases and a true-return negative mutation. SQL, cryptography, async service correctness and public hosting remain outside formal proof."
+    },
+    "src/apps/job_import.rs": {
+      "status": "unproved",
+      "sha256": "2e8ce9faf78181888ec5a896e6b1dd66ef1404d5b4603cacf024141fbc3fba83",
+      "review": "2026-10-19 reviewed native read-only import projection against shared product/category/address owners; paired CRM/history PII and private target/package/digest checks; generic completion evidence atomically uses existing job creator/lease/package and record CAS, platform AEAD, native actual-field verification, no new app table or queue. Actual eight-domain migration/archival/restart/tamper and native app callback/jobs/admin creation tests pass; pure cancelled-success policy has exact Lean claim, all boolean cases and a true-return negative mutation. SQL, cryptography, async service correctness and public hosting remain outside formal proof."
     },
     "src/apps/jobs.rs": {
       "status": "unproved",
-      "sha256": "228fdd960012b6456e9e7b51608cb5ae96b962cf9fed1dbe0f21d3cbc2c317f1",
-      "review": "Review provider-neutral split quantities, original app-bound PDF acknowledgement, native booking intent, aggregate storage and current Flow/job disclosure; provider effects remain unproved"
+      "sha256": "1652b6efc1efe61c8459342186608544e88929a6e64490d90e0e2c413a248b19",
+      "review": "Reviewed generic scoped job keyset/correlation read, held cursor position and explicit missing-anchor conflict; native HTTP105-job/archive/foreign checks, current action/PII redaction preserved. App work-plan schema and independent batch annotations carry no import/cutover authority. Native signed migration and focused independent boundary review pass; SQL/provider/async paths remain outside extracted proof."
     },
     "src/apps/manifest.rs": {
       "status": "unproved",
-      "sha256": "f974154d251378c5bf8c081c0d4fcbc7dcb33571232b6afd4b697918c38e4400",
-      "review": "Native lifecycle review: bounded namespaced app graphs preserve native terminal/payment/stock/buyer admission, per-object immutable accepted definitions, current compound scopes, same HTTP MCP Flow owners and operational history; SQL snapshots and migration 105 are regression-tested adapters, not proved."
+      "sha256": "d4c0233e1d46daa25392eb968d1ae0a1b9d137093cf37529a4840e6ab6af7d9f",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
     },
     "src/apps/manifest_validation.rs": {
       "status": "unproved",
-      "sha256": "a3e84acbaa19e7a3498ff503ebcb7b8ec8e7ee9d372b36d7ad6359f2fe12c0a0",
-      "review": "Native lifecycle review: bounded namespaced app graphs preserve native terminal/payment/stock/buyer admission, per-object immutable accepted definitions, current compound scopes, same HTTP MCP Flow owners and operational history; SQL snapshots and migration 105 are regression-tested adapters, not proved."
+      "sha256": "d481e36f588f68065d4b8a99446e3db39bc42addf21420dbaea621862117d765",
+      "review": "Reviewed optional grouped native job events, unchanged per-action compatibility and package/current actor/lease fences; bounded 32KiB stored rich documents retain strict APP metadata/checkpoints. Actual five-second slow-source RED and native document-depth RED fixed; running cancellation RED fixed with final native progress fence; complete concrete Woo families and private visibility verified through native selected publication and simulated checkout. Focused independent async review found no remaining Important/Critical defects. SQL/network/source parity remain outside pure proof."
     },
     "src/apps/mod.rs": {
       "status": "unproved",
-      "sha256": "150d7115227644e5f006c005a2641a5a20724ad80a7ebce355d22a7fd9e8c8e5",
-      "review": "Native lifecycle review: bounded namespaced app graphs preserve native terminal/payment/stock/buyer admission, per-object immutable accepted definitions, current compound scopes, same HTTP MCP Flow owners and operational history; SQL snapshots and migration 105 are regression-tested adapters, not proved."
+      "sha256": "e821536755acb0faab9008d238938760cb3c757edbe831372582e6e00dfb4c68",
+      "review": "2026-10-19 reviewed native read-only import projection against shared product/category/address owners; paired CRM/history PII and private target/package/digest checks; generic completion evidence atomically uses existing job creator/lease/package and record CAS, platform AEAD, native actual-field verification, no new app table or queue. Actual eight-domain migration/archival/restart/tamper and native app callback/jobs/admin creation tests pass; pure cancelled-success policy has exact Lean claim, all boolean cases and a true-return negative mutation. SQL, cryptography, async service correctness and public hosting remain outside formal proof."
     },
     "src/apps/native_data.rs": {
       "status": "unproved",
@@ -1462,6 +1665,11 @@
       "sha256": "33642f79985b534e7c9776143c0a047c8eef06cd96aaa6f74e76cd56bc9b2f16",
       "review": "Personal workspace and app-owned site design review: trusted personal sessions and actor RLS; public status/time/channel projection; original read-scope and current-field history; append-only cart-bound inbox/outbox with PII rights; package-before-record release fences. Independent security review and actual PostgreSQL own/foreign/CAS/history/form/model fixtures plus existing app/commerce/checkout/role/strict-runtime suites. New pure intake conjunction has exact Lean claims/conformance/negative mutations. SQL, UI, inference and providers remain unproved."
     },
+    "src/apps/record_import.rs": {
+      "status": "unproved",
+      "sha256": "7fc77192e3f2c2a47dd6212a87cbd87ef7cebbe52fa6a99d09f63b9867b4042b",
+      "review": "2026-10-19 reviewed native read-only import projection against shared product/category/address owners; paired CRM/history PII and private target/package/digest checks; generic completion evidence atomically uses existing job creator/lease/package and record CAS, platform AEAD, native actual-field verification, no new app table or queue. Actual eight-domain migration/archival/restart/tamper and native app callback/jobs/admin creation tests pass; pure cancelled-success policy has exact Lean claim, all boolean cases and a true-return negative mutation. SQL, cryptography, async service correctness and public hosting remain outside formal proof."
+    },
     "src/apps/record_lifecycle.rs": {
       "status": "unproved",
       "sha256": "46896a3c27e88a804f2f15cf11208a9c2c4efa06eee2d5d2c2b935eeb3e855c8",
@@ -1484,8 +1692,8 @@
     },
     "src/apps/routes.rs": {
       "status": "unproved",
-      "sha256": "67f037aea3e35783f597b45517f46e06d912900acbf4b76750de4de004e3740a",
-      "review": "Native lifecycle review: bounded namespaced app graphs preserve native terminal/payment/stock/buyer admission, per-object immutable accepted definitions, current compound scopes, same HTTP MCP Flow owners and operational history; SQL snapshots and migration 105 are regression-tested adapters, not proved."
+      "sha256": "dddc19e9b51dfb3375f52636f46cb6f4dac0d1bd4a5aa9ac476b38b2790c1f66",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
     },
     "src/apps/runtime.rs": {
       "status": "unproved",
@@ -1617,6 +1825,11 @@
       "sha256": "10ae93a5e3d9b9b4a6118f09c477630a58f4c6f3a9212adba9ec4988773e5c49",
       "review": "Reviewed eighteen core findings: typed trusted identity and explicit route rights; consolidated current grants; durable auth and fenced shared limits; scoped transactions and one-backend PgBouncer including nested borrow fixes; bounded Wasm/PNG work; notified workers, savepoint quarantine and conservative retention; separate runtime roles and startup configuration. Real PostgreSQL/provider regressions preserve current tenant/customer/payment behavior. SQL/network adapters remain unproved."
     },
+    "src/assets/import.rs": {
+      "status": "unproved",
+      "sha256": "63ec0a49bb425e28e7c23da52339b4cfbf22cac6587c7a105370ce4ea55cbb10",
+      "review": "Independent review of native imported immutable image boundaries and selected parent/product-before-asset publication; exact persisted product baseline, attachment-only guard, source-position ordering and recoverable two-step association verified through real HTTP/PostgreSQL regressions. Pure extracted policies unchanged."
+    },
     "src/assets/ingestion.rs": {
       "status": "unproved",
       "sha256": "935ca68eb7e01eeebbe4bf495e82012f45f21f0f40fc094be6c7ac6ac24037df",
@@ -1624,8 +1837,8 @@
     },
     "src/assets/mod.rs": {
       "status": "unproved",
-      "sha256": "0ab087033b3c4137f0ce81537ed290aa4feb49bab08c9de2cac4e1c9692c6446",
-      "review": "Reviewed app authority and current creator rights, isolated schemas/RLS and atomic migration rollback, fenced job/event leases, minimized payloads, signature/digest pins, opaque UI grants, pinned DNS egress and bounded Wasm/WIT quote adapters. Actual isolated PostgreSQL own/foreign callback, schema, jobs, events, assets, export, distribution and production-foundation regressions passed. Added extracted package, surface, resource and exact callback-consent policies with negative Lean claims; async/network/UI and general Rust modules remain explicitly unproved."
+      "sha256": "7b4d96c7913bea849d5fa743da596227117535247526fcb18c04941c8f4e9740",
+      "review": "Independent review of native imported immutable image boundaries and selected parent/product-before-asset publication; exact persisted product baseline, attachment-only guard, source-position ordering and recoverable two-step association verified through real HTTP/PostgreSQL regressions. Pure extracted policies unchanged."
     },
     "src/assets/rich.rs": {
       "status": "unproved",
@@ -1639,8 +1852,8 @@
     },
     "src/assets/upload.rs": {
       "status": "unproved",
-      "sha256": "181bc757db81a6f032340926c56d77d43e37f15231a0593686955fa4a018f310",
-      "review": "Reviewed app authority and current creator rights, isolated schemas/RLS and atomic migration rollback, fenced job/event leases, minimized payloads, signature/digest pins, opaque UI grants, pinned DNS egress and bounded Wasm/WIT quote adapters. Actual isolated PostgreSQL own/foreign callback, schema, jobs, events, assets, export, distribution and production-foundation regressions passed. Added extracted package, surface, resource and exact callback-consent policies with negative Lean claims; async/network/UI and general Rust modules remain explicitly unproved."
+      "sha256": "5bc143e5c1fe459ea700a4cd45ad6a1798ac6d08d4ebb1cc118fb03fe5948c7b",
+      "review": "Independent review of native imported immutable image boundaries and selected parent/product-before-asset publication; exact persisted product baseline, attachment-only guard, source-position ordering and recoverable two-step association verified through real HTTP/PostgreSQL regressions. Pure extracted policies unchanged."
     },
     "src/auth/abuse.rs": {
       "status": "unproved",
@@ -1944,8 +2157,8 @@
     },
     "src/bin/verified_kernel/dispatch.rs": {
       "status": "unproved",
-      "sha256": "31f8596b79e98083cbdb14b839e69b3fbb42f26150dd05fcf7c5d53aa17e34c4",
-      "review": "Review app-only accepted lifecycle snapshots and private RFQ projection, with native rights/payment/stock/buyer guards; move the extracted lifecycle conjunction into the existing app_intake pure owner and explicitly update its closed extraction registration. No expanded proof boundary."
+      "sha256": "442bb6445562c43b6984c13cd77274b8ccafae9aeb61a57326ce259fad81f0e1",
+      "review": "2026-10-19 reviewed native read-only import projection against shared product/category/address owners; paired CRM/history PII and private target/package/digest checks; generic completion evidence atomically uses existing job creator/lease/package and record CAS, platform AEAD, native actual-field verification, no new app table or queue. Actual eight-domain migration/archival/restart/tamper and native app callback/jobs/admin creation tests pass; pure cancelled-success policy has exact Lean claim, all boolean cases and a true-return negative mutation. SQL, cryptography, async service correctness and public hosting remain outside formal proof."
     },
     "src/bin/verified_kernel.rs": {
       "status": "conformance-driver",
@@ -1989,13 +2202,13 @@
     },
     "src/capabilities/registry.rs": {
       "status": "unproved",
-      "sha256": "6e74bc4bf242be02b825d773e38b28288a7c689b9942d56f565941043a132da8",
-      "review": "Reviewed migration 104 and all changed Rust/build owners: existing-key planning-only scope, trusted distinct agent identity, live-root lock before budget key, checked integer allocation with existing kernel guard, no network transaction, typed nonretryable quota errors, current credentials and lease-fenced late worker results; actual two-replica allocation/restart and in-flight-stop fixtures plus 623 UI tests pass. SQL/auth/provider integration is not formally proved."
+      "sha256": "4f680f761e0332a3fc30172b78ea4145de512def41b3828d8f4cd6801d403e82",
+      "review": "2026-10-19 final review: actual native mapped import comparison, shared address creation, tenant/PII fences; service-only atomic job evidence and current record verification; read-only MCP annotation is explicit without broadening planner reads. Native eight-domain service/restart/archival/tamper, paired API and job/admin tests, actual signed tenant/system migration with restart/key rotation, Rust and frontend suites pass. Extracted cancellation guard has exact claims and rejected true-return mutation; SQL, crypto, HTTP/service and hosted rollout remain unproved."
     },
     "src/capabilities/schema.rs": {
       "status": "unproved",
-      "sha256": "a6394944bac0de00bf02c85d54aa40213b6b2373179e5ba120d143c38ad51485",
-      "review": "Codex source review 2026-10-16: native catalogue intake CSV/HTTPS/model preparation and explicit stage-only creation reuse current permissions, stable IDs, locked settings CAS, product/history/outbox and bounded image jobs; native catalog_management, durable_agents and image_jobs checks recorded for this branch. Connected guardrail UI keeps the extracted pricing/autonomy predicates unchanged; authorized paged commerce policy read and merchant instructions verified by users, knowledge_workspace and providers plus 192 Rust tests. All changed transport/SQL/provider adapters remain unproved; no new formal correctness claim."
+      "sha256": "428d2c5975edbe8584b8bbe16ba64cb3164966231bd974b4d46b99d4b45705a6",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
     },
     "src/capabilities.rs": {
       "status": "unproved",
@@ -2044,8 +2257,8 @@
     },
     "src/categories/admin.rs": {
       "status": "unproved",
-      "sha256": "df060c39c465f88e6eba13a6132e08bc2fb9a3386d0c02e89d42a68dbae647bc",
-      "review": "Reviewed bounded native directory criteria, constant allowlisted SQL sorts and tenant tuple cursors, localized product-name ordering, read-only central model planning with current domain and PII grants, and HTTP/MCP discovery parity. Isolated PostgreSQL/provider suites cover native checkout-created records, denied foreign tenant/cursor access, stage boundaries and provider failures. Existing pure financial policies remain unchanged; SQL, model semantics and UI remain unproved adapters."
+      "sha256": "9ef1f57f98ab2ad3a58387591dbb5c6d88f632041f6e66b97dda677d81207362",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
     },
     "src/categories/graph_query.rs": {
       "status": "unproved",
@@ -2054,8 +2267,8 @@
     },
     "src/categories/mod.rs": {
       "status": "unproved",
-      "sha256": "5db2820081a36caf2576eecab14debd16a65b471a8697d11228401fcd7f9f7f8",
-      "review": "Reviewed saved category fact schema, tenant-bound current-source SQL, partial candidate indexes and shared MCP planning quota. Native catalog tests cover review/privacy/revision withdrawal, locale inheritance, confidence, channels, foreign tenants, literal wildcard semantics, CAS and selective staging; provider tests use the centrally encrypted shared replica configuration and quota rejection before model invocation."
+      "sha256": "36d90dd59b4196568ac7b896a291548db057b4ee6feba1d45d6173d2df473bf4",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
     },
     "src/categories/navigation.rs": {
       "status": "unproved",
@@ -2294,8 +2507,8 @@
     },
     "src/commerce/detail.rs": {
       "status": "unproved",
-      "sha256": "7123d2b19377bc9e7e5e5d87e55457ef3e0f529c6d91ab384ac2970059fb3c97",
-      "review": "Review combined native business capability and hardening: typed material/dimension guests remain app-owned and bounded; native CAS/FX/current B2B approval and immutable order snapshots; isolated app crate consumer preserves compiler boundary; independent per-event subscriber retry/quarantine preserves healthy events, commit gaps and explicit recovery; signed tenant/system authority, provider-native read tools and real document withdrawal, workspace image closure and source inventory. SQL/async/provider adapters remain tested, not proved."
+      "sha256": "9c8404f38e6fd01127ed8c2e7a84da3fdcb835b2a1de321f86ed59718ec59654",
+      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
     },
     "src/commerce/external_order_input.rs": {
       "status": "reviewed-binding",
@@ -2344,8 +2557,8 @@
     },
     "src/commerce/mod.rs": {
       "status": "unproved",
-      "sha256": "4168f837fc3ddd70c46bf39805a53fb473f7c9c19436b62c46bd1a1b5724b83e",
-      "review": "Codex source review 2026-10-16: native catalogue intake CSV/HTTPS/model preparation and explicit stage-only creation reuse current permissions, stable IDs, locked settings CAS, product/history/outbox and bounded image jobs; native catalog_management, durable_agents and image_jobs checks recorded for this branch. Connected guardrail UI keeps the extracted pricing/autonomy predicates unchanged; authorized paged commerce policy read and merchant instructions verified by users, knowledge_workspace and providers plus 192 Rust tests. All changed transport/SQL/provider adapters remain unproved; no new formal correctness claim."
+      "sha256": "803f0dc01781eec5cabb2f103c2e2e8e68551cc7a45f0e9eb61782979ed91c2b",
+      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
     },
     "src/commerce/order_fields.rs": {
       "status": "unproved",
@@ -2359,8 +2572,8 @@
     },
     "src/commerce/order_mutation.rs": {
       "status": "unproved",
-      "sha256": "f8acbbd81dfac312c3b33b30e982b9f0d902360545278e79cb4ed24d3b90d80a",
-      "review": "Review 2026-10-14: native conserved strict-subset shipment binding, unchanged transition replay/quote snapshots, tenant/package/current-right document admission and immutable quota accounting; DHL stays app-owned with local protocol/restart/PII denial fixtures. Carrier effects, SQL and runtime remain unproved."
+      "sha256": "84be0215ccf3e73ed3d08073510da89f3779fd71b705931a6419c4d5b977cc65",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
     },
     "src/commerce/order_workflow.rs": {
       "status": "reviewed-binding",
@@ -2394,13 +2607,18 @@
     },
     "src/commerce/product_languages.rs": {
       "status": "unproved",
-      "sha256": "f6c1c5fa42c18468c242313d0b4514fef3e1247231ee2ec0ae1821076eb4caf8",
-      "review": "Separate signed role-bound SQL authority preserves old row/domain policies; bound short-lived tickets, personal actor fences, guarded native app DDL, fixed snapshot ordering and narrow language registry. Reviewed additive 099 and runtime pools; actual login attacks, two replicas, restart, app release and real PgBouncer/key rotation pass. SQL/HMAC/transport remain tested adapters outside pure Lean proofs."
+      "sha256": "a369218680eb572372ee3d790ab5db4623583550cb081be48a10e157398470ab",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
     },
     "src/commerce/product_metadata.rs": {
       "status": "unproved",
       "sha256": "71dbafddab190a012c43fc3acfbc2a91018722245f02c7418ceea05b04540824",
       "review": "Codex source review 2026-10-16: native catalogue intake CSV/HTTPS/model preparation and explicit stage-only creation reuse current permissions, stable IDs, locked settings CAS, product/history/outbox and bounded image jobs; native catalog_management, durable_agents and image_jobs checks recorded for this branch. Connected guardrail UI keeps the extracted pricing/autonomy predicates unchanged; authorized paged commerce policy read and merchant instructions verified by users, knowledge_workspace and providers plus 192 Rust tests. All changed transport/SQL/provider adapters remain unproved; no new formal correctness claim."
+    },
+    "src/commerce/review_import.rs": {
+      "status": "unproved",
+      "sha256": "cce84aa9f45e0ddfa62c9e89c548047536b8dee4741752fdfd82338d1d75323a",
+      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
     },
     "src/commerce/review_moderation.rs": {
       "status": "unproved",
@@ -2439,8 +2657,8 @@
     },
     "src/commerce/settings_routes.rs": {
       "status": "unproved",
-      "sha256": "87fa5f263b418b7224c5ee8920882e9c2cf87140f3f17fd8ea9e8554b7a22c88",
-      "review": "Reviewed eighteen core findings: typed trusted identity and explicit route rights; consolidated current grants; durable auth and fenced shared limits; scoped transactions and one-backend PgBouncer including nested borrow fixes; bounded Wasm/PNG work; notified workers, savepoint quarantine and conservative retention; separate runtime roles and startup configuration. Real PostgreSQL/provider regressions preserve current tenant/customer/payment behavior. SQL/network adapters remain unproved."
+      "sha256": "a9957496c5319e8bb612735674d5590bf9d9176d0146a1f85871b7cde6085944",
+      "review": "2026-10-19 reviewed native read-only import projection against shared product/category/address owners; paired CRM/history PII and private target/package/digest checks; generic completion evidence atomically uses existing job creator/lease/package and record CAS, platform AEAD, native actual-field verification, no new app table or queue. Actual eight-domain migration/archival/restart/tamper and native app callback/jobs/admin creation tests pass; pure cancelled-success policy has exact Lean claim, all boolean cases and a true-return negative mutation. SQL, cryptography, async service correctness and public hosting remain outside formal proof."
     },
     "src/commerce/settings_scope.rs": {
       "status": "unproved",
@@ -2894,8 +3112,8 @@
     },
     "src/marketing/mod.rs": {
       "status": "unproved",
-      "sha256": "cec494f0bb6d287b385c8014c0b7905e91738600cfc7df24f1ec23a6c7412f97",
-      "review": "Review knowledge-source staging read/write admission against native knowledge scopes; automation import HTTP and MCP discovery now use the native per-operation scopes. Real denied-source, successful knowledge-only release, immutable history and write-only transport regressions pass. No pure decision or theorem is changed."
+      "sha256": "5171c2cdc74ba000721589e89131047c4cf6de763211cc9eeb7f0245e3364569",
+      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
     },
     "src/marketing/pipeline.rs": {
       "status": "reviewed-binding",
@@ -2912,15 +3130,20 @@
       "sha256": "10dfdb6008f17fc188ab2df832735dc79ec6d21e4ae041a45ae3ac8286f846db",
       "review": "Tenant roles and current grants independently reviewed; owner/retained-override/acceptance races repaired and PostgreSQL-blocked regressions passed; PII and Flow projection boundaries documented; B2B feature settings delegate shared CAS/history and preserve financial guards. Existing extracted policies unchanged; SQL/async/UI remain reviewed adapters, not full proofs."
     },
-    "src/marketing/promotions.rs": {
+    "src/marketing/promotion_import.rs": {
       "status": "unproved",
-      "sha256": "6751020d28aaf9afda742be4e795f5f825eab8d2e52f5320de54f2ffa84d1757",
-      "review": "Identity-only Veyndo namespace and canonical-domain rename; reviewed migration checksum compatibility for six historical SQL versions, unchanged checkout predicates, 42 library and 169 binary tests pass; native component legacy boundary remains configured and guarded."
+      "sha256": "288b34928db320fbacdc86298b74ac65c1629b388cefb6c6287c3d61f5d440e8",
+      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
+    },
+    "src/marketing/promotions.rs": {
+      "status": "reviewed-binding",
+      "sha256": "42a7ab865aa102e052039f417ed1822f5f78d5333a851675943b28febdfd4354",
+      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
     },
     "src/marketing/routes.rs": {
       "status": "unproved",
-      "sha256": "e0184fdac1965b1bb577daf1a2184ba74f4f8732542e510302b84e38dda4f241",
-      "review": "Tenant roles and current grants independently reviewed; owner/retained-override/acceptance races repaired and PostgreSQL-blocked regressions passed; PII and Flow projection boundaries documented; B2B feature settings delegate shared CAS/history and preserve financial guards. Existing extracted policies unchanged; SQL/async/UI remain reviewed adapters, not full proofs."
+      "sha256": "ef545a68e4bb1be54a1f4fc5f6692d53d3a2b2b62cab598a50c65765b448b5f2",
+      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
     },
     "src/marketing/rule_fields.rs": {
       "status": "unproved",
@@ -2969,8 +3192,8 @@
     },
     "src/migrations/recent_schema.rs": {
       "status": "unproved",
-      "sha256": "2be007a7856d31ed2f85926b7873289699227da47bec5d5ebe51f1f058dfd5f1",
-      "review": "Native lifecycle review: bounded namespaced app graphs preserve native terminal/payment/stock/buyer admission, per-object immutable accepted definitions, current compound scopes, same HTTP MCP Flow owners and operational history; SQL snapshots and migration 105 are regression-tested adapters, not proved."
+      "sha256": "7a8352e16ef5574da07ebd68d363b94f48a5061f54bb97a1133571e7e9215123",
+      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
     },
     "src/migrations/schema.rs": {
       "status": "unproved",
@@ -3009,13 +3232,13 @@
     },
     "src/operations/creation_schema.rs": {
       "status": "unproved",
-      "sha256": "90b741c69c1fd659647899ce46fa5bbb56d6968d15465bd0e0f9d0635b456757",
-      "review": "Reviewed native admin customer/order ownership, compound permissions, actor-private cart and direct-token consumers, channel/settings/customer lock ordering, final extracted manual-payment admission, MCP schemas and local isolation/concurrency regressions; SQL and async effects remain outside Lean proof."
+      "sha256": "46f8ec48db3242fb0bb3e10cc4a9ac564e9867443d9d89aee18546f799a98ce5",
+      "review": "2026-10-19 reviewed native read-only import projection against shared product/category/address owners; paired CRM/history PII and private target/package/digest checks; generic completion evidence atomically uses existing job creator/lease/package and record CAS, platform AEAD, native actual-field verification, no new app table or queue. Actual eight-domain migration/archival/restart/tamper and native app callback/jobs/admin creation tests pass; pure cancelled-success policy has exact Lean claim, all boolean cases and a true-return negative mutation. SQL, cryptography, async service correctness and public hosting remain outside formal proof."
     },
     "src/operations/customer_create.rs": {
       "status": "unproved",
-      "sha256": "c10051d032afac0fe2d6a2cb1a9923028d9ed5df136103e1874c0f7f1c000e77",
-      "review": "Reviewed native admin customer/order ownership, compound permissions, actor-private cart and direct-token consumers, channel/settings/customer lock ordering, final extracted manual-payment admission, MCP schemas and local isolation/concurrency regressions; SQL and async effects remain outside Lean proof."
+      "sha256": "67045ca1e761f375c10a6e81080213ef25e694b443de6ad571bf66274221750a",
+      "review": "2026-10-19 reviewed native read-only import projection against shared product/category/address owners; paired CRM/history PII and private target/package/digest checks; generic completion evidence atomically uses existing job creator/lease/package and record CAS, platform AEAD, native actual-field verification, no new app table or queue. Actual eight-domain migration/archival/restart/tamper and native app callback/jobs/admin creation tests pass; pure cancelled-success policy has exact Lean claim, all boolean cases and a true-return negative mutation. SQL, cryptography, async service correctness and public hosting remain outside formal proof."
     },
     "src/operations/customer_lookup.rs": {
       "status": "unproved",
@@ -3047,6 +3270,66 @@
       "sha256": "bd869ddd890c92e4a4be70d44b8451e3d54b3b1c6a7ae455bb438562e5770aca",
       "review": "Reviewed tenant-scoped guest CRM projection and indexed historical order reads; account enrollment, checkout ownership and authenticated order access are unchanged. Guest snapshots cannot be saved as account profiles; SQL and UI remain unproved adapters."
     },
+    "src/operations/imports/assets.rs": {
+      "status": "unproved",
+      "sha256": "3fe9b57d16713d6c54cdf1bc3613cd1bfe53752b10f701674679a1cc990a79f1",
+      "review": "Independent review of native imported immutable image boundaries and selected parent/product-before-asset publication; exact persisted product baseline, attachment-only guard, source-position ordering and recoverable two-step association verified through real HTTP/PostgreSQL regressions. Pure extracted policies unchanged."
+    },
+    "src/operations/imports/categories.rs": {
+      "status": "unproved",
+      "sha256": "7336ce50ac50fe12029498285f4267858d2ff8f1d929ce584b3acee74020ccfb",
+      "review": "2026-10-19 reviewed native read-only import projection against shared product/category/address owners; paired CRM/history PII and private target/package/digest checks; generic completion evidence atomically uses existing job creator/lease/package and record CAS, platform AEAD, native actual-field verification, no new app table or queue. Actual eight-domain migration/archival/restart/tamper and native app callback/jobs/admin creation tests pass; pure cancelled-success policy has exact Lean claim, all boolean cases and a true-return negative mutation. SQL, cryptography, async service correctness and public hosting remain outside formal proof."
+    },
+    "src/operations/imports/coupons.rs": {
+      "status": "unproved",
+      "sha256": "e64911a16e1fa74a7e950217d9317645c427bf7429d8603c97b90b9950e1276e",
+      "review": "2026-10-19 reviewed native read-only import projection against shared product/category/address owners; paired CRM/history PII and private target/package/digest checks; generic completion evidence atomically uses existing job creator/lease/package and record CAS, platform AEAD, native actual-field verification, no new app table or queue. Actual eight-domain migration/archival/restart/tamper and native app callback/jobs/admin creation tests pass; pure cancelled-success policy has exact Lean claim, all boolean cases and a true-return negative mutation. SQL, cryptography, async service correctness and public hosting remain outside formal proof."
+    },
+    "src/operations/imports/customers.rs": {
+      "status": "unproved",
+      "sha256": "09e3199eee67c45313b761dcd08579f93b0df4f364f7266557ac8e9d1dcf90d6",
+      "review": "Reviewed original CRM address-book and historical source joins: independent review caught region loss, five-provider US-CA controls now pass; native address import shares tenant-locked storage and suppresses only ordinary address events; all five source transports reach immutable native CRM/history with replay and denial tests. Existing kernel proof boundary unchanged; source JSON, provider reads and SQL/async effects remain unproved."
+    },
+    "src/operations/imports/historical_orders.rs": {
+      "status": "unproved",
+      "sha256": "fc111801c987d4cbd19ec2442d65e6151ee3e3c2c5067a394a117db96f551de0",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+    },
+    "src/operations/imports/inspect.rs": {
+      "status": "unproved",
+      "sha256": "dc582083f89eaaa02069690341fb7e4c5703137a137d9267c6bf0242b3f1d97a",
+      "review": "2026-10-19 reviewed native read-only import projection against shared product/category/address owners; paired CRM/history PII and private target/package/digest checks; generic completion evidence atomically uses existing job creator/lease/package and record CAS, platform AEAD, native actual-field verification, no new app table or queue. Actual eight-domain migration/archival/restart/tamper and native app callback/jobs/admin creation tests pass; pure cancelled-success policy has exact Lean claim, all boolean cases and a true-return negative mutation. SQL, cryptography, async service correctness and public hosting remain outside formal proof."
+    },
+    "src/operations/imports/inspect_history.rs": {
+      "status": "unproved",
+      "sha256": "640b10c45082ae2e30f6253dc3c85a3c10ce7e26ec114d1b75607e1ba5a15c67",
+      "review": "2026-10-19 reviewed native read-only import projection against shared product/category/address owners; paired CRM/history PII and private target/package/digest checks; generic completion evidence atomically uses existing job creator/lease/package and record CAS, platform AEAD, native actual-field verification, no new app table or queue. Actual eight-domain migration/archival/restart/tamper and native app callback/jobs/admin creation tests pass; pure cancelled-success policy has exact Lean claim, all boolean cases and a true-return negative mutation. SQL, cryptography, async service correctness and public hosting remain outside formal proof."
+    },
+    "src/operations/imports/inspect_media.rs": {
+      "status": "unproved",
+      "sha256": "7dd40d7df112e85bc867962922d01e1bc139c5411bae6892ced7ac9e6fca52bc",
+      "review": "2026-10-19 reviewed native read-only import projection against shared product/category/address owners; paired CRM/history PII and private target/package/digest checks; generic completion evidence atomically uses existing job creator/lease/package and record CAS, platform AEAD, native actual-field verification, no new app table or queue. Actual eight-domain migration/archival/restart/tamper and native app callback/jobs/admin creation tests pass; pure cancelled-success policy has exact Lean claim, all boolean cases and a true-return negative mutation. SQL, cryptography, async service correctness and public hosting remain outside formal proof."
+    },
+    "src/operations/imports/mod.rs": {
+      "status": "unproved",
+      "sha256": "b9ac517a1d555278d1f16c5f4245d8b7087dfef5046a30ec636ee2fcb87f5495",
+      "review": "2026-10-19 reviewed native read-only import projection against shared product/category/address owners; paired CRM/history PII and private target/package/digest checks; generic completion evidence atomically uses existing job creator/lease/package and record CAS, platform AEAD, native actual-field verification, no new app table or queue. Actual eight-domain migration/archival/restart/tamper and native app callback/jobs/admin creation tests pass; pure cancelled-success policy has exact Lean claim, all boolean cases and a true-return negative mutation. SQL, cryptography, async service correctness and public hosting remain outside formal proof."
+    },
+    "src/operations/imports/products.rs": {
+      "status": "unproved",
+      "sha256": "9222b9bcd6650ef6356fdf90ea54485be6a149bbe5433a21cd9ba980203338f2",
+      "review": "2026-10-19 reviewed native read-only import projection against shared product/category/address owners; paired CRM/history PII and private target/package/digest checks; generic completion evidence atomically uses existing job creator/lease/package and record CAS, platform AEAD, native actual-field verification, no new app table or queue. Actual eight-domain migration/archival/restart/tamper and native app callback/jobs/admin creation tests pass; pure cancelled-success policy has exact Lean claim, all boolean cases and a true-return negative mutation. SQL, cryptography, async service correctness and public hosting remain outside formal proof."
+    },
+    "src/operations/imports/relations.rs": {
+      "status": "unproved",
+      "sha256": "6b5cd1ee3c76bb7183770542be78c5856eb47a94ad25596cc1cf389d70bf8d65",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+    },
+    "src/operations/imports/reviews.rs": {
+      "status": "unproved",
+      "sha256": "7578095875b820a1dfc526d94a27ca5d9d8e4a674d3c58b1cd089ae46ec3887f",
+      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
+    },
     "src/operations/list_criteria.rs": {
       "status": "unproved",
       "sha256": "5355f1e250f493387910f03e33109d81958538662f781b71ae44d440e1e26655",
@@ -3069,8 +3352,8 @@
     },
     "src/operations/mod.rs": {
       "status": "unproved",
-      "sha256": "b3bbe9aae6eebf29eaa6e604b97e739f7b376e10678c1ea1cc2a1fa3d84a7bb5",
-      "review": "Reviewed native admin customer/order ownership, compound permissions, actor-private cart and direct-token consumers, channel/settings/customer lock ordering, final extracted manual-payment admission, MCP schemas and local isolation/concurrency regressions; SQL and async effects remain outside Lean proof."
+      "sha256": "2a86ad02c836dc85952adbd6dcdf6671ae6f9bc36a11fb688bbc63bfde0c6b27",
+      "review": "2026-10-19 reviewed native read-only import projection against shared product/category/address owners; paired CRM/history PII and private target/package/digest checks; generic completion evidence atomically uses existing job creator/lease/package and record CAS, platform AEAD, native actual-field verification, no new app table or queue. Actual eight-domain migration/archival/restart/tamper and native app callback/jobs/admin creation tests pass; pure cancelled-success policy has exact Lean claim, all boolean cases and a true-return negative mutation. SQL, cryptography, async service correctness and public hosting remain outside formal proof."
     },
     "src/operations/order_documents.rs": {
       "status": "unproved",
@@ -3099,8 +3382,8 @@
     },
     "src/operations/receipts.rs": {
       "status": "unproved",
-      "sha256": "b4ed32b3cc52a979598c2c3dda940d9f04605514a0251d17ef071ff72426acd4",
-      "review": "Review 2026-10-14: native conserved strict-subset shipment binding, unchanged transition replay/quote snapshots, tenant/package/current-right document admission and immutable quota accounting; DHL stays app-owned with local protocol/restart/PII denial fixtures. Carrier effects, SQL and runtime remain unproved."
+      "sha256": "a04b3f5f4b049404ddfdf179ac6b11d543d5993aff7e8ee8fbcd6b6ec5961ffa",
+      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
     },
     "src/operations/redacted_reads.rs": {
       "status": "unproved",
@@ -3109,8 +3392,8 @@
     },
     "src/operations/routes.rs": {
       "status": "unproved",
-      "sha256": "4c07904dc4ae6c890a6f4ee671029c02896abc6d09315150ce9c10bdf2bc486b",
-      "review": "Native admin creation uses existing CRM address and cart/checkout owners; independently reviewed tenant/actor tokens, final manual payment guard, channel/customer/cart lock order, replay and explicit customer acknowledgement; new SQL/HTTP adapters remain unproved and have real state regressions."
+      "sha256": "1f08be8c7631228b22fb0c955c0f796ec124f8bf56944f192d0fa9e21000c87d",
+      "review": "2026-10-19 reviewed native read-only import projection against shared product/category/address owners; paired CRM/history PII and private target/package/digest checks; generic completion evidence atomically uses existing job creator/lease/package and record CAS, platform AEAD, native actual-field verification, no new app table or queue. Actual eight-domain migration/archival/restart/tamper and native app callback/jobs/admin creation tests pass; pure cancelled-success policy has exact Lean claim, all boolean cases and a true-return negative mutation. SQL, cryptography, async service correctness and public hosting remain outside formal proof."
     },
     "src/operations/workflow.rs": {
       "status": "unproved",
@@ -3484,8 +3767,8 @@
     },
     "src/staging/assets.rs": {
       "status": "unproved",
-      "sha256": "239496fafab8086b3618e9caa369fa34931f46a299052b1ca600567785526254",
-      "review": "Initial extraction of 13 production policies; surrounding Rust explicitly unproved; existing HTTP regression suites retained"
+      "sha256": "56ad0e92f2170555ff42ee6c8ee7a363b3e8d8991add31d21f4b0e6c5b8a764e",
+      "review": "Independent review of native imported immutable image boundaries and selected parent/product-before-asset publication; exact persisted product baseline, attachment-only guard, source-position ordering and recoverable two-step association verified through real HTTP/PostgreSQL regressions. Pure extracted policies unchanged."
     },
     "src/staging/categories.rs": {
       "status": "unproved",
@@ -3514,18 +3797,23 @@
     },
     "src/staging/mod.rs": {
       "status": "unproved",
-      "sha256": "00da10f1417a9d83875b01c191d31387999e4200d18282451bf72b87615719f7",
-      "review": "Personal workspace and app-owned site design review: trusted personal sessions and actor RLS; public status/time/channel projection; original read-scope and current-field history; append-only cart-bound inbox/outbox with PII rights; package-before-record release fences. Independent security review and actual PostgreSQL own/foreign/CAS/history/form/model fixtures plus existing app/commerce/checkout/role/strict-runtime suites. New pure intake conjunction has exact Lean claims/conformance/negative mutations. SQL, UI, inference and providers remain unproved."
+      "sha256": "e1ba314ed046971e53226d6e612fabc33b5886584a6bdeb198c20d9cdbe1059f",
+      "review": "Independent review of native imported immutable image boundaries and selected parent/product-before-asset publication; exact persisted product baseline, attachment-only guard, source-position ordering and recoverable two-step association verified through real HTTP/PostgreSQL regressions. Pure extracted policies unchanged."
+    },
+    "src/staging/products.rs": {
+      "status": "unproved",
+      "sha256": "42b63ed7ffca5e9bda2540ffa3e5c0e89e3a64fb35e9bffdd6f47be62024ca09",
+      "review": "Independent review of native imported immutable image boundaries and selected parent/product-before-asset publication; exact persisted product baseline, attachment-only guard, source-position ordering and recoverable two-step association verified through real HTTP/PostgreSQL regressions. Pure extracted policies unchanged."
     },
     "src/staging/release.rs": {
       "status": "unproved",
-      "sha256": "54c92b1037b2aea4d9e94965736e231c2e5ba5a9cd8a3e73ca9ba4932d3d0299",
-      "review": "Reviewed native extension identity/private/unique anchors and current read/write/PII scopes; native projections use bounded fixed-store queries, exact indexed filters bind all input and fence the admitted package digest. Real four-object HTTP/MCP, role revocation, foreign reference, immutable upgrade, product/company clone and selected release tests passed. Added extracted configuration-only release predicate and operational false property; SQL and UI remain explicitly unproved. Reviewed canonical schema, preserved AI bindings and versioned grid prompt provenance without changing existing prompt revisions."
+      "sha256": "0b1daf906d6bc2093f684fc9865d5f1f79d03e05c8452fa6e4a122548ecc9241",
+      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
     },
     "src/staging/snapshot.rs": {
       "status": "unproved",
-      "sha256": "4647280acb0037efa6cfb8244cd37a189c87dc18a4e5d0b52bb16e23fc12db32",
-      "review": "Reviewed native extension identity/private/unique anchors and current read/write/PII scopes; native projections use bounded fixed-store queries, exact indexed filters bind all input and fence the admitted package digest. Real four-object HTTP/MCP, role revocation, foreign reference, immutable upgrade, product/company clone and selected release tests passed. Added extracted configuration-only release predicate and operational false property; SQL and UI remain explicitly unproved. Reviewed canonical schema, preserved AI bindings and versioned grid prompt provenance without changing existing prompt revisions."
+      "sha256": "9a7aa3367ad460f716f13b76301a9c98fafc20d785b4f5bba7c7465e001ee71d",
+      "review": "Independently reviewed imported image bounds, current native owner authorization and selected product/image publication; actual native regression covers original bytes, source order, 3MiB request, partial association recovery, protected-download denial, parent ordering and later exact-baseline content release. Move helper declarations before test module to satisfy unchanged lint. Pure extracted decisions unchanged."
     },
     "src/storefront_pages.rs": {
       "status": "unproved",
@@ -3639,12 +3927,12 @@
       "review": "Reviewed CI-only change: add exact source inventory and existing reviewed source/build-input registry checks before compilation, while preserving all scope classification, full Lean/conformance/mutation, integration and coverage steps unchanged. The registry gate is fail-fast only; no production policy, adapter, threshold or runtime artifact is changed."
     },
     "Cargo.lock": {
-      "sha256": "b64d49ee406819898babd77f3a2fc667a68f78b06db0cde18002f8408113ed3c",
-      "review": "Reviewed migration 104 and all changed Rust/build owners: existing-key planning-only scope, trusted distinct agent identity, live-root lock before budget key, checked integer allocation with existing kernel guard, no network transaction, typed nonretryable quota errors, current credentials and lease-fenced late worker results; actual two-replica allocation/restart and in-flight-stop fixtures plus 623 UI tests pass. SQL/auth/provider integration is not formally proved."
+      "sha256": "de01e9cdb5d3e16ec81ce7ce92898ab67d72f00f582fb0e658daf00f62f460c3",
+      "review": "Migration intake reviewed: native private catalogue/category/page owners, exact historical provenance without purchase effects, current package/creator/lease/hash fences and native replay lock order; independent Rust package uses shared money/network policy only; new HTML rich blocks preserve text and list structure. Real source/Core HTTP, signed roles, cancellation, replay, concurrent callbacks and simulated purchase regressions passed. External source completeness and SQL are not claimed proved."
     },
     "Cargo.toml": {
-      "sha256": "6a4e74848c4e6f9d391c804f4a1ab68c4fcb27d29ff165bd0fcfeb181d215dac",
-      "review": "Review compiler-enforced foundation crates with unchanged native owners; native provider read-tool aliases and current authorization, private checkpoint continuation and versioned prompt evidence; fixed subscriber acknowledgements preserve commit gaps, independent quarantine and explicit replay; traced requests/tasks/outbox without payloads; exact decimal-to-minor-unit rounding retains legacy price boundary; real SQL poison-isolation regression passes and workspace unit/clippy checks pass"
+      "sha256": "c8d3a7dd743e6e24f8b1af7c96034a46f3e273c3493d44ec872734fd7df3c6a9",
+      "review": "Follow-up migration fix reviewed: product source identity retains bounded version/digest/known stock while descriptions stay in native translations; observed multilingual import 400 identity overflow before fix. Cargo package remains independent with shared money/network policy. Existing native permission, job fence, no-purchase history and SQL proof boundaries unchanged."
     },
     "crates/apps/Cargo.toml": {
       "sha256": "496067ed6a47c2778baed402bd51378c139687fbb3b36f8f965bf880129de013",
@@ -4166,9 +4454,13 @@
       "sha256": "ee4961ddc2b41d3b3157560b60afbf7a33ab2c87b5a6b07ec22872c36851afb4",
       "review": "Native lifecycle review: bounded namespaced app graphs preserve native terminal/payment/stock/buyer admission, per-object immutable accepted definitions, current compound scopes, same HTTP MCP Flow owners and operational history; SQL snapshots and migration 105 are regression-tested adapters, not proved."
     },
+    "migrations/106-review-source-provenance.sql": {
+      "sha256": "1b22746a6b921d05e99e8d14f85efa52d579f0576bb40c6f312a11a94e8a7404",
+      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
+    },
     "proof/Commerce/Claims.lean": {
-      "sha256": "9d993b6df0c7252330b6ebf49db68f44a2cea939444a003770ae31b34bad7ffc",
-      "review": "Review native lifecycle decision extraction and unchanged native financial owners; accepted definitions, bounded projections, source digest traces, current scopes, migration 105 and B2B catalogue split reviewed with real native positive/negative tests."
+      "sha256": "65bd43ec36f301365e4f327061e68fa2492a3cf51cec7da4e9f19f1b425f579c",
+      "review": "2026-10-19 reviewed native read-only import projection against shared product/category/address owners; paired CRM/history PII and private target/package/digest checks; generic completion evidence atomically uses existing job creator/lease/package and record CAS, platform AEAD, native actual-field verification, no new app table or queue. Actual eight-domain migration/archival/restart/tamper and native app callback/jobs/admin creation tests pass; pure cancelled-success policy has exact Lean claim, all boolean cases and a true-return negative mutation. SQL, cryptography, async service correctness and public hosting remain outside formal proof."
     },
     "proof/lakefile.toml": {
       "sha256": "1cda05bac02223024b93388cf858edad4719c46f8d37a826a73a6a6e15d79432",
@@ -4199,12 +4491,12 @@
       "review": "Reviewed marketplace money guard consumers and exact properties, cap-neighbour comparison cases, native stock binding and local regressions; external protocols and tax law remain tested unproved boundaries"
     },
     "scripts/formal/extract.py": {
-      "sha256": "4859f9a538cfcf2f54e2414ed1ed3b0aa4cea7aa4eade07a98f9d8dbed952a6f",
-      "review": "Review app-only accepted lifecycle snapshots and private RFQ projection, with native rights/payment/stock/buyer guards; move the extracted lifecycle conjunction into the existing app_intake pure owner and explicitly update its closed extraction registration. No expanded proof boundary."
+      "sha256": "6d44a10b609b6b5ee1a811e5a630f46c3fc6a50bc4668d74754c26266cc0b9a0",
+      "review": "2026-10-19 reviewed native read-only import projection against shared product/category/address owners; paired CRM/history PII and private target/package/digest checks; generic completion evidence atomically uses existing job creator/lease/package and record CAS, platform AEAD, native actual-field verification, no new app table or queue. Actual eight-domain migration/archival/restart/tamper and native app callback/jobs/admin creation tests pass; pure cancelled-success policy has exact Lean claim, all boolean cases and a true-return negative mutation. SQL, cryptography, async service correctness and public hosting remain outside formal proof."
     },
     "scripts/formal/mutations.py": {
-      "sha256": "c324c821b26766a8c1a63043c7dc7a6c7ab0a0079217563530e27abf7e28a9d4",
-      "review": "Native lifecycle review: bounded namespaced app graphs preserve native terminal/payment/stock/buyer admission, per-object immutable accepted definitions, current compound scopes, same HTTP MCP Flow owners and operational history; SQL snapshots and migration 105 are regression-tested adapters, not proved."
+      "sha256": "d2457aa103a267466c433440623921ff65e37094a426eb08cdb66eacc663135f",
+      "review": "2026-10-19 reviewed native read-only import projection against shared product/category/address owners; paired CRM/history PII and private target/package/digest checks; generic completion evidence atomically uses existing job creator/lease/package and record CAS, platform AEAD, native actual-field verification, no new app table or queue. Actual eight-domain migration/archival/restart/tamper and native app callback/jobs/admin creation tests pass; pure cancelled-success policy has exact Lean claim, all boolean cases and a true-return negative mutation. SQL, cryptography, async service correctness and public hosting remain outside formal proof."
     },
     "scripts/formal/registry.py": {
       "sha256": "ed29f96108760ecc2cfd61cd953905a1c092a1fb41519167fc426915b5932004",

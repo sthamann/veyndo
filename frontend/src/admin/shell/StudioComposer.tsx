@@ -12,7 +12,7 @@ import "../styles/studio.css";
 
 import { useStudio } from "./StudioContext";
 
-export default function StudioComposer() {
+export default function StudioComposer({ context }: { context?: string } = {}) {
   const c = useCatalogIntakeText();
   const [intake, setIntake] = useState<IntakeMode>();
   const {
@@ -66,13 +66,14 @@ export default function StudioComposer() {
         className="studio-composer"
         onSubmit={(e) => {
           e.preventDefault();
-          void send();
+          void send(context);
         }}
       >
         <label className="sr-only" htmlFor="studio-message">
           {t("message")}
         </label>
         <textarea
+          maxLength={context ? Math.max(1, 4000 - context.length - 2) : 4000}
           id="studio-message"
           ref={composer}
           rows={2}
@@ -85,7 +86,7 @@ export default function StudioComposer() {
               !e.nativeEvent.isComposing
             ) {
               e.preventDefault();
-              void send();
+              void send(context);
             }
           }}
           placeholder={t("placeholder")}

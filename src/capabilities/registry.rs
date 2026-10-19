@@ -47,6 +47,7 @@ pub(crate) static OPERATIONS: LazyLock<Vec<Operation>> = LazyLock::new(|| {
             );
             // Unclassified operations deliberately retain conservative mutating hints.
             let read = agent_read
+                || name == "merchant.import.inspect"
                 || name == "merchant.run.status"
                 || name == "merchant.agents.status"
                 || matches!(name, "catalog.facts" | "checkout.options" | "cart.quote");

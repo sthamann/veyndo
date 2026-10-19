@@ -7710,6 +7710,318 @@
                         "additionalProperties": false,
                         "properties": {
                           "name": {
+                            "const": "merchant.import.inspect"
+                          },
+                          "arguments": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "options": {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "acknowledgedWarnings": {
+                                    "items": {
+                                      "maxLength": 2000,
+                                      "type": "string"
+                                    },
+                                    "maxItems": 20,
+                                    "type": "array"
+                                  },
+                                  "channelId": {
+                                    "maxLength": 100,
+                                    "type": "string"
+                                  },
+                                  "customerGroup": {
+                                    "maxLength": 100,
+                                    "type": "string"
+                                  },
+                                  "destinationDigest": {
+                                    "maxLength": 64,
+                                    "minLength": 64,
+                                    "type": "string"
+                                  },
+                                  "locale": {
+                                    "maxLength": 35,
+                                    "type": "string"
+                                  },
+                                  "sourcePriceBasis": {
+                                    "enum": [
+                                      "gross",
+                                      "net"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "taxRate": {
+                                    "maximum": 50,
+                                    "minimum": 0,
+                                    "type": "number"
+                                  }
+                                },
+                                "type": "object"
+                              },
+                              "record": {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "data": {
+                                    "type": "object"
+                                  },
+                                  "kind": {
+                                    "enum": [
+                                      "products",
+                                      "categories",
+                                      "pages",
+                                      "customers",
+                                      "orders",
+                                      "assets",
+                                      "reviews",
+                                      "coupons"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "source": {
+                                    "maxLength": 200,
+                                    "minLength": 1,
+                                    "type": "string"
+                                  },
+                                  "sourceId": {
+                                    "maxLength": 200,
+                                    "minLength": 1,
+                                    "type": "string"
+                                  },
+                                  "sourceShop": {
+                                    "maxLength": 200,
+                                    "minLength": 1,
+                                    "type": "string"
+                                  },
+                                  "version": {
+                                    "enum": [
+                                      1
+                                    ],
+                                    "type": "integer"
+                                  },
+                                  "warnings": {
+                                    "items": {
+                                      "maxLength": 2000,
+                                      "type": "string"
+                                    },
+                                    "maxItems": 20,
+                                    "type": "array"
+                                  }
+                                },
+                                "required": [
+                                  "version",
+                                  "source",
+                                  "sourceShop",
+                                  "kind",
+                                  "sourceId",
+                                  "data",
+                                  "warnings"
+                                ],
+                                "type": "object"
+                              }
+                            },
+                            "required": [
+                              "record",
+                              "options"
+                            ],
+                            "type": "object"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "jsonrpc",
+                      "id",
+                      "method",
+                      "params"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "jsonrpc": {
+                        "const": "2.0"
+                      },
+                      "id": {
+                        "type": [
+                          "string",
+                          "integer"
+                        ]
+                      },
+                      "method": {
+                        "const": "tools/call"
+                      },
+                      "params": {
+                        "type": "object",
+                        "required": [
+                          "name",
+                          "arguments"
+                        ],
+                        "additionalProperties": false,
+                        "properties": {
+                          "name": {
+                            "const": "merchant.import.record"
+                          },
+                          "arguments": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "approve": {
+                                "type": "boolean"
+                              },
+                              "assetChunks": {
+                                "items": {
+                                  "maxLength": 65536,
+                                  "type": "string"
+                                },
+                                "maxItems": 172,
+                                "type": "array"
+                              },
+                              "options": {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "acknowledgedWarnings": {
+                                    "items": {
+                                      "maxLength": 2000,
+                                      "type": "string"
+                                    },
+                                    "maxItems": 20,
+                                    "type": "array"
+                                  },
+                                  "channelId": {
+                                    "maxLength": 100,
+                                    "type": "string"
+                                  },
+                                  "customerGroup": {
+                                    "maxLength": 100,
+                                    "type": "string"
+                                  },
+                                  "destinationDigest": {
+                                    "maxLength": 64,
+                                    "minLength": 64,
+                                    "type": "string"
+                                  },
+                                  "locale": {
+                                    "maxLength": 35,
+                                    "type": "string"
+                                  },
+                                  "sourcePriceBasis": {
+                                    "enum": [
+                                      "gross",
+                                      "net"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "taxRate": {
+                                    "maximum": 50,
+                                    "minimum": 0,
+                                    "type": "number"
+                                  }
+                                },
+                                "type": "object"
+                              },
+                              "record": {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "data": {
+                                    "type": "object"
+                                  },
+                                  "kind": {
+                                    "enum": [
+                                      "products",
+                                      "categories",
+                                      "pages",
+                                      "customers",
+                                      "orders",
+                                      "assets",
+                                      "reviews",
+                                      "coupons"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "source": {
+                                    "maxLength": 200,
+                                    "minLength": 1,
+                                    "type": "string"
+                                  },
+                                  "sourceId": {
+                                    "maxLength": 200,
+                                    "minLength": 1,
+                                    "type": "string"
+                                  },
+                                  "sourceShop": {
+                                    "maxLength": 200,
+                                    "minLength": 1,
+                                    "type": "string"
+                                  },
+                                  "version": {
+                                    "enum": [
+                                      1
+                                    ],
+                                    "type": "integer"
+                                  },
+                                  "warnings": {
+                                    "items": {
+                                      "maxLength": 2000,
+                                      "type": "string"
+                                    },
+                                    "maxItems": 20,
+                                    "type": "array"
+                                  }
+                                },
+                                "required": [
+                                  "version",
+                                  "source",
+                                  "sourceShop",
+                                  "kind",
+                                  "sourceId",
+                                  "data",
+                                  "warnings"
+                                ],
+                                "type": "object"
+                              }
+                            },
+                            "required": [
+                              "approve",
+                              "record",
+                              "options"
+                            ],
+                            "type": "object"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "jsonrpc",
+                      "id",
+                      "method",
+                      "params"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "jsonrpc": {
+                        "const": "2.0"
+                      },
+                      "id": {
+                        "type": [
+                          "string",
+                          "integer"
+                        ]
+                      },
+                      "method": {
+                        "const": "tools/call"
+                      },
+                      "params": {
+                        "type": "object",
+                        "required": [
+                          "name",
+                          "arguments"
+                        ],
+                        "additionalProperties": false,
+                        "properties": {
+                          "name": {
                             "const": "merchant.customer.creation"
                           },
                           "arguments": {
@@ -7758,6 +8070,13 @@
                           "arguments": {
                             "additionalProperties": false,
                             "properties": {
+                              "additionalAddresses": {
+                                "items": {
+                                  "type": "object"
+                                },
+                                "maxItems": 50,
+                                "type": "array"
+                              },
                               "billingAddress": {
                                 "type": "object"
                               },

@@ -2,6 +2,20 @@
 /** Native input DTOs; opaque JSON fields remain explicit. */
 import type { JsonValue } from "./value";
 export interface Inputs11 {
+  "merchant.order.complete": {
+    approve: boolean;
+    cartToken: string;
+    channelId: string;
+    customerAcknowledgement: boolean;
+    digitalImmediate: boolean;
+    locale: string;
+    policyVersion: string;
+    requestKey: string;
+    revision: number;
+    terms: boolean;
+    totalMinor: string;
+  };
+  "merchant.catalog.context": JsonValue;
   "merchant.catalog.prepare": {
     count: number;
     inference?: {
@@ -56,12 +70,5 @@ export interface Inputs11 {
     cartToken?: string;
     channelId: string;
     query?: string;
-  };
-  "pos.context": { channelId: string };
-  "pos.detail": {
-    after?: string;
-    cartToken?: string;
-    channelId: string;
-    productId: string;
   };
 }

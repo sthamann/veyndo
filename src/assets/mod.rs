@@ -1,6 +1,8 @@
 //! Product attachments and paid digital downloads: bounded binary persistence and tenant/account ACL.
 use crate::*;
 mod download;
+mod import;
+pub(crate) use import::image as import_image;
 mod image_jobs;
 mod image_provider;
 mod rich;

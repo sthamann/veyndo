@@ -73,6 +73,8 @@ import Commerce.Claims
 #print axioms CommerceKernel.external_unpaid_denied
 #print axioms CommerceKernel.financial_contact_required
 #print axioms CommerceKernel.flow_delay_exact
+#print axioms CommerceKernel.job_cancelled_success_denied
+#print axioms CommerceKernel.job_completion_exact
 #print axioms CommerceKernel.legal_checkout_exact
 #print axioms CommerceKernel.manual_payment_exact
 #print axioms CommerceKernel.manual_payment_safe
@@ -120,6 +122,8 @@ import Commerce.Claims
 #print axioms CommerceKernel.scope_explicit_no_escalation
 #print axioms CommerceKernel.shop_archived_denied
 #print axioms CommerceKernel.shop_availability_exact
+#print axioms CommerceKernel.source_activation_exact
+#print axioms CommerceKernel.source_activation_unreviewed_denied
 #print axioms CommerceKernel.stock_conservation
 #print axioms CommerceKernel.stock_exact
 #print axioms CommerceKernel.stock_positive_bounded

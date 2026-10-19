@@ -263,3 +263,21 @@ Use the optional version-1 [core object extension contract](app-core-extensions.
 ## Native operational workflows
 
 Optional [version-1 native lifecycles](app-native-lifecycles.md) add app-owned order and RFQ review steps through existing native transitions, current rights and per-object accepted version snapshots. They do not replace native payment, stock, refund or buyer acceptance.
+
+### Job-bound completion evidence
+
+An approved app callback can include `evidence: {action, input}` in a successful
+`job_progress` callback. The job's frozen input must declare the exact
+`evidenceRecord: {entity, id}` destination. The declared private native save action
+and current job creator need ordinary data/action/entity rights; record CAS,
+quotas/references/history and package fencing remain in the shared owner.
+Completion and save commit together. A cancelled, stale, revoked or conflicting
+job commits neither. The stored entity declares an optional string `evidence`
+field; Core fills it using the existing platform authenticated encryption key.
+`POST /api/apps/{id}/core/job_evidence` accepts `{entity, ids}` (at most 100) and
+returns only verified current record IDs/revisions/job IDs. Callers still need
+current app and original job-action rights. Ordinary edits invalidate the seal;
+raw merchant-authored success flags are never authoritative. The service remains
+a separately trusted operator-approved observation producer. No new physical app
+table, credential authority or queue is added. Preserve `PLATFORM_SECRET_KEY` across
+restarts; key rotation needs deliberate evidence revalidation.

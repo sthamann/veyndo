@@ -1,5 +1,64 @@
 # Changelog
 
+## Current migration target checks and durable continuation — 2026-10-19
+
+- Support explicitly public frozen exports without forwarding source/export credentials; protected exports stay authenticated by default. The public synthetic GitHub sample now passes an actual pinned HTTPS read through Rust.
+
+- Atomically store successful native job completion and authenticated private evidence under current creator, package, lease, cancellation and CAS fences. Ordinary saved success flags and edited seals cannot advance migration progress. Preserve evidence across job archival and actual service restart.
+- Share native CRM address creation planning with reconciliation, preserving identical address rows and first-address defaults; enforce PII permission on full commerce-settings order projections.
+- Build and smoke-test a separate non-root Rust migration image with immutable source tags; public deployment remains a distinct acceptance step.
+
+- Compare actual native mapped target fields across all eight supported import domains. A successful replay no longer establishes parity: edited prices/text, missing records and disconnected image associations remain visible. Explicit reconciliation jobs are read-only and retain current creator, package, lease, digest, target and paired read/PII checks.
+- Save exact reviewed page intents and bounded results in existing private app records. Continue plans in dependency/cursor order after reload, technical job archival or service restart; preserve deliberate per-page approvals, conflicts and app quotas.
+- Close an older settings projection that returned full historical orders to settings/order readers without the separate PII right. Add actual restricted-role, changed-target, readonly-write denial, eight-domain archival/restart and delayed UI-rights regressions. [Scope and current deployment status](docs/agentic-migration.md).
+
+## Saved migration work plans — 2026-10-19
+
+- Connect a named source/domain/private-preview work plan to existing leased jobs through a non-authoritative group label. Plans use native logical records, revisions and current app rights; they never approve a source page or authorize cutover.
+- Page native job history beyond its previous latest-100 window, retaining tenant/app scope and current action/PII redaction. An archived page anchor now reports an explicit restart conflict instead of silently hiding older jobs.
+- Validate planned domains on the native save action and defensively in Studio. Keep current role/shop/plan changes fenced against stale asynchronous UI replies. [Workflow and remaining limits](docs/agentic-migration.md).
+
+## Frozen source-export intake — 2026-10-18
+
+- Add independent Rust streaming export packages with original source context, immutable page hashes and exact counts. Protect export files, reject duplicates/shallow references, and preserve original identities across export hosting.
+- Add separately encrypted export credentials and pinned HTTPS intake to the existing migration settings, review UI and saved native jobs. No source API secret is forwarded to an export server and no parallel queue/table is introduced.
+- Verify actual two-page 52-product private native import, stable replay, tampered-page failure before writes and retained result evidence. Full-shop orchestration/reconciliation/final delta/cutover and hosted acceptance remain open. [Guide](docs/agentic-migration.md).
+
+## Source pagination completeness — 2026-10-18
+
+- Stop on malformed or contradictory source totals, short nonterminal offset pages and missing Shopify root/nested completeness metadata. Preserve the cursor rather than silently skip source records.
+- Four actual HTTP counterexamples now reject; complete native migration and five-provider CRM/history fixtures continue to pass. Whole-shop reconciliation/cutover remains open.
+
+## Original CRM and historical source fidelity — 2026-10-18
+
+- Carry billing, shipping and additional original addresses through one native CRM transaction, including source subdivisions/contact fields, exact replay and rollback on an invalid address. Historical intake suppresses ordinary address-change events; manual editing retains them.
+- Resolve Shopware 5 detail records and PrestaShop customer/address/country/state/currency dependencies through fixed, owned and bounded source reads. Preserve Magento shipping assignments and current Shopify address/email fields; require actual all-order access for full Shopify history.
+- Show original CRM/address/order-item evidence before approval. Actual five-provider HTTP fixtures reach native CRM/history; this is not real-source admission, hosted deployment or whole-shop final cutover. [Coverage](docs/agentic-migration.md).
+
+## Reviewed source tax basis and five-provider native intake — 2026-10-18
+
+- Preserve original source amount/basis and convert declared net prices with the existing native tax calculator and currency precision. Known-basis mismatch/missing confirmation is rejected; legacy undeclared requests retain gross compatibility. Studio makes unknown basis explicit and clears approval on change.
+- Confirm the resolved source-tax warning while keeping unrelated gaps blocked. The frozen native job narrows a reviewed warning union to exact per-record warnings, preserving the ordinary native validation and replay identity.
+- Exercise all five actual local provider HTTP protocols through saved inspection, reviewed jobs and native private product creation; include zero-/three-decimal price controls. [Coverage and limits](docs/agentic-migration.md).
+
+
+## Complete concrete variants and durable source inspection — 2026-10-18
+
+- Preserve original WooCommerce variable parent/child identities, complete declared axes/options, child images and explicit private visibility through native selected publication and simulated checkout. Missing/foreign/duplicate/wildcard families and unsupported visibility stop explicitly.
+- Move source inspection onto existing permission-fenced native jobs/outbox. Slow sources no longer wait in the five-second app gateway request. Saved evidence can reopen after reload; inspection remains separate from import approval. Current PII revocation, cancellation during source reads and byte-bounded rich-document results have actual HTTP controls.
+- Preserve explicit source publication/active status across Shopify, PrestaShop, Magento and Shopware 5. Shopify requests online-store publication separately from ACTIVE; unsupported direct/search/catalogue visibility stops before import.
+- Keep both original per-action job events and an opt-in generic queued event; callback metadata/checkpoints retain their original limits. No new runtime, queue, provider role or per-shop table. [Coverage and remaining work](docs/agentic-migration.md).
+
+
+## Reviewed inward migration foundation — 2026-10-18
+
+- Add an independent Rust migration application with Shopify, WooCommerce, PrestaShop, Magento 2 and Shopware 5 source profiles, exact canonical money, explicit locale/timezone mapping and bounded variant slices.
+- Add generic native intake for private products, credential-free CRM profiles and immutable historical orders without payment, stock, ordinary-purchase or new-invoice effects.
+- Reuse native app jobs, encrypted installed settings, package/creator/lease fences and exact reviewed record hashes. Persist coarse checkpoints, retain private targets across source pages and protect small connection pools. Add an app-owned EN/DE/FR/ES Studio workflow and contextual shared agent drawer.
+- Copy bounded original source images through exact reviewed byte digests into the native asset store, preserve source order/manual slots and recover partial association failures without duplicate files. Native selected publication now orders parents/products before image assets, rejects missing attachments/protected downloads atomically and captures exact persisted live baselines for later releases.
+- Import historical reviews through native moderation with explicit source labels and current product/PII read checks; never forge verified purchases. Import supported WooCommerce coupons as inactive native promotions with exact remaining-use limits, immutable currency/provenance and explicit activation review. Reject malformed limits and unsupported restrictions; source-currency checkout and role-revocation controls cover the independent review findings.
+- [Current coverage](docs/agentic-migration.md) explicitly excludes private/provider-specific media mappings, complete complex-variant mapping, target migration of additional domains and automatic final cutover. Local implementation is not public whole-shop acceptance.
+
 ## Inward agentic commerce — 2026-10-18
 
 - Add UCP Cart Transfer through the native expiring single-use checkout handoff and independent optional buyer-consent negotiation. Native cart, consent and currency changes commit together; current privacy policy, revocation, required contact data and immutable order snapshots remain shared across transports.

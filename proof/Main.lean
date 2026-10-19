@@ -65,6 +65,8 @@ def evalRequest (j : Json) : Except String Json := do
   | "persistent_key_admissible" => pure (toJson (persistent_key_admissible ((← (args.getObjVal? "personal") >>= Json.getBool?)) ((← (args.getObjVal? "administrator") >>= Json.getBool?))))
   | "app_configuration_release_admissible" => pure (toJson (app_configuration_release_admissible ((← (args.getObjVal? "extension") >>= Json.getBool?)) ((← (args.getObjVal? "product") >>= Json.getBool?)) ((← (args.getObjVal? "company") >>= Json.getBool?))))
   | "native_lifecycle_admissible" => pure (toJson (native_lifecycle_admissible ((← (args.getObjVal? "native") >>= Json.getBool?)) ((← (args.getObjVal? "rights") >>= Json.getBool?)) ((← (args.getObjVal? "guards") >>= Json.getBool?))))
+  | "source_activation_admissible" => pure (toJson (source_activation_admissible ((← (args.getObjVal? "imported") >>= Json.getBool?)) ((← (args.getObjVal? "reviewed") >>= Json.getBool?)) ((← (args.getObjVal? "active") >>= Json.getBool?))))
+  | "job_completion_admissible" => pure (toJson (job_completion_admissible ((← (args.getObjVal? "cancel_requested") >>= Json.getBool?)) ((← (args.getObjVal? "succeeded") >>= Json.getBool?))))
   | _ => throw "Unknown policy"
 
 def main : IO Unit := do

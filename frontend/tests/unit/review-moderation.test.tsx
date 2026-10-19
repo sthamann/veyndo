@@ -110,3 +110,24 @@ it("clears old product reviews while the next product is loading", async () => {
   expect(screen.queryByText("Useful lamp")).not.toBeInTheDocument();
   await act(async () => reply({ reviews: [] }));
 });
+it("labels imported provenance without presenting source claims as a verified purchase", async () => {
+  const request = vi.fn().mockResolvedValue({
+    reviews: [
+      {
+        ...review,
+        sourceImport: {
+          source: "woocommerce",
+          sourceShop: "https://source.example",
+          sourceId: "original-review",
+        },
+      },
+    ],
+  });
+  render(<ReviewModeration request={request} productId="lamp" />, {
+    wrapper: LocaleProvider,
+  });
+  expect(
+    await screen.findByText(/original purchase not independently verified/),
+  ).toBeVisible();
+  expect(screen.getByText(/woocommerce/)).toHaveTextContent("original-review");
+});

@@ -188,3 +188,33 @@ it("removes only after a successful response", async () => {
   expect(localDate("bad")).toBe("");
   expect(localDate("2026-10-06T10:30:00Z")).toMatch(/^2026-10-06T\d{2}:30$/);
 });
+it("keeps imported coupon activation review explicit in its normal native editor", async () => {
+  const { default: PromotionSchedule } =
+    await import("../../src/admin/automation/PromotionSchedule");
+  const update = vi.fn();
+  render(
+    <PromotionSchedule
+      data={{
+        sourceImport: {
+          source: "woocommerce",
+          sourceId: "old-coupon",
+          activationReviewed: false,
+        },
+      }}
+      update={update}
+    />,
+    { wrapper: LocaleProvider },
+  );
+  const checkbox = screen.getByRole("checkbox", {
+    name: "I reviewed the mapped conditions and remaining uses",
+  });
+  expect(checkbox).not.toBeChecked();
+  await userEvent.setup().click(checkbox);
+  expect(update).toHaveBeenCalledWith(
+    "sourceImport",
+    expect.objectContaining({
+      activationReviewed: true,
+      sourceId: "old-coupon",
+    }),
+  );
+});

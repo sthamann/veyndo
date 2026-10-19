@@ -38,6 +38,7 @@ type Props = {
   request: RequestFn;
   workspace: string;
   shopName?: string;
+  initialReference?: string;
   rights: string[];
   sandbox: boolean;
   onEnvironments: () => void;
@@ -63,6 +64,7 @@ function DesignerView({
   request,
   workspace,
   shopName,
+  initialReference,
   rights,
   sandbox,
   onEnvironments,
@@ -85,7 +87,9 @@ function DesignerView({
     [pendingHome, setPendingHome] = useState(false),
     [creating, setCreating] = useState(false);
 
-  const [mode, setMode] = useState<DesignerMode>("edit");
+  const [mode, setMode] = useState<DesignerMode>(
+    initialReference ? "agent" : "edit",
+  );
   const nativeSnapshot = useRef<HomeSnapshot | undefined>(undefined);
   const [comparison, setComparison] = useState<Page | null>(null);
   useEffect(() => setComparison(null), [workspace, d.channel, request]);
@@ -309,6 +313,7 @@ function DesignerView({
             />
           </section>
           <DesignerInspector
+            initialReference={initialReference}
             onViewport={setDevice}
             scopeKey={`${workspace}:${d.channel}`}
             d={d}

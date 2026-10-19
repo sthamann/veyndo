@@ -22,3 +22,13 @@ pub fn app_configuration_release_admissible(extension: bool, product: bool, comp
 pub fn native_lifecycle_admissible(native: bool, rights: bool, guards: bool) -> bool {
     native && rights && guards
 }
+
+/// An active imported promotion requires a deliberately reviewed source mapping; ordinary promotions retain native admission.
+pub fn source_activation_admissible(imported: bool, reviewed: bool, active: bool) -> bool {
+    !imported || !active || reviewed
+}
+
+/// A requested cancellation cannot be committed as a successful job completion.
+pub fn job_completion_admissible(cancel_requested: bool, succeeded: bool) -> bool {
+    !cancel_requested || !succeeded
+}

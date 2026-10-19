@@ -38,7 +38,7 @@ pub(crate) fn valid_locale_key(v: &str) -> bool {
     })
 }
 
-pub(super) fn key(locale: &str, s: &Settings) -> String {
+pub(crate) fn key(locale: &str, s: &Settings) -> String {
     let base = locale.split('-').next().unwrap();
     if s.locales
         .iter()

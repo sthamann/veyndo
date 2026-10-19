@@ -93,6 +93,11 @@ pub(super) async fn create(
     }
     let r=sqlx::query("SELECT data #- '{cart,token}' AS data,created_at::text AS created FROM orders WHERE tenant=$1 AND id=$2 FOR UPDATE").bind(&t).bind(&id).fetch_optional(&mut *tx).await?.ok_or(Error(StatusCode::NOT_FOUND,"Order not found".into()))?;
     let order: Value = r.get("data");
+    if !order["historicalImport"].is_null() {
+        return Err(conflict(
+            "Historical invoices must be imported as original documents; no new invoice may be issued",
+        ));
+    }
     if order["revision"] != v["revision"] {
         return Err(conflict("Order revision changed"));
     }

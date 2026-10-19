@@ -1,8 +1,25 @@
 # Veyndo: current status
 
 This is the single starting point for what works, what is implemented but not
-publicly accepted, and what still needs development. Updated 18 October 2026.
+publicly accepted, and what still needs development. Updated 19 October 2026.
 A green test, merged code and a completed public business journey are different evidence.
+
+Local migration follow-up (19 October): saved plans now connect all eight supported
+domains in a review-gated page sequence. Native current-field comparison detects
+missing records, changed prices/text and image associations. Private page intents
+and bounded reports survive technical job archival and service restart; a changed
+result does not authorize repair or cutover. Local synthetic acceptance is separate
+from the still-pending public service rollout. Native completion evidence is now
+atomically sealed under current job/creator/package/lease/CAS checks; raw edited
+success flags cannot advance Studio. [Acceptance evidence](evidence/migration-continuation-2026-10-19.md)
+and [workflow limits](agentic-migration.md).
+
+Local migration follow-up (18 October): frozen domain export packaging and pinned
+HTTPS intake now reuse native reviewed jobs, with separate export credentials,
+source-reference checks and visible original counts/digests. Two-page native
+product intake/replay and tamper rejection are locally tested. This remains
+an open draft implementation; it is not a public deployment or complete shop
+migration/cutover. [Scope and evidence](agentic-migration.md).
 
 ## Start with a complete journey
 
@@ -26,6 +43,28 @@ declaration diagnostics. Full required CI passed all 101 integration suites and
 browser purchases used the explicitly simulated native demo-card.
 Google enrolment, Muse partnerships, real PSP settlement and continuous supplier
 synchronisation are separate and are not claimed by this work.
+
+## Migration Assistant: implementation in progress
+
+The new [migration workflow](agentic-migration.md) has a separate Rust application,
+five source protocol fixtures, private product/image/category/page intake and native CRM/history/review/coupon paths,
+reviewed native jobs and a Studio entry. [Local acceptance and focused independent review](evidence/migration-assistant-local-2026-10-18.md) cover this connected scope;
+the larger assistant remains in development and is not part of public acceptance below.
+Public original-image copying and selected product/image publication have local acceptance.
+Reviews retain native moderation and never gain purchase verification; WooCommerce
+coupons require activation review and remain bound to their original currency.
+WooCommerce concrete variable families now preserve native options, original parent IDs,
+private status and child images. Slow source inspection uses saved jobs, with reopening,
+cancellation and current PII revocation controls. These additions have local acceptance. Publication-state controls also cover drafts/disabled
+products across the other four source profiles; unsupported separate visibility stops explicitly.
+Complex source variants, private/provider-specific media and coupon mappings, full mapping/cutover and
+large-scale throughput remain incomplete. All five local source HTTP profiles now reach
+native private product creation; net/gross and source-warning choices use the native price owner. The guide distinguishes normalization
+from an accepted native target write. All five local provider protocols now also reach
+native CRM address books and immutable historical orders, including source detail/reference
+reads, distinct delivery addresses, subdivisions, replay and absent ordinary address-change flows.
+Shopify full-history intake requires actual all-order access. These are local acceptance
+results; hosted service deployment and whole-shop cutover remain open.
 
 ## Public acceptance
 

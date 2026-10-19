@@ -180,4 +180,10 @@ def app_configuration_release_admissible (extension : Bool) (product : Bool) (co
 def native_lifecycle_admissible (native : Bool) (rights : Bool) (guards : Bool) : Bool :=
   ((native && rights) && guards)
 
+def source_activation_admissible (imported : Bool) (reviewed : Bool) (active : Bool) : Bool :=
+  (((!imported) || (!active)) || reviewed)
+
+def job_completion_admissible (cancel_requested : Bool) (succeeded : Bool) : Bool :=
+  ((!cancel_requested) || (!succeeded))
+
 end CommerceKernel

@@ -18,6 +18,29 @@ export default function PromotionSchedule({
   const t = useLifecycleText();
   return (
     <div className="promotion-schedule">
+      {data.sourceImport && (
+        <section className="studio-card">
+          <strong>{t("sourceCoupon")}</strong>
+          <p>
+            {data.sourceImport.source} · {data.sourceImport.sourceId} ·{" "}
+            {data.sourceImport.currency}
+          </p>
+          <p>{t("sourceCouponHint")}</p>
+          <label className="checkbox-label">
+            <input
+              type="checkbox"
+              checked={data.sourceImport.activationReviewed === true}
+              onChange={(e) =>
+                update("sourceImport", {
+                  ...data.sourceImport,
+                  activationReviewed: e.target.checked,
+                })
+              }
+            />
+            {t("sourceCouponReviewed")}
+          </label>
+        </section>
+      )}
       {(["start", "end"] as const).map((key) => (
         <label key={key}>
           {t(key)}

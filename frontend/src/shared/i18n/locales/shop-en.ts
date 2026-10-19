@@ -132,6 +132,9 @@ export const en: Record<Key, string> = {
   sendReview: "Submit review",
   pending: "Thank you! Your review will be checked before publication.",
   verified: "Verified purchase",
+  importedReview:
+    "Imported review · original purchase not independently verified",
+  reviewSource: "Original source",
   demoReview: "Example review",
   front: "Full view",
   detail: "Detail view",

@@ -3,6 +3,8 @@ use super::*;
 #[derive(Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub(crate) struct Promotion {
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub source_import: Option<PromotionImport>,
     pub name: HashMap<String, String>,
     pub active: bool,
     pub code: Option<String>,
@@ -16,6 +18,27 @@ pub(crate) struct Promotion {
     pub end: Option<String>,
 }
 pub(crate) fn validate_promotion(p: &Promotion) -> Result<()> {
+    if let Some(source) = &p.source_import {
+        if currencies::scale(&source.currency).is_none()
+            || source.version != 1
+            || [&source.source, &source.source_shop, &source.source_id]
+                .iter()
+                .any(|s| s.is_empty() || s.len() > 200 || s.chars().any(char::is_control))
+            || source.record_digest.len() != 64
+            || !source.record_digest.bytes().all(|b| b.is_ascii_hexdigit())
+        {
+            return Err(bad("Invalid promotion source provenance"));
+        }
+        if !veyndo::verified_kernel::source_activation_admissible(
+            true,
+            source.activation_reviewed,
+            p.active,
+        ) {
+            return Err(bad(
+                "Review original coupon conditions and remaining usage before activation",
+            ));
+        }
+    }
     p.rule.validate(0)?;
     if !["percentage", "absolute", "free_shipping"].contains(&p.kind.as_str())
         || !p.amount.is_finite()
@@ -25,7 +48,8 @@ pub(crate) fn validate_promotion(p: &Promotion) -> Result<()> {
         || p.code
             .as_ref()
             .is_some_and(|c| c.is_empty() || c.len() > 64 || !c.is_ascii())
-        || p.max_uses.is_some_and(|n| n < 1)
+        || p.max_uses
+            .is_some_and(|n| n < 0 || (n == 0 && (p.source_import.is_none() || p.active)))
     {
         return Err(bad("Invalid promotion"));
     }
@@ -84,6 +108,9 @@ pub(crate) async fn promote(
         .fetch_one(&mut *tx)
         .await?;
         if !p.active
+            || p.source_import
+                .as_ref()
+                .is_some_and(|s| !s.activation_reviewed || q["price"]["currency"] != s.currency)
             || p.max_uses.is_some_and(|n| uses >= n)
             || p.code.as_ref().is_some_and(|v| !c.data.coupons.contains(v))
             || !p.rule.checked_matches(c, &evaluated)?

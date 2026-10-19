@@ -2,6 +2,14 @@
 use super::*;
 pub(crate) const CAPABILITIES: &[(&str, &str)] = &[
     (
+        "merchant.import.inspect",
+        "Read current mapped target fields and report missing/changed imports without writing",
+    ),
+    (
+        "merchant.import.record",
+        "Explicitly import a source record through current domain permissions; historical orders have no purchase effects",
+    ),
+    (
         "merchant.customer.creation",
         "Read safe customer-creation groups and countries without granting settings access",
     ),
@@ -26,7 +34,7 @@ pub(crate) fn schema(name: &str) -> Option<Value> {
     let (props, required) = match name {
         "merchant.customer.creation" => (json!({}), vec![]),
         "merchant.customer.create" => (
-            json!({"email":{"type":"string"},"profile":{"type":"object"},"customerGroup":{"type":"string"},"billingAddress":{"type":"object"},"shippingAddress":{"type":["object","null"]},"requestKey":{"type":"string","minLength":8,"maxLength":128}}),
+            json!({"email":{"type":"string"},"profile":{"type":"object"},"customerGroup":{"type":"string"},"billingAddress":{"type":"object"},"shippingAddress":{"type":["object","null"]},"additionalAddresses":{"type":"array","maxItems":50,"items":{"type":"object"}},"requestKey":{"type":"string","minLength":8,"maxLength":128}}),
             vec![
                 "email",
                 "profile",
