@@ -1032,8 +1032,8 @@
     },
     "extensions/apps/migration/service/config.rs": {
       "status": "unproved",
-      "sha256": "5c1bd2aa253e90f81873dc1d00babb2a44558e684e7ddfe2a84b3165c8783904",
-      "review": "Final review of frozen-export implementation and native callback error-origin recovery: exact manifest/source/context/page bytes/counts, bounded offline pack/readiness and HTTP identity without source egress; separate export credential, current reviewed native job admission unchanged. Independent boundary reviews found no Important/Critical issues. Actual six export tests, native two-page 52-product/replay/tamper and browser29/29 pass; native changed-options conflict reproduced and localized guidance tested. Only reviewed provider/input/file/network boundaries changed, no extracted pure business policy."
+      "sha256": "9c672f4849f9d605a9c49ddc9540052b16014f1215b9465b90d3e2f233ec5e35",
+      "review": "2026-10-19 public export interoperability fix: explicit opt-in omits authorization on manifest and same-origin page reads, private credential mode remains default; HTTPS, DNS pinning, separate credentials, SHA-256/content bounds and native review unchanged. Actual public immutable GitHub HTTPS export now yields exactly three normalized synthetic records; local protected/public transport controls assert no leaked retained token. Core manifest and Rust source reviewed; no new SQL/table/permission or extracted pure commerce policy."
     },
     "extensions/apps/migration/service/core.rs": {
       "status": "unproved",
@@ -1052,8 +1052,8 @@
     },
     "extensions/apps/migration/service/export_pack.rs": {
       "status": "unproved",
-      "sha256": "0d732a2872eac43b6c4eb6d43df1753295daf455e07dc651d30e7350a77ba951",
-      "review": "Final review of frozen-export implementation and native callback error-origin recovery: exact manifest/source/context/page bytes/counts, bounded offline pack/readiness and HTTP identity without source egress; separate export credential, current reviewed native job admission unchanged. Independent boundary reviews found no Important/Critical issues. Actual six export tests, native two-page 52-product/replay/tamper and browser29/29 pass; native changed-options conflict reproduced and localized guidance tested. Only reviewed provider/input/file/network boundaries changed, no extracted pure business policy."
+      "sha256": "a9eb1f03ec173a65b5bef82fdea48e3458a020c75b05267a28d41661a07c136d",
+      "review": "2026-10-19 public export interoperability fix: explicit opt-in omits authorization on manifest and same-origin page reads, private credential mode remains default; HTTPS, DNS pinning, separate credentials, SHA-256/content bounds and native review unchanged. Actual public immutable GitHub HTTPS export now yields exactly three normalized synthetic records; local protected/public transport controls assert no leaked retained token. Core manifest and Rust source reviewed; no new SQL/table/permission or extracted pure commerce policy."
     },
     "extensions/apps/migration/service/export_readiness.rs": {
       "status": "unproved",
@@ -1062,8 +1062,8 @@
     },
     "extensions/apps/migration/service/export_source.rs": {
       "status": "unproved",
-      "sha256": "fc68e5e198d4cfd0f72abdb7c44d5a43fea6e39412ab485a2bee72ff7fbd9950",
-      "review": "Reviewed independent frozen-export transport/package boundaries, separate export-only credential, pinned manifest/context/count/digest and bounded source-reference readiness. Actual pack/HTTP counterexamples and 52-product native intake/replay/tamper stop pass, no native authority or extracted pure business policy changed; source JSON, files, crypto/provider/async remain outside Lean proof."
+      "sha256": "0eca500eeaab88b55cdf84f9fcaf778ef396800324a1b7cf84ee07f7213b2bb9",
+      "review": "2026-10-19 public export interoperability fix: explicit opt-in omits authorization on manifest and same-origin page reads, private credential mode remains default; HTTPS, DNS pinning, separate credentials, SHA-256/content bounds and native review unchanged. Actual public immutable GitHub HTTPS export now yields exactly three normalized synthetic records; local protected/public transport controls assert no leaked retained token. Core manifest and Rust source reviewed; no new SQL/table/permission or extracted pure commerce policy."
     },
     "extensions/apps/migration/service/extract.rs": {
       "status": "unproved",

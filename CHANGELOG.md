@@ -2,6 +2,8 @@
 
 ## Current migration target checks and durable continuation — 2026-10-19
 
+- Support explicitly public frozen exports without forwarding source/export credentials; protected exports stay authenticated by default. The public synthetic GitHub sample now passes an actual pinned HTTPS read through Rust.
+
 - Atomically store successful native job completion and authenticated private evidence under current creator, package, lease, cancellation and CAS fences. Ordinary saved success flags and edited seals cannot advance migration progress. Preserve evidence across job archival and actual service restart.
 - Share native CRM address creation planning with reconciliation, preserving identical address rows and first-address defaults; enforce PII permission on full commerce-settings order projections.
 - Build and smoke-test a separate non-root Rust migration image with immutable source tags; public deployment remains a distinct acceptance step.

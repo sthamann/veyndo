@@ -13,7 +13,9 @@ const sources = [
 ] as const;
 export default function Connection({ request }: { request: RequestFn }) {
   const t = useMigrationText();
-  const [values, setValues] = useState<Record<string, string | number>>({
+  const [values, setValues] = useState<
+      Record<string, string | number | boolean>
+    >({
       system: "shopify",
       origin: "",
       version: "",
@@ -70,6 +72,7 @@ export default function Connection({ request }: { request: RequestFn }) {
           if (input.export_manifest === undefined) {
             input.export_manifest = "";
             input.export_digest = "";
+            input.export_public = false;
           }
           const result = await request(
             "/api/apps/migration/settings",
@@ -140,7 +143,7 @@ export default function Connection({ request }: { request: RequestFn }) {
                         : "text"
                 }
                 autoComplete="off"
-                value={values[key] ?? ""}
+                value={String(values[key] ?? "")}
                 required={!["username", "token", "timezone"].includes(key)}
                 maxLength={key === "token" ? 4096 : 200}
                 min={key === "scale" ? 0 : undefined}

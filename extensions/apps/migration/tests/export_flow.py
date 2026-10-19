@@ -5,6 +5,10 @@ redacted=json.dumps(call('/api/apps/migration/settings',h=h))
 assert 'frozen-export-synthetic' not in redacted and 'source-read-synthetic' not in redacted
 installed_export=inspect_source('products','installed')
 assert installed_export['sourceExport']['digest']==frozen_digest
+public_export=inspect_source('products','public-frozen')
+assert public_export['sourceExport']['digest']==frozen_digest
+assert public_export['records']==installed_export['records']
+print('PASS explicit public export sends no Authorization on manifest or page reads, even with a retained private token; protected export stays authenticated')
 cursor=None;export_rows=[];page_jobs=[]
 for _ in range(20):
     page=inspect_source('products','frozen',cursor)

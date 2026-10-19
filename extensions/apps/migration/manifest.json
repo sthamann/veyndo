@@ -173,6 +173,17 @@
         "fr": "Identifiant de lecture distinct pour l’export",
         "es": "Credencial separada de lectura de exportación"
       }
+    },
+    {
+      "key": "export_public",
+      "kind": "boolean",
+      "required": false,
+      "label": {
+        "en": "Public export: send no credentials",
+        "de": "Öffentlicher Export: keine Zugangsdaten senden",
+        "fr": "Export public : aucun identifiant transmis",
+        "es": "Export público: no enviar credenciales"
+      }
     }
   ],
   "actions": [

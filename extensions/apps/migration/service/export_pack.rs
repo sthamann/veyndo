@@ -75,6 +75,7 @@ pub fn run(args: &[String]) -> Result<()> {
         export_manifest: None,
         export_digest: None,
         export_token: None,
+        export_public: false,
     };
     config::original_identity(&c.origin)?;
     let context = Context {

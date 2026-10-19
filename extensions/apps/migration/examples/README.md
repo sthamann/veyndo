@@ -9,9 +9,11 @@ at the destination; no tax jurisdiction or source-store completeness is implied.
 
 For a hosted acceptance, serve this exact directory over HTTPS (for example the
 repository's immutable raw GitHub commit URL). Enter the SHA-256 of `manifest.json`
-and a separate synthetic export token in the installed migration app settings.
-The token is deliberately non-secret because these fixtures are public; never use
-real source API credentials. Review the three products, explicitly choose gross
+in the installed migration app settings and explicitly enable **Public export:
+send no credentials**. GitHub rejects an unrelated Bearer header even for public
+files. No source or export credential is sent in this mode. Protected exports
+retain their separate read credential by default; never use real source API credentials
+for this public sample. Review the three products, explicitly choose gross
 basis and the destination tax rate, and import to a private preview. Compare the
 actual target; select publication and stock activation separately. Any payment in
 this demonstration must remain simulated.

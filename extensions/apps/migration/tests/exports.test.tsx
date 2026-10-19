@@ -55,6 +55,47 @@ export function exportTests(deps: any, mount: any) {
     );
     expect(request.mock.calls.at(-1)[1].values).not.toHaveProperty("token");
   });
+  it("requires explicit public-export selection and hides its unused credential input", async () => {
+    const request = vi.fn(async (_path: string, body?: unknown) =>
+      body
+        ? { revision: 2 }
+        : {
+            revision: 1,
+            digest: "package",
+            canManage: true,
+            encryptionReady: true,
+            values: { origin: "https://source.example", version: "wc/v3" },
+          },
+    );
+    render(
+      <LocaleProvider>
+        <Connection request={request} />
+      </LocaleProvider>,
+    );
+    const mode = await screen.findByLabelText("Read a frozen source export");
+    await waitFor(() => expect(mode).toBeEnabled());
+    fireEvent.click(mode);
+    const publicMode = screen.getByLabelText(
+      "Public export: send no credentials",
+    );
+    expect(publicMode).not.toBeChecked();
+    fireEvent.click(publicMode);
+    expect(screen.queryByLabelText("Export read credential")).toBeNull();
+    fireEvent.submit(
+      screen
+        .getByRole("button", { name: "Save encrypted connection" })
+        .closest("form"),
+    );
+    await waitFor(() =>
+      expect(request).toHaveBeenCalledWith(
+        "/api/apps/migration/settings",
+        expect.objectContaining({
+          values: expect.objectContaining({ export_public: true }),
+        }),
+        "PUT",
+      ),
+    );
+  });
   it("shows frozen domain counts and digest without claiming whole-shop cutover", async () => {
     const request = vi.fn(async (path: string) => {
       if (path === "/api/apps")

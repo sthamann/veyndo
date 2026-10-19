@@ -52,7 +52,7 @@ unsupported syntax mutations, three stale/disconnected bindings and nine proof
 shortcuts. SQL, AES-GCM, HTTP, service execution and hosted deployment remain
 outside those formal claims.
 
-Frontend: 121 test files / 692 tests, production build and formatting pass.
+Frontend: 121 test files / 693 tests, production build and formatting pass.
 Documentation: all 279 Markdown sources render into 286 pages; over 29,000 local
 links/assets pass. See [current status](../status.md) for hosted acceptance.
 
@@ -67,3 +67,14 @@ or silently adopted. This is a recovery/authority check, not a completed eight-d
 browser migration. The complete eight-domain path above is native HTTP acceptance.
 
 ![Actual German Studio: preserved page evidence, 1/8 verified progress and explicit fresh source review](images/migration-2026-10-19/resume-review.jpg)
+
+## Public-source interoperability
+
+An actual HTTPS read from the immutable public GitHub commit export initially
+returned 404 when the service sent an unrelated Bearer credential. Explicit public
+export mode now sends no Authorization header on either manifest or page reads;
+the Rust service reads exactly three synthetic products with verified hashes and
+a terminal cursor. A local protected/public fixture also proves that a retained
+private token is not forwarded in public mode and that the default private mode
+still authenticates. This is a public-source transport check with a local Rust
+service; it is not Northflank service acceptance.

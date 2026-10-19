@@ -1,6 +1,18 @@
 /** Frozen export controls distinguish immutable artifact evidence from unproved whole-shop cutover. */
 import { useLocale } from "../../../../frontend/src/shared/i18n/i18n";
 const words = {
+  public: [
+    "Public export: send no credentials",
+    "Öffentlicher Export: keine Zugangsdaten senden",
+    "Export public : aucun identifiant transmis",
+    "Export público: no enviar credenciales",
+  ],
+  publicHint: [
+    "Enable only for an intentionally public source, such as the synthetic example. Protected exports use a separate read credential. HTTPS and checksum checks always apply.",
+    "Nur für bewusst öffentliche Quellen aktivieren, etwa das synthetische Beispiel. Geschützte Exporte nutzen einen eigenen Lesezugang. HTTPS und Prüfsummen werden immer geprüft.",
+    "Activez uniquement pour une source délibérément publique, comme l’exemple synthétique. Les exports protégés utilisent un accès distinct. HTTPS et sommes de contrôle restent vérifiés.",
+    "Activa solo para una fuente deliberadamente pública, como el ejemplo sintético. Los exports protegidos usan acceso propio. Siempre se comprueban HTTPS y las sumas.",
+  ],
   mode: [
     "Read a frozen source export",
     "Eingefrorenen Quellexport lesen",

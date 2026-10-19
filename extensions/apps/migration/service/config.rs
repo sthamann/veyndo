@@ -27,6 +27,8 @@ pub struct Connection {
     #[serde(default)]
     #[serde(alias = "export_token")]
     pub export_token: Option<String>,
+    #[serde(default, alias = "export_public")]
+    pub export_public: bool,
 }
 pub struct Config {
     pub gateway: String,
@@ -164,10 +166,11 @@ impl Connection {
             (None, None) if !self.token.is_empty() && self.token.len() <= 8192 => Ok(()),
             (Some(url), Some(hash))
                 if export_manifest::valid_digest(hash)
-                    && self
-                        .export_token
-                        .as_ref()
-                        .is_some_and(|s| !s.is_empty() && s.len() <= 8192) =>
+                    && (self.export_public
+                        || self
+                            .export_token
+                            .as_ref()
+                            .is_some_and(|s| !s.is_empty() && s.len() <= 8192)) =>
             {
                 transport::admit_url(url, fixture)?;
                 Ok(())

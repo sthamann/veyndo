@@ -26,14 +26,7 @@ pub async fn page(
             .ok_or("Export cursor belongs to another frozen package or is invalid")?,
     };
     let client = transport::client(url, fixture).await?;
-    let (body, _) = transport::bytes(
-        client.get(url).bearer_auth(
-            c.export_token
-                .as_deref()
-                .ok_or("Separate export read credential required")?,
-        ),
-    )
-    .await?;
+    let (body, _) = transport::bytes(authorized(client.get(url), c)?).await?;
     if digest(&body) != expected {
         return Err(
             "Export manifest changed; re-review and pin the original package before continuing"
@@ -57,14 +50,7 @@ pub async fn page(
         if page_url.origin() != base.origin() {
             return Err("Export page escaped pinned origin".into());
         }
-        let (body, _) = transport::bytes(
-            client.get(page_url).bearer_auth(
-                c.export_token
-                    .as_deref()
-                    .ok_or("Separate export read credential required")?,
-            ),
-        )
-        .await?;
+        let (body, _) = transport::bytes(authorized(client.get(page_url), c)?).await?;
         if body.len() != page.bytes || digest(&body) != page.sha256 {
             return Err("Export page bytes changed or are incomplete; no cursor advanced".into());
         }
@@ -97,4 +83,20 @@ pub async fn page(
     }
     value["sourceExport"] = json!({"digest":expected,"sourceRecords":manifest.source_records,"normalizedRecords":manifest.normalized_records,"pages":manifest.pages.len(),"page":index,"scope":"domain-export"});
     Ok(value)
+}
+
+/// Public examples deliberately send no authorization; protected exports remain the default.
+fn authorized(
+    request: reqwest::RequestBuilder,
+    c: &config::Connection,
+) -> Result<reqwest::RequestBuilder> {
+    if c.export_public {
+        Ok(request)
+    } else {
+        Ok(request.bearer_auth(
+            c.export_token
+                .as_deref()
+                .ok_or("Separate export read credential required")?,
+        ))
+    }
 }

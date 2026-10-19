@@ -531,3 +531,9 @@ A small public, credential-free source is available under
 It is a three-product frozen domain export for hosted acceptance, not a real shop
 or full-domain migration. Use an immutable raw commit URL plus the exact manifest
 hash; its README explains separate explicit review/publication and simulation.
+
+Public sample export hosting may explicitly select **Public export: send no
+credentials**. This sends no Authorization header even if an old private token is
+still stored. Protected exports remain the default and require their separately
+encrypted read credential. HTTPS, pinned manifest/page hashes, same-origin reads,
+byte bounds and reviewed source identities apply in both modes.

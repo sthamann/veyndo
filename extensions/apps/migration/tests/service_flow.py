@@ -10,6 +10,11 @@ exec(compile((ROOT/'extensions/apps/migration/tests/crm_sources.py').read_text()
 class SourceFixture(BaseHTTPRequestHandler):
     def log_message(self,*args):pass
     def do_GET(self):
+        if self.path.startswith('/public-frozen/'):
+            assert self.headers.get('Authorization') is None
+            path=self.path.replace('/public-frozen/','/frozen/',1)
+            if path not in export_files:self.send_error(404);return
+            self.send_response(200);self.end_headers();self.wfile.write(export_files[path]);return
         if self.path.startswith('/frozen/'):
             assert self.headers.get('Authorization')=='Bearer frozen-export-synthetic'
             if self.path not in export_files:self.send_error(404);return
@@ -87,6 +92,7 @@ frozen_bytes=(export_path/'manifest.json').read_bytes();frozen_manifest=json.loa
 export_files['/frozen/manifest.json']=frozen_bytes
 for frozen_page in frozen_manifest['pages']:export_files['/frozen/'+frozen_page['path']]=(export_path/frozen_page['path']).read_bytes()
 profiles[a['workspace']]['frozen']={'system':'woocommerce','origin':'https://frozen-source.example','token':'api-must-not-forward','version':'wc/v3','currency':'EUR','scale':2,'locale':'en-GB','exportManifest':source_origin+'/frozen/manifest.json','exportDigest':frozen_digest,'exportToken':'frozen-export-synthetic'}
+profiles[a['workspace']]['public-frozen']={**profiles[a['workspace']]['frozen'],'exportManifest':source_origin+'/public-frozen/manifest.json','exportPublic':True,'exportToken':'must-not-be-forwarded-on-public-reads'}
 env['MIGRATION_SOURCES']=json.dumps(profiles)
 log=open(ROOT/'artifacts/migration-live-service.log','w');process=subprocess.Popen([str(ROOT/'target/debug/migration-assistant'),'serve'],env=env,stdout=log,stderr=log)
 def service_call(path,value):
