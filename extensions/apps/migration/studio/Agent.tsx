@@ -3,14 +3,17 @@ import { useEffect, useRef } from "react";
 import StudioConversation from "../../../../frontend/src/admin/shell/StudioConversation";
 import { useMigrationText } from "./i18n";
 import type { Kind, Review } from "./model";
+import type { RunPlan } from "./run-model";
 export default function Agent({
   onClose,
   kind,
   review,
+  plan,
 }: {
   onClose: () => void;
   kind: Kind;
   review?: Review;
+  plan?: RunPlan;
 }) {
   const dialog = useRef<HTMLDialogElement>(null),
     t = useMigrationText();
@@ -34,6 +37,16 @@ export default function Agent({
           "\n" +
           JSON.stringify({
             domain: kind,
+            workPlan: plan
+              ? {
+                  id: plan.id,
+                  sourceId: plan.source_id,
+                  target: plan.target,
+                  domains: plan.domains,
+                  importApproved: false,
+                  cutoverReady: false,
+                }
+              : null,
             reviewedRecords: review?.records.length ?? 0,
             sourceVersion: review?.sourceVersion ?? null,
             privateProductPreview: true,

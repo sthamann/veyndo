@@ -122,8 +122,8 @@ try:
         time.sleep(.1)
     assert stopped['status']=='cancelled' and not stopped.get('result'),stopped
     print('PASS cancelled source inspection never presents records as approved/completed')
-    def inspect_source(domain,source_id='installed',cursor=None):
-        pending=call('/api/apps/migration/actions/review_'+domain,{'sourceId':source_id,**({'cursor':cursor} if cursor else {})},{**h,'Idempotency-Key':uuid.uuid4().hex})
+    def inspect_source(domain,source_id='installed',cursor=None,job_group=None):
+        pending=call('/api/apps/migration/actions/review_'+domain,{'sourceId':source_id,**({'cursor':cursor} if cursor else {}),**({'jobGroup':job_group} if job_group else {})},{**h,'Idempotency-Key':uuid.uuid4().hex})
         for _ in range(160):
             result=call('/api/apps/migration/jobs/'+pending['jobId'],h=h)
             if result['status'] not in ('queued','running'):break
@@ -197,6 +197,7 @@ try:
     exec(compile((ROOT/'extensions/apps/migration/tests/variable_flow.py').read_text(),'variable_flow.py','exec'))
     exec(compile((ROOT/'extensions/apps/migration/tests/provider_flow.py').read_text(),'provider_flow.py','exec'))
     exec(compile((ROOT/'extensions/apps/migration/tests/provider_crm_flow.py').read_text(),'provider_crm_flow.py','exec'))
+    exec(compile((ROOT/'extensions/apps/migration/tests/run_flow.py').read_text(),'run_flow.py','exec'))
     exec(compile((ROOT/'extensions/apps/migration/tests/export_flow.py').read_text(),'export_flow.py','exec'))
     if os.environ.get('MIGRATION_BROWSER')=='1':
         import signal

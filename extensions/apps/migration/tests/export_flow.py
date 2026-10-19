@@ -10,7 +10,7 @@ for _ in range(20):
     page=inspect_source('products','frozen',cursor)
     assert page['sourceExport']['sourceRecords']==52 and page['sourceExport']['pages']==2,page
     assert page['sourceExport']['digest']==frozen_digest and not page['cutoverReady']
-    command={'sourceId':'frozen','kind':'products','target':target,'options':{'channelId':'default','taxRate':19,'sourcePriceBasis':'gross'},'recordDigests':page['recordDigests'],**({'cursor':cursor} if cursor else {})}
+    command={'jobGroup':run_id,'sourceId':'frozen','kind':'products','target':target,'options':{'channelId':'default','taxRate':19,'sourcePriceBasis':'gross'},'recordDigests':page['recordDigests'],**({'cursor':cursor} if cursor else {})}
     if not export_rows:
         path='/frozen/'+frozen_manifest['pages'][0]['path'];original=export_files[path];export_files[path]=b'[]'
         bad=call('/api/apps/migration/actions/import_products',command,{**h,'Idempotency-Key':'frozen-tamper'})['jobId']
@@ -29,6 +29,7 @@ for _ in range(20):
         if result['status'] not in ('queued','running'):break
         time.sleep(.1)
     assert result['status']=='succeeded',result
+    assert result['result']['jobGroup']==run_id
     assert result['result']['imported']==len(page['records'])
     assert result['result']['sourceExport']['digest']==frozen_digest,result
     assert not result['result']['snapshotConsistent'] and not result['result']['cutoverReady']

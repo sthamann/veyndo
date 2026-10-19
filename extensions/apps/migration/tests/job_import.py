@@ -1,7 +1,8 @@
 """Reviewed native job writes are fenced by digests, lease, current actor and cancellation."""
 import hashlib
+from pathlib import Path
 from testing.app_approval import consent
-m={'id':'migration_fixture','version':'1.0.0','coreApi':'1','runtime':'service','name':{'en':'Migration fixture'},'permissions':['jobs.write','products.write','events:self'],'events':['app.migration_fixture.job_import'],'actions':[{'name':'import','description':'Reviewed migration batch','handler':'job','permission':'catalog.write','requiredPermissions':['apps.manage','environments.manage'],'inputSchema':{'type':'object','properties':{'kind':{'type':'string'},'target':{'type':'string'},'options':{'type':'object'},'recordDigests':{'type':'array','items':{'type':'string'}}},'additionalProperties':False}}]}
+m={'id':'migration_fixture','version':'1.0.0','coreApi':'1','runtime':'service','name':{'en':'Migration fixture'},'permissions':['jobs.write','products.write','events:self'],'events':['app.migration_fixture.job_import'],'actions':[{'name':'import','description':'Reviewed migration batch','handler':'job','permission':'catalog.write','requiredPermissions':['apps.manage','environments.manage'],'inputSchema':{'type':'object','properties':{'jobGroup':{'type':'string'},'kind':{'type':'string'},'target':{'type':'string'},'options':{'type':'object'},'recordDigests':{'type':'array','items':{'type':'string'}}},'additionalProperties':False}}]}
 call('/api/apps',consent({'manifest':m}),h)
 prefix='/api/apps/migration_fixture';digest=next(p['digest'] for p in call('/api/apps',h=h)['packages'] if p['id']==m['id'])
 k=call(prefix+'/credentials',{'approve':True,'digest':digest,'permissions':['jobs.write','products.write'],'expiresInDays':1},h)
@@ -67,3 +68,5 @@ for row in (warned,plain):
     assert call('/api/merchant/products/'+result['id'],h=sh)['commerce']['price']==23.68
     assert call(prefix+'/core/job_import',{'id':wj,'lease':wc['lease'],'record':row},kh)['replayed']
 print('PASS reviewed warning union admits exact per-record warnings and native net conversion; absent acknowledgement is denied')
+
+exec(compile(Path(__file__).with_name('job_pages.py').read_text(),'job_pages.py','exec'))

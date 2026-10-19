@@ -71,6 +71,7 @@ export type SourceRecord = {
   };
 };
 export type Review = {
+  jobGroup?: string | null;
   sourceExport?: {
     digest: string;
     sourceRecords: number;
@@ -103,6 +104,7 @@ export type Job = {
   revision: number;
   message: Record<string, string>;
   result?: {
+    jobGroup?: string | null;
     target?: string;
     kind: Kind;
     sourceId: string;

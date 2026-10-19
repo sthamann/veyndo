@@ -24,7 +24,8 @@
     "data.write",
     "assets.write",
     "reviews.write",
-    "promotions.write"
+    "promotions.write",
+    "data.read"
   ],
   "settings": [
     {
@@ -193,6 +194,11 @@
           "cursor": {
             "type": "string",
             "maxLength": 2000
+          },
+          "jobGroup": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
           }
         },
         "required": [
@@ -281,6 +287,11 @@
               }
             },
             "additionalProperties": false
+          },
+          "jobGroup": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
           }
         },
         "required": [
@@ -315,6 +326,11 @@
           "cursor": {
             "type": "string",
             "maxLength": 2000
+          },
+          "jobGroup": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
           }
         },
         "required": [
@@ -396,6 +412,11 @@
               }
             },
             "additionalProperties": false
+          },
+          "jobGroup": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
           }
         },
         "required": [
@@ -430,6 +451,11 @@
           "cursor": {
             "type": "string",
             "maxLength": 2000
+          },
+          "jobGroup": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
           }
         },
         "required": [
@@ -511,6 +537,11 @@
               }
             },
             "additionalProperties": false
+          },
+          "jobGroup": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
           }
         },
         "required": [
@@ -544,6 +575,11 @@
           "cursor": {
             "type": "string",
             "maxLength": 2000
+          },
+          "jobGroup": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
           }
         },
         "required": [
@@ -625,6 +661,11 @@
               }
             },
             "additionalProperties": false
+          },
+          "jobGroup": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
           }
         },
         "required": [
@@ -658,6 +699,11 @@
           "cursor": {
             "type": "string",
             "maxLength": 2000
+          },
+          "jobGroup": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
           }
         },
         "required": [
@@ -747,6 +793,11 @@
             "required": [
               "destinationDigest"
             ]
+          },
+          "jobGroup": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
           }
         },
         "required": [
@@ -780,6 +831,11 @@
           "cursor": {
             "type": "string",
             "maxLength": 2000
+          },
+          "jobGroup": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
           }
         },
         "required": [
@@ -862,6 +918,11 @@
               }
             },
             "additionalProperties": false
+          },
+          "jobGroup": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
           }
         },
         "required": [
@@ -896,6 +957,11 @@
           "cursor": {
             "type": "string",
             "maxLength": 2000
+          },
+          "jobGroup": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
           }
         },
         "required": [
@@ -977,6 +1043,11 @@
               }
             },
             "additionalProperties": false
+          },
+          "jobGroup": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
           }
         },
         "required": [
@@ -1010,6 +1081,11 @@
           "cursor": {
             "type": "string",
             "maxLength": 2000
+          },
+          "jobGroup": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
           }
         },
         "required": [
@@ -1090,6 +1166,11 @@
               }
             },
             "additionalProperties": false
+          },
+          "jobGroup": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
           }
         },
         "required": [
@@ -1101,13 +1182,172 @@
         ],
         "additionalProperties": false
       }
+    },
+    {
+      "name": "list_runs",
+      "description": "Merchant work plan metadata; not import authority or a cutover receipt",
+      "handler": "list",
+      "entity": "runs",
+      "permission": "apps.manage",
+      "public": false,
+      "readOnly": true,
+      "mcp": true,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "after": {
+            "type": "string"
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "save_run",
+      "description": "Merchant work plan metadata; not import authority or a cutover receipt",
+      "handler": "save",
+      "entity": "runs",
+      "permission": "apps.manage",
+      "public": false,
+      "readOnly": false,
+      "mcp": false,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "revision": {
+            "type": "integer"
+          },
+          "fields": {
+            "type": "object",
+            "required": [
+              "title",
+              "source_id",
+              "domains"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "title": {
+                "type": "object"
+              },
+              "source_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 100
+              },
+              "target": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 100
+              },
+              "domains": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 8,
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "products",
+                    "categories",
+                    "assets",
+                    "pages",
+                    "customers",
+                    "orders",
+                    "reviews",
+                    "coupons"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "id",
+          "revision",
+          "fields"
+        ],
+        "additionalProperties": false
+      }
     }
   ],
   "events": [
     "app.migration.job_queued"
   ],
   "slots": [],
-  "entities": [],
+  "entities": [
+    {
+      "name": "runs",
+      "label": {
+        "en": "Migration work plans",
+        "de": "Migrationspläne",
+        "fr": "Plans de migration",
+        "es": "Planes de migración"
+      },
+      "publicRead": false,
+      "fields": [
+        {
+          "name": "title",
+          "kind": "string",
+          "translatable": true,
+          "required": true,
+          "validation": {
+            "minLength": 1,
+            "maxLength": 100
+          }
+        },
+        {
+          "name": "source_id",
+          "kind": "string",
+          "required": true,
+          "validation": {
+            "minLength": 1,
+            "maxLength": 100
+          }
+        },
+        {
+          "name": "target",
+          "kind": "string",
+          "required": false,
+          "validation": {
+            "minLength": 1,
+            "maxLength": 100
+          }
+        },
+        {
+          "name": "domains",
+          "kind": "json",
+          "required": true,
+          "validation": {
+            "minItems": 1,
+            "maxItems": 8,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "enum": [
+                "products",
+                "categories",
+                "assets",
+                "pages",
+                "customers",
+                "orders",
+                "reviews",
+                "coupons"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
   "surfaces": [],
   "apiRoutes": [
     {
@@ -1205,6 +1445,18 @@
       "method": "POST",
       "scope": "admin",
       "action": "import_coupons"
+    },
+    {
+      "path": "list_runs",
+      "method": "POST",
+      "scope": "admin",
+      "action": "list_runs"
+    },
+    {
+      "path": "save_run",
+      "method": "POST",
+      "scope": "admin",
+      "action": "save_run"
     }
   ],
   "intelligence": {
@@ -1215,7 +1467,8 @@
       "es": "Revisa una migración a Veyndo y compara una vista previa privada antes de publicar."
     },
     "tools": [
-      "review_products"
+      "review_products",
+      "list_runs"
     ],
     "entities": []
   },

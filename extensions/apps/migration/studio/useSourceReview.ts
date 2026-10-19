@@ -8,6 +8,8 @@ export default function useSourceReview({
   jobs,
   kind,
   sourceId,
+  jobGroup,
+  accessKey = "",
   onReview,
   onError,
 }: {
@@ -15,40 +17,48 @@ export default function useSourceReview({
   jobs: Job[];
   kind: Kind;
   sourceId: string;
+  jobGroup?: string;
+  accessKey?: string;
   onReview: (review?: Review) => void;
   onError: (message: string) => void;
 }) {
   const t = useInspectionText();
-  const context = useRef({ request, kind, sourceId });
-  context.current = { request, kind, sourceId };
+  const context = useRef({ request, kind, sourceId, jobGroup, accessKey });
+  context.current = { request, kind, sourceId, jobGroup, accessKey };
   const sequence = useRef(0);
-  const desired = useRef({ request, kind, sourceId });
+  const desired = useRef({ request, kind, sourceId, jobGroup, accessKey });
   const [pending, setPending] = useState<{
     id: string;
     owner: RequestFn;
     kind: Kind;
     sourceId: string;
     sequence: number;
+    jobGroup?: string;
+    accessKey: string;
   }>();
   const [starting, setStarting] = useState(false);
   useEffect(() => {
     if (
       desired.current.request !== request ||
       desired.current.kind !== kind ||
-      desired.current.sourceId !== sourceId
+      desired.current.sourceId !== sourceId ||
+      desired.current.jobGroup !== jobGroup ||
+      desired.current.accessKey !== accessKey
     ) {
       sequence.current++;
-      desired.current = { request, kind, sourceId };
+      desired.current = { request, kind, sourceId, jobGroup, accessKey };
       setPending(undefined);
       setStarting(false);
     }
-  }, [request, kind, sourceId]);
+  }, [request, kind, sourceId, jobGroup, accessKey]);
   useEffect(() => {
     if (
       !pending ||
       pending.owner !== request ||
       pending.kind !== kind ||
-      pending.sourceId !== sourceId
+      pending.sourceId !== sourceId ||
+      pending.jobGroup !== jobGroup ||
+      pending.accessKey !== accessKey
     )
       return;
     const job = jobs.find((j) => j.id === pending.id);
@@ -63,7 +73,7 @@ export default function useSourceReview({
     )
       onReview(job.result as Review);
     else onError(t("failed"));
-  }, [pending, jobs, request, kind, sourceId]);
+  }, [pending, jobs, request, kind, sourceId, jobGroup, accessKey]);
   const inspect = async (
     cursor?: string,
     selectedKind: Kind = kind,
@@ -71,7 +81,13 @@ export default function useSourceReview({
   ) => {
     const owner = request,
       serial = ++sequence.current;
-    desired.current = { request: owner, kind: selectedKind, sourceId: profile };
+    desired.current = {
+      request: owner,
+      kind: selectedKind,
+      sourceId: profile,
+      jobGroup,
+      accessKey,
+    };
     setStarting(true);
     setPending(undefined);
     onError("");
@@ -80,11 +96,17 @@ export default function useSourceReview({
       context.current.request === owner &&
       context.current.kind === selectedKind &&
       context.current.sourceId === profile &&
+      context.current.jobGroup === jobGroup &&
+      context.current.accessKey === accessKey &&
       sequence.current === serial;
     try {
       const result = await owner(
         "/api/apps/migration/actions/review_" + selectedKind,
-        { sourceId: profile, ...(cursor ? { cursor } : {}) },
+        {
+          sourceId: profile,
+          ...(jobGroup ? { jobGroup } : {}),
+          ...(cursor ? { cursor } : {}),
+        },
         "POST",
         { idempotencyKey: crypto.randomUUID() },
       );
@@ -98,6 +120,8 @@ export default function useSourceReview({
           kind: selectedKind,
           sourceId: profile,
           sequence: serial,
+          jobGroup,
+          accessKey,
         });
       else onError(t("failed"));
     } catch (e) {

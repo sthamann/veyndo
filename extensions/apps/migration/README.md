@@ -7,7 +7,7 @@ App-specific code stays here; Core contains only generic native import/job admis
 - `contract/`: stable versioned source identities and exact source money.
 - `adapters/`: source-owned normalization, languages, addresses, historical lines/dates.
 - `service/`: bounded immutable export packaging/HTTPS reads, separate export credentials, complete source-page evidence, complete concrete WooCommerce families, byte-bounded variant slices and native inspection/import jobs.
-- `studio/`: source setup, review, saved jobs and the shared agent drawer.
+- `studio/`: source setup, review, native saved work plans, paged/grouped jobs and the shared agent drawer.
 - `tests/`: real Rust protocol/Core fixtures and app-owned UI acceptance.
 
 Native target import currently covers private products and original images, categories, editable content

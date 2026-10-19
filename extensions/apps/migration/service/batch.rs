@@ -37,6 +37,7 @@ pub async fn run(config: &config::Config, t: &str, job: &Value) -> Result<Value>
             return Err("Migration cancelled; no source inspection was adopted".into());
         }
         page["cursor"] = input["cursor"].clone();
+        page["jobGroup"] = input["jobGroup"].clone();
         return Ok(page);
     }
     if page["recordDigests"] != input["recordDigests"] {
@@ -85,6 +86,8 @@ pub async fn run(config: &config::Config, t: &str, job: &Value) -> Result<Value>
         core::callback(callback,t,"job_progress",&serde_json::json!({"id":job["id"],"lease":job["lease"],"status":"running","progress":completed*99/rows.len().max(1),"checkpoint":{"completed":completed}}),config.fixture).await?;
     }
     let mut result = serde_json::json!({"target":input["target"],"kind":input["kind"],"sourceId":input["sourceId"],"imported":completed,"reviewed":rows.len(),"nextCursor":page["nextCursor"],"sourceVersion":page["sourceVersion"],"adapterVersion":1,"snapshotConsistent":false,"cutoverReady":false,"reconciled":completed==rows.len()});
+    result["jobGroup"] = input["jobGroup"].clone();
+    result["cursor"] = input["cursor"].clone();
     if let Some(source) = page.get("sourceExport") {
         result["sourceExport"] = source.clone();
     }

@@ -1,12 +1,17 @@
 /** App-owned inward migration workflow: native consent, exact reviewed pages, private product targets and durable jobs. */
 import { useEffect, useRef, useState } from "react";
 import type { RequestFn } from "../../../../frontend/src/shared/api/types";
-import type { CustomerGroup } from "../../../../frontend/src/shared/customer/customer-types";
 import InstallConsent from "./InstallConsent";
 import Icon from "../../../../frontend/src/shared/ui/Icon";
 import Connection from "./Connection";
-import Jobs from "./Jobs";
+import JobHistory from "./JobHistory";
+import RunPlans, { type RunPlan } from "./RunPlans";
+import useJobPages from "./useJobPages";
+import useMigrationPackages from "./useMigrationPackages";
+import useCustomerGroups from "./useCustomerGroups";
+import useMigrationDesign from "./useMigrationDesign";
 import Target from "./Target";
+import SourceProfile from "./SourceProfile";
 import MigrationSteps from "./MigrationSteps";
 import ReviewPanel from "./ReviewPanel";
 import Agent from "./Agent";
@@ -19,7 +24,6 @@ import {
   reviewPriceBasis,
   type Kind,
   type Review,
-  type Job,
 } from "./model";
 import "./migration.css";
 export default function MigrationWorkspace({
@@ -40,12 +44,7 @@ export default function MigrationWorkspace({
   const t = useMigrationText(),
     current = useRef(request);
   current.current = request;
-  const [app, setApp] = useState<{ active: boolean; revision: number }>(),
-    [install, setInstall] = useState<string>(),
-    [designerPackage, setDesignerPackage] = useState<{
-      active: boolean;
-      digest: string;
-    }>(),
+  const [install, setInstall] = useState<string>(),
     [settings, setSettings] = useState(false),
     [agent, setAgent] = useState(false),
     [kind, setKind] = useState<Kind>("products"),
@@ -57,67 +56,38 @@ export default function MigrationWorkspace({
     [tax, setTax] = useState(""),
     [priceBasis, setPriceBasis] = useState(""),
     [group, setGroup] = useState(""),
-    [groups, setGroups] = useState<CustomerGroup[]>([]),
-    [jobs, setJobs] = useState<Job[]>([]),
+    [plan, setPlan] = useState<RunPlan>(),
     [working, setBusy] = useState(false),
     [error, setError] = useState("");
+  const accessKey = [...rights].sort().join("|");
   const canRead = rights.includes("apps.read"),
     canManage = rights.includes("apps.manage"),
     canImport = importRights(kind).every((p) => rights.includes(p));
-  const load = async () => {
-    const owner = request;
-    const v = await owner("/api/apps");
-    if (current.current !== owner) return;
-    setApp(v.packages.find((p: { id: string }) => p.id === "migration"));
-    setDesignerPackage(
-      v.packages.find((p: { id: string }) => p.id === "site_builder"),
-    );
-  };
+  const { app, designerPackage, load } = useMigrationPackages(
+    request,
+    canRead,
+    setError,
+  );
   useEffect(() => {
     setReview(undefined);
     setTarget(undefined);
-    setJobs([]);
     setError("");
-    setApp(undefined);
-    if (canRead) void load().catch((e) => setError(e.message));
-  }, [request, canRead]);
-  useEffect(() => {
-    if (!app?.active || !canManage) return;
-    let active = true;
-    const update = () =>
-      request("/api/apps/migration/jobs")
-        .then((v) => {
-          if (active) setJobs(v.jobs);
-        })
-        .catch((e) => {
-          if (active) setError(e.message);
-        });
-    void update();
-    const timer = setInterval(update, 4000);
-    return () => {
-      active = false;
-      clearInterval(timer);
-    };
-  }, [request, app?.active, canManage]);
-  useEffect(() => {
-    if (
-      kind !== "customers" ||
-      !rights.includes("customers.write") ||
-      !rights.includes("customers.pii")
-    )
-      return;
-    let active = true;
-    void request("/api/merchant/customers/create-context")
-      .then((v) => {
-        if (active) setGroups(v.elements);
-      })
-      .catch((e) => {
-        if (active) setError(e.message);
-      });
-    return () => {
-      active = false;
-    };
-  }, [kind, request, rights]);
+    setPlan(undefined);
+  }, [request, canRead, accessKey]);
+  const { jobs, refresh, hasMore, more } = useJobPages(
+    request,
+    !!app?.active && canManage,
+    plan?.id,
+    setError,
+    accessKey,
+  );
+  const groups = useCustomerGroups(
+    request,
+    kind === "customers" &&
+      rights.includes("customers.write") &&
+      rights.includes("customers.pii"),
+    setError,
+  );
   const adoptReview = (value?: Review) => {
     setPriceBasis("");
     setReview(value);
@@ -129,6 +99,8 @@ export default function MigrationWorkspace({
     jobs,
     kind,
     sourceId,
+    jobGroup: plan?.id,
+    accessKey,
     onReview: adoptReview,
     onError: setError,
   });
@@ -152,6 +124,21 @@ export default function MigrationWorkspace({
         : workspace;
       if (current.current !== owner) return;
       if (isPrivate(kind)) setTarget(destination);
+      if (plan && isPrivate(kind) && plan.target !== destination) {
+        const fields = {
+          title: plan.title,
+          source_id: plan.source_id,
+          domains: plan.domains,
+          target: destination,
+        };
+        const saved = await owner("/api/apps/migration/actions/save_run", {
+          id: plan.id,
+          revision: plan.revision,
+          fields,
+        });
+        if (current.current !== owner) return;
+        setPlan({ ...plan, ...fields, revision: saved.revision });
+      }
       const options = importOptions(kind, {
         tax,
         sourcePriceBasis,
@@ -168,6 +155,7 @@ export default function MigrationWorkspace({
         "/api/apps/migration/actions/import_" + kind,
         {
           sourceId,
+          ...(plan ? { jobGroup: plan.id } : {}),
           kind,
           target: destination,
           recordDigests: review.recordDigests,
@@ -179,7 +167,7 @@ export default function MigrationWorkspace({
       );
       if (current.current === owner) {
         setApproved(false);
-        setJobs((await owner("/api/apps/migration/jobs")).jobs);
+        refresh();
       }
     } catch (e) {
       if (current.current === owner) setError((e as Error).message);
@@ -187,6 +175,18 @@ export default function MigrationWorkspace({
       if (current.current === owner) setBusy(false);
     }
   };
+
+  const design = useMigrationDesign({
+    request,
+    target,
+    onDesign,
+    reference: review?.records[0]?.sourceShop,
+    setTarget,
+    setBusy,
+    setError,
+    name: t("title"),
+  });
+  const agentContext = { kind, review, plan };
   return (
     <div className="studio-page migration-workspace">
       <header className="page-intro">
@@ -246,31 +246,32 @@ export default function MigrationWorkspace({
               setApproved(false);
               setCursor(undefined);
             }}
-            onDesign={
-              onDesign
-                ? async () => {
-                    setBusy(true);
-                    setError("");
-                    const owner = request;
-                    try {
-                      const preview =
-                        target ??
-                        (await owner("/api/environments", { name: t("title") }))
-                          .id;
-                      if (current.current !== owner) return;
-                      setTarget(preview);
-                      await onDesign?.(preview, review?.records[0]?.sourceShop);
-                    } catch (e) {
-                      if (current.current === owner)
-                        setError((e as Error).message);
-                    } finally {
-                      if (current.current === owner) setBusy(false);
-                    }
-                  }
-                : undefined
-            }
+            onDesign={design}
           />
           <main>
+            {canManage && (
+              <RunPlans
+                request={request}
+                mainLocale={mainLocale}
+                sourceId={sourceId}
+                target={target}
+                selected={plan}
+                busy={busy}
+                onError={setError}
+                onSelect={(value) => {
+                  setPlan(value);
+                  setReview(undefined);
+                  setApproved(false);
+                  setCursor(undefined);
+                  if (value) {
+                    setSourceId(value.source_id);
+                    setTarget(value.target);
+                    if (value.domains.length) setKind(value.domains[0]);
+                  }
+                }}
+              />
+            )}
+
             {settings && (
               <section className="studio-card">
                 <h2>{t("connection")}</h2>
@@ -296,24 +297,22 @@ export default function MigrationWorkspace({
                   value={target}
                   onChange={(v) => {
                     setTarget(v);
+                    setPlan(undefined);
                     setApproved(false);
                   }}
                   onError={setError}
                 />
               )}
-              <details>
-                <summary>{t("sourceId")}</summary>
-                <input
-                  aria-label={t("sourceId")}
-                  value={sourceId}
-                  maxLength={100}
-                  onChange={(e) => {
-                    setSourceId(e.target.value);
-                    setReview(undefined);
-                    setApproved(false);
-                  }}
-                />
-              </details>
+              <SourceProfile
+                value={sourceId}
+                onChange={(value) => {
+                  setSourceId(value);
+                  setPlan(undefined);
+                  setReview(undefined);
+                  setApproved(false);
+                }}
+              />
+
               <button
                 className="studio-primary"
                 disabled={busy}
@@ -345,34 +344,30 @@ export default function MigrationWorkspace({
                 />
               )}
             </section>
-            <section className="studio-card">
-              <h2>{t("jobs")}</h2>
-              <Jobs
-                request={request}
-                jobs={jobs}
-                manage={canManage}
-                busy={busy}
-                onBusy={setBusy}
-                onError={setError}
-                onJobs={setJobs}
-                onReview={(value) => {
-                  setKind(value.kind);
-                  setSourceId(value.sourceId);
-                  adoptReview(value);
-                }}
-                onNext={async (result) => {
-                  setKind(result.kind);
-                  setSourceId(result.sourceId);
-                  if (isPrivate(result.kind) && result.target)
-                    setTarget(result.target);
-                  await inspect(
-                    result.nextCursor,
-                    result.kind,
-                    result.sourceId,
-                  );
-                }}
-              />
-            </section>
+            <JobHistory
+              grouped={!!plan}
+              more={more}
+              hasMore={hasMore}
+              request={request}
+              jobs={jobs}
+              manage={canManage}
+              busy={busy}
+              onBusy={setBusy}
+              onError={setError}
+              onRefresh={refresh}
+              onReview={(value) => {
+                setKind(value.kind);
+                setSourceId(value.sourceId);
+                adoptReview(value);
+              }}
+              onNext={async (result) => {
+                setKind(result.kind);
+                setSourceId(result.sourceId);
+                if (isPrivate(result.kind) && result.target)
+                  setTarget(result.target);
+                await inspect(result.nextCursor, result.kind, result.sourceId);
+              }}
+            />
           </main>
         </div>
       )}
@@ -388,9 +383,7 @@ export default function MigrationWorkspace({
           }}
         />
       )}
-      {agent && (
-        <Agent onClose={() => setAgent(false)} kind={kind} review={review} />
-      )}
+      {agent && <Agent onClose={() => setAgent(false)} {...agentContext} />}
     </div>
   );
 }

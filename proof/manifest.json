@@ -1013,8 +1013,8 @@
     },
     "extensions/apps/migration/service/batch.rs": {
       "status": "unproved",
-      "sha256": "130e119bed9cf007a4f2cc0090073969119bc9f76a54127f0c4ea40db11c39f1",
-      "review": "Reviewed independent frozen-export transport/package boundaries, separate export-only credential, pinned manifest/context/count/digest and bounded source-reference readiness. Actual pack/HTTP counterexamples and 52-product native intake/replay/tamper stop pass, no native authority or extracted pure business policy changed; source JSON, files, crypto/provider/async remain outside Lean proof."
+      "sha256": "7bfceb883b4df5a2c55197f3a92e5d5540be711a608ac82a940f5454468c29ef",
+      "review": "Reviewed generic scoped job keyset/correlation read, held cursor position and explicit missing-anchor conflict; native HTTP105-job/archive/foreign checks, current action/PII redaction preserved. App work-plan schema and independent batch annotations carry no import/cutover authority. Native signed migration and focused independent boundary review pass; SQL/provider/async paths remain outside extracted proof."
     },
     "extensions/apps/migration/service/callback_errors.rs": {
       "status": "unproved",
@@ -1553,8 +1553,8 @@
     },
     "src/apps/jobs.rs": {
       "status": "unproved",
-      "sha256": "fa2800f1caaaae5f59a8b066ba9e726241c3a7120f097f573df72b33f45c1be8",
-      "review": "Reviewed optional grouped native job events, unchanged per-action compatibility and package/current actor/lease fences; bounded 32KiB stored rich documents retain strict APP metadata/checkpoints. Actual five-second slow-source RED and native document-depth RED fixed; running cancellation RED fixed with final native progress fence; complete concrete Woo families and private visibility verified through native selected publication and simulated checkout. Focused independent async review found no remaining Important/Critical defects. SQL/network/source parity remain outside pure proof."
+      "sha256": "1652b6efc1efe61c8459342186608544e88929a6e64490d90e0e2c413a248b19",
+      "review": "Reviewed generic scoped job keyset/correlation read, held cursor position and explicit missing-anchor conflict; native HTTP105-job/archive/foreign checks, current action/PII redaction preserved. App work-plan schema and independent batch annotations carry no import/cutover authority. Native signed migration and focused independent boundary review pass; SQL/provider/async paths remain outside extracted proof."
     },
     "src/apps/manifest.rs": {
       "status": "unproved",

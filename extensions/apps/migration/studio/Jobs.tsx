@@ -12,7 +12,7 @@ export default function Jobs({
   busy,
   onBusy,
   onError,
-  onJobs,
+  onRefresh,
   onNext,
   onReview,
 }: {
@@ -22,7 +22,7 @@ export default function Jobs({
   busy: boolean;
   onBusy: (value: boolean) => void;
   onError: (value: string) => void;
-  onJobs: (jobs: Job[]) => void;
+  onRefresh: () => void;
   onReview: (review: Review) => void;
   onNext: (result: NonNullable<Job["result"]>) => Promise<void>;
 }) {
@@ -73,7 +73,7 @@ export default function Jobs({
                     revision: job.revision,
                     approveUnknownOutcome: true,
                   });
-                  onJobs((await request("/api/apps/migration/jobs")).jobs);
+                  onRefresh();
                 } catch (e) {
                   onError((e as Error).message);
                 } finally {

@@ -4,6 +4,11 @@ This is the single starting point for what works, what is implemented but not
 publicly accepted, and what still needs development. Updated 18 October 2026.
 A green test, merged code and a completed public business journey are different evidence.
 
+Local migration follow-up (19 October): saved native work plans now connect source
+profiles, planned areas and private previews with paged/grouped jobs. This is
+context and reviewed-batch history, not whole-shop orchestration, present target
+parity or final cutover. Public deployment is still not established for this draft.
+
 Local migration follow-up (18 October): frozen domain export packaging and pinned
 HTTPS intake now reuse native reviewed jobs, with separate export credentials,
 source-reference checks and visible original counts/digests. Two-page native

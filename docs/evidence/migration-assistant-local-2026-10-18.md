@@ -281,3 +281,46 @@ Additional evidence: `migration-export-red.log`, `migration-export-green.log`,
 `migration-export-completed.png` under the local artifacts directory. These are
 local development results; the complete assistant remains a draft, not a public
 rollout or admission of arbitrary live source stores.
+
+
+## Saved work plans and history — 19 October local acceptance
+
+- Native private `migration/runs` logical records retain translated labels, source
+  profile, planned domains and private preview with native optimistic revisions.
+  Actual save/list/CAS conflict, invalid domain-array negatives and foreign-shop
+  denial passed; saving a plan starts no import and does not approve records.
+- Actual HTTP history containing 105 additional jobs was read in disjoint 7-row
+  keyset pages by group. Current action/PII redaction and tenant/app containment
+  remain in the original owner. Native retention is still 1,000 jobs/shop.
+- Independent review found that deleting a cursor row could falsely end pagination.
+  Actual old-binary HTTP RED reproduced an archived cursor returning 200/empty.
+  The fix retains a resolved timestamp for the current read and reports 409/reload
+  for an already missing cursor. Actual archive/foreign/bounds negatives passed.
+- Independent review also found malformed domain metadata and late manual job
+  refreshes after role changes. Native action schemas and defensive Studio decoding
+  now reject bad plans; one request/group/access-key-fenced hook owns all job-list
+  responses. A delayed control-refresh regression confirms that revoking the same
+  user's PII right cannot repopulate customer-review rows from an old response.
+  Focused re-review reported no remaining Important/Critical findings.
+- Complete registered migration fixtures passed through actual separate signed
+  System/Tenant database logins, restart, signing-key rotation and tenant-isolation
+  checks. They include frozen 52-product native private imports, grouped source
+  evidence, exact amounts, replay/tamper/conflict negatives and the existing native
+  publication/simulated purchase/stock-once/new-empty-cart path. Source APIs and
+  payment remain synthetic; this is not live-provider or hosted service acceptance.
+- Actual Chrome: create `Sommerkollektion – Browser-Abnahme`, select products/images,
+  save, reload, reopen the native plan, inspect its frozen source, explicitly
+  confirm gross/19%/exact rows, queue import, reload and reopen again. The same
+  preview and linked 29/29 completion were visible. This browser import was an
+  exact replay into the existing synthetic destination, not a second unique batch.
+- Rust workspace tests/clippy, 120 frontend files/685 tests, build/format/localization,
+  structure, formal baseline and negative proof controls passed for this scope.
+  SQL/provider/async behavior is outside the extracted proof boundary.
+
+![Saved plan and persisted batch completion after full browser reload](images/migration-2026-10-18/work-plan-completed.jpg)
+
+The labels and plan are context only. They do not freeze changing connection settings,
+prove whole-shop coverage/current target parity, persist a separate receipt ledger
+past job archival, perform final deltas/cutover or establish real hosted admission.
+Whole-shop orchestration and the remaining provider/content/navigation/branding/
+redirect scope remain open. No public rollout is claimed for PR 168.

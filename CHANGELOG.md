@@ -1,5 +1,11 @@
 # Changelog
 
+## Saved migration work plans — 2026-10-19
+
+- Connect a named source/domain/private-preview work plan to existing leased jobs through a non-authoritative group label. Plans use native logical records, revisions and current app rights; they never approve a source page or authorize cutover.
+- Page native job history beyond its previous latest-100 window, retaining tenant/app scope and current action/PII redaction. An archived page anchor now reports an explicit restart conflict instead of silently hiding older jobs.
+- Validate planned domains on the native save action and defensively in Studio. Keep current role/shop/plan changes fenced against stale asynchronous UI replies. [Workflow and remaining limits](docs/agentic-migration.md).
+
 ## Frozen source-export intake — 2026-10-18
 
 - Add independent Rust streaming export packages with original source context, immutable page hashes and exact counts. Protect export files, reject duplicates/shallow references, and preserve original identities across export hosting.

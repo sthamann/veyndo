@@ -74,14 +74,65 @@ pub(super) fn router() -> Router<App> {
             get(detail).post(control),
         )
 }
+#[derive(Default, Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+struct JobPage {
+    limit: Option<i64>,
+    after: Option<String>,
+    group: Option<String>,
+}
 async fn list(
     State(a): State<App>,
     h: RequestContext,
     Path(id): Path<String>,
+    axum::extract::Query(q): axum::extract::Query<JobPage>,
 ) -> Result<Json<Value>> {
     let t = merchant(&a, &h)?;
     let m = package(&a, &t, &id, false).await?;
-    let mut rows:Vec<Value>=sqlx::query_scalar("SELECT jsonb_build_object('id',id,'action',action,'packageDigest',package_digest,'status',CASE WHEN status IN ('running','cancel_requested') AND lease_until<now() THEN 'uncertain' ELSE status END,'progress',progress,'message',message,'result',CASE WHEN status='succeeded' THEN result ELSE NULL END,'actor',actor,'revision',revision,'createdAt',created_at,'updatedAt',updated_at) FROM app_jobs WHERE tenant=$1 AND app=$2 ORDER BY created_at DESC,id DESC LIMIT 100").bind(&t).bind(&id).fetch_all(&a.db).await?;
+    let limit = q.limit.unwrap_or(100);
+    if !(1..=100).contains(&limit)
+        || q.after
+            .as_ref()
+            .is_some_and(|s| s.is_empty() || s.len() > 100)
+        || q.group
+            .as_ref()
+            .is_some_and(|s| s.is_empty() || s.len() > 100)
+    {
+        return Err(bad(
+            "Invalid app job page: limit 1..100; cursor/group 1..100 bytes",
+        ));
+    }
+    // Resolve the scoped anchor once: subsequent archival cannot turn its tuple into SQL NULL.
+    let before: Option<String> = if let Some(after) = &q.after {
+        Some(
+            sqlx::query_scalar(
+                "SELECT created_at::text FROM app_jobs WHERE tenant=$1 AND app=$2 AND id=$3",
+            )
+            .bind(&t)
+            .bind(&id)
+            .bind(after)
+            .fetch_optional(&a.db)
+            .await?
+            .ok_or(conflict(
+                "App job cursor no longer exists; reload the job history",
+            ))?,
+        )
+    } else {
+        None
+    };
+    // Correlation is an untrusted label, never a permission or a completion receipt.
+    // Retention is separately capped at 1000/shop; no unbounded input/index scan.
+    let mut rows: Vec<Value> = sqlx::query_scalar("SELECT jsonb_build_object('id',j.id,'action',j.action,'packageDigest',j.package_digest,'status',CASE WHEN j.status IN ('running','cancel_requested') AND j.lease_until<now() THEN 'uncertain' ELSE j.status END,'progress',j.progress,'message',j.message,'result',CASE WHEN j.status='succeeded' THEN j.result ELSE NULL END,'actor',j.actor,'revision',j.revision,'createdAt',j.created_at,'updatedAt',j.updated_at) FROM app_jobs j WHERE j.tenant=$1 AND j.app=$2 AND ($3::text IS NULL OR j.input->>'jobGroup'=$3) AND ($4::text IS NULL OR (j.created_at,j.id)<($5::text::timestamptz,$4)) ORDER BY j.created_at DESC,j.id DESC LIMIT $6")
+        .bind(&t).bind(&id).bind(&q.group).bind(&q.after).bind(before).bind(limit + 1).fetch_all(&a.db).await?;
+    let has_more = rows.len() > limit as usize;
+    rows.truncate(limit as usize);
+    let next = if has_more {
+        rows.last()
+            .and_then(|r| r["id"].as_str())
+            .map(str::to_owned)
+    } else {
+        None
+    };
     let digest = approval::canonical_digest(&m);
     for row in &mut rows {
         let allowed = row["packageDigest"] == digest
@@ -98,7 +149,9 @@ async fn list(
         }
         row.as_object_mut().unwrap().remove("packageDigest");
     }
-    Ok(Json(json!({"jobs":rows})))
+    Ok(Json(
+        json!({"jobs":rows,"hasMore":has_more,"nextCursor":next,"limit":limit}),
+    ))
 }
 async fn detail(
     State(a): State<App>,

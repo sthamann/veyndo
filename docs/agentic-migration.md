@@ -9,6 +9,43 @@ This is an implementation and local acceptance record, **not a declaration that
 all source shops or the entire migration concept are already accepted publicly**.
 See [current status](status.md) for deployed journeys.
 
+## Saved migration work plans
+
+![Saved work plan and batch completion after reload](evidence/images/migration-2026-10-18/work-plan-completed.jpg)
+
+Studio can save a named work plan with its source profile, planned domains and an
+existing private destination. Selecting it after a reload restores context, not
+approval. When the first private import needs a new preview, Studio saves that
+preview reference with the plan's current native record revision **before** queueing
+an import. A conflicting plan edit stops that action; it does not overwrite another
+administrator. Switching source/destination leaves the selected plan instead of
+silently rewriting its meaning. The shared agent sees this same limited context.
+
+Plans are private `migration/runs` logical app records in the existing four shared
+storage tables. They contain no source rows, API credentials, second job queue or
+per-app SQL objects. Native `list_runs`/`save_run` actions require current
+`apps.manage`; the read action is available to the existing MCP/agent gateway.
+Saving a plan neither imports records nor approves a batch. Unknown, duplicate,
+empty or non-array domain selections fail the save action; the UI also rejects
+malformed stored plans.
+
+Source inspection and import jobs carry the generic, non-authoritative `jobGroup`
+label. `GET /api/apps/APP/jobs?group=ID&limit=100&after=CURSOR` uses scoped keyset
+pages and preserves current action/PII redaction. Studio shows older pages through
+**Load older jobs** instead of silently losing everything beyond the latest 100.
+If an anchor was archived before the next read, the API returns an explicit 409
+asking the caller to reload, rather than a false end of history. It resolves a
+present anchor once, so archival during that read cannot turn its position into
+SQL NULL. Native retention remains **1,000 jobs per shop**; grouping does not remove
+this limit and archived jobs do not become durable reconciliation receipts.
+
+A plan and its job labels are merchant metadata, not evidence that every source
+record was imported exactly once. They do not freeze mutable connection settings,
+establish current target-field parity, bind a cross-domain snapshot, run final
+deltas or authorize cutover. Job success still applies to one exact reviewed batch;
+replaying a batch must not be summed as additional migrated source records.
+
+
 ## One connected workflow
 
 1. Open **Sales channels → Migration Assistant** and review installation consent.
