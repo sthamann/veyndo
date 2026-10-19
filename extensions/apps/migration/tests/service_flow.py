@@ -14,6 +14,8 @@ class SourceFixture(BaseHTTPRequestHandler):
             assert self.headers.get('Authorization')=='Bearer frozen-export-synthetic'
             if self.path not in export_files:self.send_error(404);return
             self.send_response(200);self.end_headers();self.wfile.write(export_files[self.path]);return
+        if self.headers.get('Authorization')=='Bearer empty-source-synthetic':
+            self.send_response(200);self.send_header('X-WP-TotalPages','1');self.end_headers();self.wfile.write(b'[]');return
         crm=crm_get(self.path,self.headers.get('Authorization'),a['workspace'])
         if crm is not None:
             self.send_response(200);self.end_headers();self.wfile.write(json.dumps(crm).encode());return
@@ -61,7 +63,7 @@ call('/api/apps',consent({'builtIn':'migration'}),h)
 package=next(p for p in call('/api/apps',h=h)['packages'] if p['id']=='migration')
 call('/api/apps/migration/credentials',{'approve':True,'digest':package['digest'],'permissions':['jobs.write']*33,'expiresInDays':1},h,400)
 call('/api/apps/migration/credentials',{'approve':True,'digest':package['digest'],'permissions':['payments.record'],'expiresInDays':1},h,400)
-key=call('/api/apps/migration/credentials',{'approve':True,'digest':package['digest'],'permissions':['jobs.write','products.write','orders.read','orders.import','customers.write','customers.pii','settings.read','data.write','assets.write','reviews.write','promotions.write'],'expiresInDays':1},h)['key']
+key=call('/api/apps/migration/credentials',{'approve':True,'digest':package['digest'],'permissions':['jobs.write','products.write','orders.read','orders.import','customers.write','customers.pii','settings.read','data.write','assets.write','reviews.write','promotions.write','products.read','assets.read','customers.read','data.read'],'expiresInDays':1},h)['key']
 with socket.socket() as probe:probe.bind(('127.0.0.1',0));port=probe.getsockname()[1]
 service=f'http://127.0.0.1:{port}';gateway='synthetic-migration-gateway-'+'x'*32
 source_origin=f'http://127.0.0.1:{source.server_port}'
@@ -73,6 +75,7 @@ call('/api/apps/migration/settings',{'approve':True,'digest':binding['digest'],'
 assert 'source-read-synthetic' not in json.dumps(call('/api/apps/migration/settings',h=h))
 env={**os.environ,'MIGRATION_ALLOW_FIXTURE':'1','MIGRATION_BIND':f'127.0.0.1:{port}','MIGRATION_GATEWAY_TOKEN':gateway,'MIGRATION_CALLBACKS':json.dumps({a['workspace']:{'coreUrl':core_url,'token':key}}),'MIGRATION_SOURCES':json.dumps({a['workspace']:{'fixture':{'system':'woocommerce','origin':source_origin,'token':'source-read-synthetic','version':'wc/v3','currency':'EUR','scale':2,'locale':'en-GB'},'slow':{'system':'woocommerce','origin':source_origin,'token':'slow-source-synthetic','version':'wc/v3','currency':'EUR','scale':2,'locale':'en-GB'},'variable':{'system':'woocommerce','origin':source_origin,'token':'variable-source-synthetic','version':'wc/v3','currency':'EUR','scale':2,'locale':'en-GB'}}})}
 profiles=json.loads(env['MIGRATION_SOURCES'])
+profiles[a['workspace']]['empty']={**profiles[a['workspace']]['fixture'],'token':'empty-source-synthetic'}
 for system in ('prestashop','magento2','shopware5','shopify'):
     profiles[a['workspace']][system]={'system':system,'origin':source_origin,'token':'provider-source-synthetic','username':'fixture' if system=='shopware5' else '', 'version':'2026-10' if system=='shopify' else 'explicit-fixture-profile','currency':'EUR','scale':2,'locale':'en-GB'}
 export_directory=tempfile.TemporaryDirectory()
@@ -162,6 +165,8 @@ try:
             if saved['status'] not in ['queued','running']:break
             time.sleep(.1)
         assert saved['status']=='succeeded',(domain,saved)
+        assert saved['result']['comparison']['matching']==saved['result']['reviewed']==1,(domain,saved['result'])
+        assert saved['result']['reconciled'],(domain,saved['result'])
         source_row=source_page['records'][0]
         dest_id=str(uuid.UUID(bytes=hashlib.sha256(json.dumps([a['workspace'],source_row['source'],source_row['sourceShop'],domain,source_row['sourceId']],separators=(',',':')).encode()).digest()[:16]))
         if domain=='coupons':
@@ -194,6 +199,7 @@ try:
     call('/api/apps/migration/jobs/'+customer_job['id'],h=reader_h,status=403)
     print('PASS saved source PII requires current paired rights; revocation redacts list and denies detail, foreign access denied')
     print('PASS all eight implemented source domains traverse the real gateway/service/outbox/native-write path')
+    exec(compile((ROOT/'extensions/apps/migration/tests/durable_flow.py').read_text(),'durable_flow.py','exec'))
     exec(compile((ROOT/'extensions/apps/migration/tests/variable_flow.py').read_text(),'variable_flow.py','exec'))
     exec(compile((ROOT/'extensions/apps/migration/tests/provider_flow.py').read_text(),'provider_flow.py','exec'))
     exec(compile((ROOT/'extensions/apps/migration/tests/provider_crm_flow.py').read_text(),'provider_crm_flow.py','exec'))

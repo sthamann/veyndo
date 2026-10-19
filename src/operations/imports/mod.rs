@@ -5,6 +5,8 @@ mod categories;
 mod coupons;
 mod customers;
 mod historical_orders;
+mod inspect;
+pub(crate) use inspect::{inspect, route as inspect_route};
 mod products;
 mod relations;
 mod reviews;
@@ -54,7 +56,14 @@ pub(super) async fn identity_namespace(a: &App, t: &str) -> Result<String> {
     Ok(staging::parent(a, t).await?.unwrap_or_else(|| t.into()))
 }
 pub(crate) fn schema(name: &str) -> Option<Value> {
-    (name=="merchant.import.record").then(||json!({"type":"object","properties":{"assetChunks":{"type":"array","maxItems":172,"items":{"type":"string","maxLength":65536}},"approve":{"type":"boolean"},"record":{"type":"object","properties":{"version":{"type":"integer","enum":[1]},"source":{"type":"string","minLength":1,"maxLength":200},"sourceShop":{"type":"string","minLength":1,"maxLength":200},"kind":{"type":"string","enum":["products","categories","pages","customers","orders","assets","reviews","coupons"]},"sourceId":{"type":"string","minLength":1,"maxLength":200},"data":{"type":"object"},"warnings":{"type":"array","maxItems":20,"items":{"type":"string","maxLength":2000}}},"required":["version","source","sourceShop","kind","sourceId","data","warnings"],"additionalProperties":false},"options":{"type":"object","properties":{"channelId":{"type":"string","maxLength":100},"taxRate":{"type":"number","minimum":0,"maximum":50},"sourcePriceBasis":{"type":"string","enum":["gross","net"]},"customerGroup":{"type":"string","maxLength":100},"locale":{"type":"string","maxLength":35},"destinationDigest":{"type":"string","minLength":64,"maxLength":64},"acknowledgedWarnings":{"type":"array","maxItems":20,"items":{"type":"string","maxLength":2000}}},"additionalProperties":false}},"required":["approve","record","options"],"additionalProperties":false}))
+    let mut schema = (matches!(name,"merchant.import.record"|"merchant.import.inspect")).then(||json!({"type":"object","properties":{"assetChunks":{"type":"array","maxItems":172,"items":{"type":"string","maxLength":65536}},"approve":{"type":"boolean"},"record":{"type":"object","properties":{"version":{"type":"integer","enum":[1]},"source":{"type":"string","minLength":1,"maxLength":200},"sourceShop":{"type":"string","minLength":1,"maxLength":200},"kind":{"type":"string","enum":["products","categories","pages","customers","orders","assets","reviews","coupons"]},"sourceId":{"type":"string","minLength":1,"maxLength":200},"data":{"type":"object"},"warnings":{"type":"array","maxItems":20,"items":{"type":"string","maxLength":2000}}},"required":["version","source","sourceShop","kind","sourceId","data","warnings"],"additionalProperties":false},"options":{"type":"object","properties":{"channelId":{"type":"string","maxLength":100},"taxRate":{"type":"number","minimum":0,"maximum":50},"sourcePriceBasis":{"type":"string","enum":["gross","net"]},"customerGroup":{"type":"string","maxLength":100},"locale":{"type":"string","maxLength":35},"destinationDigest":{"type":"string","minLength":64,"maxLength":64},"acknowledgedWarnings":{"type":"array","maxItems":20,"items":{"type":"string","maxLength":2000}}},"additionalProperties":false}},"required":["approve","record","options"],"additionalProperties":false}))
+    ?;
+    if name == "merchant.import.inspect" {
+        schema["properties"].as_object_mut()?.remove("approve");
+        schema["properties"].as_object_mut()?.remove("assetChunks");
+        schema["required"] = json!(["record", "options"]);
+    }
+    Some(schema)
 }
 pub(crate) async fn route(
     State(a): State<App>,

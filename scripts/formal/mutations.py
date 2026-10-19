@@ -5,6 +5,7 @@ from registry import check
 from axioms import source_check,dependency_check
 
 MUTANTS=[
+ ("job_completion_admissible", "!cancel_requested || !succeeded", "true"),
  ("source_activation_admissible", "!imported || !active || reviewed", "true"),
  ("native_lifecycle_admissible", "native &&", "true &&"),
  ("native_lifecycle_admissible", "&& rights &&", "&& true &&"),

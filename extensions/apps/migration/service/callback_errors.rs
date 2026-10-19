@@ -10,7 +10,14 @@ pub fn classify(error: &str) -> String {
     }
 }
 pub fn message(error: &str) -> Value {
-    let text = if error.starts_with("Veyndo callback") {
+    let text = if error.starts_with("Source changed after review;") {
+        [
+            "The source page differs from the approved snapshot. Use Review source page again in the migration plan, check its records and approve the new page. Existing target records were not overwritten.",
+            "Die Quellseite weicht vom freigegebenen Stand ab. Nutze im Migrationsplan Quellseite neu prüfen, kontrolliere die Datensätze und gib die neue Seite frei. Bestehende Zieldaten wurden nicht überschrieben.",
+            "La page source diffère de la version approuvée. Vérifiez à nouveau la page source dans le plan, contrôlez les données et approuvez la nouvelle page. Les données cibles ne sont pas écrasées.",
+            "La página de origen difiere de la versión aprobada. Vuelve a revisar la página en el plan, comprueba sus registros y apruébala. No se sobrescribieron los datos de destino.",
+        ]
+    } else if error.starts_with("Veyndo callback") {
         if error.contains("HTTP 409") {
             [
                 "Veyndo import conflict (HTTP 409). The destination, source snapshot, options or job revision differs from the admitted import. Reuse the original destination and reviewed options, or prepare an explicit update. Existing records were not overwritten.",

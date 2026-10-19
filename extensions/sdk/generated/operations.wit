@@ -638,6 +638,28 @@ interface inputs {
     %data: string,
     %revision: s64,
   }
+  record merchant-import-inspect-input-options {
+    %acknowledged-warnings: option<list<string>>,
+    %channel-id: option<string>,
+    %customer-group: option<string>,
+    %destination-digest: option<string>,
+    %locale: option<string>,
+    %source-price-basis: option<string>,
+    %tax-rate: option<float64>,
+  }
+  record merchant-import-inspect-input-record {
+    %data: string,
+    %kind: string,
+    %source: string,
+    %source-id: string,
+    %source-shop: string,
+    %version: s64,
+    %warnings: list<string>,
+  }
+  record merchant-import-inspect-input {
+    %options: merchant-import-inspect-input-options,
+    %record: merchant-import-inspect-input-record,
+  }
   record merchant-import-record-input-options {
     %acknowledged-warnings: option<list<string>>,
     %channel-id: option<string>,
@@ -1559,6 +1581,7 @@ interface inputs {
   merchant-site-apply: func(input: merchant-site-apply-input) -> result<string, string>;
   studio-workspace-read: func(input: string) -> result<string, string>;
   studio-workspace-save: func(input: studio-workspace-save-input) -> result<string, string>;
+  merchant-import-inspect: func(input: merchant-import-inspect-input) -> result<string, string>;
   merchant-import-record: func(input: merchant-import-record-input) -> result<string, string>;
   merchant-customer-creation: func(input: string) -> result<string, string>;
   merchant-customer-create: func(input: merchant-customer-create-input) -> result<string, string>;

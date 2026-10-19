@@ -2,7 +2,7 @@
 import hashlib
 from pathlib import Path
 from testing.app_approval import consent
-m={'id':'migration_fixture','version':'1.0.0','coreApi':'1','runtime':'service','name':{'en':'Migration fixture'},'permissions':['jobs.write','products.write','events:self'],'events':['app.migration_fixture.job_import'],'actions':[{'name':'import','description':'Reviewed migration batch','handler':'job','permission':'catalog.write','requiredPermissions':['apps.manage','environments.manage'],'inputSchema':{'type':'object','properties':{'jobGroup':{'type':'string'},'kind':{'type':'string'},'target':{'type':'string'},'options':{'type':'object'},'recordDigests':{'type':'array','items':{'type':'string'}}},'additionalProperties':False}}]}
+m={'id':'migration_fixture','version':'1.0.0','coreApi':'1','runtime':'service','name':{'en':'Migration fixture'},'permissions':['jobs.write','products.write','products.read','events:self'],'events':['app.migration_fixture.job_import'],'actions':[{'name':'import','description':'Reviewed migration batch','handler':'job','permission':'catalog.write','requiredPermissions':['apps.manage','environments.manage'],'inputSchema':{'type':'object','properties':{'operation':{'type':'string','enum':['import','reconcile']},'jobGroup':{'type':'string'},'kind':{'type':'string'},'target':{'type':'string'},'options':{'type':'object'},'recordDigests':{'type':'array','items':{'type':'string'}}},'additionalProperties':False}}]}
 call('/api/apps',consent({'manifest':m}),h)
 prefix='/api/apps/migration_fixture';digest=next(p['digest'] for p in call('/api/apps',h=h)['packages'] if p['id']==m['id'])
 k=call(prefix+'/credentials',{'approve':True,'digest':digest,'permissions':['jobs.write','products.write'],'expiresInDays':1},h)
@@ -19,10 +19,25 @@ call(prefix+'/core/job_import',mutated,kh,409)
 r=call(prefix+'/core/job_import',w,kh)
 assert call('/api/merchant/products/'+r['id'],h=sh)['commerce']['stock']==0
 assert call(prefix+'/core/job_import',w,kh)['replayed']
+call(prefix+'/core/job_inspect',w,kh,403)
+readkey=call(prefix+'/credentials',{'approve':True,'digest':digest,'permissions':['jobs.write','products.write','products.read'],'expiresInDays':1},h)['key']
+readkh={**h,'Authorization':'Bearer '+readkey}
+assert call(prefix+'/core/job_inspect',w,readkh)['status']=='matching'
+call(prefix+'/core/job_inspect',{**w,'lease':'wrong'},readkh,409)
+call(prefix+'/core/job_inspect',mutated,readkh,409)
 entry=call(prefix+'/jobs/'+j,h=h)
 call(prefix+'/jobs/'+j,{'operation':'cancel','revision':entry['revision']},h)
 call(prefix+'/core/job_import',w,kh,409)
+call(prefix+'/core/job_inspect',w,readkh,409)
+call(prefix+'/core/job_progress',{'id':j,'lease':claim['lease'],'status':'succeeded','result':{'reconciled':True}},kh,409)
 call(prefix+'/core/job_import',w,{**kh,'x-tenant':b['workspace']},403)
+readonly=json.loads(json.dumps(pnew));readonly['sourceId']='read-only-missing';readonly['data']['sku']='READ-ONLY-MISSING'
+readonly_intent={**intent,'operation':'reconcile','recordDigests':[hashlib.sha256(json.dumps(readonly,sort_keys=True,separators=(',',':'),ensure_ascii=False).encode()).hexdigest()]}
+readonly_id=call(prefix+'/actions/import',readonly_intent,{**h,'Idempotency-Key':'read-only-job'})['jobId'];readonly_claim=call(prefix+'/core/job_claim',{'id':readonly_id},readkh)
+readonly_call={'id':readonly_id,'lease':readonly_claim['lease'],'record':readonly}
+call(prefix+'/core/job_import',readonly_call,readkh,409)
+assert call(prefix+'/core/job_inspect',readonly_call,readkh)['status']=='missing'
+print('PASS read-only job cannot create even a missing target, paired read grant required, stale/mutated/cancelled inspection denied')
 print('PASS reviewed job import: frozen row digest, native private target, replay, stale lease, cancellation and foreign key denial')
 # A resumed job sees the last acknowledged coarse checkpoint, never a new raw-record database.
 j2=call(prefix+'/actions/import',intent,{**h,'Idempotency-Key':'job-import-checkpoint'})['jobId']

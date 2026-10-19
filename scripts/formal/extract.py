@@ -10,6 +10,7 @@ def kernel_source(root):
     source=(root/'crates/kernel/src/verified_kernel.rs').read_text()
     registrations=(
         'mod app_intake;\n',
+        'pub use app_intake::job_completion_admissible;\n',
         'pub use app_intake::source_activation_admissible;\n',
         'mod fulfillment;\n',
         'pub use app_intake::native_lifecycle_admissible;\n',

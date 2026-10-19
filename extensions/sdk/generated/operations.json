@@ -3628,6 +3628,124 @@
       "readOnly": false
     },
     {
+      "description": "Read current mapped target fields and report missing/changed imports without writing",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "options": {
+            "additionalProperties": false,
+            "properties": {
+              "acknowledgedWarnings": {
+                "items": {
+                  "maxLength": 2000,
+                  "type": "string"
+                },
+                "maxItems": 20,
+                "type": "array"
+              },
+              "channelId": {
+                "maxLength": 100,
+                "type": "string"
+              },
+              "customerGroup": {
+                "maxLength": 100,
+                "type": "string"
+              },
+              "destinationDigest": {
+                "maxLength": 64,
+                "minLength": 64,
+                "type": "string"
+              },
+              "locale": {
+                "maxLength": 35,
+                "type": "string"
+              },
+              "sourcePriceBasis": {
+                "enum": [
+                  "gross",
+                  "net"
+                ],
+                "type": "string"
+              },
+              "taxRate": {
+                "maximum": 50,
+                "minimum": 0,
+                "type": "number"
+              }
+            },
+            "type": "object"
+          },
+          "record": {
+            "additionalProperties": false,
+            "properties": {
+              "data": {
+                "type": "object"
+              },
+              "kind": {
+                "enum": [
+                  "products",
+                  "categories",
+                  "pages",
+                  "customers",
+                  "orders",
+                  "assets",
+                  "reviews",
+                  "coupons"
+                ],
+                "type": "string"
+              },
+              "source": {
+                "maxLength": 200,
+                "minLength": 1,
+                "type": "string"
+              },
+              "sourceId": {
+                "maxLength": 200,
+                "minLength": 1,
+                "type": "string"
+              },
+              "sourceShop": {
+                "maxLength": 200,
+                "minLength": 1,
+                "type": "string"
+              },
+              "version": {
+                "enum": [
+                  1
+                ],
+                "type": "integer"
+              },
+              "warnings": {
+                "items": {
+                  "maxLength": 2000,
+                  "type": "string"
+                },
+                "maxItems": 20,
+                "type": "array"
+              }
+            },
+            "required": [
+              "version",
+              "source",
+              "sourceShop",
+              "kind",
+              "sourceId",
+              "data",
+              "warnings"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "record",
+          "options"
+        ],
+        "type": "object"
+      },
+      "name": "merchant.import.inspect",
+      "readOnly": true
+    },
+    {
       "description": "Explicitly import a source record through current domain permissions; historical orders have no purchase effects",
       "inputSchema": {
         "additionalProperties": false,

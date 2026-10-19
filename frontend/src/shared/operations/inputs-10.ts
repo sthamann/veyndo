@@ -31,6 +31,34 @@ export interface Inputs10 {
   "merchant.site.apply": { approve: boolean; taskId: string };
   "studio.workspace.read": JsonValue;
   "studio.workspace.save": { data: JsonValue; revision: number };
+  "merchant.import.inspect": {
+    options: {
+      acknowledgedWarnings?: Array<string>;
+      channelId?: string;
+      customerGroup?: string;
+      destinationDigest?: string;
+      locale?: string;
+      sourcePriceBasis?: "gross" | "net";
+      taxRate?: number;
+    };
+    record: {
+      data: JsonValue;
+      kind:
+        | "products"
+        | "categories"
+        | "pages"
+        | "customers"
+        | "orders"
+        | "assets"
+        | "reviews"
+        | "coupons";
+      source: string;
+      sourceId: string;
+      sourceShop: string;
+      version: 1;
+      warnings: Array<string>;
+    };
+  };
   "merchant.import.record": {
     approve: boolean;
     assetChunks?: Array<string>;
@@ -80,18 +108,5 @@ export interface Inputs10 {
     customerId: string;
     items: Array<{ id: string; quantity: number }>;
     locale: string;
-  };
-  "merchant.order.complete": {
-    approve: boolean;
-    cartToken: string;
-    channelId: string;
-    customerAcknowledgement: boolean;
-    digitalImmediate: boolean;
-    locale: string;
-    policyVersion: string;
-    requestKey: string;
-    revision: number;
-    terms: boolean;
-    totalMinor: string;
   };
 }

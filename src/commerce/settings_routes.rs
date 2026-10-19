@@ -9,7 +9,8 @@ pub(crate) async fn merchant_config(
     auth::permit(&h, "settings.read")?;
     let (data, revision) = config(&a, &t).await?;
     let rs=sqlx::query("SELECT id,product_id,author,rating,title,content,verified,approved,demo,source_import,created_at::text AS time FROM product_reviews WHERE tenant=$1 AND (source_import IS NULL OR $2) ORDER BY created_at DESC LIMIT 100").bind(&t).bind(auth::permit(&h, "catalog.read").is_ok() && auth::permit(&h, "customers.pii").is_ok()).fetch_all(&a.db).await?;
-    let os = if auth::permit(&h, "orders.read").is_ok() {
+    let os = if auth::permit(&h, "orders.read").is_ok() && auth::permit(&h, "customers.pii").is_ok()
+    {
         sqlx::query("SELECT data #- '{cart,token}' AS data FROM orders WHERE tenant=$1 ORDER BY created_at DESC LIMIT 30")
             .bind(&t)
             .fetch_all(&a.db)

@@ -37,13 +37,81 @@ If an anchor was archived before the next read, the API returns an explicit 409
 asking the caller to reload, rather than a false end of history. It resolves a
 present anchor once, so archival during that read cannot turn its position into
 SQL NULL. Native retention remains **1,000 jobs per shop**; grouping does not remove
-this limit and archived jobs do not become durable reconciliation receipts.
+this limit. Durable page evidence is stored separately as described below.
 
 A plan and its job labels are merchant metadata, not evidence that every source
 record was imported exactly once. They do not freeze mutable connection settings,
-establish current target-field parity, bind a cross-domain snapshot, run final
-deltas or authorize cutover. Job success still applies to one exact reviewed batch;
+bind a cross-domain snapshot, run final deltas or authorize cutover.
+The separate current-field comparison below reads actual target values. Job success still applies to one exact reviewed batch;
 replaying a batch must not be summed as additional migrated source records.
+
+
+## Continue a reviewed migration and compare its actual target
+
+A selected plan now guides the supported areas in dependency order: categories,
+products, images, pages, customers, historical orders, reviews and coupons. Within
+an area it follows the actual source cursor. **Review next page** opens source
+inspection; every new page still needs deliberate approval. **Resume reviewed page**
+reuses its saved exact digests/options and verifies the source again before writes.
+A page with no source records can be explicitly acknowledged without creating data.
+Referenced products must be deliberately published before their live historical
+reviews; this workflow never silently publishes the catalogue.
+
+Before queueing a plan's import, Studio saves `migration/batches` in the same native
+private logical record store: run/profile/domain/target, source cursor, exact row
+digests, reviewed options and a revision. The independent service verifies those
+fields against the native job. Successful completion and its bounded comparison
+record are committed in one native transaction, holding current job creator,
+lease, cancellation, package and record-CAS fences. Only an explicitly approved
+app callback identity can request the native evidence seal; a personal ordinary
+save cannot mint one. The seal reuses platform authenticated encryption, bound to
+tenant/app/entity/record/current package and normalized fields. Native
+`job_evidence` verifies actual stored fields before Studio advances. Editing a
+saved result, copying a token to another record or changing its package makes it
+unverified. This authenticates the admitted service's observation, not arbitrary
+third-party service correctness; SQL, crypto and service execution remain outside
+the small extracted cancellation policy proof.
+It retains the next cursor, original source/export context, job ID, approving actor
+and package digest. A changed intent stops execution; a conflicting final save
+stops completion instead of overwriting another editor. Unknown external outcomes
+still require the existing explicit native job retry/review. There is no second
+queue, source-row store or physical table.
+
+Technical jobs can be archived after their page evidence is retained. Reopening
+Studio reads the private page records and the service can resume after a process
+restart. The UI does not infer completion from a truncated history/page list: load
+remaining saved pages first. Native app storage limits still apply (including
+8 KiB per JSON field and 64 MiB logical storage per shop/app); these are bounded
+page intents, not copies of the original catalogue or customer records.
+
+`POST /api/merchant/imports/inspect` and MCP `merchant.import.inspect` read the
+current native target. They return `matching`, `missing` or `changed`, bounded field
+paths and a timestamp, without source values or mutations. Each import job also
+performs that read after all rows, including earlier rows of a resumed job.
+**Check target again** queues a read-only run against the same reviewed page;
+native callback admission refuses writes even if its service attempts one.
+A successful technical job with differences remains a difference in Studio.
+`reconciled=true` now requires every reviewed row's mapped current fields to match.
+
+Comparison covers product name/description translations, original mapped price,
+tax, SKU, visibility, category/variant relations and provenance; category hierarchy
+and mapped content; actual stored image byte digests and their separate product
+association; normalized managed page fields; CRM identity/profile/group and
+address/default books (including identical explicit billing/shipping rows and
+first-row defaults for shipping-only or additional-only books); historical order amount/lines/date/addresses/source snapshot;
+review author/text/rating/date/product and inactive coupon mappings. It uses the
+same native product/category mapping and price owner as creation. Runtime stock,
+merchant-added metadata, new unrelated records and unsupported source/plugin fields
+are outside this mapped-row comparison. Supported source counts and export hashes
+remain separate evidence. It does not establish full source coverage, a globally
+atomic observation, final deltas or cutover readiness.
+
+Current domain read rights and the separate PII right apply to personal records.
+Job callbacks additionally keep original creator/package/lease/record-digest/private
+workspace fences. Durable summaries contain counts rather than private source values;
+personal-domain path samples are omitted. The legacy settings read model now also
+requires `orders.read` **and** `customers.pii` before returning full orders, closing
+an alternative path to imported historical addresses/source snapshots.
 
 
 ## One connected workflow
@@ -440,3 +508,20 @@ Eight concurrent editor/import first writes cover the shared page route/record l
 order; unknown-field replay and changed destination-package digests are rejected.
 A green local test does not establish public deployment, real provider access,
 whole-shop completeness or large-scale performance.
+
+## Separate service image and hosted acceptance
+
+The `migration-image.yml` workflow builds the independent Rust Dockerfile, runs
+its actual non-root health endpoint and checks there is no Python interpreter.
+After a main push it publishes an immutable
+`ghcr.io/sthamann/veyndo-migration:sha-SOURCE_SHA` tag. Core/Studio publication does
+not start this separate service automatically. Configure its private gateway and
+per-shop revocable callback identities, then approve the same package digest in
+Core's existing `APP_SERVICES` entry. Keep source credentials in the installed
+app's encrypted settings. No service receives a database connection.
+
+Hosted acceptance must verify actual source inspection, an explicit reviewed
+private import, current-field comparison, reload/resume and selected publication
+with simulated checkout on that deployed source tag. The current 19 October local
+evidence does not establish that hosted deployment; see the single
+[current status](status.md).

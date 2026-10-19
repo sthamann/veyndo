@@ -85,7 +85,7 @@ pub async fn receive(
                     }
                 }
             };
-            let (status, result, message) = match result {
+            let (status, mut result, message) = match result {
                 Ok(r) => ("succeeded", r, json!({})),
                 Err(e) => (
                     if e.starts_with("Migration cancelled;") {
@@ -97,7 +97,14 @@ pub async fn receive(
                     callback_errors::message(&e),
                 ),
             };
-            let _=core::callback(c,&tenant,"job_progress",&json!({"id":job["id"],"lease":job["lease"],"status":status,"result":result,"message":message}),cfg.fixture).await;
+            let evidence = result
+                .as_object_mut()
+                .and_then(|r| r.remove("_completionEvidence"));
+            let mut completion = json!({"id":job["id"],"lease":job["lease"],"status":status,"result":result,"message":message});
+            if let Some(evidence) = evidence {
+                completion["evidence"] = evidence;
+            }
+            let _ = core::callback(c, &tenant, "job_progress", &completion, cfg.fixture).await;
         });
     }
     Ok(Json(json!({"accepted":true})))

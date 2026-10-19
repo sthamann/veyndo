@@ -1,13 +1,18 @@
 # Veyndo: current status
 
 This is the single starting point for what works, what is implemented but not
-publicly accepted, and what still needs development. Updated 18 October 2026.
+publicly accepted, and what still needs development. Updated 19 October 2026.
 A green test, merged code and a completed public business journey are different evidence.
 
-Local migration follow-up (19 October): saved native work plans now connect source
-profiles, planned areas and private previews with paged/grouped jobs. This is
-context and reviewed-batch history, not whole-shop orchestration, present target
-parity or final cutover. Public deployment is still not established for this draft.
+Local migration follow-up (19 October): saved plans now connect all eight supported
+domains in a review-gated page sequence. Native current-field comparison detects
+missing records, changed prices/text and image associations. Private page intents
+and bounded reports survive technical job archival and service restart; a changed
+result does not authorize repair or cutover. Local synthetic acceptance is separate
+from the still-pending public service rollout. Native completion evidence is now
+atomically sealed under current job/creator/package/lease/CAS checks; raw edited
+success flags cannot advance Studio. [Acceptance evidence](evidence/migration-continuation-2026-10-19.md)
+and [workflow limits](agentic-migration.md).
 
 Local migration follow-up (18 October): frozen domain export packaging and pinned
 HTTPS intake now reuse native reviewed jobs, with separate export credentials,

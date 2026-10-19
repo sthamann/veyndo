@@ -2,7 +2,7 @@
 use crate::*;
 mod approval;
 mod record_import;
-pub(crate) use record_import::import_record;
+pub(crate) use record_import::{import_record, inspect_import_record};
 mod asset_surfaces;
 mod business_capability;
 mod cart_contributions;
@@ -61,6 +61,7 @@ mod tool_contract;
 pub(crate) use tool_contract::app_tools;
 mod input_schema;
 mod job_callbacks;
+mod job_evidence;
 mod job_import;
 mod jobs;
 pub(crate) mod native_lifecycle;

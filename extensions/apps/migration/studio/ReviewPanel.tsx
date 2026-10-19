@@ -1,4 +1,5 @@
 /** Exact source review keeps unacknowledged gaps and missing target choices from starting a write. */
+import { useProgressText } from "./run-progress-i18n";
 import ExportEvidence from "./ExportEvidence";
 import PriceOptions from "./PriceOptions";
 import { usePriceText } from "./price-i18n";
@@ -71,6 +72,7 @@ export default function ReviewPanel({
   const t = useMigrationText(),
     { locale } = useLocale();
   const priceText = usePriceText();
+  const progressText = useProgressText();
   const hasAmount = ["products", "orders", "assets", "coupons"].includes(kind);
   const unresolvedWarnings = review.records.some((row) =>
     row.warnings.some((w) => w !== "source_price_tax_basis_requires_review"),
@@ -82,6 +84,7 @@ export default function ReviewPanel({
       <p>
         {review.sourceVersion} · {review.records.length}
       </p>
+      {!review.records.length && <p>{progressText("empty")}</p>}
       <div className="migration-table">
         <table>
           <colgroup>
@@ -145,7 +148,7 @@ export default function ReviewPanel({
           </tbody>
         </table>
       </div>
-      {kind === "products" && (
+      {kind === "products" && !!review.records.length && (
         <PriceOptions
           value={priceBasis}
           locked={!!reviewPriceBasis(review)}
@@ -155,7 +158,7 @@ export default function ReviewPanel({
           }}
         />
       )}
-      {kind === "products" && (
+      {kind === "products" && !!review.records.length && (
         <label>
           {t("tax")}
           <input
@@ -173,7 +176,7 @@ export default function ReviewPanel({
           <small>{t("taxHint")}</small>
         </label>
       )}
-      {kind === "customers" && (
+      {kind === "customers" && !!review.records.length && (
         <label>
           {t("group")}
           <select
@@ -207,18 +210,20 @@ export default function ReviewPanel({
           busy ||
           !approved ||
           !canImport ||
-          !review.records.length ||
           unresolvedWarnings ||
-          (kind === "products" &&
+          (!!review.records.length &&
+            kind === "products" &&
             (!tax ||
               !Number.isFinite(Number(tax)) ||
               Number(tax) < 0 ||
               Number(tax) > 50)) ||
-          (kind === "customers" && !group)
+          (!!review.records.length && kind === "customers" && !group)
         }
         onClick={() => void start()}
       >
-        {t(busy ? "busy" : "start")}
+        {review.records.length
+          ? t(busy ? "busy" : "start")
+          : progressText("acceptEmpty")}
       </button>
       {!canImport && <p>{t("denied")}</p>}
     </>

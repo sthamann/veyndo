@@ -7,7 +7,7 @@ App-specific code stays here; Core contains only generic native import/job admis
 - `contract/`: stable versioned source identities and exact source money.
 - `adapters/`: source-owned normalization, languages, addresses, historical lines/dates.
 - `service/`: bounded immutable export packaging/HTTPS reads, separate export credentials, complete source-page evidence, complete concrete WooCommerce families, byte-bounded variant slices and native inspection/import jobs.
-- `studio/`: source setup, review, native saved work plans, paged/grouped jobs and the shared agent drawer.
+- `studio/`: source setup, review, native saved work plans, durable reviewed-page records, ordered continuation and current-field comparison and the shared agent drawer.
 - `tests/`: real Rust protocol/Core fixtures and app-owned UI acceptance.
 
 Native target import currently covers private products and original images, categories, editable content
@@ -29,3 +29,11 @@ workflow. See the main guide for provider shapes and remaining acceptance.
 expanded JSON lines; configured HTTPS readers use the same reviewed native jobs.
 See the guide for the command, encrypted export settings, source-reference checks
 and explicit distinction between immutable domain bytes and whole-shop cutover.
+
+Saved plans now walk supported domains and source cursors with explicit per-page
+approval. Their exact reviewed intents and bounded current-native-field reports
+use private logical records; archiving technical jobs or restarting the service
+does not erase them. A read-only reconciliation job cannot create even a missing
+target. Differences remain visible and are never silently repaired. Product stock,
+unsupported mappings, source-wide final deltas/cutover and public hosting acceptance
+remain separate. No new table or queue is introduced.

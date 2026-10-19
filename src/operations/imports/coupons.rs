@@ -18,7 +18,7 @@ pub(super) async fn import(a: &App, h: &RequestContext, r: &SourceRecord) -> Res
     destination["sourceImport"] = json!({"version":r.version,"source":r.source,"sourceShop":r.source_shop,"sourceId":r.source_id,"currency":r.data["currency"],"recordDigest":hash(&json!(r).to_string()),"activationReviewed":false});
     marketing::import_promotion(a, h, &configuration_id(&r.identity(&t)), &destination).await
 }
-fn configuration_id(id: &str) -> String {
+pub(super) fn configuration_id(id: &str) -> String {
     const ALPHABET: &[u8] = b"abcdefghijklmnopqrstuvwxyz234567";
     let uuid = Uuid::parse_str(id).expect("native source UUID");
     let (mut value, mut bits) = (0_u32, 0_u32);

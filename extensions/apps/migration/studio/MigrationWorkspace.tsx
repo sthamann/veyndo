@@ -5,6 +5,9 @@ import InstallConsent from "./InstallConsent";
 import Icon from "../../../../frontend/src/shared/ui/Icon";
 import Connection from "./Connection";
 import JobHistory from "./JobHistory";
+import RunProgress from "./RunProgress";
+import useRunPages from "./useRunPages";
+import useMigrationImport from "./useMigrationImport";
 import RunPlans, { type RunPlan } from "./RunPlans";
 import useJobPages from "./useJobPages";
 import useMigrationPackages from "./useMigrationPackages";
@@ -20,7 +23,6 @@ import { useMigrationText } from "./i18n";
 import {
   isPrivate,
   importRights,
-  importOptions,
   reviewPriceBasis,
   type Kind,
   type Review,
@@ -73,6 +75,7 @@ export default function MigrationWorkspace({
     setTarget(undefined);
     setError("");
     setPlan(undefined);
+    setBusy(false);
   }, [request, canRead, accessKey]);
   const { jobs, refresh, hasMore, more } = useJobPages(
     request,
@@ -80,6 +83,16 @@ export default function MigrationWorkspace({
     plan?.id,
     setError,
     accessKey,
+  );
+  const runPages = useRunPages(
+    request,
+    plan?.id,
+    accessKey,
+    !!app?.active && canManage,
+    setError,
+  );
+  const activeRun = jobs.some((j) =>
+    ["queued", "running", "cancel_requested"].includes(j.status),
   );
   const groups = useCustomerGroups(
     request,
@@ -106,75 +119,36 @@ export default function MigrationWorkspace({
   });
   const busy = working || inspecting;
   const sourcePriceBasis = priceBasis || reviewPriceBasis(review) || "";
-  const start = async () => {
-    if (
-      !review ||
-      !canImport ||
-      !approved ||
-      (kind === "pages" && !designerPackage?.active)
-    )
-      return;
-    const owner = request;
-    setBusy(true);
-    setError("");
-    try {
-      const destination = isPrivate(kind)
-        ? (target ??
-          (await owner("/api/environments", { name: t("title") })).id)
-        : workspace;
-      if (current.current !== owner) return;
-      if (isPrivate(kind)) setTarget(destination);
-      if (plan && isPrivate(kind) && plan.target !== destination) {
-        const fields = {
-          title: plan.title,
-          source_id: plan.source_id,
-          domains: plan.domains,
-          target: destination,
-        };
-        const saved = await owner("/api/apps/migration/actions/save_run", {
-          id: plan.id,
-          revision: plan.revision,
-          fields,
-        });
-        if (current.current !== owner) return;
-        setPlan({ ...plan, ...fields, revision: saved.revision });
-      }
-      const options = importOptions(kind, {
-        tax,
-        sourcePriceBasis,
-        group,
-        mainLocale,
-        destinationDigest: designerPackage?.digest,
-      });
-      const warnings = [
-        ...new Set(review.records.flatMap((row) => row.warnings)),
-      ];
-      if (warnings.length)
-        Object.assign(options, { acknowledgedWarnings: warnings });
-      await owner(
-        "/api/apps/migration/actions/import_" + kind,
-        {
-          sourceId,
-          ...(plan ? { jobGroup: plan.id } : {}),
-          kind,
-          target: destination,
-          recordDigests: review.recordDigests,
-          options,
-          ...(cursor ? { cursor } : {}),
-        },
-        "POST",
-        { idempotencyKey: crypto.randomUUID() },
-      );
-      if (current.current === owner) {
-        setApproved(false);
-        refresh();
-      }
-    } catch (e) {
-      if (current.current === owner) setError((e as Error).message);
-    } finally {
-      if (current.current === owner) setBusy(false);
-    }
-  };
+  const { start, resumePage } = useMigrationImport({
+    request,
+    workspace,
+    accessKey,
+    kind,
+    sourceId,
+    mainLocale,
+    review,
+    plan,
+    target,
+    tax,
+    sourcePriceBasis,
+    group,
+    cursor,
+    canImport,
+    approved,
+    destinationDigest: designerPackage?.active
+      ? designerPackage.digest
+      : undefined,
+    name: t("title"),
+    setBusy,
+    setError,
+    setTarget,
+    setPlan,
+    setApproved,
+    refresh: () => {
+      refresh();
+      runPages.refresh();
+    },
+  });
 
   const design = useMigrationDesign({
     request,
@@ -272,6 +246,21 @@ export default function MigrationWorkspace({
               />
             )}
 
+            {plan && (
+              <RunProgress
+                plan={plan}
+                pages={runPages.pages}
+                hasMore={runPages.more}
+                loadMore={runPages.loadMore}
+                busy={busy}
+                active={activeRun}
+                onNext={(next, cursor) => {
+                  setKind(next);
+                  void inspect(cursor, next, plan.source_id);
+                }}
+                onRun={(page, op) => void resumePage(page, op)}
+              />
+            )}
             {settings && (
               <section className="studio-card">
                 <h2>{t("connection")}</h2>
@@ -336,8 +325,12 @@ export default function MigrationWorkspace({
                   busy={busy}
                   canImport={
                     canImport &&
-                    (kind !== "products" || !!sourcePriceBasis) &&
-                    (kind !== "pages" || !!designerPackage?.active)
+                    (!review.records.length ||
+                      kind !== "products" ||
+                      !!sourcePriceBasis) &&
+                    (!review.records.length ||
+                      kind !== "pages" ||
+                      !!designerPackage?.active)
                   }
                   start={start}
                   mainLocale={mainLocale}

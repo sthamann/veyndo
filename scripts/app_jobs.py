@@ -16,6 +16,10 @@ u=call('/api/auth/register',{'workspaceId':t,'name':'Job owner','email':t+'@exam
 def sql(query):
  r=subprocess.run(psql(os.environ['TEST_DB_CONTAINER'],'commerce',os.environ['TEST_DATABASE'],'-qAt','-v','ON_ERROR_STOP=1'),input=query,text=True,capture_output=True);assert not r.returncode,r.stderr;return r.stdout.strip()
 m={'id':'jobs_fixture','version':'1.0.0','coreApi':'1','runtime':'service','name':{'en':'Job fixture','de':'Auftragsbeispiel','fr':'Exemple de tâche','es':'Ejemplo de tarea'},'permissions':['jobs.read','jobs.write','events:self'],'events':['app.jobs_fixture.job_export'],'actions':[{'name':'export','handler':'job','description':'Fixture export','permission':'apps.manage','public':False,'inputSchema':{'type':'object','properties':{'sentinel':{'type':'string'}},'required':['sentinel'],'additionalProperties':False}}]}
+m['permissions']+=['data.read','data.write']
+m['entities']=[{'name':'evidence','publicRead':False,'fields':[{'name':'state','kind':'string','required':True},{'name':'result','kind':'json'},{'name':'evidence','kind':'string'}]}]
+m['actions'][0]['inputSchema']['properties']['evidenceRecord']={'type':'object','properties':{'entity':{'type':'string'},'id':{'type':'string'}},'required':['entity','id'],'additionalProperties':False}
+m['actions']+=[{'name':'save_result','description':'Save synthetic completion evidence','handler':'save','entity':'evidence','permission':'apps.manage','inputSchema':{'type':'object','properties':{'id':{'type':'string'},'revision':{'type':'integer'},'fields':{'type':'object'}},'required':['id','revision','fields'],'additionalProperties':False}}]
 call('/api/apps',{'manifest':m},h);prefix='/api/apps/jobs_fixture';digest=next(p for p in call('/api/apps',h=h)['packages'] if p['id']==m['id'])['digest'];key=call(prefix+'/credentials',{'digest':digest,'approve':True,'permissions':['jobs.write'],'expiresInDays':1},h);kh={**h,'Authorization':'Bearer '+key['key']}
 call(prefix+'/actions/export',{'sentinel':'secret input'},h,400)
 start={**h,'Idempotency-Key':'fixture-export'};job=call(prefix+'/actions/export',{'sentinel':'secret input'},start)['jobId'];again=call(prefix+'/actions/export',{'sentinel':'secret input'},start);assert again['jobId']==job and again['reused'];call(prefix+'/actions/export',{'sentinel':'different'},start,409)
@@ -39,6 +43,31 @@ call(prefix+'/core/job_progress',{'id':job,'lease':new['lease'],'status':'cancel
 entry=call(prefix+'/jobs',h=h)['jobs'][0];assert entry['status']=='cancelled';call(prefix+'/jobs/'+job,{'revision':entry['revision'],'operation':'archive'},h);assert not call(prefix+'/jobs',h=h)['jobs']
 print('PASS durable app jobs: idempotency, minimized outbox, progress, cancellation, late/stale leases, explicit uncertain retry and CAS')
 other=t+'-other';u2=call('/api/auth/register',{'workspaceId':other,'name':'Other job owner','email':other+'@example.test','password':'Synthetic-jobs-password!'});oh={'x-tenant':other,'Authorization':'Bearer '+u2['token']};call('/api/apps',{'manifest':m},oh);call(prefix+'/core/job_claim',{'id':'foreign'},kh,404);call(prefix+'/core/job_claim',{'id':job},{**kh,'x-tenant':other},403)
+# Completion evidence is service-only and atomically fenced by the native job and record CAS.
+bid='result-1';fields={'state':'reviewed','result':{}}
+call(prefix+'/actions/save_result',{'id':bid,'revision':0,'fields':fields},h)
+ej=call(prefix+'/actions/export',{'sentinel':'receipt','evidenceRecord':{'entity':'evidence','id':bid}},{**h,'Idempotency-Key':'evidence-job'})['jobId']
+ec=call(prefix+'/core/job_claim',{'id':ej},kh)
+evidence={'action':'save_result','input':{'id':bid,'revision':1,'fields':{'state':'matching','result':{'count':0}}}}
+completion={'id':ej,'lease':ec['lease'],'status':'succeeded','result':{'count':0},'evidence':evidence}
+call(prefix+'/core/job_progress',completion,h,403)
+call(prefix+'/core/job_progress',completion,kh,403)
+service_key=call(prefix+'/credentials',{'digest':digest,'approve':True,'permissions':['jobs.write','data.write','data.read'],'expiresInDays':1},h)['key'];eh={**h,'Authorization':'Bearer '+service_key}
+call(prefix+'/core/job_progress',{**completion,'lease':'stale'},eh,409)
+call(prefix+'/core/job_progress',{**completion,'evidence':{**evidence,'input':{**evidence['input'],'revision':0}}},eh,409)
+assert call(prefix+'/jobs/'+ej,h=h)['status']=='running'
+# Callback credential still has access, while the independently checked job actor does not.
+sql(f"UPDATE app_jobs SET actor=(SELECT id FROM merchant_users WHERE email='{other}@example.test') WHERE tenant='{t}' AND id='{ej}'")
+call(prefix+'/core/job_progress',completion,eh,403)
+assert sql(f"SELECT revision FROM app_records WHERE tenant='{t}' AND app='jobs_fixture' AND id='{bid}'")=='1'
+sql(f"UPDATE app_jobs SET actor=(SELECT id FROM merchant_users WHERE email='{t}@example.test') WHERE tenant='{t}' AND id='{ej}'")
+call(prefix+'/core/job_progress',completion,eh)
+assert call(prefix+'/core/job_evidence',{'entity':'evidence','ids':[bid]},h)['verified']==[{'id':bid,'revision':2,'job':ej}]
+entry=call(prefix+'/jobs/'+ej,h=h);call(prefix+'/jobs/'+ej,{'operation':'archive','revision':entry['revision']},h)
+assert len(call(prefix+'/core/job_evidence',{'entity':'evidence','ids':[bid]},h)['verified'])==1
+assert call(prefix+'/core/job_evidence',{'entity':'evidence','ids':[bid]},oh)['verified']==[]
+assert call(prefix+'/core/job_evidence',{'entity':'evidence','ids':[]},h)['verified']==[]
+print('PASS native evidence: personal/unscoped/stale/CAS/revoked-creator denial, zero-row completion is fenced, atomic job+record commit and archival survival')
 ids=[]
 for n in range(10):ids.append(call(prefix+'/actions/export',{'sentinel':str(n)},{**h,'Idempotency-Key':'quota-'+str(n)})['jobId'])
 call(prefix+'/actions/export',{'sentinel':'over'},{**h,'Idempotency-Key':'over'},429)

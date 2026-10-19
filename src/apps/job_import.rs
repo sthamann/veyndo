@@ -3,7 +3,13 @@ use super::*;
 // Retain a connection for the native owner even on the supported two-connection pool.
 // This is process admission, not a claim of fleet-wide throughput isolation.
 static IMPORT_WRITE: tokio::sync::Semaphore = tokio::sync::Semaphore::const_new(1);
-pub(super) async fn execute(a: &App, h: &RequestContext, m: &Manifest, v: &Value) -> Result<Value> {
+pub(super) async fn execute(
+    a: &App,
+    h: &RequestContext,
+    m: &Manifest,
+    v: &Value,
+    inspect: bool,
+) -> Result<Value> {
     let mut metadata = v.clone();
     metadata
         .as_object_mut()
@@ -30,7 +36,19 @@ pub(super) async fn execute(a: &App, h: &RequestContext, m: &Manifest, v: &Value
         "orders" => "orders.import",
         _ => return Err(bad("Native job import domain unavailable")),
     };
-    for p in ["jobs.write", capability] {
+    let read_capability = match kind {
+        "products" | "categories" | "reviews" => "products.read",
+        "assets" => "assets.read",
+        "pages" => "data.read",
+        "customers" => "customers.read",
+        "orders" => "orders.read",
+        "coupons" => "promotions.write",
+        _ => unreachable!(),
+    };
+    for p in ["jobs.write", capability]
+        .into_iter()
+        .chain(inspect.then_some(read_capability))
+    {
         if !m.permissions.iter().any(|s| s == p) {
             return Err(Error(
                 StatusCode::FORBIDDEN,
@@ -90,6 +108,9 @@ pub(super) async fn execute(a: &App, h: &RequestContext, m: &Manifest, v: &Value
     identity.principal.permissions = (!rights.is_null()).then(|| rights.to_string());
     auth::permit(&identity, "apps.manage")?;
     auth::permit(&identity, credentials::scope(capability).unwrap())?;
+    if inspect {
+        auth::permit(&identity, credentials::scope(read_capability).unwrap())?;
+    }
     if ["customers", "orders", "reviews"].contains(&kind) {
         auth::permit(&identity, "customers.pii")?;
     }
@@ -104,6 +125,11 @@ pub(super) async fn execute(a: &App, h: &RequestContext, m: &Manifest, v: &Value
     )?;
     gateway::additional_permissions(&identity, action)?;
     let intent: Value = row.get("input");
+    if intent["operation"] == "reconcile" && !inspect {
+        return Err(conflict(
+            "Read-only reconciliation does not authorize native writes",
+        ));
+    }
     if intent["kind"] != kind
         || !intent["recordDigests"].as_array().is_some_and(|ds| {
             !ds.is_empty()
@@ -160,13 +186,24 @@ pub(super) async fn execute(a: &App, h: &RequestContext, m: &Manifest, v: &Value
     if let Some(chunks) = v.get("assetChunks") {
         input["assetChunks"] = chunks.clone();
     }
+    if inspect {
+        input.as_object_mut().unwrap().remove("approve");
+        input.as_object_mut().unwrap().remove("assetChunks");
+    }
     // Native scope switch is limited to a job-locked target in this same admitted workspace.
+    let operation = async {
+        if inspect {
+            crate::operations::imports::inspect(a, &identity, &input).await
+        } else {
+            crate::operations::imports::invoke(a, &identity, &input).await
+        }
+    };
     let result = veyndo::tenant_scope::scoped(
         veyndo::tenant_scope::Scope::Personal {
             tenant: target.into(),
             actor,
         },
-        crate::operations::imports::invoke(a, &identity, &input),
+        operation,
     )
     .await?;
     tx.commit().await?;

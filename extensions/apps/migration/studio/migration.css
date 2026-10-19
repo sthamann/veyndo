@@ -298,3 +298,25 @@
   border-radius: 10px;
   margin: 14px 0;
 }
+
+.migration-run-progress > p {
+  color: var(--muted, #60758b);
+  line-height: 1.6;
+}
+.migration-run-progress > progress {
+  width: 100%;
+  height: 9px;
+  accent-color: #008cdd;
+}
+.migration-run-next {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 16px 0;
+}
+.migration-run-progress time,
+.migration-run-progress code {
+  overflow-wrap: anywhere;
+}

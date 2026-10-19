@@ -1,6 +1,6 @@
 //! Admin CRM creation uses native contacts/address storage, history and outbox; it never issues customer credentials.
 use super::*;
-#[derive(Deserialize)]
+#[derive(Deserialize, Serialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 struct Input {
     email: String,
@@ -121,30 +121,8 @@ async fn create_inner(
             "Customer already exists; select the existing customer",
         ));
     }
-    if let Some(address) = input.billing_address {
-        save_address(
-            &mut tx,
-            &t,
-            &email,
-            source.is_some(),
-            &json!({"defaultBilling":true,"defaultShipping":input.shipping_address.is_none()}),
-            &address,
-        )
-        .await?;
-    }
-    if let Some(address) = input.shipping_address {
-        save_address(
-            &mut tx,
-            &t,
-            &email,
-            source.is_some(),
-            &json!({"defaultShipping":true}),
-            &address,
-        )
-        .await?;
-    }
-    for address in input.additional_addresses {
-        save_address(&mut tx, &t, &email, source.is_some(), &json!({}), &address).await?;
+    for (address, flags) in address_plan(&json!(input))? {
+        save_address(&mut tx, &t, &email, source.is_some(), &flags, &address).await?;
     }
     sqlx::query("INSERT INTO outbox(tenant,kind,data) VALUES($1,$2,$3)")
         .bind(&t)
@@ -185,4 +163,29 @@ async fn save_address(
     } else {
         accounts::address_save_conn(conn, tenant, email, None, flags, address).await
     }
+}
+
+/// One address creation plan preserves multiplicity and native first-row default assignment.
+pub(super) fn address_plan(v: &Value) -> Result<Vec<(commerce::Address, Value)>> {
+    let mut plan = vec![];
+    let mut add = |value: &Value, flags: Value| -> Result<()> {
+        if !value.is_null() {
+            let mut address: commerce::Address =
+                serde_json::from_value(value.clone()).map_err(|_| bad("Invalid source address"))?;
+            address.validate()?;
+            plan.push((address, flags));
+        }
+        Ok(())
+    };
+    add(
+        &v["billingAddress"],
+        json!({"defaultBilling":true,"defaultShipping":v["shippingAddress"].is_null()}),
+    )?;
+    add(&v["shippingAddress"], json!({"defaultShipping":true}))?;
+    if let Some(xs) = v["additionalAddresses"].as_array() {
+        for value in xs {
+            add(value, json!({}))?;
+        }
+    }
+    Ok(plan)
 }

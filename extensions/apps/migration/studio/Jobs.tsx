@@ -1,4 +1,5 @@
 /** Saved job controls use native CAS, explicit uncertain-outcome acknowledgement and current action permissions. */
+import Comparison from "./Comparison";
 import type { RequestFn } from "../../../../frontend/src/shared/api/types";
 import { useLocale } from "../../../../frontend/src/shared/i18n/i18n";
 import { contentText } from "../../../../frontend/src/shared/i18n/content-language";
@@ -40,12 +41,14 @@ export default function Jobs({
               : t(("status_" + job.status) as Parameters<typeof t>[0])}
           </strong>
           <progress value={job.progress} max={100} />
+          <Comparison result={job.result} />
           <p>{contentText(job.message, locale, locale)}</p>
-          {typeof job.result?.imported === "number" && (
-            <p>
-              {job.result.imported} / {job.result.reviewed}
-            </p>
-          )}
+          {job.result?.operation !== "reconcile" &&
+            typeof job.result?.imported === "number" && (
+              <p>
+                {job.result.imported} / {job.result.reviewed}
+              </p>
+            )}
           {job.status === "succeeded" &&
             job.action?.startsWith("review_") &&
             job.result?.records && (

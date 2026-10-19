@@ -25,7 +25,10 @@
     "assets.write",
     "reviews.write",
     "promotions.write",
-    "data.read"
+    "data.read",
+    "products.read",
+    "assets.read",
+    "customers.read"
   ],
   "settings": [
     {
@@ -214,7 +217,8 @@
       "permission": "catalog.write",
       "requiredPermissions": [
         "apps.manage",
-        "environments.manage"
+        "environments.manage",
+        "catalog.read"
       ],
       "mcp": true,
       "readOnly": false,
@@ -242,7 +246,7 @@
           },
           "recordDigests": {
             "type": "array",
-            "minItems": 1,
+            "minItems": 0,
             "maxItems": 100,
             "items": {
               "type": "string",
@@ -292,6 +296,43 @@
             "type": "string",
             "minLength": 1,
             "maxLength": 100
+          },
+          "operation": {
+            "type": "string",
+            "enum": [
+              "import",
+              "reconcile"
+            ]
+          },
+          "batchId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "batchRevision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "evidenceRecord": {
+            "type": "object",
+            "properties": {
+              "entity": {
+                "type": "string",
+                "enum": [
+                  "batches"
+                ]
+              },
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 100
+              }
+            },
+            "required": [
+              "entity",
+              "id"
+            ],
+            "additionalProperties": false
           }
         },
         "required": [
@@ -346,7 +387,8 @@
       "permission": "customers.write",
       "requiredPermissions": [
         "apps.manage",
-        "customers.pii"
+        "customers.pii",
+        "customers.read"
       ],
       "mcp": true,
       "readOnly": false,
@@ -374,7 +416,7 @@
           },
           "recordDigests": {
             "type": "array",
-            "minItems": 1,
+            "minItems": 0,
             "maxItems": 100,
             "items": {
               "type": "string",
@@ -417,6 +459,43 @@
             "type": "string",
             "minLength": 1,
             "maxLength": 100
+          },
+          "operation": {
+            "type": "string",
+            "enum": [
+              "import",
+              "reconcile"
+            ]
+          },
+          "batchId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "batchRevision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "evidenceRecord": {
+            "type": "object",
+            "properties": {
+              "entity": {
+                "type": "string",
+                "enum": [
+                  "batches"
+                ]
+              },
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 100
+              }
+            },
+            "required": [
+              "entity",
+              "id"
+            ],
+            "additionalProperties": false
           }
         },
         "required": [
@@ -471,7 +550,8 @@
       "permission": "orders.write",
       "requiredPermissions": [
         "apps.manage",
-        "customers.pii"
+        "customers.pii",
+        "orders.read"
       ],
       "mcp": true,
       "readOnly": false,
@@ -499,7 +579,7 @@
           },
           "recordDigests": {
             "type": "array",
-            "minItems": 1,
+            "minItems": 0,
             "maxItems": 100,
             "items": {
               "type": "string",
@@ -542,6 +622,43 @@
             "type": "string",
             "minLength": 1,
             "maxLength": 100
+          },
+          "operation": {
+            "type": "string",
+            "enum": [
+              "import",
+              "reconcile"
+            ]
+          },
+          "batchId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "batchRevision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "evidenceRecord": {
+            "type": "object",
+            "properties": {
+              "entity": {
+                "type": "string",
+                "enum": [
+                  "batches"
+                ]
+              },
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 100
+              }
+            },
+            "required": [
+              "entity",
+              "id"
+            ],
+            "additionalProperties": false
           }
         },
         "required": [
@@ -595,7 +712,8 @@
       "permission": "catalog.write",
       "requiredPermissions": [
         "apps.manage",
-        "environments.manage"
+        "environments.manage",
+        "catalog.read"
       ],
       "mcp": true,
       "readOnly": false,
@@ -623,7 +741,7 @@
           },
           "recordDigests": {
             "type": "array",
-            "minItems": 1,
+            "minItems": 0,
             "maxItems": 100,
             "items": {
               "type": "string",
@@ -666,6 +784,43 @@
             "type": "string",
             "minLength": 1,
             "maxLength": 100
+          },
+          "operation": {
+            "type": "string",
+            "enum": [
+              "import",
+              "reconcile"
+            ]
+          },
+          "batchId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "batchRevision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "evidenceRecord": {
+            "type": "object",
+            "properties": {
+              "entity": {
+                "type": "string",
+                "enum": [
+                  "batches"
+                ]
+              },
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 100
+              }
+            },
+            "required": [
+              "entity",
+              "id"
+            ],
+            "additionalProperties": false
           }
         },
         "required": [
@@ -747,7 +902,7 @@
           },
           "recordDigests": {
             "type": "array",
-            "minItems": 1,
+            "minItems": 0,
             "maxItems": 100,
             "items": {
               "type": "string",
@@ -798,6 +953,43 @@
             "type": "string",
             "minLength": 1,
             "maxLength": 100
+          },
+          "operation": {
+            "type": "string",
+            "enum": [
+              "import",
+              "reconcile"
+            ]
+          },
+          "batchId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "batchRevision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "evidenceRecord": {
+            "type": "object",
+            "properties": {
+              "entity": {
+                "type": "string",
+                "enum": [
+                  "batches"
+                ]
+              },
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 100
+              }
+            },
+            "required": [
+              "entity",
+              "id"
+            ],
+            "additionalProperties": false
           }
         },
         "required": [
@@ -880,7 +1072,7 @@
           },
           "recordDigests": {
             "type": "array",
-            "minItems": 1,
+            "minItems": 0,
             "maxItems": 10,
             "items": {
               "type": "string",
@@ -923,6 +1115,43 @@
             "type": "string",
             "minLength": 1,
             "maxLength": 100
+          },
+          "operation": {
+            "type": "string",
+            "enum": [
+              "import",
+              "reconcile"
+            ]
+          },
+          "batchId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "batchRevision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "evidenceRecord": {
+            "type": "object",
+            "properties": {
+              "entity": {
+                "type": "string",
+                "enum": [
+                  "batches"
+                ]
+              },
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 100
+              }
+            },
+            "required": [
+              "entity",
+              "id"
+            ],
+            "additionalProperties": false
           }
         },
         "required": [
@@ -977,7 +1206,8 @@
       "permission": "catalog.write",
       "requiredPermissions": [
         "apps.manage",
-        "customers.pii"
+        "customers.pii",
+        "catalog.read"
       ],
       "mcp": true,
       "readOnly": false,
@@ -1005,7 +1235,7 @@
           },
           "recordDigests": {
             "type": "array",
-            "minItems": 1,
+            "minItems": 0,
             "maxItems": 100,
             "items": {
               "type": "string",
@@ -1048,6 +1278,43 @@
             "type": "string",
             "minLength": 1,
             "maxLength": 100
+          },
+          "operation": {
+            "type": "string",
+            "enum": [
+              "import",
+              "reconcile"
+            ]
+          },
+          "batchId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "batchRevision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "evidenceRecord": {
+            "type": "object",
+            "properties": {
+              "entity": {
+                "type": "string",
+                "enum": [
+                  "batches"
+                ]
+              },
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 100
+              }
+            },
+            "required": [
+              "entity",
+              "id"
+            ],
+            "additionalProperties": false
           }
         },
         "required": [
@@ -1100,7 +1367,8 @@
       "handler": "job",
       "permission": "automation.manage",
       "requiredPermissions": [
-        "apps.manage"
+        "apps.manage",
+        "automation.read"
       ],
       "mcp": true,
       "readOnly": false,
@@ -1128,7 +1396,7 @@
           },
           "recordDigests": {
             "type": "array",
-            "minItems": 1,
+            "minItems": 0,
             "maxItems": 100,
             "items": {
               "type": "string",
@@ -1171,6 +1439,43 @@
             "type": "string",
             "minLength": 1,
             "maxLength": 100
+          },
+          "operation": {
+            "type": "string",
+            "enum": [
+              "import",
+              "reconcile"
+            ]
+          },
+          "batchId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "batchRevision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "evidenceRecord": {
+            "type": "object",
+            "properties": {
+              "entity": {
+                "type": "string",
+                "enum": [
+                  "batches"
+                ]
+              },
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 100
+              }
+            },
+            "required": [
+              "entity",
+              "id"
+            ],
+            "additionalProperties": false
           }
         },
         "required": [
@@ -1277,6 +1582,161 @@
         ],
         "additionalProperties": false
       }
+    },
+    {
+      "name": "list_batches",
+      "description": "Read durable reviewed page intents and their last native target comparison",
+      "handler": "list",
+      "entity": "batches",
+      "permission": "apps.manage",
+      "public": false,
+      "readOnly": true,
+      "mcp": true,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "after": {
+            "type": "string"
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "filter": {
+            "type": "object",
+            "properties": {
+              "run_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 100
+              }
+            },
+            "required": [
+              "run_id"
+            ],
+            "additionalProperties": false
+          },
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "save_batch",
+      "description": "Save a reviewed page and bounded comparison through native CAS; metadata alone grants no import rights",
+      "handler": "save",
+      "entity": "batches",
+      "permission": "apps.manage",
+      "public": false,
+      "readOnly": false,
+      "mcp": false,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "revision": {
+            "type": "integer"
+          },
+          "fields": {
+            "type": "object",
+            "properties": {
+              "run_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 100
+              },
+              "source_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 100
+              },
+              "target": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 100
+              },
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "products",
+                  "categories",
+                  "assets",
+                  "pages",
+                  "customers",
+                  "orders",
+                  "reviews",
+                  "coupons"
+                ]
+              },
+              "cursor": {
+                "type": "string",
+                "maxLength": 2000
+              },
+              "next_cursor": {
+                "type": "string",
+                "maxLength": 2000
+              },
+              "digests": {
+                "type": "array",
+                "minItems": 0,
+                "maxItems": 100,
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "minLength": 64,
+                  "maxLength": 64
+                }
+              },
+              "options": {
+                "type": "object"
+              },
+              "state": {
+                "type": "string",
+                "enum": [
+                  "reviewed",
+                  "matching",
+                  "differences"
+                ]
+              },
+              "result": {
+                "type": "object"
+              },
+              "job_id": {
+                "type": "string",
+                "maxLength": 100
+              },
+              "evidence": {
+                "type": "string",
+                "maxLength": 2000
+              }
+            },
+            "required": [
+              "run_id",
+              "source_id",
+              "target",
+              "kind",
+              "digests",
+              "options",
+              "state"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "id",
+          "revision",
+          "fields"
+        ],
+        "additionalProperties": false
+      }
     }
   ],
   "events": [
@@ -1344,6 +1804,90 @@
               ]
             }
           }
+        }
+      ]
+    },
+    {
+      "name": "batches",
+      "label": {
+        "en": "Reviewed migration pages",
+        "de": "Geprüfte Migrationsseiten",
+        "fr": "Pages de migration vérifiées",
+        "es": "Páginas de migración revisadas"
+      },
+      "publicRead": false,
+      "fields": [
+        {
+          "name": "run_id",
+          "kind": "string",
+          "required": true,
+          "indexed": true
+        },
+        {
+          "name": "source_id",
+          "kind": "string",
+          "required": true,
+          "indexed": false
+        },
+        {
+          "name": "kind",
+          "kind": "string",
+          "required": true,
+          "indexed": false
+        },
+        {
+          "name": "target",
+          "kind": "string",
+          "required": true,
+          "indexed": false
+        },
+        {
+          "name": "cursor",
+          "kind": "string",
+          "required": false,
+          "indexed": false
+        },
+        {
+          "name": "next_cursor",
+          "kind": "string",
+          "required": false,
+          "indexed": false
+        },
+        {
+          "name": "digests",
+          "kind": "json",
+          "required": true,
+          "indexed": false
+        },
+        {
+          "name": "options",
+          "kind": "json",
+          "required": true,
+          "indexed": false
+        },
+        {
+          "name": "state",
+          "kind": "string",
+          "required": true,
+          "indexed": false
+        },
+        {
+          "name": "result",
+          "kind": "json",
+          "required": false,
+          "indexed": false
+        },
+        {
+          "name": "job_id",
+          "kind": "string",
+          "required": false,
+          "indexed": false
+        },
+        {
+          "name": "evidence",
+          "kind": "string",
+          "required": false,
+          "indexed": false
         }
       ]
     }
@@ -1457,6 +2001,18 @@
       "method": "POST",
       "scope": "admin",
       "action": "save_run"
+    },
+    {
+      "path": "list_batches",
+      "method": "POST",
+      "scope": "admin",
+      "action": "list_batches"
+    },
+    {
+      "path": "save_batch",
+      "method": "POST",
+      "scope": "admin",
+      "action": "save_batch"
     }
   ],
   "intelligence": {

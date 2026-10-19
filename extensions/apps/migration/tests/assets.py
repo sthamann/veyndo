@@ -15,7 +15,16 @@ wrong=json.loads(json.dumps(abody));wrong['assetChunks']=[base64.b64encode(b'cha
 call('/api/merchant/imports',wrong,sh,400)
 assert len(call('/api/merchant/products/'+pid+'/assets',h=sh)['elements'])==1
 call('/api/merchant/imports',abody,fh,400)
-print('PASS native imported image: original private asset store, attached media, stable replay and mismatched/foreign bytes denied')
+assert inspect(abody)['status']=='matching'
+media_edit=call('/api/merchant/products/'+pid,h=sh);media_edit['commerce'].pop('stock',None)
+media_edit['commerce']['media']=[]
+call('/api/merchant/products/'+pid,media_edit,sh,method='PUT')
+missing_association=inspect(abody)
+assert missing_association['status']=='changed' and any(p.startswith('/association') for p in missing_association['differences']),missing_association
+# Restore the actual association using the normal immutable-byte replay owner.
+call('/api/merchant/imports',abody,sh)
+assert inspect(abody)['status']=='matching'
+print('PASS native imported image plus current byte/association comparison and missing-association detection')
 
 # A manual entry keeps its slot while reviewed import positions remain ordered across interleaved slices.
 edit=call('/api/merchant/products/'+pid,h=sh);edit['commerce'].pop('stock',None)

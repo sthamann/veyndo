@@ -63,8 +63,11 @@ async fn execute(
         credentials::permit(h, "assets.read")?;
         return assets::app_file_callback(a, h, operation, &v).await;
     }
-    if operation == "job_import" {
-        return job_import::execute(a, h, &m, &v).await;
+    if operation == "job_evidence" {
+        return job_evidence::verify(a, h, &m, &v).await;
+    }
+    if ["job_import", "job_inspect"].contains(&operation) {
+        return job_import::execute(a, h, &m, &v, operation == "job_inspect").await;
     }
     if ["job_claim", "job_progress"].contains(&operation) {
         if !m.permissions.iter().any(|p| p == "jobs.write") {

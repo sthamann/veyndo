@@ -1,5 +1,15 @@
 # Changelog
 
+## Current migration target checks and durable continuation — 2026-10-19
+
+- Atomically store successful native job completion and authenticated private evidence under current creator, package, lease, cancellation and CAS fences. Ordinary saved success flags and edited seals cannot advance migration progress. Preserve evidence across job archival and actual service restart.
+- Share native CRM address creation planning with reconciliation, preserving identical address rows and first-address defaults; enforce PII permission on full commerce-settings order projections.
+- Build and smoke-test a separate non-root Rust migration image with immutable source tags; public deployment remains a distinct acceptance step.
+
+- Compare actual native mapped target fields across all eight supported import domains. A successful replay no longer establishes parity: edited prices/text, missing records and disconnected image associations remain visible. Explicit reconciliation jobs are read-only and retain current creator, package, lease, digest, target and paired read/PII checks.
+- Save exact reviewed page intents and bounded results in existing private app records. Continue plans in dependency/cursor order after reload, technical job archival or service restart; preserve deliberate per-page approvals, conflicts and app quotas.
+- Close an older settings projection that returned full historical orders to settings/order readers without the separate PII right. Add actual restricted-role, changed-target, readonly-write denial, eight-domain archival/restart and delayed UI-rights regressions. [Scope and current deployment status](docs/agentic-migration.md).
+
 ## Saved migration work plans — 2026-10-19
 
 - Connect a named source/domain/private-preview work plan to existing leased jobs through a non-authoritative group label. Plans use native logical records, revisions and current app rights; they never approve a source page or authorize cutover.

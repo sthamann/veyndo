@@ -13,12 +13,6 @@ pub(super) async fn import(
             "Product migration requires a private preview; live inventory was not changed",
         ));
     }
-    let active = match r.data.get("catalogActive") {
-        None | Some(Value::Null) => true,
-        Some(value) => value
-            .as_bool()
-            .ok_or(bad("Source catalogue visibility must be boolean"))?,
-    };
     let namespace = super::identity_namespace(a, &t).await?;
     let id = r.identity(&namespace);
     let digest = hash(&json!({"record":r,"options":options}).to_string());
@@ -36,7 +30,23 @@ pub(super) async fn import(
             "Source product already has a different reviewed snapshot; prepare an explicit update",
         ));
     }
-    let (settings, revision) = commerce::config(a, &t).await?;
+    let payload = mapped(a, &t, r, options).await?;
+    let Json(result) = commerce::create_product(State(a.clone()), h.clone(), Json(payload)).await?;
+    Ok(json!({"id":result["id"],"replayed":false,"stockActivated":false}))
+}
+
+/// Shared native mapping for writes and read-only reconciliation; no second price/translation calculator.
+pub(super) async fn mapped(a: &App, t: &str, r: &SourceRecord, options: &Value) -> Result<Value> {
+    let active = match r.data.get("catalogActive") {
+        None | Some(Value::Null) => true,
+        Some(value) => value
+            .as_bool()
+            .ok_or(bad("Source catalogue visibility must be boolean"))?,
+    };
+    let namespace = super::identity_namespace(a, t).await?;
+    let id = r.identity(&namespace);
+    let digest = hash(&json!({"record":r,"options":options}).to_string());
+    let (settings, revision) = commerce::config(a, t).await?;
     let tax = options["taxRate"]
         .as_f64()
         .filter(|n| n.is_finite() && (0.0..=50.0).contains(n))
@@ -111,7 +121,7 @@ pub(super) async fn import(
         .map(str::to_owned)
         .unwrap_or_else(|| format!("IMPORT-{id}"));
     let relations = super::relations::product(r, &namespace)?;
-    let payload = json!({"id":id,"revision":0,"settingsRevision":revision,"translations":translations,"extra":{"priceCurrency":code,"identity":{"migrationDigest":digest,"importSource":{"system":r.source,"shop":r.source_shop,"id":r.source_id},"sourceRecordVersion":r.version,"sourceRecordDigest":hash(&json!(r).to_string()),"sourceStock":r.data["stock"].as_i64(),"sourcePriceBasis":basis,"sourcePrice":amount}},"catalog":{"active":active,"productNumber":sku,"categoryIds":relations["categoryIds"],"parentId":relations["parentId"],"options":relations["options"]},"commerce":{"price":price,"taxRate":tax,"stock":0,"minPurchase":1,"purchaseSteps":1,"maxPurchase":null,"deliveryDays":0,"listPrice":null,"advancedPrices":[],"media":[],"properties":{}}});
-    let Json(result) = commerce::create_product(State(a.clone()), h.clone(), Json(payload)).await?;
-    Ok(json!({"id":result["id"],"replayed":false,"stockActivated":false}))
+    Ok(
+        json!({"id":id,"revision":0,"settingsRevision":revision,"translations":translations,"extra":{"priceCurrency":code,"identity":{"migrationDigest":digest,"importSource":{"system":r.source,"shop":r.source_shop,"id":r.source_id},"sourceRecordVersion":r.version,"sourceRecordDigest":hash(&json!(r).to_string()),"sourceStock":r.data["stock"].as_i64(),"sourcePriceBasis":basis,"sourcePrice":amount}},"catalog":{"active":active,"productNumber":sku,"categoryIds":relations["categoryIds"],"parentId":relations["parentId"],"options":relations["options"]},"commerce":{"price":price,"taxRate":tax,"stock":0,"minPurchase":1,"purchaseSteps":1,"maxPurchase":null,"deliveryDays":0,"listPrice":null,"advancedPrices":[],"media":[],"properties":{}}}),
+    )
 }

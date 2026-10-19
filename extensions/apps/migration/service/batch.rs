@@ -16,6 +16,7 @@ pub async fn run(config: &config::Config, t: &str, job: &Value) -> Result<Value>
     let kind = inspecting
         .or_else(|| input["kind"].as_str())
         .ok_or("Source domain required")?;
+    let receipt = receipts::load(config, t, job).await?;
     let mut page = extract::page(
         &c,
         source_id,
@@ -46,11 +47,15 @@ pub async fn run(config: &config::Config, t: &str, job: &Value) -> Result<Value>
     let rows = page["records"]
         .as_array()
         .ok_or("Invalid source projection")?;
+    let comparing = input["operation"] == "reconcile";
     let mut completed = job["checkpoint"]["completed"].as_u64().unwrap_or(0) as usize;
     if completed > rows.len() {
         return Err("Checkpoint exceeds reviewed page".into());
     }
-    for row in rows.iter().skip(completed) {
+    for row in rows
+        .iter()
+        .skip(if comparing { rows.len() } else { completed })
+    {
         let state = core::callback(
             callback,
             t,
@@ -85,11 +90,17 @@ pub async fn run(config: &config::Config, t: &str, job: &Value) -> Result<Value>
         completed += 1;
         core::callback(callback,t,"job_progress",&serde_json::json!({"id":job["id"],"lease":job["lease"],"status":"running","progress":completed*99/rows.len().max(1),"checkpoint":{"completed":completed}}),config.fixture).await?;
     }
-    let mut result = serde_json::json!({"target":input["target"],"kind":input["kind"],"sourceId":input["sourceId"],"imported":completed,"reviewed":rows.len(),"nextCursor":page["nextCursor"],"sourceVersion":page["sourceVersion"],"adapterVersion":1,"snapshotConsistent":false,"cutoverReady":false,"reconciled":completed==rows.len()});
+    let comparison = reconcile::run(config, t, job, rows).await?;
+    let mut result = serde_json::json!({"target":input["target"],"kind":input["kind"],"sourceId":input["sourceId"],"imported":completed,"reviewed":rows.len(),"nextCursor":page["nextCursor"],"sourceVersion":page["sourceVersion"],"adapterVersion":1,"snapshotConsistent":false,"cutoverReady":false,"reconciled":comparison["matching"].as_u64()==Some(rows.len() as u64),"comparison":comparison,"operation":if comparing{"reconcile"}else{"import"}});
+    result["actor"] = job["actor"].clone();
+    result["packageDigest"] = job["packageDigest"].clone();
     result["jobGroup"] = input["jobGroup"].clone();
     result["cursor"] = input["cursor"].clone();
     if let Some(source) = page.get("sourceExport") {
         result["sourceExport"] = source.clone();
+    }
+    if let Some(row) = receipt {
+        result["_completionEvidence"] = receipts::evidence(job, &row, &result)?;
     }
     Ok(result)
 }

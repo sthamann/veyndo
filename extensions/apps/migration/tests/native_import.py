@@ -1,5 +1,6 @@
 """Native historical intake must preserve money/identity without purchase effects or account inference."""
 import json,os,uuid,urllib.request,urllib.error
+from pathlib import Path
 BASE=os.environ['BASE_URL']
 def call(path,v=None,h=None,status=200,method=None):
     req=urllib.request.Request(BASE+path,data=None if v is None else json.dumps(v).encode(),headers={'Content-Type':'application/json',**(h or {})},method=method)
@@ -13,6 +14,7 @@ def shop():
     s=uuid.uuid4().hex[:10];EMAILS.append(s+'@example.test');return call('/api/auth/register',{'name':'Migration Test','email':s+'@example.test','password':'Migration-fixture-2026!','workspaceId':'migration-'+s,'workspaceName':'Migration synthetic'})
 a,b=shop(),shop();h={'Authorization':'Bearer '+a['token'],'x-tenant':a['workspace']};fh={'Authorization':'Bearer '+b['token'],'x-tenant':b['workspace']}
 row={'version':1,'source':'shopify','sourceShop':'original-shop','kind':'orders','sourceId':'old-17','data':{'number':'OLD-17','total':{'currency':'EUR','scale':2,'minor':12990},'sourcePaymentStatus':'paid','sourceOrderStatus':'fulfilled','createdAt':'2021-01-02T10:00:00Z','lines':[{'sourceId':'old-line-1','label':'Altes Produkt','quantity':1,'unitPrice':{'currency':'EUR','scale':2,'minor':12990}}],'historical':True},'warnings':[]}
+row['data']['billingAddress']={'street':'PRIVATE-MIGRATION-ADDRESS-76921'}
 body={'approve':True,'record':row,'options':{'channelId':'default'}}
 call('/api/merchant/imports',body,status=401)
 call('/api/merchant/imports',{**body,'approve':False},h,400)
@@ -29,6 +31,7 @@ call('/api/merchant/orders/'+oid+'/receipts',{'kind':'invoice','revision':1,'req
 assert call('/api/merchant/orders/'+oid+'/receipts',h=h)['elements']==[]
 other=call('/api/merchant/imports',body,fh);assert other['id']!=oid
 print('PASS historical native order: exact total/date, source identity, replay/conflict, foreign denial, no stock/payment/invoice or guessed customer identity')
+exec(compile(Path(__file__).with_name('pii_projection.py').read_text(),'pii_projection.py','exec'))
 
 # Real products enter only a private sandbox and preserve native creation/release semantics.
 stage=call('/api/environments',{'name':'Migration preview'},h)['id'];sh={**h,'x-tenant':stage}
@@ -42,6 +45,7 @@ call('/api/merchant/products/'+pid,h=h,status=404)
 stage2=call('/api/environments',{'name':'Second migration preview'},h)['id']
 assert call('/api/merchant/imports',pbody,{**h,'x-tenant':stage2})['id']==pid
 print('PASS native product migration: private-only draft, exact price, zero active stock and stable replay')
+exec(compile(Path(__file__).with_name('reconciliation.py').read_text(),'reconciliation.py','exec'))
 # Explicit source catalogue visibility must survive the generic native import owner.
 inactive=json.loads(json.dumps(pbody));inactive['record']['sourceId']='hidden-source-product';inactive['record']['data'].update({'sku':'MIG-HIDDEN','catalogActive':False})
 hidden=call('/api/merchant/imports',inactive,sh)['id']
@@ -88,6 +92,18 @@ customer={'version':1,'source':'woocommerce','sourceShop':'source-woo','kind':'c
 cbody={'approve':True,'record':customer,'options':{'customerGroup':'consumer'}}
 c=call('/api/merchant/imports',cbody,h);assert call('/api/merchant/imports',cbody,h)['id']==c['id']
 cd=call('/api/merchant/customers/'+customer['data']['email'],h=h);assert cd['id']==c['id'] and cd['addresses']['elements']
+# Address multiplicity/defaults must agree with the exact native creation behavior.
+for mode in ('identical','shipping-only','additional-only'):
+    edge=json.loads(json.dumps(cbody));edge['record']['sourceId']='address-edge-'+mode
+    edge['record']['data']['email']='edge-'+mode+'-'+uuid.uuid4().hex[:8]+'@example.test'
+    address=edge['record']['data'].pop('billingAddress')
+    if mode=='identical':edge['record']['data'].update({'billingAddress':address,'shippingAddress':address})
+    elif mode=='shipping-only':edge['record']['data']['shippingAddress']=address
+    else:edge['record']['data']['additionalAddresses']=[address]
+    call('/api/merchant/imports',edge,h)
+    observed=call('/api/merchant/imports/inspect',{'record':edge['record'],'options':edge['options']},h)
+    assert observed['status']=='matching',(mode,observed)
+print('PASS current customer addresses: identical explicit addresses remain two rows; shipping-only/additional-only native defaults match')
 call('/store-api/account/login',{'email':customer['data']['email'],'password':'Migration-fixture-2026!'}, {'x-tenant':a['workspace']},401)
 print('PASS native customer migration: addresses, stable source ID, no issued credential or account ownership inference')
 book=json.loads(json.dumps(cbody));book['record']['sourceId']='customer-book';book['record']['data']['email']='migration-book-'+uuid.uuid4().hex[:8]+'@example.test'

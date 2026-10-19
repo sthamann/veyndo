@@ -66,3 +66,21 @@
 - [ ] Exercise browser wizard, private preview, agent proposal review and simulated checkout; save actual screenshots.
 - [ ] Update source/contract/formal review manifests after actual review; full required checks; fresh whole-branch review and fix important findings.
 - [ ] Publish reviewable PR and deliver within existing authorization; clearly record any external credential/hosting prerequisite instead of claiming it passed.
+
+## Selected completion work — 19 October
+
+The user selected delivery, actual source/target reconciliation and a connected
+resumable run (follow-ups 1, 2 and 3). These extend the earlier checkpoints:
+
+- [x] Read current native target fields for all eight domains; distinguish missing,
+  matching and changed mappings. Test manual changes and missing image associations;
+  neither source fingerprint nor a completed job alone establishes parity.
+- [x] Persist page intent/evidence through native private app records and CAS, retain
+  source cursor/digests/target/options, and restore after technical job archival.
+- [x] Guide the saved domain plan in dependency order, one explicitly reviewed page
+  at a time; show actual completion and pauses without silently granting bulk writes.
+- [ ] Finish CI/review, publish the Rust service and Core/Studio and exercise public
+  native flows. Keep local verification separate from hosted acceptance.
+
+No new queue, app SQL table or source-specific code in Core. Final source deltas,
+transactional cross-domain snapshots and production cutover remain separately scoped.

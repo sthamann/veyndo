@@ -28,7 +28,16 @@ pub(super) async fn import(
             "Source category already has a different reviewed snapshot",
         ));
     }
-    let (settings, _) = commerce::config(a, &t).await?;
+    let payload = mapped(a, &t, r, options).await?;
+    let Json(value) = crate::categories::import(a.clone(), h.clone(), id, payload).await?;
+    Ok(json!({"id":value["id"],"replayed":false}))
+}
+
+/// Read-only inspection and creation share this native hierarchy/translation mapping.
+pub(super) async fn mapped(a: &App, t: &str, r: &SourceRecord, options: &Value) -> Result<Value> {
+    let namespace = super::identity_namespace(a, t).await?;
+    let digest = hash(&json!({"record":r,"options":options}).to_string());
+    let (settings, _) = commerce::config(a, t).await?;
     let names = r.data["title"]
         .as_object()
         .ok_or(bad("Translated category names required"))?;
@@ -43,7 +52,7 @@ pub(super) async fn import(
                 .and_then(|id| super::relations::identity(r, &namespace, "categories", id))
         })
         .transpose()?;
-    let payload = json!({"revision":0,"parentId":parent,"position":0,"data":{"active":true,"visible":true,"type":"page","translations":translations,"importSource":{"digest":digest,"source":r.source,"shop":r.source_shop,"id":r.source_id}}});
-    let Json(value) = crate::categories::import(a.clone(), h.clone(), id, payload).await?;
-    Ok(json!({"id":value["id"],"replayed":false}))
+    Ok(
+        json!({"revision":0,"parentId":parent,"position":0,"data":{"active":true,"visible":true,"type":"page","translations":translations,"importSource":{"digest":digest,"source":r.source,"shop":r.source_shop,"id":r.source_id}}}),
+    )
 }

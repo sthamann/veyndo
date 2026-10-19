@@ -27,3 +27,8 @@ pub fn native_lifecycle_admissible(native: bool, rights: bool, guards: bool) -> 
 pub fn source_activation_admissible(imported: bool, reviewed: bool, active: bool) -> bool {
     !imported || !active || reviewed
 }
+
+/// A requested cancellation cannot be committed as a successful job completion.
+pub fn job_completion_admissible(cancel_requested: bool, succeeded: bool) -> bool {
+    !cancel_requested || !succeeded
+}

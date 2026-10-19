@@ -105,6 +105,16 @@ export type Job = {
   message: Record<string, string>;
   result?: {
     jobGroup?: string | null;
+    operation?: "import" | "reconcile";
+    cursor?: string;
+    comparison?: {
+      matching: number;
+      changed: number;
+      missing: number;
+      checked: number;
+      checkedAt: string;
+      examples?: { id: string; status: string; differences: string[] }[];
+    };
     target?: string;
     kind: Kind;
     sourceId: string;
@@ -116,7 +126,6 @@ export type Job = {
     recordDigests?: string[];
     sourceVersion?: string;
     adapterVersion?: number;
-    cursor?: string;
   };
 };
 export function jobKind(job: Job): Kind | undefined {
@@ -159,6 +168,15 @@ export function rowAmount(row: SourceRecord) {
 export function importRights(kind: Kind) {
   return [
     "apps.manage",
+    kind === "pages"
+      ? "apps.manage"
+      : kind === "coupons"
+        ? "automation.read"
+        : ["products", "categories", "assets", "reviews"].includes(kind)
+          ? "catalog.read"
+          : kind === "customers"
+            ? "customers.read"
+            : "orders.read",
     kind === "coupons"
       ? "automation.manage"
       : kind === "reviews"

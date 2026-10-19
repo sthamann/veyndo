@@ -1,5 +1,6 @@
 //! Closed, side-effect-free commerce policies extracted to Lean; keep within the checked bool/u64 grammar.
 mod app_intake;
+pub use app_intake::job_completion_admissible;
 pub use app_intake::source_activation_admissible;
 mod fulfillment;
 pub use app_intake::app_configuration_release_admissible;

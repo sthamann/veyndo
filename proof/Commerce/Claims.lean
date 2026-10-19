@@ -507,4 +507,9 @@ theorem source_activation_exact (imported reviewed active : Bool) :
 theorem source_activation_unreviewed_denied : source_activation_admissible true false true = false := by
   rfl
 
+theorem job_completion_exact (cancel_requested succeeded : Bool) :
+    job_completion_admissible cancel_requested succeeded = (!cancel_requested || !succeeded) := by rfl
+
+theorem job_cancelled_success_denied : job_completion_admissible true true = false := by rfl
+
 end CommerceKernel

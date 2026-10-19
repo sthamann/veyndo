@@ -291,6 +291,10 @@ pub(super) fn eval(j: &Value) -> Result<Value, String> {
             b("reviewed")?,
             b("active")?
         ))),
+        Some("job_completion_admissible") => Ok(json!(job_completion_admissible(
+            b("cancel_requested")?,
+            b("succeeded")?
+        ))),
         _ => Err("Unknown policy".into()),
     }
 }
