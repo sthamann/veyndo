@@ -525,3 +525,9 @@ private import, current-field comparison, reload/resume and selected publication
 with simulated checkout on that deployed source tag. The current 19 October local
 evidence does not establish that hosted deployment; see the single
 [current status](status.md).
+
+A small public, credential-free source is available under
+[`extensions/apps/migration/examples/`](https://github.com/sthamann/veyndo/tree/main/extensions/apps/migration/examples).
+It is a three-product frozen domain export for hosted acceptance, not a real shop
+or full-domain migration. Use an immutable raw commit URL plus the exact manifest
+hash; its README explains separate explicit review/publication and simulation.
