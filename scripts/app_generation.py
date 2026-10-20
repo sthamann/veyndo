@@ -18,7 +18,11 @@ class Model(BaseHTTPRequestHandler):
    if 'edits' in state:edits=state['edits']
    if state['invalid']:edits=[('/entities/0/fields',[])]
    out={'message':{'content':json.dumps({'patch':[{'op':'add','path':path,'valueJson':json.dumps(value)} for path,value in edits],'summary':m['name']})},'done_reason':'stop'}
-  if state.get('compose') and self.path!='/api/embed':out={'message':{'content':json.dumps({'manifest':state['composed'],'summary':state['composed']['name']})},'done_reason':'stop'}
+  if state.get('compose') and self.path!='/api/embed':
+   candidate=copy.deepcopy(state['composed'])
+   state['composeCalls']=state.get('composeCalls',0)+1
+   if state.get('repair') and state['composeCalls']==1:candidate['views'][0]['blocks'][0]['childBlocks']=['absent_child']
+   out={'message':{'content':json.dumps({'manifest':candidate,'summary':candidate['name']})},'done_reason':'stop'}
   if self.path=='/v1/responses':
    assert v['text']['format']['strict']
    out={'status':'completed','output':[{'type':'message','content':[{'type':'output_text','text':out['message']['content']}]}]}
@@ -67,16 +71,18 @@ try:
  extra=copy.deepcopy(composed['entities'][0]);extra['name']='notes';extra['publicRead']=False
  extra['fields']=[{'name':'title','kind':'string','label':m['name'],'required':True,'translatable':True}]
  composed['entities'].append(extra);composed.pop('actions',None)
- state.update(compose=True,composed=composed)
+ state.update(compose=True,composed=composed,repair=True,composeCalls=0)
  full=call('/api/developer/generate',{**payload,'inference':{'provider':'openai','model':'synthetic-model'},'mode':'compose','prompt':'Add a private notes library and a region setting. Preserve the product editor.'})
  assert len(full['manifest']['entities'])==2 and full['manifest']['settings'][0]['key']=='region'
+ assert state['composeCalls']==2 and 'Containers support one level of existing leaf blocks' in seen[-1]['input']
+ assert seen[-1]['instructions'].startswith('[prompt:app-generation@3]')
  preview=call('/api/developer/preview',{'manifest':full['manifest']})
  private={**headers,'x-tenant':preview['environment']}
  call('/api/apps/'+m['id']+'/entities/notes',{'id':'tested_note','fields':{'title':{'en-GB':'Actual private generated note'}}},scope=private)
  assert call('/api/apps/'+m['id']+'/entities/notes',scope=private)['elements'][0]['id']=='tested_note'
  assert not any(s['app']==m['id'] for s in call('/api/apps/surfaces')['surfaces'])
  state.update(compose=False)
- print('PASS complete AI composition adds data and settings, installs the real private preview and writes/reads its actual record without changing live')
+ print('PASS complete AI composition repairs one rejected native layout, validates data and settings, installs the real private preview and writes/reads its actual record without changing live')
  lifecycle=copy.deepcopy(json.loads((ROOT/'extensions/apps/production-review/manifest.json').read_text())['lifecycles'][0])
  state['edits']=[('/lifecycles',[lifecycle])]
  workflow_build=call('/api/developer/generate',{**payload,'prompt':'Add an order quality review requiring confirmed payment and delivered shipments. Preserve the current app and its data.'})

@@ -134,11 +134,36 @@ interface inputs {
   record merchant-product-create-input {
     %product: string,
   }
+  record merchant-category-create-input-category-data {
+    %active: bool,
+    %translations: string,
+    %type: string,
+    %visible: bool,
+  }
+  record merchant-category-create-input-category {
+    %data: merchant-category-create-input-category-data,
+    %id: option<string>,
+    %parent-id: option<option<string>>,
+    %position: s64,
+    %revision: option<s64>,
+  }
   record merchant-category-create-input {
-    %category: string,
+    %category: merchant-category-create-input-category,
+  }
+  record merchant-category-save-input-category-data {
+    %active: bool,
+    %translations: string,
+    %type: string,
+    %visible: bool,
+  }
+  record merchant-category-save-input-category {
+    %data: merchant-category-save-input-category-data,
+    %parent-id: option<option<string>>,
+    %position: s64,
+    %revision: s64,
   }
   record merchant-category-save-input {
-    %category: string,
+    %category: merchant-category-save-input-category,
     %id: string,
   }
   record automation-save-input {

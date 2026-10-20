@@ -22,6 +22,10 @@ const TEMPLATES: &[(&str, &str)] = &[
         "app-generation@2",
         include_str!("../prompts/app-generation.v2.txt"),
     ),
+    (
+        "app-generation@3",
+        include_str!("../prompts/app-generation.v3.txt"),
+    ),
     ("app-edit@1", include_str!("../prompts/app-edit.v1.txt")),
     ("app-edit@2", include_str!("../prompts/app-edit.v2.txt")),
     ("app-edit@3", include_str!("../prompts/app-edit.v3.txt")),
@@ -44,11 +48,16 @@ mod tests {
     #[test]
     fn workflow_edit_revision_binds_its_own_template_and_rendered_context() {
         for (id, template) in [
+            (
+                "app-generation@3",
+                include_str!("../prompts/app-generation.v3.txt"),
+            ),
             ("app-edit@2", include_str!("../prompts/app-edit.v2.txt")),
             ("app-edit@3", include_str!("../prompts/app-edit.v3.txt")),
         ] {
             let rendered = format!("{template} untrusted shop context");
             let proof = evidence(&rendered);
+            assert_eq!(proof["registered"], true);
             assert_eq!(proof["templates"][0]["id"], id);
             assert_eq!(proof["templates"].as_array().unwrap().len(), 1);
             assert_eq!(

@@ -672,8 +672,8 @@
     },
     "crates/cognition/src/prompts.rs": {
       "status": "unproved",
-      "sha256": "aa3eda99848fc2efa838bee71b879897f1b5c73d846c9d535cde26a95c88bf1b",
-      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
+      "sha256": "757cd8641990ecc8e891eb1a136828c37a11afaecebf921252509c8cade3cc3d",
+      "review": "Focused independent review accepted bounded native app proposal repair, canonical category admission and current task progress fences; fail-first generation/category/race regressions passed. These adapters remain outside proved business policies."
     },
     "crates/commerce/src/discount.rs": {
       "status": "reviewed-binding",
@@ -1427,8 +1427,8 @@
     },
     "src/agent_runs/work_plan.rs": {
       "status": "unproved",
-      "sha256": "1754a4239342324af6ae6cb7e4e2aae829d2268c770f2da7e2915e3f783629af",
-      "review": "Focused independent review accepted actor-scoped exact approval followed by existing privileged native coordinator for parent-shop stop control, locked parent-before-task CAS, no worker scope/grant widening. Direct and one-backend interruption/cancellation/expiry tests passed; signed-role failure reproduced and coordinator repaired."
+      "sha256": "f116c4ac7836a433c417d58e7ce8e2edd5d527a5dd035deb30c3d89a0e2f311e",
+      "review": "Focused independent review accepted bounded native app proposal repair, canonical category admission and current task progress fences; fail-first generation/category/race regressions passed. These adapters remain outside proved business policies."
     },
     "src/agent_runs/worker.rs": {
       "status": "unproved",
@@ -2282,8 +2282,8 @@
     },
     "src/capabilities/schema.rs": {
       "status": "unproved",
-      "sha256": "328c7667596c9cac2b79b8ac2be5d461f127c1759de9811b22bc6048f91a54a8",
-      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
+      "sha256": "63d3d54c3e6a395fbf09a90cc8dbfec78568cd5e9ab30b8bb91e5b0221725dd3",
+      "review": "Focused independent review accepted bounded native app proposal repair, canonical category admission and current task progress fences; fail-first generation/category/race regressions passed. These adapters remain outside proved business policies."
     },
     "src/capabilities.rs": {
       "status": "unproved",
@@ -2332,8 +2332,8 @@
     },
     "src/categories/admin.rs": {
       "status": "unproved",
-      "sha256": "345f5c5de1ec896b5fe6c452c4f962d606e873c7b61782b10ea2a05574f815e0",
-      "review": "Independent focused review passed: private exact work approval rebinds outside transactions with locked revision/stop recheck; token-bound late native receipts preserve cancellation and expired leases, no next step after cancellation; stable category IDs validated; actual PostgreSQL direct and one-backend durable/restart/cancel/expiry regressions passed."
+      "sha256": "6c51683785f5acd856fab5c09591488ade522560ea357cf25ae9f59cb0e1f40f",
+      "review": "Focused independent review accepted bounded native app proposal repair, canonical category admission and current task progress fences; fail-first generation/category/race regressions passed. These adapters remain outside proved business policies."
     },
     "src/categories/graph_query.rs": {
       "status": "unproved",
@@ -2342,8 +2342,8 @@
     },
     "src/categories/mod.rs": {
       "status": "unproved",
-      "sha256": "36d90dd59b4196568ac7b896a291548db057b4ee6feba1d45d6173d2df473bf4",
-      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+      "sha256": "67ec6b72f61aa30913ada60297c2ff2e33e86b1086bd1b0f45630a26816676f9",
+      "review": "Focused independent review accepted bounded native app proposal repair, canonical category admission and current task progress fences; fail-first generation/category/race regressions passed. These adapters remain outside proved business policies."
     },
     "src/categories/navigation.rs": {
       "status": "unproved",
@@ -2847,8 +2847,8 @@
     },
     "src/developer/generation.rs": {
       "status": "unproved",
-      "sha256": "4bc17fd43c785bb8bd69e637cf96fdc056bee71e685ce9b59f2daa4c1d7654b7",
-      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
+      "sha256": "e9b0246252a903e2a986d050c2be61132ac633f046da57ac2b3214b5153acd67",
+      "review": "Focused independent review accepted bounded native app proposal repair, canonical category admission and current task progress fences; fail-first generation/category/race regressions passed. These adapters remain outside proved business policies."
     },
     "src/developer/generation_contract.rs": {
       "status": "unproved",
@@ -4068,13 +4068,17 @@
       "sha256": "99172810be7e83732cb9cd38033a0b24b658d0e41ef54118c44344dcce7e8fdc",
       "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
     },
+    "crates/cognition/prompts/app-generation.v3.txt": {
+      "sha256": "5f55127630ef5f3726d9b6ea12430a3d7531bfd481e270030682fd34d273e960",
+      "review": "Focused independent review accepted bounded native app proposal repair, canonical category admission and current task progress fences; fail-first generation/category/race regressions passed. These adapters remain outside proved business policies."
+    },
     "crates/cognition/prompts/grid-filter.v1.txt": {
       "sha256": "d3e9261f4f96530f3e47c65a1d8b320283a5a56a187f66439a00c0a13cd1e77e",
       "review": "Reviewed native extension identity/private/unique anchors and current read/write/PII scopes; native projections use bounded fixed-store queries, exact indexed filters bind all input and fence the admitted package digest. Real four-object HTTP/MCP, role revocation, foreign reference, immutable upgrade, product/company clone and selected release tests passed. Added extracted configuration-only release predicate and operational false property; SQL and UI remain explicitly unproved. Reviewed canonical schema, preserved AI bindings and versioned grid prompt provenance without changing existing prompt revisions."
     },
     "crates/cognition/prompts/manifest.json": {
-      "sha256": "1ce1220cac25e632dacd4b98ff84827ff434360ea0f5245c4e0cad43a17ebd33",
-      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
+      "sha256": "2d7aa004faff6373ef9d55053228afb20ba1549ff200bcc3469ec7fac8fec70f",
+      "review": "Focused independent review accepted bounded native app proposal repair, canonical category admission and current task progress fences; fail-first generation/category/race regressions passed. These adapters remain outside proved business policies."
     },
     "crates/cognition/prompts/merchant-planner.v1.txt": {
       "sha256": "6fc1d69faed9342d8b95af531c3c3e0c597f1c4d18a311d3f62e5849236fdfaf",

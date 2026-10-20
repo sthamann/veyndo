@@ -64,6 +64,15 @@ pub(crate) async fn bind(a: &App, t: &str, h: &RequestContext, steps: &mut [Step
                     "Operation is not admitted for private configuration work",
                 ))?;
             apps::validate_native_input(&op.input_schema(), &args)?;
+            if step.name.starts_with("merchant.category.") {
+                categories::admit_configuration(
+                    a,
+                    t,
+                    &args["category"],
+                    step.name.ends_with(".create"),
+                )
+                .await?;
+            }
             if step.name.ends_with(".create") {
                 let key = if step.name == "merchant.product.create" {
                     "product"
@@ -99,6 +108,10 @@ pub(crate) async fn bind(a: &App, t: &str, h: &RequestContext, steps: &mut [Step
                     && args["product"]["contentRevision"].as_i64().is_none()
                 {
                     return Err(bad("Planned product edit needs its original revision"));
+                }
+            } else if step.name == "merchant.category.save" {
+                if args["category"]["revision"].as_i64().is_none() {
+                    return Err(bad("Planned category edit needs its original revision"));
                 }
             } else if args["revision"].as_i64().is_none() {
                 return Err(bad("Planned edit needs its original revision"));

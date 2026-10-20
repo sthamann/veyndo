@@ -4,7 +4,8 @@ mod admin;
 mod graph_query;
 mod navigation;
 pub(crate) use admin::{
-    create as create_category, import, list as list_categories, save as save_category,
+    admit_configuration, create as create_category, import, input_schema, list as list_categories,
+    save as save_category,
 };
 pub(crate) use navigation::admit;
 pub(crate) fn router() -> Router<App> {

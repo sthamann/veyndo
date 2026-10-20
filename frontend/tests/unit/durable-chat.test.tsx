@@ -86,6 +86,88 @@ it("queues the native background turn and immediately retains its conversation",
   expect(o.setMessages).toHaveBeenCalledWith(messages);
   expect(o.setPendingText).toHaveBeenLastCalledWith("");
 });
+it("polls approved work from the saved run even after the completed proposal has no message runId", async () => {
+  const o = options();
+  o.id = "conversation-a";
+  o.messages = [
+    {
+      id: 0,
+      role: "assistant",
+      content: "Earlier failed work",
+      data: { runId: "old-work" },
+      applied: false,
+    },
+    {
+      id: 1,
+      role: "assistant",
+      content: "Reviewed work",
+      data: { taskId: "work-a" },
+      applied: false,
+    },
+  ];
+  const execution = { completed: 2, total: 2, steps: [] };
+  o.request.mockImplementation(async (path) =>
+    path.includes("/conversations/")
+      ? {
+          conversationId: o.id,
+          messages: o.messages,
+          run: {
+            taskId: "work-a",
+            state: "running",
+            revision: 2,
+            execution: { ...execution, completed: 0 },
+          },
+        }
+      : path.endsWith("/old-work")
+        ? { taskId: "old-work", state: "cancelled", revision: 2 }
+        : { taskId: "work-a", state: "ready", revision: 3, execution },
+  );
+  const hook = renderHook(() => useChatTurns(o));
+  await act(() => hook.result.current.load(o.id!));
+  await waitFor(() =>
+    expect(hook.result.current.savedRun?.execution?.completed).toBe(2),
+  );
+  expect(o.request).toHaveBeenCalledWith("/api/agent/runs/work-a");
+  hook.unmount();
+});
+it("discards a deferred historical run response after loading current work in the same batch", async () => {
+  const o = options();
+  o.id = "conversation-a";
+  o.messages = [
+    {
+      id: 0,
+      role: "assistant",
+      content: "Earlier error",
+      data: { runId: "old-work" },
+      applied: false,
+    },
+  ];
+  let finishOld!: (value: unknown) => void;
+  const current = { taskId: "work-a", state: "running", revision: 2 };
+  o.request.mockImplementation(async (path) => {
+    if (path.endsWith("/old-work"))
+      return new Promise((resolve) => {
+        finishOld = resolve;
+      });
+    if (path.includes("/conversations/"))
+      return { conversationId: o.id, messages: [], run: current };
+    return current;
+  });
+  const hook = renderHook(() => useChatTurns(o));
+  await waitFor(() =>
+    expect(o.request).toHaveBeenCalledWith("/api/agent/runs/old-work"),
+  );
+  await act(async () => {
+    await hook.result.current.load(o.id!);
+    finishOld({ taskId: "old-work", state: "cancelled", revision: 3 });
+    await Promise.resolve();
+  });
+  await waitFor(() =>
+    expect(hook.result.current.savedRun?.taskId).toBe("work-a"),
+  );
+  expect(o.request).toHaveBeenCalledWith("/api/agent/runs/work-a");
+  hook.unmount();
+});
 it("discards a late saved-run response after switching actor or shop", async () => {
   const o = options();
   o.id = "conversation-a";
@@ -177,11 +259,15 @@ it("continuation sends explicit approval and the current native revision", async
 it("never restores an accepted instruction as a retry when only the subsequent refresh fails", async () => {
   const o = options();
   o.id = "conversation-a";
-  o.request.mockResolvedValue({
-    conversationId: o.id,
-    messages: [],
-    run: { taskId: "run-a", state: "queued", revision: 1 },
-  });
+  o.request.mockImplementation(async (path) =>
+    path === "/api/agent/chat"
+      ? {
+          conversationId: o.id,
+          messages: [],
+          run: { taskId: "run-a", state: "queued", revision: 1 },
+        }
+      : { taskId: "run-a", state: "queued", revision: 1 },
+  );
   o.refresh.mockRejectedValueOnce(new Error("Refresh interrupted"));
   const hook = renderHook(() => useChatTurns(o));
   await act(async () => {
@@ -192,7 +278,9 @@ it("never restores an accepted instruction as a retry when only the subsequent r
   expect(o.setDraft).toHaveBeenCalledTimes(1);
   expect(o.setDraft).toHaveBeenCalledWith("");
   expect(hook.result.current.savedRun?.taskId).toBe("run-a");
-  expect(o.request).toHaveBeenCalledTimes(1);
+  expect(
+    o.request.mock.calls.filter(([path]) => path === "/api/agent/chat"),
+  ).toHaveLength(1);
   hook.unmount();
 });
 it("adds the current domain context to a turn without replacing the user's draft", async () => {
