@@ -49,6 +49,6 @@ source ownership, frontend architecture and four-language interface checks. The
 existing formal gate passed 61 extracted policies with 156,705 conformance cases
 and zero mismatches; its mutation suite rejected 174 broken policies plus the
 syntax/binding/axiom negative controls. These proofs do not cover the new async
-execution adapters. The complete site build covers 295 Markdown documents in
-302 pages with local links/assets and search checked. No blanket full-platform certification,
+execution adapters. The complete site build covers 296 Markdown documents in
+303 pages with local links/assets and search checked. No blanket full-platform certification,
 external coding-agent execution or general exactly-once provider guarantee is claimed.
