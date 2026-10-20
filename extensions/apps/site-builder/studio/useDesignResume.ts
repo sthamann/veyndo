@@ -33,7 +33,10 @@ export default function useDesignResume({
   scopeKey: string;
   setMode: (mode: DesignerMode) => void;
 }) {
-  const [resume, setResume] = useState<DesignIntent>();
+  const [resume, setResume] = useState<{
+    intent: DesignIntent;
+    scope: string;
+  }>();
   const beginSetup = (intent: DesignIntent) => {
     const url = new URL(location.href);
     url.searchParams.set("designIntent", intent);
@@ -59,11 +62,19 @@ export default function useDesignResume({
     setMode(
       intent === "agent" ? "agent" : intent === "blocks" ? "blocks" : "edit",
     );
-    setResume(intent);
+    setResume({ intent, scope: scopeKey });
   }, [workspace, request, writable, missing, d.loaded]);
   useEffect(() => {
-    if (!writable || !d.loaded || !["hero", "products"].includes(resume ?? ""))
+    if (
+      !writable ||
+      !d.loaded ||
+      !["hero", "products"].includes(resume?.intent ?? "")
+    )
       return;
+    if (resume?.scope !== scopeKey) {
+      setResume(undefined);
+      return;
+    }
     if (!d.draft && snapshotScope !== scopeKey) return;
     const page =
       d.draft ??
@@ -76,7 +87,8 @@ export default function useDesignResume({
       );
     if (!d.draft) d.open(page);
     d.setSelected(
-      page.content.blocks.find((block) => block.kind === resume)?.id ?? "",
+      page.content.blocks.find((block) => block.kind === resume?.intent)?.id ??
+        "",
     );
     setResume(undefined);
   }, [resume, d.loaded, writable, d.draft, snapshotScope, scopeKey]);

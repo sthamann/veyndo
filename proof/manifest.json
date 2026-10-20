@@ -3297,8 +3297,8 @@
     },
     "src/operations/imports/inspect.rs": {
       "status": "unproved",
-      "sha256": "dc582083f89eaaa02069690341fb7e4c5703137a137d9267c6bf0242b3f1d97a",
-      "review": "2026-10-19 reviewed native read-only import projection against shared product/category/address owners; paired CRM/history PII and private target/package/digest checks; generic completion evidence atomically uses existing job creator/lease/package and record CAS, platform AEAD, native actual-field verification, no new app table or queue. Actual eight-domain migration/archival/restart/tamper and native app callback/jobs/admin creation tests pass; pure cancelled-success policy has exact Lean claim, all boolean cases and a true-return negative mutation. SQL, cryptography, async service correctness and public hosting remain outside formal proof."
+      "sha256": "19482d31f56f056a0acdf28e224d9f2ee341a0cdc992463b1f2b6ce5244aacba",
+      "review": "Reviewed product inspection diff: explicit catalogue-only bounded projection under existing apps.manage/catalog.read and tenant admission; default comparison stays values-free. Actual migration HTTP tests verify changed price/text, missing targets, foreign and no-catalogue denial; no native write/release is added."
     },
     "src/operations/imports/inspect_history.rs": {
       "status": "unproved",
@@ -3310,10 +3310,15 @@
       "sha256": "7dd40d7df112e85bc867962922d01e1bc139c5411bae6892ced7ac9e6fca52bc",
       "review": "2026-10-19 reviewed native read-only import projection against shared product/category/address owners; paired CRM/history PII and private target/package/digest checks; generic completion evidence atomically uses existing job creator/lease/package and record CAS, platform AEAD, native actual-field verification, no new app table or queue. Actual eight-domain migration/archival/restart/tamper and native app callback/jobs/admin creation tests pass; pure cancelled-success policy has exact Lean claim, all boolean cases and a true-return negative mutation. SQL, cryptography, async service correctness and public hosting remain outside formal proof."
     },
+    "src/operations/imports/inspect_product.rs": {
+      "status": "unproved",
+      "sha256": "0562fec96f1773681e1ba61fd577a2aa776205755ed4e3da4ccab26a18210043",
+      "review": "Reviewed product inspection diff: explicit catalogue-only bounded projection under existing apps.manage/catalog.read and tenant admission; default comparison stays values-free. Actual migration HTTP tests verify changed price/text, missing targets, foreign and no-catalogue denial; no native write/release is added."
+    },
     "src/operations/imports/mod.rs": {
       "status": "unproved",
-      "sha256": "b9ac517a1d555278d1f16c5f4245d8b7087dfef5046a30ec636ee2fcb87f5495",
-      "review": "2026-10-19 reviewed native read-only import projection against shared product/category/address owners; paired CRM/history PII and private target/package/digest checks; generic completion evidence atomically uses existing job creator/lease/package and record CAS, platform AEAD, native actual-field verification, no new app table or queue. Actual eight-domain migration/archival/restart/tamper and native app callback/jobs/admin creation tests pass; pure cancelled-success policy has exact Lean claim, all boolean cases and a true-return negative mutation. SQL, cryptography, async service correctness and public hosting remain outside formal proof."
+      "sha256": "61cafa1652913654a6552a7bb7645caa9c076ae97c149ff4a2b8c88d3d01784f",
+      "review": "Reviewed product inspection diff: explicit catalogue-only bounded projection under existing apps.manage/catalog.read and tenant admission; default comparison stays values-free. Actual migration HTTP tests verify changed price/text, missing targets, foreign and no-catalogue denial; no native write/release is added."
     },
     "src/operations/imports/products.rs": {
       "status": "unproved",

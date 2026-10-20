@@ -144,9 +144,9 @@ export default function StudioRoutes() {
           : undefined
       }
       onEnvironments={() => selectTab("environments")}
-      onSandbox={async (id) => {
+      onSandbox={async (id, current) => {
         await refreshEnvironments();
-        setEnvironment(id);
+        if (current?.() !== false) setEnvironment(id);
       }}
     />
   ) : tab === "orders" ? (

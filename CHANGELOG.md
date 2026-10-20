@@ -1,5 +1,12 @@
 # Changelog
 
+## Guided design setup and current product comparison — 2026-10-20
+
+- Guide first-time shop design through existing private workspaces and actual per-package consent, then resume the chosen tool/home section. Explain missing rights and support cancellation/retry without implicit publication.
+- Show original, natively mapped and currently stored product fields through an explicit bounded read-only inspection; preserve role/tenant checks, exact native money formatting and values-free default evidence.
+- Keep comparison results transient and discard stale target/source/access responses. Explain separate image, stock and publication checks; retain the existing native importer, app storage and selected release path.
+- Add connected UI and real PostgreSQL/HTTP/MCP regressions. These changes are locally verified development; the separately prepared hosted migration service remains stopped pending its user-owned gateway-key entry.
+
 ## Current migration target checks and durable continuation — 2026-10-19
 
 - Merge PR #168 after full green verification and deploy the identical Core/Studio source after a successful snapshot and additive migration 106. Publish the independent source-pinned Rust image. Keep hosted migration-service configuration and public end-to-end acceptance explicitly open in the status/evidence; a healthy Core is not a completed migration journey.

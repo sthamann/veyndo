@@ -69,3 +69,11 @@
     width: 100%;
   }
 }
+.migration-product-comparison .migration-table th {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.migration-compare-controls label {
+  display: grid;
+  gap: 6px;
+}

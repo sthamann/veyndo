@@ -88,7 +88,7 @@ const words = {
   ],
   active: [
     "Catalogue visibility",
-    "Katalogsichtbarkeit",
+    "Katalogstatus",
     "Visibilité catalogue",
     "Visibilidad del catálogo",
   ],
@@ -100,7 +100,7 @@ const words = {
   ],
   options: [
     "Variant options",
-    "Variantenausprägungen",
+    "Variantenauswahl",
     "Options de variante",
     "Opciones de variante",
   ],

@@ -55,7 +55,9 @@ function view(
   request: RequestFn,
   sandbox = false,
   access = rights,
-  onSandbox = vi.fn(async () => {}),
+  onSandbox: (id: string, current?: () => boolean) => Promise<void> = vi.fn(
+    async () => {},
+  ),
 ) {
   return (
     <LocaleScope locale="en-GB">
@@ -81,7 +83,9 @@ it("guides a new shop through private handoff and explicit package consents, the
   fireEvent.click(
     screen.getByRole("button", { name: "Create private draft and continue" }),
   );
-  await waitFor(() => expect(enter).toHaveBeenCalledWith("private-one"));
+  await waitFor(() =>
+    expect(enter).toHaveBeenCalledWith("private-one", expect.any(Function)),
+  );
   expect(live.mock.calls.some(([path]) => path === "/api/apps")).toBe(false);
   const privateRequest = api();
   page.rerender(view(privateRequest, true));
@@ -126,7 +130,12 @@ it("reuses a selected private workspace without creating another environment", a
   fireEvent.click(
     screen.getByRole("button", { name: "Open selected sandbox" }),
   );
-  await waitFor(() => expect(enter).toHaveBeenCalledWith("existing-private"));
+  await waitFor(() =>
+    expect(enter).toHaveBeenCalledWith(
+      "existing-private",
+      expect.any(Function),
+    ),
+  );
   expect(
     request.mock.calls.some(
       ([path, body]) => path === "/api/environments" && body,
@@ -213,4 +222,43 @@ it("does not switch a different workspace when an old sandbox creation finishes 
     ).toBeEnabled(),
   );
   expect(enter).not.toHaveBeenCalled();
+});
+it("does not redirect another Studio view after setup was unmounted", async () => {
+  const base = api(),
+    enter = vi.fn(async () => {});
+  let finish!: (value: unknown) => void;
+  const request: RequestFn = vi.fn(async (path, body) =>
+    path === "/api/environments" && body
+      ? new Promise((resolve) => {
+          finish = resolve;
+        })
+      : base(path, body),
+  );
+  const page = render(view(request, false, rights, enter));
+  fireEvent.click(
+    await screen.findByRole("button", {
+      name: "Create private draft and continue",
+    }),
+  );
+  await waitFor(() => expect(finish).toBeTypeOf("function"));
+  page.unmount();
+  history.replaceState(null, "", "/?studio=orders");
+  finish({ id: "late-private" });
+  await waitFor(() => expect(enter).not.toHaveBeenCalled());
+  expect(location.search).toBe("?studio=orders");
+});
+
+it("invalidates the host handoff while environment-list refresh is still pending", async () => {
+  const enter = vi.fn(async (_id: string, _current?: () => boolean) => {});
+  const page = render(view(api(), false, rights, enter));
+  fireEvent.click(
+    await screen.findByRole("button", {
+      name: "Create private draft and continue",
+    }),
+  );
+  await waitFor(() => expect(enter).toHaveBeenCalled());
+  const current = enter.mock.calls[0][1]!;
+  expect(current()).toBe(true);
+  page.unmount();
+  expect(current()).toBe(false);
 });

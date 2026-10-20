@@ -27,11 +27,12 @@ export default function DesignSetup({
   sandbox: boolean;
   installed: string[];
   loaded: boolean;
-  onSandbox?: (id: string) => Promise<void>;
+  onSandbox?: (id: string, current?: () => boolean) => Promise<void>;
   onReload: () => Promise<void>;
 }) {
   const t = useSetupText(),
-    current = useRef(request);
+    current = useRef(request),
+    generation = useRef(0);
   current.current = request;
   const [environments, setEnvironments] = useState<
       { id: string; name: string }[]
@@ -60,6 +61,7 @@ export default function DesignSetup({
         });
     return () => {
       active = false;
+      generation.current++;
     };
   }, [request, workspace, sandbox, rights.includes("environments.read")]);
   if (sandbox && !missing && rights.includes("channels.manage")) return null;
@@ -123,6 +125,9 @@ export default function DesignSetup({
           className="studio-primary"
           disabled={busy || !loaded}
           onClick={async () => {
+            const epoch = generation.current;
+            const valid = () =>
+              current.current === request && generation.current === epoch;
             if (!designIntent()) {
               const url = new URL(location.href);
               url.searchParams.set("designIntent", "edit");
@@ -138,15 +143,15 @@ export default function DesignSetup({
               const id =
                 selected ||
                 (await request("/api/environments", { name: t("private") })).id;
-              if (current.current !== request) return;
+              if (!valid()) return;
               const url = new URL(location.href);
               url.searchParams.set("designIntentTarget", id);
               history.replaceState(null, "", url);
-              await onSandbox!(id);
+              await onSandbox!(id, valid);
             } catch (e) {
-              if (current.current === request) setError((e as Error).message);
+              if (valid()) setError((e as Error).message);
             } finally {
-              if (current.current === request) setBusy(false);
+              if (valid()) setBusy(false);
             }
           }}
         >
@@ -161,10 +166,13 @@ export default function DesignSetup({
           request={request}
           onCancel={() => setConsent(false)}
           onInstall={async (approved) => {
+            const epoch = generation.current;
+            const valid = () =>
+              current.current === request && generation.current === epoch;
             await request("/api/apps", approved);
-            if (current.current !== request) return;
+            if (!valid()) return;
             await onReload();
-            if (current.current === request)
+            if (valid())
               window.dispatchEvent(new Event("commerce.apps.changed"));
           }}
         />

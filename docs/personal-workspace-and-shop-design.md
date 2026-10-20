@@ -45,9 +45,12 @@ scheduler or promise that a sentence automatically completes a whole campaign.
 
 1. Open a Storefront sales channel and choose **Shop design**, or open it from the
    Experiences navigation.
-2. Create/select a private sandbox. Live view is read-only in this editor.
+2. Follow **Make this shop yours** beside the actual storefront. Select an existing private workspace or create one. Live view is read-only; missing editing or environment permissions have a named next step.
 3. Review the native **Shop design** and **Forms inbox** package consents. Their
    implementations remain in `extensions/apps/site-builder/` and `site-forms/`.
+   Each actual package has its own digest/permission consent. Cancel or retry without
+   silently installing another package. After setup you return to the Agent, Elements
+   or home section you selected; draft content and credentials do not enter the URL.
 4. The existing storefront is visible immediately, including the native header, hero, product cards and footer. Saved home pages open automatically. Click the hero or collection to prepare a private home-page document; **New page** remains a separate action for additional pages. No blank CMS form is required before seeing the shop.
    Additional pages use lowercase letters, numbers and dashes for their addresses.
 5. Select a section in the real shared preview. Edit its heading inline or use the
@@ -57,6 +60,8 @@ scheduler or promise that a sentence automatically completes a whole campaign.
    desktop/tablet/mobile. Preview controls cannot place orders or submit forms.
 8. Save, then choose **Review publication**. Select the intended app/page changes
    in the native staging review and publish explicitly.
+
+![Guided private setup keeps the actual storefront visible](assets/design-migration-20261020/design-start.jpg)
 
 ![Drag directly into the storefront at the blue insertion boundary](assets/shop-design-20261016/drop.jpg)
 

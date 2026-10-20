@@ -160,3 +160,15 @@ it("uses a non-English shop main language when the current language has no produ
   await screen.findAllByText("Tasse française");
   expect(screen.getAllByText("Texte original français")).toHaveLength(2);
 });
+it("discards an earlier comparison when an import changes the target", async () => {
+  const scoped = () => vi.fn(async () => result);
+  const page = render(
+    view({ ...props, scopedRequest: scoped, revision: "import-running" }),
+  );
+  fireEvent.click(screen.getByRole("button", { name: "Read current target" }));
+  await screen.findByText("22.50 EUR");
+  page.rerender(
+    view({ ...props, scopedRequest: scoped, revision: "import-complete" }),
+  );
+  expect(screen.queryByText("22.50 EUR")).toBeNull();
+});

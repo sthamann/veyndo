@@ -43,7 +43,7 @@ type Props = {
   rights: string[];
   sandbox: boolean;
   onEnvironments: () => void;
-  onSandbox?: (id: string) => Promise<void>;
+  onSandbox?: (id: string, current?: () => boolean) => Promise<void>;
 };
 export default function ShopDesigner(props: Props) {
   const d = useDesigner(props.request, props.workspace);

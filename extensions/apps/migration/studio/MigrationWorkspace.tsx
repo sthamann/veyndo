@@ -317,6 +317,7 @@ export default function MigrationWorkspace({
                   comparison={
                     scopedRequest && kind === "products" ? (
                       <ProductComparison
+                        revision={jobs.map((j) => j.id + j.status).join()}
                         mainLocale={mainLocale}
                         review={review}
                         target={target}

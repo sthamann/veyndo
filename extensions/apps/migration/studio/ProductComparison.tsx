@@ -27,6 +27,7 @@ export type ComparisonProps = {
   review: Review;
   mainLocale: string;
   target?: string;
+  revision?: string;
   tax: string;
   priceBasis: string;
   rights: string[];
@@ -59,6 +60,7 @@ export default function ProductComparison(props: ComparisonProps) {
     Number(tax) <= 50;
   const scope = JSON.stringify([
     review,
+    props.revision,
     selected,
     target,
     tax,
