@@ -163,7 +163,7 @@ export default function NativeRecordForm({
                       );
                       return f
                         ? contentText(
-                            r[f.name] as Record<string, string>,
+                            (r[f.name] ?? {}) as Record<string, string>,
                             locale,
                             mainLocale,
                           ) || r.id

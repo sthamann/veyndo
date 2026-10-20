@@ -134,6 +134,37 @@ it("edits the selected record with its revision and keeps only the entered trans
     },
   });
 });
+it("reopens and edits a saved record whose optional translated title is absent", async () => {
+  const entity = template().entities[0];
+  entity.fields[0].required = false;
+  const save = vi.fn(async () => {}),
+    saved = vi.fn();
+  render(
+    <ContentLanguage
+      locales={["en-GB", "de-DE"]}
+      mainLocale="en-GB"
+      language="en-GB"
+    >
+      <NativeRecordForm
+        entity={entity}
+        records={[{ id: "untitled", revision: 3 }]}
+        save={save}
+        saved={saved}
+      />
+    </ContentLanguage>,
+    { wrapper: LocaleProvider },
+  );
+  const user = userEvent.setup();
+  await user.selectOptions(screen.getByLabelText("Record"), "untitled");
+  await user.type(screen.getByLabelText("Title"), "Care instructions");
+  await user.click(screen.getByRole("button", { name: "Save record" }));
+  await waitFor(() => expect(saved).toHaveBeenCalledOnce());
+  expect(save).toHaveBeenCalledWith({
+    id: "untitled",
+    revision: 3,
+    fields: { title: { "en-GB": "Care instructions" } },
+  });
+});
 it("fails closed for unlisted reads and refuses public forms in the renderer", async () => {
   const m = template(),
     request = vi.fn(async () => ({ elements: [] }));

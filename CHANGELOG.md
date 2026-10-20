@@ -1,5 +1,9 @@
 # Changelog
 
+## Native optional record titles — 2026-10-20
+
+- Keep native App Studio forms usable when a saved record has no optional translated title. Fall back to its record ID, preserve the original revision and save only explicitly entered translations. Reproduce the public preview crash and cover record selection, editing and persistence in the shared renderer.
+
 ## Validated agent plans and recoverable app proposals — 2026-10-20
 
 - Describe category create/save with the canonical native DTO and validate reviewed category inputs against current shop configuration before queuing. Preserve nested revision checks and stable create IDs; malformed model output cannot become an approved task.
