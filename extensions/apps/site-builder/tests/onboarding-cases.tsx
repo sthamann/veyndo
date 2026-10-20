@@ -94,6 +94,7 @@ it("guides a new shop through private handoff and explicit package consents, the
       privateRequest.mock.calls.filter(([path]) => path === "/api/apps"),
     ).toHaveLength(1),
   );
+  await screen.findByText("site_forms · 1.0.0");
   fireEvent.click(await screen.findByRole("button", { name: "Install" }));
   await waitFor(() =>
     expect(
@@ -117,6 +118,7 @@ it("reuses a selected private workspace without creating another environment", a
   const request = api(["site_builder", "site_forms"]),
     enter = vi.fn(async () => {});
   render(view(request, false, rights, enter));
+  await screen.findByRole("option", { name: "My campaign" });
   fireEvent.change(
     await screen.findByRole("combobox", { name: "Private workspace" }),
     { target: { value: "existing-private" } },
