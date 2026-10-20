@@ -46,22 +46,27 @@ and [local evidence](evidence/service-integrations-2026-10-20.md).
 
 ## 20 October: connected agentic workspace
 
-Merged in PR #172 and deployed as Core/Studio `34e272b`: typed editor context, relevance/cursor app discovery,
-reviewed private multi-step native work with durable action progress, complete app
-composition and real proposal preview, editable grid handoffs, current-right work
-suggestions and versioned private merchant guidance. Configuration work remains in
-private environments; arbitrary service calls and publication retain their native
-owners. Full CI passed 102 registered suites, 718 frontend and 298 Rust tests.
-Public context/intake, current private guidance recall, current-stock work cards
-and editable product-grid handoff are checked. Real model output exposed optional
-strict-wire placeholders, untyped category inputs and invalid app layout. The
-shared wire correction passed full CI and merged in PR #173. The follow-on
-`458ead3` / PR #174 adds native plan admission, current-task progress fences and
-one bounded app proposal repair. The configured public model completed both category steps with saved progress
-after reload; generated app 0.2.0 saved English/German private records, and selected
-package publication/configuration also passed. The required final combined check
-and optional-title renderer correction are recorded separately in the evidence below. [User guide](agentic-workspace.md)
-and [acceptance evidence](evidence/agentic-workspace-2026-10-20.md).
+Merged in PRs #172, #173 and #174, running as Core/Studio `b0811f8`:
+typed editor context, relevance/cursor app discovery, reviewed private multi-step
+native work with saved action progress, complete native app composition/private
+preview, editable grid handoffs, current-right work suggestions and explicit
+versioned private guidance. Current rights and native review/publication remain
+authoritative across these paths.
+
+The final required full run [39441599258](https://github.com/sthamann/veyndo/actions/runs/39441599258)
+passed all 102 registered integration/browser-contract suites, 721 frontend tests,
+299 Rust workspace tests, restricted-login/pooler repetitions, formal/mutation
+checks and unchanged coverage gates. PR #174 merged as `2aadf62c`; its Git tree
+is identical to the tested, publicly running `b0811f8` tree.
+
+Actual public configured-model acceptance covers selected-editor/guidance recall,
+native editable product filtering, current-stock work cards, one approval finishing
+two private category steps, saved progress after full reload, and a generated
+care-note app with English/German records. Its selected package release left test
+data private; the central region setting survived reload. The missing optional
+title regression also passed on the final public image.
+[User guide](agentic-workspace.md) and
+[acceptance evidence](evidence/agentic-workspace-2026-10-20.md).
 
 ## Start with a complete journey
 

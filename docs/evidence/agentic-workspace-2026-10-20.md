@@ -301,3 +301,29 @@ It did not offer an unrelated external shopping plan or mutate products. The
 verified CSV/URL/described-demo entry points remained directly below the response.
 This is one actual configured-model response, not a guarantee of every future
 ambiguous request.
+
+
+## Final required verification and merged source
+
+[Required full CI 39441599258](https://github.com/sthamann/veyndo/actions/runs/39441599258)
+completed successfully on `b0811f8a88a56a0d111874e9198457511654ab81`.
+It passed 721 frontend tests, 299 Rust workspace tests and all 102 registered
+integration/browser-contract suites, including restricted system/tenant logins
+and one-backend pooler repetitions. Formal/mutation checks and unchanged coverage
+floors also passed. This full sensitive-renderer run was not replaced with a
+frontend-only check or a branch-protection bypass.
+
+PR #174 merged normally at 15:30:34 UTC as
+`2aadf62c4ad95f05abad32baf320619a3dea45dd`. Both source trees are exactly
+`d2da868b450a698ee54edadb7ea7d0ecc9513387`. The already accepted public
+`plant-horses-6593` image therefore contains the merged runtime source. The
+redundant main-triggered workflow `50ab6021-340d-4b7a-86e0-947983f00c1f`
+was stopped at its build stage, before backup, migration or service replacement;
+workflow configuration and required verification remain enabled.
+
+The separately reviewed documentation updates touch no production Docker COPY
+inputs. They refresh README, the homepage, App Studio/workspace/operations guides,
+canonical status and actual screenshots through the normal Pages publication.
+The complete site check covers 296 Markdown sources in 303 pages, local
+links/assets, full-text search, sitemap and metadata. Browser inspection confirms
+the guide's actual Mermaid SVG and no broken article images.
