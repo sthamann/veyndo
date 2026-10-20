@@ -64,6 +64,19 @@ pub(super) fn restore(schema: &Value, mut value: Value) -> Result<Value, String>
         && let Some(object) = value.as_object_mut()
     {
         for (key, shape) in properties {
+            // Strict providers require every property and encode omitted optional
+            // fields as null. Undo only that wire adaptation: a required null or
+            // an explicitly nullable/dynamic domain value must still be validated.
+            let required = schema["required"]
+                .as_array()
+                .is_some_and(|keys| keys.iter().any(|name| name.as_str() == Some(key)));
+            if !required
+                && shape["type"].as_str().is_some_and(|kind| kind != "null")
+                && object.get(key).is_some_and(Value::is_null)
+            {
+                object.remove(key);
+                continue;
+            }
             if let Some(v) = object.get_mut(key) {
                 *v = restore(shape, v.clone())?;
             }
@@ -81,6 +94,33 @@ pub(super) fn restore(schema: &Value, mut value: Value) -> Result<Value, String>
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn wire_only_optional_nulls_restore_absence_without_clearing_domain_values() {
+        let schema = json!({"type":"object","required":["changes"],"properties":{
+            "changes":{"type":"array","items":{"type":"object"}},
+            "operations":{"type":"array","items":{"type":"object"}},
+            "manifest":{"type":"object","required":[],"properties":{
+                "lifecycles":{"type":"array","items":{"type":"object"}},
+                "caption":{"anyOf":[{"type":"string"},{"type":"null"}]},
+                "arbitrary":{}
+            }}
+        }});
+        let restored = restore(
+            &schema,
+            json!({"changes":[],"operations":null,
+            "manifest":{"lifecycles":null,"caption":null,"arbitrary":null}}),
+        )
+        .unwrap();
+        assert!(restored.get("operations").is_none());
+        assert!(restored["manifest"].get("lifecycles").is_none());
+        assert_eq!(restored["manifest"].get("caption"), Some(&Value::Null));
+        assert_eq!(restored["manifest"].get("arbitrary"), Some(&Value::Null));
+        // Invalid required values remain visible to the ordinary domain validator.
+        assert_eq!(
+            restore(&schema, json!({"changes":null})).unwrap()["changes"],
+            Value::Null
+        );
+    }
     #[test]
     fn dynamic_fields_roundtrip_and_invalid_wire_json_fails_closed() {
         let schema = json!({"type":"object","properties":{"fields":{"type":"object"},"branches":{"type":"array","items":{"anyOf":[{"type":"object","properties":{"value":{}}},{"type":"null"}]}}}});

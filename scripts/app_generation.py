@@ -11,7 +11,7 @@ class Model(BaseHTTPRequestHandler):
   v=json.loads(self.rfile.read(int(self.headers['Content-Length'])))
   if self.path=='/api/embed':out={'embeddings':[[1.0]+[0.0]*1023 for _ in v['input']]}
   else:
-   assert self.path=='/api/chat';seen.append(v)
+   assert self.path in ['/api/chat','/v1/responses'];seen.append(v)
    m=copy.deepcopy(state['manifest'])
    control={'id':'ai_title','kind':'textbox','entity':m['entities'][0]['name'],'dataField':m['entities'][0]['fields'][1]['name'],'readAction':'list_'+m['entities'][0]['name'],'title':m['name'],'contextBinding':m['views'][0]['blocks'][0]['contextBinding']}
    edits=[('/views/0/blocks/-',control),('/entities/0/publicRead',True),('/entities/0/fields/0/coreReference','customer')]
@@ -19,10 +19,13 @@ class Model(BaseHTTPRequestHandler):
    if state['invalid']:edits=[('/entities/0/fields',[])]
    out={'message':{'content':json.dumps({'patch':[{'op':'add','path':path,'valueJson':json.dumps(value)} for path,value in edits],'summary':m['name']})},'done_reason':'stop'}
   if state.get('compose') and self.path!='/api/embed':out={'message':{'content':json.dumps({'manifest':state['composed'],'summary':state['composed']['name']})},'done_reason':'stop'}
+  if self.path=='/v1/responses':
+   assert v['text']['format']['strict']
+   out={'status':'completed','output':[{'type':'message','content':[{'type':'output_text','text':out['message']['content']}]}]}
   self.send_response(200);self.send_header('Content-Type','application/json');self.end_headers();self.wfile.write(json.dumps(out).encode())
 model=ThreadingHTTPServer(('127.0.0.1',0),Model);threading.Thread(target=model.serve_forever,daemon=True).start()
 with socket.socket() as s:s.bind(('127.0.0.1',0));port=s.getsockname()[1]
-base=f'http://127.0.0.1:{port}';env={**os.environ,'BIND_ADDR':f'127.0.0.1:{port}','OLLAMA_URL':f'http://127.0.0.1:{model.server_port}','PROCESS_ROLE':'all'}
+base=f'http://127.0.0.1:{port}';env={**os.environ,'BIND_ADDR':f'127.0.0.1:{port}','OLLAMA_URL':f'http://127.0.0.1:{model.server_port}','OPENAI_BASE_URL':f'http://127.0.0.1:{model.server_port}/v1','OPENAI_API_KEY':'synthetic-app-generation-only','PROCESS_ROLE':'all'}
 (ROOT/'artifacts').mkdir(exist_ok=True);log=(ROOT/'artifacts/app-generation.log').open('w');process=serve(env,base,log);headers={}
 def call(path,body=None,expected=200,scope=None):
  r=urllib.request.Request(base+path,data=None if body is None else json.dumps(body).encode(),headers={'Content-Type':'application/json',**(headers if scope is None else scope)})
@@ -58,12 +61,14 @@ try:
  print('PASS real model HTTP → validated immutable draft → explicit staging; expanded native grammar and token budget; model exposure attempts neutralized and field removal rejected without a saved build (no paid calls)')
  state['invalid']=False
  composed=copy.deepcopy(generated);composed['version']='0.2.0'
+ # Strict provider wires encode absent optional array fields as null.
+ composed['lifecycles']=None
  composed['settings']=[{'key':'region','kind':'string','label':m['name'],'required':False}]
  extra=copy.deepcopy(composed['entities'][0]);extra['name']='notes';extra['publicRead']=False
  extra['fields']=[{'name':'title','kind':'string','label':m['name'],'required':True,'translatable':True}]
  composed['entities'].append(extra);composed.pop('actions',None)
  state.update(compose=True,composed=composed)
- full=call('/api/developer/generate',{**payload,'mode':'compose','prompt':'Add a private notes library and a region setting. Preserve the product editor.'})
+ full=call('/api/developer/generate',{**payload,'inference':{'provider':'openai','model':'synthetic-model'},'mode':'compose','prompt':'Add a private notes library and a region setting. Preserve the product editor.'})
  assert len(full['manifest']['entities'])==2 and full['manifest']['settings'][0]['key']=='region'
  preview=call('/api/developer/preview',{'manifest':full['manifest']})
  private={**headers,'x-tenant':preview['environment']}
