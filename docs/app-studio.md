@@ -111,11 +111,22 @@ OpenAI strict fixed-object wire schemas encode dynamic JSON as a string, restore
 it on the server and then run domain validation; Claude/local adapters preserve
 native JSON. This adaptation does not bypass the shared manifest contract.
 
-Existing in-app AI edits use bounded JSON Patch against the current Manifest,
-not full regeneration. Identity and version stay host-controlled; native validation,
+**Improve the current app** uses bounded JSON Patch against the current Manifest.
+**Extend the complete app** instead prepares a coherent new immutable version,
+including new models, settings and native views together while preserving the
+existing contracts. Identity and version stay host-controlled; native validation,
 access preservation and proposal review still run before staging. Patch values are
-JSON-encoded only on the model wire. The server rejects no-op and invalid edits;
-no paid automatic repair loop is introduced. See the [workbench test boundaries](connected-workbench.md).
+JSON-encoded only on the model wire. No-op, unauthorized and conflicting edits are
+rejected. If a generated candidate fails native validation, the same provider may
+make **one bounded repair** with the exact error and original Manifest, under the
+same quota/lease. The result must pass the same admission; this is not an open
+repair loop. Prompt `app-generation@3` and rendered-context provenance identify it.
+
+Use **Test this version privately** to try the proposed immutable build in the
+actor-private native runtime before adoption. The [connected workspace guide](agentic-workspace.md#3-generate-and-test-a-complete-native-app)
+records the configured-model care-note example, real multilingual record writes,
+selected package-only publication and central settings after reload. Existing
+[workbench test boundaries](connected-workbench.md) retain their dated scope.
 The assistant can add a missing native order/quote review workflow; proposal
 review displays its steps, conditions and additional rights. Existing workflows
 remain protected from AI patches. See [native app workflows](app-native-lifecycles.md)

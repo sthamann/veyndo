@@ -1,5 +1,12 @@
 # Changelog
 
+## Public connected workspace acceptance — 2026-10-20
+
+- Record actual configured-model context/guidance recall, native editable-grid handoff, current-stock work cards, one approval completing two private category steps and saved progress after reload.
+- Accept generated care-note app composition, private installation, ordinary English/German record persistence, selected package-only publication and central region configuration after reload. Keep test records/categories private and capture the real Studio views.
+- Update the concise README, website feature description, connected-workspace guide and canonical status with current public evidence. Preserve the earlier checkout, provider and broader migration acceptance boundaries.
+- Add a bounded Qdrant startup health check to the existing deployment maintenance job after reproducing two initial-network failures; retain all native database/namespace checks and fail closed on unavailable dependencies.
+
 ## Native optional record titles — 2026-10-20
 
 - Keep native App Studio forms usable when a saved record has no optional translated title. Fall back to its record ID, preserve the original revision and save only explicitly entered translations. Reproduce the public preview crash and cover record selection, editing and persistence in the shared renderer.

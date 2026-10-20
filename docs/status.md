@@ -9,8 +9,8 @@ domains in a review-gated page sequence. Native current-field comparison detects
 missing records, changed prices/text and image associations. Private page intents
 and bounded reports survive technical job archival and service restart; a changed
 result does not authorize repair or cutover. Local synthetic acceptance is separate
-from the still-pending public migration-service acceptance. Core/Studio source
-`b13aedb` is deployed after migration 106; the separate service image is published,
+from the still-pending public migration-service acceptance. Migration 106 was deployed with Core/Studio `b13aedb`; the current Core/Studio
+release is `b0811f8` (20 October, see the workspace section). The separate service image is published,
 but its hosted gateway/callback configuration and public migration journey remain
 open. Native completion evidence is now
 atomically sealed under current job/creator/package/lease/CAS checks; raw edited
@@ -26,17 +26,16 @@ complete shop migration/cutover. [Scope and evidence](agentic-migration.md).
 
 ## 20 October: design onboarding and readable product comparison
 
-Prepared in the implementation branch: guided native private-workspace/package
+Merged and included in Core/Studio `34e272b`: guided native private-workspace/package
 setup with return to the selected design tool, plus original/mapped/current
 product comparison. The local native migration suite and 706 frontend regressions
-passed; browser acceptance uses a separate synthetic local shop. This entry does
-not establish public deployment or hosted migration-service readiness. [Local acceptance evidence](evidence/design-migration-2026-10-20.md). See
+passed; browser acceptance uses a separate synthetic local shop. The deployment does not establish a complete hosted migration-service journey. [Local acceptance evidence](evidence/design-migration-2026-10-20.md). See
 [shop design](personal-workspace-and-shop-design.md) and
 [migration review](agentic-migration.md).
 
 ## 20 October: service integration implementation
 
-The implementation branch adds five bounded Rust provider apps (Vercel, Klaviyo,
+Merged in PR #172 and included in Core/connector `34e272b`: five bounded Rust provider apps (Vercel, Klaviyo,
 HubSpot, Contentful, Algolia), a Shopware 6 product reader into native private
 imports, and ten discoverable integration routes reusing existing Shopify,
 WooCommerce and Slack owners. Nexus uses a documented HTTP-action recipe.
@@ -47,13 +46,27 @@ and [local evidence](evidence/service-integrations-2026-10-20.md).
 
 ## 20 October: connected agentic workspace
 
-The implementation branch adds typed editor context, relevance/cursor app discovery,
-reviewed private multi-step native work with durable action progress, complete app
-composition and real proposal preview, editable grid handoffs, current-right work
-suggestions and versioned private merchant guidance. Configuration work remains in
-private environments; arbitrary service calls and publication retain their native
-owners. Local verification and public rollout are separate. [User guide](agentic-workspace.md)
-and [acceptance evidence](evidence/agentic-workspace-2026-10-20.md).
+Merged in PRs #172, #173 and #174, running as Core/Studio `b0811f8`:
+typed editor context, relevance/cursor app discovery, reviewed private multi-step
+native work with saved action progress, complete native app composition/private
+preview, editable grid handoffs, current-right work suggestions and explicit
+versioned private guidance. Current rights and native review/publication remain
+authoritative across these paths.
+
+The final required full run [39441599258](https://github.com/sthamann/veyndo/actions/runs/39441599258)
+passed all 102 registered integration/browser-contract suites, 721 frontend tests,
+299 Rust workspace tests, restricted-login/pooler repetitions, formal/mutation
+checks and unchanged coverage gates. PR #174 merged as `2aadf62c`; its Git tree
+is identical to the tested, publicly running `b0811f8` tree.
+
+Actual public configured-model acceptance covers selected-editor/guidance recall,
+native editable product filtering, current-stock work cards, one approval finishing
+two private category steps, saved progress after full reload, and a generated
+care-note app with English/German records. Its selected package release left test
+data private; the central region setting survived reload. The missing optional
+title regression also passed on the final public image.
+[User guide](agentic-workspace.md) and
+[acceptance evidence](evidence/agentic-workspace-2026-10-20.md).
 
 ## Start with a complete journey
 
@@ -62,7 +75,7 @@ and [acceptance evidence](evidence/agentic-workspace-2026-10-20.md).
 3. [Review a sandbox and selected publication](workbench.md).
 4. [Understand the connected architecture](production-architecture.md).
 
-## Latest accepted delivery
+## Accepted commerce journeys
 
 The [inward agentic-commerce change](agentic-commerce.md) adds native UCP Cart
 Transfer, optional explicit buyer consent, inward Shopify CSV/Shop MCP catalogue
@@ -134,7 +147,17 @@ results; hosted service deployment and whole-shop cutover remain open.
 
 ## Public delivery and current work
 
-The current Core is `b13aedb`, image `violet-glass-1926`, deployment
+The connected workspace is publicly running on `b0811f8`, image
+`plant-horses-6593`, deployment `vendune-core-6cc7f557d9`.
+Its real model acceptance includes two approved category steps, saved progress
+across reload, private/live isolation, a generated multilingual care-note app,
+ordinary installed record writes and selected package publication/configuration.
+The optional-title renderer correction is also public: a record without an
+optional title was saved, selected, edited and saved again without a crash.
+English/German content survived the Core rollout. Exact source and results belong to the
+[20 October acceptance record](evidence/agentic-workspace-2026-10-20.md).
+
+The preceding Core was `b13aedb`, image `violet-glass-1926`, deployment
 `vendune-core-589c44c658`. [19 October delivery evidence](evidence/migration-continuation-2026-10-19.md#hosted-core-delivery-boundary)
 records the full green PR checks, identical source trees after merging as
 `0aaec005`, a fresh successful snapshot, migration 106 through the existing owner

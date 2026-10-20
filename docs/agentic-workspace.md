@@ -28,19 +28,29 @@ bounded metadata and schemas; data reads retain the app's current domain rights,
 MCP opt-out and knowledge declarations. Managed save metadata is reviewable,
 never executed by a read tool. App records use the existing shared storage.
 
-![The actual contextual merchant drawer in a synthetic local shop](assets/agent-workspace-20261020/context.jpg)
+![Contextual assistance in the public synthetic Studio](assets/agent-workspace-20261020/public-context.png)
+
+![CSV, URL and described demo products keep the selected private target](assets/agent-workspace-20261020/public-intake.png)
 
 ## 2. Approve a real sequence of work
 
 In a **private workspace**, ask for a small catalogue, category, Flow or managed
 app-data change. For example:
 
-> Create two care guides for the mug in this private workspace. / Lege in dieser
-> privaten Umgebung zwei Pflegehinweise für die Tasse an.
+> Create two categories, Care Instructions and Material Guide, in English and
+> German in this private workspace. Prepare both for review; publish nothing. /
+> Lege zwei Kategorien, Pflegehinweise und Materialwissen, auf Englisch und
+> Deutsch in dieser privaten Umgebung an. Bereite beide zur Freigabe vor;
+> veröffentliche nichts.
 
-The saved proposal lists every operation and its exact arguments. One approval
+![Two approved actions completed in the public private workspace](assets/agent-workspace-20261020/public-work-completed.png)
+
+The saved proposal lists every operation and its exact arguments. Category plans use
+the canonical native input contract and current configured language checks before
+they can be reviewed; an invalid model object does not become approved work. One approval
 by the original personal actor queues that exact sequence in the existing Rust
-agent worker. Progress shows completed actions. There is no second queue or
+agent worker. Progress shows completed actions and survives reopening the conversation.
+Current task identity fences delayed responses from an older run. There is no second queue or
 model-controlled SQL/shell executor.
 
 Supported configuration operations are product/category creation and revision-bound
@@ -52,7 +62,7 @@ retain their own explicit native admission. Dedicated budgeted planning keys kee
 their read-only scope.
 
 ```mermaid
-flowchart LR
+flowchart TD
     Context[Editor and current shop] --> Plan[Saved exact proposal]
     Plan --> Review[Personal approval]
     Review --> Worker[Existing Rust task worker]
@@ -98,7 +108,22 @@ proposal in the existing actor-private native preview before adoption. Select a
 surface, save a record, reload it and exercise validation. Installation diagnostics
 can be returned to the same composer to prepare a repaired proposal. The existing
 version comparison, staging and selected-publication controls remain separate.
-An old proposal cannot replace a manually changed draft.
+An old proposal cannot replace a manually changed draft. If native validation
+rejects a generated candidate, the server asks the same provider for one bounded
+repair with that error and the original manifest. The repaired candidate must pass
+the same checks; a conflict, denied permission or provider failure is not retried.
+The versioned prompt and rendered context have provenance in inference evidence.
+
+The public acceptance generated a care-note library with its own multilingual
+records, a region setting and a private Studio entry. The installed app saved
+English and German content on the same record. Selected publication moved only
+the package into the synthetic live shop; its private records stayed private.
+The central Apps panel then saved `region = EU`, retained after a full reload.
+Installed settings belong to the live app owner and are not copied from sandboxes.
+
+![Generated app used through its ordinary private Studio entry](assets/agent-workspace-20261020/public-native-app.png)
+
+![Central configuration of the selectively published synthetic app](assets/agent-workspace-20261020/public-app-settings.png)
 
 Immediate preview runs declarative native apps. Event-driven services, schedules
 and payments use reviewed staging and their existing service owners. Export/import
@@ -113,6 +138,8 @@ usual server-backed order grid. Filters remain editable by hand. Product and
 customer views use the same path, with current catalogue/customer/PII rights.
 The list opens only on a click and performs no commerce mutation.
 
+![A real public agent request opens the native product grid with its editable filter](assets/agent-workspace-20261020/public-grid.png)
+
 Personal search terms remain in a short-lived in-memory handoff; pinned saved
 views retain their existing safe-criteria projection. Shop/account transitions
 clear handoffs. Unknown identity fields and SQL are rejected by the native grid
@@ -124,7 +151,7 @@ proposal does not replace those editors with a separate generated interface.
 
 ## 5. Work from current facts and remember explicit preferences
 
-![Real work suggestions in the synthetic merchant workspace](assets/agent-workspace-20261020/workspace.jpg)
+![Real work suggestions in the synthetic merchant workspace](assets/agent-workspace-20261020/public-workspace.png)
 
 The personal workspace shows a bounded selection of actual work: sold-out products,
 the actor's failed/uncertain runs, prepared translations and failed jobs of active
@@ -140,7 +167,9 @@ shop-wide preferences as a private `guidance` source. For example:
 > Umweltzertifizierungen ohne Nachweis.
 
 The next merchant task receives bounded current guidance with source ID, hash and
-revision, even when the task uses different search words. Source history, editing
+revision, even when the task uses different search words.
+
+![The configured public model recalls explicit private guidance and the originating product](assets/agent-workspace-20261020/public-context-answer.png) Source history, editing
 and archiving use the ordinary knowledge owner. Archive to withdraw a preference;
 changed/withdrawn sources invalidate an in-flight saved evidence snapshot. Guidance
 cannot be published to shoppers and never grants permissions or bypasses approval.
@@ -149,8 +178,9 @@ never silently promoted into this category.
 
 ## Verification and extension
 
-[The local evidence](evidence/agentic-workspace-2026-10-20.md) records the native
-HTTP/PostgreSQL, worker interruption and UI checks. Provider fixtures exercise the
+[The acceptance record](evidence/agentic-workspace-2026-10-20.md) records the native
+HTTP/PostgreSQL, worker interruption and UI checks alongside dated public browser
+results. Provider fixtures exercise the
 real adapters without paid calls; they are not evidence of a live model's reasoning.
 See [saved runs](durable-agent-runs.md), [App Studio](app-studio.md),
 [knowledge](knowledge-workspace.md), [grids](agentic-grids.md) and
