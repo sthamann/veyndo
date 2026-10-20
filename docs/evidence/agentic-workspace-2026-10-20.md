@@ -291,3 +291,13 @@ selected. Switching its URL/demo-description tabs retains that private target.
 **Add a document** opens the ordinary localized private knowledge-source editor
 with its PDF/text upload. These are actual entry/navigation checks; no additional
 CSV, URL crawl or demo generation was submitted in this final navigation repeat.
+
+
+The final configured model also received the original ambiguous request,
+“Stelle eine kompakte Leseecke unter 300 € zusammen”, from the actual notebook
+editor without an added merchant-role hint. It stayed with the available catalogue:
+furniture/lighting were missing and a sub-300-euro selection could not be supported.
+It did not offer an unrelated external shopping plan or mutate products. The
+verified CSV/URL/described-demo entry points remained directly below the response.
+This is one actual configured-model response, not a guarantee of every future
+ambiguous request.
