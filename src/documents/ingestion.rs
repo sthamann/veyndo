@@ -67,6 +67,7 @@ pub(crate) async fn upload(
     ))
 }
 async fn save(a: &App, h: &RequestContext, t: &str, v: &Value, source: &str) -> Result<Value> {
+    guidance::admit(h, &v["kind"])?;
     let data = content::validate(a, t, v).await?;
     let title = data["title"].as_str().unwrap();
     let text = data["content"].as_str().unwrap();
@@ -127,7 +128,7 @@ pub(crate) async fn publish(
     }
     let mut tx = a.db.begin().await?;
     history::context(&mut tx, &h, "merchant").await?;
-    let n=sqlx::query("UPDATE knowledge_documents SET visibility=$1,revision=revision+1 WHERE tenant=$2 AND id=$3 AND revision=$4 AND NOT archived").bind(visibility).bind(&t).bind(&id).bind(v["revision"].as_i64()).execute(&mut *tx).await?.rows_affected();
+    let n=sqlx::query("UPDATE knowledge_documents SET visibility=$1,revision=revision+1 WHERE tenant=$2 AND id=$3 AND revision=$4 AND NOT archived AND (kind<>'guidance' OR $1='private')").bind(visibility).bind(&t).bind(&id).bind(v["revision"].as_i64()).execute(&mut *tx).await?.rows_affected();
     if n != 1 {
         return Err(conflict("Document changed or unavailable"));
     }

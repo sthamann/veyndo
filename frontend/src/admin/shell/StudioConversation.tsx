@@ -9,6 +9,7 @@ import { useExperienceUIText } from "../../shared/i18n/experience-ui-i18n";
 import "../../shared/styles/workbench.css";
 import Icon from "../../shared/ui/Icon";
 import MessageText from "../assistant/MessageText";
+import { openReviewedView } from "../../shared/grid/pinned-view";
 import ProposalCard from "../assistant/ProposalCard";
 import "../styles/operations.css";
 import "../styles/studio.css";
@@ -164,6 +165,14 @@ export default function StudioConversation({
                 {m.data.preview && (
                   <>
                     <ProposalCard
+                      onOpenView={(view) => {
+                        const tab =
+                          view.entity === "products"
+                            ? "productData"
+                            : view.entity;
+                        openReviewedView(tab, view.criteria);
+                        selectTab(tab);
+                      }}
                       message={m}
                       canApply={role !== "viewer"}
                       busy={busy}

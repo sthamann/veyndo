@@ -1,6 +1,7 @@
 /** Coding agents receive the current Manifest IR and authoritative schema; imported edits round-trip to the canvas. */
 import { useAppWorkspaceText } from "../../shared/i18n/app-workspace-i18n";
 import { useBuildingText } from "../../shared/i18n/app-building-i18n";
+import AppProposalTest from "./AppProposalTest";
 import AppProposalReview from "./AppProposalReview";
 import { useControlText } from "../../shared/i18n/control-i18n";
 import { useState, useEffect } from "react";
@@ -34,9 +35,11 @@ export default function AppAgentPanel({
   request,
   requestSeed,
   onRequestConsumed,
+  sandboxRequest,
 }: {
   studio: AppStudio;
   request: RequestFn;
+  sandboxRequest?: (environment: string) => RequestFn;
   requestSeed?: AppAgentRequest;
   onRequestConsumed?: () => void;
 }) {
@@ -46,6 +49,7 @@ export default function AppAgentPanel({
   const { a } = useAppStudioText(),
     { w } = useWorkbenchText();
   const [prompt, setPrompt] = useState(""),
+    [mode, setMode] = useState<"edit" | "compose">("edit"),
     [provider, setProvider] = useState("platform"),
     [model, setModel] = useState(""),
     [agent, setAgent] = useState<AgentEngine>("platform"),
@@ -101,6 +105,7 @@ export default function AppAgentPanel({
                   model ||
                     studio.providers.find((p) => p.id === provider)?.model ||
                     "",
+                  mode,
                 );
               else
                 setTask(
@@ -120,6 +125,18 @@ export default function AppAgentPanel({
         >
           {agent === "platform" && (
             <div className="app-agent-options">
+              <label>
+                {t("generationMode")}
+                <select
+                  value={mode}
+                  onChange={(e) =>
+                    setMode(e.target.value as "edit" | "compose")
+                  }
+                >
+                  <option value="edit">{t("editMode")}</option>
+                  <option value="compose">{t("composeMode")}</option>
+                </select>
+              </label>
               <label>
                 {w("provider")}
                 <select
@@ -156,6 +173,15 @@ export default function AppAgentPanel({
         </AgentComposer>
       </section>
       <AppProposalReview studio={studio} />
+      {studio.proposal && sandboxRequest && (
+        <AppProposalTest
+          key={studio.proposal.build.digest}
+          build={studio.proposal.build}
+          request={request}
+          sandboxRequest={sandboxRequest}
+          onRepair={setPrompt}
+        />
+      )}
       {task && (
         <AgentTaskTransfer
           task={JSON.parse(task)}

@@ -13,7 +13,7 @@
 [![Working prototype](https://img.shields.io/badge/status-working_prototype-189EFF)](#current-boundaries)
 [![Sustainable Use License](https://img.shields.io/badge/license-Sustainable_Use-189EFF)](LICENSE)
 
-[Try one complete round](docs/first-tour.md) · [Watch the tours](docs/video-tours.md) · [First contributions](docs/early-contributors.md) · [Feature guide](docs/features.md) · [Architecture](docs/production-architecture.md) · [Documentation](https://veyndo.ai/docs/)
+[Try one complete round](docs/first-tour.md) · [Watch the tours](docs/video-tours.md) · [First contributions](docs/early-contributors.md) · [Feature guide](docs/features.md) · [Architecture](docs/production-architecture.md) · [Integrations](docs/service-integrations.md) · [Documentation](https://veyndo.ai/docs/)
 
 </div>
 
@@ -31,7 +31,7 @@ public acceptance are recorded separately.
 
 | Work | What connects it |
 | --- | --- |
-| **Ask, review, act** | The merchant assistant reads authorized shop context and prepares native changes for review. [Intelligence](docs/cognitive-commerce.md). |
+| **Ask, review, act** | Contextual assistance, relevant app discovery, reviewed private work and durable action progress use the same native owners. [AI workspace](docs/agentic-workspace.md). |
 | **Bring your shop** | The [Migration Assistant](docs/agentic-migration.md) connects versioned source profiles, saved background inspection, readable variant review and native imports into private previews. Current implementation and open domains are documented separately. |
 | **Build the business** | App Studio, visual editing and coding agents share versioned app definitions, typed records and bounded actions. [App Studio](docs/app-studio.md), [native object extensions](docs/app-core-extensions.md), [order and quote workflows](docs/app-native-lifecycles.md). |
 | **Shape the shop** | Design standard storefront pages on the actual preview; use original Storyfront for connected Experiences. [Visual design](docs/personal-workspace-and-shop-design.md). |
@@ -78,7 +78,7 @@ for verification tooling. Run `./scripts/dev.sh` and open
 | POS, B2B, EDI and marketplaces | [POS](docs/pos.md) · [B2B](docs/b2b-commerce.md) · [EDI](docs/edi.md) · [Marketplaces](docs/marketplaces.md) |
 | Apps, settings, storage and private releases | [App platform](docs/app-platform.md) · [Build five apps](docs/app-tutorials/README.md) · [Shared storage](docs/app-data-storage.md) |
 | Agents and shared operations | [Connections](docs/connectors.md) · [Agent identities & limits](docs/agent-authority-controls.md) · [MCP workshop](docs/agent-workshop.md) · [UCP B2B](docs/b2b-ucp-negotiation.md) |
-| Operation and verification | [Architecture](docs/production-architecture.md) · [Testing](docs/testing.md) · [Proof boundaries](docs/formal-verification.md) |
+| Operation and verification | [Architecture](docs/production-architecture.md) · [Integrations](docs/service-integrations.md) · [Testing](docs/testing.md) · [Proof boundaries](docs/formal-verification.md) |
 
 The [handbook on veyndo.ai](https://veyndo.ai/docs/) follows seven ordered chapters,
 with full-text search and article navigation. Technical articles retain their

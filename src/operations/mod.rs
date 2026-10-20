@@ -41,7 +41,7 @@ pub(crate) use routes::router;
 
 mod list_criteria;
 pub(crate) use list_criteria::{Criteria, direction as list_direction};
-mod grid_schema;
+pub(crate) mod grid_schema;
 pub(crate) use grid_schema::fields as grid_fields;
 mod grid_plan;
 pub(crate) use grid_plan::visible as grid_visible;

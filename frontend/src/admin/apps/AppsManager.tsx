@@ -139,6 +139,7 @@ export default function AppsManager({
               const url = new URL(location.href);
               url.searchParams.delete("app");
               url.searchParams.delete("channel");
+              url.searchParams.delete("migrationSource");
               history.replaceState(null, "", url);
               setResult(undefined);
             }}

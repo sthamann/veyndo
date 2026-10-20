@@ -25,7 +25,7 @@ real app-owned packages; the nine assistants create the same editable contract.*
 2. Open **Staging & releases**, create a private environment and select it in the
    top bar. Return to **Developers → App Studio → New app**. Creation/version
    management requires your account's app-management rights; data actions have
-   their own narrower rights. See [the access contract](../app-assistants.md#four-independent-access-decisions).
+   their own narrower rights. See [the access contract](../app-assistants.md#four-access-checks).
 3. Match the screenshots by choosing **Language → English**. This affects UI
    labels. **Content language** separately selects which translation you edit.
    The UI also supports German, Spanish and French. German navigation:

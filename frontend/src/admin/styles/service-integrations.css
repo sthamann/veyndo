@@ -1,0 +1,103 @@
+/* Compact, responsive provider setup and explicit operation feedback. */
+.service-integration {
+  padding: 1.5rem;
+  border: 1px solid var(--border, #d3dfeb);
+  border-radius: 18px;
+  background: var(--surface, #fff);
+}
+.service-integration-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2rem;
+}
+.service-integration form {
+  min-width: 0;
+}
+.service-integration fieldset {
+  border: 0;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+  min-width: 0;
+}
+.service-integration label {
+  display: grid;
+  gap: 0.4rem;
+}
+.service-integration input {
+  width: 100%;
+  box-sizing: border-box;
+}
+.service-integration input[type="checkbox"] {
+  width: auto;
+}
+.service-integration-enabled {
+  display: flex !important;
+  align-items: center;
+}
+.service-integration small {
+  color: var(--muted, #60748a);
+}
+.service-integration header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+}
+.service-integration ul {
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.5rem;
+}
+.service-integration li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  padding: 0.75rem;
+  background: var(--soft, #f3f7fb);
+  border-radius: 8px;
+}
+.service-integration code {
+  overflow-wrap: anywhere;
+}
+.service-integration li small {
+  flex-basis: 100%;
+}
+@media (max-width: 800px) {
+  .service-integration-columns {
+    grid-template-columns: 1fr;
+  }
+}
+.integration-directory {
+  margin: 1.25rem 0;
+  padding: 1rem;
+  border: 1px solid var(--border, #d3dfeb);
+  border-radius: 14px;
+}
+.integration-directory summary {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-weight: 650;
+}
+.integration-directory-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+  gap: 1rem;
+}
+.integration-directory-grid article {
+  padding: 1rem;
+  border: 1px solid var(--border, #d3dfeb);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+.integration-directory-grid p {
+  flex: 1;
+}
+.integration-directory-grid button {
+  margin-top: 0.5rem;
+}

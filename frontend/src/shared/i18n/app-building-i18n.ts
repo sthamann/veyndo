@@ -1,6 +1,31 @@
 /** Shared translated app recipes and reviewed AI changes; no alternate app schema. */
 import { useLocale } from "./i18n";
 export const buildingWords = {
+  generationMode: [
+    "What should change?",
+    "Was soll verändert werden?",
+    "Que modifier ?",
+    "¿Qué cambiar?",
+  ],
+  editMode: [
+    "Improve the current app",
+    "Bestehende App verbessern",
+    "Améliorer l’application",
+    "Mejorar la aplicación",
+  ],
+  composeMode: [
+    "Extend the complete app",
+    "Die ganze App erweitern",
+    "Étendre toute l’application",
+    "Ampliar toda la aplicación",
+  ],
+  testProposal: [
+    "Test this version privately",
+    "Diese Version privat ausprobieren",
+    "Tester cette version en privé",
+    "Probar esta versión en privado",
+  ],
+
   furniture: [
     "Configurable furniture",
     "Möbel konfigurieren",

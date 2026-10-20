@@ -10,7 +10,7 @@ pub(crate) async fn agent_plan(
     merchant(&a, &h)?;
     auth::permit(&h, "knowledge.read")?;
     let selection = choice(&v)?;
-    let queued=agent_runs::enqueue(&a,&h,json!({"instruction":v["instruction"],"inference":selection,"locale":language_context(&a,&h).await?.0,"channel":marketing::channel_id(&h)}),None).await?;
+    let queued=agent_runs::enqueue(&a,&h,json!({"instruction":v["instruction"],"workspaceContext":v["workspaceContext"],"inference":selection,"locale":language_context(&a,&h).await?.0,"channel":marketing::channel_id(&h)}),None).await?;
     if v["background"] == true {
         return Ok(Json(queued));
     }

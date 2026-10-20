@@ -6,10 +6,7 @@ import { type AppSurface } from "../../shared/apps/AppSurfaces";
 import { useConnectedText } from "../../shared/i18n/connected-i18n";
 import { useLocale } from "../../shared/i18n/i18n";
 import { useWorkbenchText } from "../../shared/i18n/workbench-i18n";
-import "../../shared/styles/workbench.css";
 import { type Environment } from "../environments/EnvironmentManager";
-import "../styles/operations.css";
-import "../styles/studio.css";
 import type { Message, Overview, Provider } from "./studio-types";
 
 import { useDesignHandoff } from "./useDesignHandoff";
@@ -21,6 +18,8 @@ import { useServerHealth } from "./useServerHealth";
 import { useStudioPermissions } from "./useStudioPermissions";
 import { useStudioAccess } from "./useStudioAccess";
 import { useChatTurns } from "./useChatTurns";
+import { useStudioTheme } from "./useStudioTheme";
+import { useAgentWorkspaceContext } from "./useAgentWorkspaceContext";
 
 export function useStudioController({
   onChanged,
@@ -90,8 +89,14 @@ export function useStudioController({
     ),
   );
   const { tab } = navigation;
+  const agentWorkspace = useAgentWorkspaceContext(
+    JSON.stringify([scope, token]),
+    tab,
+    navigation.entityTarget,
+  );
   const [appSurface, setAppSurface] = useState<AppSurface | null>(null);
   const selectTab = (id: Parameters<typeof navigation.selectTab>[0]) => {
+    if (id === "assistant") agentWorkspace.remember();
     setAppSurface(null);
     navigation.selectTab(id);
   };
@@ -99,9 +104,7 @@ export function useStudioController({
   const [data, setData] = useState<Overview>();
   const [focus, setFocus] = useState("lamp");
   const [menu, setMenu] = useState(false);
-  const [theme, setTheme] = useState(
-    () => localStorage.getItem("rac-studio-theme-v03") || "light",
-  );
+  const [theme, setTheme] = useStudioTheme();
   const [updated, setUpdated] = useState("");
   const bottom = useRef<HTMLDivElement>(null);
   const composer = useRef<HTMLTextAreaElement>(null);
@@ -249,9 +252,6 @@ export function useStudioController({
     if (tab === "assistant")
       bottom.current?.scrollIntoView({ block: "nearest" });
   }, [messages, busy, tab]);
-  useEffect(() => {
-    localStorage.setItem("rac-studio-theme-v03", theme);
-  }, [theme]);
   const chat = useChatTurns({
     scope: JSON.stringify([
       scope,
@@ -271,6 +271,7 @@ export function useStudioController({
     setPendingText,
     provider,
     model,
+    workspaceContext: agentWorkspace.workspaceContext,
     run,
     refresh,
     onOpen: () => {
@@ -285,6 +286,7 @@ export function useStudioController({
   });
   const { load, newChat, send } = chat;
   const intent = (text: string) => {
+    agentWorkspace.remember();
     selectTab("assistant");
     setDraft(text);
     setMenu(false);
@@ -303,6 +305,7 @@ export function useStudioController({
     (!focus ? data?.products[0] : undefined);
 
   return {
+    workspaceContext: agentWorkspace.workspaceContext,
     ...navigation,
     ...designHandoff,
     onExit,

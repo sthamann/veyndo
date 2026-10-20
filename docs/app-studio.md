@@ -1,5 +1,9 @@
 # Visual App Studio
 
+See the [connected AI workspace](agentic-workspace.md) for the 20 October context,
+reviewed private execution, complete app composition, real preview, editable list
+handoff and remembered merchant-guidance workflow. [Current status](status.md).
+
 **12 October workbench update:** editable app patterns, explicit AI/agent proposal review, native control generation, approved catalogue translation jobs and scoped personalization. [How to use it, ownership and verification boundaries](connected-workbench.md).
 
 App Studio and coding agents edit one Manifest. The same renderer, action gateway,

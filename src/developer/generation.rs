@@ -33,13 +33,18 @@ pub(super) async fn generate(a: &App, t: &str, h: &RequestContext, v: &Value) ->
             .collect::<Vec<_>>()
     );
     let (settings, _) = commerce::config(a, t).await?;
-    let editing = v.get("manifest").is_some_and(Value::is_object);
+    let editing = v.get("manifest").is_some_and(Value::is_object) && v["mode"] != "compose";
+    if v.get("mode")
+        .is_some_and(|mode| mode != "compose" && mode != "edit")
+    {
+        return Err(bad("Unknown generation mode"));
+    }
     let app_schema = if editing {
         generation_edits::schema(&settings.locales)
     } else {
         schema_for(&settings.locales)
     };
-    let system = include_str!("../../crates/cognition/prompts/app-generation.v1.txt");
+    let system = include_str!("../../crates/cognition/prompts/app-generation.v2.txt");
     let _cluster = crate::performance::cluster_lease::Lease::acquire(a, t, "model", 2).await?;
     let edit_system = generation_edits::system(&settings.locales);
     let out=a.inference.structured(Some(&choice),if editing { &edit_system } else { system },&format!("Interface locale {locale}. Existing development versions {versions}. Current editable manifest {}. Task: {prompt}", v.get("manifest").unwrap_or(&Value::Null)),&app_schema).await.map_err(Error::from)?;

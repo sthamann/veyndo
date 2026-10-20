@@ -26,6 +26,40 @@ function options() {
     onNew: vi.fn(),
   };
 }
+it("binds retries to the selected workspace context and transmits it separately from merchant text", async () => {
+  const o = {
+    ...options(),
+    workspaceContext: {
+      view: "products",
+      selected: { kind: "product", id: "coat" },
+    },
+  };
+  o.request.mockRejectedValue(new Error("Response lost"));
+  const hook = renderHook(({ current }) => useChatTurns(current), {
+    initialProps: { current: o },
+  });
+  await act(async () => {
+    await expect(hook.result.current.send()).rejects.toThrow("Response lost");
+  });
+  const first = o.request.mock.calls[0][1] as any;
+  expect(first.workspaceContext).toEqual(o.workspaceContext);
+  expect(first.message).toBe(o.draft);
+  hook.rerender({
+    current: {
+      ...o,
+      workspaceContext: {
+        view: "products",
+        selected: { kind: "product", id: "scarf" },
+      },
+    },
+  });
+  await act(async () => {
+    await expect(hook.result.current.send()).rejects.toThrow("Response lost");
+  });
+  expect((o.request.mock.calls[1][1] as any).requestId).not.toBe(
+    first.requestId,
+  );
+});
 it("queues the native background turn and immediately retains its conversation", async () => {
   const o = options();
   const messages = [

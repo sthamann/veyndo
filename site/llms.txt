@@ -25,6 +25,8 @@
 - [Saved agent work](https://sthamann.github.io/veyndo/docs/durable-agent-runs.html): Bounded merchant planning, private checkpoints, current rights and explicit uncertain-call continuation.
 - [Business-capability direction](https://sthamann.github.io/veyndo/docs/business-capabilities.html): Intent and frozen pure-decision examples are implemented; complete B2B, historical replay, managed source builds/runtimes and fleet compatibility remain open.
 
+- [Connected AI workspace](https://veyndo.ai/docs/agentic-workspace.html): Context, reviewed private multi-step work, complete native app composition, real preview, editable grids and versioned merchant preferences. Implementation and hosted acceptance are documented separately.
+
 ## Full HTML documentation
 - [Production architecture](https://sthamann.github.io/veyndo/docs/production-architecture.html): Illustrated request, checkout, tenant security, cache, quota and grounded AI paths, with source locations, deployment configuration and explicit proof limits.
 - [All guides and developer notes](https://sthamann.github.io/veyndo/docs/)

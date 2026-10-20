@@ -41,3 +41,27 @@ export function consumePinnedView(tab: string): GridCriteria | undefined {
 export function clearPinnedView() {
   pending = undefined;
 }
+
+/** Already reviewed agent filters remain ephemeral, including personal search terms; never used for persisted pins. */
+export function openReviewedView(tab: string, criteria: GridCriteria) {
+  if (!["orders", "customers", "productData"].includes(tab)) return;
+  const allowed = new Set([
+    ...keys,
+    "query",
+    "customer",
+    "search",
+    "parentId",
+    "appFilter",
+  ]);
+  if (
+    Object.entries(criteria).some(
+      ([key, value]) =>
+        !allowed.has(key) ||
+        (typeof value !== "boolean" &&
+          (typeof value !== "string" ||
+            value.length > (key === "appFilter" ? 4096 : 200))),
+    )
+  )
+    return;
+  pending = { tab, criteria: { ...criteria }, expires: Date.now() + 30000 };
+}

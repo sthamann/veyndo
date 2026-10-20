@@ -1,6 +1,6 @@
 {
   "id": "migration",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "coreApi": "1",
   "runtime": "service",
   "category": "operations",
@@ -36,10 +36,10 @@
       "kind": "string",
       "required": true,
       "label": {
-        "en": "Source system: shopify / woocommerce / prestashop / magento2 / shopware5",
-        "de": "Quellsystem: shopify / woocommerce / prestashop / magento2 / shopware5",
-        "fr": "Système source : shopify / woocommerce / prestashop / magento2 / shopware5",
-        "es": "Sistema origen: shopify / woocommerce / prestashop / magento2 / shopware5"
+        "en": "Source system: shopify / woocommerce / prestashop / magento2 / shopware5 / shopware6 (products)",
+        "de": "Quellsystem: shopify / woocommerce / prestashop / magento2 / shopware5 / shopware6 (Produkte)",
+        "fr": "Système source : shopify / woocommerce / prestashop / magento2 / shopware5 / shopware6 (produits)",
+        "es": "Sistema origen: shopify / woocommerce / prestashop / magento2 / shopware5 / shopware6 (productos)"
       }
     },
     {

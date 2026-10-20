@@ -40,6 +40,7 @@ class Model(BaseHTTPRequestHandler):
         if not read and mode['block']:
             started.set(); release.wait(40)
         value={'tool_calls':[{'name':'knowledge.source.detail','arguments_json':json.dumps({'id':source})}] if source_read else []} if read else {'summary':'Synthetic durable proposal; not live inference.','changes':[{'product_id':'lamp','price':mode['price']}],'experience':None,'expected_experience_revision':None}
+        if not read and mode.get('operations'):value={**value,'changes':[],'operations':mode['operations']}
         answer={'status':'completed','output':[{'type':'message','content':[{'type':'output_text','text':json.dumps(value)}]}],'usage':{'input_tokens':10,'output_tokens':20}}
         if read: answer=native_response(body,value)
         try:
@@ -246,6 +247,8 @@ try:
     call(base,'/api/agent/control',{'stopped':False,'revision':paused['revision'],'approve':True},h)
     assert call(base,'/api/agent/runs/'+global_run['taskId'],h=h)['state']=='cancelled'
     passed('Global personal stop fences an actual in-flight Rust worker; its late provider result cannot persist a proposal or restart after enable')
+    from testing.agent_work_restart import verify_work_restart
+    worker3=verify_work_restart(call,base,h,mode,sql,worker3,start,passed,account)
     # A lost response must remain recoverable after the committed request consumes the final daily attempt.
     sql(f"INSERT INTO tenant_resource_limits(tenant,daily_ai) VALUES('{tenant}',1) ON CONFLICT(tenant) DO UPDATE SET daily_ai=1")
     for path,body in [('/api/agent/chat',{'message':'At most one budgeted turn','background':True,'inference':{'provider':'openai'}}),('/api/agent/runs',{'instruction':'At most one budgeted run','inference':{'provider':'openai'}})]:

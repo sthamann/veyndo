@@ -1,5 +1,6 @@
 /** Typed knowledge read models preserve source ownership, revisions, sampling and privacy boundaries. */
 export type SourceKind =
+  | "guidance"
   | "document"
   | "datasheet"
   | "manual"
@@ -10,6 +11,7 @@ export type SourceKind =
   | "warranty"
   | "brand";
 export const sourceKinds: SourceKind[] = [
+  "guidance",
   "document",
   "datasheet",
   "manual",

@@ -1,5 +1,21 @@
 # Changelog
 
+## Connected agentic workspace — 2026-10-20
+
+- Preserve bounded editor/selection context across merchant conversations and retries; discover relevant installed apps with cursor search and safe native reads rather than alphabetical sampling.
+- Approve bounded private configuration work through the existing Rust task worker, with current authority, exact argument/CAS review, durable action progress and transactional managed-app receipts.
+- Keep work approval and native command execution usable through a one-backend transaction pool; preserve stable category IDs and token-bound completion receipts after cancellation or lease expiry without reviving stopped work.
+- Compose complete native app extensions (models, settings and views), preserve accepted contracts and try the proposed version in the actual actor-private runtime before adoption.
+- Open reviewed natural-language criteria in the existing editable native grids. Show bounded current-right work suggestions and save explicit private, versioned merchant preferences through Shop knowledge.
+- Update the handbook, website navigation, README and operation-generated contracts. Local fixtures and current public activation remain distinct in the status/evidence guide.
+
+## Bounded service integrations — 2026-10-20
+
+- Add app-owned Vercel, Klaviyo, HubSpot, Contentful and Algolia protocol adapters to the existing Rust connector, encrypted settings and durable queue, with explicit current permissions and honest asynchronous receipts.
+- Add localized connection/operation controls and ten integration routes through existing Apps consent. Keep Nexus as a documented HTTP-action recipe and preserve inward Shopify/WooCommerce migrations.
+- Add Shopware 6 OAuth/currency/language/product intake and native reviewed private import; retain explicit domain, translation, tax/channel, stock and cutover limits.
+- Provide a stateless Vercel Store API/native checkout handoff client and public-route rewrite example; no public Vercel deployment or Nexus marketplace approval is claimed.
+
 ## Guided design setup and current product comparison — 2026-10-20
 
 - Guide first-time shop design through existing private workspaces and actual per-package consent, then resume the chosen tool/home section. Explain missing rights and support cancellation/retry without implicit publication.

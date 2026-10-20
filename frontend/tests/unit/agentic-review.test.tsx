@@ -6,6 +6,48 @@ import AppDiagnostics from "../../src/admin/developer/AppDiagnostics";
 import { template } from "../../src/admin/developer/app-model";
 import DesignReview from "../../../extensions/apps/site-builder/studio/DesignReview";
 import { newPage, newBlock } from "../../../extensions/apps/site-builder/model";
+import ProposalCard from "../../src/admin/assistant/ProposalCard";
+it("shows every proposed work step for one explicit approval and never executes while rendering", () => {
+  const approve = vi.fn();
+  const message: any = {
+    id: 1,
+    role: "assistant",
+    content: "Prepare the private catalogue",
+    applied: false,
+    data: {
+      taskId: "task",
+      preview: {
+        catalogBefore: [],
+        proposal: {
+          summary: "Prepare",
+          changes: [],
+          operations: [
+            {
+              name: "merchant.product.create",
+              label: "Create the coat",
+              arguments_json: '{"product":{"id":"coat"}}',
+            },
+            {
+              name: "automation.save",
+              label: "Prepare the review flow",
+              arguments_json: '{"id":"review"}',
+            },
+          ],
+        },
+      },
+    },
+  };
+  render(
+    <LocaleScope locale="en-GB">
+      <ProposalCard message={message} onApply={approve} busy={false} canApply />
+    </LocaleScope>,
+  );
+  expect(screen.getByText(/Create the coat/)).toBeVisible();
+  expect(screen.getByText(/Prepare the review flow/)).toBeVisible();
+  expect(approve).not.toHaveBeenCalled();
+  fireEvent.click(screen.getByRole("button", { name: /approve/i }));
+  expect(approve).toHaveBeenCalledTimes(1);
+});
 it("links incomplete declarations to editors and agent tests without asserting execution", () => {
   const nav = vi.fn(),
     assist = vi.fn();

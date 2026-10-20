@@ -2,8 +2,12 @@
 use crate::*;
 mod authority;
 pub(crate) mod checkpoint;
+pub(crate) mod context;
 mod contract;
 pub(crate) mod controls;
+pub(crate) mod view;
+pub(crate) mod work;
+pub(crate) mod work_plan;
 mod worker;
 pub(crate) use contract::{CAPABILITIES, invoke, router, schema};
 pub(crate) use worker::once;
@@ -12,6 +16,7 @@ pub(crate) struct Run {
     pub tenant: String,
     pub id: String,
     pub lease: String,
+    pub workspace: Value,
 }
 tokio::task_local! { pub(crate) static CURRENT: Run; }
 pub(crate) fn current_id() -> Option<String> {
@@ -26,6 +31,7 @@ pub(crate) async fn enqueue(
 ) -> Result<Value> {
     agent::assistant_access(h)?;
     let t = merchant(a, h)?;
+    request["workspaceContext"] = context::normalize(&request["workspaceContext"])?;
     request["agentId"] = json!(h.principal.agent_key);
     let requested = agent::choice(&request)?;
     if h.principal.agent_key.is_some() {
@@ -95,7 +101,8 @@ pub(crate) async fn enqueue(
             request["inference"],
             request["locale"],
             request["channel"],
-            request["requestedConversation"]
+            request["requestedConversation"],
+            request["workspaceContext"]
         ])
         .to_string(),
     );

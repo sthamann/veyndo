@@ -96,7 +96,7 @@ def run():
         config = {app_id: {"url": f"http://127.0.0.1:{service_port}", "uiUrl": f"http://127.0.0.1:{service_port}", "token": module.TOKEN}}
         m = json.loads((ROOT / "extensions/apps/product-lab/manifest.json").read_text())
         m["id"] = app_id
-        # Internal planning is independent of MCP, but never independent of action rights.
+        # Agent planning and direct tools share the explicit app opt-in and current action rights.
         save_action = next(a for a in m["actions"] if a["name"] == "save_entry")
         save_action.update(permission="orders.write", mcp=False)
         m["entities"].append({"name":"private_notes","label":m["name"],"publicRead":False,"fields":[{"name":"text","label":m["name"],"kind":"string","required":True}]})
@@ -112,8 +112,13 @@ def run():
         busy["version"] = "1.2.0"
         busy["actions"].append({"name": "slow", "description": "Local slow fixture", "handler": "service", "entity": None, "readOnly": True, "permission": "catalog.read", "inputSchema": {"type": "object", "properties": {}, "additionalProperties": False}})
         config[app_id]["uiDigests"] = {"v1/index.html": hashlib.sha256(module.UI).hexdigest()}
-        pin(config,app_id,m)
-        pin(config,app_id,busy)
+        allowed = copy.deepcopy(m)
+        allowed["version"] = "1.1.1"
+        next(a for a in allowed["actions"] if a["name"] == "save_entry")["mcp"] = True
+        blocked = copy.deepcopy(m)
+        blocked["version"] = "1.1.2"
+        for manifest in (m, allowed, blocked, busy):
+            pin(config,app_id,manifest)
         # This provider fixture owns both HTTP and queued planning; unrelated test workers must not claim its jobs.
         env = {**os.environ, "APP_SERVICES": json.dumps(config), "PROCESS_ROLE": "all", "BIND_ADDR": f"127.0.0.1:{api_port}", "OPENAI_API_KEY": "local-wire-fixture", "OPENAI_BASE_URL": f"http://127.0.0.1:{model_server.server_address[1]}/v1"}
 
@@ -213,6 +218,11 @@ def run():
             for n in range(100):
                 call(f"/api/apps/{app_id}/http/guides", {"id": f"page-{n:03}", "revision": 0, "fields": fields}, h)
             call(f"/api/apps/{app_id}/http/guides", {"id": "zz-last", "revision": 0, "fields": fields}, h)
+            denied_plan = call("/api/agent/chat", {"message": "Propose changing only the zz-last guide.", "inference": {"provider":"openai", "model":"local-fixture"}}, h)
+            assert denied_plan["run"]["state"] == "failed" and denied_plan["run"]["preview"] is None, denied_plan
+            assert "not selected for merchant planning" in denied_plan["run"]["error"]["detail"]
+            assert call(path + "?after=zz&limit=1", headers=public)["elements"][0]["revision"] == 1
+            call("/api/apps", {"manifest": allowed}, h)
             chat = call("/api/agent/chat", {"message": "Propose changing only the zz-last guide.", "inference": {"provider":"openai", "model":"local-fixture"}}, h)
             assert chat["messages"][-1]["data"].get("preview"),chat
             preview = chat["messages"][-1]["data"]["preview"]
@@ -243,10 +253,12 @@ def run():
             # previous captured input belongs to the authorized owner and may
             # legitimately contain save_entry; it is not the denied key's input.
             assert len(model_requests) == before_denied
+            call("/api/apps", {"manifest": blocked}, h)
+            m = blocked
             denied = call("/mcp", {"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":f"app.{app_id}.save_entry","arguments":{"id":"x","fields":fields}}}, h)
             assert denied['error']['code']==-32602
             assert not any(row['id']=='x' for row in call(path+'?limit=100',headers=public)['elements'])
-            passed("MCP-disabled owner planning works; unbudgeted keys make no model call and cannot bypass app scopes or proposal approval")
+            passed("Explicit agent opt-in admits reviewed owner planning; opt-out blocks it and direct MCP, while unbudgeted keys make no model call and cannot bypass current scopes")
 
             call("/api/apps", {"manifest": m}, oh)
             assert call(path, headers={"x-tenant": other["workspace"]})["elements"] == []

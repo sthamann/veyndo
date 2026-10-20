@@ -4,11 +4,13 @@ mod model;
 pub(crate) use model::schema;
 
 pub(crate) fn router() -> Router<App> {
-    Router::new().secure_route(
-        "/api/studio/workspace",
-        &[("GET", "read"), ("PUT", "read")],
-        get(read).put(save),
-    )
+    Router::new()
+        .secure_route("/api/studio/work", &[("GET", "read")], get(work))
+        .secure_route(
+            "/api/studio/workspace",
+            &[("GET", "read"), ("PUT", "read")],
+            get(read).put(save),
+        )
 }
 async fn identity(a: &App, h: &RequestContext) -> Result<(String, String)> {
     let t = merchant(a, h)?;
@@ -33,6 +35,9 @@ async fn identity(a: &App, h: &RequestContext) -> Result<(String, String)> {
 }
 pub(crate) async fn invoke(a: &App, h: &RequestContext, name: &str, v: &Value) -> Result<Value> {
     let (t, user) = identity(a, h).await?;
+    if name == "studio.workspace.work.read" {
+        return super::work::load(a, h, &t, &user).await;
+    }
     let mut tx = a.db.begin().await?;
     sqlx::query("SELECT set_config('rac.tenant',$1,true),set_config('rac.actor',$2,true)")
         .bind(&t)
@@ -128,4 +133,10 @@ async fn save(
     Json(v): Json<Value>,
 ) -> Result<Json<Value>> {
     Ok(Json(invoke(&a, &h, "studio.workspace.save", &v).await?))
+}
+
+async fn work(State(a): State<App>, h: RequestContext) -> Result<Json<Value>> {
+    Ok(Json(
+        invoke(&a, &h, "studio.workspace.work.read", &json!({})).await?,
+    ))
 }

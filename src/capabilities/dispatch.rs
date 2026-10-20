@@ -7,6 +7,7 @@ pub(super) enum Owner {
     Personal,
     Site,
     AppHistory,
+    AppDiscovery,
     Roles,
     B2b,
     Pos,
@@ -25,7 +26,9 @@ pub(super) enum Owner {
 }
 impl Owner {
     pub(super) fn for_name(name: &str) -> Self {
-        if name.starts_with("merchant.catalog.") {
+        if name.starts_with("merchant.apps.") {
+            Self::AppDiscovery
+        } else if name.starts_with("merchant.catalog.") {
             Self::CatalogIntake
         } else if name.starts_with("merchant.run.") || name.starts_with("merchant.agents.") {
             Self::Runs
@@ -75,6 +78,7 @@ impl Owner {
         v: &'a Value,
     ) -> CapabilityFuture<'a> {
         match self {
+            Self::AppDiscovery => Box::pin(apps::discovery::invoke(a, h, name, v)),
             Self::CatalogIntake => Box::pin(commerce::catalog_intake::invoke(a, h, name, v)),
             Self::Runs => Box::pin(agent_runs::invoke(a, h, name, v)),
             Self::Personal => Box::pin(studio::personal::invoke(a, h, name, v)),

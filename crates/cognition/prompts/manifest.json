@@ -35,6 +35,16 @@
       "id": "grid-filter@1",
       "path": "prompts/grid-filter.v1.txt",
       "sha256": "d3e9261f4f96530f3e47c65a1d8b320283a5a56a187f66439a00c0a13cd1e77e"
+    },
+    {
+      "id": "merchant-planner@2",
+      "path": "prompts/merchant-planner.v2.txt",
+      "sha256": "3a14ffb644f88aa65eb86fd4c734c354e0f0afb11ea10925fa762a2b392a79a1"
+    },
+    {
+      "id": "app-generation@2",
+      "path": "prompts/app-generation.v2.txt",
+      "sha256": "99172810be7e83732cb9cd38033a0b24b658d0e41ef54118c44344dcce7e8fdc"
     }
   ]
 }

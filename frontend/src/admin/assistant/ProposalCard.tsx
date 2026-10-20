@@ -1,4 +1,5 @@
 /** ProposalCard keeps merchant interaction separate from workspace orchestration. */
+import { useAgentWorkspaceText } from "../../shared/i18n/agent-workspace-i18n";
 import { useAppText } from "../../shared/i18n/app-i18n";
 import { useLocale } from "../../shared/i18n/i18n";
 import { useBuildingText } from "../../shared/i18n/app-building-i18n";
@@ -9,15 +10,22 @@ export default function ProposalCard({
   onApply,
   busy,
   canApply,
+  onOpenView,
 }: {
   message: Message;
   onApply: () => void;
   busy: boolean;
   canApply: boolean;
+  onOpenView?: (
+    view: NonNullable<
+      NonNullable<Message["data"]["preview"]>["proposal"]["view"]
+    >,
+  ) => void;
 }) {
   const { t, money } = useLocale();
   const { a } = useAppText();
-  const b = useBuildingText();
+  const b = useBuildingText(),
+    aw = useAgentWorkspaceText();
   const preview = message.data.preview;
   if (!preview) return null;
   const changes = preview.proposal.changes;
@@ -30,7 +38,9 @@ export default function ProposalCard({
     !changes.length &&
     !preview.proposal.experience &&
     !preview.proposal.app_action &&
-    !preview.proposal.translation
+    !preview.proposal.translation &&
+    !preview.proposal.operations?.length &&
+    !preview.proposal.view
   )
     return null;
   return (
@@ -43,8 +53,36 @@ export default function ProposalCard({
           <Icon name={message.applied ? "check" : "pulse"} size={18} />
           <span>{message.applied ? t("applied") : t("pending")}</span>
         </div>
-        <span>{changes.length || 1}</span>
+        <span>
+          {preview.proposal.operations?.length || changes.length || 1}
+        </span>
       </header>
+      {preview.proposal.operations?.map((step, index) => (
+        <div className="review-product" key={index}>
+          <b>
+            {index + 1}. {step.label}
+          </b>
+          <details>
+            <summary>{step.name}</summary>
+            <pre>{step.arguments_json}</pre>
+          </details>
+        </div>
+      ))}
+      {preview.proposal.view && (
+        <div className="review-product">
+          <pre>{JSON.stringify(preview.proposal.view.criteria, null, 2)}</pre>
+          {onOpenView && (
+            <button
+              type="button"
+              className="studio-primary"
+              disabled={busy}
+              onClick={() => onOpenView(preview.proposal.view!)}
+            >
+              {aw("openView")}
+            </button>
+          )}
+        </div>
+      )}
       {changes.map((c) => {
         const before = preview.catalogBefore.find((p) => p.id === c.product_id);
         return (
@@ -123,7 +161,7 @@ export default function ProposalCard({
           <blockquote>{preview.proposal.experience.headline}</blockquote>
         </div>
       )}
-      {!message.applied && (
+      {!message.applied && !preview.proposal.view && (
         <footer>
           <span>
             <Icon name="lock" size={14} />

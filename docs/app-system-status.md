@@ -1,5 +1,9 @@
 # App system: delivered foundations and remaining gates
 
+See the [connected AI workspace](agentic-workspace.md) for the 20 October context,
+reviewed private execution, complete app composition, real preview, editable list
+handoff and remembered merchant-guidance workflow. [Current status](status.md).
+
 **Reviewed 17 October 2026.** The integrated app builder is usable. The complete
 business-capability proposal — describe an individual business model and have
 Veyndo build, verify, operate and maintain it — remains an implementation programme.

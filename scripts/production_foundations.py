@@ -244,13 +244,14 @@ try:
         sql("UPDATE veyndo_authority.keys SET verify_until=now()-interval '1 second' WHERE NOT active")
         for base in bases:call(base,'/store-api/product/mug',h={'x-tenant':'atelier'})
         print('PASS scope signing-key rotation survives both running replicas after the retired key is no longer accepted')
+        # Retain the actual restricted logins but stop these owned workers:
+        # they must not claim the next fixture's deliberately queued tasks.
+        for process, log in processes:
+            stop(process); log.close()
+        processes.clear()
         if not tenant_pooler:
-            # Retain the actual restricted logins but stop these owned workers:
-            # they must not claim the next fixture's deliberately queued tasks.
-            for process, log in processes:
-                stop(process); log.close()
-            processes.clear()
             subprocess.run(['python3','scripts/agent_authorities.py'],cwd=ROOT,env=env,check=True)
+        subprocess.run(['python3','scripts/durable_agents.py'],cwd=ROOT,env=env,check=True)
 finally:
     for process, log in processes:
         stop(process); log.close()

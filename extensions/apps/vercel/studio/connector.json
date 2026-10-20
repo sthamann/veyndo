@@ -1,0 +1,12 @@
+{
+  "id": "vercel",
+  "name": "Vercel",
+  "fields": [],
+  "operation": [],
+  "summary": [
+    "Connect your headless frontend and request a new deployment through a private Deploy Hook.",
+    "Verbinde dein Headless-Frontend und fordere über einen privaten Deploy-Hook eine Bereitstellung an.",
+    "Connectez votre frontend et demandez un déploiement via un Deploy Hook privé.",
+    "Conecta tu frontend y solicita un despliegue con un Deploy Hook privado."
+  ]
+}

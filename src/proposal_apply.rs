@@ -2,6 +2,10 @@
 use crate::*;
 
 pub(crate) async fn apply(a: &App, t: &str, id: &str, h: &RequestContext) -> Result<Value> {
+    let work:bool=sqlx::query_scalar("SELECT coalesce(jsonb_array_length(proposal->'proposal'->'operations'),0)>0 FROM tasks WHERE tenant=$1 AND id=$2").bind(t).bind(id).fetch_optional(&a.db).await?.unwrap_or(false);
+    if work {
+        return agent_runs::work_plan::approve(a, t, id, h).await;
+    }
     apply_mode(a, t, id, h, false).await
 }
 pub(crate) async fn apply_mode(
@@ -36,6 +40,11 @@ pub(crate) async fn apply_mode(
     let v: Value = r.get("proposal");
     let p: Proposal =
         serde_json::from_value(v["proposal"].clone()).map_err(|e| bad(e.to_string()))?;
+    if !p.operations.is_empty() {
+        return Err(bad(
+            "Operation plans require their exact private work approval",
+        ));
+    }
     if !p.changes.is_empty() {
         auth::permit(h, "catalog.write")?;
     }

@@ -7,12 +7,20 @@ const TEMPLATES: &[(&str, &str)] = &[
         include_str!("../prompts/merchant-planner.v1.txt"),
     ),
     (
+        "merchant-planner@2",
+        include_str!("../prompts/merchant-planner.v2.txt"),
+    ),
+    (
         "app-generation@1",
         include_str!("../prompts/app-generation.v1.txt"),
     ),
     (
         "app-coding-task@1",
         include_str!("../prompts/app-coding-task.v1.txt"),
+    ),
+    (
+        "app-generation@2",
+        include_str!("../prompts/app-generation.v2.txt"),
     ),
     ("app-edit@1", include_str!("../prompts/app-edit.v1.txt")),
     ("app-edit@2", include_str!("../prompts/app-edit.v2.txt")),

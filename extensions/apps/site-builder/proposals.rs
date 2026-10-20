@@ -124,6 +124,8 @@ pub(super) async fn prepare(
         validation.rollback().await?;
         let args = json!({"id":v["id"],"revision":v["revision"],"fields":next});
         let p = Proposal {
+            operations: vec![],
+            view: None,
             summary: candidate["summary"]
                 .as_str()
                 .unwrap_or("")

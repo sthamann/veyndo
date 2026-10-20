@@ -1,0 +1,229 @@
+{
+  "id": "contentful",
+  "version": "1.0.0",
+  "coreApi": "1",
+  "runtime": "service",
+  "name": {
+    "en": "Contentful",
+    "de": "Contentful",
+    "fr": "Contentful",
+    "es": "Contentful"
+  },
+  "category": "ai",
+  "presentation": {
+    "description": {
+      "en": "Read published content into shop knowledge in bounded pages. Storefront publishing remains separate.",
+      "de": "Übernimm veröffentlichte Inhalte seitenweise ins Shopwissen. Die Shop-Veröffentlichung bleibt ein eigener Schritt.",
+      "fr": "Importez les contenus publiés dans les connaissances. La publication boutique reste séparée.",
+      "es": "Importa contenidos publicados al conocimiento. La publicación en la tienda es independiente."
+    }
+  },
+  "permissions": [
+    "service.call",
+    "knowledge.write"
+  ],
+  "entities": [],
+  "slots": [],
+  "events": [],
+  "actions": [
+    {
+      "name": "status",
+      "description": "Contentful status",
+      "handler": "service",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      },
+      "public": false,
+      "readOnly": true,
+      "permission": "apps.manage",
+      "mcp": true,
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "revision": {
+            "type": "integer"
+          },
+          "settings": {
+            "type": "object"
+          },
+          "credentialConfigured": {
+            "type": "boolean"
+          },
+          "jobs": {
+            "type": "array",
+            "maxItems": 30,
+            "items": {
+              "type": "object"
+            }
+          }
+        },
+        "required": [
+          "revision",
+          "settings",
+          "credentialConfigured",
+          "jobs"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "configure",
+      "description": "Contentful configure",
+      "handler": "service",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "revision": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "settings": {
+            "type": "object",
+            "properties": {
+              "enabled": {
+                "type": "boolean"
+              },
+              "space": {
+                "type": "string",
+                "maxLength": 100
+              },
+              "environment": {
+                "type": "string",
+                "maxLength": 100
+              },
+              "locale": {
+                "type": "string",
+                "maxLength": 100
+              },
+              "region": {
+                "type": "string",
+                "maxLength": 100
+              }
+            },
+            "required": [
+              "enabled"
+            ],
+            "additionalProperties": false
+          },
+          "credentials": {
+            "type": "object",
+            "properties": {
+              "apiKey": {
+                "type": "string",
+                "maxLength": 4000
+              }
+            },
+            "required": [],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "revision",
+          "settings"
+        ],
+        "additionalProperties": false
+      },
+      "public": false,
+      "readOnly": false,
+      "permission": "apps.manage",
+      "mcp": true,
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "revision": {
+            "type": "integer"
+          },
+          "settings": {
+            "type": "object"
+          },
+          "credentialConfigured": {
+            "type": "boolean"
+          },
+          "jobs": {
+            "type": "array",
+            "maxItems": 30,
+            "items": {
+              "type": "object"
+            }
+          },
+          "purgeSources": {
+            "type": "boolean"
+          },
+          "exportCursor": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "revision",
+          "settings",
+          "credentialConfigured",
+          "jobs"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "run",
+      "description": "Contentful run",
+      "handler": "service",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "requestKey": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "input": {
+            "type": "object",
+            "properties": {
+              "offset": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 1000000
+              }
+            },
+            "required": [],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "requestKey",
+          "input"
+        ],
+        "additionalProperties": false
+      },
+      "public": false,
+      "readOnly": false,
+      "permission": "apps.manage",
+      "mcp": true,
+      "flowAllowed": true,
+      "requiredPermissions": [
+        "knowledge.write"
+      ],
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "jobId": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "accepted"
+            ]
+          }
+        },
+        "required": [
+          "jobId",
+          "state"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ]
+}

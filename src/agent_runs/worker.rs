@@ -3,7 +3,7 @@ use super::*;
 use tracing::Instrument;
 pub(crate) async fn once(a: &App) -> Result<bool> {
     // A dead worker can be resumed safely between calls; an in-flight provider result is ambiguous.
-    sqlx::query("UPDATE tasks SET run_state=CASE WHEN run_pending IS NULL THEN 'queued' ELSE 'uncertain' END,run_error=CASE WHEN run_pending IS NULL THEN NULL ELSE '{\"code\":\"agent_model_interrupted\",\"retryable\":false}'::jsonb END,run_lease=NULL,run_until=NULL,run_revision=run_revision+1,run_updated=now() WHERE (tenant,id) IN (SELECT tenant,id FROM tasks WHERE run_state='running' AND run_until<now() ORDER BY run_updated LIMIT 20 FOR UPDATE SKIP LOCKED)").execute(&a.db).await?;
+    sqlx::query("UPDATE tasks SET run_state=CASE WHEN run_pending IS NULL THEN 'queued' ELSE 'uncertain' END,run_error=CASE WHEN run_pending IS NULL THEN NULL ELSE jsonb_build_object('code',CASE WHEN run_request ? 'execution' THEN 'agent_work_interrupted' ELSE 'agent_model_interrupted' END,'retryable',false) END,run_lease=NULL,run_until=NULL,run_revision=run_revision+1,run_updated=now() WHERE (tenant,id) IN (SELECT tenant,id FROM tasks WHERE run_state='running' AND run_until<now() ORDER BY run_updated LIMIT 20 FOR UPDATE SKIP LOCKED)").execute(&a.db).await?;
     let lease = uid();
     let mut tx = a.db.begin().await?;
     let row=sqlx::query("SELECT * FROM tasks r WHERE run_state='queued' AND NOT EXISTS(SELECT 1 FROM tasks active WHERE active.tenant=r.tenant AND active.run_state='running' AND active.run_until>now()) ORDER BY run_updated,tenant,id FOR UPDATE SKIP LOCKED LIMIT 1").fetch_optional(&mut *tx).await?;
@@ -48,12 +48,16 @@ pub(crate) async fn once(a: &App) -> Result<bool> {
                 tenant: t.clone(),
                 id: id.clone(),
                 lease: lease.clone(),
+                workspace: request["workspaceContext"].clone(),
             };
             veyndo::tenant_scope::scoped(
                 scope,
                 veyndo::inference::budget::scoped(
                     model_authority,
                     CURRENT.scope(run, async {
+                        if request["execution"].is_array() {
+                            return Box::pin(work::execute(a, &t, &id, &h, &request)).await;
+                        }
                         let choice = agent::choice(&request)?;
                         tokio::time::timeout(
                             std::time::Duration::from_secs(190),

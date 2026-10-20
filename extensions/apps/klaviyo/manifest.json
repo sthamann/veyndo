@@ -1,0 +1,223 @@
+{
+  "id": "klaviyo",
+  "version": "1.0.0",
+  "coreApi": "1",
+  "runtime": "service",
+  "name": {
+    "en": "Klaviyo",
+    "de": "Klaviyo",
+    "fr": "Klaviyo",
+    "es": "Klaviyo"
+  },
+  "category": "operations",
+  "presentation": {
+    "description": {
+      "en": "Send explicit events without subscribing customers to marketing.",
+      "de": "Übertrage gezielte Ereignisse, ohne Kunden für Marketing anzumelden.",
+      "fr": "Envoyez des événements sans inscrire les clients au marketing.",
+      "es": "Envía eventos sin suscribir clientes a marketing."
+    }
+  },
+  "permissions": [
+    "service.call"
+  ],
+  "entities": [],
+  "slots": [],
+  "events": [],
+  "actions": [
+    {
+      "name": "status",
+      "description": "Klaviyo status",
+      "handler": "service",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      },
+      "public": false,
+      "readOnly": true,
+      "permission": "apps.manage",
+      "mcp": true,
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "revision": {
+            "type": "integer"
+          },
+          "settings": {
+            "type": "object"
+          },
+          "credentialConfigured": {
+            "type": "boolean"
+          },
+          "jobs": {
+            "type": "array",
+            "maxItems": 30,
+            "items": {
+              "type": "object"
+            }
+          }
+        },
+        "required": [
+          "revision",
+          "settings",
+          "credentialConfigured",
+          "jobs"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "configure",
+      "description": "Klaviyo configure",
+      "handler": "service",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "revision": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "settings": {
+            "type": "object",
+            "properties": {
+              "enabled": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "enabled"
+            ],
+            "additionalProperties": false
+          },
+          "credentials": {
+            "type": "object",
+            "properties": {
+              "apiKey": {
+                "type": "string",
+                "maxLength": 4000
+              }
+            },
+            "required": [],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "revision",
+          "settings"
+        ],
+        "additionalProperties": false
+      },
+      "public": false,
+      "readOnly": false,
+      "permission": "apps.manage",
+      "mcp": true,
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "revision": {
+            "type": "integer"
+          },
+          "settings": {
+            "type": "object"
+          },
+          "credentialConfigured": {
+            "type": "boolean"
+          },
+          "jobs": {
+            "type": "array",
+            "maxItems": 30,
+            "items": {
+              "type": "object"
+            }
+          },
+          "purgeSources": {
+            "type": "boolean"
+          },
+          "exportCursor": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "revision",
+          "settings",
+          "credentialConfigured",
+          "jobs"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "run",
+      "description": "Klaviyo run",
+      "handler": "service",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "requestKey": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "input": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string"
+              },
+              "metric": {
+                "type": "string"
+              },
+              "eventId": {
+                "type": "string"
+              },
+              "properties": {
+                "type": "object"
+              }
+            },
+            "required": [
+              "email",
+              "metric",
+              "eventId"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "requestKey",
+          "input"
+        ],
+        "additionalProperties": false
+      },
+      "public": false,
+      "readOnly": false,
+      "permission": "apps.manage",
+      "mcp": true,
+      "flowAllowed": true,
+      "requiredPermissions": [
+        "customers.pii"
+      ],
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "jobId": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "accepted"
+            ]
+          }
+        },
+        "required": [
+          "jobId",
+          "state"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ]
+}

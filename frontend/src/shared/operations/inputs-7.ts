@@ -40,6 +40,40 @@ export interface Inputs7 {
     instruction: string;
     requestId?: string;
     revision?: number;
+    workspaceContext?: {
+      selected?: {
+        id: string;
+        kind:
+          | "product"
+          | "order"
+          | "customer"
+          | "company"
+          | "app"
+          | "page"
+          | "flow";
+      };
+      view:
+        | "assistant"
+        | "workspace"
+        | "overview"
+        | "knowledge"
+        | "agents"
+        | "commerce"
+        | "design"
+        | "productData"
+        | "products"
+        | "orders"
+        | "customers"
+        | "b2b"
+        | "pos"
+        | "storyfronts"
+        | "channels"
+        | "automation"
+        | "apps"
+        | "developers"
+        | "environments"
+        | "users";
+    };
   };
   "merchant.run.status": {
     approve?: boolean;
@@ -51,6 +85,40 @@ export interface Inputs7 {
     instruction?: string;
     requestId?: string;
     revision?: number;
+    workspaceContext?: {
+      selected?: {
+        id: string;
+        kind:
+          | "product"
+          | "order"
+          | "customer"
+          | "company"
+          | "app"
+          | "page"
+          | "flow";
+      };
+      view:
+        | "assistant"
+        | "workspace"
+        | "overview"
+        | "knowledge"
+        | "agents"
+        | "commerce"
+        | "design"
+        | "productData"
+        | "products"
+        | "orders"
+        | "customers"
+        | "b2b"
+        | "pos"
+        | "storyfronts"
+        | "channels"
+        | "automation"
+        | "apps"
+        | "developers"
+        | "environments"
+        | "users";
+    };
   };
   "merchant.run.cancel": {
     approve: boolean;
@@ -62,6 +130,40 @@ export interface Inputs7 {
     instruction?: string;
     requestId?: string;
     revision: number;
+    workspaceContext?: {
+      selected?: {
+        id: string;
+        kind:
+          | "product"
+          | "order"
+          | "customer"
+          | "company"
+          | "app"
+          | "page"
+          | "flow";
+      };
+      view:
+        | "assistant"
+        | "workspace"
+        | "overview"
+        | "knowledge"
+        | "agents"
+        | "commerce"
+        | "design"
+        | "productData"
+        | "products"
+        | "orders"
+        | "customers"
+        | "b2b"
+        | "pos"
+        | "storyfronts"
+        | "channels"
+        | "automation"
+        | "apps"
+        | "developers"
+        | "environments"
+        | "users";
+    };
   };
   "merchant.run.resume": {
     approve: boolean;
@@ -73,6 +175,40 @@ export interface Inputs7 {
     instruction?: string;
     requestId?: string;
     revision: number;
+    workspaceContext?: {
+      selected?: {
+        id: string;
+        kind:
+          | "product"
+          | "order"
+          | "customer"
+          | "company"
+          | "app"
+          | "page"
+          | "flow";
+      };
+      view:
+        | "assistant"
+        | "workspace"
+        | "overview"
+        | "knowledge"
+        | "agents"
+        | "commerce"
+        | "design"
+        | "productData"
+        | "products"
+        | "orders"
+        | "customers"
+        | "b2b"
+        | "pos"
+        | "storyfronts"
+        | "channels"
+        | "automation"
+        | "apps"
+        | "developers"
+        | "environments"
+        | "users";
+    };
   };
-  "merchant.agents.status": JsonValue;
+  "merchant.apps.search": { after?: string; limit?: number; query?: string };
 }

@@ -11,6 +11,9 @@ pub async fn source_page(
     if c.export_manifest.is_some() {
         return super::export_source::page(c, source_id, kind, cursor, fixture).await;
     }
+    if c.system == Source::Shopware6 {
+        return super::shopware6::page(c, source_id, kind, cursor, fixture).await;
+    }
     if c.system == Source::Shopify {
         return super::shopify::page(c, source_id, kind, cursor, fixture).await;
     }

@@ -2,6 +2,12 @@
 /** Native input DTOs; opaque JSON fields remain explicit. */
 import type { JsonValue } from "./value";
 export interface Inputs9 {
+  "knowledge.experiment.create": { approve?: boolean; design?: JsonValue };
+  "knowledge.experiment.start": {
+    approve?: boolean;
+    id?: string;
+    revision?: number;
+  };
   "knowledge.experiment.stop": {
     approve?: boolean;
     id?: string;
@@ -55,21 +61,5 @@ export interface Inputs9 {
   "knowledge.compile": {
     claims?: Array<{ id: string; text: string }>;
     productId?: string;
-  };
-  "merchant.app.history": {
-    app: string;
-    approve?: boolean;
-    entity: string;
-    id: string;
-    revision?: number;
-    version?: number;
-  };
-  "merchant.app.restore": {
-    app: string;
-    approve: boolean;
-    entity: string;
-    id: string;
-    revision: number;
-    version: number;
   };
 }

@@ -1,5 +1,9 @@
 # Knowledge workspace
 
+See the [connected AI workspace](agentic-workspace.md) for the 20 October context,
+reviewed private execution, complete app composition, real preview, editable list
+handoff and remembered merchant-guidance workflow. [Current status](status.md).
+
 Open **VEYNDO Studio → Shop intelligence** (German: **Shopwissen**). The workspace separates authoritative
 catalogue data, merchant-managed sources, curated graph connections, order-derived
 associations and explicit merchant approvals. It shows actual persisted data;

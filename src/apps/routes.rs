@@ -2,6 +2,7 @@
 use super::*;
 pub(crate) fn app_router() -> Router<App> {
     Router::new()
+        .merge(discovery::router())
         .merge(super::webhooks::router())
         .merge(evidence_routes::router())
         .merge(record_history::router())
@@ -63,7 +64,7 @@ async fn app_list(State(a): State<App>, h: RequestContext) -> Result<Json<Value>
         .collect();
     Ok(Json(json!({
         "apiVersion":"1", "mainLocale":config.main_locale, "packages":packages,
-        "builtIns":["migration","site_builder","site_forms","marketplaces","engraving","paypal","shopware_payments","storyfront","google_analytics","gmail","slack","email"],
+        "builtIns":["migration","site_builder","site_forms","marketplaces","engraving","paypal","shopware_payments","storyfront","google_analytics","gmail","slack","email","vercel","klaviyo","hubspot","contentful","algolia"],
         "serviceExecution":"digest-approved external services and bounded typed Wasm commerce hooks"
     })))
 }

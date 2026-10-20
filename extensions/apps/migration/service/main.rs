@@ -20,6 +20,7 @@ mod reconcile;
 mod server;
 mod shopify;
 mod shopware;
+mod shopware6;
 mod slices;
 mod transport;
 mod woo;

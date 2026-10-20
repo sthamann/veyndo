@@ -1,0 +1,16 @@
+{
+  "id": "hubspot",
+  "name": "HubSpot",
+  "fields": [],
+  "operation": [
+    "email",
+    "firstName",
+    "lastName"
+  ],
+  "summary": [
+    "Create or update an explicitly selected CRM contact with protected customer-data permissions.",
+    "Lege gezielt CRM-Kontakte an oder aktualisiere sie mit geschützten Kundendatenrechten.",
+    "Créez ou modifiez des contacts CRM avec des droits protégés.",
+    "Crea o actualiza contactos CRM con permisos de datos protegidos."
+  ]
+}

@@ -1,5 +1,9 @@
 # Connected creation and app workbench — 12 October 2026
 
+See the [connected AI workspace](agentic-workspace.md) for the 20 October context,
+reviewed private execution, complete app composition, real preview, editable list
+handoff and remembered merchant-guidance workflow. [Current status](status.md).
+
 This change extends existing owners. It does not introduce a second app language,
 translation queue, checkout or model registry. Hosted availability is a separate
 acceptance step; the checks below use isolated shops and local provider fixtures.

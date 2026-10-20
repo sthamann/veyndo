@@ -1,5 +1,9 @@
 # Agentic Studio grids
 
+See the [connected AI workspace](agentic-workspace.md) for the 20 October context,
+reviewed private execution, complete app composition, real preview, editable list
+handoff and remembered merchant-guidance workflow. [Current status](status.md).
+
 Orders, products and customers now share one grid instead of separate fixed lists.
 People and agents use the same native filter/sort contract. The grid never owns
 prices, customer identity, order states or a second database.

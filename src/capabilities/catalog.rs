@@ -4,6 +4,7 @@ mod core;
 pub(super) fn definitions() -> Vec<(&'static str, &'static str)> {
     let mut all = core::CORE.to_vec();
     all.extend(crate::agent_runs::CAPABILITIES.iter().copied());
+    all.extend(crate::apps::discovery::CAPABILITIES.iter().copied());
     all.extend(crate::agent_runs::controls::CAPABILITIES.iter().copied());
     all.extend(COGNITIVE.iter().copied());
     all.extend([
@@ -35,6 +36,10 @@ pub(super) fn definitions() -> Vec<(&'static str, &'static str)> {
         ),
     ]);
     all.extend([
+        (
+            "studio.workspace.work.read",
+            "Read bounded actionable work from current authorized shop data",
+        ),
         (
             "studio.workspace.read",
             "Read the current personal Studio workspace",

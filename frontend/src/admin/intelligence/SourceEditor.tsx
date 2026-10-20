@@ -1,6 +1,7 @@
 /** Single-language source editor with inherited fields, product lookup and private-first API/file ingestion. */
 import Icon from "../../shared/ui/Icon";
 import { useState } from "react";
+import { useLocale } from "../../shared/i18n/i18n";
 import { ContentLanguage } from "../../shared/i18n/ContentLanguage";
 import ContentLanguagePicker from "../../shared/i18n/ContentLanguagePicker";
 import LocalizedField from "../../shared/i18n/LocalizedField";
@@ -19,15 +20,21 @@ export default function SourceEditor({
   request,
   onSaved,
   onCancel,
+  initialKind = "document",
 }: {
   source?: SourceDetail;
+  initialKind?: SourceKind;
   workspace: Workspace;
   request: RequestFn;
   onSaved: () => void;
   onCancel: () => void;
 }) {
   const k = useKnowledgeText(),
-    base = source?.locale ?? workspace.mainLocale;
+    { locale } = useLocale(),
+    base =
+      source?.locale ??
+      (workspace.locales.includes(locale) ? locale : workspace.mainLocale);
+  const [language, setLanguage] = useState(base);
   const initial = (field: "title" | "content"): LocalizedText =>
     Object.fromEntries([
       [base, source?.[field] ?? ""],
@@ -37,7 +44,7 @@ export default function SourceEditor({
     ]);
   const [title, setTitle] = useState(initial("title")),
     [content, setContent] = useState(initial("content"));
-  const [kind, setKind] = useState<SourceKind>(source?.kind ?? "document"),
+  const [kind, setKind] = useState<SourceKind>(source?.kind ?? initialKind),
     [productId, setProduct] = useState(source?.product_id ?? "");
   const [query, setQuery] = useState(""),
     [products, setProducts] = useState<Product[]>([]),
@@ -98,6 +105,8 @@ export default function SourceEditor({
       <ContentLanguage
         locales={workspace.locales}
         mainLocale={workspace.mainLocale}
+        language={language}
+        onLanguageChange={setLanguage}
       >
         <ContentLanguagePicker />
         <div className="knowledge-form-grid">

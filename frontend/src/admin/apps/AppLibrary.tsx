@@ -7,6 +7,7 @@ import { useEmailText } from "../../../../extensions/apps/email/studio/email-i18
 import { useLibraryText } from "../../shared/i18n/app-library-i18n";
 import Icon from "../../shared/ui/Icon";
 import AppArtwork from "./AppArtwork";
+import IntegrationDirectory from "./IntegrationDirectory";
 import {
   appCategory,
   appName,
@@ -82,6 +83,13 @@ export default function AppLibrary({
           {l("available")}
         </span>
       </div>
+      <IntegrationDirectory
+        packages={packages}
+        manage={manage}
+        busy={busy}
+        onOpen={onOpen}
+        onInstall={onInstall}
+      />
       <div className="app-library-toolbar">
         <div className="app-library-switch" role="group" aria-label={a("apps")}>
           {["installed", "discover"].map((k) => (

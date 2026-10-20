@@ -417,6 +417,14 @@ interface inputs {
     %model: option<option<string>>,
     %provider: string,
   }
+  record merchant-run-create-input-workspace-context-selected {
+    %id: string,
+    %kind: string,
+  }
+  record merchant-run-create-input-workspace-context {
+    %selected: option<merchant-run-create-input-workspace-context-selected>,
+    %view: string,
+  }
   record merchant-run-create-input {
     %approve: option<bool>,
     %id: option<string>,
@@ -424,10 +432,19 @@ interface inputs {
     %instruction: string,
     %request-id: option<string>,
     %revision: option<s64>,
+    %workspace-context: option<merchant-run-create-input-workspace-context>,
   }
   record merchant-run-status-input-inference {
     %model: option<option<string>>,
     %provider: string,
+  }
+  record merchant-run-status-input-workspace-context-selected {
+    %id: string,
+    %kind: string,
+  }
+  record merchant-run-status-input-workspace-context {
+    %selected: option<merchant-run-status-input-workspace-context-selected>,
+    %view: string,
   }
   record merchant-run-status-input {
     %approve: option<bool>,
@@ -436,10 +453,19 @@ interface inputs {
     %instruction: option<string>,
     %request-id: option<string>,
     %revision: option<s64>,
+    %workspace-context: option<merchant-run-status-input-workspace-context>,
   }
   record merchant-run-cancel-input-inference {
     %model: option<option<string>>,
     %provider: string,
+  }
+  record merchant-run-cancel-input-workspace-context-selected {
+    %id: string,
+    %kind: string,
+  }
+  record merchant-run-cancel-input-workspace-context {
+    %selected: option<merchant-run-cancel-input-workspace-context-selected>,
+    %view: string,
   }
   record merchant-run-cancel-input {
     %approve: bool,
@@ -448,10 +474,19 @@ interface inputs {
     %instruction: option<string>,
     %request-id: option<string>,
     %revision: s64,
+    %workspace-context: option<merchant-run-cancel-input-workspace-context>,
   }
   record merchant-run-resume-input-inference {
     %model: option<option<string>>,
     %provider: string,
+  }
+  record merchant-run-resume-input-workspace-context-selected {
+    %id: string,
+    %kind: string,
+  }
+  record merchant-run-resume-input-workspace-context {
+    %selected: option<merchant-run-resume-input-workspace-context-selected>,
+    %view: string,
   }
   record merchant-run-resume-input {
     %approve: bool,
@@ -460,6 +495,17 @@ interface inputs {
     %instruction: option<string>,
     %request-id: option<string>,
     %revision: s64,
+    %workspace-context: option<merchant-run-resume-input-workspace-context>,
+  }
+  record merchant-apps-search-input {
+    %after: option<string>,
+    %limit: option<s64>,
+    %query: option<string>,
+  }
+  record merchant-apps-read-input {
+    %action: string,
+    %app: string,
+    %arguments: string,
   }
   record merchant-agents-control-input {
     %approve: bool,
@@ -1551,6 +1597,8 @@ interface inputs {
   merchant-run-status: func(input: merchant-run-status-input) -> result<string, string>;
   merchant-run-cancel: func(input: merchant-run-cancel-input) -> result<string, string>;
   merchant-run-resume: func(input: merchant-run-resume-input) -> result<string, string>;
+  merchant-apps-search: func(input: merchant-apps-search-input) -> result<string, string>;
+  merchant-apps-read: func(input: merchant-apps-read-input) -> result<string, string>;
   merchant-agents-status: func(input: string) -> result<string, string>;
   merchant-agents-control: func(input: merchant-agents-control-input) -> result<string, string>;
   merchant-grid-plan: func(input: merchant-grid-plan-input) -> result<string, string>;
@@ -1580,6 +1628,7 @@ interface inputs {
   merchant-site-propose: func(input: merchant-site-propose-input) -> result<string, string>;
   merchant-site-plan: func(input: merchant-site-plan-input) -> result<string, string>;
   merchant-site-apply: func(input: merchant-site-apply-input) -> result<string, string>;
+  studio-workspace-work-read: func(input: string) -> result<string, string>;
   studio-workspace-read: func(input: string) -> result<string, string>;
   studio-workspace-save: func(input: studio-workspace-save-input) -> result<string, string>;
   merchant-import-inspect: func(input: merchant-import-inspect-input) -> result<string, string>;

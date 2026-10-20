@@ -118,7 +118,7 @@ fn safe_pin(query: &str) -> bool {
 }
 pub(crate) fn schema(n: &str) -> Option<Value> {
     let properties = match n {
-        "studio.workspace.read" => json!({}),
+        "studio.workspace.read" | "studio.workspace.work.read" => json!({}),
         "studio.workspace.save" => {
             json!({"revision":{"type":"integer","minimum":0},"data":{"type":"object"}})
         }
