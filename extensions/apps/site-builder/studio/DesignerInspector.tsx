@@ -103,7 +103,7 @@ export default function DesignerInspector({
             onAdd={(block) => editing?.insert(block)}
           />
         )}
-        {
+        {!setup && (
           <div hidden={mode !== "agent"}>
             <DesignAgent
               initialReference={initialReference}
@@ -126,8 +126,8 @@ export default function DesignerInspector({
               }}
             />
           </div>
-        }
-        {mode === "edit" && !d.draft && (
+        )}
+        {!setup && mode === "edit" && !d.draft && (
           <div className="designer-welcome">
             <div className="designer-welcome-symbol">
               <Icon name="palette" size={28} />
@@ -159,7 +159,7 @@ export default function DesignerInspector({
             </button>
           </div>
         )}
-        {mode === "edit" && d.draft && (
+        {!setup && mode === "edit" && d.draft && (
           <>
             <ContentLanguagePicker />
             <PageInspector
@@ -175,7 +175,7 @@ export default function DesignerInspector({
             />
           </>
         )}
-        {mode === "history" && d.draft && (
+        {!setup && mode === "history" && d.draft && (
           <>
             <h2>{w("history")}</h2>
             {rights.includes("apps.read") && (

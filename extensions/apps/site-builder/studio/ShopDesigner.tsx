@@ -5,7 +5,6 @@ import {
   ContentLanguage,
   useContentLanguage,
 } from "../../../../frontend/src/shared/i18n/ContentLanguage";
-import AppConsent from "../../../../frontend/src/admin/apps/AppConsent";
 import ConfirmDialog from "../../../../frontend/src/shared/ui/ConfirmDialog";
 import Icon from "../../../../frontend/src/shared/ui/Icon";
 import type { SiteProduct } from "../Renderer";
@@ -34,6 +33,8 @@ import "./palette.css";
 import { BlockEditingContext, useBlockEditing } from "./useBlockEditing";
 import "./interactions.css";
 import { PlacementStatus } from "./EditableSection";
+import DesignSetup, { designIntent } from "./DesignSetup";
+import useDesignResume from "./useDesignResume";
 type Props = {
   request: RequestFn;
   workspace: string;
@@ -81,22 +82,27 @@ function DesignerView({
       window.matchMedia("(max-width: 650px)").matches ? "mobile" : "desktop",
     ),
     [showPages, setShowPages] = useState(false),
-    [install, setInstall] = useState(false),
     [pending, setPending] = useState<Page>(),
     [pendingChannel, setPendingChannel] = useState<string>(),
-    [pendingHome, setPendingHome] = useState(false),
-    [creating, setCreating] = useState(false);
+    [pendingHome, setPendingHome] = useState(false);
 
   const [mode, setMode] = useState<DesignerMode>(
-    initialReference ? "agent" : "edit",
+    initialReference || designIntent() === "agent"
+      ? "agent"
+      : designIntent() === "blocks"
+        ? "blocks"
+        : "edit",
   );
   const nativeSnapshot = useRef<HomeSnapshot | undefined>(undefined);
+  const [snapshotScope, setSnapshotScope] = useState("");
+  const scopeKey = `${workspace}:${d.channel}:${language}`;
   const [comparison, setComparison] = useState<Page | null>(null);
   useEffect(() => setComparison(null), [workspace, d.channel, request]);
   const writable =
       sandbox &&
       rights.includes("channels.manage") &&
-      d.context!.installed.includes("site_builder"),
+      d.context!.installed.includes("site_builder") &&
+      d.context!.installed.includes("site_forms"),
     missing = ["site_builder", "site_forms"].find(
       (id) => !d.context!.installed.includes(id),
     );
@@ -105,26 +111,20 @@ function DesignerView({
     else d.open(page);
     setComparison(null);
   };
-  const createSandbox = async () => {
-    if (!onSandbox || creating) return;
-    if (
-      !rights.includes("environments.manage") ||
-      !rights.includes("channels.manage")
-    ) {
-      d.setError(t("readOnly"));
-      return;
-    }
-    setCreating(true);
-    d.setError("");
-    try {
-      const env = await request("/api/environments", { name: t("title") });
-      await onSandbox(env.id);
-    } catch (e) {
-      d.setError((e as Error).message);
-    } finally {
-      setCreating(false);
-    }
-  };
+  const beginSetup = useDesignResume({
+    workspace,
+    request,
+    sandbox,
+    writable,
+    missing,
+    d,
+    language,
+    mainLocale,
+    nativeSnapshot,
+    snapshotScope,
+    scopeKey,
+    setMode,
+  });
   useEffect(() => {
     if (!d.loaded || d.draft) return;
     const pages = effectivePages(d.pages, d.channel);
@@ -138,12 +138,8 @@ function DesignerView({
     section: "hero" | "products",
   ) => {
     if (d.draft) return;
-    if (!sandbox) {
-      void createSandbox();
-      return;
-    }
-    if (missing) {
-      setInstall(true);
+    if (!sandbox || missing) {
+      beginSetup(section);
       return;
     }
     if (!writable) {
@@ -196,33 +192,19 @@ function DesignerView({
         )
       ).catalogue.elements,
   );
-  const setup = missing ? (
-    <section className="studio-card designer-setup">
-      <Icon name="palette" size={40} />
-      <h2>{t("install")}</h2>
-      <p>{t("installHint")}</p>
-      <button
-        className="studio-primary"
-        disabled={!rights.includes("apps.manage")}
-        onClick={() => setInstall(true)}
-      >
-        {t("install")}
-      </button>
-      {install && (
-        <AppConsent
-          key={missing}
-          app={missing}
-          request={request}
-          onCancel={() => setInstall(false)}
-          onInstall={async (consent) => {
-            await request("/api/apps", consent);
-            await d.load();
-            window.dispatchEvent(new Event("commerce.apps.changed"));
-          }}
-        />
-      )}
-    </section>
-  ) : null;
+  const setup =
+    !writable || missing ? (
+      <DesignSetup
+        request={request}
+        workspace={workspace}
+        rights={rights}
+        sandbox={sandbox}
+        installed={d.context!.installed}
+        loaded={d.loaded}
+        onSandbox={onSandbox}
+        onReload={d.load}
+      />
+    ) : null;
   return (
     <BlockEditingContext.Provider value={editing}>
       <div className="shop-designer">
@@ -231,15 +213,18 @@ function DesignerView({
           rights={rights}
           sandbox={sandbox}
           writable={writable}
-          creating={creating}
+          creating={false}
           selectionError={!!selection.error}
           onChannel={(channel) => {
             if (d.dirty) setPendingChannel(channel);
             else d.changeChannel(channel);
           }}
-          onSandbox={() => void createSandbox()}
+          onSandbox={() => beginSetup("edit")}
           onEnvironments={onEnvironments}
-          onAgent={() => setMode("agent")}
+          onAgent={() => {
+            if (!writable || missing) beginSetup("agent");
+            else setMode("agent");
+          }}
           agentOpen={mode === "agent"}
         />
 
@@ -308,6 +293,7 @@ function DesignerView({
               onHome={customizeHome}
               onSnapshot={(snapshot) => {
                 nativeSnapshot.current = snapshot;
+                setSnapshotScope(scopeKey);
               }}
               onEdit={() => setMode("edit")}
             />
@@ -325,11 +311,14 @@ function DesignerView({
             setShowPages={setShowPages}
             setup={setup}
             mode={mode}
-            onMode={setMode}
+            onMode={(next) => {
+              if (!writable || missing)
+                beginSetup(next === "history" ? "edit" : next);
+              else setMode(next);
+            }}
             onPrepare={async () => {
               if (!writable) {
-                if (!sandbox) await createSandbox();
-                else d.setError(t("readOnly"));
+                beginSetup("edit");
                 return;
               }
               if (
