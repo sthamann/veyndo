@@ -41,6 +41,7 @@ pub(super) async fn validate(a: &App, t: &str, v: &Value) -> Result<Value> {
         "returns",
         "warranty",
         "brand",
+        "guidance",
     ]
     .contains(&kind)
     {

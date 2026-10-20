@@ -18,6 +18,7 @@ class Model(BaseHTTPRequestHandler):
    if 'edits' in state:edits=state['edits']
    if state['invalid']:edits=[('/entities/0/fields',[])]
    out={'message':{'content':json.dumps({'patch':[{'op':'add','path':path,'valueJson':json.dumps(value)} for path,value in edits],'summary':m['name']})},'done_reason':'stop'}
+  if state.get('compose') and self.path!='/api/embed':out={'message':{'content':json.dumps({'manifest':state['composed'],'summary':state['composed']['name']})},'done_reason':'stop'}
   self.send_response(200);self.send_header('Content-Type','application/json');self.end_headers();self.wfile.write(json.dumps(out).encode())
 model=ThreadingHTTPServer(('127.0.0.1',0),Model);threading.Thread(target=model.serve_forever,daemon=True).start()
 with socket.socket() as s:s.bind(('127.0.0.1',0));port=s.getsockname()[1]
@@ -56,6 +57,21 @@ try:
  assert len([x for x in call('/api/developer')['builds'] if x['app']==m['id']])==1
  print('PASS real model HTTP → validated immutable draft → explicit staging; expanded native grammar and token budget; model exposure attempts neutralized and field removal rejected without a saved build (no paid calls)')
  state['invalid']=False
+ composed=copy.deepcopy(generated);composed['version']='0.2.0'
+ composed['settings']=[{'key':'region','kind':'string','label':m['name'],'required':False}]
+ extra=copy.deepcopy(composed['entities'][0]);extra['name']='notes';extra['publicRead']=False
+ extra['fields']=[{'name':'title','kind':'string','label':m['name'],'required':True,'translatable':True}]
+ composed['entities'].append(extra);composed.pop('actions',None)
+ state.update(compose=True,composed=composed)
+ full=call('/api/developer/generate',{**payload,'mode':'compose','prompt':'Add a private notes library and a region setting. Preserve the product editor.'})
+ assert len(full['manifest']['entities'])==2 and full['manifest']['settings'][0]['key']=='region'
+ preview=call('/api/developer/preview',{'manifest':full['manifest']})
+ private={**headers,'x-tenant':preview['environment']}
+ call('/api/apps/'+m['id']+'/entities/notes',{'id':'tested_note','fields':{'title':{'en-GB':'Actual private generated note'}}},scope=private)
+ assert call('/api/apps/'+m['id']+'/entities/notes',scope=private)['elements'][0]['id']=='tested_note'
+ assert not any(s['app']==m['id'] for s in call('/api/apps/surfaces')['surfaces'])
+ state.update(compose=False)
+ print('PASS complete AI composition adds data and settings, installs the real private preview and writes/reads its actual record without changing live')
  lifecycle=copy.deepcopy(json.loads((ROOT/'extensions/apps/production-review/manifest.json').read_text())['lifecycles'][0])
  state['edits']=[('/lifecycles',[lifecycle])]
  workflow_build=call('/api/developer/generate',{**payload,'prompt':'Add an order quality review requiring confirmed payment and delivered shipments. Preserve the current app and its data.'})

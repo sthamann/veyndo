@@ -8,7 +8,11 @@ import { useAppWorkspaceText } from "../../shared/i18n/app-workspace-i18n";
 import type { RequestFn } from "../shell/studio-types";
 import type { AppStudio } from "./useAppStudio";
 import AppAgentPanel, { type AppAgentRequest } from "./AppAgentPanel";
-export function useAppAgentEntry(studio: AppStudio, request: RequestFn) {
+export function useAppAgentEntry(
+  studio: AppStudio,
+  request: RequestFn,
+  sandboxRequest?: (environment: string) => RequestFn,
+) {
   const [open, setOpen] = useState(false),
     [requestSeed, setSeed] = useState<AppAgentRequest>();
   return {
@@ -20,6 +24,7 @@ export function useAppAgentEntry(studio: AppStudio, request: RequestFn) {
     drawer: {
       studio,
       request,
+      sandboxRequest,
       open,
       onClose: () => setOpen(false),
       requestSeed,
@@ -34,11 +39,13 @@ export default function AppAgentDrawer({
   request,
   requestSeed,
   onRequestConsumed,
+  sandboxRequest,
 }: {
   open: boolean;
   onClose: () => void;
   studio: AppStudio;
   request: RequestFn;
+  sandboxRequest?: (environment: string) => RequestFn;
   requestSeed?: AppAgentRequest;
   onRequestConsumed?: () => void;
 }) {
@@ -103,6 +110,7 @@ export default function AppAgentDrawer({
           key={studio.manifest.id}
           studio={studio}
           request={request}
+          sandboxRequest={sandboxRequest}
           requestSeed={requestSeed}
           onRequestConsumed={onRequestConsumed}
         />

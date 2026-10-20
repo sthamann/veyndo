@@ -1,6 +1,24 @@
 /** Durable run states and explicit ambiguous-call continuation, in the shared interface language. */
 import { useLocale } from "./i18n";
 export const agentRunWords = {
+  workReady: [
+    "Approved work completed",
+    "Freigegebener Auftrag erledigt",
+    "Travail approuvé terminé",
+    "Trabajo aprobado completado",
+  ],
+  workHint: [
+    "The approved steps run in your private workspace. Open the existing editors to inspect their results.",
+    "Die freigegebenen Schritte laufen in deiner privaten Arbeitsumgebung. Ihre Ergebnisse findest du in den vorhandenen Editoren.",
+    "Les étapes approuvées s’exécutent dans votre espace privé. Consultez leurs résultats dans les éditeurs existants.",
+    "Los pasos aprobados se ejecutan en tu espacio privado. Revisa sus resultados en los editores existentes.",
+  ],
+  workSteps: [
+    "Completed operations: {count}",
+    "Abgeschlossene Aktionen: {count}",
+    "Opérations terminées : {count}",
+    "Operaciones completadas: {count}",
+  ],
   authority: [
     "Access changed. Sign in with the original account and check its permissions before continuing.",
     "Der Zugriff hat sich geändert. Melde dich mit dem ursprünglichen Konto an und prüfe dessen Rechte vor der Fortsetzung.",

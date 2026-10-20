@@ -672,8 +672,8 @@
     },
     "crates/cognition/src/prompts.rs": {
       "status": "unproved",
-      "sha256": "96000673ef059569a01eb4f5349a58d482940cadee1f7a4297d3c0cd84b61024",
-      "review": "Reviewed model-refusal repair against native validator and connected app-generation/native-lifecycle fixtures: graph, guards, replacement limits and scope metadata share the existing owners; admission predicates, financial boundaries and quote acceptance are unchanged. app-edit@3 preserves immutable prior revisions and binds prompt provenance. Eight hostile provider outputs remain atomic refusals, modal errors preserve the draft, workspace tests and strict Clippy pass. No new pure policy or whole-adapter proof claim."
+      "sha256": "aa3eda99848fc2efa838bee71b879897f1b5c73d846c9d535cde26a95c88bf1b",
+      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
     },
     "crates/commerce/src/discount.rs": {
       "status": "reviewed-binding",
@@ -1197,8 +1197,8 @@
     },
     "extensions/apps/site-builder/proposals.rs": {
       "status": "unproved",
-      "sha256": "b5c36824ae066cdc9a22d9d32095c9b2c9feab6ba504e9226ba4d4cc34ee2f7d",
-      "review": "Reviewed native designer transport and shared proposal path: sandbox/current rights and positive saved-page revision before export/import, content/theme-only external results, active tenant-owned public native element references, existing CAS/history/release. Preview grants narrow existing allowed actions using the unchanged verified read policy. Real PostgreSQL/app-surface regressions and clippy pass; async adapters remain unproved."
+      "sha256": "55b879a93340ceb8c267dcd4d17ab2967f6563a7da819664239cf8e87e84b49e",
+      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
     },
     "extensions/apps/site-builder/references.rs": {
       "status": "unproved",
@@ -1387,8 +1387,8 @@
     },
     "src/agent.rs": {
       "status": "unproved",
-      "sha256": "bbf8db1de7c65f5b0665cffc7cd2762c9251d31b9e2ae05dd1e5ad031551e0e3",
-      "review": "Reviewed migration 104 and all changed Rust/build owners: existing-key planning-only scope, trusted distinct agent identity, live-root lock before budget key, checked integer allocation with existing kernel guard, no network transaction, typed nonretryable quota errors, current credentials and lease-fenced late worker results; actual two-replica allocation/restart and in-flight-stop fixtures plus 623 UI tests pass. SQL/auth/provider integration is not formally proved."
+      "sha256": "6485933b3abcaf98827eae1f585074c60033ced0f38ba78307dcb28c6e3b7d1c",
+      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
     },
     "src/agent_runs/authority.rs": {
       "status": "unproved",
@@ -1400,25 +1400,45 @@
       "sha256": "7fbc80d5ffb369e0d5b7d90e69ab81af531d771739cbf11445bd1ff2a23f5eb6",
       "review": "Reviewed migration 104 and all changed Rust/build owners: existing-key planning-only scope, trusted distinct agent identity, live-root lock before budget key, checked integer allocation with existing kernel guard, no network transaction, typed nonretryable quota errors, current credentials and lease-fenced late worker results; actual two-replica allocation/restart and in-flight-stop fixtures plus 623 UI tests pass. SQL/auth/provider integration is not formally proved."
     },
+    "src/agent_runs/context.rs": {
+      "status": "unproved",
+      "sha256": "f13ed66be03415156120a753a719585e5c61edfecce4767ea0b00780eeba31dc",
+      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
+    },
     "src/agent_runs/contract.rs": {
       "status": "unproved",
-      "sha256": "1b729de4ec3c64ddeca6a77725f54c42b9d16763f109a5263be973994015e454",
-      "review": "Reviewed migration 104 and all changed Rust/build owners: existing-key planning-only scope, trusted distinct agent identity, live-root lock before budget key, checked integer allocation with existing kernel guard, no network transaction, typed nonretryable quota errors, current credentials and lease-fenced late worker results; actual two-replica allocation/restart and in-flight-stop fixtures plus 623 UI tests pass. SQL/auth/provider integration is not formally proved."
+      "sha256": "35e760f95d774c226f78400d956b26e12e685370fc9a8973f50b74c6be39e2c3",
+      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
     },
     "src/agent_runs/controls.rs": {
       "status": "unproved",
       "sha256": "3b7e657659d3998077f35d9996be504f2b37ed8856aff485c18243aa11abc149",
       "review": "Reviewed agent scope construction and locking: synchronously box the child before constructing the task-local future; retain authority only while polling and verify no context leak. Live-root NO KEY UPDATE serializes allocation/enqueue/stop while admitting FK KEY SHARE, avoiding tenant/task inversion. Real held-reference HTTP stop fails before and passes after; actual worker stop and signed-role allocation cases pass. Existing kernel proof unchanged; async/SQL/provider code remains unproved and the Linux instrumented POS repeat is still required."
     },
+    "src/agent_runs/view.rs": {
+      "status": "unproved",
+      "sha256": "25c89b8f78305a8b5e8f9711448a0761bc09b2cea0ef9ae95c56ee18e6908197",
+      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
+    },
+    "src/agent_runs/work.rs": {
+      "status": "unproved",
+      "sha256": "682707f0e9155d261a00978b7c838a7c046f058f378bb07940231e4973a88fdc",
+      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
+    },
+    "src/agent_runs/work_plan.rs": {
+      "status": "unproved",
+      "sha256": "ea6c57765f595b019015bb14c76590771d918b6a39316b13bd8b09be4ba91e35",
+      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
+    },
     "src/agent_runs/worker.rs": {
       "status": "unproved",
-      "sha256": "42bcae1185505795532106408bca7f85242db6aa247db28aca6dfac17e732821",
-      "review": "Reviewed migration 104 and all changed Rust/build owners: existing-key planning-only scope, trusted distinct agent identity, live-root lock before budget key, checked integer allocation with existing kernel guard, no network transaction, typed nonretryable quota errors, current credentials and lease-fenced late worker results; actual two-replica allocation/restart and in-flight-stop fixtures plus 623 UI tests pass. SQL/auth/provider integration is not formally proved."
+      "sha256": "fb2b0d06948f5ef991704f973774ddcd731d628622c33870b951de3c57ed6e36",
+      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
     },
     "src/agent_runs.rs": {
       "status": "unproved",
-      "sha256": "d8c87802d7e1ac329b4631969c5d5cd6707a06a814308fd21b88e1dfc6e341e9",
-      "review": "Reviewed agent scope construction and locking: synchronously box the child before constructing the task-local future; retain authority only while polling and verify no context leak. Live-root NO KEY UPDATE serializes allocation/enqueue/stop while admitting FK KEY SHARE, avoiding tenant/task inversion. Real held-reference HTTP stop fails before and passes after; actual worker stop and signed-role allocation cases pass. Existing kernel proof unchanged; async/SQL/provider code remains unproved and the Linux instrumented POS repeat is still required."
+      "sha256": "bee8a27e31b8007076152c29385668a0f948b90bbb2822b54e8f222f5b98b96e",
+      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
     },
     "src/apps/approval.rs": {
       "status": "reviewed-binding",
@@ -1524,6 +1544,11 @@
       "status": "unproved",
       "sha256": "6384764c81e121be079c464dc29cc569dcaf6eeb2ca0a06b8d299f2889f51ff1",
       "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+    },
+    "src/apps/discovery.rs": {
+      "status": "unproved",
+      "sha256": "8b77d8f1b7809c47574dd1e2ac6cc688c5531a1c030387dc22a7917d2260b941",
+      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
     },
     "src/apps/distribution.rs": {
       "status": "unproved",
@@ -1642,8 +1667,8 @@
     },
     "src/apps/mod.rs": {
       "status": "unproved",
-      "sha256": "e821536755acb0faab9008d238938760cb3c757edbe831372582e6e00dfb4c68",
-      "review": "2026-10-19 reviewed native read-only import projection against shared product/category/address owners; paired CRM/history PII and private target/package/digest checks; generic completion evidence atomically uses existing job creator/lease/package and record CAS, platform AEAD, native actual-field verification, no new app table or queue. Actual eight-domain migration/archival/restart/tamper and native app callback/jobs/admin creation tests pass; pure cancelled-success policy has exact Lean claim, all boolean cases and a true-return negative mutation. SQL, cryptography, async service correctness and public hosting remain outside formal proof."
+      "sha256": "66e802243246cf7dd23fa0adcd6d01e6311765f771102c3bce571034a8406f8e",
+      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
     },
     "src/apps/native_data.rs": {
       "status": "unproved",
@@ -1697,8 +1722,8 @@
     },
     "src/apps/planning.rs": {
       "status": "unproved",
-      "sha256": "0a081a71cd0007305f6355fd2dc9245550b6dfb0721f9cb676c5cb509f200a18",
-      "review": "Personal workspace and app-owned site design review: trusted personal sessions and actor RLS; public status/time/channel projection; original read-scope and current-field history; append-only cart-bound inbox/outbox with PII rights; package-before-record release fences. Independent security review and actual PostgreSQL own/foreign/CAS/history/form/model fixtures plus existing app/commerce/checkout/role/strict-runtime suites. New pure intake conjunction has exact Lean claims/conformance/negative mutations. SQL, UI, inference and providers remain unproved."
+      "sha256": "dd0962ed28b9027edfeb2a8459c45f25d65e4f9f0c88b3500290a6a8a745dc74",
+      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
     },
     "src/apps/presentation.rs": {
       "status": "unproved",
@@ -1742,8 +1767,8 @@
     },
     "src/apps/routes.rs": {
       "status": "unproved",
-      "sha256": "4efe5aa7e734587bd350e5aa068ef02f41fd86fbdeab27c6d05807b50fe39b18",
-      "review": "Reviewed app-owned Vercel/Klaviyo/HubSpot/Contentful/Algolia fixed transports, bounded redacted receipts, native compound action rights and encrypted CAS/lease fences; Shopware 6 read-only OAuth/currency/language projection delegates exact native import/reconciliation; generic tenant/app source reset and bounded source count use existing storage/admission owners. Provider protocols and SQL remain outside the extracted Lean proof scope; native two-worker, private/foreign, signed-login, migration and checkout regressions exercised."
+      "sha256": "af5cd68d2678e47bc59023376d1b2064dc157f1e66e8bbc186e7a73ce7d3173d",
+      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
     },
     "src/apps/runtime.rs": {
       "status": "unproved",
@@ -2227,13 +2252,13 @@
     },
     "src/capabilities/admission.rs": {
       "status": "unproved",
-      "sha256": "b3c13f0cc7aece264dd1b3dfcd9494cd5cf943cb41761a994179d28d02e1cfca",
-      "review": "Reviewed migration 104 and all changed Rust/build owners: existing-key planning-only scope, trusted distinct agent identity, live-root lock before budget key, checked integer allocation with existing kernel guard, no network transaction, typed nonretryable quota errors, current credentials and lease-fenced late worker results; actual two-replica allocation/restart and in-flight-stop fixtures plus 623 UI tests pass. SQL/auth/provider integration is not formally proved."
+      "sha256": "1eb260b160af436c4efe027f17de13e93239821521627c33cbf8bf6b467d808a",
+      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
     },
     "src/capabilities/catalog.rs": {
       "status": "unproved",
-      "sha256": "6c4e7dac3e36566ebc833ff5d630613852ace8389718d35eabe3265cca965c6d",
-      "review": "Reviewed migration 104 and all changed Rust/build owners: existing-key planning-only scope, trusted distinct agent identity, live-root lock before budget key, checked integer allocation with existing kernel guard, no network transaction, typed nonretryable quota errors, current credentials and lease-fenced late worker results; actual two-replica allocation/restart and in-flight-stop fixtures plus 623 UI tests pass. SQL/auth/provider integration is not formally proved."
+      "sha256": "2ead835abcc5b086a06a0f0574a11e0dcac8ead100b7f45712b20af2afeae5ea",
+      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
     },
     "src/capabilities/contract.rs": {
       "status": "unproved",
@@ -2247,18 +2272,18 @@
     },
     "src/capabilities/dispatch.rs": {
       "status": "unproved",
-      "sha256": "10b849716be3b12b267bcc715cbfed23baa66e0af33cbc6b59a85cf62e28f757",
-      "review": "Reviewed migration 104 and all changed Rust/build owners: existing-key planning-only scope, trusted distinct agent identity, live-root lock before budget key, checked integer allocation with existing kernel guard, no network transaction, typed nonretryable quota errors, current credentials and lease-fenced late worker results; actual two-replica allocation/restart and in-flight-stop fixtures plus 623 UI tests pass. SQL/auth/provider integration is not formally proved."
+      "sha256": "c9ca29a214408688ea350c579b78224dcfb4ce35d9bde32a30cb9d49403b3e64",
+      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
     },
     "src/capabilities/registry.rs": {
       "status": "unproved",
-      "sha256": "4f680f761e0332a3fc30172b78ea4145de512def41b3828d8f4cd6801d403e82",
-      "review": "2026-10-19 final review: actual native mapped import comparison, shared address creation, tenant/PII fences; service-only atomic job evidence and current record verification; read-only MCP annotation is explicit without broadening planner reads. Native eight-domain service/restart/archival/tamper, paired API and job/admin tests, actual signed tenant/system migration with restart/key rotation, Rust and frontend suites pass. Extracted cancellation guard has exact claims and rejected true-return mutation; SQL, crypto, HTTP/service and hosted rollout remain unproved."
+      "sha256": "29e18e8359bd7677c9805b97b1b1ebe723832136ba9cb2d630591ec81333f6a9",
+      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
     },
     "src/capabilities/schema.rs": {
       "status": "unproved",
-      "sha256": "428d2c5975edbe8584b8bbe16ba64cb3164966231bd974b4d46b99d4b45705a6",
-      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+      "sha256": "328c7667596c9cac2b79b8ac2be5d461f127c1759de9811b22bc6048f91a54a8",
+      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
     },
     "src/capabilities.rs": {
       "status": "unproved",
@@ -2822,13 +2847,13 @@
     },
     "src/developer/generation.rs": {
       "status": "unproved",
-      "sha256": "74ac259f0351f4857b34ec44a759797c453019681584dd21b2dc138b58e960c8",
-      "review": "Reviewed public model-refusal follow-up: generation schema reads native machines, guard/replacement catalogues and registered team scopes from the existing validator; financial, terminal, quote acceptance and graph predicates are unchanged. Failure categories remain fail-closed and are localized inside the assistant. Real native lifecycle and provider-edit/private-release/order suites pass, including eight adversarial outputs; source/context and modal-error tests pass. No new pure policy or whole-adapter proof claim."
+      "sha256": "4bc17fd43c785bb8bd69e637cf96fdc056bee71e685ce9b59f2daa4c1d7654b7",
+      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
     },
     "src/developer/generation_contract.rs": {
       "status": "unproved",
-      "sha256": "66636c1b45c63c08214e64389bffb55d7c8943cd7bc88097fe93a79b85748f73",
-      "review": "Reviewed ordinary AI patch admission for missing order/quote lifecycle domains: existing domain definitions are retained or atomically rejected on alteration; candidate commerce.lifecycle consent remains explicit and does not grant native installation authority. Versioned app-edit@2 provenance preserves v1. Real local provider HTTP, private install, selected release, native simulated order guard and six adversarial outputs pass; no new pure policy or whole-adapter proof claim."
+      "sha256": "abf6dc82d9ceab2b64340dcec8c172caa3306f184227207cea5e69ee55f50a52",
+      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
     },
     "src/developer/generation_edits.rs": {
       "status": "unproved",
@@ -2852,23 +2877,28 @@
     },
     "src/documents/content.rs": {
       "status": "unproved",
-      "sha256": "949eef17083f86d519c0eccfc801088355542f7f94b8357572fc45216c30a4c8",
-      "review": "Reviewed tenant-scoped knowledge lifecycle, enabled-language chunks, optimistic private re-review, transactional graph reassignment, archived/public retrieval fences, actual planner consumption and MCP dispatch; real PostgreSQL/privacy/staging and local-provider regressions cover these paths. No money or Lean pure decision changed."
+      "sha256": "9c7b3435030e1b26c0c5b94e177988f7fb12fc87e03ab581089d33589c29ea84",
+      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
+    },
+    "src/documents/guidance.rs": {
+      "status": "unproved",
+      "sha256": "32b08915879a4ba13a245a70126b5a2925ee8c82394d10c04cb1b225b8eb18a9",
+      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
     },
     "src/documents/ingestion.rs": {
       "status": "unproved",
-      "sha256": "58455b92235280f0a48d1d61a2fd42abffd09cf2999182b341b5bc0e6694578b",
-      "review": "Tenant roles and current grants independently reviewed; owner/retained-override/acceptance races repaired and PostgreSQL-blocked regressions passed; PII and Flow projection boundaries documented; B2B feature settings delegate shared CAS/history and preserve financial guards. Existing extracted policies unchanged; SQL/async/UI remain reviewed adapters, not full proofs."
+      "sha256": "42f1d45652e42757d422c55b70cdaffbdbfbc21137378c2f679bc0d8e14eb8d2",
+      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
     },
     "src/documents/lifecycle.rs": {
       "status": "unproved",
-      "sha256": "f64b6aadec4b4c0aa55a3ba86e44bc5a71442f39ecdb4bd567299c557404a525",
-      "review": "Tenant roles and current grants independently reviewed; owner/retained-override/acceptance races repaired and PostgreSQL-blocked regressions passed; PII and Flow projection boundaries documented; B2B feature settings delegate shared CAS/history and preserve financial guards. Existing extracted policies unchanged; SQL/async/UI remain reviewed adapters, not full proofs."
+      "sha256": "1b5aacecab00989bbb46fa00d639533b17c78c862dcd6b4134862c7128e6da64",
+      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
     },
     "src/documents/mod.rs": {
       "status": "unproved",
-      "sha256": "20a7310349c7931aaf14bb46c4ad781a7ef92856b54daab6b6b666a28f3dc169",
-      "review": "Tenant roles and current grants independently reviewed; owner/retained-override/acceptance races repaired and PostgreSQL-blocked regressions passed; PII and Flow projection boundaries documented; B2B feature settings delegate shared CAS/history and preserve financial guards. Existing extracted policies unchanged; SQL/async/UI remain reviewed adapters, not full proofs."
+      "sha256": "a3133e9b6d3eae9f9e753c64d5ef7be8f5bd58413f25a550b73ab4535b984184",
+      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
     },
     "src/documents/parser.rs": {
       "status": "unproved",
@@ -2897,8 +2927,8 @@
     },
     "src/documents/tools.rs": {
       "status": "unproved",
-      "sha256": "23e7f5df4a579d9e231bd43d40110bc6b1ae3c50d77c2eed670275457e46aaa4",
-      "review": "Reviewed eighteen core findings: typed trusted identity and explicit route rights; consolidated current grants; durable auth and fenced shared limits; scoped transactions and one-backend PgBouncer including nested borrow fixes; bounded Wasm/PNG work; notified workers, savepoint quarantine and conservative retention; separate runtime roles and startup configuration. Real PostgreSQL/provider regressions preserve current tenant/customer/payment behavior. SQL/network adapters remain unproved."
+      "sha256": "2d13409918f32363f921ea16f0b8899d4968ec8395ce7a320a07705d36e68f97",
+      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
     },
     "src/documents/workspace.rs": {
       "status": "unproved",
@@ -3407,8 +3437,8 @@
     },
     "src/operations/mod.rs": {
       "status": "unproved",
-      "sha256": "2a86ad02c836dc85952adbd6dcdf6671ae6f9bc36a11fb688bbc63bfde0c6b27",
-      "review": "2026-10-19 reviewed native read-only import projection against shared product/category/address owners; paired CRM/history PII and private target/package/digest checks; generic completion evidence atomically uses existing job creator/lease/package and record CAS, platform AEAD, native actual-field verification, no new app table or queue. Actual eight-domain migration/archival/restart/tamper and native app callback/jobs/admin creation tests pass; pure cancelled-success policy has exact Lean claim, all boolean cases and a true-return negative mutation. SQL, cryptography, async service correctness and public hosting remain outside formal proof."
+      "sha256": "817bc5325bdf42ac60c5c95186e27274bbec57ba03acdd0d843b5bdadec7b2c7",
+      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
     },
     "src/operations/order_documents.rs": {
       "status": "unproved",
@@ -3632,8 +3662,8 @@
     },
     "src/planner.rs": {
       "status": "unproved",
-      "sha256": "5483dff767442eae27e0207b4806429ce84655e7abc555189e3a865179085ccf",
-      "review": "Review compiler-enforced foundation crates with unchanged native owners; native provider read-tool aliases and current authorization, private checkpoint continuation and versioned prompt evidence; fixed subscriber acknowledgements preserve commit gaps, independent quarantine and explicit replay; traced requests/tasks/outbox without payloads; exact decimal-to-minor-unit rounding retains legacy price boundary; real SQL poison-isolation regression passes and workspace unit/clippy checks pass"
+      "sha256": "2e05c8b18826f7044d9a7cf437ab088b252ba235ae1012ed7a42a7478a963470",
+      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
     },
     "src/platform/ai.rs": {
       "status": "reviewed-binding",
@@ -3742,18 +3772,18 @@
     },
     "src/proposal_apply.rs": {
       "status": "unproved",
-      "sha256": "3e378bfd99b09502380383e458d0cd97df969aa2813b44283a93b07e82b1d912",
-      "review": "Reviewed existing-task continuation, actor/scopes/credential-kind reauthorization, private context and read-result checks, UUID lease-fenced completion, request-ID deduplication before daily quota, original proposal-only approval, migration100 operational columns, and actual killed-worker/revocation/withdrawal/quota HTTP regressions; pure financial policies unchanged"
+      "sha256": "9c6676c38fdb470e1e0d7395fb432c4a58a0ee265376c943d7f7d12b0196b519",
+      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
     },
     "src/proposal_model.rs": {
       "status": "unproved",
-      "sha256": "113d39d565277b4ca70aa4429734b3b96986ee4a46efac8a2f3eddc79432ffb9",
-      "review": "Reviewed generated app schema and retained storage/access/service contracts, explicit merchant translation enqueue transaction and replay guards, app-only inference output budget and personalization scope/explanation adapters. Verified relevant SQL/provider/frontend fixtures; adapter changes remain outside the extracted policy proof scope."
+      "sha256": "95248591ffb296a3e2f74fbbf60740b4269f85badd170553e61655acb8e0fdff",
+      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
     },
     "src/proposal_routes.rs": {
       "status": "unproved",
-      "sha256": "dc3b6fd2d9d242d9ee2664e844a610444ad5471967ba88f7602941a997a99142",
-      "review": "Reviewed existing-task continuation, actor/scopes/credential-kind reauthorization, private context and read-result checks, UUID lease-fenced completion, request-ID deduplication before daily quota, original proposal-only approval, migration100 operational columns, and actual killed-worker/revocation/withdrawal/quota HTTP regressions; pure financial policies unchanged"
+      "sha256": "735554df3375de3d1445fd570baa40507874c1bd37381b6e2e9f3c79a0b75640",
+      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
     },
     "src/request_context.rs": {
       "status": "unproved",
@@ -3882,23 +3912,28 @@
     },
     "src/studio/personal/model.rs": {
       "status": "unproved",
-      "sha256": "dd048f2c56685533ff01bd69203aafdadfda01a0529d05588f08cdf0f3dab185",
-      "review": "Personal workspace and app-owned site design review: trusted personal sessions and actor RLS; public status/time/channel projection; original read-scope and current-field history; append-only cart-bound inbox/outbox with PII rights; package-before-record release fences. Independent security review and actual PostgreSQL own/foreign/CAS/history/form/model fixtures plus existing app/commerce/checkout/role/strict-runtime suites. New pure intake conjunction has exact Lean claims/conformance/negative mutations. SQL, UI, inference and providers remain unproved."
+      "sha256": "8a9df1e647400b7c42adc74c25d87d03276cfda6884eb976d8003cf25f5931d9",
+      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
     },
     "src/studio/personal.rs": {
       "status": "unproved",
-      "sha256": "0a054539918690df20883924b7da423d73bf41f99e8c455447cafb31caf39b87",
-      "review": "Personal workspace and app-owned site design review: trusted personal sessions and actor RLS; public status/time/channel projection; original read-scope and current-field history; append-only cart-bound inbox/outbox with PII rights; package-before-record release fences. Independent security review and actual PostgreSQL own/foreign/CAS/history/form/model fixtures plus existing app/commerce/checkout/role/strict-runtime suites. New pure intake conjunction has exact Lean claims/conformance/negative mutations. SQL, UI, inference and providers remain unproved."
+      "sha256": "1bbc594cca12f6711bde63a18f1ce4a55a90832f9a0c7d326e6e57ec2ef1ac56",
+      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
     },
     "src/studio/revenue.rs": {
       "status": "unproved",
       "sha256": "62194db8088c5f27cdd1ade1046098326d0289b6d1a9f10bd98016b004db2734",
       "review": "Reviewed native-only static bypass with hosted denial and Lean exact acceptance; one fresh domain/environment/status/channel/mount SQL snapshot and current membership lookup preserve scoped admission, binding identity and revocation; immutable Arc settings retain locked mutation/checkout reads; secret-free compression opt-in and deterministic precompressed assets preserve streams/ranges; batched inventory uses existing checkout locks and ordered idempotent release; bounded overview SQL preserves currency-separated historical facts. Real two-replica read/channel/tenant/checkout and strict-runtime regressions passed; SQL and build inputs now explicitly locked. These adapters remain unproved."
     },
+    "src/studio/work.rs": {
+      "status": "unproved",
+      "sha256": "d68651b2a3e01955c78a5fdd74cb98165b97432c03023b9e148d71481fc832a6",
+      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
+    },
     "src/studio.rs": {
       "status": "unproved",
-      "sha256": "6f460e9b4bd2db81c953299d1e43d8c23554b008f9a7ecaf602de0ab55d5ef95",
-      "review": "Reviewed restored native operation/schema/boxed dispatch ownership, non-retryable output-contract failures, escaped identifiers and scheduling-row fair outbox migration; existing pure policies unchanged, SQL and transport adapters remain unproved"
+      "sha256": "547abe6bbe49ce628d6d8493e3e135e1410be561afcd8954cb1ac49a44cd0a8e",
+      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
     },
     "src/translations/apply.rs": {
       "status": "reviewed-binding",
@@ -4029,17 +4064,25 @@
       "sha256": "270d9bd6499bcb156e819485cd279c1c6e918903f68f71879c9bb9481a2a64bc",
       "review": "Review compiler-enforced foundation crates with unchanged native owners; native provider read-tool aliases and current authorization, private checkpoint continuation and versioned prompt evidence; fixed subscriber acknowledgements preserve commit gaps, independent quarantine and explicit replay; traced requests/tasks/outbox without payloads; exact decimal-to-minor-unit rounding retains legacy price boundary; real SQL poison-isolation regression passes and workspace unit/clippy checks pass"
     },
+    "crates/cognition/prompts/app-generation.v2.txt": {
+      "sha256": "99172810be7e83732cb9cd38033a0b24b658d0e41ef54118c44344dcce7e8fdc",
+      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
+    },
     "crates/cognition/prompts/grid-filter.v1.txt": {
       "sha256": "d3e9261f4f96530f3e47c65a1d8b320283a5a56a187f66439a00c0a13cd1e77e",
       "review": "Reviewed native extension identity/private/unique anchors and current read/write/PII scopes; native projections use bounded fixed-store queries, exact indexed filters bind all input and fence the admitted package digest. Real four-object HTTP/MCP, role revocation, foreign reference, immutable upgrade, product/company clone and selected release tests passed. Added extracted configuration-only release predicate and operational false property; SQL and UI remain explicitly unproved. Reviewed canonical schema, preserved AI bindings and versioned grid prompt provenance without changing existing prompt revisions."
     },
     "crates/cognition/prompts/manifest.json": {
-      "sha256": "b03f28817733e68d9d4c31ab6c417f3a8fbbbf916460aacd8158cec696007379",
-      "review": "Reviewed model-refusal repair against native validator and connected app-generation/native-lifecycle fixtures: graph, guards, replacement limits and scope metadata share the existing owners; admission predicates, financial boundaries and quote acceptance are unchanged. app-edit@3 preserves immutable prior revisions and binds prompt provenance. Eight hostile provider outputs remain atomic refusals, modal errors preserve the draft, workspace tests and strict Clippy pass. No new pure policy or whole-adapter proof claim."
+      "sha256": "1ce1220cac25e632dacd4b98ff84827ff434360ea0f5245c4e0cad43a17ebd33",
+      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
     },
     "crates/cognition/prompts/merchant-planner.v1.txt": {
       "sha256": "6fc1d69faed9342d8b95af531c3c3e0c597f1c4d18a311d3f62e5849236fdfaf",
       "review": "Review compiler-enforced foundation crates with unchanged native owners; native provider read-tool aliases and current authorization, private checkpoint continuation and versioned prompt evidence; fixed subscriber acknowledgements preserve commit gaps, independent quarantine and explicit replay; traced requests/tasks/outbox without payloads; exact decimal-to-minor-unit rounding retains legacy price boundary; real SQL poison-isolation regression passes and workspace unit/clippy checks pass"
+    },
+    "crates/cognition/prompts/merchant-planner.v2.txt": {
+      "sha256": "3a14ffb644f88aa65eb86fd4c734c354e0f0afb11ea10925fa762a2b392a79a1",
+      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
     },
     "crates/commerce/Cargo.toml": {
       "sha256": "aae017a1931861c398001a481dfc3f17c0954cb89cc1247d2947934ebefb1d26",

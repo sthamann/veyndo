@@ -21,6 +21,8 @@ class Handler(BaseHTTPRequestHandler):
         if behavior['mode']=='reject':
             self.send_response(429); self.end_headers(); return
         result=proposal
+        if behavior['mode']=='view-plan':result={**proposal,'changes':[],'view':behavior['view']}
+        if behavior['mode']=='work-plan':result={**proposal,'changes':[],'operations':behavior['operations']}
         if behavior['mode'] in ['extract','bad-extract']:
             quote='Ceramic capacity 500 ml.' if behavior['mode']=='extract' else 'Invented waterproof certification'
             result={'claims':[{'text':quote,'quote':quote,'nodeType':'property'}]}
@@ -73,6 +75,7 @@ try:
     graph_app=json.loads((root/'extensions/apps/ontology-care/manifest.json').read_text());graph_app['id']='planner_ontology';graph_app['views']=[];graph_app['surfaces']=[];graph_app['apiRoutes']=[]
     graph_app['entities'][0]['fields']=[f for f in graph_app['entities'][0]['fields'] if f['name'] in ['title','product_id']]
     graph_app['intelligence']['ontology'][0]['fields']=['title','product_id'];graph_app['intelligence']['ontology'][0]['label']={'en':'Care'}
+    graph_app['intelligence']['tools'].append('save_guides')
     call('/api/apps',{'manifest':graph_app})
     call('/api/apps/planner_ontology/entities/guides',{'id':'guide','fields':{'product_id':'mug','title':{'en':'Exact native care'}}})
     conversation=call('/api/agent/chat',{'message':'Contract test: change lamp price.','inference':{'provider':'openai','model':'contract-openai-model'}})
@@ -102,6 +105,12 @@ try:
     rejected=call('/api/agent/chat',{'message':'Unsupported direct write tool','inference':{'provider':'openai'}})
     assert rejected['messages'][-1]['data']['error'] and 'taskId' not in rejected['messages'][-1]['data']
     passed('Model-selected write tools cannot execute or create an executable task')
+    from testing.app_discovery import verify_app_discovery
+    verify_app_discovery(call, graph_app, ah, passed)
+    from testing.agent_work import verify_agent_work
+    verify_agent_work(call, behavior, ah, passed)
+    from testing.merchant_guidance import verify_guidance
+    verify_guidance(call, captured, behavior, passed)
     behavior['mode']='normal'
     from testing.extraction import verify_extraction
     from testing.provider_fleet import shared_provider

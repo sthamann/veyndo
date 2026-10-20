@@ -2,6 +2,25 @@
 /** Native input DTOs; opaque JSON fields remain explicit. */
 import type { JsonValue } from "./value";
 export interface Inputs11 {
+  "merchant.customer.create": {
+    additionalAddresses?: Array<JsonValue>;
+    billingAddress: JsonValue;
+    customerGroup: string;
+    email: string;
+    profile: JsonValue;
+    requestKey: string;
+    shippingAddress?: JsonValue | null;
+  };
+  "merchant.order.context": { channelId: string; locale?: string };
+  "merchant.order.review": {
+    channelId: string;
+    checkout: JsonValue;
+    codes?: Array<string>;
+    currency: string;
+    customerId: string;
+    items: Array<{ id: string; quantity: number }>;
+    locale: string;
+  };
   "merchant.order.complete": {
     approve: boolean;
     cartToken: string;
@@ -62,13 +81,4 @@ export interface Inputs11 {
   };
   "pos.receipt": { channelId: string; orderId: string; receiptId: string };
   "pos.channels": JsonValue;
-  "pos.payment": { cartToken: string; channelId: string };
-  "pos.reconcile": { cartToken: string; channelId: string; requestKey: string };
-  "pos.catalog": {
-    after?: string;
-    barcode?: string;
-    cartToken?: string;
-    channelId: string;
-    query?: string;
-  };
 }

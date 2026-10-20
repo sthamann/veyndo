@@ -10,6 +10,16 @@
     "source": "src/ucp/mod.rs"
   },
   {
+    "path": "/api/agent/apps/read",
+    "method": "POST",
+    "source": "src/apps/discovery.rs"
+  },
+  {
+    "path": "/api/agent/apps/search",
+    "method": "POST",
+    "source": "src/apps/discovery.rs"
+  },
+  {
     "path": "/api/agent/chat",
     "method": "POST",
     "source": "src/routes.rs"
@@ -1128,6 +1138,11 @@
     "path": "/api/settings/master-data/channels/{id}",
     "method": "PUT",
     "source": "src/operations/routes.rs"
+  },
+  {
+    "path": "/api/studio/work",
+    "method": "GET",
+    "source": "src/studio/personal.rs"
   },
   {
     "path": "/api/studio/workspace",

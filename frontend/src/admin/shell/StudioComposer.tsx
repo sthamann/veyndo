@@ -4,6 +4,8 @@ import { useCatalogIntakeText } from "../../shared/i18n/catalog-intake-i18n";
 import type { IntakeMode } from "../catalog/catalog-intake-model";
 import "../styles/catalog-intake.css";
 const CatalogIntake = lazy(() => import("../catalog/CatalogIntake"));
+import MerchantSourceIntake from "../intelligence/MerchantSourceIntake";
+import { useAgentWorkspaceText } from "../../shared/i18n/agent-workspace-i18n";
 import { locales } from "../../shared/i18n/i18n";
 import "../../shared/styles/workbench.css";
 import Icon from "../../shared/ui/Icon";
@@ -13,10 +15,15 @@ import "../styles/studio.css";
 import { useStudio } from "./StudioContext";
 
 export default function StudioComposer({ context }: { context?: string } = {}) {
-  const c = useCatalogIntakeText();
+  const c = useCatalogIntakeText(),
+    aw = useAgentWorkspaceText();
+  const [source, setSource] = useState<"document" | "guidance">();
   const [intake, setIntake] = useState<IntakeMode>();
   const {
     access,
+    request,
+    workspaceContext,
+    tabLabel,
     workspace,
     environment,
     send,
@@ -30,6 +37,13 @@ export default function StudioComposer({ context }: { context?: string } = {}) {
   } = useStudio();
   return (
     <div className="composer-wrap">
+      {workspaceContext && (
+        <small>
+          {aw("context")}:{" "}
+          {tabLabel(workspaceContext.view as Parameters<typeof tabLabel>[0])}
+          {workspaceContext.selected && ` · ${workspaceContext.selected.id}`}
+        </small>
+      )}
       {connected && access.includes("catalog.write") && (
         <div className="merchant-catalog-actions">
           {(
@@ -52,6 +66,29 @@ export default function StudioComposer({ context }: { context?: string } = {}) {
             </button>
           ))}
         </div>
+      )}
+      {connected && access.includes("knowledge.write") && (
+        <div className="merchant-catalog-actions">
+          {(["document", "guidance"] as const).map((kind) => (
+            <button
+              key={kind}
+              type="button"
+              disabled={busy}
+              onClick={() => setSource(kind)}
+            >
+              <Icon name={kind === "guidance" ? "spark" : "text"} size={15} />
+              {aw(kind === "guidance" ? "guidance" : "source")}
+            </button>
+          ))}
+        </div>
+      )}
+      {source && (
+        <MerchantSourceIntake
+          key={`${workspace}:${environment}:${locale}`}
+          request={request}
+          guidance={source === "guidance"}
+          onClose={() => setSource(undefined)}
+        />
       )}
       {intake && connected && access.includes("catalog.write") && (
         <Suspense fallback={null}>

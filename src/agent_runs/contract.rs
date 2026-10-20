@@ -22,7 +22,7 @@ pub(crate) fn schema(name: &str) -> Option<Value> {
     if let Some(schema) = super::controls::schema(name) {
         return Some(schema);
     }
-    CAPABILITIES.iter().any(|(n,_)|*n==name).then(||json!({"type":"object","properties":{"requestId":{"type":"string","minLength":1,"maxLength":64},"id":{"type":"string","maxLength":64},"revision":{"type":"integer","minimum":1},"approve":{"type":"boolean"},"instruction":{"type":"string","minLength":1,"maxLength":4000},"inference":{"type":"object","properties":{"provider":{"type":"string","enum":["platform","ollama","openai","anthropic"]},"model":{"type":["string","null"],"maxLength":128}},"required":["provider"],"additionalProperties":false}},"required":if name=="merchant.run.create" {vec!["instruction"]}else if name=="merchant.run.status" {vec!["id"]}else{vec!["id","revision","approve"]},"additionalProperties":false}))
+    CAPABILITIES.iter().any(|(n,_)|*n==name).then(||json!({"type":"object","properties":{"requestId":{"type":"string","minLength":1,"maxLength":64},"id":{"type":"string","maxLength":64},"revision":{"type":"integer","minimum":1},"approve":{"type":"boolean"},"instruction":{"type":"string","minLength":1,"maxLength":4000},"inference":{"type":"object","properties":{"provider":{"type":"string","enum":["platform","ollama","openai","anthropic"]},"model":{"type":["string","null"],"maxLength":128}},"required":["provider"],"additionalProperties":false}},"required":if name=="merchant.run.create" {vec!["instruction"]}else if name=="merchant.run.status" {vec!["id"]}else{vec!["id","revision","approve"]},"additionalProperties":false})).map(|mut schema| { schema["properties"]["workspaceContext"] = context::schema(); schema })
 }
 pub(crate) fn router() -> Router<App> {
     Router::new()
@@ -91,7 +91,7 @@ pub(crate) async fn invoke(a: &App, h: &RequestContext, name: &str, v: &Value) -
     agent::assistant_access(h)?;
     let t = merchant(a, h)?;
     if name == "merchant.run.create" {
-        return enqueue(a,h,json!({"instruction":v["instruction"],"inference":v.get("inference"),"locale":language_context(a,h).await?.0,"channel":marketing::channel_id(h),"requestId":v["requestId"]}),None).await;
+        return enqueue(a,h,json!({"instruction":v["instruction"],"inference":v.get("inference"),"locale":language_context(a,h).await?.0,"channel":marketing::channel_id(h),"requestId":v["requestId"],"workspaceContext":v["workspaceContext"]}),None).await;
     }
     // Resume charges the shared live-shop budget in the same transaction.
     // Status/cancel retain the ordinary actor-scoped connection.
@@ -180,11 +180,7 @@ pub(crate) async fn invoke(a: &App, h: &RequestContext, name: &str, v: &Value) -
     if next == "queued"
         && let Some(c) = row.get::<Option<String>, _>("conversation_id")
     {
-        let available:bool=sqlx::query_scalar("SELECT NOT EXISTS(SELECT 1 FROM tasks WHERE tenant=$1 AND conversation_id=$2 AND id<>$3 AND run_state IN ('queued','running','uncertain')) AND EXISTS(SELECT 1 FROM conversations WHERE tenant=$1 AND id=$2 AND (turn_owner=$3 OR turn_until IS NULL OR turn_until<now()))").bind(&t).bind(&c).bind(row.get::<String,_>("id")).fetch_one(&mut *tx).await?;
-        if !available {
-            return Err(conflict("A newer conversation turn is active"));
-        }
-        sqlx::query("UPDATE conversations SET turn_owner=$3,turn_until='infinity' WHERE tenant=$1 AND id=$2").bind(&t).bind(&c).bind(row.get::<String,_>("id")).execute(&mut *tx).await?;
+        claim_conversation(&mut tx, &t, &c, &row.get::<String, _>("id")).await?;
     }
     if next == "queued" && row.get::<bool, _>("run_personal") != h.principal.personal_session {
         return Err(Error(
@@ -208,11 +204,38 @@ pub(crate) async fn invoke(a: &App, h: &RequestContext, name: &str, v: &Value) -
         json!({"taskId":row.get::<String,_>("id"),"state":next,"revision":revision+1,"approvalRequired":true}),
     )
 }
+/// Share one conversation turn fence between explicit continuation and approved work.
+pub(super) async fn claim_conversation(
+    tx: &mut sqlx::Transaction<'_, sqlx::Postgres>,
+    t: &str,
+    conversation: &str,
+    task: &str,
+) -> Result<()> {
+    let row=sqlx::query("SELECT turn_owner,(turn_until IS NULL OR turn_until<now()) AS available FROM conversations WHERE tenant=$1 AND id=$2 FOR UPDATE").bind(t).bind(conversation).fetch_optional(&mut **tx).await?.ok_or(conflict("Conversation unavailable"))?;
+    let busy:bool=sqlx::query_scalar("SELECT EXISTS(SELECT 1 FROM tasks WHERE tenant=$1 AND conversation_id=$2 AND id<>$3 AND run_state IN ('queued','running','uncertain'))").bind(t).bind(conversation).bind(task).fetch_one(&mut **tx).await?;
+    if busy
+        || (row.get::<Option<String>, _>("turn_owner").as_deref() != Some(task)
+            && !row.get::<bool, _>("available"))
+    {
+        return Err(conflict("A newer conversation turn is active"));
+    }
+    sqlx::query(
+        "UPDATE conversations SET turn_owner=$3,turn_until='infinity' WHERE tenant=$1 AND id=$2",
+    )
+    .bind(t)
+    .bind(conversation)
+    .bind(task)
+    .execute(&mut **tx)
+    .await?;
+    Ok(())
+}
 pub(super) fn project(row: &sqlx::postgres::PgRow) -> Value {
     let state: String = row.get("run_state");
     let cp: Value = row.get("run_checkpoint");
+    let request: Value = row.get("run_request");
+    let execution=request["execution"].as_array().map(|plan|json!({"total":plan.len(),"completed":cp.as_object().map_or(0,|o|o.keys().filter(|k|k.starts_with("operation-")).count()),"steps":plan.iter().enumerate().map(|(n,s)|json!({"name":s["name"],"label":s["label"],"completed":cp.get(format!("operation-{n}")).is_some()})).collect::<Vec<_>>()}));
     let steps = cp
         .as_object()
         .map_or(0, |o| o.keys().filter(|k| k.starts_with("model-")).count());
-    json!({"taskId":row.get::<String,_>("id"),"agentId":row.get::<Value,_>("run_request")["agentId"],"state":state,"revision":row.get::<i64,_>("run_revision"),"completedModelSteps":steps,"error":row.get::<Option<Value>,_>("run_error"),"conversationId":row.get::<Option<String>,_>("conversation_id"),"approvalRequired":true,"preview":if state=="ready" {row.get::<Value,_>("proposal")}else{Value::Null},"updatedAt":row.get::<String,_>("updated_text")})
+    json!({"taskId":row.get::<String,_>("id"),"agentId":row.get::<Value,_>("run_request")["agentId"],"state":state,"revision":row.get::<i64,_>("run_revision"),"completedModelSteps":steps,"execution":execution,"error":row.get::<Option<Value>,_>("run_error"),"conversationId":row.get::<Option<String>,_>("conversation_id"),"approvalRequired":!row.get::<bool,_>("applied"),"preview":if state=="ready" {row.get::<Value,_>("proposal")}else{Value::Null},"updatedAt":row.get::<String,_>("updated_text")})
 }

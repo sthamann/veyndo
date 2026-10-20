@@ -2029,7 +2029,8 @@
               "shipping",
               "returns",
               "warranty",
-              "brand"
+              "brand",
+              "guidance"
             ],
             "type": "string"
           },
@@ -2099,7 +2100,8 @@
               "shipping",
               "returns",
               "warranty",
-              "brand"
+              "brand",
+              "guidance"
             ],
             "type": "string"
           },
@@ -2440,6 +2442,67 @@
           "revision": {
             "minimum": 1,
             "type": "integer"
+          },
+          "workspaceContext": {
+            "additionalProperties": false,
+            "properties": {
+              "selected": {
+                "additionalProperties": false,
+                "properties": {
+                  "id": {
+                    "maxLength": 160,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "kind": {
+                    "enum": [
+                      "product",
+                      "order",
+                      "customer",
+                      "company",
+                      "app",
+                      "page",
+                      "flow"
+                    ],
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "id"
+                ],
+                "type": "object"
+              },
+              "view": {
+                "enum": [
+                  "assistant",
+                  "workspace",
+                  "overview",
+                  "knowledge",
+                  "agents",
+                  "commerce",
+                  "design",
+                  "productData",
+                  "products",
+                  "orders",
+                  "customers",
+                  "b2b",
+                  "pos",
+                  "storyfronts",
+                  "channels",
+                  "automation",
+                  "apps",
+                  "developers",
+                  "environments",
+                  "users"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "view"
+            ],
+            "type": "object"
           }
         },
         "required": [
@@ -2500,6 +2563,67 @@
           "revision": {
             "minimum": 1,
             "type": "integer"
+          },
+          "workspaceContext": {
+            "additionalProperties": false,
+            "properties": {
+              "selected": {
+                "additionalProperties": false,
+                "properties": {
+                  "id": {
+                    "maxLength": 160,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "kind": {
+                    "enum": [
+                      "product",
+                      "order",
+                      "customer",
+                      "company",
+                      "app",
+                      "page",
+                      "flow"
+                    ],
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "id"
+                ],
+                "type": "object"
+              },
+              "view": {
+                "enum": [
+                  "assistant",
+                  "workspace",
+                  "overview",
+                  "knowledge",
+                  "agents",
+                  "commerce",
+                  "design",
+                  "productData",
+                  "products",
+                  "orders",
+                  "customers",
+                  "b2b",
+                  "pos",
+                  "storyfronts",
+                  "channels",
+                  "automation",
+                  "apps",
+                  "developers",
+                  "environments",
+                  "users"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "view"
+            ],
+            "type": "object"
           }
         },
         "required": [
@@ -2560,6 +2684,67 @@
           "revision": {
             "minimum": 1,
             "type": "integer"
+          },
+          "workspaceContext": {
+            "additionalProperties": false,
+            "properties": {
+              "selected": {
+                "additionalProperties": false,
+                "properties": {
+                  "id": {
+                    "maxLength": 160,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "kind": {
+                    "enum": [
+                      "product",
+                      "order",
+                      "customer",
+                      "company",
+                      "app",
+                      "page",
+                      "flow"
+                    ],
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "id"
+                ],
+                "type": "object"
+              },
+              "view": {
+                "enum": [
+                  "assistant",
+                  "workspace",
+                  "overview",
+                  "knowledge",
+                  "agents",
+                  "commerce",
+                  "design",
+                  "productData",
+                  "products",
+                  "orders",
+                  "customers",
+                  "b2b",
+                  "pos",
+                  "storyfronts",
+                  "channels",
+                  "automation",
+                  "apps",
+                  "developers",
+                  "environments",
+                  "users"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "view"
+            ],
+            "type": "object"
           }
         },
         "required": [
@@ -2622,6 +2807,67 @@
           "revision": {
             "minimum": 1,
             "type": "integer"
+          },
+          "workspaceContext": {
+            "additionalProperties": false,
+            "properties": {
+              "selected": {
+                "additionalProperties": false,
+                "properties": {
+                  "id": {
+                    "maxLength": 160,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "kind": {
+                    "enum": [
+                      "product",
+                      "order",
+                      "customer",
+                      "company",
+                      "app",
+                      "page",
+                      "flow"
+                    ],
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "id"
+                ],
+                "type": "object"
+              },
+              "view": {
+                "enum": [
+                  "assistant",
+                  "workspace",
+                  "overview",
+                  "knowledge",
+                  "agents",
+                  "commerce",
+                  "design",
+                  "productData",
+                  "products",
+                  "orders",
+                  "customers",
+                  "b2b",
+                  "pos",
+                  "storyfronts",
+                  "channels",
+                  "automation",
+                  "apps",
+                  "developers",
+                  "environments",
+                  "users"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "view"
+            ],
+            "type": "object"
           }
         },
         "required": [
@@ -2633,6 +2879,58 @@
       },
       "name": "merchant.run.resume",
       "readOnly": false
+    },
+    {
+      "description": "Find relevant installed apps and their admitted read tools by query; follow nextAfter",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "after": {
+            "maxLength": 160,
+            "type": "string"
+          },
+          "limit": {
+            "maximum": 20,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "query": {
+            "maxLength": 4000,
+            "type": "string"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "name": "merchant.apps.search",
+      "readOnly": true
+    },
+    {
+      "description": "Read an explicitly discovered managed app model through its current declared read action",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "maxLength": 160,
+            "type": "string"
+          },
+          "app": {
+            "maxLength": 160,
+            "type": "string"
+          },
+          "arguments": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "app",
+          "action",
+          "arguments"
+        ],
+        "type": "object"
+      },
+      "name": "merchant.apps.read",
+      "readOnly": true
     },
     {
       "description": "Read live shop agent stop state and revision",
@@ -3593,6 +3891,17 @@
       },
       "name": "merchant.site.apply",
       "readOnly": false
+    },
+    {
+      "description": "Read bounded actionable work from current authorized shop data",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {},
+        "required": [],
+        "type": "object"
+      },
+      "name": "studio.workspace.work.read",
+      "readOnly": true
     },
     {
       "description": "Read the current personal Studio workspace",

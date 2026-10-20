@@ -1,5 +1,9 @@
 # VEYNDO feature guide
 
+See the [connected AI workspace](agentic-workspace.md) for the 20 October context,
+reviewed private execution, complete app composition, real preview, editable list
+handoff and remembered merchant-guidance workflow. [Current status](status.md).
+
 **Personal workspace and standard-shop editor:** [Illustrated workflow, shared models, rights, history, forms and publication](personal-workspace-and-shop-design.md).
 
 **Admin workflow update:** grouped/searchable settings, native CRM creation and reviewed manual orders use the same Rust owners and current role/PII checks. [Step-by-step guide and current boundaries](admin-workflows.md).

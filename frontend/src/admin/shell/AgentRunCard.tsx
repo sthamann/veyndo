@@ -24,13 +24,29 @@ export default function AgentRunCard({
     <aside className="agent-run-card" aria-live="polite">
       <div>
         <Icon name={value.state === "ready" ? "check" : "spark"} size={18} />
-        <strong>{text(value.state)}</strong>
+        <strong>
+          {text(
+            value.execution && value.state === "ready"
+              ? "workReady"
+              : value.state,
+          )}
+        </strong>
       </div>
-      <p>{text("hint")}</p>
+      <p>{text(value.execution ? "workHint" : "hint")}</p>
+      {value.execution && (
+        <ol>
+          {value.execution.steps.map((step, index) => (
+            <li key={index}>
+              <Icon name={step.completed ? "check" : "pulse"} size={14} />
+              {step.label}
+            </li>
+          ))}
+        </ol>
+      )}
       <small>
-        {text("steps").replace(
+        {text(value.execution ? "workSteps" : "steps").replace(
           "{count}",
-          String(value.completedModelSteps ?? 0),
+          String(value.execution?.completed ?? value.completedModelSteps ?? 0),
         )}
       </small>
       {value.error && (

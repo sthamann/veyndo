@@ -56,7 +56,18 @@ pub(super) fn retain(old: &Value, next: &mut Value) -> Result<()> {
         }
     }
     if let Some(settings) = old.get("settings") {
-        next["settings"] = settings.clone();
+        let mut combined = next.get("settings").cloned().unwrap_or(json!([]));
+        let rows = combined
+            .as_array_mut()
+            .ok_or(bad("App settings must be an array"))?;
+        for prior in settings.as_array().into_iter().flatten() {
+            if let Some(row) = rows.iter_mut().find(|row| row["key"] == prior["key"]) {
+                *row = prior.clone();
+            } else {
+                rows.push(prior.clone());
+            }
+        }
+        next["settings"] = combined;
     }
     if old["runtime"] == "service" {
         for key in ["runtime", "category", "paymentProvider"] {
@@ -68,7 +79,12 @@ pub(super) fn retain(old: &Value, next: &mut Value) -> Result<()> {
     // Manual service and event actions are outside the generation schema; retaining them prevents broken integrations.
     if let Some(actions) = next.get_mut("actions").and_then(Value::as_array_mut) {
         for prior in old["actions"].as_array().into_iter().flatten() {
-            if !actions.iter().any(|action| action["name"] == prior["name"]) {
+            if let Some(action) = actions
+                .iter_mut()
+                .find(|action| action["name"] == prior["name"])
+            {
+                *action = prior.clone();
+            } else {
                 actions.push(prior.clone());
             }
         }
@@ -200,6 +216,27 @@ mod tests {
         generated["lifecycles"] = json!([{"object":"order"}]);
         retain(&original, &mut generated).unwrap();
         assert_eq!(generated["permissions"], json!(["commerce.lifecycle"]));
+    }
+    #[test]
+    fn composition_adds_settings_without_rewriting_existing_secrets() {
+        let mut original = old();
+        original["settings"] = json!([{"key":"api_key","kind":"secret","required":true}]);
+        let mut generated = original.clone();
+        generated["settings"] =
+            json!([{"key":"api_key","kind":"string"},{"key":"region","kind":"string"}]);
+        retain(&original, &mut generated).unwrap();
+        assert_eq!(generated["settings"][0], original["settings"][0]);
+        assert_eq!(generated["settings"][1]["key"], "region");
+    }
+    #[test]
+    fn composition_preserves_colliding_manual_action_contracts() {
+        let mut original = old();
+        original["actions"] = json!([{"name":"save_cases","handler":"service","inputSchema":{"type":"object","required":["approval"]}}]);
+        let mut generated = original.clone();
+        generated["actions"] =
+            json!([{"name":"save_cases","handler":"save","inputSchema":{"type":"object"}}]);
+        retain(&original, &mut generated).unwrap();
+        assert_eq!(generated["actions"], original["actions"]);
     }
     fn old() -> Value {
         json!({"id":"same","entities":[{"name":"cases","publicRead":false,"fields":[{"name":"order_id","kind":"string","coreReference":"order","indexed":true}]}],"surfaces":[{"id":"editor","location":"admin.order","permission":"orders.write"}],"events":["order.placed"],"views":[{"id":"main","blocks":[{"id":"save","handlers":{"click":[{"op":"refresh","target":"table"}]}}]}]})

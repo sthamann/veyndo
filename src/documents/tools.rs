@@ -10,7 +10,7 @@ pub(crate) fn knowledge_schema(name: &str) -> Option<Value> {
         }
         "knowledge.product" | "knowledge.source.detail" => json!({"id":{"type":"string"}}),
         "knowledge.source.create" | "knowledge.source.edit" => {
-            json!({"id":{"type":"string"},"revision":{"type":"integer","minimum":1},"title":{"type":"string","maxLength":200},"content":{"type":"string","maxLength":100000},"productId":{"type":["string","null"]},"kind":{"type":"string","enum":["document","datasheet","manual","care","faq","shipping","returns","warranty","brand"]},"locale":{"type":"string"},"translations":{"type":"object","additionalProperties":{"type":"object","properties":{"title":{"type":["string","null"]},"content":{"type":["string","null"]}},"additionalProperties":false}}})
+            json!({"id":{"type":"string"},"revision":{"type":"integer","minimum":1},"title":{"type":"string","maxLength":200},"content":{"type":"string","maxLength":100000},"productId":{"type":["string","null"]},"kind":{"type":"string","enum":["document","datasheet","manual","care","faq","shipping","returns","warranty","brand","guidance"]},"locale":{"type":"string"},"translations":{"type":"object","additionalProperties":{"type":"object","properties":{"title":{"type":["string","null"]},"content":{"type":["string","null"]}},"additionalProperties":false}}})
         }
         "knowledge.source.visibility" => {
             json!({"id":{"type":"string"},"revision":{"type":"integer","minimum":1},"visibility":{"type":"string","enum":["private","public"]},"approve":{"type":"boolean"}})

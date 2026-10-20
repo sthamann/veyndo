@@ -43,7 +43,8 @@ export interface Inputs6 {
       | "shipping"
       | "returns"
       | "warranty"
-      | "brand";
+      | "brand"
+      | "guidance";
     locale?: string;
     productId?: string | null;
     revision?: number;
@@ -62,7 +63,8 @@ export interface Inputs6 {
       | "shipping"
       | "returns"
       | "warranty"
-      | "brand";
+      | "brand"
+      | "guidance";
     locale?: string;
     productId?: string | null;
     revision?: number;

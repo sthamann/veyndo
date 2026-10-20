@@ -1,5 +1,13 @@
 # Changelog
 
+## Connected agentic workspace — 2026-10-20
+
+- Preserve bounded editor/selection context across merchant conversations and retries; discover relevant installed apps with cursor search and safe native reads rather than alphabetical sampling.
+- Approve bounded private configuration work through the existing Rust task worker, with current authority, exact argument/CAS review, durable action progress and transactional managed-app receipts.
+- Compose complete native app extensions (models, settings and views), preserve accepted contracts and try the proposed version in the actual actor-private runtime before adoption.
+- Open reviewed natural-language criteria in the existing editable native grids. Show bounded current-right work suggestions and save explicit private, versioned merchant preferences through Shop knowledge.
+- Update the handbook, website navigation, README and operation-generated contracts. Local fixtures and current public activation remain distinct in the status/evidence guide.
+
 ## Bounded service integrations — 2026-10-20
 
 - Add app-owned Vercel, Klaviyo, HubSpot, Contentful and Algolia protocol adapters to the existing Rust connector, encrypted settings and durable queue, with explicit current permissions and honest asynchronous receipts.

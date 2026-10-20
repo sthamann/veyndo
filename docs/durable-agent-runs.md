@@ -3,7 +3,7 @@
 Merchant conversations submit work to the existing PostgreSQL `tasks` owner.
 The Rust worker prepares the same revision-bound proposal as before. Closing the
 browser or losing its HTTP response does not delete the task. A proposal still
-needs native approval; continuation never applies a price change.
+needs native approval. Planning continuation prepares a proposal; an explicitly approved private work sequence can execute its already-reviewed native steps. [Connected work guide](agentic-workspace.md).
 
 PR 135 passed both exact-head verification runs and is publicly deployed on
 15 October. A hosted read-only task completed after browser reload and reopening

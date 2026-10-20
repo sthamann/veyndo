@@ -2,6 +2,8 @@
 /** Native input DTOs; opaque JSON fields remain explicit. */
 import type { JsonValue } from "./value";
 export interface Inputs8 {
+  "merchant.apps.read": { action: string; app: string; arguments: JsonValue };
+  "merchant.agents.status": JsonValue;
   "merchant.agents.control": {
     approve: true;
     revision: number;
@@ -192,10 +194,4 @@ export interface Inputs8 {
   "knowledge.behavior": { days?: number; salesChannelId?: string };
   "knowledge.behavior.journey": { session?: string };
   "knowledge.experiments": JsonValue;
-  "knowledge.experiment.create": { approve?: boolean; design?: JsonValue };
-  "knowledge.experiment.start": {
-    approve?: boolean;
-    id?: string;
-    revision?: number;
-  };
 }

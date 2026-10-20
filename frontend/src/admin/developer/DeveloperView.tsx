@@ -71,7 +71,7 @@ export default function DeveloperView({
     { w } = useWorkbenchText();
   const studio = useAppStudio(request, environments[0]?.id ?? "", onRefresh),
     m = studio.manifest;
-  const agent = useAppAgentEntry(studio, request);
+  const agent = useAppAgentEntry(studio, request, sandboxRequest);
   const workspaceText = useAppWorkspaceText();
   const [section, setSection] = useState<AppStudioKey>("design"),
     [viewId, setViewId] = useState("workspace"),

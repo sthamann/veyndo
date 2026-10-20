@@ -177,7 +177,7 @@ pub(super) async fn merchant_chat(
         })
         .collect::<Vec<_>>()
         .join("\n");
-    let queued=agent_runs::enqueue(&a,&h,json!({"instruction":instruction,"inference":selection,"history":history,"locale":language_context(&a,&h).await?.0,"channel":marketing::channel_id(&h),"requestId":v["requestId"],"newConversation":v["conversationId"].is_null(),"requestedConversation":v["conversationId"]}),Some(&id)).await?;
+    let queued=agent_runs::enqueue(&a,&h,json!({"instruction":instruction,"inference":selection,"history":history,"locale":language_context(&a,&h).await?.0,"channel":marketing::channel_id(&h),"workspaceContext":v["workspaceContext"],"requestId":v["requestId"],"newConversation":v["conversationId"].is_null(),"requestedConversation":v["conversationId"]}),Some(&id)).await?;
     let id = queued["conversationId"].as_str().unwrap_or(&id).to_string();
     admit_conversation(&a, &t, &id, &h).await?;
     if v["background"] == true {

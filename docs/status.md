@@ -45,6 +45,16 @@ are separate from local fixtures. Local provider/native/signed-runtime tests and
 713 frontend checks pass. [Capabilities, setup and limits](service-integrations.md)
 and [local evidence](evidence/service-integrations-2026-10-20.md).
 
+## 20 October: connected agentic workspace
+
+The implementation branch adds typed editor context, relevance/cursor app discovery,
+reviewed private multi-step native work with durable action progress, complete app
+composition and real proposal preview, editable grid handoffs, current-right work
+suggestions and versioned private merchant guidance. Configuration work remains in
+private environments; arbitrary service calls and publication retain their native
+owners. Local verification and public rollout are separate. [User guide](agentic-workspace.md)
+and [acceptance evidence](evidence/agentic-workspace-2026-10-20.md).
+
 ## Start with a complete journey
 
 1. [Create and explore a synthetic shop](first-tour.md).

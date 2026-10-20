@@ -108,6 +108,11 @@ export type Preview = {
   locale?: string;
   catalogBefore: Product[];
   proposal: {
+    view?: {
+      entity: "orders" | "customers" | "products";
+      criteria: Record<string, string | boolean>;
+    } | null;
+    operations?: { name: string; label: string; arguments_json: string }[];
     summary: string;
     translation?: string | null;
     app_action?: { app: string; action: string; arguments_json: string } | null;

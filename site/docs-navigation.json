@@ -41,6 +41,7 @@
         "es": "Conecta conocimiento, revisa propuestas y autoriza a los agentes."
       },
       "sources": [
+        "docs/agentic-workspace.md",
         "docs/cognitive-commerce.md",
         "docs/durable-agent-runs.md",
         "docs/agent-authority-controls.md",

@@ -15,6 +15,7 @@ import {
   type Workspace,
   type WorkspaceRecord,
 } from "./workspace-model";
+import WorkSuggestions from "./WorkSuggestions";
 import WorkspaceGoals from "./WorkspaceGoals";
 import "./workspace.css";
 export default function PersonalWorkspace() {
@@ -151,6 +152,7 @@ export default function PersonalWorkspace() {
           </button>
         ))}
       </div>
+      <WorkSuggestions />
       <WorkspaceGoals
         goals={draft.goals}
         onChange={(goals) => update({ ...draft, goals })}

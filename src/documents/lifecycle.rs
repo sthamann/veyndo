@@ -25,6 +25,7 @@ pub(crate) async fn edit(
 ) -> Result<Json<Value>> {
     let t = merchant(&a, &h)?;
     auth::permit(&h, "knowledge.write")?;
+    guidance::admit(&h, &v["kind"])?;
     let data = content::validate(&a, &t, &v).await?;
     let rev = v["revision"].as_i64().ok_or(bad("Revision required"))?;
     let mut tx = a.db.begin().await?;
@@ -33,6 +34,8 @@ pub(crate) async fn edit(
         .bind(&t)
         .execute(&mut *tx)
         .await?;
+    let prior: String = sqlx::query_scalar("SELECT kind FROM knowledge_documents WHERE tenant=$1 AND id=$2 AND NOT archived FOR UPDATE").bind(&t).bind(&id).fetch_optional(&mut *tx).await?.ok_or(Error(StatusCode::NOT_FOUND,"Source unavailable".into()))?;
+    guidance::admit(&h, &json!(prior))?;
     let product = data["productId"].as_str();
     if let Some(p) = product {
         let r = sqlx::query("SELECT * FROM products WHERE tenant=$1 AND id=$2")

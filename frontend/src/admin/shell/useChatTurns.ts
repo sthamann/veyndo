@@ -6,6 +6,11 @@ export type SavedRun = {
   state: "queued" | "running" | "ready" | "failed" | "uncertain" | "cancelled";
   revision: number;
   completedModelSteps?: number;
+  execution?: {
+    completed: number;
+    total: number;
+    steps: { name: string; label: string; completed: boolean }[];
+  } | null;
   error?: { code?: string; detail?: string };
 };
 type Options = {
@@ -22,6 +27,7 @@ type Options = {
   setPendingText: (v: string) => void;
   provider: string;
   model: string;
+  workspaceContext?: { view: string; selected?: { kind: string; id: string } };
   run: (operation: () => Promise<void>) => Promise<void>;
   refresh: () => Promise<void>;
   onOpen: () => void;
@@ -121,6 +127,7 @@ export function useChatTurns(options: Options) {
       text,
       o.provider,
       o.model,
+      o.workspaceContext,
     ]);
     if (pendingRequest.current?.fingerprint !== fingerprint)
       pendingRequest.current = { fingerprint, id: crypto.randomUUID() };
@@ -135,6 +142,7 @@ export function useChatTurns(options: Options) {
           conversationId: originalId,
           background: true,
           requestId,
+          workspaceContext: o.workspaceContext,
           inference: { provider: o.provider, model: o.model || undefined },
         });
         accepted = true;

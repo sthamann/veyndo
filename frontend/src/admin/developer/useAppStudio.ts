@@ -278,7 +278,12 @@ export function useAppStudio(
       adopt(proposal.build);
       setProposal(null);
     },
-    generate: async (prompt: string, provider: string, model: string) => {
+    generate: async (
+      prompt: string,
+      provider: string,
+      model: string,
+      mode: "edit" | "compose" = "edit",
+    ) => {
       const base = JSON.stringify(manifest),
         current = epoch.current;
       setProposal(null);
@@ -287,6 +292,7 @@ export function useAppStudio(
         prompt,
         manifest,
         inference: { provider, model },
+        mode,
       });
       if (current === epoch.current) setProposal({ build: b, base });
     },
