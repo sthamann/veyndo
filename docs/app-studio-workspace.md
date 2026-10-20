@@ -74,6 +74,13 @@ execution of a local shell. Imported changes use the existing proposal review an
 native contract validation. Schema download and manual JSON import are collapsed
 under **Schema & manual import**. Credentials are never embedded in agent tasks.
 
+The composer distinguishes a bounded edit from **Extend the complete app**. In the
+latter mode it can add a data model, settings and a native interface as one
+versioned proposal, preserving existing behavior. The comparison offers **Test
+this version privately** before adoption; save/select/edit real records there.
+A native validation error permits one bounded proposal repair under the same
+provider and authority. [Current walkthrough and actual public captures](agentic-workspace.md#3-generate-and-test-a-complete-native-app).
+
 ## Make a button do something
 
 Select a button and edit its behavior. Choose understandable operations such as
