@@ -49,7 +49,7 @@ fn own(source: Source, v: &Value) -> Result<Option<bool>> {
             }
             numeric(&v["status"], "1", "2")
         }
-        Source::Shopware5 => match v.get("active") {
+        Source::Shopware6 | Source::Shopware5 => match v.get("active") {
             None | Some(Value::Null) => Ok(None),
             Some(Value::Bool(active)) => Ok(Some(*active)),
             _ => Err("Shopware source active flag must be boolean".into()),

@@ -31,7 +31,7 @@ def configuration():
             "url": values["CONNECTOR_PUBLIC_URL"] + "/" + a,
             "token": values["CONNECTOR_GATEWAY_TOKEN"],
         }
-        for a in ["gmail", "google_analytics", "slack", "email"]
+        for a in ["gmail", "google_analytics", "slack", "email", "vercel", "klaviyo", "hubspot", "contentful", "algolia"]
     }
     path = RUNTIME / "connector-services.json"
     existing = json.loads(path.read_text()) if path.exists() else {}

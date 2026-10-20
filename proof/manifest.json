@@ -755,6 +755,11 @@
       "sha256": "da3dbe6dfaa083fcdcdff099d1756572ea75baa2ecec7cf499a9b72e42841c53",
       "review": "Review compiler-enforced foundation crates with unchanged native owners; native provider read-tool aliases and current authorization, private checkpoint continuation and versioned prompt evidence; fixed subscriber acknowledgements preserve commit gaps, independent quarantine and explicit replay; traced requests/tasks/outbox without payloads; exact decimal-to-minor-unit rounding retains legacy price boundary; real SQL poison-isolation regression passes and workspace unit/clippy checks pass"
     },
+    "extensions/apps/algolia/src/provider.rs": {
+      "status": "unproved",
+      "sha256": "41417bbdb4d5fb97e3e5750d12ee155f4e6c09d41dcb691a57c9092b1fd27ec7",
+      "review": "Reviewed app-owned Vercel/Klaviyo/HubSpot/Contentful/Algolia fixed transports, bounded redacted receipts, native compound action rights and encrypted CAS/lease fences; Shopware 6 read-only OAuth/currency/language projection delegates exact native import/reconciliation; generic tenant/app source reset and bounded source count use existing storage/admission owners. Provider protocols and SQL remain outside the extracted Lean proof scope; native two-worker, private/foreign, signed-login, migration and checkout regressions exercised."
+    },
     "extensions/apps/catalog-import/mod.rs": {
       "status": "unproved",
       "sha256": "25a9bcc34fbbaf4e76bd8daa74863ec862d6e811b4601d88fd33617c6fdd59ac",
@@ -769,6 +774,11 @@
       "status": "unproved",
       "sha256": "8cee1f40041d8e4a4a603067916a9349db19675c67e37ca910969719d5802bfb",
       "review": "Reviewed inbound UCP/native cart and consent transactions, native finalization contact guard, immutable order snapshots, explicit optional negotiation, public HTTPS app-owned catalogue adapters; independent whole-branch review findings repaired and six isolated HTTP/PG suites pass. No extracted kernel policy changed; SQL/provider behavior remains unproved."
+    },
+    "extensions/apps/contentful/src/provider.rs": {
+      "status": "unproved",
+      "sha256": "742738aaf80edef1dbd1dfae910dc3e7244fe95ec94911dd020f861853647b6e",
+      "review": "Reviewed app-owned Vercel/Klaviyo/HubSpot/Contentful/Algolia fixed transports, bounded redacted receipts, native compound action rights and encrypted CAS/lease fences; Shopware 6 read-only OAuth/currency/language projection delegates exact native import/reconciliation; generic tenant/app source reset and bounded source count use existing storage/admission owners. Provider protocols and SQL remain outside the extracted Lean proof scope; native two-worker, private/foreign, signed-login, migration and checkout regressions exercised."
     },
     "extensions/apps/edi/service/callbacks.rs": {
       "status": "unproved",
@@ -880,6 +890,16 @@
       "sha256": "d4ee48aa8006b1ff98d1f1d7ff7b42ed27e1fcf38ecb4738c0c40dea642415ba",
       "review": "Reviewed Rust-only standard connector service: typed mail settings, tenant-bound AES-GCM, composite PostgreSQL queue/RLS, fenced distributed leases and explicit-only retry; original app/flow/MCP contract and actual SMTP/OAuth/migration regressions. SQL and providers remain unproved."
     },
+    "extensions/apps/hubspot/src/provider.rs": {
+      "status": "unproved",
+      "sha256": "c1502dd7b1d3df45eee7a8b6248d258061323af1c3fce8a789053470f83e4272",
+      "review": "Reviewed app-owned Vercel/Klaviyo/HubSpot/Contentful/Algolia fixed transports, bounded redacted receipts, native compound action rights and encrypted CAS/lease fences; Shopware 6 read-only OAuth/currency/language projection delegates exact native import/reconciliation; generic tenant/app source reset and bounded source count use existing storage/admission owners. Provider protocols and SQL remain outside the extracted Lean proof scope; native two-worker, private/foreign, signed-login, migration and checkout regressions exercised."
+    },
+    "extensions/apps/klaviyo/src/provider.rs": {
+      "status": "unproved",
+      "sha256": "179bf19fe56f9edc220ac5a7f6885dd8b1b27bc98bde7173b7ed024c1b5dfdf9",
+      "review": "Reviewed app-owned Vercel/Klaviyo/HubSpot/Contentful/Algolia fixed transports, bounded redacted receipts, native compound action rights and encrypted CAS/lease fences; Shopware 6 read-only OAuth/currency/language projection delegates exact native import/reconciliation; generic tenant/app source reset and bounded source count use existing storage/admission owners. Provider protocols and SQL remain outside the extracted Lean proof scope; native two-worker, private/foreign, signed-login, migration and checkout regressions exercised."
+    },
     "extensions/apps/marketplaces/service/amazon.rs": {
       "status": "unproved",
       "sha256": "531af1c1842eba34f6c8991b7beab57f53b055d7bb20ae7cf902be39d9dd6403",
@@ -972,8 +992,8 @@
     },
     "extensions/apps/migration/adapters/mod.rs": {
       "status": "unproved",
-      "sha256": "42febf22f06192057bf13e2f056d54407e0ceb4a496a4930c329aeb7875cafc6",
-      "review": "Reviewed app-owned source status preservation against primary schemas: Shopify status and online-store publication, Presta typed active flag, Magento status/visibility and Shopware boolean parent/child status. Actual prior CLI29 assertion failures are fixed by four source-state cases plus real transport projections; native eight-domain and variant checkout remain green. Independent focused source-visibility review found no Important/Critical findings; source orchestration remains outside pure proof."
+      "sha256": "aa1bd489c9e544f5f5b1309aec5bab5776b3d8a61f7f0f18bf25261cdbfb80b3",
+      "review": "Reviewed app-owned Vercel/Klaviyo/HubSpot/Contentful/Algolia fixed transports, bounded redacted receipts, native compound action rights and encrypted CAS/lease fences; Shopware 6 read-only OAuth/currency/language projection delegates exact native import/reconciliation; generic tenant/app source reset and bounded source count use existing storage/admission owners. Provider protocols and SQL remain outside the extracted Lean proof scope; native two-worker, private/foreign, signed-login, migration and checkout regressions exercised."
     },
     "extensions/apps/migration/adapters/order_lines.rs": {
       "status": "unproved",
@@ -987,8 +1007,8 @@
     },
     "extensions/apps/migration/adapters/products.rs": {
       "status": "unproved",
-      "sha256": "2f65b63f91374df8f0589507913e5d80fa3b57cacabcba88e42a90fa0e5e0076",
-      "review": "Reviewed native source net/gross basis contract, explicit declared-basis equality, existing PHP-compatible PriceInput conversion with configured currency scale and compatibility bounds; original money/basis provenance retained. Mixed reviewed warning union observed400 RED then exact-record reduction GREEN behind unchanged creator/digest/lease/target fences. Actual five-provider HTTP-to-native private imports, missing/mismatched/invalid basis, zero-/three-decimal currency and UI approval controls pass. Independent focused review found no Important findings; SQL/source/network orchestration remain unproved."
+      "sha256": "4acb8f0e761addab5519fa7c3a4adf6dc75f9054c2f9f7723ffb3452e15160d9",
+      "review": "Reviewed app-owned Vercel/Klaviyo/HubSpot/Contentful/Algolia fixed transports, bounded redacted receipts, native compound action rights and encrypted CAS/lease fences; Shopware 6 read-only OAuth/currency/language projection delegates exact native import/reconciliation; generic tenant/app source reset and bounded source count use existing storage/admission owners. Provider protocols and SQL remain outside the extracted Lean proof scope; native two-worker, private/foreign, signed-login, migration and checkout regressions exercised."
     },
     "extensions/apps/migration/adapters/records.rs": {
       "status": "unproved",
@@ -1000,10 +1020,15 @@
       "sha256": "c9483641a7b1c0f518318dec9ed39c7cc22c809abf9f7691fc997c8a88d0e384",
       "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
     },
+    "extensions/apps/migration/adapters/shopware6.rs": {
+      "status": "unproved",
+      "sha256": "b423f072a2dee273e683130520b776d7a34328fd046442b2c5bc89b22142cf76",
+      "review": "Reviewed app-owned Vercel/Klaviyo/HubSpot/Contentful/Algolia fixed transports, bounded redacted receipts, native compound action rights and encrypted CAS/lease fences; Shopware 6 read-only OAuth/currency/language projection delegates exact native import/reconciliation; generic tenant/app source reset and bounded source count use existing storage/admission owners. Provider protocols and SQL remain outside the extracted Lean proof scope; native two-worker, private/foreign, signed-login, migration and checkout regressions exercised."
+    },
     "extensions/apps/migration/adapters/visibility.rs": {
       "status": "unproved",
-      "sha256": "adfeeeb89b5e0d4a1fa47f213be40bcccd29e21b970a31b716213275a570143d",
-      "review": "Reviewed app-owned source status preservation against primary schemas: Shopify status and online-store publication, Presta typed active flag, Magento status/visibility and Shopware boolean parent/child status. Actual prior CLI29 assertion failures are fixed by four source-state cases plus real transport projections; native eight-domain and variant checkout remain green. Independent focused source-visibility review found no Important/Critical findings; source orchestration remains outside pure proof."
+      "sha256": "e50c2fe3b183c5fbbfaff9af24e0ff4b621cbdb9c44246b23fac602a728b7bcc",
+      "review": "Reviewed app-owned Vercel/Klaviyo/HubSpot/Contentful/Algolia fixed transports, bounded redacted receipts, native compound action rights and encrypted CAS/lease fences; Shopware 6 read-only OAuth/currency/language projection delegates exact native import/reconciliation; generic tenant/app source reset and bounded source count use existing storage/admission owners. Provider protocols and SQL remain outside the extracted Lean proof scope; native two-worker, private/foreign, signed-login, migration and checkout regressions exercised."
     },
     "extensions/apps/migration/adapters/woo.rs": {
       "status": "unproved",
@@ -1012,8 +1037,8 @@
     },
     "extensions/apps/migration/contract/mod.rs": {
       "status": "unproved",
-      "sha256": "587ee130b908e7a7ac86d369647f092aa6257db64d237d4bd9708b074e98885e",
-      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+      "sha256": "07cd77523f86cc5c48e0b5fb585b63cb41891e19107aad3ca3b3bbe18bcf8c1c",
+      "review": "Reviewed app-owned Vercel/Klaviyo/HubSpot/Contentful/Algolia fixed transports, bounded redacted receipts, native compound action rights and encrypted CAS/lease fences; Shopware 6 read-only OAuth/currency/language projection delegates exact native import/reconciliation; generic tenant/app source reset and bounded source count use existing storage/admission owners. Provider protocols and SQL remain outside the extracted Lean proof scope; native two-worker, private/foreign, signed-login, migration and checkout regressions exercised."
     },
     "extensions/apps/migration/contract/money.rs": {
       "status": "unproved",
@@ -1067,13 +1092,13 @@
     },
     "extensions/apps/migration/service/extract.rs": {
       "status": "unproved",
-      "sha256": "317c51a3bbb6a4a387c9ab64ae9742810ba26499d5f2357cabd567c353f1bba7",
-      "review": "Reviewed independent frozen-export transport/package boundaries, separate export-only credential, pinned manifest/context/count/digest and bounded source-reference readiness. Actual pack/HTTP counterexamples and 52-product native intake/replay/tamper stop pass, no native authority or extracted pure business policy changed; source JSON, files, crypto/provider/async remain outside Lean proof."
+      "sha256": "318343ba0bac4b04a28ac13da6ee32569e17c574419e00b1df7247ea4ecb7d18",
+      "review": "Reviewed app-owned Vercel/Klaviyo/HubSpot/Contentful/Algolia fixed transports, bounded redacted receipts, native compound action rights and encrypted CAS/lease fences; Shopware 6 read-only OAuth/currency/language projection delegates exact native import/reconciliation; generic tenant/app source reset and bounded source count use existing storage/admission owners. Provider protocols and SQL remain outside the extracted Lean proof scope; native two-worker, private/foreign, signed-login, migration and checkout regressions exercised."
     },
     "extensions/apps/migration/service/main.rs": {
       "status": "unproved",
-      "sha256": "3690da5a145f254a34ed6195bb37754f12797d608a02ff95d496bb41d75a63aa",
-      "review": "2026-10-19 reviewed native read-only import projection against shared product/category/address owners; paired CRM/history PII and private target/package/digest checks; generic completion evidence atomically uses existing job creator/lease/package and record CAS, platform AEAD, native actual-field verification, no new app table or queue. Actual eight-domain migration/archival/restart/tamper and native app callback/jobs/admin creation tests pass; pure cancelled-success policy has exact Lean claim, all boolean cases and a true-return negative mutation. SQL, cryptography, async service correctness and public hosting remain outside formal proof."
+      "sha256": "7e2964f15f95e70f126c0db330d86df825fd1880a727b44b3b02e29a005ddb26",
+      "review": "Reviewed app-owned Vercel/Klaviyo/HubSpot/Contentful/Algolia fixed transports, bounded redacted receipts, native compound action rights and encrypted CAS/lease fences; Shopware 6 read-only OAuth/currency/language projection delegates exact native import/reconciliation; generic tenant/app source reset and bounded source count use existing storage/admission owners. Provider protocols and SQL remain outside the extracted Lean proof scope; native two-worker, private/foreign, signed-login, migration and checkout regressions exercised."
     },
     "extensions/apps/migration/service/media.rs": {
       "status": "unproved",
@@ -1109,6 +1134,11 @@
       "status": "unproved",
       "sha256": "a9ff195c6bc7160e9622c758083383b2e6170840e783401a4bf9610565e3695d",
       "review": "Reviewed original CRM address-book and historical source joins: independent review caught region loss, five-provider US-CA controls now pass; native address import shares tenant-locked storage and suppresses only ordinary address events; all five source transports reach immutable native CRM/history with replay and denial tests. Existing kernel proof boundary unchanged; source JSON, provider reads and SQL/async effects remain unproved."
+    },
+    "extensions/apps/migration/service/shopware6.rs": {
+      "status": "unproved",
+      "sha256": "2bdef7747d3566bdb389d446c8849f759899f745a5463f5c48ebfd57ffaeac25",
+      "review": "Reviewed app-owned Vercel/Klaviyo/HubSpot/Contentful/Algolia fixed transports, bounded redacted receipts, native compound action rights and encrypted CAS/lease fences; Shopware 6 read-only OAuth/currency/language projection delegates exact native import/reconciliation; generic tenant/app source reset and bounded source count use existing storage/admission owners. Provider protocols and SQL remain outside the extracted Lean proof scope; native two-worker, private/foreign, signed-login, migration and checkout regressions exercised."
     },
     "extensions/apps/migration/service/slices.rs": {
       "status": "unproved",
@@ -1195,6 +1225,11 @@
       "sha256": "aab3801384ce5a1003cb3a47b2c2d9c2ac3371e7f767b8e67e04dd8d610495aa",
       "review": "Relocated app implementation into owner packages; generic connector binary and payment ledger preserve existing contracts; reviewed receipt and inventory bindings unchanged"
     },
+    "extensions/apps/vercel/src/provider.rs": {
+      "status": "unproved",
+      "sha256": "d310748d2f30ac5e9d9fef1079e08ef55febccc0a29c91ec68f3497092eae04b",
+      "review": "Reviewed app-owned Vercel/Klaviyo/HubSpot/Contentful/Algolia fixed transports, bounded redacted receipts, native compound action rights and encrypted CAS/lease fences; Shopware 6 read-only OAuth/currency/language projection delegates exact native import/reconciliation; generic tenant/app source reset and bounded source count use existing storage/admission owners. Provider protocols and SQL remain outside the extracted Lean proof scope; native two-worker, private/foreign, signed-login, migration and checkout regressions exercised."
+    },
     "extensions/sdk/rust-events.rs": {
       "status": "unproved",
       "sha256": "9d3e944a0a7dd0a3533925b3a5aa64071ef2af32d2bf7c496922f2e03cc10735",
@@ -1202,8 +1237,8 @@
     },
     "extensions/services/connectors/src/actions.rs": {
       "status": "unproved",
-      "sha256": "6540f246d66516d08fa7a1c47d008f17dc5b708024c89ba66b0644406d1c5c19",
-      "review": "Reviewed native quota/task atomic transactions and actor-bound continuation; removed connector Core identity reads, retained gateway/FK authority and sanitized missing references. Real one-backend PgBouncer create/resume/kill/restart and scoped connector regressions passed."
+      "sha256": "f03bbcefaa2f19c8421f2f4e9053a61d8edf2fceb01651647c3a67dd17d9b136",
+      "review": "Reviewed app-owned Vercel/Klaviyo/HubSpot/Contentful/Algolia fixed transports, bounded redacted receipts, native compound action rights and encrypted CAS/lease fences; Shopware 6 read-only OAuth/currency/language projection delegates exact native import/reconciliation; generic tenant/app source reset and bounded source count use existing storage/admission owners. Provider protocols and SQL remain outside the extracted Lean proof scope; native two-worker, private/foreign, signed-login, migration and checkout regressions exercised."
     },
     "extensions/services/connectors/src/crypto.rs": {
       "status": "unproved",
@@ -1222,8 +1257,18 @@
     },
     "extensions/services/connectors/src/exports.rs": {
       "status": "unproved",
-      "sha256": "d900c1f18d411cdd04a82f253d70905469c464943d2d871509903e5a46c2f558",
-      "review": "Reviewed Rust-only standard connector service: typed mail settings, tenant-bound AES-GCM, composite PostgreSQL queue/RLS, fenced distributed leases and explicit-only retry; original app/flow/MCP contract and actual SMTP/OAuth/migration regressions. SQL and providers remain unproved."
+      "sha256": "085d1e341cd24df6848d4fd477f7415281df11e9c22ec7589d4258a46f2e415c",
+      "review": "Reviewed app-owned Vercel/Klaviyo/HubSpot/Contentful/Algolia fixed transports, bounded redacted receipts, native compound action rights and encrypted CAS/lease fences; Shopware 6 read-only OAuth/currency/language projection delegates exact native import/reconciliation; generic tenant/app source reset and bounded source count use existing storage/admission owners. Provider protocols and SQL remain outside the extracted Lean proof scope; native two-worker, private/foreign, signed-login, migration and checkout regressions exercised."
+    },
+    "extensions/services/connectors/src/integrations/settings.rs": {
+      "status": "unproved",
+      "sha256": "10ecec6e60a6683a5d9fbc187dc5122bc1026936016ff41c526518d122f21baa",
+      "review": "Reviewed app-owned Vercel/Klaviyo/HubSpot/Contentful/Algolia fixed transports, bounded redacted receipts, native compound action rights and encrypted CAS/lease fences; Shopware 6 read-only OAuth/currency/language projection delegates exact native import/reconciliation; generic tenant/app source reset and bounded source count use existing storage/admission owners. Provider protocols and SQL remain outside the extracted Lean proof scope; native two-worker, private/foreign, signed-login, migration and checkout regressions exercised."
+    },
+    "extensions/services/connectors/src/integrations.rs": {
+      "status": "unproved",
+      "sha256": "0bd33d0de4b28cafc89ccc63ebe082066fa1b35cc6cc540770044a79dd861b2f",
+      "review": "Reviewed app-owned Vercel/Klaviyo/HubSpot/Contentful/Algolia fixed transports, bounded redacted receipts, native compound action rights and encrypted CAS/lease fences; Shopware 6 read-only OAuth/currency/language projection delegates exact native import/reconciliation; generic tenant/app source reset and bounded source count use existing storage/admission owners. Provider protocols and SQL remain outside the extracted Lean proof scope; native two-worker, private/foreign, signed-login, migration and checkout regressions exercised."
     },
     "extensions/services/connectors/src/legacy.rs": {
       "status": "unproved",
@@ -1232,13 +1277,13 @@
     },
     "extensions/services/connectors/src/mod.rs": {
       "status": "unproved",
-      "sha256": "eda9222174c168df9b1eb7a7c8ef4ad2acc1334596162ad3db4f97fa3fc53bd7",
-      "review": "Relocated app implementation into owner packages; generic connector binary and payment ledger preserve existing contracts; reviewed receipt and inventory bindings unchanged"
+      "sha256": "074f8df6178f5755d53468d14957e663aba05efc3ef865c8ffaaca9405084351",
+      "review": "Reviewed app-owned Vercel/Klaviyo/HubSpot/Contentful/Algolia fixed transports, bounded redacted receipts, native compound action rights and encrypted CAS/lease fences; Shopware 6 read-only OAuth/currency/language projection delegates exact native import/reconciliation; generic tenant/app source reset and bounded source count use existing storage/admission owners. Provider protocols and SQL remain outside the extracted Lean proof scope; native two-worker, private/foreign, signed-login, migration and checkout regressions exercised."
     },
     "extensions/services/connectors/src/network.rs": {
       "status": "unproved",
-      "sha256": "ab1711899efd6ac0b101b4373992372fe8ca8206de18175a53ad4942d692ebdd",
-      "review": "Reviewed Rust-only standard connector service: typed mail settings, tenant-bound AES-GCM, composite PostgreSQL queue/RLS, fenced distributed leases and explicit-only retry; original app/flow/MCP contract and actual SMTP/OAuth/migration regressions. SQL and providers remain unproved."
+      "sha256": "8ef1c262b78acf4ca024a2d71097726ac7b7465a499f397b6b4f71045a9ff9f4",
+      "review": "Reviewed app-owned Vercel/Klaviyo/HubSpot/Contentful/Algolia fixed transports, bounded redacted receipts, native compound action rights and encrypted CAS/lease fences; Shopware 6 read-only OAuth/currency/language projection delegates exact native import/reconciliation; generic tenant/app source reset and bounded source count use existing storage/admission owners. Provider protocols and SQL remain outside the extracted Lean proof scope; native two-worker, private/foreign, signed-login, migration and checkout regressions exercised."
     },
     "extensions/services/connectors/src/oauth.rs": {
       "status": "unproved",
@@ -1257,8 +1302,8 @@
     },
     "extensions/services/connectors/src/server.rs": {
       "status": "unproved",
-      "sha256": "cdebf78782103deee8883ab5bf6256bcb9c44a14b69420ffce16e5e8a399ee29",
-      "review": "Identity-only Veyndo namespace and canonical-domain rename; reviewed migration checksum compatibility for six historical SQL versions, unchanged checkout predicates, 42 library and 169 binary tests pass; native component legacy boundary remains configured and guarded."
+      "sha256": "2e941dac5f2a0f3a64decfd0fc320fc76f25141c3540d9af81e79dbbc9152001",
+      "review": "Reviewed app-owned Vercel/Klaviyo/HubSpot/Contentful/Algolia fixed transports, bounded redacted receipts, native compound action rights and encrypted CAS/lease fences; Shopware 6 read-only OAuth/currency/language projection delegates exact native import/reconciliation; generic tenant/app source reset and bounded source count use existing storage/admission owners. Provider protocols and SQL remain outside the extracted Lean proof scope; native two-worker, private/foreign, signed-login, migration and checkout regressions exercised."
     },
     "extensions/services/connectors/src/store.rs": {
       "status": "unproved",
@@ -1272,8 +1317,13 @@
     },
     "extensions/services/connectors/src/worker.rs": {
       "status": "reviewed-binding",
-      "sha256": "93df63a7df8be020004d2de307729c75bb1c71dd24c7f17fbc88d77d66a929c5",
-      "review": "Reviewed Rust-only standard connector service: typed mail settings, tenant-bound AES-GCM, composite PostgreSQL queue/RLS, fenced distributed leases and explicit-only retry; original app/flow/MCP contract and actual SMTP/OAuth/migration regressions. SQL and providers remain unproved."
+      "sha256": "bb9f5ccfbe4da5045b7a416da83de897fe70bbcca34db6d28ea0afbea5d181dd",
+      "review": "Reviewed app-owned Vercel/Klaviyo/HubSpot/Contentful/Algolia fixed transports, bounded redacted receipts, native compound action rights and encrypted CAS/lease fences; Shopware 6 read-only OAuth/currency/language projection delegates exact native import/reconciliation; generic tenant/app source reset and bounded source count use existing storage/admission owners. Provider protocols and SQL remain outside the extracted Lean proof scope; native two-worker, private/foreign, signed-login, migration and checkout regressions exercised."
+    },
+    "extensions/services/connectors/tests/integration_contracts.rs": {
+      "status": "unproved",
+      "sha256": "7dd250660934625e9fee8c09c77844b57a0fc18144812b52898d24466998dafb",
+      "review": "Reviewed app-owned Vercel/Klaviyo/HubSpot/Contentful/Algolia fixed transports, bounded redacted receipts, native compound action rights and encrypted CAS/lease fences; Shopware 6 read-only OAuth/currency/language projection delegates exact native import/reconciliation; generic tenant/app source reset and bounded source count use existing storage/admission owners. Provider protocols and SQL remain outside the extracted Lean proof scope; native two-worker, private/foreign, signed-login, migration and checkout regressions exercised."
     },
     "src/accounts/address_restore.rs": {
       "status": "unproved",
@@ -1372,8 +1422,8 @@
     },
     "src/apps/approval.rs": {
       "status": "reviewed-binding",
-      "sha256": "085ec1656d6691f0a3197f68ddeea0979ac28fa9f1a57e394dbe1cb716a5a273",
-      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+      "sha256": "b782335c67483092391b295f3555ad8289348e835e84d75478806162fa3d8bd2",
+      "review": "Reviewed app-owned Vercel/Klaviyo/HubSpot/Contentful/Algolia fixed transports, bounded redacted receipts, native compound action rights and encrypted CAS/lease fences; Shopware 6 read-only OAuth/currency/language projection delegates exact native import/reconciliation; generic tenant/app source reset and bounded source count use existing storage/admission owners. Provider protocols and SQL remain outside the extracted Lean proof scope; native two-worker, private/foreign, signed-login, migration and checkout regressions exercised."
     },
     "src/apps/asset_surfaces.rs": {
       "status": "unproved",
@@ -1512,8 +1562,8 @@
     },
     "src/apps/evidence.rs": {
       "status": "unproved",
-      "sha256": "daf4bfc631774ba5dd93c057af1463d9384a193c392f41ef2b02ae87918d8e15",
-      "review": "Reviewed quota/task single-connection admission and actor-bound resume; reviewed signed tenant scope handoff for collector tasks and common current-shop egress gate; connector no longer reads Core tables and sanitizes missing references. Existing business kernel unchanged."
+      "sha256": "34378db3544058b447d1d6880b7d2cfe10c68429d614988f2fe871de897231cb",
+      "review": "Reviewed app-owned Vercel/Klaviyo/HubSpot/Contentful/Algolia fixed transports, bounded redacted receipts, native compound action rights and encrypted CAS/lease fences; Shopware 6 read-only OAuth/currency/language projection delegates exact native import/reconciliation; generic tenant/app source reset and bounded source count use existing storage/admission owners. Provider protocols and SQL remain outside the extracted Lean proof scope; native two-worker, private/foreign, signed-login, migration and checkout regressions exercised."
     },
     "src/apps/evidence_routes.rs": {
       "status": "unproved",
@@ -1582,8 +1632,8 @@
     },
     "src/apps/manifest.rs": {
       "status": "unproved",
-      "sha256": "d4c0233e1d46daa25392eb968d1ae0a1b9d137093cf37529a4840e6ab6af7d9f",
-      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+      "sha256": "b9e9852be57c44bb1a9286439812eddbb5ce64c7bfacd649d2087c7b8de2b21f",
+      "review": "Reviewed app-owned Vercel/Klaviyo/HubSpot/Contentful/Algolia fixed transports, bounded redacted receipts, native compound action rights and encrypted CAS/lease fences; Shopware 6 read-only OAuth/currency/language projection delegates exact native import/reconciliation; generic tenant/app source reset and bounded source count use existing storage/admission owners. Provider protocols and SQL remain outside the extracted Lean proof scope; native two-worker, private/foreign, signed-login, migration and checkout regressions exercised."
     },
     "src/apps/manifest_validation.rs": {
       "status": "unproved",
@@ -1692,8 +1742,8 @@
     },
     "src/apps/routes.rs": {
       "status": "unproved",
-      "sha256": "dddc19e9b51dfb3375f52636f46cb6f4dac0d1bd4a5aa9ac476b38b2790c1f66",
-      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+      "sha256": "4efe5aa7e734587bd350e5aa068ef02f41fd86fbdeab27c6d05807b50fe39b18",
+      "review": "Reviewed app-owned Vercel/Klaviyo/HubSpot/Contentful/Algolia fixed transports, bounded redacted receipts, native compound action rights and encrypted CAS/lease fences; Shopware 6 read-only OAuth/currency/language projection delegates exact native import/reconciliation; generic tenant/app source reset and bounded source count use existing storage/admission owners. Provider protocols and SQL remain outside the extracted Lean proof scope; native two-worker, private/foreign, signed-login, migration and checkout regressions exercised."
     },
     "src/apps/runtime.rs": {
       "status": "unproved",

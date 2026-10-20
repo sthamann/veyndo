@@ -13,6 +13,7 @@ pub enum Source {
     Prestashop,
     Magento2,
     Shopware5,
+    Shopware6,
 }
 impl Source {
     pub fn parse(s: &str) -> Result<Self> {
@@ -26,6 +27,7 @@ impl Source {
             Self::Prestashop => "prestashop",
             Self::Magento2 => "magento2",
             Self::Shopware5 => "shopware5",
+            Self::Shopware6 => "shopware6",
         }
     }
 }

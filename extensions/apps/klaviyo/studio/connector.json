@@ -1,0 +1,17 @@
+{
+  "id": "klaviyo",
+  "name": "Klaviyo",
+  "fields": [],
+  "operation": [
+    "email",
+    "metric",
+    "eventId",
+    "properties"
+  ],
+  "summary": [
+    "Send explicit events without subscribing customers to marketing.",
+    "Übertrage gezielte Ereignisse, ohne Kunden für Marketing anzumelden.",
+    "Envoyez des événements sans inscrire les clients au marketing.",
+    "Envía eventos sin suscribir clientes a marketing."
+  ]
+}

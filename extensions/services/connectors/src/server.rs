@@ -184,7 +184,10 @@ pub async fn run() -> Result<()> {
         .and_then(|s| s.parse::<usize>().ok())
         .filter(|n| *n > 0 && *n <= 8)
         .unwrap_or(2);
-    let mut tasks = vec![];
+    let mut tasks = vec![tokio::spawn(worker::maintenance(
+        store.clone(),
+        receiver.clone(),
+    ))];
     for app in APPS {
         for _ in 0..workers {
             tasks.push(tokio::spawn(worker::loop_worker(

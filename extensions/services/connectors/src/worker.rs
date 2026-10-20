@@ -17,7 +17,9 @@ pub async fn once(store: &Store, a: &str) -> Result<bool> {
             (
                 if retryable {
                     "queued"
-                } else if ["email", "slack"].contains(&a) && !(400..500).contains(&code) {
+                } else if (["email", "slack"].contains(&a) || integrations::APPS.contains(&a))
+                    && !(400..500).contains(&code)
+                {
                     "uncertain"
                 } else {
                     "failed"
@@ -51,6 +53,9 @@ pub async fn once(store: &Store, a: &str) -> Result<bool> {
     Ok(true)
 }
 async fn perform(store: &Store, j: &queue::Job) -> Result<Value> {
+    if integrations::APPS.contains(&j.app.as_str()) {
+        return integrations::perform(store, j).await;
+    }
     if j.app == "email" {
         let mut tx = store.tx(&j.tenant).await?;
         store.lock(&mut tx, &j.tenant, &j.app).await?;
@@ -69,7 +74,8 @@ async fn perform(store: &Store, j: &queue::Job) -> Result<Value> {
     match j.app.as_str() {
         "slack" => providers::slack(store, &j.tenant, &j.payload, &settings).await,
         "gmail" => providers::gmail(store, &j.tenant, &settings).await,
-        _ => providers::analytics(store, &j.tenant, &settings).await,
+        "google_analytics" => providers::analytics(store, &j.tenant, &settings).await,
+        _ => Err(Error::Invalid("Unknown queued app")),
     }
 }
 pub async fn loop_worker(
@@ -81,12 +87,22 @@ pub async fn loop_worker(
         if *stop.borrow() {
             break;
         }
-        let _ = store.recover().await;
         match once(&store, app).await {
             Ok(true) => continue,
             _ => {
                 tokio::select! {_=stop.changed()=>{},_=tokio::time::sleep(Duration::from_millis(250))=>{}}
             }
         }
+    }
+}
+
+/// Lease recovery is once per process, not once per idle provider worker.
+pub async fn maintenance(store: Store, mut stop: tokio::sync::watch::Receiver<bool>) {
+    loop {
+        if *stop.borrow() {
+            break;
+        }
+        let _ = store.recover().await;
+        tokio::select! {_=stop.changed()=>{},_=tokio::time::sleep(Duration::from_secs(1))=>{}}
     }
 }

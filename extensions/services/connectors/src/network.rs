@@ -16,6 +16,11 @@ pub fn endpoint(name: &str) -> Result<String> {
         return Ok(s.into());
     }
     Ok(match name {
+        "vercel" => "https://api.vercel.com",
+        "hubspot" => "https://api.hubapi.com",
+        "klaviyo" => "https://a.klaviyo.com",
+        "contentful" => "https://cdn.contentful.com",
+        "contentful_eu" => "https://cdn.eu.contentful.com",
         "resend" => "https://api.resend.com",
         "sendgrid" => "https://api.sendgrid.com/v3",
         "sendgrid_eu" => "https://api.eu.sendgrid.com/v3",
@@ -92,4 +97,30 @@ pub async fn request(
         req = req.bearer_auth(token);
     }
     response(req.send().await?).await
+}
+
+/// Provider-owned computed hosts remain fixed; only explicit loopback fixtures can replace them.
+pub fn integration_origin(name: &str, production: &str) -> Result<String> {
+    let value: Value =
+        serde_json::from_str(&env::var("CONNECTOR_TEST_ENDPOINTS").unwrap_or("{}".into()))
+            .map_err(|_| Error::Invalid("Invalid fixture endpoints"))?;
+    if value.get(name).is_some() {
+        endpoint(name)
+    } else {
+        Ok(production.into())
+    }
+}
+pub async fn integration_request(call: integrations::Call) -> Result<(u16, Value)> {
+    let client = client()?;
+    let mut request = if let Some(body) = call.body {
+        client.post(&call.url).json(&body)
+    } else {
+        client.get(&call.url)
+    };
+    for (name, value) in call.headers {
+        request = request.header(name, value);
+    }
+    let response = request.send().await?;
+    let code = response.status().as_u16();
+    Ok((code, self::response(response).await?))
 }

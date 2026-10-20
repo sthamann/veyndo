@@ -54,6 +54,24 @@ class SourceFixture(BaseHTTPRequestHandler):
         else:self.send_error(404);return
         self.send_response(200);self.send_header('X-WP-TotalPages','1');self.end_headers();self.wfile.write(json.dumps(body).encode())
     def do_POST(self):
+        if self.path.startswith('/api/'):
+            query=json.loads(self.rfile.read(int(self.headers.get('Content-Length','0'))))
+            if self.path=='/api/oauth/token':
+                assert query=={'grant_type':'client_credentials','client_id':'fixture-client','client_secret':'provider-source-synthetic'}
+                body={'access_token':'synthetic-sw6-access'}
+            else:
+                assert self.headers.get('Authorization')=='Bearer synthetic-sw6-access'
+                if self.path=='/api/search/currency':
+                    assert query['filter'][0]['value']=='EUR'
+                    body={'data':[{'id':'c'*32}]}
+                elif self.path=='/api/search/language':
+                    assert query['filter'][0]['field']=='locale.code' and query['filter'][0]['value']=='en-GB'
+                    body={'data':[{'id':'d'*32}]}
+                else:
+                    assert self.path=='/api/search/product' and query['limit']==50 and query['total-count-mode']==1
+                    assert self.headers.get('sw-language-id')=='d'*32 and self.headers.get('sw-inheritance')=='1'
+                    body={'total':1,'data':[{'id':'e'*32,'translated':{'name':'Shopware 6 source cup','description':'Original translated description'},'price':[{'currencyId':'c'*32,'gross':'23.90'}],'productNumber':'SW6-CUP','stock':7,'active':True,'parentId':None,'childCount':0,'options':[],'categories':[],'media':[],'tax':{'taxRate':19}}]}
+            self.send_response(200);self.end_headers();self.wfile.write(json.dumps(body).encode());return
         assert self.path.startswith('/admin/api/2026-10/graphql.json')
         assert self.headers.get('X-Shopify-Access-Token')=='provider-source-synthetic'
         query=json.loads(self.rfile.read(int(self.headers.get('Content-Length','0'))))
@@ -80,6 +98,7 @@ call('/api/apps/migration/settings',{'approve':True,'digest':binding['digest'],'
 assert 'source-read-synthetic' not in json.dumps(call('/api/apps/migration/settings',h=h))
 env={**os.environ,'MIGRATION_ALLOW_FIXTURE':'1','MIGRATION_BIND':f'127.0.0.1:{port}','MIGRATION_GATEWAY_TOKEN':gateway,'MIGRATION_CALLBACKS':json.dumps({a['workspace']:{'coreUrl':core_url,'token':key}}),'MIGRATION_SOURCES':json.dumps({a['workspace']:{'fixture':{'system':'woocommerce','origin':source_origin,'token':'source-read-synthetic','version':'wc/v3','currency':'EUR','scale':2,'locale':'en-GB'},'slow':{'system':'woocommerce','origin':source_origin,'token':'slow-source-synthetic','version':'wc/v3','currency':'EUR','scale':2,'locale':'en-GB'},'variable':{'system':'woocommerce','origin':source_origin,'token':'variable-source-synthetic','version':'wc/v3','currency':'EUR','scale':2,'locale':'en-GB'}}})}
 profiles=json.loads(env['MIGRATION_SOURCES'])
+profiles[a['workspace']]['shopware6']={'system':'shopware6','origin':source_origin,'token':'provider-source-synthetic','username':'fixture-client','version':'6.7-admin-api','currency':'EUR','scale':2,'locale':'en-GB'}
 profiles[a['workspace']]['empty']={**profiles[a['workspace']]['fixture'],'token':'empty-source-synthetic'}
 for system in ('prestashop','magento2','shopware5','shopify'):
     profiles[a['workspace']][system]={'system':system,'origin':source_origin,'token':'provider-source-synthetic','username':'fixture' if system=='shopware5' else '', 'version':'2026-10' if system=='shopify' else 'explicit-fixture-profile','currency':'EUR','scale':2,'locale':'en-GB'}
@@ -140,10 +159,28 @@ try:
         assert result['status']=='succeeded',(domain,result)
         assert 'target' not in result['result'] and len(json.dumps(result['result']).encode())<32768
         return result['result']
+    sw6=inspect_source('products','shopware6')
+    assert sw6['records'][0]['source']=='shopware6' and sw6['records'][0]['data']['price']['minor']==2390
+    assert sw6['records'][0]['data']['name']=={'en-GB':'Shopware 6 source cup'}
+    assert sw6['records'][0]['data']['priceBasis']=='gross' and sw6['records'][0]['data']['catalogActive'] is None
+    assert 'synthetic-sw6-access' not in json.dumps(sw6)
     page=inspect_source('products')
     assert 'source-read-synthetic' not in json.dumps(page)
     call('/api/apps',consent({'builtIn':'site_builder'}),h)
     target=call('/api/environments',{'name':'Source service preview'},h)['id']
+    sw_intent={'sourceId':'shopware6','kind':'products','target':target,'options':{'channelId':'default','taxRate':19,'sourcePriceBasis':'gross','acknowledgedWarnings':sw6['records'][0]['warnings']},'recordDigests':sw6['recordDigests']}
+    sw_job=call('/api/apps/migration/actions/import_products',sw_intent,{**h,'Idempotency-Key':'sw6-native-import'})['jobId']
+    for _ in range(160):
+        sw_state=call('/api/apps/migration/jobs/'+sw_job,h=h)
+        if sw_state['status'] not in ('queued','running'):break
+        time.sleep(.1)
+    assert sw_state['status']=='succeeded' and sw_state['result']['imported']==1,sw_state
+    sw_record=sw6['records'][0]
+    sw_id=str(uuid.UUID(bytes=hashlib.sha256(json.dumps([a['workspace'],sw_record['source'],sw_record['sourceShop'],sw_record['kind'],sw_record['sourceId']],separators=(',',':')).encode()).digest()[:16]))
+    sw_native=call('/api/merchant/products/'+sw_id,h={**h,'x-tenant':target})
+    assert sw_native['commerce']['price']==23.9 and sw_native['commerce']['stock']==0
+    call('/api/merchant/products/'+sw_id,h=h,status=404)
+    print('PASS Shopware 6 OAuth/language/currency/search -> native review -> private import with no live catalogue mutation')
     intent={'sourceId':'installed','kind':'products','target':target,'options':{'channelId':'default','taxRate':19},'recordDigests':page['recordDigests']}
     job=call('/api/apps/migration/actions/import_products',intent,{**h,'Idempotency-Key':'service-flow'})['jobId']
     for _ in range(100):

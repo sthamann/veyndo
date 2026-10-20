@@ -196,3 +196,11 @@ leases and outbox; it has no direct database credential or second order queue.
 ## UCP B2B protocol boundary
 
 `src/ucp/` adapts checkout and the versioned VEYNDO negotiation extension to existing `src/b2b/` owners. Platform-profile fetching reuses the bounded public HTTPS egress client; identity never comes from a profile. RFQs, prices, approvals, budgets, events and orders share native storage and transactions. [Contract, sequence and executable flow](b2b-ucp-negotiation.md).
+
+## Service integrations
+
+Five additional provider packages reuse the Rust connector host: `vercel`,
+`klaviyo`, `hubspot`, `contentful`, `algolia`. Generic key-configuration/dispatch
+is in `extensions/services/connectors/src/integrations/`; protocol code stays
+in each app package. There are no new per-app tables. Contentful feeds the
+existing private knowledge export consumer. See [integration contracts and limits](service-integrations.md).

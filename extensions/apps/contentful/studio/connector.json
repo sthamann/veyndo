@@ -1,0 +1,19 @@
+{
+  "id": "contentful",
+  "name": "Contentful",
+  "fields": [
+    "space",
+    "environment",
+    "locale",
+    "region"
+  ],
+  "operation": [
+    "offset"
+  ],
+  "summary": [
+    "Read published content into shop knowledge in bounded pages. Storefront publishing remains separate.",
+    "Übernimm veröffentlichte Inhalte seitenweise ins Shopwissen. Die Shop-Veröffentlichung bleibt ein eigener Schritt.",
+    "Importez les contenus publiés dans les connaissances. La publication boutique reste séparée.",
+    "Importa contenidos publicados al conocimiento. La publicación en la tienda es independiente."
+  ]
+}

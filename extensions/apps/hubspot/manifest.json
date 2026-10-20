@@ -1,0 +1,220 @@
+{
+  "id": "hubspot",
+  "version": "1.0.0",
+  "coreApi": "1",
+  "runtime": "service",
+  "name": {
+    "en": "HubSpot",
+    "de": "HubSpot",
+    "fr": "HubSpot",
+    "es": "HubSpot"
+  },
+  "category": "operations",
+  "presentation": {
+    "description": {
+      "en": "Create or update an explicitly selected CRM contact with protected customer-data permissions.",
+      "de": "Lege gezielt CRM-Kontakte an oder aktualisiere sie mit geschützten Kundendatenrechten.",
+      "fr": "Créez ou modifiez des contacts CRM avec des droits protégés.",
+      "es": "Crea o actualiza contactos CRM con permisos de datos protegidos."
+    }
+  },
+  "permissions": [
+    "service.call"
+  ],
+  "entities": [],
+  "slots": [],
+  "events": [],
+  "actions": [
+    {
+      "name": "status",
+      "description": "HubSpot status",
+      "handler": "service",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      },
+      "public": false,
+      "readOnly": true,
+      "permission": "apps.manage",
+      "mcp": true,
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "revision": {
+            "type": "integer"
+          },
+          "settings": {
+            "type": "object"
+          },
+          "credentialConfigured": {
+            "type": "boolean"
+          },
+          "jobs": {
+            "type": "array",
+            "maxItems": 30,
+            "items": {
+              "type": "object"
+            }
+          }
+        },
+        "required": [
+          "revision",
+          "settings",
+          "credentialConfigured",
+          "jobs"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "configure",
+      "description": "HubSpot configure",
+      "handler": "service",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "revision": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "settings": {
+            "type": "object",
+            "properties": {
+              "enabled": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "enabled"
+            ],
+            "additionalProperties": false
+          },
+          "credentials": {
+            "type": "object",
+            "properties": {
+              "apiKey": {
+                "type": "string",
+                "maxLength": 4000
+              }
+            },
+            "required": [],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "revision",
+          "settings"
+        ],
+        "additionalProperties": false
+      },
+      "public": false,
+      "readOnly": false,
+      "permission": "apps.manage",
+      "mcp": true,
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "revision": {
+            "type": "integer"
+          },
+          "settings": {
+            "type": "object"
+          },
+          "credentialConfigured": {
+            "type": "boolean"
+          },
+          "jobs": {
+            "type": "array",
+            "maxItems": 30,
+            "items": {
+              "type": "object"
+            }
+          },
+          "purgeSources": {
+            "type": "boolean"
+          },
+          "exportCursor": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "revision",
+          "settings",
+          "credentialConfigured",
+          "jobs"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "run",
+      "description": "HubSpot run",
+      "handler": "service",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "requestKey": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "input": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string"
+              },
+              "firstName": {
+                "type": "string"
+              },
+              "lastName": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "email",
+              "firstName",
+              "lastName"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "requestKey",
+          "input"
+        ],
+        "additionalProperties": false
+      },
+      "public": false,
+      "readOnly": false,
+      "permission": "apps.manage",
+      "mcp": true,
+      "flowAllowed": true,
+      "requiredPermissions": [
+        "customers.pii"
+      ],
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "jobId": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "accepted"
+            ]
+          }
+        },
+        "required": [
+          "jobId",
+          "state"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ]
+}

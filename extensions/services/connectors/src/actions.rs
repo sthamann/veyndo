@@ -8,6 +8,9 @@ pub async fn public(store: &Store, t: &str, a: &str) -> Result<Value> {
     )
 }
 pub async fn action(store: &Store, t: &str, a: &str, name: &str, v: &Value) -> Result<Value> {
+    if integrations::APPS.contains(&a) {
+        return integrations::action(store, t, a, name, v).await;
+    }
     if a == "email" {
         return email::action(store, t, name, v).await;
     }

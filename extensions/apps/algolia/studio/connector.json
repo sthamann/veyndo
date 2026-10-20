@@ -1,0 +1,17 @@
+{
+  "id": "algolia",
+  "name": "Algolia",
+  "fields": [
+    "applicationId",
+    "index"
+  ],
+  "operation": [
+    "records"
+  ],
+  "summary": [
+    "Send bounded catalogue projections to search. Veyndo still calculates prices, inventory and checkout.",
+    "Übertrage begrenzte Katalogdaten zur Suche. Preise, Bestand und Checkout berechnet weiter Veyndo.",
+    "Envoyez le catalogue à la recherche. Veyndo conserve les prix, stocks et commandes.",
+    "Envía el catálogo al buscador. Veyndo conserva precios, existencias y compra."
+  ]
+}

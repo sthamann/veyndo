@@ -1,0 +1,11 @@
+{
+  "protocol": "veyndo-native-http-v1",
+  "note": "HTTP-action setup recipe, not a Shopware Nexus workflow export or marketplace package",
+  "method": "POST",
+  "path": "/api/search/product",
+  "headers": {"Content-Type": "application/json", "x-tenant": "YOUR_VEYNDO_SHOP"},
+  "credential": "Store a Veyndo integration key with catalog.read in the Nexus connection; send it as Authorization: Bearer <key>",
+  "body": {"limit": 50},
+  "pagination": "Use the returned nextCursor as the next request's after value. Stop when hasMore is false.",
+  "effects": "read-only"
+}

@@ -19,6 +19,8 @@ import AppSettings from "./AppSettings";
 import AppSecrets from "./AppSecrets";
 import AppEntity from "./AppEntity";
 import ConnectorPanel from "./ConnectorPanel";
+import ServiceIntegrationPanel from "./ServiceIntegrationPanel";
+import { serviceIntegrations } from "./service-integrations";
 import ProviderAccount from "./ProviderAccount";
 import MarketplacePanel from "../../../../extensions/apps/marketplaces/studio/MarketplacePanel";
 import EmailPanel from "../../../../extensions/apps/email/studio/EmailPanel";
@@ -157,6 +159,16 @@ export default function AppDetails({
             }
           />
         )}
+        {detailTab === "appDetails" &&
+          p.active &&
+          serviceIntegrations[p.id] && (
+            <ServiceIntegrationPanel
+              key={p.id}
+              app={p.id}
+              request={request}
+              manage={manage}
+            />
+          )}
         {detailTab === "appDetails" && p.active && p.id === "email" && (
           <EmailPanel request={request} manage={manage} />
         )}
@@ -213,11 +225,23 @@ export default function AppDetails({
                 mainLocale={mainLocale}
               />
             )}
-            <AppAccess app={p.id} request={request} />
-            <AppSecrets app={p.id} request={request} />
+            {serviceIntegrations[p.id] ? (
+              <details className="app-integration-diagnostics">
+                <summary>{l("advancedConnection")}</summary>
+                <p>{l("advancedConnectionHint")}</p>
+                <AppAccess app={p.id} request={request} />
+                <AppSecrets app={p.id} request={request} />
+                <AppActivity app={p.id} request={request} />
+              </details>
+            ) : (
+              <>
+                <AppAccess app={p.id} request={request} />
+                <AppSecrets app={p.id} request={request} />
+              </>
+            )}
           </>
         )}
-        {detailTab === "appDetails" && manage && (
+        {detailTab === "appDetails" && manage && !serviceIntegrations[p.id] && (
           <AppActivity app={p.id} request={request} />
         )}
         {detailTab === "appInterface" && p.active && (
