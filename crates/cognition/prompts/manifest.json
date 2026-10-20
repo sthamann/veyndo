@@ -45,6 +45,11 @@
       "id": "app-generation@2",
       "path": "prompts/app-generation.v2.txt",
       "sha256": "99172810be7e83732cb9cd38033a0b24b658d0e41ef54118c44344dcce7e8fdc"
+    },
+    {
+      "id": "app-generation@3",
+      "path": "prompts/app-generation.v3.txt",
+      "sha256": "5f55127630ef5f3726d9b6ea12430a3d7531bfd481e270030682fd34d273e960"
     }
   ]
 }

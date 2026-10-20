@@ -6,6 +6,11 @@ from testing.runtime import ROOT
 
 def verify_native_work(call,base,h,sh,mode,sql,passed):
     main=call(base,'/api/merchant/commerce',h=sh)['data'].get('mainLocale','en')
+    malformed={'name':'merchant.category.create','label':'Malformed native shape','arguments_json':json.dumps({'category':{'id':'bad_category','name':'Wrong shape','translations':{main:{'name':'Wrong shape'}}}})}
+    mode.update(block=False,operations=[malformed])
+    refused=call(base,'/api/agent/chat',{'message':'Reject invalid native arguments before review','inference':{'provider':'openai'}},sh)
+    assert refused['messages'][-1]['data'].get('error') and not refused['messages'][-1]['data'].get('taskId'),refused
+    assert sql(f"SELECT count(*) FROM categories WHERE tenant='{sh['x-tenant']}' AND id='bad_category'")=='0'
     steps=[{'name':'merchant.category.create','label':'Create private category '+str(n),'arguments_json':json.dumps({'category':{'id':'native_work_'+str(n),'position':n,'data':{'active':True,'visible':False,'type':'folder','translations':{main:{'name':'Native work '+str(n)}}}}})} for n in (1,2)]
     mode.update(block=False,operations=steps)
     created=call(base,'/api/agent/chat',{'message':'Prepare two native private categories','inference':{'provider':'openai'}},sh)
@@ -20,6 +25,16 @@ def verify_native_work(call,base,h,sh,mode,sql,passed):
     assert sql(f"SELECT count(*) FROM categories WHERE tenant='{h['x-tenant']}' AND id IN ('native_work_1','native_work_2')")=='0'
     assert call(base,'/api/agent/tasks/'+task+'/apply',{'approve':True},sh)['replayed']
     assert sql(f"SELECT sum(revision) FROM categories WHERE tenant='{sh['x-tenant']}' AND id IN ('native_work_1','native_work_2')")=='2'
+    mode.update(operations=[{'name':'merchant.category.save','label':'Edit reviewed category','arguments_json':json.dumps({'id':'native_work_1','category':{'revision':1,'position':1,'data':{'active':True,'visible':False,'type':'folder','translations':{main:{'name':'Reviewed native edit'}}}}})}])
+    edited=call(base,'/api/agent/chat',{'message':'Edit a private category at its original revision','inference':{'provider':'openai'}},sh)
+    edit_task=edited['messages'][-1]['data']['taskId']
+    call(base,'/api/agent/tasks/'+edit_task+'/apply',{'approve':True},sh)
+    for _ in range(120):
+        status=call(base,'/api/agent/runs/'+edit_task,h=sh)
+        if status['state'] not in ('queued','running'):break
+        time.sleep(.1)
+    assert status['state']=='ready' and status['execution']['completed']==1,status
+    assert sql(f"SELECT revision FROM categories WHERE tenant='{sh['x-tenant']}' AND id='native_work_1'")=='2'
     passed('Native private work preserves reviewed category IDs and runs once through a one-backend transaction pool without nested connection waits')
 
 

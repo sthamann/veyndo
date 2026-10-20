@@ -852,6 +852,59 @@
         "additionalProperties": false,
         "properties": {
           "category": {
+            "additionalProperties": false,
+            "properties": {
+              "data": {
+                "properties": {
+                  "active": {
+                    "type": "boolean"
+                  },
+                  "translations": {
+                    "description": "Content locale keys (for example en-GB), each containing name and optional description/slug. Include the shop main language.",
+                    "type": "object"
+                  },
+                  "type": {
+                    "enum": [
+                      "page",
+                      "folder",
+                      "structuring",
+                      "link"
+                    ],
+                    "type": "string"
+                  },
+                  "visible": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "active",
+                  "visible",
+                  "type",
+                  "translations"
+                ],
+                "type": "object"
+              },
+              "id": {
+                "type": "string"
+              },
+              "parentId": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "position": {
+                "type": "integer"
+              },
+              "revision": {
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "position",
+              "data"
+            ],
             "type": "object"
           }
         },
@@ -869,6 +922,57 @@
         "additionalProperties": false,
         "properties": {
           "category": {
+            "additionalProperties": false,
+            "properties": {
+              "data": {
+                "properties": {
+                  "active": {
+                    "type": "boolean"
+                  },
+                  "translations": {
+                    "description": "Content locale keys (for example en-GB), each containing name and optional description/slug. Include the shop main language.",
+                    "type": "object"
+                  },
+                  "type": {
+                    "enum": [
+                      "page",
+                      "folder",
+                      "structuring",
+                      "link"
+                    ],
+                    "type": "string"
+                  },
+                  "visible": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "active",
+                  "visible",
+                  "type",
+                  "translations"
+                ],
+                "type": "object"
+              },
+              "parentId": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "position": {
+                "type": "integer"
+              },
+              "revision": {
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "revision",
+              "position",
+              "data"
+            ],
             "type": "object"
           },
           "id": {

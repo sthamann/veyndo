@@ -8,6 +8,54 @@ struct Edit {
     position: i32,
     data: Value,
 }
+pub(crate) fn input_schema(create: bool) -> Value {
+    let mut fields = json!({
+        "parentId":{"type":["string","null"]},
+        "position":{"type":"integer"},
+        "revision":{"type":"integer","minimum":1},
+        "data":{"type":"object","required":["active","visible","type","translations"],"properties":{
+            "active":{"type":"boolean"},"visible":{"type":"boolean"},
+            "type":{"type":"string","enum":["page","folder","structuring","link"]},
+            "translations":{"type":"object","description":"Content locale keys (for example en-GB), each containing name and optional description/slug. Include the shop main language."}
+        }}
+    });
+    if create {
+        fields["id"] = json!({"type":"string"});
+    }
+    json!({"type":"object","additionalProperties":false,"properties":fields,"required":if create {json!(["position","data"])} else {json!(["revision","position","data"])}})
+}
+fn parse(v: Value) -> Result<Edit> {
+    let edit: Edit = serde_json::from_value(v).map_err(|_| bad("Invalid category edit"))?;
+    validate(&edit)?;
+    Ok(edit)
+}
+async fn configured(a: &App, t: &str, edit: &Edit) -> Result<()> {
+    let (settings, _) = commerce::config(a, t).await?;
+    graph_query::validate(&edit.data, &settings)?;
+    let names: Value = edit.data["translations"]
+        .as_object()
+        .unwrap()
+        .iter()
+        .map(|(key, tr)| (key.clone(), tr["name"].clone()))
+        .collect();
+    commerce::validate_names(&names, &settings, 200)
+}
+/// Review uses the exact native DTO/data/language checks before creating executable work.
+pub(crate) async fn admit_configuration(
+    a: &App,
+    t: &str,
+    value: &Value,
+    create: bool,
+) -> Result<()> {
+    let mut value = value.clone();
+    if create {
+        value
+            .as_object_mut()
+            .ok_or(bad("Invalid category edit"))?
+            .remove("id");
+    }
+    configured(a, t, &parse(value)?).await
+}
 fn validate(v: &Edit) -> Result<()> {
     let d = &v.data;
     if !d.is_object()
@@ -104,17 +152,8 @@ async fn write(
 ) -> Result<Json<Value>> {
     auth::permit(&h, "catalog")?;
     let t = merchant(&a, &h)?;
-    let v: Edit = serde_json::from_value(v).map_err(|_| bad("Invalid category edit"))?;
-    validate(&v)?;
-    let (settings, _) = commerce::config(&a, &t).await?;
-    graph_query::validate(&v.data, &settings)?;
-    let names: Value = v.data["translations"]
-        .as_object()
-        .unwrap()
-        .iter()
-        .map(|(key, tr)| (key.clone(), tr["name"].clone()))
-        .collect();
-    commerce::validate_names(&names, &settings, 200)?;
+    let v = parse(v)?;
+    configured(&a, &t, &v).await?;
     let mut tx = a.db.begin().await?;
     history::context(&mut tx, &h, "merchant").await?;
     sqlx::query("SELECT pg_advisory_xact_lock(hashtextextended($1,726))")

@@ -1,5 +1,11 @@
 # Changelog
 
+## Validated agent plans and recoverable app proposals — 2026-10-20
+
+- Describe category create/save with the canonical native DTO and validate reviewed category inputs against current shop configuration before queuing. Preserve nested revision checks and stable create IDs; malformed model output cannot become an approved task.
+- Follow the current scoped saved task after approval and fence historical or late poll responses when conversations, tasks or accounts change.
+- Repair a rejected app-generation proposal once with its native validation error under the same provider, schema, original manifest and authority; preserve all native validation and conflict checks. Register immutable `app-generation@3` provenance and test actual private record persistence after a repaired proposal.
+
 ## Strict-provider optional fields — 2026-10-20
 
 - Restore strict OpenAI wire placeholders for omitted optional, non-null fields to absence before native validation. Real public model replies exposed `operations: null` and `lifecycles: null`; required values, explicit nullable fields and intentional dynamic JSON remain unchanged.

@@ -100,8 +100,10 @@ pub(crate) fn input(name: &str) -> Value {
         }
         "merchant.categories" => json!({}),
         "merchant.product.create" => json!({"product":{"type":"object"}}),
-        "merchant.category.create" => json!({"category":{"type":"object"}}),
-        "merchant.category.save" => json!({"id":{"type":"string"},"category":{"type":"object"}}),
+        "merchant.category.create" => json!({"category":categories::input_schema(true)}),
+        "merchant.category.save" => {
+            json!({"id":{"type":"string"},"category":categories::input_schema(false)})
+        }
         "automation.save" => {
             json!({"kind":{"type":"string","enum":["rules","flows","promotions","channels"]},"id":{"type":"string"},"revision":{"type":"integer","minimum":0},"data":{"type":"object"}})
         }

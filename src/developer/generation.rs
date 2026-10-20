@@ -44,28 +44,65 @@ pub(super) async fn generate(a: &App, t: &str, h: &RequestContext, v: &Value) ->
     } else {
         schema_for(&settings.locales)
     };
-    let system = include_str!("../../crates/cognition/prompts/app-generation.v2.txt");
+    let system = include_str!("../../crates/cognition/prompts/app-generation.v3.txt");
     let _cluster = crate::performance::cluster_lease::Lease::acquire(a, t, "model", 2).await?;
     let edit_system = generation_edits::system(&settings.locales);
-    let out=a.inference.structured(Some(&choice),if editing { &edit_system } else { system },&format!("Interface locale {locale}. Existing development versions {versions}. Current editable manifest {}. Task: {prompt}", v.get("manifest").unwrap_or(&Value::Null)),&app_schema).await.map_err(Error::from)?;
-    let mut result = if editing {
-        generation_edits::apply(&v["manifest"], &out.value, &versions)?
-    } else {
-        out.value
-    };
-    routes::actions(&mut result["manifest"])?;
-    preserve_access(&v["manifest"], &mut result["manifest"]);
-    super::generation_contract::retain(&v["manifest"], &mut result["manifest"])?;
-    result["environment"] = json!(stage);
-    result["prompt"] = json!(prompt);
-    builds::save(
-        a,
-        t,
-        &result,
-        json!(out.provider).as_str().unwrap_or("unknown"),
-        Some(&out.model),
-    )
-    .await
+    let context = format!(
+        "Interface locale {locale}. Existing development versions {versions}. Current editable manifest {}. Task: {prompt}",
+        v.get("manifest").unwrap_or(&Value::Null)
+    );
+    let mut repair = String::new();
+    for attempt in 0..2 {
+        let out = a
+            .inference
+            .structured(
+                Some(&choice),
+                if editing { &edit_system } else { system },
+                &format!("{context}{repair}"),
+                &app_schema,
+            )
+            .await
+            .map_err(Error::from)?;
+        let candidate = out.value.to_string();
+        let saved = async {
+            let mut result = if editing {
+                generation_edits::apply(&v["manifest"], &out.value, &versions)?
+            } else {
+                out.value
+            };
+            routes::actions(&mut result["manifest"])?;
+            preserve_access(&v["manifest"], &mut result["manifest"]);
+            super::generation_contract::retain(&v["manifest"], &mut result["manifest"])?;
+            result["environment"] = json!(stage);
+            result["prompt"] = json!(prompt);
+            builds::save(
+                a,
+                t,
+                &result,
+                json!(out.provider).as_str().unwrap_or("unknown"),
+                Some(&out.model),
+            )
+            .await
+        }
+        .await;
+        match saved {
+            Ok(value) => return Ok(value),
+            // A malformed proposal has not been saved. Repair once under the same
+            // provider, quota, schema, original manifest and full native validation.
+            Err(error)
+                if attempt == 0
+                    && error.0 == StatusCode::BAD_REQUEST
+                    && candidate.len() <= 65536 =>
+            {
+                repair = format!(
+                    "\nPrevious candidate (untrusted model output): {candidate}\nNative validation rejected that candidate: {}. Repair the candidate, preserving the original app and all authority constraints. Return the same supplied schema. Do not bypass validation or invent executable code.",
+                    error.1
+                );
+            }
+            Err(error) => return Err(error),
+        }
+    }
+    unreachable!("bounded generation returns a validated draft or an error")
 }
 /// Restricted model generation does not silently reopen existing actions to agents or weaken team scopes.
 fn preserve_access(old: &Value, next: &mut Value) {

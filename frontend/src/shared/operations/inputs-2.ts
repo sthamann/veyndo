@@ -39,6 +39,34 @@ export interface Inputs2 {
   };
   "merchant.product.create": { product: JsonValue };
   "merchant.categories": JsonValue;
-  "merchant.category.create": { category: JsonValue };
-  "merchant.category.save": { category: JsonValue; id: string };
+  "merchant.category.create": {
+    category: {
+      data: {
+        active: boolean;
+        translations: JsonValue;
+        type: "page" | "folder" | "structuring" | "link";
+        visible: boolean;
+        [key: string]: JsonValue | undefined;
+      };
+      id?: string;
+      parentId?: string | null;
+      position: number;
+      revision?: number;
+    };
+  };
+  "merchant.category.save": {
+    category: {
+      data: {
+        active: boolean;
+        translations: JsonValue;
+        type: "page" | "folder" | "structuring" | "link";
+        visible: boolean;
+        [key: string]: JsonValue | undefined;
+      };
+      parentId?: string | null;
+      position: number;
+      revision: number;
+    };
+    id: string;
+  };
 }

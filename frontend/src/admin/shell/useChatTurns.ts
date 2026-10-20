@@ -37,6 +37,7 @@ export function useChatTurns(options: Options) {
   const pendingRequest = useRef<
     { fingerprint: string; id: string } | undefined
   >(undefined);
+  const pollGeneration = useRef(0);
   const latest = useRef(options);
   latest.current = options;
   const [saved, setSaved] = useState<{
@@ -49,35 +50,40 @@ export function useChatTurns(options: Options) {
     id?: string;
     runId: string;
   }>();
-  const runId = [...options.messages].reverse().find((m) => m.data?.runId)?.data
-    .runId as string | undefined;
   const savedRun =
     saved?.scope === options.scope && saved.id === options.id
       ? saved.value
       : undefined;
+  const runId =
+    savedRun?.taskId ??
+    ([...options.messages].reverse().find((m) => m.data?.runId)?.data.runId as
+      string | undefined);
   const active = savedRun?.state === "queued" || savedRun?.state === "running";
   const same = (scope: string, id?: string) =>
     latest.current.scope === scope && latest.current.id === id;
+  const pollVersion = pollGeneration.current;
   useEffect(() => {
     if (!runId || !options.id || !options.connected) return;
     const { scope, id, request } = options;
+    const generation = pollVersion;
+    const current = () =>
+      !cancelled && generation === pollGeneration.current && same(scope, id);
     let cancelled = false;
     let timer: ReturnType<typeof setTimeout> | undefined;
     const poll = async () => {
       try {
         const value: SavedRun = await request(`/api/agent/runs/${runId}`);
-        if (cancelled || !same(scope, id)) return;
+        if (!current()) return;
         setPollError(undefined);
         setSaved({ scope, id, value });
         if (value.state === "queued" || value.state === "running") {
           timer = setTimeout(poll, 1500);
         } else {
           const conversation = await request(`/api/agent/conversations/${id}`);
-          if (!cancelled && same(scope, id))
-            latest.current.setMessages(conversation.messages);
+          if (current()) latest.current.setMessages(conversation.messages);
         }
       } catch {
-        if (!cancelled && same(scope, id)) {
+        if (current()) {
           setPollError({ scope, id, runId });
           timer = setTimeout(poll, 5000);
         }
@@ -94,6 +100,7 @@ export function useChatTurns(options: Options) {
     options.connected,
     options.request,
     runId,
+    pollVersion,
     savedRun?.state === "queued",
   ]);
   const load = async (id: string) => {
@@ -101,6 +108,7 @@ export function useChatTurns(options: Options) {
     const scope = o.scope;
     const value = await o.request(`/api/agent/conversations/${id}`);
     if (latest.current.scope !== scope) return;
+    pollGeneration.current++;
     o.setId(value.conversationId);
     o.setMessages(value.messages);
     setSaved(value.run ? { scope, id, value: value.run } : undefined);
@@ -109,6 +117,7 @@ export function useChatTurns(options: Options) {
   const newChat = () => {
     const o = latest.current;
     pendingRequest.current = undefined;
+    pollGeneration.current++;
     o.setId(undefined);
     o.setMessages([]);
     o.setDraft("");
@@ -148,6 +157,7 @@ export function useChatTurns(options: Options) {
         accepted = true;
         if (!same(scope, originalId)) return;
         pendingRequest.current = undefined;
+        pollGeneration.current++;
         o.setId(value.conversationId);
         o.setMessages(value.messages);
         setSaved({ scope, id: value.conversationId, value: value.run });
@@ -167,7 +177,10 @@ export function useChatTurns(options: Options) {
       `/api/agent/runs/${savedRun.taskId}/${action}`,
       { revision: savedRun.revision, approve: true },
     );
-    if (same(o.scope, o.id)) setSaved({ scope: o.scope, id: o.id, value });
+    if (same(o.scope, o.id)) {
+      pollGeneration.current++;
+      setSaved({ scope: o.scope, id: o.id, value });
+    }
   };
   const progressUnavailable =
     pollError?.scope === options.scope &&
