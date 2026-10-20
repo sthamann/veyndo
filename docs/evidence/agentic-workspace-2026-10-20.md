@@ -283,3 +283,11 @@ in 30 seconds (pod 20 seconds). The native process and all checks remained in
 place. After another complete browser reload, both private app records and the
 completed two-step merchant task were still present; the latter still reported
 **completed actions: 2** and did not require approval again.
+
+
+On the final public image, the conversation's CSV button opens the existing native
+**Build catalogue** dialog with **Agentic Workspace Abnahme 20 Okt** already
+selected. Switching its URL/demo-description tabs retains that private target.
+**Add a document** opens the ordinary localized private knowledge-source editor
+with its PDF/text upload. These are actual entry/navigation checks; no additional
+CSV, URL crawl or demo generation was submitted in this final navigation repeat.

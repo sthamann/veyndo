@@ -30,6 +30,8 @@ never executed by a read tool. App records use the existing shared storage.
 
 ![Contextual assistance in the public synthetic Studio](assets/agent-workspace-20261020/public-context.png)
 
+![CSV, URL and described demo products keep the selected private target](assets/agent-workspace-20261020/public-intake.png)
+
 ## 2. Approve a real sequence of work
 
 In a **private workspace**, ask for a small catalogue, category, Flow or managed
