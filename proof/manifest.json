@@ -1422,13 +1422,13 @@
     },
     "src/agent_runs/work.rs": {
       "status": "unproved",
-      "sha256": "682707f0e9155d261a00978b7c838a7c046f058f378bb07940231e4973a88fdc",
-      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
+      "sha256": "6396db81ec3b3238165363cab200b5b9ec93b00eaecce7167b5a03924cf5ff84",
+      "review": "Independent focused review passed: private exact work approval rebinds outside transactions with locked revision/stop recheck; token-bound late native receipts preserve cancellation and expired leases, no next step after cancellation; stable category IDs validated; actual PostgreSQL direct and one-backend durable/restart/cancel/expiry regressions passed."
     },
     "src/agent_runs/work_plan.rs": {
       "status": "unproved",
-      "sha256": "ea6c57765f595b019015bb14c76590771d918b6a39316b13bd8b09be4ba91e35",
-      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
+      "sha256": "1754a4239342324af6ae6cb7e4e2aae829d2268c770f2da7e2915e3f783629af",
+      "review": "Focused independent review accepted actor-scoped exact approval followed by existing privileged native coordinator for parent-shop stop control, locked parent-before-task CAS, no worker scope/grant widening. Direct and one-backend interruption/cancellation/expiry tests passed; signed-role failure reproduced and coordinator repaired."
     },
     "src/agent_runs/worker.rs": {
       "status": "unproved",
@@ -2332,8 +2332,8 @@
     },
     "src/categories/admin.rs": {
       "status": "unproved",
-      "sha256": "9ef1f57f98ab2ad3a58387591dbb5c6d88f632041f6e66b97dda677d81207362",
-      "review": "Reviewed native source-neutral imports, historical no-purchase effects, scoped job leases/creator/package/digest fences and shared managed-record replay. Independent boundary findings fixed with unknown-field rejection and eight concurrent editor/import cases; actual signed-runtime/source-service/native-checkout tests pass. SQL and external source equivalence remain outside extracted proofs."
+      "sha256": "345f5c5de1ec896b5fe6c452c4f962d606e873c7b61782b10ea2a05574f815e0",
+      "review": "Independent focused review passed: private exact work approval rebinds outside transactions with locked revision/stop recheck; token-bound late native receipts preserve cancellation and expired leases, no next step after cancellation; stable category IDs validated; actual PostgreSQL direct and one-backend durable/restart/cancel/expiry regressions passed."
     },
     "src/categories/graph_query.rs": {
       "status": "unproved",

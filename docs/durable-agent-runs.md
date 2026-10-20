@@ -109,4 +109,10 @@ Cases cover parallel retries, quota-bound retries, HTTP restart, tenant/same-sho
 actor isolation, credential/role withdrawal, cancellation, withdrawal of a separately
 discovered source and synchronous HTTP/MCP errors. Frontend tests cover late
 responses, retained conversations, revision controls and send-success/refresh-failure.
+Approved private work also runs through a real one-backend PgBouncer fixture.
+Paused native category writes exercise cancellation and lease expiry: completed
+effects retain their receipts, cancelled work cannot start step two, and explicit
+continuation does not duplicate step one. A killed managed-save worker verifies
+the atomic app-write/receipt boundary. The signed-runtime fixture repeats these
+paths with separate restricted tenant/system logins.
 No real paid provider, mail, payment or private customer data is used by these tests.

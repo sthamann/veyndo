@@ -70,6 +70,11 @@ domain commands retain their own transaction and stable-ID/CAS checks; a crash
 between that commit and its receipt is uncertain and is never blindly retried.
 Explicit continuation reuses completed receipts. Cancellation and current authority
 are checked before each next step; a cancelled task cannot start another one.
+An already admitted native command may finish after cancellation; its matching
+admission token records the completed step without reviving the task. A late
+completion after lease expiry likewise records its outcome without renewing the
+expired lease. Admission and domain calls do not hold nested connections, including
+when PostgreSQL is reached through a one-backend transaction pool.
 Partial completed work is visible; execution is not one all-or-nothing transaction.
 
 ## 3. Generate and test a complete native app

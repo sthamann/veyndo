@@ -73,9 +73,19 @@ pub(crate) async fn import(a: App, h: RequestContext, id: String, v: Value) -> R
 pub(crate) async fn create(
     State(a): State<App>,
     h: RequestContext,
-    Json(v): Json<Value>,
+    Json(mut v): Json<Value>,
 ) -> Result<Json<Value>> {
-    write(a, h, Uuid::new_v4().to_string(), v, true).await
+    let id = match v.get("id") {
+        None | Some(Value::Null) => Uuid::new_v4().to_string(),
+        Some(Value::String(id)) if apps::identifier(id) || Uuid::parse_str(id).is_ok() => {
+            id.clone()
+        }
+        _ => return Err(bad("Invalid category ID")),
+    };
+    v.as_object_mut()
+        .ok_or(bad("Invalid category edit"))?
+        .remove("id");
+    write(a, h, id, v, true).await
 }
 pub(crate) async fn save(
     State(a): State<App>,

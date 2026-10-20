@@ -72,7 +72,7 @@ pub(crate) async fn bind(a: &App, t: &str, h: &RequestContext, steps: &mut [Step
                 };
                 let id = args[key]["id"]
                     .as_str()
-                    .filter(|id| apps::identifier(id))
+                    .filter(|id| apps::identifier(id) || Uuid::parse_str(id).is_ok())
                     .ok_or(bad("Work creation needs an explicit stable identifier"))?;
                 let exists: bool = if key == "product" {
                     sqlx::query_scalar(
@@ -117,11 +117,12 @@ pub(crate) async fn approve(a: &App, t: &str, id: &str, h: &RequestContext) -> R
             "Personal approval required for work execution".into(),
         ));
     }
-    let mut tx = a.db.begin().await?;
-    let row = sqlx::query("SELECT * FROM tasks WHERE tenant=$1 AND id=$2 FOR UPDATE")
+    // Rebinding uses native owners which acquire their own connection. Do not hold
+    // a transaction while calling them: transaction poolers may have one backend.
+    let row = sqlx::query("SELECT * FROM tasks WHERE tenant=$1 AND id=$2")
         .bind(t)
         .bind(id)
-        .fetch_one(&mut *tx)
+        .fetch_one(&a.db)
         .await?;
     if row.get::<bool, _>("applied") {
         return Ok(json!({"taskId":id,"applied":true,"replayed":true}));
@@ -141,13 +142,6 @@ pub(crate) async fn approve(a: &App, t: &str, id: &str, h: &RequestContext) -> R
         return Err(Error(
             StatusCode::FORBIDDEN,
             "Current permissions no longer cover the reviewed work".into(),
-        ));
-    }
-    let stopped:bool=sqlx::query_scalar("SELECT agents_stopped FROM tenants WHERE id=coalesce((SELECT live_tenant FROM shop_environments WHERE tenant=$1),$1)").bind(t).fetch_one(&mut *tx).await?;
-    if stopped {
-        return Err(Error(
-            StatusCode::FORBIDDEN,
-            "Shop agents are stopped by an administrator".into(),
         ));
     }
     let mut request: Value = row.get("run_request");
@@ -174,6 +168,29 @@ pub(crate) async fn approve(a: &App, t: &str, id: &str, h: &RequestContext) -> R
     bind(a, t, h, &mut steps).await?;
     if reviewed != json!(steps) {
         return Err(conflict("Work targets changed after review"));
+    }
+    // The native coordinator reads the live-shop stop flag outside the private
+    // tenant's SQL visibility, as enqueue/resume do. Actor-scoped reads and exact
+    // rebinding above authorize this one task. Lock live control before its task,
+    // matching the global-stop owner and never widening the worker's data scope.
+    let mut tx = a.db.begin_privileged().await?;
+    let stopped:bool=sqlx::query_scalar("SELECT agents_stopped FROM tenants WHERE id=coalesce((SELECT live_tenant FROM shop_environments WHERE tenant=$1),$1) FOR NO KEY UPDATE").bind(t).fetch_one(&mut *tx).await?;
+    if stopped {
+        return Err(Error(
+            StatusCode::FORBIDDEN,
+            "Shop agents are stopped by an administrator".into(),
+        ));
+    }
+    let revision: i64 =
+        sqlx::query_scalar("SELECT run_revision FROM tasks WHERE tenant=$1 AND id=$2 FOR UPDATE")
+            .bind(t)
+            .bind(id)
+            .fetch_one(&mut *tx)
+            .await?;
+    if revision != row.get::<i64, _>("run_revision") {
+        return Err(conflict(
+            "Work changed while checking approval; reload its current state",
+        ));
     }
     if let Some(conversation) = row.get::<Option<String>, _>("conversation_id") {
         contract::claim_conversation(&mut tx, t, &conversation, id).await?;

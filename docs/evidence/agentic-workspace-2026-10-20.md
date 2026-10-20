@@ -52,3 +52,31 @@ syntax/binding/axiom negative controls. These proofs do not cover the new async
 execution adapters. The complete site build covers 296 Markdown documents in
 303 pages with local links/assets and search checked. No blanket full-platform certification,
 external coding-agent execution or general exactly-once provider guarantee is claimed.
+
+## Final pool and interruption regression
+
+The full native follow-on exposed two nested-connection waits: work approval held
+its task transaction during native rebinding, and native execution held its task
+transaction during the domain owner's write. Both now release that connection
+before the nested owner runs; approval compares the locked task revision and stop
+state again before queueing. Native category creation now preserves validated
+reviewed IDs instead of discarding them.
+
+The actual `durable_agents` suite passes both directly and through PgBouncer with
+one backend. It creates two private categories once, checks live isolation, kills
+a managed-save worker, and resumes without duplicate records. A paused native
+write followed by HTTP cancellation retains one completed receipt while the
+second category remains absent. A paused native write followed by accelerated
+lease expiry retains its outcome without renewing the expired lease. Matching
+admission tokens fence old workers; cancellation remains terminal. Independent
+focused review accepted these receipt and transaction changes.
+
+The same durable cases also pass with the actual separate restricted tenant and
+system logins. This exposed and repaired a parent-shop stop-control read during
+private approval: the existing trusted coordinator now performs only the final
+stop/revision/queue transaction, after actor-scoped authorization and exact
+rebinding. Parent control is locked before the task, matching global stop; worker
+domain access remains under its original scope. No SQL grants or RLS bypass were
+added. Remaining app/provider/native follow-on suites passed locally, including
+app secrets, events, export, signed distribution, shared-storage migration,
+generation, ERP/EDI, marketplaces, shipping, grids and the visual workspace.

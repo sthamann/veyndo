@@ -27,16 +27,16 @@ Supported editor mounts are `admin.product.general`, `admin.product.tab`, `admin
 
 ![Installed product app with persisted data](screenshots/app-product-tab.png)
 
-## Four independent access decisions
+## Four access checks
 
 | Decision | Manifest / enforcement |
 | --- | --- |
 | Who can see/edit the admin module? | Surface permission plus per-action team permission; unreadable blocks disappear and read-only users receive cards instead of editable forms. |
 | Is the data public in the storefront API? | Entity publicRead **and** explicit public list action; authenticated writes remain separate. |
 | Can MCP discover/call this action? | Action mcp flag plus the same team authorization. Omitted mcp retains legacy behavior; new assistants default false. |
-| Can merchant AI use this action as a selected planning tool? | intelligence.tools selection and action authorization; independent of MCP exposure. |
+| Can merchant AI use this action as a selected planning tool? | Action mcp must not be false, intelligence.tools must select it when declared, and current action permissions must admit it. |
 
-The legacy direct entity routes also enforce the matching action scopes. Merchant planning filters app grounding/actions by current rights and rechecks selected actions both when binding a proposal and when committing it; a model cannot invent a disabled tool to bypass the gateway. UI visibility alone grants no backend access. Do not put secrets into records, prompts or manifests.
+The legacy direct entity routes also enforce the matching action scopes. Merchant planning filters app grounding/actions by current rights and rechecks selected actions both when binding a proposal and when committing it; a model cannot invent a disabled tool to bypass the gateway. Explicit MCP/agent opt-out blocks both planning and direct tool calls; ordinary HTTP and visual editors retain their separate current team authorization. UI visibility alone grants no backend access. Do not put secrets into records, prompts or manifests.
 
 ## Events, cron and incoming webhooks
 
