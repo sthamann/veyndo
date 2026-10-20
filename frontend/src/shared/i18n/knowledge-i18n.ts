@@ -6,7 +6,12 @@ import { guardrailWorkspaceWords } from "./guardrail-workspace-i18n";
 import { guardrailWords } from "./guardrail-i18n";
 import { useLocale } from "./i18n";
 export const knowledgeWords = {
-  guidance: ["Merchant instructions", "Händlervorgaben", "Consignes du marchand", "Instrucciones del comerciante"],
+  guidance: [
+    "Merchant instructions",
+    "Händlervorgaben",
+    "Consignes du marchand",
+    "Instrucciones del comerciante",
+  ],
   behavior: behaviorWords.behavior,
   ...cognitiveEventWords,
   ...guardrailWords,
