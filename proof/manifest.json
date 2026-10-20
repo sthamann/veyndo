@@ -627,8 +627,8 @@
     },
     "crates/cognition/src/inference/schema.rs": {
       "status": "unproved",
-      "sha256": "7a36ba806b3bed1aa0b0a435b2284ef1d1b702d356f55e00dfa1f750aa218636",
-      "review": "Reviewed app authority and current creator rights, isolated schemas/RLS and atomic migration rollback, fenced job/event leases, minimized payloads, signature/digest pins, opaque UI grants, pinned DNS egress and bounded Wasm/WIT quote adapters. Actual isolated PostgreSQL own/foreign callback, schema, jobs, events, assets, export, distribution and production-foundation regressions passed. Added extracted package, surface, resource and exact callback-consent policies with negative Lean claims; async/network/UI and general Rust modules remain explicitly unproved."
+      "sha256": "87ea0b078500abfd079cd3f8fce80c86c6f586c1a175c3d1aa042ec08543a551",
+      "review": "Independent focused review: restore strict-provider optional non-null typed placeholders to absence; preserve required and explicitly nullable values, current domain validation and authority. Failing-first null-array regression and actual OpenAI wire fixtures cover planner operations and composed lifecycles."
     },
     "crates/cognition/src/inference/settings.rs": {
       "status": "unproved",

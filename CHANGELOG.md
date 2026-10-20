@@ -1,5 +1,10 @@
 # Changelog
 
+## Strict-provider optional fields — 2026-10-20
+
+- Restore strict OpenAI wire placeholders for omitted optional, non-null fields to absence before native validation. Real public model replies exposed `operations: null` and `lifecycles: null`; required values, explicit nullable fields and intentional dynamic JSON remain unchanged.
+- Add failing-first schema coverage and actual local OpenAI HTTP regressions for merchant planning and complete app composition/private record persistence. Preserve domain authorization, review and publication contracts.
+
 ## Connected agentic workspace — 2026-10-20
 
 - Preserve bounded editor/selection context across merchant conversations and retries; discover relevant installed apps with cursor search and safe native reads rather than alphabetical sampling.

@@ -10,7 +10,7 @@ root = pathlib.Path(__file__).resolve().parents[1]
 root.joinpath('.run').mkdir(exist_ok=True)
 captured = []; checks = []; behavior = {'mode': 'normal'}; inference_started=threading.Event()
 advisor_started=threading.Event();advisor_release=threading.Event()
-proposal = {'summary':'HTTP provider contract test; not live inference.', 'changes':[{'product_id':'lamp','price':71.23}], 'experience':None, 'expected_experience_revision':None}
+proposal = {'summary':'HTTP provider contract test; not live inference.', 'changes':[{'product_id':'lamp','price':71.23}], 'operations':None, 'view':None, 'experience':None, 'expected_experience_revision':None}
 class Handler(BaseHTTPRequestHandler):
     def log_message(self,*args): pass
     def do_POST(self):
