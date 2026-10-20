@@ -3632,6 +3632,10 @@
       "inputSchema": {
         "additionalProperties": false,
         "properties": {
+          "details": {
+            "description": "Explicit bounded product catalogue preview; default comparisons contain no values",
+            "type": "boolean"
+          },
           "options": {
             "additionalProperties": false,
             "properties": {

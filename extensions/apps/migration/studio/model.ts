@@ -25,6 +25,7 @@ export type SourceRecord = {
   warnings: string[];
   data: {
     name?: Record<string, string>;
+    description?: Record<string, string>;
     title?: Record<string, string> | string;
     destination?: {
       amount: number;

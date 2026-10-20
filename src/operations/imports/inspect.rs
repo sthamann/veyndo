@@ -4,6 +4,8 @@ use super::*;
 mod history;
 #[path = "inspect_media.rs"]
 mod media;
+#[path = "inspect_product.rs"]
+mod product;
 pub(crate) async fn route(
     State(a): State<App>,
     h: RequestContext,
@@ -96,9 +98,20 @@ pub(crate) async fn inspect(a: &App, h: &RequestContext, v: &Value) -> Result<Va
     if let Some(actual) = &actual {
         compare(&expected, actual, "", &mut differences);
     }
-    Ok(
-        json!({"id":id,"kind":r.kind,"status":if actual.is_none(){"missing"}else if differences.is_empty(){"matching"}else{"changed"},"differences":differences,"checkedAt":chrono::Utc::now().to_rfc3339(),"comparison":"mapped-current-fields-v1","readOnly":true}),
-    )
+    let mut result = json!({"id":id,"kind":r.kind,"status":if actual.is_none(){"missing"}else if differences.is_empty(){"matching"}else{"changed"},"differences":differences,"checkedAt":chrono::Utc::now().to_rfc3339(),"comparison":"mapped-current-fields-v1","readOnly":true});
+    if r.kind == "products" && v["details"] == true {
+        let (settings, _) = commerce::config(a, &t).await?;
+        let scale = settings
+            .currencies
+            .selected(
+                expected["extra"]["priceCurrency"]
+                    .as_str()
+                    .ok_or(bad("Product currency required"))?,
+            )?
+            .scale;
+        result["preview"] = json!({"expected":product::projection(&expected, scale)?,"actual":actual.as_ref().map(|value| product::projection(value, settings.currencies.selected(value["extra"]["priceCurrency"].as_str().ok_or(bad("Product currency required"))?)?.scale)).transpose()?,"limits":{"locales":16,"textCharacters":4000,"images":8},"publication":"private-preview-not-publication"});
+    }
+    Ok(result)
 }
 /// A sparse expected object asserts only mapped fields. Arrays retain their meaningful order.
 fn compare(expected: &Value, actual: &Value, path: &str, differences: &mut Vec<String>) {

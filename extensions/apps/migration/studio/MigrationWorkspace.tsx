@@ -16,6 +16,7 @@ import useMigrationDesign from "./useMigrationDesign";
 import Target from "./Target";
 import SourceProfile from "./SourceProfile";
 import MigrationSteps from "./MigrationSteps";
+import ProductComparison from "./ProductComparison";
 import ReviewPanel from "./ReviewPanel";
 import Agent from "./Agent";
 import useSourceReview from "./useSourceReview";
@@ -30,6 +31,7 @@ import {
 import "./migration.css";
 export default function MigrationWorkspace({
   request,
+  scopedRequest,
   workspace,
   rights,
   mainLocale,
@@ -37,6 +39,7 @@ export default function MigrationWorkspace({
   onDesign,
 }: {
   request: RequestFn;
+  scopedRequest?: (target: string) => RequestFn;
   workspace: string;
   rights: string[];
   mainLocale: string;
@@ -311,6 +314,19 @@ export default function MigrationWorkspace({
               </button>
               {review && (
                 <ReviewPanel
+                  comparison={
+                    scopedRequest && kind === "products" ? (
+                      <ProductComparison
+                        mainLocale={mainLocale}
+                        review={review}
+                        target={target}
+                        tax={tax}
+                        priceBasis={sourcePriceBasis}
+                        rights={rights}
+                        scopedRequest={scopedRequest}
+                      />
+                    ) : undefined
+                  }
                   review={review}
                   kind={kind}
                   tax={tax}

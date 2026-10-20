@@ -203,6 +203,7 @@ export default function StudioRoutes() {
     />
   ) : tab === "channels" ? (
     <SalesChannelsWorkspace
+      scopedRequest={sandboxRequest}
       key={environment || workspace}
       request={request}
       workspace={environment || workspace}

@@ -15,6 +15,23 @@ assert call('/api/merchant/imports',pbody,sh)['replayed']
 result=inspect(pbody)
 assert result['status']=='changed' and '/commerce/price' in result['differences'] and '/translations/en/description' in result['differences'],result
 assert 'Manual merchant description' not in json.dumps(result)
+# Explicit product previews are current native values, bounded and product-only.
+detail_body={'record':pbody['record'],'options':pbody['options'],'details':True}
+details=call('/api/merchant/imports/inspect',detail_body,sh)
+assert details['preview']['expected']['price']=={'amount':'19.90','currency':'EUR'}
+assert details['preview']['actual']['price']=={'amount':'22.50','currency':'EUR'}
+assert details['preview']['actual']['translations']['en']['description']=='Manual merchant description'
+assert set(details['preview']['actual'])=={'translations','sku','active','parentId','options','price','taxRate','media'},details
+assert 'migrationDigest' not in json.dumps(details['preview'])
+assert call('/api/merchant/imports/inspect',detail_body,fh)['preview']['actual'] is None
+call('/api/merchant/imports/inspect',detail_body,status=401)
+call('/api/merchant/imports/inspect',detail_body,{**h,'x-tenant':b['workspace']},status=403)
+role='migration_no_catalog'
+call('/api/workspace/roles/'+role,{'revision':0,'data':{'name':{'en-GB':'Migration without catalogue'},'active':True,'permissions':['apps.manage','environments.read']}},h,method='PUT')
+invite=call('/api/workspace/invitations',{'role':role,'email':'no-catalog-'+uuid.uuid4().hex[:8]+'@example.test'},h)
+restricted=call('/api/auth/accept',{'name':'Restricted product comparison','password':'Synthetic-fixture-2026!','invitationToken':invite['token']})
+call('/api/merchant/imports/inspect',detail_body,{'Authorization':'Bearer '+restricted['token'],'x-tenant':stage},status=403)
+print('PASS explicit current product preview: native money/text, bounded fields, own/foreign/no-catalogue denial')
 # Comparison must be read-only, including when target and source differ.
 assert call('/api/merchant/products/'+pid,h=sh)['commerce']['price']==22.50
 restored=call('/api/merchant/products/'+pid,h=sh)
