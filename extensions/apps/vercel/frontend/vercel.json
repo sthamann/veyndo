@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    {"source": "/store-api/:path*", "destination": "https://app.veyndo.ai/store-api/:path*"}
+  ]
+}

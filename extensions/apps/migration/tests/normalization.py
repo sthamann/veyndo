@@ -11,6 +11,15 @@ class Normalization(unittest.TestCase):
     def read(self,source,kind,value):
         r=normalize(source,kind,value);self.assertEqual(r.returncode,0,r.stderr)
         return [json.loads(s) for s in r.stdout.splitlines()]
+    def test_shopware6_variant_projection(self):
+        source={'id':'variant','translated':{'name':'Tasse','description':''},'_veyndoPrice':'23.90','stock':8,'active':True,'productNumber':'SW6','parentId':'parent','childCount':0,'media':[],'categories':[],'options':[{'translated':{'name':'Blau'},'group':{'translated':{'name':'Farbe'}}}]}
+        row=self.read('shopware6','products',source)[0]
+        self.assertEqual(row['data']['price']['minor'],2390)
+        self.assertEqual(row['data']['parentSourceId'],'parent')
+        self.assertEqual(row['data']['options'],{'Farbe':'Blau'})
+        self.assertIsNone(row['data']['catalogActive'])
+        source['_veyndoPrice']=None
+        self.assertNotEqual(normalize('shopware6','products',source).returncode,0)
     def test_shopify_variant_money_and_parent(self):
         rows=self.read('shopify','products',{'id':'gid://shopify/Product/1','title':'Keramik','body_html':'<p>Handarbeit</p>','variants':[{'id':11,'title':'Blau','sku':'MUG-B','price':'19.90','inventory_quantity':8}]})
         self.assertEqual(len(rows),1);r=rows[0]

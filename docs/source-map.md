@@ -645,3 +645,12 @@ egress; the existing native catalogue intake owns review, private save and relea
 `frontend/src/admin/channels/AgenticChannels.tsx` owns readiness presentation,
 and `frontend/src/storefront/shell/storefront-actions.ts` shares actual UI and
 optional browser-agent cart commands. [Workflow and boundaries](agentic-commerce.md).
+
+## External services
+
+[Service integrations](service-integrations.md) maps ten user-facing routes to
+the existing app, migration and native API owners. App-owned protocols reside in
+`extensions/apps/{vercel,klaviyo,hubspot,contentful,algolia}/src/`;
+`extensions/services/connectors/src/integrations.rs` hosts their generic queue
+and credential-revision fences. Shopware 6 extraction/normalization stays in
+`extensions/apps/migration/`; Nexus is an HTTP setup recipe only.

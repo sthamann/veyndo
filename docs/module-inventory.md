@@ -600,12 +600,17 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/admin/apps/AppSettings.tsx](../frontend/src/admin/apps/AppSettings.tsx) | Installed settings use the existing encrypted secret owner; secret inputs are write-only and cleared after save. |
 | [frontend/src/admin/apps/AppsManager.tsx](../frontend/src/admin/apps/AppsManager.tsx) | Installed package workspace: lifecycle, generated entities and shared agent actions. |
 | [frontend/src/admin/apps/ConnectorPanel.tsx](../frontend/src/admin/apps/ConnectorPanel.tsx) | Native app workspace: OAuth, provider settings, durable jobs and private sources. |
+| [frontend/src/admin/apps/IntegrationDirectory.tsx](../frontend/src/admin/apps/IntegrationDirectory.tsx) | Ten explicit service routes reuse native app consent or the documented HTTP setup; no fake connected state. |
 | [frontend/src/admin/apps/PaymentManager.tsx](../frontend/src/admin/apps/PaymentManager.tsx) | Payment ledger, adapter readiness and explicit refund approval. |
 | [frontend/src/admin/apps/ProviderAccount.tsx](../frontend/src/admin/apps/ProviderAccount.tsx) | Shared installed-provider onboarding and channel connection controls for merchant Apps and App Studio. |
+| [frontend/src/admin/apps/ServiceIntegrationPanel.tsx](../frontend/src/admin/apps/ServiceIntegrationPanel.tsx) | Revisioned encrypted connection forms and bounded operations on the existing app action gateway. |
 | [frontend/src/admin/apps/app-settings.css](../frontend/src/admin/apps/app-settings.css) | Installed-app configuration remains usable outside the developer workbench. |
 | [frontend/src/admin/apps/app-types.ts](../frontend/src/admin/apps/app-types.ts) | Installed package metadata used by app administration views. |
 | [frontend/src/admin/apps/connector-descriptors.ts](../frontend/src/admin/apps/connector-descriptors.ts) | Shared connector presentation registry; settings and capabilities are owned by each app package. |
+| [frontend/src/admin/apps/integration-directory-text.ts](../frontend/src/admin/apps/integration-directory-text.ts) | Service catalogue capability boundaries in all supported Studio languages. |
 | [frontend/src/admin/apps/library-model.ts](../frontend/src/admin/apps/library-model.ts) | Shared app discovery metadata, safe artwork sources and localized search independent of rendering. |
+| [frontend/src/admin/apps/service-integration-text.ts](../frontend/src/admin/apps/service-integration-text.ts) | Shared connector controls; provider-specific descriptions and field choices stay in app packages. |
+| [frontend/src/admin/apps/service-integrations.ts](../frontend/src/admin/apps/service-integrations.ts) | Installed provider UI capabilities come from their app packages, not an alternate commerce registry. |
 | [frontend/src/admin/assistant/MessageText.tsx](../frontend/src/admin/assistant/MessageText.tsx) | MessageText keeps merchant interaction separate from workspace orchestration. |
 | [frontend/src/admin/assistant/ProposalCard.tsx](../frontend/src/admin/assistant/ProposalCard.tsx) | ProposalCard keeps merchant interaction separate from workspace orchestration. |
 | [frontend/src/admin/assistant/SettingsDialog.tsx](../frontend/src/admin/assistant/SettingsDialog.tsx) | SettingsDialog keeps merchant interaction separate from workspace orchestration. |
@@ -917,6 +922,7 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/admin/styles/operations.css](../frontend/src/admin/styles/operations.css) | Operational screens share the studio's light surface and clear focus states. |
 | [frontend/src/admin/styles/provider-account.css](../frontend/src/admin/styles/provider-account.css) | Shared provider onboarding layout works independently of the lazy-loaded visual App Studio. |
 | [frontend/src/admin/styles/sales-channels.css](../frontend/src/admin/styles/sales-channels.css) | Sales-channel cards, onboarding and scoped settings use the same responsive, accessible Studio design. |
+| [frontend/src/admin/styles/service-integrations.css](../frontend/src/admin/styles/service-integrations.css) | Compact, responsive provider setup and explicit operation feedback. |
 | [frontend/src/admin/styles/settings.css](../frontend/src/admin/styles/settings.css) | Independent settings navigation, grouped native forms and save feedback in Studio theme tokens. |
 | [frontend/src/admin/styles/studio/01-studio.css](../frontend/src/admin/styles/studio/01-studio.css) | studio: studio styles. Source order is preserved by the entry stylesheet. |
 | [frontend/src/admin/styles/studio/02-workspace-switch.css](../frontend/src/admin/styles/studio/02-workspace-switch.css) | studio: workspace-switch styles. Source order is preserved by the entry stylesheet. |
@@ -1263,10 +1269,12 @@ This lists every checked-in source module in these roots, including files with n
 
 | Module | Responsibility |
 |---|---|
+| [extensions/apps/algolia/src/provider.rs](../extensions/apps/algolia/src/provider.rs) | Search projections contain explicit catalogue fields only; commerce remains authoritative in Veyndo. |
 | [extensions/apps/catalog-export/server.py](../extensions/apps/catalog-export/server.py) | Independent, language-neutral export example. Only scoped commerce callbacks; no core SQL or hosted Python dependency. |
 | [extensions/apps/catalog-import/mod.rs](../extensions/apps/catalog-import/mod.rs) | Inbound provider formats belong to this app; reviewed creation and publication remain native Veyndo operations. |
 | [extensions/apps/catalog-import/shop_mcp.rs](../extensions/apps/catalog-import/shop_mcp.rs) | Read-only Shop MCP catalogue connector. Never calls foreign carts, checkout, account, wallet or purchase tools. |
 | [extensions/apps/catalog-import/shopify_csv.rs](../extensions/apps/catalog-import/shopify_csv.rs) | Deterministic Shopify product-export adapter; image-only rows are not products and variant prices/SKUs remain distinct. |
+| [extensions/apps/contentful/src/provider.rs](../extensions/apps/contentful/src/provider.rs) | Contentful reads a bounded, explicitly paged source into the existing knowledge export path. |
 | [extensions/apps/edi/service/callbacks.rs](../extensions/apps/edi/service/callbacks.rs) | Scoped canonical callbacks retain installed digest, consent, actor rights and native app storage ownership. |
 | [extensions/apps/edi/service/config.rs](../extensions/apps/edi/service/config.rs) | Only operator configuration supplies core callback destinations; documents cannot choose URLs or credentials. |
 | [extensions/apps/edi/service/document.rs](../extensions/apps/edi/service/document.rs) | Protocol-neutral requisitions preserve partner identity and SKUs; commerce prices remain native. |
@@ -1299,6 +1307,8 @@ This lists every checked-in source module in these roots, including files with n
 | [extensions/apps/google-analytics/src/actions.rs](../extensions/apps/google-analytics/src/actions.rs) | App-owned connector capabilities and provider settings; shared host supplies tenant-bound storage. |
 | [extensions/apps/google-analytics/src/provider.rs](../extensions/apps/google-analytics/src/provider.rs) | Exact bounded GA4 source rows, quota metadata and stale-report tombstones; no invented causal claims. |
 | [extensions/apps/google-analytics/storefront/ShopAnalytics.tsx](../extensions/apps/google-analytics/storefront/ShopAnalytics.tsx) | Customer consent and real GA4 ecommerce events; absent apps produce no external script. |
+| [extensions/apps/hubspot/src/provider.rs](../extensions/apps/hubspot/src/provider.rs) | Explicit bounded CRM contact upsert; no subscriptions, bulk customer reads or implicit opt-ins. |
+| [extensions/apps/klaviyo/src/provider.rs](../extensions/apps/klaviyo/src/provider.rs) | Klaviyo event ingestion uses a stable unique ID and never enrolls a profile into marketing. |
 | [extensions/apps/marketplaces/service/amazon.rs](../extensions/apps/marketplaces/service/amazon.rs) | Official amazon listing adapter, isolated inside the marketplace app. |
 | [extensions/apps/marketplaces/service/config.rs](../extensions/apps/marketplaces/service/config.rs) | Operator-only destinations and per-tenant credentials; marketplace records can select aliases, never supply secrets or URLs. |
 | [extensions/apps/marketplaces/service/core.rs](../extensions/apps/marketplaces/service/core.rs) | Scoped canonical callbacks retain installed digest, consent, actor rights and native app storage ownership. |
@@ -1336,6 +1346,7 @@ This lists every checked-in source module in these roots, including files with n
 | [extensions/apps/migration/adapters/products.rs](../extensions/apps/migration/adapters/products.rs) | Preserve source variant identity, decimal price and known stock; never invent available inventory. |
 | [extensions/apps/migration/adapters/records.rs](../extensions/apps/migration/adapters/records.rs) | Historical facts remain source claims, without synthesized account, payment, consent or verified-purchase authority. |
 | [extensions/apps/migration/adapters/relations.rs](../extensions/apps/migration/adapters/relations.rs) | Provider relation shapes become explicit source IDs and native option labels, never guessed target IDs. |
+| [extensions/apps/migration/adapters/shopware6.rs](../extensions/apps/migration/adapters/shopware6.rs) | Shopware 6 catalogue projection preserves identities and refuses unresolved inheritance, prices or options. |
 | [extensions/apps/migration/adapters/visibility.rs](../extensions/apps/migration/adapters/visibility.rs) | Source publication/status is distinct from inventory; unsupported direct/search/catalogue visibility must be mapped explicitly. |
 | [extensions/apps/migration/adapters/woo.rs](../extensions/apps/migration/adapters/woo.rs) | A WooCommerce variation snapshot must cover exactly the declared source IDs and concrete attribute combinations. |
 | [extensions/apps/migration/contract/mod.rs](../extensions/apps/migration/contract/mod.rs) | Versioned source identities and exact historical money shared by migration transport and admission. |
@@ -1358,6 +1369,7 @@ This lists every checked-in source module in these roots, including files with n
 | [extensions/apps/migration/service/server.rs](../extensions/apps/migration/service/server.rs) | Private gateway authentication binds every source to its configured tenant and bounds concurrent source reads. |
 | [extensions/apps/migration/service/shopify.rs](../extensions/apps/migration/service/shopify.rs) | Shopify GraphQL preserves scope errors and nested pagination instead of dropping undisclosed records. |
 | [extensions/apps/migration/service/shopware.rs](../extensions/apps/migration/service/shopware.rs) | Shopware list summaries omit historical positions and addresses; bounded detail reads retain original identity. |
+| [extensions/apps/migration/service/shopware6.rs](../extensions/apps/migration/service/shopware6.rs) | Read-only Shopware Admin OAuth/search intake; currency and language are resolved explicitly before product paging. |
 | [extensions/apps/migration/service/slices.rs](../extensions/apps/migration/service/slices.rs) | Variant-expanded source pages are sliced into native-sized immutable batches; changed parent pages cannot shift offsets silently. |
 | [extensions/apps/migration/service/transport.rs](../extensions/apps/migration/service/transport.rs) | Shared address classification, pinned DNS, disabled proxies/redirects and bounded streamed source responses. |
 | [extensions/apps/migration/service/woo.rs](../extensions/apps/migration/service/woo.rs) | Bounded parallel WooCommerce variant reads use fixed source paths, pinned transport and exact parent-declared IDs. |
@@ -1521,6 +1533,8 @@ This lists every checked-in source module in these roots, including files with n
 | [extensions/apps/storyfront/studio/storyfront-model.ts](../extensions/apps/storyfront/studio/storyfront-model.ts) | Passive operator URLs contain no browser credential; the destination editor authorizes its own owner. |
 | [extensions/apps/storyfront/studio/storyfronts.css](../extensions/apps/storyfront/studio/storyfronts.css) | Tenant-bound Experience cards share Studio tokens and keep long hostnames inside mobile columns. |
 | [extensions/apps/storyfront/ui.html](../extensions/apps/storyfront/ui.html) | Independent app entry; see extensions/README.md for its public contract. |
+| [extensions/apps/vercel/frontend/client.ts](../extensions/apps/vercel/frontend/client.ts) | Stateless headless Store API client: every cart token is explicit and no merchant credential is accepted. |
+| [extensions/apps/vercel/src/provider.rs](../extensions/apps/vercel/src/provider.rs) | Vercel Deploy Hooks accept a deployment request; they do not prove deployment success. |
 | [extensions/budget-reserve.wat](../extensions/budget-reserve.wat) | Keep EUR 100 of the supplied budget unused. Inputs are integer cents. |
 | [extensions/company-limit.wat](../extensions/company-limit.wat) | Independent app entry; see extensions/README.md for its public contract. |
 | [extensions/minimum-order.wat](../extensions/minimum-order.wat) | Business orders must reach EUR 50 and stay inside the supplied budget. |
@@ -1536,6 +1550,8 @@ This lists every checked-in source module in these roots, including files with n
 | [extensions/services/connectors/src/error.rs](../extensions/services/connectors/src/error.rs) | Sanitized failures distinguish explicit rejection from ambiguous external side effects. |
 | [extensions/services/connectors/src/events.rs](../extensions/services/connectors/src/events.rs) | One bounded event envelope feeds existing durable, idempotent connector queues; no parallel scheduler. |
 | [extensions/services/connectors/src/exports.rs](../extensions/services/connectors/src/exports.rs) | Tenant-scoped encrypted knowledge records and bounded monotonic exports preserve importer fences. |
+| [extensions/services/connectors/src/integrations/settings.rs](../extensions/services/connectors/src/integrations/settings.rs) | Existing encrypted connector configuration remains the single provider credential owner. |
+| [extensions/services/connectors/src/integrations.rs](../extensions/services/connectors/src/integrations.rs) | API-key app hosting reuses encrypted connector settings, durable jobs and live configuration fences. |
 | [extensions/services/connectors/src/legacy.rs](../extensions/services/connectors/src/legacy.rs) | Explicit offline SQLite export import: all records are rebound/encrypted atomically; ambiguous jobs stay uncertain. |
 | [extensions/services/connectors/src/mod.rs](../extensions/services/connectors/src/mod.rs) | Language-neutral app HTTP contract backed by a Rust-only standard connector runtime. |
 | [extensions/services/connectors/src/network.rs](../extensions/services/connectors/src/network.rs) | Fixed provider endpoints, no redirects, bounded response streaming and loopback-only fixture overrides. |
@@ -1546,6 +1562,8 @@ This lists every checked-in source module in these roots, including files with n
 | [extensions/services/connectors/src/store.rs](../extensions/services/connectors/src/store.rs) | PostgreSQL transactions carry local RLS context; config mutation serializes with in-flight delivery. |
 | [extensions/services/connectors/src/tests.rs](../extensions/services/connectors/src/tests.rs) | Actual Rust parsers, encryption and template consumers reject escalation/injection and preserve language behavior. |
 | [extensions/services/connectors/src/worker.rs](../extensions/services/connectors/src/worker.rs) | Distributed delivery workers fence settings and leases, retry only proven rejection, and drain on shutdown. |
+| [extensions/services/connectors/tests/integration_contracts.rs](../extensions/services/connectors/tests/integration_contracts.rs) | Provider projections reject arbitrary endpoints and preserve asynchronous acceptance semantics. |
+| [extensions/services/connectors/tests/integrations.py](../extensions/services/connectors/tests/integrations.py) | Actual provider requests and native action admission using the existing Rust multi-worker fixture. |
 | [extensions/single-order-cap.wat](../extensions/single-order-cap.wat) | Limit any individual business purchase to EUR 250, within its budget. |
 
 ## Verification tools and fixtures

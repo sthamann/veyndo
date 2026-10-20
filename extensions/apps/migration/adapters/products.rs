@@ -1,6 +1,9 @@
 //! Preserve source variant identity, decimal price and known stock; never invent available inventory.
 use super::*;
 pub fn normalize(c: &Context, v: &Value) -> Result<Vec<Record>> {
+    if c.source == Source::Shopware6 {
+        return super::shopware6::product(c, v);
+    }
     let parent = id(v, &["id", "sku"])?;
     if c.source == Source::Woocommerce
         && v["type"]

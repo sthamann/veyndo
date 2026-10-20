@@ -13,7 +13,7 @@
 [![Working prototype](https://img.shields.io/badge/status-working_prototype-189EFF)](#current-boundaries)
 [![Sustainable Use License](https://img.shields.io/badge/license-Sustainable_Use-189EFF)](LICENSE)
 
-[Try one complete round](docs/first-tour.md) · [Watch the tours](docs/video-tours.md) · [First contributions](docs/early-contributors.md) · [Feature guide](docs/features.md) · [Architecture](docs/production-architecture.md) · [Documentation](https://veyndo.ai/docs/)
+[Try one complete round](docs/first-tour.md) · [Watch the tours](docs/video-tours.md) · [First contributions](docs/early-contributors.md) · [Feature guide](docs/features.md) · [Architecture](docs/production-architecture.md) · [Integrations](docs/service-integrations.md) · [Documentation](https://veyndo.ai/docs/)
 
 </div>
 
@@ -78,7 +78,7 @@ for verification tooling. Run `./scripts/dev.sh` and open
 | POS, B2B, EDI and marketplaces | [POS](docs/pos.md) · [B2B](docs/b2b-commerce.md) · [EDI](docs/edi.md) · [Marketplaces](docs/marketplaces.md) |
 | Apps, settings, storage and private releases | [App platform](docs/app-platform.md) · [Build five apps](docs/app-tutorials/README.md) · [Shared storage](docs/app-data-storage.md) |
 | Agents and shared operations | [Connections](docs/connectors.md) · [Agent identities & limits](docs/agent-authority-controls.md) · [MCP workshop](docs/agent-workshop.md) · [UCP B2B](docs/b2b-ucp-negotiation.md) |
-| Operation and verification | [Architecture](docs/production-architecture.md) · [Testing](docs/testing.md) · [Proof boundaries](docs/formal-verification.md) |
+| Operation and verification | [Architecture](docs/production-architecture.md) · [Integrations](docs/service-integrations.md) · [Testing](docs/testing.md) · [Proof boundaries](docs/formal-verification.md) |
 
 The [handbook on veyndo.ai](https://veyndo.ai/docs/) follows seven ordered chapters,
 with full-text search and article navigation. Technical articles retain their

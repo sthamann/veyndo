@@ -10,13 +10,17 @@ const sources = [
   "prestashop",
   "magento2",
   "shopware5",
+  "shopware6",
 ] as const;
 export default function Connection({ request }: { request: RequestFn }) {
+  const requestedSource =
+    new URLSearchParams(location.search).get("migrationSource") ?? "";
+  const sourceHint = sources.find((s) => s === requestedSource);
   const t = useMigrationText();
   const [values, setValues] = useState<
       Record<string, string | number | boolean>
     >({
-      system: "shopify",
+      system: sourceHint ?? "shopify",
       origin: "",
       version: "",
       token: "",
@@ -44,6 +48,7 @@ export default function Connection({ request }: { request: RequestFn }) {
           setBinding(v);
           setValues((old) => {
             const next = { ...old, ...v.values, token: "", export_token: "" };
+            if (v.revision === 0 && sourceHint) next.system = sourceHint;
             if (!next.export_manifest) delete next.export_manifest;
             return next;
           });

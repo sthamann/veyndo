@@ -27,8 +27,27 @@ impl Store {
         checked(
             state["settings"] == *settings
                 && state["revision"] == *revision
-                && state["tokens"].is_object(),
+                && (state["tokens"].is_object()
+                    || (a == "contentful"
+                        && state["settings"]["enabled"] == true
+                        && !text(&state["credentials"], "apiKey").is_empty())),
             "Connection or settings changed during import",
+        )?;
+        let ids = records.iter().map(|r| text(r, "id")).collect::<Vec<_>>();
+        checked(
+            ids.iter().collect::<std::collections::HashSet<_>>().len() == ids.len(),
+            "Duplicate knowledge source identities",
+        )?;
+        let count: i64 =
+            sqlx::query_scalar("SELECT count(*) FROM connector_sources WHERE tenant=$1 AND app=$2")
+                .bind(t)
+                .bind(a)
+                .fetch_one(&mut *tx)
+                .await?;
+        let added:i64=sqlx::query_scalar("SELECT count(*) FROM unnest($3::text[]) AS candidate WHERE NOT EXISTS(SELECT 1 FROM connector_sources WHERE tenant=$1 AND app=$2 AND id=candidate)").bind(t).bind(a).bind(&ids).fetch_one(&mut *tx).await?;
+        checked(
+            count + added <= 2000,
+            "Knowledge source capacity reached; narrow scope or reset the connection",
         )?;
         for r in records {
             let id = text(r, "id");

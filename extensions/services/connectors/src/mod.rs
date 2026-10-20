@@ -8,6 +8,7 @@ mod email;
 mod error;
 mod events;
 mod exports;
+mod integrations;
 mod legacy;
 mod network;
 mod oauth;
@@ -28,7 +29,17 @@ pub use server::run;
 use sqlx::{PgPool, Row};
 use std::{env, sync::Arc, time::Duration};
 use store::Store;
-const APPS: [&str; 4] = ["email", "gmail", "google_analytics", "slack"];
+const APPS: [&str; 9] = [
+    "email",
+    "gmail",
+    "google_analytics",
+    "slack",
+    "vercel",
+    "klaviyo",
+    "hubspot",
+    "contentful",
+    "algolia",
+];
 fn digest(value: &[u8]) -> String {
     use sha2::{Digest, Sha256};
     format!("{:x}", Sha256::digest(value))
@@ -43,3 +54,7 @@ fn checked(condition: bool, message: &'static str) -> Result<()> {
         Err(Error::Invalid(message))
     }
 }
+
+#[cfg(test)]
+#[path = "../tests/integration_contracts.rs"]
+mod integration_contracts;

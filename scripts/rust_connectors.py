@@ -6,6 +6,8 @@ from cryptography.fernet import Fernet
 from http.server import BaseHTTPRequestHandler,ThreadingHTTPServer
 from email_tests import http,SMTP,Contracts
 from testing.runtime import ROOT,serve,stop
+import importlib.util
+spec=importlib.util.spec_from_file_location("integration_contracts",ROOT/"extensions/services/connectors/tests/integrations.py");integration_contracts=importlib.util.module_from_spec(spec);spec.loader.exec_module(integration_contracts)
 
 def port():
  with socket.socket() as s:s.bind(('127.0.0.1',0));return s.getsockname()[1]
@@ -29,6 +31,9 @@ class Wire(BaseHTTPRequestHandler):
   self.server.calls.append((self.path,body,dict(self.headers)))
   path=urllib.parse.urlsplit(self.path).path
   code=200;value={}
+  integration=integration_contracts.wire(path,body,self.headers,self.server.calls)
+  if integration is not None:
+   code,value=integration;raw=json.dumps(value).encode();self.send_response(code);self.send_header("Content-Length",str(len(raw)));self.send_header("Retry-After","1");self.end_headers();self.wfile.write(raw);return
   if path.endswith('/emails') or path.endswith('/mail/send'):
    key=self.headers.get('Idempotency-Key','');mode=json.loads(body).get('subject','')
    code=429 if mode=='rate-limit' else 503 if mode=='ambiguous' else 200
@@ -55,10 +60,10 @@ with tempfile.TemporaryDirectory(prefix='veyndo-rust-connectors-') as directory:
  threading.Thread(target=provider.serve_forever,daemon=True).start()
  try:
   gateway='fixture-gateway-'+uuid.uuid4().hex;key=base64.urlsafe_b64encode(bytes([7])*32).decode();p1,p2=port(),port();base='http://127.0.0.1:'+str(port());origin='http://127.0.0.1:'+str(provider.server_port)
-  mappings={a:{'url':f'http://127.0.0.1:{p1}/{a}','token':gateway} for a in ('email','gmail','google_analytics','slack')}
+  mappings={a:{'url':f'http://127.0.0.1:{p1}/{a}','token':gateway} for a in ('email','gmail','google_analytics','slack')+integration_contracts.APPS}
   env={**os.environ,'BIND_ADDR':base.removeprefix('http://'),'APP_SERVICES':json.dumps(mappings),'PROCESS_ROLE':'all'}
   log=open(directory+'/core.log','w');logs.append(log);core=serve(env,base,log)
-  ce={**env,'CONNECTOR_GATEWAY_TOKEN':gateway,'CONNECTOR_SECRET_KEY':key,'CONNECTOR_DATABASE_URL':env['DATABASE_URL'],'CONNECTOR_PUBLIC_URL':f'http://127.0.0.1:{p1}','GOOGLE_CLIENT_ID':'synthetic-google','GOOGLE_CLIENT_SECRET':'synthetic-secret','SLACK_CLIENT_ID':'synthetic-slack','SLACK_CLIENT_SECRET':'synthetic-secret','CONNECTOR_TEST_ENDPOINTS':json.dumps({n:origin+('/token' if n=='google_token' else '/oauth.v2.access' if n=='slack_token' else '/global' if n=='sendgrid' else '/eu' if n=='sendgrid_eu' else '') for n in ('resend','sendgrid','sendgrid_eu','google_token','gmail','analytics','slack','slack_token')}),'CONNECTOR_TENANT_DAILY':'20','EMAIL_TEST_SMTP':'1','EMAIL_TLS_CA_FILE':Contracts.folder.name+'/ca.pem'}
+  ce={**env,'CONNECTOR_GATEWAY_TOKEN':gateway,'CONNECTOR_SECRET_KEY':key,'CONNECTOR_DATABASE_URL':env['DATABASE_URL'],'CONNECTOR_PUBLIC_URL':f'http://127.0.0.1:{p1}','GOOGLE_CLIENT_ID':'synthetic-google','GOOGLE_CLIENT_SECRET':'synthetic-secret','SLACK_CLIENT_ID':'synthetic-slack','SLACK_CLIENT_SECRET':'synthetic-secret','CONNECTOR_TEST_ENDPOINTS':json.dumps({n:origin+('/token' if n=='google_token' else '/oauth.v2.access' if n=='slack_token' else '/global' if n=='sendgrid' else '/eu' if n=='sendgrid_eu' else '') for n in ('resend','sendgrid','sendgrid_eu','google_token','gmail','analytics','slack','slack_token','vercel','hubspot','klaviyo','contentful','algolia')}),'CONNECTOR_TENANT_DAILY':'20','EMAIL_TEST_SMTP':'1','EMAIL_TLS_CA_FILE':Contracts.folder.name+'/ca.pem'}
   unsafe=subprocess.run([str(ROOT/'target/debug/connectors'),'--import-legacy'],input=json.dumps({'format':1,'configs':[],'jobs':[],'sources':[],'changes':[]}),text=True,env={**ce,'DB_RLS_REQUIRED':'true'},capture_output=True)
   assert unsafe.returncode!=0
   runtime_role='connector_runtime_'+uuid.uuid4().hex[:10];password=uuid.uuid4().hex
@@ -141,6 +146,7 @@ with tempfile.TemporaryDirectory(prefix='veyndo-rust-connectors-') as directory:
   assert not http(base+'/api/knowledge/external',headers=oh)['elements']
   evidence=http(base+'/mcp',{'jsonrpc':'2.0','id':1,'method':'tools/call','params':{'name':'knowledge.external','arguments':{'query':'RAC-42'}}},h)
   assert 'RAC-42' in json.dumps(evidence)
+  integration_contracts.verify(call,http,base,shops,provider,wait,sql,services,p1,p2,direct)
   # Actual Rust STARTTLS, implicit TLS and lost DATA-acceptance outcomes.
   for implicit,security in [(False,'starttls'),(True,'tls')]:
    Contracts.smtp.implicit=implicit

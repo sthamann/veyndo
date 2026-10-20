@@ -1,6 +1,49 @@
 /** App library vocabulary and built-in summaries; no inferred connection or payment readiness. */
 import { useLocale } from "./i18n";
 export const libraryWords = {
+  advancedConnection: [
+    "Advanced connection & diagnostics",
+    "Erweiterte Verbindung & Diagnose",
+    "Connexion avancée et diagnostic",
+    "Conexión avanzada y diagnóstico",
+  ],
+  advancedConnectionHint: [
+    "These keys connect the app service to Veyndo. Configure the provider credential in the connection form above.",
+    "Diese Schlüssel verbinden den App-Dienst mit Veyndo. Den Anbieterzugang konfigurierst du oben im Verbindungsformular.",
+    "Ces clés relient le service à Veyndo. Configurez l’accès fournisseur dans le formulaire ci-dessus.",
+    "Estas claves conectan el servicio con Veyndo. Configura la clave del proveedor en el formulario superior.",
+  ],
+  vercel: [
+    "Connect your headless frontend and request a new deployment through a private Deploy Hook.",
+    "Verbinde dein Headless-Frontend und fordere über einen privaten Deploy-Hook eine Bereitstellung an.",
+    "Connectez votre frontend et demandez un déploiement via un Deploy Hook privé.",
+    "Conecta tu frontend y solicita un despliegue con un Deploy Hook privado.",
+  ],
+  klaviyo: [
+    "Send explicit events without subscribing customers to marketing.",
+    "Übertrage gezielte Ereignisse, ohne Kunden für Marketing anzumelden.",
+    "Envoyez des événements sans inscrire les clients au marketing.",
+    "Envía eventos sin suscribir clientes a marketing.",
+  ],
+  hubspot: [
+    "Create or update an explicitly selected CRM contact with protected customer-data permissions.",
+    "Lege gezielt CRM-Kontakte an oder aktualisiere sie mit geschützten Kundendatenrechten.",
+    "Créez ou modifiez des contacts CRM avec des droits protégés.",
+    "Crea o actualiza contactos CRM con permisos de datos protegidos.",
+  ],
+  contentful: [
+    "Read published content into shop knowledge in bounded pages. Storefront publishing remains separate.",
+    "Übernimm veröffentlichte Inhalte seitenweise ins Shopwissen. Die Shop-Veröffentlichung bleibt ein eigener Schritt.",
+    "Importez les contenus publiés dans les connaissances. La publication boutique reste séparée.",
+    "Importa contenidos publicados al conocimiento. La publicación en la tienda es independiente.",
+  ],
+  algolia: [
+    "Send bounded catalogue projections to search. Veyndo still calculates prices, inventory and checkout.",
+    "Übertrage begrenzte Katalogdaten zur Suche. Preise, Bestand und Checkout berechnet weiter Veyndo.",
+    "Envoyez le catalogue à la recherche. Veyndo conserve les prix, stocks et commandes.",
+    "Envía el catálogo al buscador. Veyndo conserva precios, existencias y compra.",
+  ],
+
   marketplaces: [
     "Amazon, eBay and Kaufland: dedicated channels, custom offers, field mapping and native order import.",
     "Amazon, eBay und Kaufland: eigene Kanäle, angepasste Angebote, Feldzuordnung und Bestellimport.",

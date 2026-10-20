@@ -165,10 +165,10 @@ const words = {
     "Credencial de lectura",
   ],
   username: [
-    "API username / consumer key (when required)",
-    "API-Benutzer / Consumer Key (falls benötigt)",
-    "Utilisateur API / clé consommateur (si nécessaire)",
-    "Usuario API / clave consumidor (si necesario)",
+    "API username / consumer key / Shopware access ID",
+    "API-Benutzer / Consumer Key / Shopware-Zugangs-ID",
+    "Utilisateur API / clé consommateur / identifiant Shopware",
+    "Usuario API / clave consumidor / ID de acceso Shopware",
   ],
   currency: [
     "Source currency",

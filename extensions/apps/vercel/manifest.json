@@ -1,0 +1,204 @@
+{
+  "id": "vercel",
+  "version": "1.0.0",
+  "coreApi": "1",
+  "runtime": "service",
+  "name": {
+    "en": "Vercel",
+    "de": "Vercel",
+    "fr": "Vercel",
+    "es": "Vercel"
+  },
+  "category": "design",
+  "presentation": {
+    "description": {
+      "en": "Connect your headless frontend and request a new deployment through a private Deploy Hook.",
+      "de": "Verbinde dein Headless-Frontend und fordere über einen privaten Deploy-Hook eine Bereitstellung an.",
+      "fr": "Connectez votre frontend et demandez un déploiement via un Deploy Hook privé.",
+      "es": "Conecta tu frontend y solicita un despliegue con un Deploy Hook privado."
+    }
+  },
+  "permissions": [
+    "service.call"
+  ],
+  "entities": [],
+  "slots": [],
+  "events": [],
+  "actions": [
+    {
+      "name": "status",
+      "description": "Vercel status",
+      "handler": "service",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      },
+      "public": false,
+      "readOnly": true,
+      "permission": "apps.manage",
+      "mcp": true,
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "revision": {
+            "type": "integer"
+          },
+          "settings": {
+            "type": "object"
+          },
+          "credentialConfigured": {
+            "type": "boolean"
+          },
+          "jobs": {
+            "type": "array",
+            "maxItems": 30,
+            "items": {
+              "type": "object"
+            }
+          }
+        },
+        "required": [
+          "revision",
+          "settings",
+          "credentialConfigured",
+          "jobs"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "configure",
+      "description": "Vercel configure",
+      "handler": "service",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "revision": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "settings": {
+            "type": "object",
+            "properties": {
+              "enabled": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "enabled"
+            ],
+            "additionalProperties": false
+          },
+          "credentials": {
+            "type": "object",
+            "properties": {
+              "apiKey": {
+                "type": "string",
+                "maxLength": 4000
+              }
+            },
+            "required": [],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "revision",
+          "settings"
+        ],
+        "additionalProperties": false
+      },
+      "public": false,
+      "readOnly": false,
+      "permission": "apps.manage",
+      "mcp": true,
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "revision": {
+            "type": "integer"
+          },
+          "settings": {
+            "type": "object"
+          },
+          "credentialConfigured": {
+            "type": "boolean"
+          },
+          "jobs": {
+            "type": "array",
+            "maxItems": 30,
+            "items": {
+              "type": "object"
+            }
+          },
+          "purgeSources": {
+            "type": "boolean"
+          },
+          "exportCursor": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "revision",
+          "settings",
+          "credentialConfigured",
+          "jobs"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "run",
+      "description": "Vercel run",
+      "handler": "service",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "requestKey": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "input": {
+            "type": "object",
+            "properties": {},
+            "required": [],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "requestKey",
+          "input"
+        ],
+        "additionalProperties": false
+      },
+      "public": false,
+      "readOnly": false,
+      "permission": "apps.manage",
+      "mcp": true,
+      "flowAllowed": true,
+      "requiredPermissions": [],
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "jobId": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "accepted"
+            ]
+          }
+        },
+        "required": [
+          "jobId",
+          "state"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ]
+}

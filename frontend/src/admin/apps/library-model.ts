@@ -13,6 +13,12 @@ export const categories = [
   "operations",
 ] as const;
 export const builtIns = [
+  { id: "vercel", name: "Vercel", category: "design", icon: "globe" },
+  { id: "klaviyo", name: "Klaviyo", category: "operations", icon: "chat" },
+  { id: "hubspot", name: "HubSpot", category: "operations", icon: "people" },
+  { id: "contentful", name: "Contentful", category: "ai", icon: "layers" },
+  { id: "algolia", name: "Algolia", category: "api", icon: "search" },
+
   {
     id: "marketplaces",
     name: "Marketplace Studio",
