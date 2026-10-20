@@ -21,8 +21,13 @@ offers explicit version reload, preserving ordinary unsaved-change checks.
 `vendune-migrate` runs `/app/veyndo` with `BOOTSTRAP_MODE=migrate`, without
 operator credentials or demo seeding. It inherits only the existing private
 PostgreSQL URI from `vendune-runtime`. Migration ledger/checksums and the database
-migration lock remain authoritative. Do not edit a released migration: add a new
-one. Use expand/contract schema changes while the previous version is serving.
+migration lock remain authoritative. The existing maintenance job now starts with
+a bounded health check against its configured `QDRANT_URL` (5-second connect,
+10-second request, two retries), then `exec /app/veyndo`. This follows two observed
+initial network timeouts; a later retry and the unchanged native namespace/database
+checks succeeded. The guard is fail-closed and uses no new endpoint, credential
+or service. [20 October rollout evidence](evidence/agentic-workspace-2026-10-20.md#final-shared-renderer-rollout).
+Do not edit a released migration: add a new one. Use expand/contract schema changes while the previous version is serving.
 A database backup is not automatic rollback: restore is an operator decision,
 and backward-incompatible changes require a staged rollout. Release backups are
 additional to the daily seven-day retention schedule; manage their retention as

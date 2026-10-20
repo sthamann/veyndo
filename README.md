@@ -31,18 +31,18 @@ public acceptance are recorded separately.
 
 | Work | What connects it |
 | --- | --- |
-| **Ask, review, act** | Contextual assistance, relevant app discovery, reviewed private work and durable action progress use the same native owners. [AI workspace](docs/agentic-workspace.md). |
+| **Ask, review, act** | Start from the selected product, describe the work, review private steps and follow saved progress. App discovery, editable grid filters and explicit merchant preferences stay connected. [AI workspace](docs/agentic-workspace.md). |
 | **Bring your shop** | The [Migration Assistant](docs/agentic-migration.md) connects versioned source profiles, saved background inspection, readable variant review and native imports into private previews. Current implementation and open domains are documented separately. |
-| **Build the business** | App Studio, visual editing and coding agents share versioned app definitions, typed records and bounded actions. [App Studio](docs/app-studio.md), [native object extensions](docs/app-core-extensions.md), [order and quote workflows](docs/app-native-lifecycles.md). |
+| **Build the business** | Ask for a coherent app with its own data, settings and interface; test real records privately before adoption. Visual editing and coding agents share its versioned definition. [App Studio](docs/app-studio.md), [native object extensions](docs/app-core-extensions.md), [order and quote workflows](docs/app-native-lifecycles.md). |
 | **Shape the shop** | Design standard storefront pages on the actual preview; use original Storyfront for connected Experiences. [Visual design](docs/personal-workspace-and-shop-design.md). |
 | **Automate the work** | Rules, events, durable Flows and app actions reuse native business operations. [Automation](docs/automation.md). |
 | **Stay in control** | Current roles, private sandboxes, immutable versions and selected publication govern changes. [Security](docs/security.md). |
 
-[![Veyndo Studio: native orders and agentic filters](docs/assets/launch-20261014/agentic-orders.jpg)](docs/agentic-grids.md)
+[![Veyndo Studio: a real agent request opens an editable native product filter](docs/assets/agent-workspace-20261020/public-grid.png)](docs/agentic-workspace.md)
 
 Screenshots use synthetic shops; payments are simulated. Recordings retain their
 capture dates and are edited for readability, not performance measurements.
-[Watch the tours](docs/video-tours.md) · [Screenshot provenance](docs/assets/launch-20261014/README.md).
+[Watch the tours](docs/video-tours.md) · [Current screenshot and acceptance](docs/agentic-workspace.md#verification-and-extension) · [Tour provenance](docs/assets/launch-20261014/README.md).
 
 ## Try one complete round
 

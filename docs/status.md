@@ -9,8 +9,8 @@ domains in a review-gated page sequence. Native current-field comparison detects
 missing records, changed prices/text and image associations. Private page intents
 and bounded reports survive technical job archival and service restart; a changed
 result does not authorize repair or cutover. Local synthetic acceptance is separate
-from the still-pending public migration-service acceptance. Core/Studio source
-`b13aedb` is deployed after migration 106; the separate service image is published,
+from the still-pending public migration-service acceptance. Migration 106 was deployed with Core/Studio `b13aedb`; the current Core/Studio
+release is `b0811f8` (20 October, see the workspace section). The separate service image is published,
 but its hosted gateway/callback configuration and public migration journey remain
 open. Native completion evidence is now
 atomically sealed under current job/creator/package/lease/CAS checks; raw edited
@@ -26,17 +26,16 @@ complete shop migration/cutover. [Scope and evidence](agentic-migration.md).
 
 ## 20 October: design onboarding and readable product comparison
 
-Prepared in the implementation branch: guided native private-workspace/package
+Merged and included in Core/Studio `34e272b`: guided native private-workspace/package
 setup with return to the selected design tool, plus original/mapped/current
 product comparison. The local native migration suite and 706 frontend regressions
-passed; browser acceptance uses a separate synthetic local shop. This entry does
-not establish public deployment or hosted migration-service readiness. [Local acceptance evidence](evidence/design-migration-2026-10-20.md). See
+passed; browser acceptance uses a separate synthetic local shop. The deployment does not establish a complete hosted migration-service journey. [Local acceptance evidence](evidence/design-migration-2026-10-20.md). See
 [shop design](personal-workspace-and-shop-design.md) and
 [migration review](agentic-migration.md).
 
 ## 20 October: service integration implementation
 
-The implementation branch adds five bounded Rust provider apps (Vercel, Klaviyo,
+Merged in PR #172 and included in Core/connector `34e272b`: five bounded Rust provider apps (Vercel, Klaviyo,
 HubSpot, Contentful, Algolia), a Shopware 6 product reader into native private
 imports, and ten discoverable integration routes reusing existing Shopify,
 WooCommerce and Slack owners. Nexus uses a documented HTTP-action recipe.
@@ -47,12 +46,21 @@ and [local evidence](evidence/service-integrations-2026-10-20.md).
 
 ## 20 October: connected agentic workspace
 
-The implementation branch adds typed editor context, relevance/cursor app discovery,
+Merged in PR #172 and deployed as Core/Studio `34e272b`: typed editor context, relevance/cursor app discovery,
 reviewed private multi-step native work with durable action progress, complete app
 composition and real proposal preview, editable grid handoffs, current-right work
 suggestions and versioned private merchant guidance. Configuration work remains in
 private environments; arbitrary service calls and publication retain their native
-owners. Local verification and public rollout are separate. [User guide](agentic-workspace.md)
+owners. Full CI passed 102 registered suites, 718 frontend and 298 Rust tests.
+Public context/intake, current private guidance recall, current-stock work cards
+and editable product-grid handoff are checked. Real model output exposed optional
+strict-wire placeholders, untyped category inputs and invalid app layout. The
+shared wire correction passed full CI and merged in PR #173. The follow-on
+`458ead3` / PR #174 adds native plan admission, current-task progress fences and
+one bounded app proposal repair. The configured public model completed both category steps with saved progress
+after reload; generated app 0.2.0 saved English/German private records, and selected
+package publication/configuration also passed. The required final combined check
+and optional-title renderer correction are recorded separately in the evidence below. [User guide](agentic-workspace.md)
 and [acceptance evidence](evidence/agentic-workspace-2026-10-20.md).
 
 ## Start with a complete journey
@@ -62,7 +70,7 @@ and [acceptance evidence](evidence/agentic-workspace-2026-10-20.md).
 3. [Review a sandbox and selected publication](workbench.md).
 4. [Understand the connected architecture](production-architecture.md).
 
-## Latest accepted delivery
+## Accepted commerce journeys
 
 The [inward agentic-commerce change](agentic-commerce.md) adds native UCP Cart
 Transfer, optional explicit buyer consent, inward Shopify CSV/Shop MCP catalogue
@@ -134,7 +142,17 @@ results; hosted service deployment and whole-shop cutover remain open.
 
 ## Public delivery and current work
 
-The current Core is `b13aedb`, image `violet-glass-1926`, deployment
+The connected workspace is publicly running on `b0811f8`, image
+`plant-horses-6593`, deployment `vendune-core-6cc7f557d9`.
+Its real model acceptance includes two approved category steps, saved progress
+across reload, private/live isolation, a generated multilingual care-note app,
+ordinary installed record writes and selected package publication/configuration.
+The optional-title renderer correction is also public: a record without an
+optional title was saved, selected, edited and saved again without a crash.
+English/German content survived the Core rollout. Exact source and results belong to the
+[20 October acceptance record](evidence/agentic-workspace-2026-10-20.md).
+
+The preceding Core was `b13aedb`, image `violet-glass-1926`, deployment
 `vendune-core-589c44c658`. [19 October delivery evidence](evidence/migration-continuation-2026-10-19.md#hosted-core-delivery-boundary)
 records the full green PR checks, identical source trees after merging as
 `0aaec005`, a fresh successful snapshot, migration 106 through the existing owner
