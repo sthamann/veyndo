@@ -61,6 +61,7 @@ pub(crate) fn schema(name: &str) -> Option<Value> {
     if name == "merchant.import.inspect" {
         schema["properties"].as_object_mut()?.remove("approve");
         schema["properties"].as_object_mut()?.remove("assetChunks");
+        schema["properties"]["details"] = json!({"type":"boolean","description":"Explicit bounded product catalogue preview; default comparisons contain no values"});
         schema["required"] = json!(["record", "options"]);
     }
     Some(schema)

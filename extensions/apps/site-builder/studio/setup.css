@@ -1,0 +1,58 @@
+/* Compact prerequisite guidance keeps the real storefront visible and the next action clear. */
+.designer-start {
+  display: grid;
+  gap: 12px;
+  padding: 4px 0 16px;
+  line-height: 1.55;
+}
+.designer-start > svg {
+  color: var(--accent, #0877df);
+}
+.designer-start h2,
+.designer-start p {
+  margin: 0;
+}
+.designer-start p {
+  font-size: 13px;
+  color: var(--studio-muted, #60758a);
+}
+.designer-start ol {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0;
+  display: grid;
+  gap: 16px;
+}
+.designer-start li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+}
+.designer-start li > span {
+  display: grid;
+  place-items: center;
+  width: 25px;
+  height: 25px;
+  border: 1px solid var(--line, #d6e2ef);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.designer-start li[data-complete="true"] > span {
+  color: #0869bd;
+  background: #e1f2ff;
+  border-color: #b8dcf6;
+}
+.designer-start label {
+  display: grid;
+  gap: 7px;
+}
+.designer-start .designer-start-note {
+  padding: 12px;
+  border-radius: 10px;
+  background: var(--studio-bg, #f6f9fc);
+}
+.designer-start > button {
+  width: 100%;
+  min-height: 42px;
+}

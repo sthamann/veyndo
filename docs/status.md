@@ -1,7 +1,7 @@
 # Veyndo: current status
 
 This is the single starting point for what works, what is implemented but not
-publicly accepted, and what still needs development. Updated 19 October 2026.
+publicly accepted, and what still needs development. Updated 20 October 2026.
 A green test, merged code and a completed public business journey are different evidence.
 
 Migration implementation (19 October): saved plans now connect all eight supported
@@ -23,6 +23,16 @@ source-reference checks and visible original counts/digests. Two-page native
 product intake/replay and tamper rejection are locally tested. This remains
 a historical local checkpoint, now merged in PR #168; it did not establish a
 complete shop migration/cutover. [Scope and evidence](agentic-migration.md).
+
+## 20 October: design onboarding and readable product comparison
+
+Prepared in the implementation branch: guided native private-workspace/package
+setup with return to the selected design tool, plus original/mapped/current
+product comparison. The local native migration suite and 706 frontend regressions
+passed; browser acceptance uses a separate synthetic local shop. This entry does
+not establish public deployment or hosted migration-service readiness. [Local acceptance evidence](evidence/design-migration-2026-10-20.md). See
+[shop design](personal-workspace-and-shop-design.md) and
+[migration review](agentic-migration.md).
 
 ## Start with a complete journey
 

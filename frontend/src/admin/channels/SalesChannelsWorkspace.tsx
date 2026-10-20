@@ -18,12 +18,14 @@ import MarketplaceWorkspace from "../../../../extensions/apps/marketplaces/studi
 import "../styles/sales-channels.css";
 export default function SalesChannelsWorkspace({
   request,
+  scopedRequest,
   workspace,
   onTeam,
   onDesign,
   sandbox = false,
 }: {
   request: RequestFn;
+  scopedRequest?: (target: string) => RequestFn;
   workspace: string;
   onTeam: () => void;
   onDesign?: (
@@ -97,6 +99,7 @@ export default function SalesChannelsWorkspace({
       <MigrationWorkspace
         key={workspace}
         request={request}
+        scopedRequest={scopedRequest}
         workspace={workspace}
         rights={rights}
         mainLocale={settings?.mainLocale ?? locale}

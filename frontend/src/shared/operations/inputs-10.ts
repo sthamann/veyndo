@@ -32,6 +32,7 @@ export interface Inputs10 {
   "studio.workspace.read": JsonValue;
   "studio.workspace.save": { data: JsonValue; revision: number };
   "merchant.import.inspect": {
+    details?: boolean;
     options: {
       acknowledgedWarnings?: Array<string>;
       channelId?: string;

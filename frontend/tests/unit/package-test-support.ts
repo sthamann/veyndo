@@ -6,5 +6,5 @@ export {
   screen,
   waitFor,
 } from "@testing-library/react";
-export { expect, it, vi } from "vitest";
+export { afterEach, expect, it, vi } from "vitest";
 export { fireEvent, within } from "@testing-library/react";

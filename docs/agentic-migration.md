@@ -9,6 +9,36 @@ This is an implementation and local acceptance record, **not a declaration that
 all source shops or the entire migration concept are already accepted publicly**.
 See [current status](status.md) for deployed journeys.
 
+## Compare one product with its actual private target
+
+[Local browser acceptance and screenshots](evidence/design-migration-2026-10-20.md).
+
+Choose an existing private target, inspect a source product page, then confirm the
+original gross/net price basis and the destination tax rate. **Read current target**
+shows the original source, the values expected from native mapping, and the current
+Veyndo product side by side. Changed displayed fields are highlighted. This makes
+legitimate native net-to-gross conversion visible rather than treating every
+original/target price difference as a failed import.
+
+The comparison includes translated names/descriptions, product number, price and
+currency, tax, catalogue visibility, variant parent/options and current target
+images. Missing products are identified explicitly. Images have their own source
+record/byte/association checks; stock activation and selected publication remain
+separate. A visible private catalogue product is not proof of public publication.
+
+This uses the existing `merchant.import.inspect` owner with `details: true`, scoped
+to the selected private workspace through Studio's normal authenticated request.
+Current `apps.manage` and `catalog.read` still apply server-side; foreign and denied
+reads fail. The UI also requires environment-read access. No target-tenant argument
+is accepted by the inspection operation, and no alternate importer is introduced.
+The default comparison remains values-free; explicit product previews whitelist
+catalogue fields, cap translations at 16, text at 4,000 characters and images at 8.
+Other source domains do not gain personal-data previews. Source/target values stay
+in transient UI state, not saved jobs or completion receipts. Changing target,
+source page, mapping choices or current access discards stale results; refresh after
+editing. Inspection does not write, import, release or activate stock.
+
+
 ## Saved migration work plans
 
 ![Saved work plan and batch completion after reload](evidence/images/migration-2026-10-18/work-plan-completed.jpg)

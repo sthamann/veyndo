@@ -1,0 +1,79 @@
+/* Product comparison stays readable in the existing migration workspace and narrow viewports. */
+.migration-product-comparison {
+  margin: 24px 0;
+  padding: 24px;
+  border: 1px solid var(--line, #cfe0f2);
+  border-radius: 16px;
+  background: var(--surface, #fff);
+}
+.migration-product-comparison h3 {
+  margin: 0 0 8px;
+}
+.migration-product-comparison p {
+  line-height: 1.55;
+}
+.migration-compare-controls {
+  display: flex;
+  align-items: end;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin: 20px 0;
+}
+.migration-compare-controls label {
+  flex: 1;
+  min-width: 200px;
+}
+.migration-compare-status {
+  padding: 12px 16px;
+  border-radius: 10px;
+  background: var(--accent-soft, #e5f3ff);
+  font-weight: 600;
+}
+.migration-product-comparison table {
+  min-width: 650px;
+  table-layout: fixed;
+}
+.migration-product-comparison th:first-child {
+  width: 18%;
+}
+.migration-product-comparison td {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  vertical-align: top;
+}
+.migration-product-comparison tr[data-changed="true"] {
+  background: #fff7e5;
+}
+.migration-compare-media {
+  margin-top: 20px;
+}
+.migration-compare-media img {
+  height: 100px;
+  max-width: 150px;
+  object-fit: contain;
+  border-radius: 8px;
+  margin: 8px;
+}
+.migration-compare-notice {
+  color: var(--muted, #586e85);
+  font-size: 0.88rem;
+}
+.migration-product-comparison details {
+  margin-top: 16px;
+}
+@media (max-width: 700px) {
+  .migration-product-comparison {
+    padding: 16px;
+  }
+  .migration-compare-controls button {
+    width: 100%;
+  }
+}
+.migration-product-comparison .migration-table th {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.migration-compare-controls label {
+  display: grid;
+  gap: 6px;
+}

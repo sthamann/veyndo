@@ -657,6 +657,7 @@ interface inputs {
     %warnings: list<string>,
   }
   record merchant-import-inspect-input {
+    %details: option<bool>,
     %options: merchant-import-inspect-input-options,
     %record: merchant-import-inspect-input-record,
   }

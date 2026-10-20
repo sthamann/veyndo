@@ -415,6 +415,7 @@ This lists every checked-in source module in these roots, including files with n
 | [src/operations/imports/inspect.rs](../src/operations/imports/inspect.rs) | Read-only native import reconciliation compares mapped current values, never a successful replay flag. |
 | [src/operations/imports/inspect_history.rs](../src/operations/imports/inspect_history.rs) | Operational history comparison reads actual CRM/address/order/review values with paired current PII rights. |
 | [src/operations/imports/inspect_media.rs](../src/operations/imports/inspect_media.rs) | Current immutable image bytes and the independently editable native media association are both inspected. |
+| [src/operations/imports/inspect_product.rs](../src/operations/imports/inspect_product.rs) | Explicit catalogue-only preview: whitelist current mapped/native fields, bound text/media, reuse native money formatting. |
 | [src/operations/imports/mod.rs](../src/operations/imports/mod.rs) | Generic source-record admission; adapters own source formats, native domain owners retain every write. |
 | [src/operations/imports/products.rs](../src/operations/imports/products.rs) | Private native product intake delegates all catalogue validation, history and selected release to the existing owner. |
 | [src/operations/imports/relations.rs](../src/operations/imports/relations.rs) | Canonical import references resolve to tenant-bound native IDs; the existing product owner validates every relation. |
@@ -1373,6 +1374,7 @@ This lists every checked-in source module in these roots, including files with n
 | [extensions/apps/migration/studio/MigrationSteps.tsx](../extensions/apps/migration/studio/MigrationSteps.tsx) | Compact migration step navigation keeps source, reviewed domains and the native design handoff together. |
 | [extensions/apps/migration/studio/MigrationWorkspace.tsx](../extensions/apps/migration/studio/MigrationWorkspace.tsx) | App-owned inward migration workflow: native consent, exact reviewed pages, private product targets and durable jobs. |
 | [extensions/apps/migration/studio/PriceOptions.tsx](../extensions/apps/migration/studio/PriceOptions.tsx) | One reviewed tax rate and explicit original basis feed the existing native price owner. |
+| [extensions/apps/migration/studio/ProductComparison.tsx](../extensions/apps/migration/studio/ProductComparison.tsx) | Current authorized source/target preview; no values enter job history and no inspection performs a write. |
 | [extensions/apps/migration/studio/ProductDetails.tsx](../extensions/apps/migration/studio/ProductDetails.tsx) | Merchant-readable variant evidence is displayed before the exact source-page approval. |
 | [extensions/apps/migration/studio/ReviewPanel.tsx](../extensions/apps/migration/studio/ReviewPanel.tsx) | Exact source review keeps unacknowledged gaps and missing target choices from starting a write. |
 | [extensions/apps/migration/studio/RunPlans.tsx](../extensions/apps/migration/studio/RunPlans.tsx) | Coarse work plans use existing versioned native app records; source rows and job authority stay with their original owners. |
@@ -1387,7 +1389,9 @@ This lists every checked-in source module in these roots, including files with n
 | [extensions/apps/migration/studio/inspection-i18n.ts](../extensions/apps/migration/studio/inspection-i18n.ts) | Source inspection is a durable read, distinct from a reviewed native import. |
 | [extensions/apps/migration/studio/migration.css](../extensions/apps/migration/studio/migration.css) | App-owned migration workspace: compact stable steps, clear review canvas and contained tables. |
 | [extensions/apps/migration/studio/model.ts](../extensions/apps/migration/studio/model.ts) | Review projections retain exact minor units and source IDs; UI never invents native purchase or identity authority. |
+| [extensions/apps/migration/studio/preview-i18n.ts](../extensions/apps/migration/studio/preview-i18n.ts) | Merchant-facing labels for transient source/current-target catalogue review. |
 | [extensions/apps/migration/studio/price-i18n.ts](../extensions/apps/migration/studio/price-i18n.ts) | Source tax-basis choices are explicit; conversion belongs to the existing native tax calculator. |
+| [extensions/apps/migration/studio/product-comparison.css](../extensions/apps/migration/studio/product-comparison.css) | Product comparison stays readable in the existing migration workspace and narrow viewports. |
 | [extensions/apps/migration/studio/product-i18n.ts](../extensions/apps/migration/studio/product-i18n.ts) | Original product evidence distinguishes private variants and source inventory from active target stock. |
 | [extensions/apps/migration/studio/run-i18n.ts](../extensions/apps/migration/studio/run-i18n.ts) | Work-plan vocabulary distinguishes saved context from verified migration effects. |
 | [extensions/apps/migration/studio/run-model.ts](../extensions/apps/migration/studio/run-model.ts) | Defensive work-plan projection; metadata cannot select unknown domains or become an import receipt. |
@@ -1418,6 +1422,7 @@ This lists every checked-in source module in these roots, including files with n
 | [extensions/apps/migration/tests/pii_projection.py](../extensions/apps/migration/tests/pii_projection.py) | The settings read model cannot bypass current order and separate personal-data rights. |
 | [extensions/apps/migration/tests/price_basis.py](../extensions/apps/migration/tests/price_basis.py) | Net source prices use the existing native gross calculator and explicit reviewed basis, never nominal copying. |
 | [extensions/apps/migration/tests/price_basis.test.tsx](../extensions/apps/migration/tests/price_basis.test.tsx) | Explicit tax basis and warnings remain part of the exact reviewed import command. |
+| [extensions/apps/migration/tests/product-preview-cases.tsx](../extensions/apps/migration/tests/product-preview-cases.tsx) | Product preview uses current scoped native reads and discards stale responses without writing. |
 | [extensions/apps/migration/tests/progress.test.tsx](../extensions/apps/migration/tests/progress.test.tsx) | Connected-run regressions cover actual native-record consumption and delayed authorization changes. |
 | [extensions/apps/migration/tests/provider_crm_flow.py](../extensions/apps/migration/tests/provider_crm_flow.py) | Four additional provider CRM protocols reach native address books and immutable history, never purchases. |
 | [extensions/apps/migration/tests/provider_flow.py](../extensions/apps/migration/tests/provider_flow.py) | Every advertised platform traverses its actual Rust source transport, reviewed job and native private product owner. |
@@ -1460,6 +1465,7 @@ This lists every checked-in source module in these roots, including files with n
 | [extensions/apps/site-builder/studio/DesignAgent.tsx](../extensions/apps/site-builder/studio/DesignAgent.tsx) | Shop design uses the shared agent workspace and existing native proposal/approval owners. |
 | [extensions/apps/site-builder/studio/DesignReferences.tsx](../extensions/apps/site-builder/studio/DesignReferences.tsx) | Discoverable URL and image reference inputs; no external HTML is rendered in the editor. |
 | [extensions/apps/site-builder/studio/DesignReview.tsx](../extensions/apps/site-builder/studio/DesignReview.tsx) | Review real proposed page changes and viewport entry points; never infer visual correctness or app execution from a model summary. |
+| [extensions/apps/site-builder/studio/DesignSetup.tsx](../extensions/apps/site-builder/studio/DesignSetup.tsx) | One visible setup path reuses native sandbox admission and explicit per-package consent. |
 | [extensions/apps/site-builder/studio/DesignerHeader.tsx](../extensions/apps/site-builder/studio/DesignerHeader.tsx) | Channel, private save and agent entry remain visible above the shared preview. |
 | [extensions/apps/site-builder/studio/DesignerInspector.tsx](../extensions/apps/site-builder/studio/DesignerInspector.tsx) | Visible edit, element, agent and history modes share the same native draft and approval path. |
 | [extensions/apps/site-builder/studio/DesignerPreview.tsx](../extensions/apps/site-builder/studio/DesignerPreview.tsx) | Preview composes the shared storefront renderer with editor-only gesture controls. |
@@ -1483,7 +1489,10 @@ This lists every checked-in source module in these roots, including files with n
 | [extensions/apps/site-builder/studio/palette.css](../extensions/apps/site-builder/studio/palette.css) | Graphical insertion gallery for built-in and registered app-owned elements. |
 | [extensions/apps/site-builder/studio/references.css](../extensions/apps/site-builder/studio/references.css) | References are a first-class design starting point in the existing agent rail. |
 | [extensions/apps/site-builder/studio/review-i18n.ts](../extensions/apps/site-builder/studio/review-i18n.ts) | Design comparison vocabulary keeps automated structural counts distinct from visual and functional acceptance. |
+| [extensions/apps/site-builder/studio/setup-i18n.ts](../extensions/apps/site-builder/studio/setup-i18n.ts) | Guided private-editing vocabulary; package consent and publication keep their native owners. |
+| [extensions/apps/site-builder/studio/setup.css](../extensions/apps/site-builder/studio/setup.css) | Compact prerequisite guidance keeps the real storefront visible and the next action clear. |
 | [extensions/apps/site-builder/studio/useBlockEditing.tsx](../extensions/apps/site-builder/studio/useBlockEditing.tsx) | Local editor gestures share one bounded document mutation path; drag payloads never contain executable/app data. |
+| [extensions/apps/site-builder/studio/useDesignResume.ts](../extensions/apps/site-builder/studio/useDesignResume.ts) | Non-sensitive editor intent survives native sandbox handoff; only a current authorized private preview can resume it. |
 | [extensions/apps/site-builder/studio/useDesigner.ts](../extensions/apps/site-builder/studio/useDesigner.ts) | Explicit native saves and scope-safe reads; local undo never bypasses record CAS or staging review. |
 | [extensions/apps/site-builder/studio/usePointerPlacement.ts](../extensions/apps/site-builder/studio/usePointerPlacement.ts) | Captured mouse/touch gestures cross the iframe boundary with viewport-aware drop positions and edge scrolling. |
 | [extensions/apps/site-builder/studio/workspace-i18n.ts](../extensions/apps/site-builder/studio/workspace-i18n.ts) | Shared visual workspace vocabulary; interface choices never become untranslated content. |
@@ -1492,6 +1501,7 @@ This lists every checked-in source module in these roots, including files with n
 | [extensions/apps/site-builder/tests/design-reference-cases.tsx](../extensions/apps/site-builder/tests/design-reference-cases.tsx) | Screenshot bounds and invalid-file recovery use the actual reference input and existing agent payload. |
 | [extensions/apps/site-builder/tests/designer-cases.tsx](../extensions/apps/site-builder/tests/designer-cases.tsx) | Initial native storefront, automatic home selection and inherited-draft copy regressions. |
 | [extensions/apps/site-builder/tests/interactions-cases.tsx](../extensions/apps/site-builder/tests/interactions-cases.tsx) | Real editor commands: insertion positions, stale/untrusted drags, caps and native undo remain consistent. |
+| [extensions/apps/site-builder/tests/onboarding-cases.tsx](../extensions/apps/site-builder/tests/onboarding-cases.tsx) | New-shop setup uses real consent and private handoff, never a live edit or implicit installation. |
 | [extensions/apps/site-builder/tests/pointer-cases.tsx](../extensions/apps/site-builder/tests/pointer-cases.tsx) | Mouse/touch placement converts scaled iframe coordinates and excludes clipped/outside targets. |
 | [extensions/apps/site-builder/tests/workspace-cases.tsx](../extensions/apps/site-builder/tests/workspace-cases.tsx) | Graphical insertion and shared agent controls exercise the same native editor state. |
 | [extensions/apps/site-builder/usePageProducts.ts](../extensions/apps/site-builder/usePageProducts.ts) | Resolve explicit selections through the native bounded catalogue, independent of the first catalogue/search page. |

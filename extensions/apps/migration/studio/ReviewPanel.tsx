@@ -4,7 +4,7 @@ import ExportEvidence from "./ExportEvidence";
 import PriceOptions from "./PriceOptions";
 import { usePriceText } from "./price-i18n";
 import SourceDetails from "./SourceDetails";
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import Icon from "../../../../frontend/src/shared/ui/Icon";
 import { useLocale } from "../../../../frontend/src/shared/i18n/i18n";
 import type { CustomerGroup } from "../../../../frontend/src/shared/customer/customer-types";
@@ -38,6 +38,7 @@ function SourceImage({ url, name }: { url: string; name: string }) {
 }
 export default function ReviewPanel({
   review,
+  comparison,
   kind,
   tax,
   priceBasis,
@@ -54,6 +55,7 @@ export default function ReviewPanel({
   mainLocale,
 }: {
   review: Review;
+  comparison?: ReactNode;
   kind: Kind;
   tax: string;
   priceBasis: string;
@@ -196,6 +198,7 @@ export default function ReviewPanel({
           </select>
         </label>
       )}
+      {comparison}
       <label className="migration-approval">
         <input
           type="checkbox"
