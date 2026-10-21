@@ -150,3 +150,31 @@ approval response cannot update the conversation or notice in another shop.
 
 Translation draft navigation stays inside the current Studio session and private
 environment. It does not reload the page into the live shop.
+
+## Review work prepared by a Flow
+
+The **AI proposal** action, both directly and inside a graphical pipeline, saves
+its result as a ready task in the same merchant work area. Open the task, inspect
+the proposed changes and approve them using your personal session. In a private
+environment, approved native steps use the existing durable executor, revision
+checks and replay receipts. Preparation alone never changes shop data.
+
+The Flow retains its current owner's identity and initial permission ceiling.
+Membership, private workspace access and the live shop's emergency stop are checked
+before inference and again before storing its result. The task contains no invented
+personal session or execution credential; approval binds the real current session.
+The stop also applies to scheduled proposals in the shop's private environments.
+The task records its originating Flow job. Saving the result locks that job in the
+same transaction and requires an unexpired running lease. A delayed model response
+cannot create a ready task after expiry or after another worker marks the job
+uncertain; recovery does not silently repeat the inference.
+
+The registered `durable_agents` test follows an actual product update through the
+outbox and Flow worker, opens its task, approves it and confirms one private category
+write, replay protection and unchanged live data. It also covers the graphical
+pipeline, a stop before/during inference, permission withdrawal during inference,
+and expired direct/pipeline jobs with and without a second recovery worker.
+These are local HTTP/PostgreSQL tests with a synthetic model, not public acceptance.
+Flow inference still follows its existing job/uncertainty handling; this connection
+does not add durable model checkpoints to legacy Flow calls or turn arbitrary
+accepted work into a parameterized automation automatically.

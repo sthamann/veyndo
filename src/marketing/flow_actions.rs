@@ -166,7 +166,12 @@ pub(crate) async fn execute(
         return crate::cognition::extraction::extract(a, &h, &args).await;
     }
     if action == "ai_proposal" {
-        auth::permit(&h, "knowledge.read")?;
+        // The pipeline owner supplies this stable key; it is never model output.
+        let (job, _) = key
+            .strip_prefix("flow:")
+            .and_then(|key| key.split_once(':'))
+            .ok_or(bad("Flow job required for proposal"))?;
+        let h = super::flow_access::proposal_headers(a, t, f.actor.as_deref(), job).await?;
         crate::performance::reserve_ai_attempt(a, t).await?;
         let (settings, _) = commerce::config(a, t).await?;
         let instruction =

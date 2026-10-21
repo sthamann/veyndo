@@ -81,6 +81,9 @@ try:
     actor=account['user']['id']; tenant='workshop'
     sql(f"INSERT INTO memberships(tenant,user_id,role) VALUES('{tenant}','{actor}','owner')")
     h={'Authorization':'Bearer '+account['token'],'x-tenant':tenant}
+    from testing.agent_flow_work import verify_flow_work
+    verify_flow_work(call,base,h,actor,mode,sql,start,passed,started,release,captured)
+    mode['block']=True;captured.clear();release.clear()
     before=call(base,'/api/merchant/products/lamp',h=h)['commerce']['price']
     turn={'message':'Prepare lamp price; do not apply.','background':True,'requestId':uuid.uuid4().hex,'inference':{'provider':'openai'}}
     with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:

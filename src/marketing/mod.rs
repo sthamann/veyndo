@@ -19,6 +19,7 @@ mod customer_facts;
 mod dependencies;
 mod facts;
 mod flow_access;
+pub(crate) use flow_access::proposal_headers as flow_proposal_headers;
 mod flow_policy;
 pub(crate) use flow_policy::{authorize_flow, validate_flow_config};
 pub(crate) use flows::Flow;

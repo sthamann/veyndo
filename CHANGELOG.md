@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased — review and execute work prepared by Flows
+
+- Save direct and graphical Flow AI proposals as actor-owned ready tasks, so the existing work area can open, review and approve their native steps. Personal approval supplies the execution credential; preparation never queues writes automatically.
+- Recheck current Flow rights, private workspace admission and shop emergency stop before inference and before saving its result. Preserve the original permission ceiling and reject late results after withdrawal. Use the actual event kind for non-order events.
+- Verify the real product-event/outbox/Flow/task/approval path, one private category write, repeated approval, unchanged live data, graphical pipelines and stop/revocation during inference with isolated PostgreSQL and a synthetic model.
+- Bind prepared tasks to their originating Flow job and reject late model results transactionally after lease expiry or recovery. Test direct proposals and graphical steps with two actual Rust workers; an uncertain job cannot create an executable task later.
+
 ## Public provider recovery and checkout repetition — 2026-10-21
 
 - Record Experience `cbb4d283` / `alert-light-1076`, the original typed-Date reconciliation repair and an observed three-receipt recovery cycle with no technical failures. External results remain pending.

@@ -5,6 +5,7 @@ pub(crate) mod checkpoint;
 pub(crate) mod context;
 mod contract;
 pub(crate) mod controls;
+mod flow_proposals;
 pub(crate) mod translation;
 pub(crate) mod view;
 pub(crate) mod work;
@@ -156,15 +157,15 @@ pub(crate) async fn enqueue(
     )
 }
 
-pub(crate) async fn persist(a: &App, t: &str, id: &str, evidence: &Value) -> Result<()> {
+pub(crate) async fn persist(
+    a: &App,
+    t: &str,
+    id: &str,
+    evidence: &Value,
+    h: &RequestContext,
+) -> Result<()> {
     let Some(run) = CURRENT.try_with(Clone::clone).ok() else {
-        sqlx::query("INSERT INTO tasks(id,tenant,proposal) VALUES($1,$2,$3)")
-            .bind(id)
-            .bind(t)
-            .bind(evidence)
-            .execute(&a.db)
-            .await?;
-        return Ok(());
+        return flow_proposals::persist(a, t, id, evidence, h).await;
     };
     checkpoint::authorize(a).await?;
     let mut tx = a.db.begin().await?;

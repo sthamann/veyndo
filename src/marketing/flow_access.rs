@@ -36,3 +36,36 @@ pub(crate) async fn headers(a: &App, t: &str, actor: Option<&str>) -> Result<Req
     auth::permit(&h, "automation.manage")?;
     Ok(h)
 }
+
+/// A scheduled proposal uses current Flow rights, never a synthetic personal session.
+pub(crate) async fn proposal_headers(
+    a: &App,
+    t: &str,
+    actor: Option<&str>,
+    job: &str,
+) -> Result<RequestContext> {
+    let mut h = headers(a, t, actor).await?;
+    h.insert(
+        "x-rac-flow-job",
+        job.parse().map_err(|_| bad("Invalid Flow job"))?,
+    );
+    agent::assistant_access(&h)?;
+    auth::permit(&h, "catalog.write")?;
+    auth::permit(&h, "knowledge.read")?;
+    let row=sqlx::query("SELECT t.status,t.agents_stopped,e.preview_owner,e.preview_until>now() AS valid FROM tenants t LEFT JOIN shop_environments e ON e.tenant=$1 WHERE t.id=coalesce(e.live_tenant,$1)")
+        .bind(t).fetch_one(&a.db).await?;
+    if row.get::<bool, _>("agents_stopped")
+        || row.get::<String, _>("status") != "active"
+        || row
+            .get::<Option<String>, _>("preview_owner")
+            .is_some_and(|owner| {
+                Some(owner.as_str()) != actor || row.get::<Option<bool>, _>("valid") != Some(true)
+            })
+    {
+        return Err(Error(
+            StatusCode::FORBIDDEN,
+            "Flow agent or workspace is unavailable".into(),
+        ));
+    }
+    Ok(h)
+}

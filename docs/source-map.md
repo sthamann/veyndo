@@ -173,6 +173,7 @@ See [international commerce](international-commerce.md) for the exact contract.
 | [`extensions/apps/paypal/src/webhooks.rs`](../extensions/apps/paypal/src/webhooks.rs) | PayPal verifies webhook signatures before inbox insertion; provider reconciliation confirms monetary state. | `payments.py (local wire fixture) + Rust integer-money tests` |
 | [`src/payments/worker.rs`](../src/payments/worker.rs) | Leased payment jobs; network runs after claim commit, fenced receipts prevent duplicate local effects. | `payments.py (local wire fixture) + Rust integer-money tests` |
 | [`src/agent_runs.rs`](../src/agent_runs.rs) | Existing-task continuation, private checkpoints, lease-fenced completion and original approval. | `durable_agents.py + providers.py` |
+| `src/agent_runs/flow_proposals.rs`, `src/marketing/flow_access.rs` | Scheduled proposals join native ready tasks with current Flow authority, original scope ceiling and live-shop stop; personal approval supplies execution authority. | `testing/agent_flow_work.py` through registered `durable_agents` |
 | [`src/workers.rs`](../src/workers.rs) | Independently deployable worker roles; leases and durable receipts coordinate replicas. | `services.py + payments.py` |
 | [`src/http_limits.rs`](../src/http_limits.rs) | Bounded streaming responses for extension services and payment providers. | `services.py + payments.py + build` |
 
