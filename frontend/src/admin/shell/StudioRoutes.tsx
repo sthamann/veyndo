@@ -93,6 +93,7 @@ export default function StudioRoutes() {
     nav,
     tabLabel,
     t,
+    w,
     x,
   } = useStudio();
   const { locale } = useLocale();
@@ -113,9 +114,19 @@ export default function StudioRoutes() {
           {x(connectionPending ? "loadingWorkspace" : "workspaceLoadFailed")}
         </p>
         {!connectionPending && (
-          <button className="studio-primary" onClick={retryConnection}>
-            {t("refresh")}
-          </button>
+          <>
+            <button className="studio-primary" onClick={retryConnection}>
+              {t("refresh")}
+            </button>
+            {environment && (
+              <button
+                className="studio-secondary"
+                onClick={() => setEnvironment("")}
+              >
+                {w("live")}
+              </button>
+            )}
+          </>
         )}
       </div>
     );

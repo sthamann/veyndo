@@ -183,6 +183,7 @@ export const en = {
   noCalls: "No calls recorded",
   workspacePinned:
     "View pinned to your personal workspace. Personal search text was omitted.",
+  acceptedWork: "Approved work accepted. Follow its saved progress below.",
   approvedAction: "Changes applied. Shop data refreshed.",
   basedOn: "Based on actual shop data",
   errorReply:

@@ -122,7 +122,12 @@ pub(crate) async fn release(
     }
     categories::publish(&mut tx, &t, &current, &keys).await?;
     products::publish(&mut tx, &t, &current, &keys).await?;
-    for key in &keys {
+    // App records validate current native references (languages, channels, packages).
+    // Apply all selected configuration before its dependent records in this same
+    // transaction. Missing dependencies still fail and roll back the whole release.
+    let configuration = keys.iter().filter(|key| !key.starts_with("appdata:"));
+    let records = keys.iter().filter(|key| key.starts_with("appdata:"));
+    for key in configuration.chain(records) {
         let s = req.selections.iter().find(|s| s.key == *key).unwrap();
         let value = &current[&s.key];
         if let Some(channel) = s.key.strip_prefix("settings-channel:") {

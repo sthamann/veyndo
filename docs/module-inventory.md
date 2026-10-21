@@ -897,6 +897,7 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/admin/shell/useServerHealth.ts](../frontend/src/admin/shell/useServerHealth.ts) | Public server health is independent of the personal Studio session. |
 | [frontend/src/admin/shell/useStudioAccess.ts](../frontend/src/admin/shell/useStudioAccess.ts) | Central Studio identity boundary: initial login, expiry suspension and same-account resume. |
 | [frontend/src/admin/shell/useStudioController.ts](../frontend/src/admin/shell/useStudioController.ts) | Studio session/controller: authentication context, tenant/staging state and chat commands. |
+| [frontend/src/admin/shell/useStudioEnvironment.ts](../frontend/src/admin/shell/useStudioEnvironment.ts) | Remember only the selected environment ID per live shop/tab; native requests still revalidate access. |
 | [frontend/src/admin/shell/useStudioPermissions.ts](../frontend/src/admin/shell/useStudioPermissions.ts) | Recheck current server grants; discard previously loaded views when a live role changes. |
 | [frontend/src/admin/shell/useStudioSession.ts](../frontend/src/admin/shell/useStudioSession.ts) | Revalidate visible Studio sessions and route authenticated failures to the active controller. |
 | [frontend/src/admin/shell/useStudioTheme.ts](../frontend/src/admin/shell/useStudioTheme.ts) | Persist only the presentation theme; account, agent context and commerce state never enter this preference. |
@@ -1537,6 +1538,7 @@ This lists every checked-in source module in these roots, including files with n
 | [extensions/apps/site-builder/tests/interactions-cases.tsx](../extensions/apps/site-builder/tests/interactions-cases.tsx) | Real editor commands: insertion positions, stale/untrusted drags, caps and native undo remain consistent. |
 | [extensions/apps/site-builder/tests/onboarding-cases.tsx](../extensions/apps/site-builder/tests/onboarding-cases.tsx) | New-shop setup uses real consent and private handoff, never a live edit or implicit installation. |
 | [extensions/apps/site-builder/tests/pointer-cases.tsx](../extensions/apps/site-builder/tests/pointer-cases.tsx) | Mouse/touch placement converts scaled iframe coordinates and excludes clipped/outside targets. |
+| [extensions/apps/site-builder/tests/published-language-cases.tsx](../extensions/apps/site-builder/tests/published-language-cases.tsx) | Published pages use the selected content language even when Studio/store controls use another locale. |
 | [extensions/apps/site-builder/tests/workspace-cases.tsx](../extensions/apps/site-builder/tests/workspace-cases.tsx) | Graphical insertion and shared agent controls exercise the same native editor state. |
 | [extensions/apps/site-builder/usePageProducts.ts](../extensions/apps/site-builder/usePageProducts.ts) | Resolve explicit selections through the native bounded catalogue, independent of the first catalogue/search page. |
 | [extensions/apps/site-forms/server.rs](../extensions/apps/site-forms/server.rs) | Forms validate answers against a published page's declared fields; inbox entries stay private. |
@@ -1762,6 +1764,7 @@ This lists every checked-in source module in these roots, including files with n
 | [scripts/testing/provider_fleet.py](../scripts/testing/provider_fleet.py) | Configure one encrypted synthetic provider for all test workers, then restore the isolated control-plane row. |
 | [scripts/testing/role_races.py](../scripts/testing/role_races.py) | Force real HTTP delegation to wait behind the same PostgreSQL lifecycle lock as role edits. |
 | [scripts/testing/runtime.py](../scripts/testing/runtime.py) | Owned synthetic server lifetime, child checks and loopback readiness for verification. |
+| [scripts/testing/site_release.py](../scripts/testing/site_release.py) | Actual selective publication resolves page dependencies atomically; no provider calls. |
 | [scripts/testing/sitecustomize.py](../scripts/testing/sitecustomize.py) | Opt-in subprocess instrumentation for synthetic verification; never loaded by production. |
 | [scripts/testing/source_inventory.py](../scripts/testing/source_inventory.py) | Generate/check exact production and verification module inventory; listings are not coverage. |
 | [scripts/testing/test_ci_scope.py](../scripts/testing/test_ci_scope.py) | CI routing regressions exercise real Git renames, missing history and sensitive mixed changes. |

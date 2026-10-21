@@ -11,6 +11,7 @@ import { usePublishedSite } from "./PublishedSite";
 import usePageProducts from "../usePageProducts";
 import {
   shopApi,
+  getContentLocale,
   type Product,
 } from "../../../../frontend/src/shared/api/shop-api";
 function safeSlug(value: string) {
@@ -23,7 +24,8 @@ function safeSlug(value: string) {
 export default function ShopSite({ fallback }: { fallback: ReactNode }) {
   const registry = useAppRegistry(),
     c = useStorefront(),
-    t = useEditorText();
+    t = useEditorText(),
+    language = getContentLocale();
   const { pages, loaded, error, available } = usePublishedSite();
   const visible = effectivePages(pages, c.salesChannel),
     slug = c.appPath.startsWith("#page/")
@@ -37,7 +39,7 @@ export default function ShopSite({ fallback }: { fallback: ReactNode }) {
   const selection = usePageProducts(
     page,
     c.products,
-    `${c.shopTenant}:${c.salesChannel}:${c.locale}:${c.cart?.token}:${c.cart?.revision}`,
+    `${c.shopTenant}:${c.salesChannel}:${language}:${c.cart?.token}:${c.cart?.revision}`,
     async (ids) =>
       (
         await shopApi<{ elements: Product[] }>(
@@ -50,7 +52,7 @@ export default function ShopSite({ fallback }: { fallback: ReactNode }) {
   useEffect(() => {
     if (!page) return;
     const previousTitle = document.title;
-    document.title = `${contentText(page.title, c.locale, registry.mainLocale)} · ${c.company.brandName || c.shopTenant}`;
+    document.title = `${contentText(page.title, language, registry.mainLocale)} · ${c.company.brandName || c.shopTenant}`;
     let meta = document.querySelector<HTMLMetaElement>(
       'meta[name="description"]',
     );
@@ -63,7 +65,7 @@ export default function ShopSite({ fallback }: { fallback: ReactNode }) {
     }
     meta.content = contentText(
       page.seo?.description ?? {},
-      c.locale,
+      language,
       registry.mainLocale,
     );
     return () => {
@@ -71,7 +73,7 @@ export default function ShopSite({ fallback }: { fallback: ReactNode }) {
       else meta!.remove();
       document.title = previousTitle;
     };
-  }, [page, c.locale, registry.mainLocale, c.salesChannel]);
+  }, [page, language, registry.mainLocale, c.salesChannel]);
   if (!available) return fallback;
   if (!loaded)
     return (
@@ -100,7 +102,7 @@ export default function ShopSite({ fallback }: { fallback: ReactNode }) {
         pages={visible}
         products={selection.products}
         theme={theme}
-        language={c.locale}
+        language={language}
         mainLocale={registry.mainLocale}
         channel={c.salesChannel}
         request={registry.request}

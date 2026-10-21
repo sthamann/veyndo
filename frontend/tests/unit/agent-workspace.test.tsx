@@ -144,7 +144,8 @@ it("shows exactly the reviewed collection rather than claiming a whole-catalogue
 });
 
 import AgentRunCard from "../../src/admin/shell/AgentRunCard";
-it("opens the actual linked translation drafts from work progress while retaining the current shop URL", () => {
+it("opens linked drafts through the existing scoped Studio rather than a document reload", () => {
+  const onTranslations = vi.fn();
   history.replaceState(null, "", "?shop=private-collection&lang=de-DE");
   render(
     <LocaleScope locale="de-DE">
@@ -166,17 +167,16 @@ it("opens the actual linked translation drafts from work progress while retainin
             ],
           },
         }}
+        onTranslations={onTranslations}
         control={vi.fn()}
       />
     </LocaleScope>,
   );
-  const link = screen.getByRole("link", {
-    name: "Übersetzungsentwürfe prüfen",
-  });
-  const target = new URL(link.getAttribute("href")!);
-  expect(target.searchParams.get("shop")).toBe("private-collection");
-  expect(target.searchParams.get("translationJob")).toBe("work-task-1-1");
-  expect(target.searchParams.get("settings")).toBe("languages");
+  fireEvent.click(
+    screen.getByRole("button", { name: "Übersetzungsentwürfe prüfen" }),
+  );
+  expect(onTranslations).toHaveBeenCalledWith("work-task-1-1");
+  expect(location.search).toBe("?shop=private-collection&lang=de-DE");
   expect(screen.queryByText("Freigegebener Auftrag erledigt")).toBeNull();
 });
 
@@ -212,4 +212,91 @@ it("keeps linked translation lifecycle controls in the original task while retai
   await screen.findByText(/Managed by an agent task/);
   expect(screen.queryByRole("button", { name: /resume|cancel/i })).toBeNull();
   expect(request.mock.calls.every((call) => call.length === 1)).toBe(true);
+});
+
+it("distinguishes an interrupted native operation from an uncertain model call and retains explicit continuation", async () => {
+  const control = vi.fn(async () => {});
+  const value = { taskId: "task-1", state: "uncertain" as const, revision: 4 };
+  const { rerender } = render(
+    <LocaleScope locale="de-DE">
+      <AgentRunCard value={value} control={control} onTranslations={vi.fn()} />
+    </LocaleScope>,
+  );
+  expect(
+    screen.getByText("Modellaufruf unterbrochen · vor Fortsetzung prüfen"),
+  ).toBeInTheDocument();
+  rerender(
+    <LocaleScope locale="de-DE">
+      <AgentRunCard
+        value={{
+          ...value,
+          execution: {
+            completed: 1,
+            total: 2,
+            steps: [
+              {
+                name: "merchant.category.create",
+                label: "Kategorie",
+                completed: true,
+              },
+            ],
+          },
+        }}
+        control={control}
+        onTranslations={vi.fn()}
+      />
+    </LocaleScope>,
+  );
+  expect(screen.queryByText(/Modellaufruf/)).toBeNull();
+  expect(
+    screen.getByText("Aktion unterbrochen · vor Fortsetzung prüfen"),
+  ).toBeInTheDocument();
+  expect(screen.getByText("Abgeschlossene Aktionen: 1")).toBeInTheDocument();
+  expect(control).not.toHaveBeenCalled();
+  fireEvent.click(
+    screen.getByRole("button", { name: "Gespeicherten Auftrag fortsetzen" }),
+  );
+  await waitFor(() => expect(control).toHaveBeenCalledWith("resume"));
+});
+
+import StudioConversation from "../../src/admin/shell/StudioConversation";
+import { StudioContext } from "../../src/admin/shell/StudioContext";
+it("labels a saved native execution error without mislabelling unrelated model failures", () => {
+  const state = {
+    t: (key: string) => key,
+    providers: [],
+    access: [],
+    draft: "",
+    locale: "de-DE",
+    messages: [
+      {
+        id: 1,
+        role: "assistant",
+        content: "Invalid product metadata",
+        data: { error: true, runId: "work-1" },
+      },
+    ],
+    savedRun: {
+      taskId: "work-1",
+      state: "failed",
+      revision: 3,
+      execution: { completed: 1, total: 2, steps: [] },
+    },
+  } as any;
+  const view = (value: any) => (
+    <LocaleScope locale="de-DE">
+      <StudioContext.Provider value={value}>
+        <StudioConversation />
+      </StudioContext.Provider>
+    </LocaleScope>
+  );
+  const { rerender } = render(view(state));
+  expect(
+    screen.getByText(/Eine freigegebene Aktion wurde angehalten/),
+  ).toBeInTheDocument();
+  expect(screen.queryByText("errorReply")).toBeNull();
+  rerender(
+    view({ ...state, savedRun: { ...state.savedRun, taskId: "another-task" } }),
+  );
+  expect(screen.getByText("errorReply")).toBeInTheDocument();
 });

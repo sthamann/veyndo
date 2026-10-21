@@ -1,6 +1,5 @@
 /** Shared product configuration form: declared input fields use the existing cart, revision and app gateway. */
 import { useState } from "react";
-import { shopApi, type Cart } from "../api/shop-api";
 import { useAppText } from "../i18n/app-i18n";
 import { contentText } from "../i18n/content-language";
 import type { Props, Slot } from "./AppSlot";
@@ -9,14 +8,18 @@ export default function ConfigurationForm({
   slot,
   productId,
   cart,
-  onCart,
+  onConfigure,
   language,
   mainLocale,
 }: Props & { slot: Slot; language: string; mainLocale: string }) {
   const { a } = useAppText();
-  const stored = cart?.lineItems
-    ?.find((line) => line.id === productId)
-    ?.appConfigurations?.find((config) => config.app === slot.app)?.fields;
+  const stored =
+    cart?.savedConfigurations?.find(
+      (config) => config.app === slot.app && config.productId === productId,
+    )?.fields ??
+    cart?.lineItems
+      ?.find((line) => line.id === productId)
+      ?.appConfigurations?.find((config) => config.app === slot.app)?.fields;
   const [text, setText] = useState(() =>
     String(stored?.[slot.configuration!.inputField] ?? ""),
   );
@@ -46,16 +49,10 @@ export default function ConfigurationForm({
           setBusy(true);
           setError("");
           try {
-            onCart(
-              await shopApi<Cart>(
-                `/store-api/apps/${slot.app}/configure`,
-                {
-                  productId,
-                  fields: c.inputs ? fields : { [c.inputField]: text },
-                  revision: cart.revision,
-                },
-                cart.token,
-              ),
+            await onConfigure(
+              slot.app,
+              productId,
+              c.inputs ? fields : { [c.inputField]: text },
             );
             setSaved(true);
           } catch (e) {

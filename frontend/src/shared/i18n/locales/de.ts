@@ -187,6 +187,8 @@ export const de: Dictionary = {
   noCalls: "Noch keine Aufrufe",
   workspacePinned:
     "Ansicht am Arbeitsplatz angeheftet. Persönliche Suchtexte werden nicht gespeichert.",
+  acceptedWork:
+    "Freigegebener Auftrag angenommen. Den gespeicherten Fortschritt siehst du unten.",
   approvedAction: "Änderungen angewendet. Shop-Daten aktualisiert.",
   basedOn: "Aus echten Shop-Daten",
   errorReply:

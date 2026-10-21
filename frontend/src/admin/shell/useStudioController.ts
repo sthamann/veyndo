@@ -7,7 +7,7 @@ import { useConnectedText } from "../../shared/i18n/connected-i18n";
 import { useLocale } from "../../shared/i18n/i18n";
 import { useWorkbenchText } from "../../shared/i18n/workbench-i18n";
 import { type Environment } from "../environments/EnvironmentManager";
-import type { Message, Overview, Provider } from "./studio-types";
+import type { Message, Overview, Provider, StudioNotice } from "./studio-types";
 
 import { useDesignHandoff } from "./useDesignHandoff";
 import { useEntityNavigation } from "./useEntityNavigation";
@@ -18,6 +18,7 @@ import { useServerHealth } from "./useServerHealth";
 import { useStudioPermissions } from "./useStudioPermissions";
 import { useStudioAccess } from "./useStudioAccess";
 import { useChatTurns } from "./useChatTurns";
+import { useStudioEnvironment } from "./useStudioEnvironment";
 import { useStudioTheme } from "./useStudioTheme";
 import { useAgentWorkspaceContext } from "./useAgentWorkspaceContext";
 
@@ -36,7 +37,6 @@ export function useStudioController({
   const { tabLabel, nav } = useStudioNavigation();
   const [access, setAccess] = useState<string[]>([]);
   const [environments, setEnvironments] = useState<Environment[]>([]);
-  const [environment, setEnvironment] = useState("");
   const [token, setToken] = useState(browserCredential);
   const [workspace, setWorkspace] = useState(
     () =>
@@ -45,6 +45,7 @@ export function useStudioController({
       sessionStorage.getItem("rac-user-workspace") ??
       "nord-atelier",
   );
+  const [environment, setEnvironment] = useStudioEnvironment(workspace);
   useEffect(() => {
     if (token && !new URLSearchParams(location.search).has("shop")) {
       const url = new URL(location.href);
@@ -76,10 +77,7 @@ export function useStudioController({
   const [pendingText, setPendingText] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
-  const [notice, setNotice] = useState<{
-    key: "indexed" | "approvedAction" | "copied" | "workspacePinned";
-    count?: number;
-  }>();
+  const [notice, setNotice] = useState<StudioNotice>();
   const [settings, setSettings] = useState(false);
   const [previewOpen, setPreviewOpen] = useState(false);
   const navigation = useEntityNavigation(
@@ -152,7 +150,6 @@ export function useStudioController({
     [liveRequest],
   );
   useEffect(() => {
-    setEnvironment("");
     setEnvironments([]);
   }, [workspace]);
   useEffect(() => {
@@ -293,11 +290,10 @@ export function useStudioController({
     requestAnimationFrame(() => composer.current?.focus());
   };
   const apply = async (m: Message) => {
-    await request(`/api/agent/tasks/${m.data.taskId}/apply`, { approve: true });
-    if (id) await load(id);
-    await refresh();
+    const result = await chat.apply(m);
+    if (!result) return;
     await onChanged();
-    setNotice({ key: "approvedAction" });
+    if (result.current()) setNotice(result.notice);
   };
   const onProduct = (productId: string) => setFocus(productId);
   const selected =

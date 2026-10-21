@@ -7,8 +7,10 @@ import type { SavedRun } from "./useChatTurns";
 export default function AgentRunCard({
   value,
   control,
+  onTranslations,
 }: {
   value: SavedRun;
+  onTranslations: (jobId: string) => void;
   control: (action: "resume" | "cancel") => Promise<void>;
 }) {
   const [busy, setBusy] = useState(false);
@@ -22,14 +24,6 @@ export default function AgentRunCard({
   };
   const text = useAgentRunText(),
     b = useBuildingText();
-  const translationLink = (id: string) => {
-    const target = new URL(location.href);
-    target.searchParams.set("studio", "commerce");
-    target.searchParams.set("settings", "languages");
-    target.searchParams.set("translationJob", id);
-    target.hash = "merchant";
-    return target.href;
-  };
   const preparingDrafts =
     (value.state === "queued" || value.state === "running") &&
     value.execution?.steps.some(
@@ -45,7 +39,9 @@ export default function AgentRunCard({
               ? "preparingDrafts"
               : value.execution && value.state === "ready"
                 ? "workReady"
-                : value.state,
+                : value.execution && value.state === "uncertain"
+                  ? "workUncertain"
+                  : value.state,
           )}
         </strong>
       </div>
@@ -57,9 +53,12 @@ export default function AgentRunCard({
               <Icon name={step.completed ? "check" : "pulse"} size={14} />
               {step.label}
               {step.translationJobId && (
-                <a href={translationLink(step.translationJobId)}>
+                <button
+                  type="button"
+                  onClick={() => onTranslations(step.translationJobId!)}
+                >
                   {b("reviewTranslations")}
-                </a>
+                </button>
               )}
             </li>
           ))}
@@ -82,7 +81,9 @@ export default function AgentRunCard({
           )}
         </p>
       )}
-      {value.state === "uncertain" && <p>{text("ambiguous")}</p>}
+      {value.state === "uncertain" && (
+        <p>{text(value.execution ? "workAmbiguous" : "ambiguous")}</p>
+      )}
       <div className="agent-run-actions">
         {(value.state === "failed" || value.state === "uncertain") && (
           <button

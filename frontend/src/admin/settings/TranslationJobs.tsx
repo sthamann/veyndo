@@ -324,7 +324,7 @@ export default function TranslationJobs({
                     )
                   }
                 >
-                  {i("applied")}
+                  {i("applyDraft")}
                 </button>
               )}
             </details>

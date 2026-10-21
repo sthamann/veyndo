@@ -4,6 +4,12 @@ This is the single starting point for what works, what is implemented but not
 publicly accepted, and what still needs development. Updated 21 October 2026.
 A green test, merged code and a completed public business journey are different evidence.
 
+Current additional repair: saved material/dimensions now have an app/product-scoped
+representation in the native cart response, so forms can restore them after a
+reload before the first line item is added. Actual HTTP/PostgreSQL and rendered
+tests pass; public deployment/reload acceptance remains pending. See the
+[furniture browser evidence](evidence/furniture-browser-2026-10-21.md).
+
 Migration implementation (19 October): saved plans now connect all eight supported
 domains in a review-gated page sequence. Native current-field comparison detects
 missing records, changed prices/text and image associations. Private page intents
@@ -24,33 +30,67 @@ product intake/replay and tamper rejection are locally tested. This remains
 a historical local checkpoint, now merged in PR #168; it did not establish a
 complete shop migration/cutover. [Scope and evidence](agentic-migration.md).
 
-## 21 October: collection workflow deployed; public acceptance open
+## 21 October: connected collection preparation runs publicly
 
-The next [connected merchant follow-ups](connected-merchant-followups.md) are being
-implemented in sequence. Scoped translation jobs and a connected private
-category/translation/page task have passed initial local HTTP/PostgreSQL restart
-and selective-release cases. PR #177 is merged; migration 107 completed successfully
-after a fresh snapshot, and the Core deployment is running. The configured-model
-Studio test in a private shop initially stopped on HTTP 400 after four reads.
-Core `693dd33` now runs publicly and fixes the unsupported strict-provider schema
-keyword. Continuing the original task reached the next native validation boundary:
-`Unknown entity field`. Nothing was approved or published by that failed run.
+Public Core `9d70e60` completes the original configured-model collection task in a
+private shop: one category, assignments for exactly two existing products, two
+Italian translation drafts and a site-builder landing-page draft. The same saved
+task continued after deployment without duplicating its completed category.
+Both translation drafts were reviewed and applied privately. Browser checks confirm
+unchanged prices and stock for the selected products and no change to the third
+product. Migration 107 and PR #177 are already deployed; the subsequent native
+contract corrections are tracked in PRs #180 and #181.
 
-The follow-up supplies authorized installed app field contracts and the app-owned
-page format, names invalid fields and permits one checkpointed correction through
-full native admission. Local HTTP/PostgreSQL acceptance passes collection preparation,
-malicious correction rejection, worker restart and explicit continuation with no
-unapproved writes; Rust workspace tests and clippy pass. This correction (`40b4a97a`)
-is publicly deployed. Continuing the same task reached six saved model steps, but
-the proposed landing page still failed native block validation before approval.
-Core `1824e159` is publicly deployed with explicit block identifiers, localized
-content shapes and field-specific errors. The original task reached a five-step
-review after seven model steps. Private approval saved the category, then stopped
-on `Invalid product metadata`: the proposed category-only product change did not
-match the full editor payload. Its receipt is retained. A native assignment-only
-contract and product-shape admission are being verified; this latest correction
-is not yet publicly accepted. Actual private preview and selected release remain open.
-[Continuation contract](durable-agent-runs.md).
+The actual run exposed incomplete provider/app/product input contracts. Repairs
+retain native field validation, original revisions, tenant scope and explicit
+approval. Local HTTP/PostgreSQL checks include stale edits, malicious corrections,
+worker restart, explicit continuation, failed translations and selective release.
+
+Public Core/Studio `498ced45` renders the Italian page with the two selected
+products in its private preview. The public selected-release attempt exposed an
+ordering defect: page validation ran before its jointly selected language settings.
+The repair applies selected configuration before app records within the same
+transaction. Actual local HTTP/PostgreSQL checks cover a new language, channel,
+package and page together, missing-dependency rollback, stale selection and replay.
+Public Core/Studio `be620bfd` accepted all six selected units together on 21 October
+at 13:34 CEST. The published product completed simulated order `RAC-484bd556`
+for EUR 49.90 with its Italian order label; return and empty cart were observed.
+The public page exposed one further rendering defect: its text used the interface
+language instead of the selected content language. The app-owned correction and
+Italian/French-fallback regressions pass. Public image `quack-sand-8930` (`f3255dab`)
+started healthy at 13:54 CEST; the browser now shows the Italian headings, paragraphs,
+two selected products and document title.
+PR #182 fixes the translation handoff retaining
+the private environment, removes an optional form-package requirement for ordinary
+pages, distinguishes queued work from completed changes and fences late conversation
+responses. Its frontend baseline passes 732 tests and the existing coverage
+thresholds; four additional checks cover the new actionable release errors.
+The release-order repair is deployed. Native full CI passed for PR #178, now
+merged. PR #182 stopped at a test-file formatting check; the formatting is
+corrected and the new verification run is in progress.
+
+The [hosted private furniture journey](evidence/furniture-browser-2026-10-21.md)
+now completes a EUR 417 simulated purchase with material, dimensions and native
+order/Flow records; later material edits leave the order unchanged. Continuation
+after purchase and Studio sandbox reload repairs are public in `fa33a003`, image
+`shallow-place-4222`, deployed at 14:13 CEST. A second simulated order
+`RAC-6c9f8c4f` for EUR 427, empty-cart return, a fresh EUR 379 configuration/cart
+without reload, and the retained private Studio order list after reload passed.
+The subsequent control-reset presentation repair is deployed as `b0b8cba7`,
+image `tangible-cat-3650`, with one healthy replica. A freshly loaded browser
+completed simulated order `RAC-1c51b79e` (EUR 379), returned to an empty cart,
+then saved and added a new 240 x 80 cm configuration without reloading; the
+controls and saved message remained visible. The 744-test frontend suite passes.
+[Original Storyfront embedded checkout](evidence/storyfront-checkout-2026-10-21.md)
+also completed simulated order `RAC-585cbb53` (EUR 24.90), returned to the original
+Experience and retained an empty bag after reload. Its first iframe navigation
+required the visible retry; first-load reliability remains separate from the
+accepted purchase/return path. [One selected product's missing German text](evidence/product-gaps-2026-10-21.md)
+was also prepared, reviewed and applied without changing its price or stock.
+Independent hosted B2B approval and saved
+selection/reorder acceptance remain open.
+See [the ordered follow-ups](connected-merchant-followups.md) and the
+[saved-work contract](durable-agent-runs.md).
 
 ## 20 October: design onboarding and readable product comparison
 

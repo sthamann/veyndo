@@ -11,6 +11,7 @@ import {
 } from "../../../../frontend/tests/unit/package-test-support";
 import { LocaleScope } from "../../../../frontend/src/shared/i18n/i18n";
 import ShopDesigner from "../studio/ShopDesigner";
+import DesignSetup from "../studio/DesignSetup";
 import type { RequestFn } from "../../../../frontend/src/shared/api/types";
 afterEach(() => history.replaceState(null, "", "/"));
 const rights = [
@@ -72,7 +73,7 @@ function view(
     </LocaleScope>
   );
 }
-it("guides a new shop through private handoff and explicit package consents, then returns to the agent", async () => {
+it("guides a new shop through private handoff and the required package consent, then returns to the agent", async () => {
   const live = api(),
     enter = vi.fn(async () => {}),
     page = render(view(live, false, rights, enter));
@@ -98,8 +99,6 @@ it("guides a new shop through private handoff and explicit package consents, the
       privateRequest.mock.calls.filter(([path]) => path === "/api/apps"),
     ).toHaveLength(1),
   );
-  await screen.findByText("site_forms · 1.0.0");
-  fireEvent.click(await screen.findByRole("button", { name: "Install" }));
   await waitFor(() =>
     expect(
       screen.getByRole("textbox", { name: "Reference URLs (one per line)" }),
@@ -113,7 +112,7 @@ it("guides a new shop through private handoff and explicit package consents, the
     privateRequest.mock.calls
       .filter(([path]) => path === "/api/apps")
       .map(([, body]) => body.builtIn),
-  ).toEqual(["site_builder", "site_forms"]);
+  ).toEqual(["site_builder"]);
   expect(
     privateRequest.mock.calls.some(([path]) => /save_page|release/.test(path)),
   ).toBe(false);
@@ -261,4 +260,40 @@ it("invalidates the host handoff while environment-list refresh is still pending
   expect(current()).toBe(true);
   page.unmount();
   expect(current()).toBe(false);
+});
+
+it("does not require a form receiver for ordinary pages, but reviews it for a form page", async () => {
+  const request = api(["site_builder"]);
+  const { rerender } = render(view(request, true));
+  await waitFor(() =>
+    expect(
+      screen.queryByRole("button", { name: "Review required apps" }),
+    ).toBeNull(),
+  );
+  fireEvent.click(await screen.findByRole("tab", { name: "Agent" }));
+  expect(
+    await screen.findByRole("textbox", {
+      name: "Reference URLs (one per line)",
+    }),
+  ).toBeEnabled();
+  expect(request.mock.calls.some(([path]) => path === "/api/apps")).toBe(false);
+  rerender(
+    <LocaleScope locale="en-GB">
+      <DesignSetup
+        request={request}
+        workspace="private-one"
+        rights={rights}
+        sandbox
+        installed={["site_builder"]}
+        loaded
+        requiresForms
+        onReload={async () => {}}
+      />
+    </LocaleScope>,
+  );
+  fireEvent.click(
+    await screen.findByRole("button", { name: "Review required apps" }),
+  );
+  await screen.findByText("site_forms · 1.0.0");
+  expect(request.mock.calls.some(([path]) => path === "/api/apps")).toBe(false);
 });

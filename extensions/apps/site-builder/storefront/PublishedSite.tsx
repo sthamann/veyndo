@@ -7,6 +7,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { getContentLocale } from "../../../../frontend/src/shared/api/shop-api";
 import { useAppRegistry } from "../../../../frontend/src/shared/apps/AppSurfaces";
 import { useStorefront } from "../../../../frontend/src/storefront/shell/StorefrontContext";
 import { inheritedTheme, normalizePage, type Page } from "../model";
@@ -26,7 +27,8 @@ const Context = createContext<Published>({
 export const usePublishedSite = () => useContext(Context);
 export default function PublishedSite({ children }: { children: ReactNode }) {
   const registry = useAppRegistry(),
-    c = useStorefront();
+    c = useStorefront(),
+    language = getContentLocale();
   const [pages, setPages] = useState<Page[]>([]),
     [loaded, setLoaded] = useState(false),
     [error, setError] = useState(false);
@@ -62,7 +64,7 @@ export default function PublishedSite({ children }: { children: ReactNode }) {
     return () => {
       active = false;
     };
-  }, [available, c.shopTenant, c.salesChannel, c.locale]);
+  }, [available, c.shopTenant, c.salesChannel, language]);
   useEffect(() => {
     if (!pages.some((p) => p.slug === "home")) return;
     const shop = document.querySelector<HTMLElement>(".shop");

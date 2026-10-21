@@ -17,6 +17,7 @@ export default function DesignSetup({
   rights,
   sandbox,
   installed,
+  requiresForms = false,
   loaded,
   onSandbox,
   onReload,
@@ -26,6 +27,7 @@ export default function DesignSetup({
   rights: string[];
   sandbox: boolean;
   installed: string[];
+  requiresForms?: boolean;
   loaded: boolean;
   onSandbox?: (id: string, current?: () => boolean) => Promise<void>;
   onReload: () => Promise<void>;
@@ -41,9 +43,9 @@ export default function DesignSetup({
     [busy, setBusy] = useState(false),
     [error, setError] = useState(""),
     [consent, setConsent] = useState(false);
-  const missing = ["site_builder", "site_forms"].find(
-    (id) => !installed.includes(id),
-  );
+  const missing = (
+    requiresForms ? ["site_builder", "site_forms"] : ["site_builder"]
+  ).find((id) => !installed.includes(id));
   useEffect(() => {
     let active = true;
     setSelected("");

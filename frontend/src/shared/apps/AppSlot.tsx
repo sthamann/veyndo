@@ -26,7 +26,11 @@ export type Props = {
   productId: string;
   familyId?: string;
   cart?: Cart;
-  onCart: (c: Cart) => void;
+  onConfigure: (
+    app: string,
+    productId: string,
+    fields: Record<string, unknown>,
+  ) => Promise<unknown>;
 };
 export default function AppSlot(props: Props) {
   const { locale } = useAppText();

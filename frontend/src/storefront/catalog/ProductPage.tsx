@@ -27,13 +27,13 @@ export default function ProductPage({
   cart,
   busy,
   onAdd,
-  onCart,
+  onConfigure,
 }: {
   id: string;
   cart?: Cart;
   busy: boolean;
   onAdd: (id: string, q: number) => void;
-  onCart: (c: Cart) => void;
+  onConfigure: import("../../shared/apps/AppSlot").Props["onConfigure"];
 }) {
   const { s, money, locale } = useShopText();
   const contentLanguage = getContentLocale().split("-")[0];
@@ -48,16 +48,20 @@ export default function ProductPage({
   const detailContext = JSON.stringify([
     id,
     locale,
-    cart?.token,
+    cart?.customerId,
     cart?.customerGroup,
     cart?.checkout.country,
+    cart?.price.currency,
+    cart?.b2b?.unitId,
   ]);
   const loadedContext = useRef("");
   useEffect(() => {
     ++detailRequest.current;
     let active = true;
     // Repricing the current cart must not unmount app controls, lose unsaved
-    // inputs or erase their saved confirmation. A changed identity still resets.
+    // inputs or erase their saved confirmation, including a new cart after a
+    // purchase. Tokens still trigger a fresh native read below; buyer, country,
+    // currency and company changes reset the controls rather than leaking input.
     const reset = loadedContext.current !== detailContext;
     loadedContext.current = detailContext;
     if (reset) {
@@ -227,7 +231,7 @@ export default function ProductPage({
           cart={cart}
           setData={setData}
           setError={setError}
-          onCart={onCart}
+          onConfigure={onConfigure}
           quantity={quantity}
           setQuantity={setQuantity}
           effective={effective}

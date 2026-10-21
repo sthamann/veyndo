@@ -2322,8 +2322,8 @@
     },
     "src/cart_price.rs": {
       "status": "unproved",
-      "sha256": "d2a11def1d6bf816c0ba46e798463f5970ca67231e6e78f05150ba8339d563bf",
-      "review": "Review combined native business capability and hardening: typed material/dimension guests remain app-owned and bounded; native CAS/FX/current B2B approval and immutable order snapshots; isolated app crate consumer preserves compiler boundary; independent per-event subscriber retry/quarantine preserves healthy events, commit gaps and explicit recovery; signed tenant/system authority, provider-native read tools and real document withdrawal, workspace image closure and source inventory. SQL/async/provider adapters remain tested, not proved."
+      "sha256": "c2b9bad2838b4cd5c148d765c66b2ad177d03cf8a35da586d244d93dc89e5fee",
+      "review": "Review cart response projection: expose only app/product IDs and accepted input fields from the already scoped cart; no fee authority, SQL, pricing, payment or permission changes. Rendered tests scope restoration by app/product; native workflow checks empty-cart reload and another cart isolation."
     },
     "src/cart_routes.rs": {
       "status": "unproved",
@@ -3927,8 +3927,8 @@
     },
     "src/staging/release.rs": {
       "status": "unproved",
-      "sha256": "0b1daf906d6bc2093f684fc9865d5f1f79d03e05c8452fa6e4a122548ecc9241",
-      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
+      "sha256": "08e135d523201c3b07bc4d4831d9a6e889cdb0137cbc86ae2023cdf59af57297",
+      "review": "Reviewed selective release ordering: selected native configuration precedes dependent app records in the same transaction. Actual HTTP/PostgreSQL regressions cover new locale/channel/package/page, omitted-dependency rollback, stale digest and replay. Native ownership, domain rights, CAS, locks and final configuration checks unchanged."
     },
     "src/staging/snapshot.rs": {
       "status": "unproved",

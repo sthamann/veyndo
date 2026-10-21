@@ -1,5 +1,20 @@
 # Changelog
 
+## Unreleased — continuation after purchase and Studio reload
+
+- Restore accepted app configuration inputs after reloading even before a product is added to the cart. The existing cart response exposes only app/product-scoped input fields; native fees, rules and order snapshots remain authoritative. Another cart receives no saved inputs.
+- Preserve app configuration fields while a fresh cart replaces a completed purchase and native prices refresh. A changed buyer, country, currency or company still resets those inputs. Label individual translation application as an action rather than an already-completed state in EN/DE/FR/ES.
+- Route app product configuration through the same serialized native cart owner as add/quantity actions. A completed purchase creates a fresh cart before the next configuration; conflicts are shown without silent retries, and abandoned shop scopes cannot adopt late results.
+- Remember the selected Studio sandbox separately for each live shop and browser tab. Reload revalidates its current rights; failed access stays closed with an explicit return-to-live action instead of silently switching the destination.
+
+## Unreleased — truthful saved-work progress
+
+- Render published page headings, rich text and SEO in the selected shop content language, independently of the language of interface controls. Keep the configured shop-main-language fallback and scope page/product refreshes to the same content language.
+
+- Publish selected native settings and channels before dependent app records in the same transaction. Newly enabled languages and new page channels can accompany their translated pages in one release. Missing dependencies, stale digests and repeated releases remain rejected atomically; Studio explains missing page languages/channels in all four interface languages.
+- Keep translation-review navigation in its current private Studio session. Require the form-receiver package only when the selected page contains a form; ordinary landing pages and design assistance use the site-builder package alone.
+- Distinguish accepted background work from completed changes in Studio. Show native execution interruptions separately from model failures, retain saved step progress and explicit continuation, and suppress late approval notices after a shop or conversation switch.
+
 ## Unreleased — connected material library and completed reorder
 
 - Add native AI-context/graph metadata to furniture pattern `1.0.1`, keeping material names, EUR-cent surcharge and exact package/record provenance consistent across authorized API/MCP/public lists. Preserve reviewed material writes and private order-read rights.

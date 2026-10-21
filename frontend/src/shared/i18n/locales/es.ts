@@ -184,6 +184,8 @@ export const es: Dictionary = {
   noCalls: "Sin llamadas",
   workspacePinned:
     "Vista fijada en tu espacio personal. Se excluyen búsquedas personales.",
+  acceptedWork:
+    "Trabajo aprobado aceptado. Sigue el progreso guardado a continuación.",
   approvedAction: "Cambios aplicados. Datos actualizados.",
   basedOn: "Datos reales de tienda",
   errorReply:

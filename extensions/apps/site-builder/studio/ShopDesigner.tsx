@@ -98,14 +98,12 @@ function DesignerView({
   const scopeKey = `${workspace}:${d.channel}:${language}`;
   const [comparison, setComparison] = useState<Page | null>(null);
   useEffect(() => setComparison(null), [workspace, d.channel, request]);
-  const writable =
-      sandbox &&
-      rights.includes("channels.manage") &&
-      d.context!.installed.includes("site_builder") &&
-      d.context!.installed.includes("site_forms"),
-    missing = ["site_builder", "site_forms"].find(
-      (id) => !d.context!.installed.includes(id),
-    );
+  const requiresForms =
+    d.draft?.content.blocks.some((block) => block.kind === "form") ?? false;
+  const missing = (
+    requiresForms ? ["site_builder", "site_forms"] : ["site_builder"]
+  ).find((id) => !d.context!.installed.includes(id));
+  const writable = sandbox && rights.includes("channels.manage") && !missing;
   const open = (page: Page) => {
     if (d.dirty) setPending(page);
     else d.open(page);
@@ -200,6 +198,7 @@ function DesignerView({
         rights={rights}
         sandbox={sandbox}
         installed={d.context!.installed}
+        requiresForms={requiresForms}
         loaded={d.loaded}
         onSandbox={onSandbox}
         onReload={d.load}

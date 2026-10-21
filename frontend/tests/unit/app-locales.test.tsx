@@ -82,7 +82,7 @@ it("uses the shop main language for legacy product slots and retains intentional
       headers: { "Content-Type": "application/json" },
     });
   });
-  render(<AppSlot productId="one" onCart={() => {}} />, {
+  render(<AppSlot productId="one" onConfigure={async () => {}} />, {
     wrapper: LocaleProvider,
   });
   expect(await screen.findByRole("heading", { name: "Consejo" })).toBeVisible();

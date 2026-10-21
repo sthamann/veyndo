@@ -154,7 +154,13 @@ export default function StudioConversation({
                 {m.role === "assistant" && !m.data.error ? (
                   <MessageText text={m.content} />
                 ) : (
-                  <p>{m.data.error ? t("errorReply") : m.content}</p>
+                  <p>
+                    {m.data.error
+                      ? savedRun?.execution && savedRun.taskId === m.data.runId
+                        ? runText("workError")
+                        : t("errorReply")
+                      : m.content}
+                  </p>
                 )}
                 {m.data.error && (
                   <details>
@@ -232,6 +238,13 @@ export default function StudioConversation({
         {savedRun && (
           <AgentRunCard
             value={savedRun}
+            onTranslations={(jobId) => {
+              const target = new URL(location.href);
+              target.searchParams.set("settings", "languages");
+              target.searchParams.set("translationJob", jobId);
+              history.replaceState(null, "", target);
+              selectTab("commerce");
+            }}
             control={(action) => run(() => controlRun(action))}
           />
         )}

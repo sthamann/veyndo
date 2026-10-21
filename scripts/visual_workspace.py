@@ -40,6 +40,8 @@ def mcp(name,args,h):return call('/mcp',{'jsonrpc':'2.0','id':1,'method':'tools/
 def save(fields,id='home',revision=0,h=None):return call('/api/apps/site_builder/actions/save_page',{'id':id,'revision':revision,'fields':fields},h)
 def rows(h,public=False):return call(('/store-api' if public else '/api')+'/apps/site_builder/actions/'+('pages' if public else 'editor_pages'),{},h)['elements']
 try:
+ from testing.site_release import verify as verify_site_release
+ verify_site_release(call,account,headers)
  a=account('visual'); other=account('foreign-visual'); ah=headers(a); bh=headers(other)
  empty=call('/api/studio/workspace',h=ah);assert empty['revision']==0
  layout={'active':'area_1','areas':[{'id':'area_1','name':'Content','cards':['productData','design'],'pins':[]}],'goals':[]}
