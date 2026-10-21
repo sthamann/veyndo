@@ -59,3 +59,12 @@ These paths now reuse the locked package snapshot or existing transaction,
 retaining current model/action/PII rights, environment ownership and digest/CAS
 checks. Activation uses the same tenant/app package fence as installation and
 record writes. The required pooler suite retains staging and collection tests.
+
+## Material and dimensions: next development step
+
+The app-owned `1.0.1` pattern adds the existing material records to the native AI
+context and namespaced graph, shared by authorized API/MCP/public reads. Local
+acceptance now completes a second independently approved purchase after saved-input
+reorder and material/rule changes, checks idempotent order/stock effects and keeps
+the first order immutable. The original `1.0.0` definition and workflow tests stay
+inside the plugin directory. Public B2B/browser acceptance remains outstanding.

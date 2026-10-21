@@ -1316,6 +1316,7 @@ This lists every checked-in source module in these roots, including files with n
 | [extensions/apps/erp-handoff/service/store.rs](../extensions/apps/erp-handoff/service/store.rs) | App-private PostgreSQL receipts use forced tenant RLS, short claims and explicit uncertain outcomes after a crash. |
 | [extensions/apps/erp-handoff/tests/integration.py](../extensions/apps/erp-handoff/tests/integration.py) | Real core -> scoped callback -> Rust ERP adapter -> local ERP -> forced-RLS receipt, replay/restart and ambiguous outcome. |
 | [extensions/apps/furniture-configurator/configuration.wat](../extensions/apps/furniture-configurator/configuration.wat) | Furniture-owned dimensional validation and surcharge. Core retains money, tax, stock and purchasing approval. |
+| [extensions/apps/furniture-configurator/tests/workflow.py](../extensions/apps/furniture-configurator/tests/workflow.py) | Actual app library/dimensions → exact-cart B2B approval → immutable order → saved-input reorder; no paid providers. |
 | [extensions/apps/gift-message/configuration.wat](../extensions/apps/gift-message/configuration.wat) | Gift-message-owned rules: printable input is checked by the host; app defines length and fee. |
 | [extensions/apps/gmail/src/actions.rs](../extensions/apps/gmail/src/actions.rs) | App-owned connector capabilities and provider settings; shared host supplies tenant-bound storage. |
 | [extensions/apps/gmail/src/provider.rs](../extensions/apps/gmail/src/provider.rs) | Read-only Gmail incremental imports preserve high-water cursors, bounded windows and deletion evidence. |
@@ -1624,7 +1625,7 @@ This lists every checked-in source module in these roots, including files with n
 | [scripts/browser_sessions.py](../scripts/browser_sessions.py) | Real HTTP personal-cookie transport, current ledger, origin/CSRF/session fences and legacy bearer compatibility. |
 | [scripts/build_app_ui.py](../scripts/build_app_ui.py) | Export deterministic example HTML and its operator uiDigests entry; never fetch remote resources. |
 | [scripts/build_site.py](../scripts/build_site.py) | Build marketing pages and the complete Markdown documentation for GitHub Pages. |
-| [scripts/business_capability.py](../scripts/business_capability.py) | Actual app library/dimensions → exact-cart B2B approval → immutable order → saved-input reorder; no paid providers. |
+| [scripts/business_capability.py](../scripts/business_capability.py) | Run the app-owned furniture purchasing workflow through the registered HTTP suite. |
 | [scripts/catalog_management.py](../scripts/catalog_management.py) | Real HTTP/PostgreSQL catalog creation, categories, multilingual editor, visibility and staging regressions. Synthetic isolated shops only. |
 | [scripts/channel_management.py](../scripts/channel_management.py) | Isolated HTTP regressions for revisioned channels, domain aliases and session-bound private previews; no providers. |
 | [scripts/check_site.py](../scripts/check_site.py) | Check the generated documentation's links and discovery metadata. |
