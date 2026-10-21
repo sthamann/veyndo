@@ -107,6 +107,13 @@ empty original Storyfront bag. [Screenshots and exact acceptance boundary](evide
 The first iframe open required its visible retry, so first-load reliability
 remains open. No real payment was made.
 
+The subsequent Experience release `cbb4d283` / `alert-light-1076` is public with
+the original provider-receipt Date-binding repair. Its first observed recovery
+cycle checked three receipts without technical failure; all three still awaited
+provider results. Embedded simulated order `RAC-386cdc4c` then completed with
+receipt return and an empty original bag after full reload. The initial controlled
+iframe navigation still needed retry. [Deployment and repeated browser evidence](evidence/storyfront-checkout-2026-10-21.md#provider-recovery-repair-and-repeated-public-purchase).
+
 ## 20 October: design onboarding and readable product comparison
 
 Merged and included in Core/Studio `34e272b`: guided native private-workspace/package

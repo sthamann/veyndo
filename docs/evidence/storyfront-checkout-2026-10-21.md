@@ -74,3 +74,35 @@ first-load success.
 ![Completed embedded simulated order](images/storyfront-2026-10-21/confirmed.png)
 
 ![Original Storyfront bag empty after full reload](images/storyfront-2026-10-21/empty-after-reload.png)
+
+## Provider recovery repair and repeated public purchase
+
+Experience `cbb4d283`, image `alert-light-1076`, started on 21 October at
+17:04 CEST with original Storyfront pin `5d5f0e7`. Core remained `fb8d54e0`.
+The original provider-receipt reconciliation used an unencoded JavaScript Date
+inside raw SQL. The repair uses the database column's typed comparison, retaining
+the exact lease token, operation and expiry checks. The actual PostgreSQL driver
+reproduced the public error before the repair; the corrected regression and ten
+existing tests pass, including expired and stale-worker rejection.
+
+At 17:09 CEST the deployed worker logged `claimed=3`, `pending=3`, `failed=0`.
+The preceding deployment had logged three technical failures with the Date-binding
+exception. The repaired cycle successfully checked all three receipts; it did not
+report provider completion. Their external results remained pending.
+
+The browser then completed embedded simulated order `RAC-386cdc4c`, with one
+German-labelled cup, EUR 24.90 total and EUR 3.98 VAT. Returning from its receipt
+closed the iframe and emptied the original Storyfront bag. Full reload, hydration
+and reopening the bag retained zero items. Synthetic contact/address data and
+the explicitly simulated payment method were used; no real payment was made.
+
+The initial controlled iframe navigation again reached its bounded timeout while
+the browser diagnostic reported a paused document response. The ordinary retry
+after closing and reloading the page completed the journey. This repetition
+accepts purchase, return and persistent cart clearing on the repaired deployment;
+it does not establish reliable first loading or completion of the pending provider
+jobs. No user-side manual verification was needed.
+
+![Embedded order on the provider-recovery deployment](images/storyfront-2026-10-21/recovery-confirmed.png)
+
+![Original bag empty after reload on the repaired deployment](images/storyfront-2026-10-21/recovery-empty-after-reload.png)
