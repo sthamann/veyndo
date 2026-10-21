@@ -8,6 +8,7 @@ pub(crate) async fn edit_product(
     Path(id): Path<String>,
     Json(v): Json<Value>,
 ) -> Result<Json<Value>> {
+    let v = super::product_input::expand_category_edit(&a, &h, &id, v).await?;
     save_product(a, h, id, v, false).await
 }
 pub(super) async fn save_product(

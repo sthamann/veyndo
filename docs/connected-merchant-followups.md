@@ -56,6 +56,9 @@ contracts and one bounded model repair. The continued public task reached page
 block validation. The app-owned contract now describes block IDs, localized text,
 product selection and form/extension limits explicitly, with a native-validated
 example. Rejections identify the block index and property without echoing content.
+The continued public plan now reaches review. Execution exposed an incomplete
+product edit after its category was saved. Native category-only edits and pre-review
+product-shape validation are being checked against this exact case.
 Final public collection preview and selective publication remain open; see the
 current status page.
 

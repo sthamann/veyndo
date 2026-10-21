@@ -26,9 +26,14 @@ class Handler(BaseHTTPRequestHandler):
    if behavior.get('selection') is not None and 'summary' in value:value['translation_products']=behavior['selection']
    if behavior.get('operations') is not None and 'summary' in value:value.update(translation=None,operations=behavior['operations'])
    if repair and behavior.get('repaired_operations') is not None:
-    context=json.loads(raw);contract=next(c for c in context['managedSaveContracts'] if c['app']=='site_builder')
-    assert {f['name'] for f in contract['fields']} >= {'title','content','theme','channel'}
-    assert contract['nestedFormat']['content'] and behavior.get('expected_repair_error','headline') in context['validationError'],context['validationError']
+    context=json.loads(raw)
+    if behavior.get('expected_repair_error')=='Product edit requires':
+     assert 'categoryOnly' in json.dumps(body)
+    else:
+     contract=next(c for c in context['managedSaveContracts'] if c['app']=='site_builder')
+     assert {f['name'] for f in contract['fields']} >= {'title','content','theme','channel'}
+     assert contract['nestedFormat']['content']
+    assert behavior.get('expected_repair_error','headline') in context['validationError'],context['validationError']
     value['operations']=behavior['repaired_operations']
    text=json.dumps(value)
    self.send_response(200);self.send_header('Content-Type','application/json');self.end_headers();self.wfile.write(json.dumps({'message':{'content':text},'done_reason':'stop'}).encode());return
