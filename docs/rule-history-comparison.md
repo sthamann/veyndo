@@ -94,3 +94,10 @@ one changed result. Editing the draft cleared that result; selecting a Flow with
 no records showed the empty-history message. Nothing was saved by comparing.
 
 ![Local Studio showing the recorded-condition comparison](evidence/images/rule-history-2026-10-21/local-comparison.jpg)
+
+The 390 × 844 browser check also completes the comparison. The shared content
+language card stays in the page flow on narrow screens, so it cannot cover the
+condition or result controls. Controls stack vertically and the result table
+scrolls inside its own container.
+
+![Mobile Studio comparison with unobstructed controls](evidence/images/rule-history-2026-10-21/mobile-comparison.jpg)
