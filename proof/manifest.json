@@ -3852,8 +3852,8 @@
     },
     "src/staging/access.rs": {
       "status": "unproved",
-      "sha256": "7c3cabdc5e6ba41dc11d0c6f4a3b24975e52fe986a5d47cdfff128d4b49fb044",
-      "review": "Personal workspace and app-owned site design review: trusted personal sessions and actor RLS; public status/time/channel projection; original read-scope and current-field history; append-only cart-bound inbox/outbox with PII rights; package-before-record release fences. Independent security review and actual PostgreSQL own/foreign/CAS/history/form/model fixtures plus existing app/commerce/checkout/role/strict-runtime suites. New pure intake conjunction has exact Lean claims/conformance/negative mutations. SQL, UI, inference and providers remain unproved."
+      "sha256": "028fdee783c1926d366c1c4fad0a03192e9240b3200a6a354ed2533a3623374e",
+      "review": "Reviewed staging diff: model/action and private-data admission use the same locked package snapshot; no nested pool checkout under the snapshot transaction. Regression rejects missing additional rights, PII rights and missing models; real one-backend PgBouncer collection reproduction retained."
     },
     "src/staging/assets.rs": {
       "status": "unproved",
@@ -3887,8 +3887,8 @@
     },
     "src/staging/mod.rs": {
       "status": "unproved",
-      "sha256": "e1ba314ed046971e53226d6e612fabc33b5886584a6bdeb198c20d9cdbe1059f",
-      "review": "Independent review of native imported immutable image boundaries and selected parent/product-before-asset publication; exact persisted product baseline, attachment-only guard, source-position ordering and recoverable two-step association verified through real HTTP/PostgreSQL regressions. Pure extracted policies unchanged."
+      "sha256": "b8f5eb17d2b3fd37c7536f62aca7484676a430fad289657e3bdfdddbd37c3b5c",
+      "review": "Reviewed staging diff: model/action and private-data admission use the same locked package snapshot; no nested pool checkout under the snapshot transaction. Regression rejects missing additional rights, PII rights and missing models; real one-backend PgBouncer collection reproduction retained."
     },
     "src/staging/products.rs": {
       "status": "unproved",

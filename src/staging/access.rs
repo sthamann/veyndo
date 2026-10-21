@@ -42,8 +42,8 @@ pub(super) fn can_read(h: &RequestContext, key: &str) -> bool {
             || auth::allowed(h, "customers.pii"))
 }
 
-/// App diffs expose actual records, so the current model's list action rights apply.
-pub(super) async fn can_read_unit(a: &App, h: &RequestContext, t: &str, key: &str) -> Result<bool> {
+/// Use the locked snapshot's model, avoiding a second backend while its transaction owns the pool.
+pub(super) fn can_read_unit(h: &RequestContext, key: &str, current: &Value) -> Result<bool> {
     if !key.starts_with("appdata:") {
         return Ok(can_read(h, key));
     }
@@ -54,7 +54,14 @@ pub(super) async fn can_read_unit(a: &App, h: &RequestContext, t: &str, key: &st
     if parts.len() != 4 {
         return Ok(false);
     }
-    let m = apps::package(a, t, parts[1], false).await?;
+    let Some(manifest) = current
+        .get(format!("app:{}", parts[1]))
+        .and_then(|package| package.get("manifest"))
+    else {
+        return Ok(false);
+    };
+    let m: apps::Manifest =
+        serde_json::from_value(manifest.clone()).map_err(|_| bad("Invalid app"))?;
     let Some(e) = m.entities.iter().find(|e| e.name == parts[2]) else {
         return Ok(false);
     };
@@ -108,4 +115,40 @@ pub(super) fn before(
         }
     }
     Some(Value::Object(projection))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn snapshot_reads_keep_model_action_and_private_data_rights() {
+        let mut current = json!({"app:fixture":{"manifest":{"id":"fixture","version":"1.0.0","coreApi":"1","runtime":"declarative","name":{"en":"Fixture"},"permissions":["data.read"],"entities":[{"name":"notes","publicRead":true,"fields":[]}],"actions":[{"name":"list_notes","description":"Read notes","handler":"list","entity":"notes","permission":"catalog.read","requiredPermissions":["knowledge.read"],"inputSchema":{}}],"slots":[],"events":[]}}});
+        let mut h = RequestContext::new();
+        h.principal.role = Some("viewer".into());
+        h.principal.permissions = Some(json!(["apps.read", "catalog.read"]).to_string());
+        let key = "appdata:fixture:notes:same";
+        assert!(!can_read_unit(&h, key, &current).unwrap());
+        h.principal.permissions =
+            Some(json!(["apps.read", "catalog.read", "knowledge.read"]).to_string());
+        assert!(can_read_unit(&h, key, &current).unwrap());
+        current["app:fixture"]["manifest"]["entities"][0]["publicRead"] = json!(false);
+        assert!(!can_read_unit(&h, key, &current).unwrap());
+        h.principal.permissions = Some(
+            json!([
+                "apps.read",
+                "catalog.read",
+                "knowledge.read",
+                "customers.pii"
+            ])
+            .to_string(),
+        );
+        assert!(can_read_unit(&h, key, &current).unwrap());
+        for invalid in [
+            "appdata:absent:notes:same",
+            "appdata:fixture:absent:same",
+            "appdata:fixture",
+        ] {
+            assert!(!can_read_unit(&h, invalid, &current).unwrap());
+        }
+    }
 }

@@ -90,7 +90,7 @@ async fn diff(
     let actual = snapshot(&mut tx, &t).await?;
     let mut changes = vec![];
     for (key, value) in current.as_object().unwrap() {
-        if !access::can_read_unit(&a, &h, &id, key).await? {
+        if !access::can_read_unit(&h, key, &current)? {
             continue;
         }
         if base["stage"].get(key) != Some(value) {
