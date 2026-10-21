@@ -147,3 +147,6 @@ applied result reports completed changes. Native operation failures are shown as
 execution interruptions, separately from model failures. Explicit continuation
 uses the existing saved work and retains confirmed completed steps. A late
 approval response cannot update the conversation or notice in another shop.
+
+Translation draft navigation stays inside the current Studio session and private
+environment. It does not reload the page into the live shop.

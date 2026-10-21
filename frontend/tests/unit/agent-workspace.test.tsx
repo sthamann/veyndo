@@ -144,7 +144,8 @@ it("shows exactly the reviewed collection rather than claiming a whole-catalogue
 });
 
 import AgentRunCard from "../../src/admin/shell/AgentRunCard";
-it("opens the actual linked translation drafts from work progress while retaining the current shop URL", () => {
+it("opens linked drafts through the existing scoped Studio rather than a document reload", () => {
+  const onTranslations = vi.fn();
   history.replaceState(null, "", "?shop=private-collection&lang=de-DE");
   render(
     <LocaleScope locale="de-DE">
@@ -166,17 +167,16 @@ it("opens the actual linked translation drafts from work progress while retainin
             ],
           },
         }}
+        onTranslations={onTranslations}
         control={vi.fn()}
       />
     </LocaleScope>,
   );
-  const link = screen.getByRole("link", {
-    name: "Übersetzungsentwürfe prüfen",
-  });
-  const target = new URL(link.getAttribute("href")!);
-  expect(target.searchParams.get("shop")).toBe("private-collection");
-  expect(target.searchParams.get("translationJob")).toBe("work-task-1-1");
-  expect(target.searchParams.get("settings")).toBe("languages");
+  fireEvent.click(
+    screen.getByRole("button", { name: "Übersetzungsentwürfe prüfen" }),
+  );
+  expect(onTranslations).toHaveBeenCalledWith("work-task-1-1");
+  expect(location.search).toBe("?shop=private-collection&lang=de-DE");
   expect(screen.queryByText("Freigegebener Auftrag erledigt")).toBeNull();
 });
 
@@ -219,7 +219,7 @@ it("distinguishes an interrupted native operation from an uncertain model call a
   const value = { taskId: "task-1", state: "uncertain" as const, revision: 4 };
   const { rerender } = render(
     <LocaleScope locale="de-DE">
-      <AgentRunCard value={value} control={control} />
+      <AgentRunCard value={value} control={control} onTranslations={vi.fn()} />
     </LocaleScope>,
   );
   expect(
@@ -243,6 +243,7 @@ it("distinguishes an interrupted native operation from an uncertain model call a
           },
         }}
         control={control}
+        onTranslations={vi.fn()}
       />
     </LocaleScope>,
   );

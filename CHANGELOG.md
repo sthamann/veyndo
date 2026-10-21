@@ -2,6 +2,7 @@
 
 ## Unreleased — truthful saved-work progress
 
+- Keep translation-review navigation in its current private Studio session. Require the form-receiver package only when the selected page contains a form; ordinary landing pages and design assistance use the site-builder package alone.
 - Distinguish accepted background work from completed changes in Studio. Show native execution interruptions separately from model failures, retain saved step progress and explicit continuation, and suppress late approval notices after a shop or conversation switch.
 
 ## Unreleased — connected material library and completed reorder

@@ -238,6 +238,13 @@ export default function StudioConversation({
         {savedRun && (
           <AgentRunCard
             value={savedRun}
+            onTranslations={(jobId) => {
+              const target = new URL(location.href);
+              target.searchParams.set("settings", "languages");
+              target.searchParams.set("translationJob", jobId);
+              history.replaceState(null, "", target);
+              selectTab("commerce");
+            }}
             control={(action) => run(() => controlRun(action))}
           />
         )}

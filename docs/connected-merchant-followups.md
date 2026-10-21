@@ -58,7 +58,13 @@ product selection and form/extension limits explicitly, with a native-validated
 example. Rejections identify the block index and property without echoing content.
 The continued public plan now reaches review. Execution exposed an incomplete
 product edit after its category was saved. Native category-only edits and pre-review
-product-shape validation are being checked against this exact case.
+product-shape validation are deployed as `9d70e60`. Continuing that exact saved
+public task completed all five steps; both Italian translation drafts were reviewed
+and applied in the private environment. The category was retained instead of being
+created again. Browser verification found two additional editor handoff issues:
+translation-review links reloaded into the live shop, and ordinary page editing
+required the optional form receiver. Repairs are tested in PR #182; their public
+rollout is still pending.
 Final public collection preview and selective publication remain open; see the
 current status page.
 

@@ -26,3 +26,7 @@ grants; `elements.rs` validates their tenant, active package and public native s
 `proposals.rs` owns shared proposal validation and persistence; `agent_handoff.rs`
 exports credential-free tasks and validates coding-agent results through that owner.
 Shared agent controls stay in the generic host; page business behavior stays here.
+
+Ordinary pages and design assistance require only the site-builder package. The
+optional form receiver is reviewed separately when the selected page contains a
+form. Existing package consent, sandbox and channel-editing rights still apply.
