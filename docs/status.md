@@ -18,6 +18,11 @@ The responsive follow-up `ef093e7a` (`brave-produce-7557`), deployed at 21:14
 CEST, also completes that comparison in the public 390 × 844 Studio. Its shared
 language selector stays in normal flow on narrow screens, leaving editor controls
 accessible. The guide includes the public mobile screenshot.
+The same public Core also completes a repeated original Storyfront iframe
+purchase, simulated order `RAC-14a61722` (EUR 24.90), receipt return and an empty
+original bag after full reload. Controlled-browser first loads still timed out;
+the complete journey succeeded after the documented normal-navigation recovery.
+[Exact checkout observations and screenshots](evidence/storyfront-checkout-2026-10-21.md#regression-after-reusable-work-and-rule-comparison).
 
 Earlier public acceptance: Core/Studio `650529c7` (`aromatic-voyage-2152`), deployed
 21 October at 20:22 CEST, completes **Reuse as a Flow** through the public Studio.

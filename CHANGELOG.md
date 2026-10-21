@@ -7,6 +7,7 @@
 - Show reviewed comparison counts and saved/draft outcomes in EN/DE/FR/ES. Clear stale results when the draft, rule, revision or shop changes. Keep full historical checkout repricing and revenue claims outside this condition-only comparison.
 - Deliver `6a71d072` / `jubilant-plane-2874` and compare an existing EUR 49.90 public test order: the saved EUR 100 threshold is false and the unsaved EUR 1 threshold true. Verify cleared stale results, empty history, retained saved revision and unchanged order count. [Usage and browser evidence](docs/rule-history-comparison.md).
 - Keep the shared language card in normal page flow below 600 px so it cannot cover editor controls. Deliver `ef093e7a` / `brave-produce-7557`, complete the 390 × 844 public browser comparison and preserve its screenshot.
+- Repeat the original Storyfront iframe purchase on `ef093e7a`: simulated order `RAC-14a61722`, German item label, EUR 24.90, receipt return and empty original bag after reload. Retain the initial controlled-browser loading failures separately from the successful recovery journey. [Exact observations and screenshots](docs/evidence/storyfront-checkout-2026-10-21.md#regression-after-reusable-work-and-rule-comparison).
 
 ## Public reusable-work Flow acceptance — 2026-10-21
 
