@@ -46,3 +46,31 @@ The same test found a separate presentation defect: on the long-description
 Purchase scene at a 2060 x 881 viewport, the fixed Ask bar overlaps the add button.
 Keyboard activation added exactly one item. That workaround completes this
 checkout regression but does not accept pointer usability of the covered button.
+
+
+## Pointer acceptance on the original scrollable Purchase scene
+
+Public Experience `56ae7b8`, image `sole-shield-9134`, started on 21 October at
+15:47:50 CEST with original Storyfront pin `a08a0f5`. Core remained `fb8d54e0`
+(image `dainty-ray-8892`). The repair uses the original cinematic renderer's
+existing scroll owner; it adds no second checkout, bag or price calculator.
+
+At the same desktop viewport, a native wheel action scrolled the long-description
+Purchase scene. A pointer click on the now-visible Add to bag button added exactly
+one cup and changed the bag from zero to one. The complete iframe guest purchase
+then used synthetic contact/address data, pickup and explicit Demo payment.
+Order `RAC-3bce945b` retained the German product name, quantity one, EUR 24.90
+total and EUR 3.98 VAT. The receipt explicitly reported simulated authorization.
+
+The receipt return closed the iframe in the original Experience. The original
+bag became empty. Full page reload, hydration and reopening the bag retained
+zero items and the empty-bag view. No user-side manual test was required.
+The first checkout open reached the bounded timeout and required the ordinary
+visible retry; this remains a separate reliability issue rather than a claimed
+first-load success.
+
+![Pointer-accessible Purchase action and one bag item](images/storyfront-2026-10-21/pointer.png)
+
+![Completed embedded simulated order](images/storyfront-2026-10-21/confirmed.png)
+
+![Original Storyfront bag empty after full reload](images/storyfront-2026-10-21/empty-after-reload.png)

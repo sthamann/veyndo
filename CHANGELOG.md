@@ -1,5 +1,10 @@
 # Changelog
 
+## Public original Storyfront purchase acceptance — 2026-10-21
+
+- Record the original scrollable Purchase scene, pointer add-to-bag, embedded simulated order `RAC-3bce945b`, receipt return and empty original bag after full reload on public Experience `56ae7b8` and Core `fb8d54e0`. Include actual screenshots and retain the separate first-load retry limitation.
+- Replace the stale PR #182 verification-in-progress notice with the successful full required run and merged state.
+
 ## Unreleased — continuation after purchase and Studio reload
 
 - Restore accepted app configuration inputs after reloading even before a product is added to the cart. The existing cart response exposes only app/product-scoped input fields; native fees, rules and order snapshots remain authoritative. Another cart receives no saved inputs.
