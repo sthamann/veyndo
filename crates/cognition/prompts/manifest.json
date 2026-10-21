@@ -60,6 +60,11 @@
       "id": "merchant-planner@3",
       "path": "prompts/merchant-planner.v3.txt",
       "sha256": "5591a2794cd421adfdb13a772e6ebc5c380e044b9a8e92c775d1224a82187dab"
+    },
+    {
+      "id": "merchant-repair@1",
+      "path": "prompts/merchant-repair.v1.txt",
+      "sha256": "703a48219790f0746e893117dfeddc88438de3a6eb123af0722900a3b87220ef"
     }
   ]
 }

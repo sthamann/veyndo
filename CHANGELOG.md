@@ -1,5 +1,18 @@
 # Changelog
 
+## Unreleased — managed app proposal correction
+
+- Describe the complete native page-block format, including stable identifiers,
+  translated content and product selection; return exact field paths for invalid
+  blocks without echoing their content. Preserve the existing admission rules and
+  verify correction through the actual collection task before approval.
+- Give merchant planning the current authorized app field contracts and shared,
+  app-owned page content format. Unknown fields identify their model and names.
+- Correct an invalid proposal once through the existing durable model checkpoint;
+  preserve original evidence, current rights, full native validation and personal
+  approval. Reuse completed calls on explicit continuation after a provider failure.
+
+
 ## Unreleased — strict provider selection schema
 
 - Omit unsupported `uniqueItems` only from the OpenAI strict wire schema and reject duplicate selections when restoring the model result; preserve the original domain schema and product/tenant validation.

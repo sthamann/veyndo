@@ -30,8 +30,9 @@ class Model(BaseHTTPRequestHandler):
         body=json.loads(self.rfile.read(int(self.headers['Content-Length'])))
         assert 'ADMINISTRATION' in body['instructions'] and 'CSV' in body['instructions'] and 'sandbox=' in body['instructions']
         read=bool(body.get('tools'))
+        repair='[prompt:merchant-repair@1]' in body['instructions']
         captured.append('read' if read else 'final')
-        if mode.get('unavailable'):
+        if mode.get('unavailable') or (repair and mode.get('repairUnavailable')):
             self.send_response(503);self.send_header('Content-Type','application/json');self.end_headers();self.wfile.write(b'{"error":"synthetic outage"}');return
         source=mode.get('source')
         source_read=read and source and not any(v.get('type')=='function_call_output' for v in body.get('input',[]) if isinstance(v,dict))
@@ -41,6 +42,9 @@ class Model(BaseHTTPRequestHandler):
             started.set(); release.wait(40)
         value={'tool_calls':[{'name':'knowledge.source.detail','arguments_json':json.dumps({'id':source})}] if source_read else []} if read else {'summary':'Synthetic durable proposal; not live inference.','changes':[{'product_id':'lamp','price':mode['price']}],'experience':None,'expected_experience_revision':None}
         if not read and mode.get('operations'):value={**value,'changes':[],'operations':mode['operations']}
+        if repair and mode.get('repairOperations') is not None:
+            context=json.loads(body['input']);assert context['managedSaveContracts'] and context['rejectedCandidate']['operations']
+            value['operations']=mode['repairOperations']
         answer={'status':'completed','output':[{'type':'message','content':[{'type':'output_text','text':json.dumps(value)}]}],'usage':{'input_tokens':10,'output_tokens':20}}
         if read: answer=native_response(body,value)
         try:

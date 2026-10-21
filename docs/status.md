@@ -31,12 +31,22 @@ implemented in sequence. Scoped translation jobs and a connected private
 category/translation/page task have passed initial local HTTP/PostgreSQL restart
 and selective-release cases. PR #177 is merged; migration 107 completed successfully
 after a fresh snapshot, and the Core deployment is running. The configured-model
-Studio test in a private shop completed four read steps, then stopped on HTTP 400
-at the final structured proposal request. No proposal was approved or published.
-The provider adapter is being repaired: the new selection schema sent unsupported
-`uniqueItems` to the strict provider. Local wire-contract tests now reject that
-keyword; the host retains duplicate-selection validation. Public acceptance still
-requires continuation of the saved task, draft review, preview and selected release.
+Studio test in a private shop initially stopped on HTTP 400 after four reads.
+Core `693dd33` now runs publicly and fixes the unsupported strict-provider schema
+keyword. Continuing the original task reached the next native validation boundary:
+`Unknown entity field`. Nothing was approved or published by that failed run.
+
+The follow-up supplies authorized installed app field contracts and the app-owned
+page format, names invalid fields and permits one checkpointed correction through
+full native admission. Local HTTP/PostgreSQL acceptance passes collection preparation,
+malicious correction rejection, worker restart and explicit continuation with no
+unapproved writes; Rust workspace tests and clippy pass. This correction (`40b4a97a`)
+is publicly deployed. Continuing the same task reached six saved model steps, but
+the proposed landing page still failed native block validation before approval.
+The next repair supplies explicit block identifiers, localized content shapes and
+field-specific errors instead of a combined rejection. Public acceptance still
+requires the saved task to reach review, actual preview and selected release.
+[Continuation contract](durable-agent-runs.md).
 
 ## 20 October: design onboarding and readable product comparison
 

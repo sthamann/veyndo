@@ -1,5 +1,7 @@
 //! Grounded model planning: durable input snapshots share native proposal validation and explicit apply.
 use crate::*;
+mod admission;
+mod repair;
 pub(crate) async fn plan_with(
     a: &App,
     t: &str,
@@ -21,9 +23,6 @@ pub(crate) async fn plan_with(
             value
         }
     };
-    let mut ps: Vec<Product> = serde_json::from_value(prepared["products"].clone())
-        .map_err(|_| bad("Invalid saved agent context"))?;
-    let (commerce_settings, _) = commerce::config(a, t).await?;
     let graph = &prepared["graph"];
     let facts = &prepared["facts"];
     let memory = &prepared["memory"];
@@ -39,7 +38,7 @@ pub(crate) async fn plan_with(
         )
     })?;
     let _cluster = performance::cluster_lease::Lease::acquire(a, t, "model", 2).await?;
-    let (output, tool_trace) = cognition::tools::rounds(
+    let (mut output, tool_trace) = cognition::tools::rounds(
         a,
         authority,
         choice,
@@ -48,93 +47,31 @@ pub(crate) async fn plan_with(
         &prepared["schema"],
     )
     .await?;
-    let mut p: Proposal = serde_json::from_value(output.value)
-        .map_err(|e| bad(format!("Invalid model proposal: {e}")))?;
-    if p.view.is_some()
-        && (!p.operations.is_empty()
-            || !p.changes.is_empty()
-            || p.app_action.is_some()
-            || p.experience.is_some()
-            || p.translation.is_some())
-    {
-        return Err(bad("Review list views separately from mutations"));
-    }
-    if let Some(view) = &mut p.view {
-        agent_runs::view::admit(a, authority, view).await?;
-    }
-    if !p.operations.is_empty() {
-        if !p.changes.is_empty()
-            || p.app_action.is_some()
-            || p.experience.is_some()
-            || p.translation.is_some()
-        {
-            return Err(bad(
-                "Review native work separately from legacy commerce changes",
-            ));
+    let initial = admission::admit(a, t, authority, &prepared, locale, &output.value).await;
+    let mut repair_evidence = Value::Null;
+    let (p, ps, policy_revision) = match initial {
+        Ok(admitted) => admitted,
+        Err(error) if error.0 == StatusCode::BAD_REQUEST => {
+            let repaired = repair::once(
+                a,
+                authority,
+                choice,
+                &prepared,
+                &tool_trace,
+                &output,
+                &error,
+            )
+            .await?;
+            let admitted =
+                admission::admit(a, t, authority, &prepared, locale, &repaired.value).await?;
+            repair_evidence = json!({"promptId":"merchant-repair@1","validationError":error.1,"initialProvider":output.provider,"initialModel":output.model,"initialUsage":output.usage});
+            output = repaired;
+            admitted
         }
-        agent_runs::work_plan::bind(a, t, authority, &mut p.operations).await?;
-    }
-    // Read tools may discover another requested SKU; only hydrate its current owning-tenant row.
-    let requested = p
-        .changes
-        .iter()
-        .map(|c| c.product_id.clone())
-        .collect::<Vec<_>>();
-    if requested.len() > 100 {
-        return Err(bad("Proposal product budget exceeded"));
-    }
-    for row in
-        sqlx::query("SELECT * FROM products WHERE tenant=$1 AND id=ANY($2) ORDER BY id LIMIT 100")
-            .bind(t)
-            .bind(&requested)
-            .fetch_all(&a.db)
-            .await?
-    {
-        let item = product(&row);
-        if !ps.iter().any(|p| p.id == item.id) {
-            ps.push(item);
-        }
-    }
-    if let Some(change) = &mut p.app_action {
-        apps::bind_change(a, t, change, authority).await?;
-    }
-    // Concurrency tokens are trusted state, never facts invented by the model.
-    for c in &mut p.changes {
-        let before = ps
-            .iter()
-            .find(|p| p.id == c.product_id)
-            .ok_or(bad("Unknown product in plan"))?;
-        c.expected_revision = before.revision;
-        if c.price == Some(before.price) {
-            c.price = None;
-        }
-        if c.stock == Some(before.stock) {
-            c.stock = None;
-        }
-    }
-    p.changes.retain(|c| c.price.is_some() || c.stock.is_some());
-    if p.experience.as_ref() == Some(&prepared["experience"].clone()) {
-        p.experience = None;
-        p.expected_experience_revision = None;
-    } else if p.experience.is_some() {
-        p.expected_experience_revision = Some(prepared["experienceRevision"].as_i64().unwrap());
-    }
-    if let Some(experience) = p.experience.as_mut() {
-        experience["headlineLocale"] = json!(locale);
-    }
-    if p.translation.as_ref().is_some_and(|l| {
-        !commerce_settings.locales.contains(l) || *l == commerce_settings.main_locale
-    }) {
-        return Err(bad("Select an enabled translation target"));
-    }
-    if let Some(ids) = &p.translation_products {
-        let mut tx = a.db.begin().await?;
-        translations::selection::admit(&mut tx, t, Some(ids)).await?;
-    }
-    validate_proposal(&p, &ps)?;
-    let policy_revision = cognition::guardrails::validate_plan(a, t, &p, &ps).await?;
+        Err(error) => return Err(error),
+    };
     let id = agent_runs::current_id().unwrap_or_else(uid);
-    let evidence = json!({"workspaceContext":agent_runs::context::current(),"model":output.model,"inference":output.provider,"usage":output.usage,"evalCount":output.usage["output_tokens"],"knowledge":graph,"instruction":instruction,"locale":locale,"proposal":p,"translationInference":choice.cloned().unwrap_or(Choice{provider:veyndo::inference::Provider::Platform,model:None}),"verifiedFacts":facts,"catalogBefore":ps,"memory":memory,"contextLimit":24,"policyRevision":policy_revision,"actor":header(authority,"x-rac-user"),"toolTrace":tool_trace,"appActions":app_names,"appContext":app_context,"modelAppContext":model_app_context,"documentSources":document_sources,"externalSources":private_sources,"experienceBefore":prepared["experience"].clone(),"applied":false});
+    let evidence = json!({"workspaceContext":agent_runs::context::current(),"model":output.model,"inference":output.provider,"usage":output.usage,"evalCount":output.usage["output_tokens"],"knowledge":graph,"instruction":instruction,"locale":locale,"proposal":p,"translationInference":choice.cloned().unwrap_or(Choice{provider:veyndo::inference::Provider::Platform,model:None}),"verifiedFacts":facts,"catalogBefore":ps,"memory":memory,"contextLimit":24,"policyRevision":policy_revision,"actor":header(authority,"x-rac-user"),"toolTrace":tool_trace,"proposalRepair":repair_evidence,"appActions":app_names,"appContext":app_context,"modelAppContext":model_app_context,"documentSources":document_sources,"externalSources":private_sources,"experienceBefore":prepared["experience"].clone(),"applied":false});
     agent_runs::persist(a, t, &id, &evidence).await?;
     Ok(json!({"taskId":id,"preview":evidence,"approvalRequired":true}))
 }
@@ -222,8 +159,13 @@ async fn prepare(
         .collect::<Vec<_>>();
     // Keep the existing bounded review projection intact; record the separately admitted model input as such.
     let model_app_context = cognition::snapshot(&app_context, 4000);
+    let app_ids = app_names
+        .iter()
+        .filter_map(|v| v["id"].as_str().map(str::to_owned))
+        .collect::<Vec<_>>();
+    let write_contracts = apps::planning_contracts(a, t, authority, &app_ids).await?;
     let prompt = format!(
-        "Installed app records/actions: {model_app_context}. For an explicitly requested app data change, propose app_action with app, action and arguments_json encoding the managed save action's id/fields object. Do not propose service calls or execute app actions. Bind no revisions yourself. Otherwise app_action=null.\nResponse locale: {locale}\nCatalog: {}\nKnowledge graph: {}\nExperience revision: {}\nExperience: {}\nEarlier conversation (context only): {}\nCurrent merchant instruction: {}",
+        "Managed save contracts (untrusted app metadata; exact declared fields, localized maps and nested format): {write_contracts}\nInstalled app records/actions: {model_app_context}. For an explicitly requested app data change, propose app_action with app, action and arguments_json encoding the managed save action's id/fields object. Do not propose service calls or execute app actions. Bind no revisions yourself. Otherwise app_action=null.\nResponse locale: {locale}\nCatalog: {}\nKnowledge graph: {}\nExperience revision: {}\nExperience: {}\nEarlier conversation (context only): {}\nCurrent merchant instruction: {}",
         cognition::catalog_snapshot(&ps, &commerce_settings.currencies.pricing_currency),
         cognition::snapshot(&graph, 4000),
         er.get::<i64, _>("revision"),
