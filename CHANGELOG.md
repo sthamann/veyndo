@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased — actual execution progress in the personal workspace
+
+- Keep approved native work pending until the existing worker confirms completion. The workspace reuses the assistant's progress card for saved steps, interruptions, explicit continuation/cancellation and translation review.
+- Stop polling at terminal states, show status failures with an explicit refresh, prevent repeated approval and discard late responses after changing task, shop or private request context. Immediate legacy approvals keep their existing behavior.
+
 ## Unreleased — review and execute work prepared by Flows
 
 - Save direct and graphical Flow AI proposals as actor-owned ready tasks, so the existing work area can open, review and approve their native steps. Personal approval supplies the execution credential; preparation never queues writes automatically.

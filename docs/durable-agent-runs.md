@@ -19,6 +19,12 @@ a compact card shows queued, running, ready, stopped or uncertain progress.
 Reloading the conversation restores its saved run. Completed model-step counts
 report stored responses, not invented percentages or internal reasoning.
 
+The personal workspace uses this same card after approving a saved task. A
+`queued` approval response is an acknowledgement, not a completed change. It
+observes the original run until completion or interruption and exposes the
+existing revision-checked continue/cancel actions. A status outage remains an
+error with explicit refresh; it never becomes a success or another approval.
+
 An interrupted in-flight provider call is **uncertain**: the provider may have
 accepted or charged it. Veyndo does not automatically repeat that call. Continue
 explicitly to permit another attempt, or cancel. Completed earlier responses are

@@ -36,6 +36,14 @@ proposal's sources/changes, and use the native approval action. A goal's own
 status is a personal planning status; marking it stopped does not cancel a
 separate provider operation or background job.
 
+Approving a native work sequence first saves it for the existing worker. Its shared
+progress card shows waiting, running and completed steps; the workspace reports
+completion only after the server confirms the write. Failed or uncertain work
+offers the same explicit continue/cancel actions as the assistant. If progress
+cannot be loaded, use **Reload** to read its current state without approving it
+again. Translation review stays in the selected private workspace. Switching
+shop, request context or task discards late responses from the previous view.
+
 **Open Flow Builder** prepares an **inactive** native Flow draft from the goal.
 Choose the real trigger, conditions, current authorized actions and language;
 review it before saving/activating. This does not create a second autonomous

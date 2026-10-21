@@ -973,6 +973,7 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/admin/workspace/WorkspaceGoals.tsx](../frontend/src/admin/workspace/WorkspaceGoals.tsx) | Goals reference the existing proposal owner; no parallel worker, executor or approval queue. |
 | [frontend/src/admin/workspace/WorkspacePinBridge.tsx](../frontend/src/admin/workspace/WorkspacePinBridge.tsx) | The shared grid pins criteria in the existing actor-private workspace; rows and credentials are never copied. |
 | [frontend/src/admin/workspace/WorkspaceTask.tsx](../frontend/src/admin/workspace/WorkspaceTask.tsx) | Personal goals open the native proposal review and apply owner; no second approval/execution path. |
+| [frontend/src/admin/workspace/useWorkspaceTaskRun.ts](../frontend/src/admin/workspace/useWorkspaceTaskRun.ts) | Observe the original task worker; an accepted command is not a completed write. |
 | [frontend/src/admin/workspace/workspace-i18n.ts](../frontend/src/admin/workspace/workspace-i18n.ts) | Personal workspace vocabulary; UI language never changes saved content language. |
 | [frontend/src/admin/workspace/workspace-model.ts](../frontend/src/admin/workspace/workspace-model.ts) | Layouts are private presentation preferences, never roles or delegated permissions. |
 | [frontend/src/admin/workspace/workspace.css](../frontend/src/admin/workspace/workspace.css) | Personal workspace: stable shell, accessible rearrangement and scoped cards. |
