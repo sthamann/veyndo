@@ -14,6 +14,8 @@ pub(crate) async fn create(
             .unwrap_or(json!({"provider":"ollama","model":null})),
     )
     .map_err(|_| bad("Invalid translation provider"))?;
+    let products = selection::parse(v.get("productIds"))?;
+    admit_provider(&a, &choice).await?;
     let mut tx = a.db.begin().await?;
     let id = Uuid::new_v4().to_string();
     enqueue(
@@ -28,6 +30,7 @@ pub(crate) async fn create(
                 .ok_or(bad("Target language required"))?,
             &choice,
             v["overwrite"].as_bool().unwrap_or(false),
+            products.as_deref(),
         ),
     )
     .await?;
@@ -36,32 +39,26 @@ pub(crate) async fn create(
 }
 /// Both explicit settings commands and approved merchant tasks enqueue the same durable draft owner.
 pub(crate) async fn enqueue(
-    a: &App,
+    _a: &App,
     tx: &mut sqlx::Transaction<'_, sqlx::Postgres>,
     t: &str,
     id: &str,
     s: &commerce::Settings,
-    request: (&str, &Choice, bool),
+    request: (&str, &Choice, bool, Option<&[String]>),
 ) -> Result<()> {
-    let (target, choice, overwrite) = request;
+    let (target, choice, overwrite, products) = request;
+    selection::admit(tx, t, products).await?;
     if !s.locales.iter().any(|l| l == target) || target == s.main_locale {
         return Err(bad("Select an enabled translation target"));
     }
-    if !a.inference.providers()["providers"]
-        .as_array()
-        .unwrap()
-        .iter()
-        .any(|p| p["id"] == json!(choice.provider) && p["configured"] == true)
-    {
-        return Err(bad("Translation provider is not configured"));
-    }
     let row = sqlx::query(
-        "SELECT count(*) AS total,coalesce(max(id),'') AS highwater FROM products WHERE tenant=$1",
+        "SELECT count(*) AS total,coalesce(max(id),'') AS highwater FROM products WHERE tenant=$1 AND ($2::text[] IS NULL OR id=ANY($2))",
     )
     .bind(t)
+    .bind(products)
     .fetch_one(&mut **tx)
     .await?;
-    sqlx::query("INSERT INTO translation_jobs(tenant,id,source_locale,target_locale,choice,overwrite,total,highwater) VALUES($1,$2,$3,$4,$5,$6,$7,$8)").bind(t).bind(id).bind(&s.main_locale).bind(target).bind(json!(choice)).bind(overwrite).bind(row.get::<i64,_>("total")).bind(row.get::<String,_>("highwater")).execute(&mut **tx).await?;
+    sqlx::query("INSERT INTO translation_jobs(tenant,id,source_locale,target_locale,choice,overwrite,total,highwater,product_ids) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9)").bind(t).bind(id).bind(&s.main_locale).bind(target).bind(json!(choice)).bind(overwrite).bind(row.get::<i64,_>("total")).bind(row.get::<String,_>("highwater")).bind(products).execute(&mut **tx).await?;
     Ok(())
 }
 
@@ -99,9 +96,24 @@ pub(crate) async fn control(
         Some("cancel") => "cancelled",
         _ => return Err(bad("Invalid translation action")),
     };
-    let n=sqlx::query("UPDATE translation_jobs SET status=$1,error=NULL,lease=NULL,lease_until=NULL WHERE tenant=$2 AND id=$3 AND status IN ('queued','failed','processing')").bind(status).bind(&t).bind(&id).execute(&a.db).await?.rows_affected();
+    let n=sqlx::query("UPDATE translation_jobs SET status=$1,error=NULL,lease=NULL,lease_until=NULL WHERE tenant=$2 AND id=$3 AND run_task IS NULL AND status IN ('queued','failed','processing')").bind(status).bind(&t).bind(&id).execute(&a.db).await?.rows_affected();
     if n == 0 {
-        return Err(conflict("Translation job is already complete"));
+        return Err(conflict(
+            "Translation is complete or controlled by its original task; use the task continuation controls",
+        ));
     }
     Ok(Json(json!({"status":status})))
+}
+
+/// Resolve centrally managed provider settings before acquiring a transaction-pool backend.
+pub(crate) async fn admit_provider(a: &App, choice: &Choice) -> Result<()> {
+    let available = a.inference.public_providers().await.map_err(bad)?;
+    if !available["providers"].as_array().is_some_and(|providers| {
+        providers
+            .iter()
+            .any(|p| p["id"] == json!(choice.provider) && p["configured"] == true)
+    }) {
+        return Err(bad("Translation provider is not configured"));
+    }
+    Ok(())
 }

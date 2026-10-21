@@ -58,10 +58,18 @@ pub(crate) async fn live(a: &App, h: &RequestContext) -> Result<String> {
     Ok(t)
 }
 pub(crate) async fn owned(a: &App, live: &str, stage: &str) -> Result<Value> {
+    owned_on(&a.db, live, stage).await
+}
+/// Transactional callers retain their current backend and the same live/stage ownership guard.
+pub(crate) async fn owned_on<'e>(
+    db: impl sqlx::Executor<'e, Database = sqlx::Postgres>,
+    live: &str,
+    stage: &str,
+) -> Result<Value> {
     sqlx::query_scalar("SELECT baseline FROM shop_environments WHERE tenant=$1 AND live_tenant=$2 AND preview_owner IS NULL")
         .bind(stage)
         .bind(live)
-        .fetch_optional(&a.db)
+        .fetch_optional(db)
         .await?
         .ok_or(Error(
             StatusCode::NOT_FOUND,
@@ -90,7 +98,7 @@ async fn diff(
     let actual = snapshot(&mut tx, &t).await?;
     let mut changes = vec![];
     for (key, value) in current.as_object().unwrap() {
-        if !access::can_read_unit(&a, &h, &id, key).await? {
+        if !access::can_read_unit(&h, key, &current)? {
             continue;
         }
         if base["stage"].get(key) != Some(value) {

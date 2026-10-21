@@ -1,6 +1,12 @@
 /** International settings vocabulary. Every key requires English, German, French and Spanish. */
 import { useLocale } from "./i18n";
 export const internationalWords = {
+  managedTranslation: [
+    "Managed by an agent task. Continue or cancel in its original conversation; review drafts here.",
+    "Gehört zu einem Agentenauftrag. Setze ihn im ursprünglichen Gespräch fort oder brich ihn dort ab. Die Entwürfe kannst du hier prüfen.",
+    "Géré par une tâche de l’agent. Reprenez ou annulez dans sa conversation initiale ; examinez les traductions ici.",
+    "Gestionado por una tarea del agente. Continúa o cancela en su conversación original; revisa los borradores aquí.",
+  ],
   cash: [
     "Cash · POS only",
     "Barzahlung · nur Kasse",

@@ -9,7 +9,12 @@ export type SavedRun = {
   execution?: {
     completed: number;
     total: number;
-    steps: { name: string; label: string; completed: boolean }[];
+    steps: {
+      name: string;
+      label: string;
+      completed: boolean;
+      translationJobId?: string | null;
+    }[];
   } | null;
   error?: { code?: string; detail?: string };
 };

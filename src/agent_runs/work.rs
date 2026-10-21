@@ -18,6 +18,12 @@ pub(crate) async fn execute(
         if checkpoint::load(a, &key).await?.is_some() {
             continue;
         }
+        if step.name == "merchant.translations.create" {
+            if !translation::advance(a, t, id, h, &run, index, step).await? {
+                return Ok(json!({"taskId":id,"applied":false,"queued":true}));
+            }
+            continue;
+        }
         let changed=sqlx::query("UPDATE tasks SET run_pending=$4,run_revision=run_revision+1 WHERE tenant=$1 AND id=$2 AND run_state='running' AND run_lease=$3 AND run_until>now()").bind(t).bind(id).bind(&run.lease).bind(&key).execute(&a.db).await?.rows_affected();
         if changed != 1 {
             return Err(conflict("Work cancelled before operation"));
@@ -39,8 +45,11 @@ pub(crate) async fn execute(
             // Do not hold a backend while a native owner acquires its own one.
             // Retain an admission token across cancellation so an admitted native
             // effect can truthfully finish its receipt without reviving the task.
-            sqlx::query("UPDATE tasks SET run_checkpoint=jsonb_set(run_checkpoint,ARRAY[$3],$4,true) WHERE tenant=$1 AND id=$2")
-                .bind(t).bind(id).bind(&admission).bind(json!({"lease":run.lease})).execute(&mut *tx).await?;
+            let admitted = sqlx::query("UPDATE tasks SET run_checkpoint=jsonb_set(run_checkpoint,ARRAY[$3],$4,true) WHERE tenant=$1 AND id=$2 AND run_state='running' AND run_lease=$5 AND run_until>now()")
+                .bind(t).bind(id).bind(&admission).bind(json!({"lease":run.lease})).bind(&run.lease).execute(&mut *tx).await?.rows_affected();
+            if admitted != 1 {
+                return Err(conflict("Native work admission lost its lease"));
+            }
             tx.commit().await?;
             Box::pin(capabilities::invoke(a, h, &step.name, &args)).await?;
             tx = a.db.begin().await?;

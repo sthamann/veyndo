@@ -240,4 +240,8 @@ pub(super) const SCHEMA: &[(&str, &str)] = &[
         "106-review-source-provenance",
         include_str!("../../migrations/106-review-source-provenance.sql"),
     ),
+    (
+        "107-translation-selection",
+        include_str!("../../migrations/107-translation-selection.sql"),
+    ),
 ];

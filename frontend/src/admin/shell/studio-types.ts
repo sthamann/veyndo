@@ -115,6 +115,7 @@ export type Preview = {
     operations?: { name: string; label: string; arguments_json: string }[];
     summary: string;
     translation?: string | null;
+    translation_products?: string[] | null;
     app_action?: { app: string; action: string; arguments_json: string } | null;
     changes: {
       product_id: string;

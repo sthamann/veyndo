@@ -196,6 +196,13 @@ pub(crate) async fn invoke(a: &App, h: &RequestContext, name: &str, v: &Value) -
     }
     sqlx::query("UPDATE tasks SET run_state=$3,run_error=NULL,run_pending=NULL,run_lease=NULL,run_until=NULL,run_credential=$4,run_personal=$5,run_revision=run_revision+1,run_updated=now() WHERE tenant=$1 AND id=$2")
    .bind(&t).bind(row.get::<String,_>("id")).bind(next).bind(credential).bind(h.principal.personal_session).execute(&mut *tx).await?;
+    sqlx::query("UPDATE tasks SET run_after=now() WHERE tenant=$1 AND id=$2")
+        .bind(&t)
+        .bind(row.get::<String, _>("id"))
+        .execute(&mut *tx)
+        .await?;
+    sqlx::query("UPDATE translation_jobs SET status=$3,error=NULL,error_code=NULL,lease=NULL,lease_until=NULL WHERE tenant=$1 AND run_task=$2 AND status IN ('queued','processing','failed')")
+        .bind(&t).bind(row.get::<String,_>("id")).bind(if next=="cancelled" {"cancelled"} else {"queued"}).execute(&mut *tx).await?;
     if next == "cancelled" {
         sqlx::query("UPDATE conversations SET turn_owner=NULL,turn_until=NULL WHERE tenant=$1 AND id=$2 AND turn_owner=$3").bind(&t).bind(row.get::<Option<String>,_>("conversation_id")).bind(row.get::<String,_>("id")).execute(&mut *tx).await?;
     }
@@ -233,7 +240,7 @@ pub(super) fn project(row: &sqlx::postgres::PgRow) -> Value {
     let state: String = row.get("run_state");
     let cp: Value = row.get("run_checkpoint");
     let request: Value = row.get("run_request");
-    let execution=request["execution"].as_array().map(|plan|json!({"total":plan.len(),"completed":cp.as_object().map_or(0,|o|o.keys().filter(|k|k.starts_with("operation-")).count()),"steps":plan.iter().enumerate().map(|(n,s)|json!({"name":s["name"],"label":s["label"],"completed":cp.get(format!("operation-{n}")).is_some()})).collect::<Vec<_>>()}));
+    let execution=request["execution"].as_array().map(|plan|json!({"total":plan.len(),"completed":cp.as_object().map_or(0,|o|o.keys().filter(|k|k.starts_with("operation-")).count()),"steps":plan.iter().enumerate().map(|(n,s)|json!({"name":s["name"],"label":s["label"],"completed":cp.get(format!("operation-{n}")).is_some(),"translationJobId":cp.get(format!("translation-{n}"))})).collect::<Vec<_>>()}));
     let steps = cp
         .as_object()
         .map_or(0, |o| o.keys().filter(|k| k.starts_with("model-")).count());

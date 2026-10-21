@@ -123,7 +123,7 @@ pub(crate) async fn stage(
         return Err(conflict("Build digest changed"));
     }
     let env: String = row.get("environment");
-    staging::owned(&a, &t, &env).await?;
+    staging::owned_on(&mut *tx, &t, &env).await?;
     let m: apps::Manifest =
         serde_json::from_value(row.get("manifest")).map_err(|_| bad("Invalid app"))?;
     builds::validate(&m)?;

@@ -61,6 +61,15 @@ payment through this path. Existing payment, order, import and release workflows
 retain their own explicit native admission. Dedicated budgeted planning keys keep
 their read-only scope.
 
+**21 October development extension:** reviewed work can also prepare translation
+drafts for exact selected product IDs, including products created earlier in the
+same plan. The existing translation worker retains original task authority and
+returns a real job link. The parent waits for ready drafts, stops on child failure
+and resumes only after explicit continuation. Draft review/apply and selected
+publication remain separate. See [the delivery tracker](connected-merchant-followups.md)
+for local acceptance and public rollout status; the public screenshots above are
+from the accepted 20 October release.
+
 ```mermaid
 flowchart TD
     Context[Editor and current shop] --> Plan[Saved exact proposal]

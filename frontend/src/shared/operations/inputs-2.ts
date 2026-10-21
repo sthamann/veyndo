@@ -17,9 +17,10 @@ export interface Inputs2 {
   "merchant.translations.create": {
     inference?: {
       model?: string | null;
-      provider?: "ollama" | "openai" | "anthropic";
+      provider?: "platform" | "ollama" | "openai" | "anthropic";
     };
     overwrite?: boolean;
+    productIds?: Array<string>;
     targetLocale: string;
   };
   "merchant.translations.detail": { cursor?: string; id: string };

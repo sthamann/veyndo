@@ -10,6 +10,7 @@ import type { InternationalConfig } from "./CommerceSettings";
 import type { RequestFn } from "../shell/studio-types";
 type Job = {
   id: string;
+  run_task?: string | null;
   target_locale: string;
   status: string;
   processed: number;
@@ -229,8 +230,11 @@ export default function TranslationJobs({
           {job.error && (
             <p role="alert">{responseError(job.error, 400).message}</p>
           )}
+          {job.run_task && (
+            <p className="intl-hint">{i("managedTranslation")}</p>
+          )}
           <div className="intl-inline">
-            {job.status === "failed" && (
+            {!job.run_task && job.status === "failed" && (
               <button
                 type="button"
                 className="studio-secondary"
@@ -248,24 +252,25 @@ export default function TranslationJobs({
                 {i("resume")}
               </button>
             )}
-            {["queued", "processing", "failed"].includes(job.status) && (
-              <button
-                type="button"
-                className="studio-secondary"
-                disabled={disabled || busy}
-                onClick={() =>
-                  void act(() =>
-                    request(
-                      `/api/merchant/translations/${job.id}`,
-                      { action: "cancel" },
-                      "PUT",
-                    ),
-                  )
-                }
-              >
-                {i("cancel")}
-              </button>
-            )}
+            {!job.run_task &&
+              ["queued", "processing", "failed"].includes(job.status) && (
+                <button
+                  type="button"
+                  className="studio-secondary"
+                  disabled={disabled || busy}
+                  onClick={() =>
+                    void act(() =>
+                      request(
+                        `/api/merchant/translations/${job.id}`,
+                        { action: "cancel" },
+                        "PUT",
+                      ),
+                    )
+                  }
+                >
+                  {i("cancel")}
+                </button>
+              )}
             {job.status === "ready" && counts.ready > 0 && (
               <button
                 type="button"

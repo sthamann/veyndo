@@ -1,7 +1,7 @@
 # Veyndo: current status
 
 This is the single starting point for what works, what is implemented but not
-publicly accepted, and what still needs development. Updated 20 October 2026.
+publicly accepted, and what still needs development. Updated 21 October 2026.
 A green test, merged code and a completed public business journey are different evidence.
 
 Migration implementation (19 October): saved plans now connect all eight supported
@@ -23,6 +23,14 @@ source-reference checks and visible original counts/digests. Two-page native
 product intake/replay and tamper rejection are locally tested. This remains
 a historical local checkpoint, now merged in PR #168; it did not establish a
 complete shop migration/cutover. [Scope and evidence](agentic-migration.md).
+
+## 21 October: collection workflow in development
+
+The next [connected merchant follow-ups](connected-merchant-followups.md) are being
+implemented in sequence. Scoped translation jobs and a connected private
+category/translation/page task have passed initial local HTTP/PostgreSQL restart
+and selective-release cases. The new extension is not yet publicly deployed;
+the accepted public workspace remains the 20 October release below.
 
 ## 20 October: design onboarding and readable product comparison
 

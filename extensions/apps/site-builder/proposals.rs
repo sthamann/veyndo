@@ -136,6 +136,7 @@ pub(super) async fn prepare(
             experience: None,
             expected_experience_revision: None,
             translation: None,
+            translation_products: None,
             app_action: Some(apps::AppChange {
                 app: "site_builder".into(),
                 action: "save_page".into(),

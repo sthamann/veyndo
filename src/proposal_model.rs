@@ -23,6 +23,8 @@ pub(crate) struct Proposal {
     /// Queues catalogue drafts only after explicit approval; it never applies or publishes translations.
     #[serde(default)]
     pub(crate) translation: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub(crate) translation_products: Option<Vec<String>>,
     pub(crate) summary: String,
     pub(crate) changes: Vec<Change>,
     #[serde(default)]
@@ -45,6 +47,12 @@ pub(crate) fn validate_experience(v: &Value) -> Result<()> {
 pub(crate) fn validate_proposal(p: &Proposal, ps: &[Product]) -> Result<()> {
     if p.changes.len() > 100 || p.summary.len() > 2000 {
         return Err(bad("Proposal is too large"));
+    }
+    if let Some(ids) = &p.translation_products {
+        translations::selection::validate(ids)?;
+        if p.translation.is_none() {
+            return Err(bad("Selected translations need a target language"));
+        }
     }
     let mut ids = std::collections::HashSet::new();
     for c in &p.changes {

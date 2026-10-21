@@ -672,8 +672,8 @@
     },
     "crates/cognition/src/prompts.rs": {
       "status": "unproved",
-      "sha256": "757cd8641990ecc8e891eb1a136828c37a11afaecebf921252509c8cade3cc3d",
-      "review": "Focused independent review accepted bounded native app proposal repair, canonical category admission and current task progress fences; fail-first generation/category/race regressions passed. These adapters remain outside proved business policies."
+      "sha256": "18a86d7b9c67765fb4e6dce7d4a172fbc5541e527252cf892e3aff64e5d08f59",
+      "review": "Reviewed scoped translation selection, original task authority, atomic child linking and completion, cancellation/explicit ambiguous continuation, lease fences, central provider admission outside transactions and bounded prompt evidence; real PostgreSQL/HTTP collection and interruption regressions plus 724 UI tests; skipped products store SQL NULL evidence rather than JSON null. Claude supplied code-only review, findings checked and fixed."
     },
     "crates/commerce/src/discount.rs": {
       "status": "reviewed-binding",
@@ -1197,8 +1197,8 @@
     },
     "extensions/apps/site-builder/proposals.rs": {
       "status": "unproved",
-      "sha256": "55b879a93340ceb8c267dcd4d17ab2967f6563a7da819664239cf8e87e84b49e",
-      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
+      "sha256": "352a4e21ac0e29c13e46f9481585ce6032a73c7e65351d74922479b5bd179d7a",
+      "review": "Reviewed scoped translation selection, original task authority, atomic child linking and completion, cancellation/explicit ambiguous continuation, lease fences, central provider admission outside transactions and bounded prompt evidence; real PostgreSQL/HTTP collection and interruption regressions plus 724 UI tests; skipped products store SQL NULL evidence rather than JSON null. Claude supplied code-only review, findings checked and fixed."
     },
     "extensions/apps/site-builder/references.rs": {
       "status": "unproved",
@@ -1407,13 +1407,18 @@
     },
     "src/agent_runs/contract.rs": {
       "status": "unproved",
-      "sha256": "35e760f95d774c226f78400d956b26e12e685370fc9a8973f50b74c6be39e2c3",
-      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
+      "sha256": "1e312a4b98413c13166a672ff6f7283eebfedb5f2177b32043ee15a6663afd60",
+      "review": "Reviewed scoped translation selection, original task authority, atomic child linking and completion, cancellation/explicit ambiguous continuation, lease fences, central provider admission outside transactions and bounded prompt evidence; real PostgreSQL/HTTP collection and interruption regressions plus 724 UI tests; skipped products store SQL NULL evidence rather than JSON null. Claude supplied code-only review, findings checked and fixed."
     },
     "src/agent_runs/controls.rs": {
       "status": "unproved",
       "sha256": "3b7e657659d3998077f35d9996be504f2b37ed8856aff485c18243aa11abc149",
       "review": "Reviewed agent scope construction and locking: synchronously box the child before constructing the task-local future; retain authority only while polling and verify no context leak. Live-root NO KEY UPDATE serializes allocation/enqueue/stop while admitting FK KEY SHARE, avoiding tenant/task inversion. Real held-reference HTTP stop fails before and passes after; actual worker stop and signed-role allocation cases pass. Existing kernel proof unchanged; async/SQL/provider code remains unproved and the Linux instrumented POS repeat is still required."
+    },
+    "src/agent_runs/translation.rs": {
+      "status": "unproved",
+      "sha256": "360762ea22e072bd6c9463c92c51c3d40aa01bb6183f599f35f157d903f68619",
+      "review": "Reviewed scoped translation selection, original task authority, atomic child linking and completion, cancellation/explicit ambiguous continuation, lease fences, central provider admission outside transactions and bounded prompt evidence; real PostgreSQL/HTTP collection and interruption regressions plus 724 UI tests; skipped products store SQL NULL evidence rather than JSON null. Claude supplied code-only review, findings checked and fixed."
     },
     "src/agent_runs/view.rs": {
       "status": "unproved",
@@ -1422,23 +1427,23 @@
     },
     "src/agent_runs/work.rs": {
       "status": "unproved",
-      "sha256": "6396db81ec3b3238165363cab200b5b9ec93b00eaecce7167b5a03924cf5ff84",
-      "review": "Independent focused review passed: private exact work approval rebinds outside transactions with locked revision/stop recheck; token-bound late native receipts preserve cancellation and expired leases, no next step after cancellation; stable category IDs validated; actual PostgreSQL direct and one-backend durable/restart/cancel/expiry regressions passed."
+      "sha256": "abac923a54d5c703fb15f558d959b9fee79e1df6263be2261ec7f709e540c8eb",
+      "review": "Reviewed scoped translation selection, original task authority, atomic child linking and completion, cancellation/explicit ambiguous continuation, lease fences, central provider admission outside transactions and bounded prompt evidence; real PostgreSQL/HTTP collection and interruption regressions plus 724 UI tests; skipped products store SQL NULL evidence rather than JSON null. Claude supplied code-only review, findings checked and fixed."
     },
     "src/agent_runs/work_plan.rs": {
       "status": "unproved",
-      "sha256": "f116c4ac7836a433c417d58e7ce8e2edd5d527a5dd035deb30c3d89a0e2f311e",
-      "review": "Focused independent review accepted bounded native app proposal repair, canonical category admission and current task progress fences; fail-first generation/category/race regressions passed. These adapters remain outside proved business policies."
+      "sha256": "565639e8949fa6cd94a31d4ae62d082b4f54017af9c6c2f645acb526f5150dc1",
+      "review": "Reviewed scoped translation selection, original task authority, atomic child linking and completion, cancellation/explicit ambiguous continuation, lease fences, central provider admission outside transactions and bounded prompt evidence; real PostgreSQL/HTTP collection and interruption regressions plus 724 UI tests; skipped products store SQL NULL evidence rather than JSON null. Claude supplied code-only review, findings checked and fixed."
     },
     "src/agent_runs/worker.rs": {
       "status": "unproved",
-      "sha256": "fb2b0d06948f5ef991704f973774ddcd731d628622c33870b951de3c57ed6e36",
-      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
+      "sha256": "ee04d3d7d51c1510e9486727e04e9732697a00da9c75e5911666ffd10c6eeae6",
+      "review": "Reviewed scoped translation selection, original task authority, atomic child linking and completion, cancellation/explicit ambiguous continuation, lease fences, central provider admission outside transactions and bounded prompt evidence; real PostgreSQL/HTTP collection and interruption regressions plus 724 UI tests; skipped products store SQL NULL evidence rather than JSON null. Claude supplied code-only review, findings checked and fixed."
     },
     "src/agent_runs.rs": {
       "status": "unproved",
-      "sha256": "bee8a27e31b8007076152c29385668a0f948b90bbb2822b54e8f222f5b98b96e",
-      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
+      "sha256": "59dc24cd72829e1a139dc7181511720c1d91c02784954be77169fca94cd48ce7",
+      "review": "Reviewed scoped translation selection, original task authority, atomic child linking and completion, cancellation/explicit ambiguous continuation, lease fences, central provider admission outside transactions and bounded prompt evidence; real PostgreSQL/HTTP collection and interruption regressions plus 724 UI tests; skipped products store SQL NULL evidence rather than JSON null. Claude supplied code-only review, findings checked and fixed."
     },
     "src/apps/approval.rs": {
       "status": "reviewed-binding",
@@ -1757,8 +1762,8 @@
     },
     "src/apps/registry.rs": {
       "status": "unproved",
-      "sha256": "25bb05cd46425dfc21341f1b49bbec58d8786e1bf10fd50c1240dd4543c31799",
-      "review": "Review native lifecycle labels across immutable builds, atomic installation, settings main-language edits and final selected-release validation. Existing aggregate configuration lock precedes package admission and private preview resets. Accepted historical snapshots retain their original language; the pure native-admission conjunction is unchanged."
+      "sha256": "9cd5600c71072cfd1aed919d5d994a67413ce167a36a148562dc65d13e0d31a2",
+      "review": "Reviewed scoped-pool repairs: staging ownership and app package reads reuse their existing transaction; package lookup retains exact tenant/id/active checks; activation uses the same tenant:app fence as install and native records. Real one-backend PgBouncer staging/import/reactivation/diffs/selected release, foreign-build denial, linked translations and durable cancellation/restart all pass. No policy, scope, permission, digest or CAS bypass."
     },
     "src/apps/relations.rs": {
       "status": "unproved",
@@ -1767,8 +1772,8 @@
     },
     "src/apps/routes.rs": {
       "status": "unproved",
-      "sha256": "af5cd68d2678e47bc59023376d1b2064dc157f1e66e8bbc186e7a73ce7d3173d",
-      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
+      "sha256": "650b698f24c6b8f37e917f44b9231192690b86ada80998865d23119ddfa89919",
+      "review": "Reviewed scoped-pool repairs: staging ownership and app package reads reuse their existing transaction; package lookup retains exact tenant/id/active checks; activation uses the same tenant:app fence as install and native records. Real one-backend PgBouncer staging/import/reactivation/diffs/selected release, foreign-build denial, linked translations and durable cancellation/restart all pass. No policy, scope, permission, digest or CAS bypass."
     },
     "src/apps/runtime.rs": {
       "status": "unproved",
@@ -2282,8 +2287,8 @@
     },
     "src/capabilities/schema.rs": {
       "status": "unproved",
-      "sha256": "63d3d54c3e6a395fbf09a90cc8dbfec78568cd5e9ab30b8bb91e5b0221725dd3",
-      "review": "Focused independent review accepted bounded native app proposal repair, canonical category admission and current task progress fences; fail-first generation/category/race regressions passed. These adapters remain outside proved business policies."
+      "sha256": "0dac9a85031f0eadbad72d68166ef436bfe44ba6ec6c0e0770c0e142693c26dc",
+      "review": "Reviewed scoped translation selection, original task authority, atomic child linking and completion, cancellation/explicit ambiguous continuation, lease fences, central provider admission outside transactions and bounded prompt evidence; real PostgreSQL/HTTP collection and interruption regressions plus 724 UI tests; skipped products store SQL NULL evidence rather than JSON null. Claude supplied code-only review, findings checked and fixed."
     },
     "src/capabilities.rs": {
       "status": "unproved",
@@ -2872,8 +2877,8 @@
     },
     "src/developer/routes.rs": {
       "status": "unproved",
-      "sha256": "1207c061186d12a5fbc5eea669fbfad748b302b7ead2b13b91f1af310557c735",
-      "review": "Native lifecycle review: bounded namespaced app graphs preserve native terminal/payment/stock/buyer admission, per-object immutable accepted definitions, current compound scopes, same HTTP MCP Flow owners and operational history; SQL snapshots and migration 105 are regression-tested adapters, not proved."
+      "sha256": "61332c4420d8bf146f8aec6fe56f9ee90c55f091cfb2a8e681ac37a229242007",
+      "review": "Reviewed native app staging: retain live/stage/preview-owner checks on the existing privileged build transaction instead of recursively acquiring another system backend. Existing digest, actor, package fences and installation transaction unchanged; real PgBouncer staging and foreign-build rejection cover the path."
     },
     "src/documents/content.rs": {
       "status": "unproved",
@@ -3272,8 +3277,8 @@
     },
     "src/migrations/recent_schema.rs": {
       "status": "unproved",
-      "sha256": "7a8352e16ef5574da07ebd68d363b94f48a5061f54bb97a1133571e7e9215123",
-      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
+      "sha256": "9bfc99029e6097351938d42b99ffbe79f1f613d122209db8dbb74cb815485db5",
+      "review": "Reviewed scoped translation selection, original task authority, atomic child linking and completion, cancellation/explicit ambiguous continuation, lease fences, central provider admission outside transactions and bounded prompt evidence; real PostgreSQL/HTTP collection and interruption regressions plus 724 UI tests; skipped products store SQL NULL evidence rather than JSON null. Claude supplied code-only review, findings checked and fixed."
     },
     "src/migrations/schema.rs": {
       "status": "unproved",
@@ -3662,8 +3667,8 @@
     },
     "src/planner.rs": {
       "status": "unproved",
-      "sha256": "2e05c8b18826f7044d9a7cf437ab088b252ba235ae1012ed7a42a7478a963470",
-      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
+      "sha256": "3b72e33202920b230666d904df114cf4f3a1cb75652a1830814b32c6d784ed6d",
+      "review": "Reviewed scoped translation selection, original task authority, atomic child linking and completion, cancellation/explicit ambiguous continuation, lease fences, central provider admission outside transactions and bounded prompt evidence; real PostgreSQL/HTTP collection and interruption regressions plus 724 UI tests; skipped products store SQL NULL evidence rather than JSON null. Claude supplied code-only review, findings checked and fixed."
     },
     "src/platform/ai.rs": {
       "status": "reviewed-binding",
@@ -3772,13 +3777,13 @@
     },
     "src/proposal_apply.rs": {
       "status": "unproved",
-      "sha256": "9c6676c38fdb470e1e0d7395fb432c4a58a0ee265376c943d7f7d12b0196b519",
-      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
+      "sha256": "37a2fcc1d57691f72e8be35a8121e9f7e1612d7d7138b183b2924ae8f0bc2275",
+      "review": "Reviewed scoped translation selection, original task authority, atomic child linking and completion, cancellation/explicit ambiguous continuation, lease fences, central provider admission outside transactions and bounded prompt evidence; real PostgreSQL/HTTP collection and interruption regressions plus 724 UI tests; skipped products store SQL NULL evidence rather than JSON null. Claude supplied code-only review, findings checked and fixed."
     },
     "src/proposal_model.rs": {
       "status": "unproved",
-      "sha256": "95248591ffb296a3e2f74fbbf60740b4269f85badd170553e61655acb8e0fdff",
-      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
+      "sha256": "41034e340df18b7015018cae4fc04dd339df37c1bd9570465db93a1c33e3571d",
+      "review": "Reviewed scoped translation selection, original task authority, atomic child linking and completion, cancellation/explicit ambiguous continuation, lease fences, central provider admission outside transactions and bounded prompt evidence; real PostgreSQL/HTTP collection and interruption regressions plus 724 UI tests; skipped products store SQL NULL evidence rather than JSON null. Claude supplied code-only review, findings checked and fixed."
     },
     "src/proposal_routes.rs": {
       "status": "unproved",
@@ -3847,8 +3852,8 @@
     },
     "src/staging/access.rs": {
       "status": "unproved",
-      "sha256": "7c3cabdc5e6ba41dc11d0c6f4a3b24975e52fe986a5d47cdfff128d4b49fb044",
-      "review": "Personal workspace and app-owned site design review: trusted personal sessions and actor RLS; public status/time/channel projection; original read-scope and current-field history; append-only cart-bound inbox/outbox with PII rights; package-before-record release fences. Independent security review and actual PostgreSQL own/foreign/CAS/history/form/model fixtures plus existing app/commerce/checkout/role/strict-runtime suites. New pure intake conjunction has exact Lean claims/conformance/negative mutations. SQL, UI, inference and providers remain unproved."
+      "sha256": "028fdee783c1926d366c1c4fad0a03192e9240b3200a6a354ed2533a3623374e",
+      "review": "Reviewed staging diff: model/action and private-data admission use the same locked package snapshot; no nested pool checkout under the snapshot transaction. Regression rejects missing additional rights, PII rights and missing models; real one-backend PgBouncer collection reproduction retained."
     },
     "src/staging/assets.rs": {
       "status": "unproved",
@@ -3882,8 +3887,8 @@
     },
     "src/staging/mod.rs": {
       "status": "unproved",
-      "sha256": "e1ba314ed046971e53226d6e612fabc33b5886584a6bdeb198c20d9cdbe1059f",
-      "review": "Independent review of native imported immutable image boundaries and selected parent/product-before-asset publication; exact persisted product baseline, attachment-only guard, source-position ordering and recoverable two-step association verified through real HTTP/PostgreSQL regressions. Pure extracted policies unchanged."
+      "sha256": "550e23143345bab66936df3ead5167d2e26552fa379d47f7ae58874d2e340b8a",
+      "review": "Reviewed native app staging: retain live/stage/preview-owner checks on the existing privileged build transaction instead of recursively acquiring another system backend. Existing digest, actor, package fences and installation transaction unchanged; real PgBouncer staging and foreign-build rejection cover the path."
     },
     "src/staging/products.rs": {
       "status": "unproved",
@@ -3947,18 +3952,23 @@
     },
     "src/translations/mod.rs": {
       "status": "unproved",
-      "sha256": "581e15143b58b9ecf8aa6622c1fcc84d0fe0eb6f461b535702314e75cc5814e7",
-      "review": "Reviewed generated app schema and retained storage/access/service contracts, explicit merchant translation enqueue transaction and replay guards, app-only inference output budget and personalization scope/explanation adapters. Verified relevant SQL/provider/frontend fixtures; adapter changes remain outside the extracted policy proof scope."
+      "sha256": "bdb886225812f61ac4723788edd8da0752859af2e39fac9f7b612f8bd1ee8f62",
+      "review": "Reviewed scoped translation selection, original task authority, atomic child linking and completion, cancellation/explicit ambiguous continuation, lease fences, central provider admission outside transactions and bounded prompt evidence; real PostgreSQL/HTTP collection and interruption regressions plus 724 UI tests; skipped products store SQL NULL evidence rather than JSON null. Claude supplied code-only review, findings checked and fixed."
     },
     "src/translations/routes.rs": {
       "status": "unproved",
-      "sha256": "273eb947bc81f3ed82fe610361d051f563ebc193d098aaae22d9ab87b046f245",
-      "review": "Reviewed generated app schema and retained storage/access/service contracts, explicit merchant translation enqueue transaction and replay guards, app-only inference output budget and personalization scope/explanation adapters. Verified relevant SQL/provider/frontend fixtures; adapter changes remain outside the extracted policy proof scope."
+      "sha256": "dbb37fe43ae741dbb9c97265542b163f9ee497389ca4e12ead0e27893d4daf3a",
+      "review": "Reviewed scoped translation selection, original task authority, atomic child linking and completion, cancellation/explicit ambiguous continuation, lease fences, central provider admission outside transactions and bounded prompt evidence; real PostgreSQL/HTTP collection and interruption regressions plus 724 UI tests; skipped products store SQL NULL evidence rather than JSON null. Claude supplied code-only review, findings checked and fixed."
+    },
+    "src/translations/selection.rs": {
+      "status": "unproved",
+      "sha256": "1b2849851a50f96c34b51c10ac840f109c756ca8febdafc6519ee7b88cab1461",
+      "review": "Reviewed scoped translation selection, original task authority, atomic child linking and completion, cancellation/explicit ambiguous continuation, lease fences, central provider admission outside transactions and bounded prompt evidence; real PostgreSQL/HTTP collection and interruption regressions plus 724 UI tests; skipped products store SQL NULL evidence rather than JSON null. Claude supplied code-only review, findings checked and fixed."
     },
     "src/translations/worker.rs": {
       "status": "unproved",
-      "sha256": "3a4078d45460790b5298c9627fe5059ec33dd7e2f168f8de89c956f8c09e8b89",
-      "review": "Reviewed eighteen core findings: typed trusted identity and explicit route rights; consolidated current grants; durable auth and fenced shared limits; scoped transactions and one-backend PgBouncer including nested borrow fixes; bounded Wasm/PNG work; notified workers, savepoint quarantine and conservative retention; separate runtime roles and startup configuration. Real PostgreSQL/provider regressions preserve current tenant/customer/payment behavior. SQL/network adapters remain unproved."
+      "sha256": "776531d4749b239df2f07705ba0a5e7f268344879214d9494bd5a1c99d5555df",
+      "review": "Reviewed scoped translation selection, original task authority, atomic child linking and completion, cancellation/explicit ambiguous continuation, lease fences, central provider admission outside transactions and bounded prompt evidence; real PostgreSQL/HTTP collection and interruption regressions plus 724 UI tests; skipped products store SQL NULL evidence rather than JSON null. Claude supplied code-only review, findings checked and fixed."
     },
     "src/ucp/cart.rs": {
       "status": "unproved",
@@ -4040,6 +4050,10 @@
       "sha256": "47e06a6a8b792e07d2c37d6bb41e5c553cdcb36d1884e86c2339659ae84e1056",
       "review": "Reviewed model-refusal repair against native validator and connected app-generation/native-lifecycle fixtures: graph, guards, replacement limits and scope metadata share the existing owners; admission predicates, financial boundaries and quote acceptance are unchanged. app-edit@3 preserves immutable prior revisions and binds prompt provenance. Eight hostile provider outputs remain atomic refusals, modal errors preserve the draft, workspace tests and strict Clippy pass. No new pure policy or whole-adapter proof claim."
     },
+    "crates/cognition/evals/collection-translation.v1.json": {
+      "sha256": "9f821c5af0e0b929dbfd12e66196c109a4c7fd30160fcb80b3eb0b96b0976477",
+      "review": "Reviewed scoped translation selection, original task authority, atomic child linking and completion, cancellation/explicit ambiguous continuation, lease fences, central provider admission outside transactions and bounded prompt evidence; real PostgreSQL/HTTP collection and interruption regressions plus 724 UI tests; skipped products store SQL NULL evidence rather than JSON null. Claude supplied code-only review, findings checked and fixed."
+    },
     "crates/cognition/evals/tool-injection.v1.json": {
       "sha256": "4cf25b4a445c8df9c099efb9cdac0c2160b06e633256bc9d498edac67c11535d",
       "review": "Review compiler-enforced foundation crates with unchanged native owners; native provider read-tool aliases and current authorization, private checkpoint continuation and versioned prompt evidence; fixed subscriber acknowledgements preserve commit gaps, independent quarantine and explicit replay; traced requests/tasks/outbox without payloads; exact decimal-to-minor-unit rounding retains legacy price boundary; real SQL poison-isolation regression passes and workspace unit/clippy checks pass"
@@ -4072,13 +4086,17 @@
       "sha256": "5f55127630ef5f3726d9b6ea12430a3d7531bfd481e270030682fd34d273e960",
       "review": "Focused independent review accepted bounded native app proposal repair, canonical category admission and current task progress fences; fail-first generation/category/race regressions passed. These adapters remain outside proved business policies."
     },
+    "crates/cognition/prompts/catalogue-translation.v1.txt": {
+      "sha256": "d50b1c4d06588f5cfc93baa2c06d27ea5d01f32d3fbd0104596f6f8dac9db68e",
+      "review": "Reviewed scoped translation selection, original task authority, atomic child linking and completion, cancellation/explicit ambiguous continuation, lease fences, central provider admission outside transactions and bounded prompt evidence; real PostgreSQL/HTTP collection and interruption regressions plus 724 UI tests; skipped products store SQL NULL evidence rather than JSON null. Claude supplied code-only review, findings checked and fixed."
+    },
     "crates/cognition/prompts/grid-filter.v1.txt": {
       "sha256": "d3e9261f4f96530f3e47c65a1d8b320283a5a56a187f66439a00c0a13cd1e77e",
       "review": "Reviewed native extension identity/private/unique anchors and current read/write/PII scopes; native projections use bounded fixed-store queries, exact indexed filters bind all input and fence the admitted package digest. Real four-object HTTP/MCP, role revocation, foreign reference, immutable upgrade, product/company clone and selected release tests passed. Added extracted configuration-only release predicate and operational false property; SQL and UI remain explicitly unproved. Reviewed canonical schema, preserved AI bindings and versioned grid prompt provenance without changing existing prompt revisions."
     },
     "crates/cognition/prompts/manifest.json": {
-      "sha256": "2d7aa004faff6373ef9d55053228afb20ba1549ff200bcc3469ec7fac8fec70f",
-      "review": "Focused independent review accepted bounded native app proposal repair, canonical category admission and current task progress fences; fail-first generation/category/race regressions passed. These adapters remain outside proved business policies."
+      "sha256": "76ff1eade502d8d76f86bb59cc02c937294aebbb70545a9a82163b2a0defaa80",
+      "review": "Reviewed final collection work and prompt contracts: scoped native IDs and prior reviewed creates, central provider preflight outside SQL transactions, atomic linked jobs, original actor/stop/cancellation guards, guarded leases, explicit ambiguous-call continuation and non-bypassable child controls. Native negative/restart tests and 724 UI tests; SQL NULL evidence fix follows a failing real skipped-product regression. New versioned prompt separates native private creation from CSV/image intake."
     },
     "crates/cognition/prompts/merchant-planner.v1.txt": {
       "sha256": "6fc1d69faed9342d8b95af531c3c3e0c597f1c4d18a311d3f62e5849236fdfaf",
@@ -4087,6 +4105,10 @@
     "crates/cognition/prompts/merchant-planner.v2.txt": {
       "sha256": "3a14ffb644f88aa65eb86fd4c734c354e0f0afb11ea10925fa762a2b392a79a1",
       "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
+    },
+    "crates/cognition/prompts/merchant-planner.v3.txt": {
+      "sha256": "5591a2794cd421adfdb13a772e6ebc5c380e044b9a8e92c775d1224a82187dab",
+      "review": "Reviewed final collection work and prompt contracts: scoped native IDs and prior reviewed creates, central provider preflight outside SQL transactions, atomic linked jobs, original actor/stop/cancellation guards, guarded leases, explicit ambiguous-call continuation and non-bypassable child controls. Native negative/restart tests and 724 UI tests; SQL NULL evidence fix follows a failing real skipped-product regression. New versioned prompt separates native private creation from CSV/image intake."
     },
     "crates/commerce/Cargo.toml": {
       "sha256": "aae017a1931861c398001a481dfc3f17c0954cb89cc1247d2947934ebefb1d26",
@@ -4559,6 +4581,10 @@
     "migrations/106-review-source-provenance.sql": {
       "sha256": "1b22746a6b921d05e99e8d14f85efa52d579f0576bb40c6f312a11a94e8a7404",
       "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
+    },
+    "migrations/107-translation-selection.sql": {
+      "sha256": "08fce73d745571d681bf00df74c81f7b4008e1aaafc3b6d23b998620a6ae4500",
+      "review": "Reviewed scoped translation selection, original task authority, atomic child linking and completion, cancellation/explicit ambiguous continuation, lease fences, central provider admission outside transactions and bounded prompt evidence; real PostgreSQL/HTTP collection and interruption regressions plus 724 UI tests; skipped products store SQL NULL evidence rather than JSON null. Claude supplied code-only review, findings checked and fixed."
     },
     "proof/Commerce/Claims.lean": {
       "sha256": "65bd43ec36f301365e4f327061e68fa2492a3cf51cec7da4e9f19f1b425f579c",

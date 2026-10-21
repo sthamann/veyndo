@@ -1,6 +1,7 @@
 /** Saved native run progress and explicit continuation share the conversation's permission-scoped request owner. */
 import { useState } from "react";
 import { useAgentRunText } from "../../shared/i18n/agent-runs-i18n";
+import { useBuildingText } from "../../shared/i18n/app-building-i18n";
 import Icon from "../../shared/ui/Icon";
 import type { SavedRun } from "./useChatTurns";
 export default function AgentRunCard({
@@ -19,16 +20,32 @@ export default function AgentRunCard({
       setBusy(false);
     }
   };
-  const text = useAgentRunText();
+  const text = useAgentRunText(),
+    b = useBuildingText();
+  const translationLink = (id: string) => {
+    const target = new URL(location.href);
+    target.searchParams.set("studio", "commerce");
+    target.searchParams.set("settings", "languages");
+    target.searchParams.set("translationJob", id);
+    target.hash = "merchant";
+    return target.href;
+  };
+  const preparingDrafts =
+    (value.state === "queued" || value.state === "running") &&
+    value.execution?.steps.some(
+      (step) => step.translationJobId && !step.completed,
+    );
   return (
     <aside className="agent-run-card" aria-live="polite">
       <div>
         <Icon name={value.state === "ready" ? "check" : "spark"} size={18} />
         <strong>
           {text(
-            value.execution && value.state === "ready"
-              ? "workReady"
-              : value.state,
+            preparingDrafts
+              ? "preparingDrafts"
+              : value.execution && value.state === "ready"
+                ? "workReady"
+                : value.state,
           )}
         </strong>
       </div>
@@ -39,6 +56,11 @@ export default function AgentRunCard({
             <li key={index}>
               <Icon name={step.completed ? "check" : "pulse"} size={14} />
               {step.label}
+              {step.translationJobId && (
+                <a href={translationLink(step.translationJobId)}>
+                  {b("reviewTranslations")}
+                </a>
+              )}
             </li>
           ))}
         </ol>

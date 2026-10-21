@@ -27,21 +27,6 @@
       "sha256": "270d9bd6499bcb156e819485cd279c1c6e918903f68f71879c9bb9481a2a64bc"
     },
     {
-      "id": "merchant-planner@1",
-      "path": "prompts/merchant-planner.v1.txt",
-      "sha256": "6fc1d69faed9342d8b95af531c3c3e0c597f1c4d18a311d3f62e5849236fdfaf"
-    },
-    {
-      "id": "grid-filter@1",
-      "path": "prompts/grid-filter.v1.txt",
-      "sha256": "d3e9261f4f96530f3e47c65a1d8b320283a5a56a187f66439a00c0a13cd1e77e"
-    },
-    {
-      "id": "merchant-planner@2",
-      "path": "prompts/merchant-planner.v2.txt",
-      "sha256": "3a14ffb644f88aa65eb86fd4c734c354e0f0afb11ea10925fa762a2b392a79a1"
-    },
-    {
       "id": "app-generation@2",
       "path": "prompts/app-generation.v2.txt",
       "sha256": "99172810be7e83732cb9cd38033a0b24b658d0e41ef54118c44344dcce7e8fdc"
@@ -50,6 +35,31 @@
       "id": "app-generation@3",
       "path": "prompts/app-generation.v3.txt",
       "sha256": "5f55127630ef5f3726d9b6ea12430a3d7531bfd481e270030682fd34d273e960"
+    },
+    {
+      "id": "catalogue-translation@1",
+      "path": "prompts/catalogue-translation.v1.txt",
+      "sha256": "d50b1c4d06588f5cfc93baa2c06d27ea5d01f32d3fbd0104596f6f8dac9db68e"
+    },
+    {
+      "id": "grid-filter@1",
+      "path": "prompts/grid-filter.v1.txt",
+      "sha256": "d3e9261f4f96530f3e47c65a1d8b320283a5a56a187f66439a00c0a13cd1e77e"
+    },
+    {
+      "id": "merchant-planner@1",
+      "path": "prompts/merchant-planner.v1.txt",
+      "sha256": "6fc1d69faed9342d8b95af531c3c3e0c597f1c4d18a311d3f62e5849236fdfaf"
+    },
+    {
+      "id": "merchant-planner@2",
+      "path": "prompts/merchant-planner.v2.txt",
+      "sha256": "3a14ffb644f88aa65eb86fd4c734c354e0f0afb11ea10925fa762a2b392a79a1"
+    },
+    {
+      "id": "merchant-planner@3",
+      "path": "prompts/merchant-planner.v3.txt",
+      "sha256": "5591a2794cd421adfdb13a772e6ebc5c380e044b9a8e92c775d1224a82187dab"
     }
   ]
 }

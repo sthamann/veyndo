@@ -15,6 +15,20 @@ pub(crate) async fn apply_mode(
     h: &RequestContext,
     autonomous: bool,
 ) -> Result<Value> {
+    let evidence: Option<Value> =
+        sqlx::query_scalar("SELECT proposal FROM tasks WHERE tenant=$1 AND id=$2 AND NOT applied")
+            .bind(t)
+            .bind(id)
+            .fetch_optional(&a.db)
+            .await?;
+    if let Some(evidence) = evidence
+        && evidence["proposal"]["translation"].is_string()
+    {
+        auth::permit(h, "catalog.write")?;
+        let choice: Choice = serde_json::from_value(evidence["translationInference"].clone())
+            .map_err(|_| bad("Invalid translation provider"))?;
+        translations::admit_provider(a, &choice).await?;
+    }
     let mut tx = a.db.begin().await?;
     history::context(
         &mut tx,
@@ -109,7 +123,15 @@ pub(crate) async fn apply_mode(
     if let Some(target) = &p.translation {
         let choice: Choice = serde_json::from_value(v["translationInference"].clone())
             .map_err(|_| bad("Invalid translation provider"))?;
-        translations::enqueue(a, &mut tx, t, id, &settings, (target, &choice, false)).await?;
+        translations::enqueue(
+            a,
+            &mut tx,
+            t,
+            id,
+            &settings,
+            (target, &choice, false, p.translation_products.as_deref()),
+        )
+        .await?;
     }
     if let Some(change) = &p.app_action {
         apps::apply_change(&mut tx, t, change, h).await?;
