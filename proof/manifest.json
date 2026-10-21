@@ -1762,8 +1762,8 @@
     },
     "src/apps/registry.rs": {
       "status": "unproved",
-      "sha256": "25bb05cd46425dfc21341f1b49bbec58d8786e1bf10fd50c1240dd4543c31799",
-      "review": "Review native lifecycle labels across immutable builds, atomic installation, settings main-language edits and final selected-release validation. Existing aggregate configuration lock precedes package admission and private preview resets. Accepted historical snapshots retain their original language; the pure native-admission conjunction is unchanged."
+      "sha256": "9cd5600c71072cfd1aed919d5d994a67413ce167a36a148562dc65d13e0d31a2",
+      "review": "Reviewed scoped-pool repairs: staging ownership and app package reads reuse their existing transaction; package lookup retains exact tenant/id/active checks; activation uses the same tenant:app fence as install and native records. Real one-backend PgBouncer staging/import/reactivation/diffs/selected release, foreign-build denial, linked translations and durable cancellation/restart all pass. No policy, scope, permission, digest or CAS bypass."
     },
     "src/apps/relations.rs": {
       "status": "unproved",
@@ -1772,8 +1772,8 @@
     },
     "src/apps/routes.rs": {
       "status": "unproved",
-      "sha256": "af5cd68d2678e47bc59023376d1b2064dc157f1e66e8bbc186e7a73ce7d3173d",
-      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
+      "sha256": "650b698f24c6b8f37e917f44b9231192690b86ada80998865d23119ddfa89919",
+      "review": "Reviewed scoped-pool repairs: staging ownership and app package reads reuse their existing transaction; package lookup retains exact tenant/id/active checks; activation uses the same tenant:app fence as install and native records. Real one-backend PgBouncer staging/import/reactivation/diffs/selected release, foreign-build denial, linked translations and durable cancellation/restart all pass. No policy, scope, permission, digest or CAS bypass."
     },
     "src/apps/runtime.rs": {
       "status": "unproved",
@@ -2877,8 +2877,8 @@
     },
     "src/developer/routes.rs": {
       "status": "unproved",
-      "sha256": "1207c061186d12a5fbc5eea669fbfad748b302b7ead2b13b91f1af310557c735",
-      "review": "Native lifecycle review: bounded namespaced app graphs preserve native terminal/payment/stock/buyer admission, per-object immutable accepted definitions, current compound scopes, same HTTP MCP Flow owners and operational history; SQL snapshots and migration 105 are regression-tested adapters, not proved."
+      "sha256": "61332c4420d8bf146f8aec6fe56f9ee90c55f091cfb2a8e681ac37a229242007",
+      "review": "Reviewed native app staging: retain live/stage/preview-owner checks on the existing privileged build transaction instead of recursively acquiring another system backend. Existing digest, actor, package fences and installation transaction unchanged; real PgBouncer staging and foreign-build rejection cover the path."
     },
     "src/documents/content.rs": {
       "status": "unproved",
@@ -3887,8 +3887,8 @@
     },
     "src/staging/mod.rs": {
       "status": "unproved",
-      "sha256": "b8f5eb17d2b3fd37c7536f62aca7484676a430fad289657e3bdfdddbd37c3b5c",
-      "review": "Reviewed staging diff: model/action and private-data admission use the same locked package snapshot; no nested pool checkout under the snapshot transaction. Regression rejects missing additional rights, PII rights and missing models; real one-backend PgBouncer collection reproduction retained."
+      "sha256": "550e23143345bab66936df3ead5167d2e26552fa379d47f7ae58874d2e340b8a",
+      "review": "Reviewed native app staging: retain live/stage/preview-owner checks on the existing privileged build transaction instead of recursively acquiring another system backend. Existing digest, actor, package fences and installation transaction unchanged; real PgBouncer staging and foreign-build rejection cover the path."
     },
     "src/staging/products.rs": {
       "status": "unproved",

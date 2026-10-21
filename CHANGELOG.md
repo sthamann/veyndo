@@ -6,6 +6,7 @@
 - Connect scoped translation preparation to reviewed private native/app work, with durable child links, worker yielding, explicit failed-task continuation and current-authority/cancellation fences.
 - Expose actual translation-job links in work progress and exact product scope in translation proposals; preserve separate draft review and selected publication.
 - Resolve translation provider availability through central configuration before taking transaction-pool backends, and include the platform selection in the native API/MCP schema.
+- Keep publication diffs, reviewed app staging and reactivation usable with one backend per database login; reuse the same locked snapshot/transaction, preserve domain/PII rights and align activation with the native tenant/app package fence. Retain these actual flows in required transaction-pool acceptance.
 - Add real PostgreSQL/HTTP collection, process-restart and selective-publication regressions. This section describes development; it is not a public deployment receipt.
 
 ## Public connected workspace acceptance — 2026-10-20

@@ -49,6 +49,13 @@ a newly created selected product and a native landing page, deliberately invalid
 translation output, a fresh process, explicit continuation and selected publication
 of the page alone. Native category revision remains one; other product changes
 stay private. Cancellation during inference, original-session revocation and a
-killed translation worker also pass locally. All 723 frontend regressions pass;
+killed translation worker also pass locally. All 724 frontend regressions pass;
 final backend/full verification is in progress. Public configured-model/browser
 acceptance and public rollout of this extension have not yet been completed.
+
+The one-backend transaction-pool checks additionally exposed nested database
+acquisition in publication diffs, reviewed app staging and app reactivation.
+These paths now reuse the locked package snapshot or existing transaction,
+retaining current model/action/PII rights, environment ownership and digest/CAS
+checks. Activation uses the same tenant/app package fence as installation and
+record writes. The required pooler suite retains staging and collection tests.

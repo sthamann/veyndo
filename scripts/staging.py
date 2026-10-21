@@ -34,6 +34,8 @@ assert b['state']=='draft' and b['digest']
 assert not any(p['id']=='care_guide' for p in call('/api/apps',session=a)['packages'])
 call('/api/developer/import',{'environment':stage,'prompt':'Again','summary':name,'manifest':m},a,expected=409)
 call('/api/developer/builds/'+b['id']+'/stage',{'approve':True,'digest':'tampered'},a,expected=409)
+call('/api/developer/builds/'+b['id']+'/stage',{'approve':True,'digest':b['digest']},other,expected=404)
+assert not any(p['id']=='care_guide' for p in call('/api/apps',session=other)['packages'])
 call('/api/developer/builds/'+b['id']+'/stage',{'approve':True,'digest':b['digest']},a)
 call('/api/apps/care_guide/entities/guides',{'id':'test','fields':{'title':'Sandbox only'}},a,stage)
 assert call('/store-api/apps/care_guide/actions/list_guides',{},a,stage)['elements'][0]['title']=='Sandbox only'

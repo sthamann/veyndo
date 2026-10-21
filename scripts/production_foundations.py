@@ -98,10 +98,11 @@ try:
     if tenant_role:
         sql('SELECT public.veyndo_rotate_scope_key();')
         rotation_started=time.monotonic()
-        # The direct signed suite already repeats the entire HTTP registry. Pooler
-        # verification repeats the focused two-replica/restart/rotation path below.
+        # The direct signed suite repeats the HTTP registry. Pooler acceptance
+        # retains native app stage/reactivation/diffs and linked translation work
+        # as well as the two-replica/restart/rotation path below.
         registered=json.loads((ROOT/'scripts/testing/suites.json').read_text())['http']
-        suites=[] if tenant_pooler else registered
+        suites=['staging','translations'] if tenant_pooler else registered
         if selected:=env.get('TEST_SIGNED_HTTP_SUITES'):
             requested=selected.split(',')
             assert set(requested)<=set(registered),'Only registered HTTP suites can be selected'
