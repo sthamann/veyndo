@@ -626,6 +626,12 @@ orders reuse it. A direct editor entry must not require visiting settings first.
 
 ## Connected App Studio workbench
 
+Site-builder page shape admission stays in `extensions/apps/site-builder/`:
+`server.rs` owns page/theme and current-shop validation, `block_validation.rs`
+reports bounded block/property errors, and `planning.rs` exposes the nested format
+to both native merchant planning and the coding-agent handoff. The same native
+checks run before review and before managed save; model guidance grants no rights.
+
 See the [illustrated workbench guide](app-studio-workspace.md) for multiple placements, compact adjustable panels, the contextual AI drawer, model-backed form editing, shared Flow visuals, installed app settings and scoped integration keys. These extend the existing native Manifest, runtime and release owners.
 
 ## Fixed app storage

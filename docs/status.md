@@ -40,9 +40,13 @@ The follow-up supplies authorized installed app field contracts and the app-owne
 page format, names invalid fields and permits one checkpointed correction through
 full native admission. Local HTTP/PostgreSQL acceptance passes collection preparation,
 malicious correction rejection, worker restart and explicit continuation with no
-unapproved writes; Rust workspace tests and clippy pass. This newer correction is
-not yet publicly deployed. Public acceptance still requires the saved task to reach
-review, actual preview and selected release. [Continuation contract](durable-agent-runs.md).
+unapproved writes; Rust workspace tests and clippy pass. This correction (`40b4a97a`)
+is publicly deployed. Continuing the same task reached six saved model steps, but
+the proposed landing page still failed native block validation before approval.
+The next repair supplies explicit block identifiers, localized content shapes and
+field-specific errors instead of a combined rejection. Public acceptance still
+requires the saved task to reach review, actual preview and selected release.
+[Continuation contract](durable-agent-runs.md).
 
 ## 20 October: design onboarding and readable product comparison
 

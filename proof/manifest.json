@@ -1180,6 +1180,11 @@
       "sha256": "03e25eee856bdc596b02097b3aae5bcf5661a821e6dd63b18b5d4b1c798db303",
       "review": "Review shared read-only planner admission and one checkpointed correction using original context, current authorized app contracts and unchanged personal approval; managed page fields use app-owned schema; translation and malicious checkout-correction HTTP regressions pass, workspace units and clippy pass"
     },
+    "extensions/apps/site-builder/block_validation.rs": {
+      "status": "unproved",
+      "sha256": "bf81a59d1d45f081e55c092b5f9857750d4538076299cb9662939babfdc2fbf0",
+      "review": "Reviewed app-owned block validation extraction: all original admission predicates retained, errors contain bounded field paths without content, planner and coding handoff share explicit format and native-validated example; workspace units and clippy plus actual collection correction regression validate the boundary."
+    },
     "extensions/apps/site-builder/context.rs": {
       "status": "unproved",
       "sha256": "ace5934dd123c849bf3ecf5d97ec22707aa467b32a456d511fce95c22daa775e",
@@ -1195,6 +1200,11 @@
       "sha256": "7210f4df61f7a448e27a1a0a48cf2527d3022e316fc4c5e4dc282b9f5c1f6be6",
       "review": "Reviewed native designer task handoff through existing sandbox, membership, revision and proposal owners; app elements admit only active same-tenant public native surfaces; read-only preview grants narrow server action allowlists. HTTP/PostgreSQL regressions cover own/foreign/private/inactive elements, CAS/release and explicit approval. No verified decision or proof boundary changed."
     },
+    "extensions/apps/site-builder/planning.rs": {
+      "status": "unproved",
+      "sha256": "a65de022b88f3617debf92a2b910042bb2034b1da8c01b63b07c2b8c33c7f707",
+      "review": "Reviewed app-owned block validation extraction: all original admission predicates retained, errors contain bounded field paths without content, planner and coding handoff share explicit format and native-validated example; workspace units and clippy plus actual collection correction regression validate the boundary."
+    },
     "extensions/apps/site-builder/proposals.rs": {
       "status": "unproved",
       "sha256": "352a4e21ac0e29c13e46f9481585ce6032a73c7e65351d74922479b5bd179d7a",
@@ -1207,8 +1217,8 @@
     },
     "extensions/apps/site-builder/server.rs": {
       "status": "unproved",
-      "sha256": "0930478ec621b36979218412ed57c583ca3a2a94649b8bb309c31dbc8621cf52",
-      "review": "Review shared read-only planner admission and one checkpointed correction using original context, current authorized app contracts and unchanged personal approval; managed page fields use app-owned schema; translation and malicious checkout-correction HTTP regressions pass, workspace units and clippy pass"
+      "sha256": "e39c827b0ea50c92f6d396aa05ced7c3182256557335b147763bbb20fda1ee0d",
+      "review": "Reviewed app-owned block validation extraction: all original admission predicates retained, errors contain bounded field paths without content, planner and coding handoff share explicit format and native-validated example; workspace units and clippy plus actual collection correction regression validate the boundary."
     },
     "extensions/apps/site-forms/server.rs": {
       "status": "unproved",

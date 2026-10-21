@@ -1479,10 +1479,12 @@ This lists every checked-in source module in these roots, including files with n
 | [extensions/apps/site-builder/AppElement.tsx](../extensions/apps/site-builder/AppElement.tsx) | Placed native app surfaces use the existing public registry, renderer and server-bound read-only preview grants. |
 | [extensions/apps/site-builder/Renderer.tsx](../extensions/apps/site-builder/Renderer.tsx) | Shared page renderer: Studio previews and published shops use exactly these registered components. |
 | [extensions/apps/site-builder/agent_handoff.rs](../extensions/apps/site-builder/agent_handoff.rs) | Coding agents edit the same page schema through credential-free tasks and explicit native review. |
+| [extensions/apps/site-builder/block_validation.rs](../extensions/apps/site-builder/block_validation.rs) | App-owned block admission with bounded field paths; never echo untrusted content in errors. |
 | [extensions/apps/site-builder/context.rs](../extensions/apps/site-builder/context.rs) | Designer context projects native channels, languages and calculated products; no second catalogue or price engine. |
 | [extensions/apps/site-builder/design_agent.rs](../extensions/apps/site-builder/design_agent.rs) | Scoped visual proposals reuse central inference and native revision-bound tasks; models cannot publish or execute. |
 | [extensions/apps/site-builder/elements.rs](../extensions/apps/site-builder/elements.rs) | Placed app elements resolve only active, public surfaces of this tenant; app code stays in its own package. |
 | [extensions/apps/site-builder/model.ts](../extensions/apps/site-builder/model.ts) | One app-owned document contract for manual editing, agents, API/MCP and the storefront renderer. |
+| [extensions/apps/site-builder/planning.rs](../extensions/apps/site-builder/planning.rs) | App-owned nested page format shared by merchant planning and external coding agents. |
 | [extensions/apps/site-builder/proposals.rs](../extensions/apps/site-builder/proposals.rs) | Native revision-bound proposal validation and persistence shared by every design agent. |
 | [extensions/apps/site-builder/references.rs](../extensions/apps/site-builder/references.rs) | Bounded reference capture uses the shared public-only DNS-pinned egress client; partial failures remain visible. |
 | [extensions/apps/site-builder/server.rs](../extensions/apps/site-builder/server.rs) | Standard-shop page contract. App-owned content and theme validation; no HTML, CSS or script evaluation. |

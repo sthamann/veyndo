@@ -28,7 +28,7 @@ class Handler(BaseHTTPRequestHandler):
    if repair and behavior.get('repaired_operations') is not None:
     context=json.loads(raw);contract=next(c for c in context['managedSaveContracts'] if c['app']=='site_builder')
     assert {f['name'] for f in contract['fields']} >= {'title','content','theme','channel'}
-    assert contract['nestedFormat']['content'] and 'headline' in context['validationError']
+    assert contract['nestedFormat']['content'] and behavior.get('expected_repair_error','headline') in context['validationError'],context['validationError']
     value['operations']=behavior['repaired_operations']
    text=json.dumps(value)
    self.send_response(200);self.send_header('Content-Type','application/json');self.end_headers();self.wfile.write(json.dumps({'message':{'content':text},'done_reason':'stop'}).encode());return

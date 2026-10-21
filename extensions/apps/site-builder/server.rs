@@ -1,8 +1,10 @@
 //! Standard-shop page contract. App-owned content and theme validation; no HTML, CSS or script evaluation.
 use super::*;
+mod block_validation;
 mod context;
 pub(crate) mod design_agent;
 mod elements;
+mod planning;
 pub(crate) fn router() -> Router<App> {
     Router::new()
         .merge(context::router())
@@ -83,54 +85,7 @@ pub(crate) fn validate(entity: &str, v: &Value) -> Result<()> {
     {
         return Err(bad("Use a lowercase page slug and at most 24 blocks"));
     }
-    let mut ids = std::collections::HashSet::new();
-    for b in &content.blocks {
-        if !identifier(&b.id)
-            || !ids.insert(&b.id)
-            || ![
-                "hero", "text", "products", "image", "form", "articles", "app",
-            ]
-            .contains(&b.kind.as_str())
-            || (b.kind == "app") != b.extension.is_some()
-            || b.extension.as_ref().is_some_and(|e| {
-                !identifier(&e.app) || !identifier(&e.surface) || e.app == "site_builder"
-            })
-            || b.text.len() > 100
-            || b.text.iter().any(|(k, v)| {
-                !commerce::valid_locale_key(k) || v.as_ref().is_some_and(|s| s.len() > 2000)
-            })
-            || b.product_mode
-                .as_deref()
-                .is_some_and(|m| !["all", "selected"].contains(&m))
-            || b.products.len() > 24
-            || b.products.iter().any(|s| s.len() > 100)
-            || b.fields.len() > 12
-        {
-            return Err(bad("Invalid page block, translation or product selection"));
-        }
-        if !b.rich.is_null() {
-            assets::validate_rich(&b.rich)?;
-        }
-        if !b.image.is_empty() && !safe_image(&b.image) {
-            return Err(bad(
-                "Image must be a public product-media path or HTTPS URL",
-            ));
-        }
-        let mut fields = std::collections::HashSet::new();
-        for f in &b.fields {
-            if !identifier(&f.id)
-                || !fields.insert(&f.id)
-                || !["text", "email", "textarea", "checkbox", "number"].contains(&f.kind.as_str())
-                || f.label.is_empty()
-                || f.label.len() > 100
-                || f.label
-                    .iter()
-                    .any(|(l, s)| !commerce::valid_locale_key(l) || s.len() > 100)
-            {
-                return Err(bad("Invalid form field"));
-            }
-        }
-    }
+    block_validation::validate(&content.blocks)?;
     for c in [theme.accent, theme.background, theme.foreground]
         .into_iter()
         .flatten()
@@ -240,10 +195,7 @@ pub(crate) async fn validate_owned(
     }
     Ok(())
 }
-/// App-owned nested format shared by merchant and external coding agents.
-pub(crate) fn planning_contract() -> Value {
-    json!({"content":{"blocks":"max 24; id, kind=hero/text/products/image/form/articles/app, text=localized map, rich=localized safe rich blocks, image=owned media, products=owned IDs, productMode=all/selected, fields=form fields; app kind requires extension={app,surface}"},"theme":{"accent":"#rrggbb","background":"#rrggbb","foreground":"#rrggbb","font":"sans/serif/mono","radius":"0..32","spacing":"12..96","columns":"1..4"}})
-}
+pub(crate) use planning::contract as planning_contract;
 
 #[cfg(test)]
 mod tests {

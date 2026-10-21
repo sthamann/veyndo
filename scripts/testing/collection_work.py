@@ -32,6 +32,17 @@ def verify(req,behavior,merchant,check,stop_replica,start_replica,expire_child,c
     behavior.pop('repaired_operations');behavior['operations']=operations
     assert not req('/api/apps/site_builder/actions/editor_pages',{},sh)['elements']
     check('one rejected app field is corrected using current installed field and nested page contracts; no page or category is saved before personal approval')
+    malformed_page=copy.deepcopy(operations[-1])
+    args=json.loads(malformed_page['arguments_json']);args['fields']['content']['blocks'][0]['id']='selected-products'
+    malformed_page['arguments_json']=json.dumps(args)
+    behavior.update(operations=[malformed_page],repaired_operations=[operations[-1]],expected_repair_error='content.blocks[0].id:')
+    corrected=req('/api/agent/plan',{'instruction':'Prepare only this private landing page using the observed products','inference':{'provider':'ollama'}},sh)['taskId']
+    correction=req('/api/agent/runs/'+corrected,h=sh)['preview']['proposalRepair']
+    assert correction['validationError'].startswith('content.blocks[0].id:'),correction
+    assert not req('/api/apps/site_builder/actions/editor_pages',{},sh)['elements']
+    behavior.pop('expected_repair_error')
+    behavior.pop('repaired_operations');behavior['operations']=operations
+    check('an invalid page block receives its exact field path and one native-admitted correction without writing before review')
     # Fail translation output after the category commits. Parent completion must wait.
     behavior['invalid']=True
     req('/api/agent/tasks/'+task+'/apply',{'approve':True},sh)

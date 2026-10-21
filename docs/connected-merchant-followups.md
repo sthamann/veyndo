@@ -51,9 +51,13 @@ of the page alone. Native category revision remains one; other product changes
 stay private. Cancellation during inference, original-session revocation and a
 killed translation worker also pass locally. PR #177 passed its full verification and is publicly deployed with migration 107.
 The public configured-model task exposed a provider schema error (fixed by deployed
-`693dd33`) and then an unknown app field. A further locally tested correction adds
-current app contracts and one bounded model repair. Final public collection preview
-and selective publication remain open; see the current status page.
+`693dd33`) and then an unknown app field. Deployed `40b4a97a` adds current app
+contracts and one bounded model repair. The continued public task reached page
+block validation. The app-owned contract now describes block IDs, localized text,
+product selection and form/extension limits explicitly, with a native-validated
+example. Rejections identify the block index and property without echoing content.
+Final public collection preview and selective publication remain open; see the
+current status page.
 
 The one-backend transaction-pool checks additionally exposed nested database
 acquisition in publication diffs, reviewed app staging and app reactivation.
