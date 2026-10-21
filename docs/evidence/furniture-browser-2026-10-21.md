@@ -80,5 +80,15 @@ snapshots or introduce another persistence or calculation path. The form restore
 the matching entry, with the line-item representation as a compatibility fallback.
 Rendered tests reject entries for a different app or product and clear values for
 a new cart. The actual HTTP/PostgreSQL app workflow verifies saving with no line
-items, a fresh cart read, and isolation from a second cart. Public deployment and
-browser reload acceptance of this additional repair are still pending.
+items, a fresh cart read, and isolation from a second cart.
+
+Public image `dainty-ray-8892` (`fb8d54e0`) started at 15:00:54 CEST as
+`vendune-core-5fb6c677cb`, with one passing replica and zero restarts. Before
+deployment the browser saved Walnut Select, 250 x 80 cm with no line items.
+After deployment and an explicit full reload, all three controls and EUR 427
+remained visible without reentry. Adding and reviewing retained those inputs.
+Simulated order `RAC-2246a373` completed with EUR 78 surcharge, EUR 427 total
+and EUR 68.17 VAT. Return showed cart zero and product stock five.
+
+This verifies the saved-input reload repair on the named public image. It does
+not replace the separate independent B2B approval or saved-list reorder check.
