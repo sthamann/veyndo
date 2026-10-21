@@ -36,7 +36,7 @@ and ERP handoff using the same visual/coding-agent Manifest and version lifecycl
 
 [Documentation home](documentation-site.md) · [Get started](quickstart.md) · [Exact Shopware scope](shopware-parity.md) · [Source map](source-map.md)
 
-**Updated on 9 October 2026 against merged Core `598bbec`.** This guide follows the storefront, all 15 Studio workspaces and the separate platform console. The connected intelligence, app ontology, source/consent fences and runtime hardening are described in the [complete change and acceptance record](release-acceptance-2026-10-09.md). The dated media captures retain their original provenance. [Current release and deployment boundaries](current-release.md).
+**Baseline tour: 9 October 2026, merged Core `598bbec`; current entry links refreshed 21 October.** This guide follows the storefront, Studio workspaces and the separate platform console. The original connected intelligence, app ontology, source/consent fences and runtime hardening are described in the [dated change and acceptance record](release-acceptance-2026-10-09.md). The media captures retain their original provenance. Use [current status](status.md) for the newer connected workspace, app and public checkout outcomes.
 
 The current screenshots, twelve GIFs and films use fresh VEYNDO captures from 13 October 2026. They show actual UI with synthetic accounts and records; individual source revisions and editing boundaries are retained in the metadata. GIF timing is not a performance measurement. Commerce examples use simulated payments. Draft setup, disabled provider settings and completed local actions are identified separately. Earlier public acceptance captures remain dated archive links. [Current capture provenance](assets/README.md) · [Showcase files and limits](assets/showcase/README.md).
 
@@ -400,7 +400,7 @@ Experience onboarding installs the public Storyfront integration in the same tra
 
 [Archived capture from the preceding release: Automatically installed Storyfront app with its domain, sales channel and editor](https://github.com/sthamann/veyndo/blob/ced4a3887086e8c6a943d774a78bc8cca5deb5dd/docs/assets/showcase/storyfront-managed.png)
 
-The public Experience deployment currently retains its React revision editor. The private native image builds the original Astro Studio and Cinematic renderer, but its successful isolated CI test does not mean every public shop uses that renderer. Native activation, workers and provider configuration are explicit deployment choices. [Current release](current-release.md) · [Generic connection contract](experience-integration.md).
+Original Storyfront runs as a separate service connected to Veyndo's catalogue and native checkout. The current public acceptance includes an embedded purchase, return to the original Experience and an empty original bag after reload. Deployment-specific editor and renderer details retain their own release evidence. [Current public status](status.md#public-acceptance) · [Generic connection contract](experience-integration.md).
 
 ### Optional companion catalog publication and checkout transfer
 

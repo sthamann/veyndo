@@ -1,0 +1,368 @@
+# Release history through 21 October 2026
+
+Archived delivery notes, frozen before the final PR #191 rollout. “Current”,
+“pending” and “open” below describe their original observation dates; use the
+[current status](../status.md) for the latest verdict. These notes preserve
+source versions and evidence rather than defining a second release status.
+
+Latest public acceptance: Core/Studio `6a71d072` (`jubilant-plane-2874`), deployed
+21 October at 21:04 CEST, compares a saved rule with an unsaved draft on existing
+frozen order-placement Flow inputs. The public Studio evaluated the existing
+EUR 49.90 test order: the saved EUR 100 threshold did not match; the draft EUR 1
+threshold did. Editing cleared the result, an empty Flow showed its empty-history
+message, and reload retained the original threshold and revision. The order list
+still contained exactly the original order. Actual HTTP/PostgreSQL tests cover
+MCP parity, current permissions, isolation and unavailable inputs. Complete
+historical checkout repricing remains open.
+[Usage and observed scope](../rule-history-comparison.md).
+The responsive follow-up `ef093e7a` (`brave-produce-7557`), deployed at 21:14
+CEST, also completes that comparison in the public 390 × 844 Studio. Its shared
+language selector stays in normal flow on narrow screens, leaving editor controls
+accessible. The guide includes the public mobile screenshot.
+The same public Core also completes a repeated original Storyfront iframe
+purchase, simulated order `RAC-14a61722` (EUR 24.90), receipt return and an empty
+original bag after full reload. Controlled-browser first loads still timed out;
+the complete journey succeeded after the documented normal-navigation recovery.
+[Exact checkout observations and screenshots](../evidence/storyfront-checkout-2026-10-21.md#regression-after-reusable-work-and-rule-comparison).
+
+The same public release completes a configured company purchase and saved-list
+reorder: `RAC-f117d21d` at EUR 427, then `RAC-39436999` at EUR 447 after the
+merchant changes the material label and fee. Dimensions remain 260 x 80 cm;
+the current surcharge changes from EUR 78 to EUR 98. Each purchase needs its own
+independent approval, buyer self-approval is denied, and return/reload leave an
+empty cart. The first frozen approval retains its original values. Purchases and
+list restoration ran through the browser; the separate approver used the native
+Store API. Both payments were simulated. [Public steps and screenshots](../evidence/furniture-browser-2026-10-21.md#public-configured-company-purchase-and-saved-list-reorder).
+
+The all-browser two-account journey additionally passes locally. Its repair makes
+the approval inbox and reopened customer/company order display the accepted app
+configuration using the existing frozen snapshot renderer. That presentation
+change awaits final public deployment and browser verification. [Local proof](../evidence/furniture-browser-2026-10-21.md#saved-list-reorder-and-separate-approval-local-browser-21-october).
+
+Earlier public acceptance: Core/Studio `650529c7` (`aromatic-voyage-2152`), deployed
+21 October at 20:22 CEST, completes **Reuse as a Flow** through the public Studio.
+A completed native task opened as an inactive Flow draft, with an explicit daily
+limit and a fresh reference per run. After activation, a real product update
+prepared one new review. Personal approval created one hidden category at revision
+one; completion survived reload and the category remained absent from the parent
+live shop. The test Flow is inactive again and the trigger product text is restored.
+The previous `4c0392ae` repair is retained: direct Flow history and the personal
+workspace share durable progress and permission-aware continuation controls.
+
+The original ordinary product event prepared a configured-model
+Flow proposal; the original proposal was approved in the selected private workspace
+on Core/Studio `09b1aa35` (`giving-insect-7440`). Exactly one hidden native category
+was created at revision one. The completed task survived a full reload and the
+category was absent from the parent live shop. The repair also keeps previously
+approved queued or interrupted tasks available to their original actor.
+[Flow-to-workspace evidence and screenshots](../evidence/flow-native-work-2026-10-21.md).
+The public journey covers one native category operation with a generated per-run
+reference. Event-field mappings, limits across competing workers, withdrawn rights,
+stop and cross-workspace rejection additionally have actual local HTTP/PostgreSQL
+coverage. It does not establish unrestricted automation or live publication of
+private source tasks. [Configure and use a repeatable Flow](../personal-workspace-and-shop-design.md#repeat-completed-work-as-a-flow).
+
+Current additional repair: saved material/dimensions now have an app/product-scoped
+representation in the native cart response, so forms can restore them after a
+reload before the first line item is added. Actual HTTP/PostgreSQL and rendered
+tests pass. Public image `dainty-ray-8892` (`fb8d54e0`) passed the browser reload
+check with an empty cart, followed by simulated order `RAC-2246a373`: Walnut
+Select, 250 x 80 cm, EUR 78 surcharge, EUR 427 total. Return showed cart zero.
+See the
+[furniture browser evidence](../evidence/furniture-browser-2026-10-21.md).
+
+Migration implementation (19 October): saved plans now connect all eight supported
+domains in a review-gated page sequence. Native current-field comparison detects
+missing records, changed prices/text and image associations. Private page intents
+and bounded reports survive technical job archival and service restart; a changed
+result does not authorize repair or cutover. Local synthetic acceptance is separate
+from the still-pending public migration-service acceptance. Migration 106 was deployed with Core/Studio `b13aedb`; the current Core/Studio
+release includes `e18fa1b` / merge `4e2f6af` (21 October, see the collection section). The separate service image is published,
+but its hosted gateway/callback configuration and public migration journey remain
+open. Native completion evidence is now
+atomically sealed under current job/creator/package/lease/CAS checks; raw edited
+success flags cannot advance Studio. [Acceptance evidence](../evidence/migration-continuation-2026-10-19.md)
+and [workflow limits](../agentic-migration.md).
+
+Local migration follow-up (18 October): frozen domain export packaging and pinned
+HTTPS intake now reuse native reviewed jobs, with separate export credentials,
+source-reference checks and visible original counts/digests. Two-page native
+product intake/replay and tamper rejection are locally tested. This remains
+a historical local checkpoint, now merged in PR #168; it did not establish a
+complete shop migration/cutover. [Scope and evidence](../agentic-migration.md).
+
+## 21 October: connected collection preparation runs publicly
+
+Public Core `9d70e60` completes the original configured-model collection task in a
+private shop: one category, assignments for exactly two existing products, two
+Italian translation drafts and a site-builder landing-page draft. The same saved
+task continued after deployment without duplicating its completed category.
+Both translation drafts were reviewed and applied privately. Browser checks confirm
+unchanged prices and stock for the selected products and no change to the third
+product. Migration 107 and PR #177 are already deployed; the subsequent native
+contract corrections are tracked in PRs #180 and #181.
+
+The actual run exposed incomplete provider/app/product input contracts. Repairs
+retain native field validation, original revisions, tenant scope and explicit
+approval. Local HTTP/PostgreSQL checks include stale edits, malicious corrections,
+worker restart, explicit continuation, failed translations and selective release.
+
+Public Core/Studio `498ced45` renders the Italian page with the two selected
+products in its private preview. The public selected-release attempt exposed an
+ordering defect: page validation ran before its jointly selected language settings.
+The repair applies selected configuration before app records within the same
+transaction. Actual local HTTP/PostgreSQL checks cover a new language, channel,
+package and page together, missing-dependency rollback, stale selection and replay.
+Public Core/Studio `be620bfd` accepted all six selected units together on 21 October
+at 13:34 CEST. The published product completed simulated order `RAC-484bd556`
+for EUR 49.90 with its Italian order label; return and empty cart were observed.
+The public page exposed one further rendering defect: its text used the interface
+language instead of the selected content language. The app-owned correction and
+Italian/French-fallback regressions pass. Public image `quack-sand-8930` (`f3255dab`)
+started healthy at 13:54 CEST; the browser now shows the Italian headings, paragraphs,
+two selected products and document title.
+PR #182 fixes the translation handoff retaining
+the private environment, removes an optional form-package requirement for ordinary
+pages, distinguishes queued work from completed changes and fences late conversation
+responses. Its frontend baseline passes 732 tests and the existing coverage
+thresholds; four additional checks cover the new actionable release errors.
+The release-order repair is deployed. Native full CI passed for PR #178, now
+merged. PR #182 passed the complete required verification run
+[39602839351](https://github.com/sthamann/veyndo/actions/runs/39602839351)
+and merged as `6ef9a240`. Its subsequent documentation update is published.
+
+The [hosted private furniture journey](../evidence/furniture-browser-2026-10-21.md)
+now completes a EUR 417 simulated purchase with material, dimensions and native
+order/Flow records; later material edits leave the order unchanged. Continuation
+after purchase and Studio sandbox reload repairs are public in `fa33a003`, image
+`shallow-place-4222`, deployed at 14:13 CEST. A second simulated order
+`RAC-6c9f8c4f` for EUR 427, empty-cart return, a fresh EUR 379 configuration/cart
+without reload, and the retained private Studio order list after reload passed.
+The subsequent control-reset presentation repair is deployed as `b0b8cba7`,
+image `tangible-cat-3650`, with one healthy replica. A freshly loaded browser
+completed simulated order `RAC-1c51b79e` (EUR 379), returned to an empty cart,
+then saved and added a new 240 x 80 cm configuration without reloading; the
+controls and saved message remained visible. The 744-test frontend suite passes.
+[Original Storyfront embedded checkout](../evidence/storyfront-checkout-2026-10-21.md)
+also completed simulated order `RAC-585cbb53` (EUR 24.90), returned to the original
+Experience and retained an empty bag after reload. Its first iframe navigation
+required the visible retry; first-load reliability remains separate from the
+accepted purchase/return path. [One selected product's missing German text](../evidence/product-gaps-2026-10-21.md)
+was also prepared, reviewed and applied without changing its price or stock.
+Independent hosted B2B approval and saved
+selection/reorder acceptance remain open.
+See [the ordered follow-ups](../connected-merchant-followups.md) and the
+[saved-work contract](../durable-agent-runs.md).
+
+## 21 October: original Storyfront purchase scene
+
+Experience image `sole-shield-9134` (`56ae7b8`, original pin `a08a0f5`)
+restores scrolling inside the original long-description Purchase scene. The
+public browser reached Add to bag using the pointer and completed embedded
+simulated order `RAC-3bce945b`: EUR 24.90 total, EUR 3.98 VAT and the German
+product name. Receipt return closed the iframe; a full reload retained an
+empty original Storyfront bag. [Screenshots and exact acceptance boundary](../evidence/storyfront-checkout-2026-10-21.md#pointer-acceptance-on-the-original-scrollable-purchase-scene).
+The first iframe open required its visible retry, so first-load reliability
+remains open. No real payment was made.
+
+The subsequent Experience release `cbb4d283` / `alert-light-1076` is public with
+the original provider-receipt Date-binding repair. Its first observed recovery
+cycle checked three receipts without technical failure; all three still awaited
+provider results. Embedded simulated order `RAC-386cdc4c` then completed with
+receipt return and an empty original bag after full reload. The initial controlled
+iframe navigation still needed retry. [Deployment and repeated browser evidence](../evidence/storyfront-checkout-2026-10-21.md#provider-recovery-repair-and-repeated-public-purchase).
+
+## 20 October: design onboarding and readable product comparison
+
+Merged and included in Core/Studio `34e272b`: guided native private-workspace/package
+setup with return to the selected design tool, plus original/mapped/current
+product comparison. The local native migration suite and 706 frontend regressions
+passed; browser acceptance uses a separate synthetic local shop. The deployment does not establish a complete hosted migration-service journey. [Local acceptance evidence](../evidence/design-migration-2026-10-20.md). See
+[shop design](../personal-workspace-and-shop-design.md) and
+[migration review](../agentic-migration.md).
+
+## 20 October: service integration implementation
+
+Merged in PR #172 and included in Core/connector `34e272b`: five bounded Rust provider apps (Vercel, Klaviyo,
+HubSpot, Contentful, Algolia), a Shopware 6 product reader into native private
+imports, and ten discoverable integration routes reusing existing Shopify,
+WooCommerce and Slack owners. Nexus uses a documented HTTP-action recipe.
+Provider activation, a real Nexus run and an externally hosted Vercel checkout
+are separate from local fixtures. Local provider/native/signed-runtime tests and
+713 frontend checks pass. [Capabilities, setup and limits](../service-integrations.md)
+and [local evidence](../evidence/service-integrations-2026-10-20.md).
+
+## 20 October: connected agentic workspace
+
+Merged in PRs #172, #173 and #174, running as Core/Studio `b0811f8`:
+typed editor context, relevance/cursor app discovery, reviewed private multi-step
+native work with saved action progress, complete native app composition/private
+preview, editable grid handoffs, current-right work suggestions and explicit
+versioned private guidance. Current rights and native review/publication remain
+authoritative across these paths.
+
+The final required full run [39441599258](https://github.com/sthamann/veyndo/actions/runs/39441599258)
+passed all 102 registered integration/browser-contract suites, 721 frontend tests,
+299 Rust workspace tests, restricted-login/pooler repetitions, formal/mutation
+checks and unchanged coverage gates. PR #174 merged as `2aadf62c`; its Git tree
+is identical to the tested, publicly running `b0811f8` tree.
+
+Actual public configured-model acceptance covers selected-editor/guidance recall,
+native editable product filtering, current-stock work cards, one approval finishing
+two private category steps, saved progress after full reload, and a generated
+care-note app with English/German records. Its selected package release left test
+data private; the central region setting survived reload. The missing optional
+title regression also passed on the final public image.
+[User guide](../agentic-workspace.md) and
+[acceptance evidence](../evidence/agentic-workspace-2026-10-20.md).
+
+## Start with a complete journey
+
+1. [Create and explore a synthetic shop](../first-tour.md).
+2. [Build an app and test its real records privately](../app-tutorials/README.md).
+3. [Review a sandbox and selected publication](../workbench.md).
+4. [Understand the connected architecture](../production-architecture.md).
+
+## Accepted commerce journeys
+
+The [inward agentic-commerce change](../agentic-commerce.md) adds native UCP Cart
+Transfer, optional explicit buyer consent, inward Shopify CSV/Shop MCP catalogue
+preparation, merchant AI-channel controls and shared UI/browser-agent cart actions.
+It also adds structural design comparison and app declaration diagnostics.
+[Public acceptance on 18 October](../evidence/agentic-commerce-hosted-2026-10-18.md)
+passed native cart transfer and original embedded Storyfront purchases, return and
+persistent empty carts, inward Shopify import into a private sandbox and app
+declaration diagnostics. Full required CI passed all 101 integration suites and
+657 frontend tests. The actual private Shopware Payments adapter also passed
+[synthetic-provider checks](../evidence/agentic-commerce-local-2026-10-18.md); public
+browser purchases used the explicitly simulated native demo-card.
+Google enrolment, Muse partnerships, real PSP settlement and continuous supplier
+synchronisation are separate and are not claimed by this work.
+
+## Migration Assistant: implementation in progress
+
+The new [migration workflow](../agentic-migration.md) has a separate Rust application,
+five source protocol fixtures, private product/image/category/page intake and native CRM/history/review/coupon paths,
+reviewed native jobs and a Studio entry. [Local acceptance and focused independent review](../evidence/migration-assistant-local-2026-10-18.md) cover this connected scope;
+the larger assistant remains in development and is not part of public acceptance below.
+Public original-image copying and selected product/image publication have local acceptance.
+Reviews retain native moderation and never gain purchase verification; WooCommerce
+coupons require activation review and remain bound to their original currency.
+WooCommerce concrete variable families now preserve native options, original parent IDs,
+private status and child images. Slow source inspection uses saved jobs, with reopening,
+cancellation and current PII revocation controls. These additions have local acceptance. Publication-state controls also cover drafts/disabled
+products across the other four source profiles; unsupported separate visibility stops explicitly.
+Complex source variants, private/provider-specific media and coupon mappings, full mapping/cutover and
+large-scale throughput remain incomplete. All five local source HTTP profiles now reach
+native private product creation; net/gross and source-warning choices use the native price owner. The guide distinguishes normalization
+from an accepted native target write. All five local provider protocols now also reach
+native CRM address books and immutable historical orders, including source detail/reference
+reads, distinct delivery addresses, subdivisions, replay and absent ordinary address-change flows.
+Shopify full-history intake requires actual all-order access. These are local acceptance
+results; hosted service deployment and whole-shop cutover remain open.
+
+## Public acceptance
+
+| Journey or boundary | Evidence and present limitation |
+| --- | --- |
+| Inward agentic commerce | [18 October public acceptance](../evidence/agentic-commerce-hosted-2026-10-18.md): UCP transfer purchase RAC-81a64f7e, embedded Storyfront purchase RAC-df45f7f6, return and persistent empty bags, two private Shopify variants and declaration diagnostics passed. No real money, Google admission or continuous supplier sync. |
+| Buyer entry and native POS receipt | [17 October hosted follow-up](../evidence/buyer-pos-hosted-2026-10-17.md): own-account sign-in entry, preserved carts across rollout, German simulated purchase RAC-7bd54019, fictional POS sale RAC-5e78c602, actionable seller setup, single native invoice/PDF and guarded app-bound completion passed. Hosted signed-buyer RFQs, real settlement and physical printers remain separate. The [later PDF follow-up](../evidence/receipt-pdf-hosted-2026-10-17.md) repairs its Windows-1252 punctuation; arbitrary Unicode fonts remain outside that renderer. |
+| Native app workflows and AI proposals | [17 October public acceptance](../evidence/native-app-workflows-hosted-2026-10-17.md): visual creation, private installation, selected publication, guarded completion, 0.1.1 → 0.1.2 upgrade and distinct old/new order workflows passed. The [configured-model follow-up](../evidence/agent-native-workflows-hosted-2026-10-17.md#follow-up-accepted-on-d939257) also passed exact preservation, private install and selected publication of a missing quote workflow. Payments remained simulated; hosted RFQ buyer execution is a separate acceptance. |
+| Native app product journey | [17 October hosted acceptance](../evidence/native-app-fields-hosted-2026-10-17.md): visual creation, native product writes, compatible upgrade with retained data, optional grid column, exact positive/negative filters and selected live publication passed. Original embedded Storyfront purchase/return/bag clearing also passed on that image; payment remained simulated. |
+| Shared app storage | [15 October hosted migration](../evidence/shared-app-storage-hosted-2026-10-15.json): four fixed physical tables, checked data migration and simulated purchases. This does not establish unbounded capacity. |
+| Restricted database runtime | [Hosted enforcement record](../evidence/database-enforcement-2026-10-15.json): separate roles and strict restart. Authorization and SQL isolation are both required. |
+| Native checkout | Dated acceptance covers simulated purchases. It does not prove a real provider payment, mail delivery, invoice and refund journey. |
+| Storyfront embedded checkout | [18 October controlled-Chrome acceptance](../evidence/storyfront-checkout-hosted-2026-10-18.md): the then-current public original Experience opens the native iframe, saves simulated order RAC-3b2e5dfc with its German product name, verifies completion and clears the original bag. The receipt's return closes the iframe on the same Experience; the bag stays empty after reload. Earlier paused-document attempts remain historical evidence; real provider redirects/3DS remain unaccepted. |
+| Browser login | HttpOnly implementation and registered session tests exist. Public Google sign-in, reload and logout passed on 16 October. Fresh SaaS creation and its one-use Studio handoff also passed. Public password sign-in, reload persistence, logout and denied protected-route return also passed in a separate incognito session on 16 October. Apple currently returns `invalid_request: Invalid web redirect url` for the new start.veyndo.ai callback; the Apple Service ID configuration is not repaired. |
+| Legacy domains | 16 October public DNS/TLS/redirect checks passed for vendune.ai and team.vendune.ai, ending at www.veyndo.ai and team.veyndo.ai respectively. No DNS change was made. Authoritative-provider configuration and filtering-provider delisting remain separate checks. |
+| Recovery and real providers | Restore drill and real payment/mail/refund acceptance require their own recorded outcomes. No current whole-system production certification. |
+
+## Implementation and hardening
+
+| Area | Current boundary | Acceptance required |
+| --- | --- | --- |
+| Commerce and channels | Native Rust owners for products, prices, stock, checkout, orders, documents, POS and selected B2B/UCP routes | Full relevant role/channel/language/currency flows, including denied cases |
+| App storage and lifecycle | Shared bounded records, references, settings, immutable definitions, private previews and selected release | Complete generated business capability across data/UI/logic; no arbitrary-source hosting claim |
+| Agent runs | Persisted native task checkpoints, leases, cancellation and explicit uncertain-call continuation. Publicly deployed [planning-agent controls](../agent-authority-controls.md) add distinct revocable keys, exact-model allocation envelopes and live/sandbox stop. | [Hosted stop/re-enable and shopping acceptance](../evidence/agent-authority-hosted-2026-10-16.md); conservative token/USD allocations are not provider invoices or unrestricted financial autonomy. |
+| Provider tools | Native OpenAI Responses/Chat, Claude and Ollama read tool protocols, private conversation continuation and current per-call authorization are deployed in the 16 October Core | Local provider and durable-worker fixture suites passed; real configured provider quality/usage needs separate acceptance |
+| Native app extensions | [Version-1 private product/customer/order/company fields](../app-core-extensions.md) integrate native details, existing grids, exact filters, current permissions and selected configuration release | [17 October hosted product lifecycle](../evidence/native-app-fields-hosted-2026-10-17.md) passed; all four object types have local/required-CI coverage, not four separate hosted walkthroughs |
+| POS status and database recovery | [Reproduced read-race and startup repairs](../evidence/startup-pos-recovery-2026-10-17.md) keep payment/order snapshots coherent and retry transient initial database connections | Deterministic regressions and full required CI passed; repairs are deployed in the [17 October image](../evidence/native-app-fields-hosted-2026-10-17.md). No induced production outage, failover or uncertain-write retry claim |
+| Prompt governance | Central prompts are versioned files with ID, template digest and rendered-system digest in model usage | Versioned prompt IDs and content digests in model evidence, injection evaluation at actual admission |
+| Contracts | Compiled operation registry generates request OpenAPI, TypeScript and WIT contracts with drift checks | Input contract generation passes locally; broad domain objects and response DTOs are not yet completely typed |
+| Module boundaries | Five real workspace libraries extract kernel, runtime, commerce, apps and provider inference; HTTP/domain composition remains in the root | Compiler checks and dependency-DAG negative controls passed locally; not every domain handler has moved |
+| Money | Exact `Money` exists; compatibility calculation paths still contain `f64` | Exact authoritative arithmetic with the original PHP differential gate |
+| Outbox | Separate cognition/apps/flows/audit checkpoints and durable request/task/event trace IDs are deployed in the 16 October Core | Actual PostgreSQL poison-audit isolation, other-consumer progress, quarantine, cold restart and explicit replay passed; public migration 103 applied successfully after a fresh snapshot |
+
+## Earlier public deliveries
+
+The connected workspace was publicly accepted on `b0811f8`, image
+`plant-horses-6593`, deployment `vendune-core-6cc7f557d9`.
+Its real model acceptance includes two approved category steps, saved progress
+across reload, private/live isolation, a generated multilingual care-note app,
+ordinary installed record writes and selected package publication/configuration.
+The optional-title renderer correction is also public: a record without an
+optional title was saved, selected, edited and saved again without a crash.
+English/German content survived the Core rollout. Exact source and results belong to the
+[20 October acceptance record](../evidence/agentic-workspace-2026-10-20.md).
+
+The preceding Core was `b13aedb`, image `violet-glass-1926`, deployment
+`vendune-core-589c44c658`. [19 October delivery evidence](../evidence/migration-continuation-2026-10-19.md#hosted-core-delivery-boundary)
+records the full green PR checks, identical source trees after merging as
+`0aaec005`, a fresh successful snapshot, migration 106 through the existing owner
+job and one healthy replica. Google entry, a new empty test shop, retained Studio
+session after rollout and the public health endpoint were checked. The separate
+Rust image is published; the hosted migration service and its complete public
+import/publication/purchase journey are not accepted yet. This does not extend
+the earlier Storyfront purchase acceptance to a new purchase on this image.
+
+The preceding accepted agentic-commerce Core was `d5c4724`, image `smiling-driving-6446`, deployment
+`vendune-core-58f5569684`. The [18 October agentic-commerce acceptance](../evidence/agentic-commerce-hosted-2026-10-18.md)
+records the full required CI on `dd19c22`, merged as `1bb2e5e`, and identical
+production input trees. One healthy replica served actual native cart-transfer and
+original embedded Storyfront purchases, return and empty carts after reload.
+Inward Shopify variants remained private. No migration or database privilege
+change was needed. The original Experience remains `b40b386`, image
+`educated-sort-2532`; it was not redeployed.
+
+The earlier receipt-PDF Core was `25b354e`, image `wise-authority-6674`. Its
+[PDF follow-up](../evidence/receipt-pdf-hosted-2026-10-17.md) preserves the original
+invoice identity while repairing Windows-1252 punctuation. Its separate
+[18 October Storyfront receipt](../evidence/storyfront-checkout-hosted-2026-10-18.md)
+retains the earlier order and source boundary.
+
+The preceding Core was `ce5a710`, image `busy-machine-7486`. Its
+[buyer/POS receipt](../evidence/buyer-pos-hosted-2026-10-17.md) records the full required
+100-suite/648-frontend-test check on `eab3534`, merged as `0460521` with an identical
+Git tree. All Dockerfile inputs in the image are identical to that verified tree;
+later differences are CI review metadata and test documentation. One healthy Core,
+preserved carts/session, a native simulated purchase and a fictional POS sale with
+one invoice/PDF passed publicly. No migration or new runtime right was required.
+Before this rollout, the original embedded Storyfront recheck on `e9369cf` was
+held by the browser controller. That receipt accepts no new embedded purchase;
+it preserves the exact diagnostic and earlier successes.
+
+The preceding `e9369cf` [UI-caption receipt](../evidence/agent-native-workflows-hosted-2026-10-17.md#ui-caption-follow-up-accepted-on-e9369cf) retains its 641 frontend tests, maintenance/readiness and native quote captions. Rust, schema and runtime contracts remain unchanged from the fully tested `d939257` backend. The [release and configured-model receipt](../evidence/agent-native-workflows-hosted-2026-10-17.md#follow-up-accepted-on-d939257)
+records full required CI, snapshot, successful maintenance/readiness and preserved
+merchant sign-in. The original natural-language request now produced a valid
+0.1.3 quote-review proposal through the configured model. Direct package comparison
+preserved the old order contract and every data/UI/access section. Explicit private
+installation and selected publication passed; the old order remained unchanged.
+The prior two public refusals retain their earlier image and evidence.
+The [preceding native order receipt](../evidence/native-app-workflows-hosted-2026-10-17.md)
+retains its guarded purchases and old/new workflow versions. This release did not
+redeploy the private Experience service or newly accept the original embedded
+Storyfront checkout; earlier results retain their own source boundary.
+
+Earlier deliveries retain their source and acceptance boundaries:
+[product fields and original embedded checkout, 17 October](../evidence/native-app-fields-hosted-2026-10-17.md),
+[agent authority, 16 October](../evidence/agent-authority-hosted-2026-10-16.md),
+[configuration summaries](../evidence/configuration-summary-hosted-2026-10-16.md),
+[platform hardening](../evidence/platform-hardening-hosted-2026-10-16.md) and
+[Studio release](../evidence/studio-release-hosted-2026-10-16.json).
+
+## Evidence and reference guides
+
+- [Hardening design and owners](../platform-hardening.md): architecture detail, not another release status.
+- [Historical delivery audit](../delivery-audit-2026-10-15.md) and [release record](../current-release.md): dated evidence.
+- [Testing](../testing.md), [formal scope](../formal-verification.md), [capacity measurements](../benchmarks.md).
+- [Changelog](../../CHANGELOG.md): implementation notes belong here, not in the README.

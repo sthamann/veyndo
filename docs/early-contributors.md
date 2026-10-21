@@ -31,7 +31,7 @@ goal, not a support SLA. Read the existing task before creating another one.
 | Reliability | Complete app-data history and stronger operational acceptance | Discuss scoped designs before implementation |
 
 The last row remains development work, not a delivered feature. The
-[current release](current-release.md) and [consistency audit](system-consistency-audit.md)
+[current status](status.md) and [consistency audit](system-consistency-audit.md)
 record implementation and evidence separately.
 
 ## For agencies

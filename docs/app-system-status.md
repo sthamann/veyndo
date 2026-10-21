@@ -1,12 +1,14 @@
 # App system: delivered foundations and remaining gates
 
-See the [connected AI workspace](agentic-workspace.md) for the 20 October context,
-reviewed private execution, complete app composition, real preview, editable list
-handoff and remembered merchant-guidance workflow. [Current status](status.md).
+See [current public status](status.md) for the running release and observed
+journeys. The [connected AI workspace](agentic-workspace.md) explains contextual
+planning, reviewed private execution, app composition, real preview, editable list
+handoff and remembered merchant guidance.
 
-**Updated 20 October 2026:** connected app composition, private proposal preview
-and current merchant-work flows are described in the guide above. The broader
-programme comparison below retains its 17 October baseline. The integrated app builder is usable. The complete
+**Updated 21 October 2026:** connected collection preparation and selected
+publication, configured B2B purchase/reorder, reuse as a Flow and recorded-rule
+comparison now have public evidence. The tables below retain the wider programme's
+remaining boundaries. The integrated app builder is usable. The complete
 business-capability proposal — describe an individual business model and have
 Veyndo build, verify, operate and maintain it — remains an implementation programme.
 This page maps that distinction; it is not a completion percentage.
@@ -26,7 +28,7 @@ branch, build or documentation change does not update a hosted result by itself.
 | Understand data, permissions and API/Flow/MCP calls | [App platform](app-platform.md), [security](app-security.md), [shared storage](app-data-storage.md) |
 | Continue saved merchant-agent work | [Durable runs and their boundaries](durable-agent-runs.md) |
 | Understand the full product direction | [Business capabilities](business-capabilities.md) |
-| Check the latest recorded hosted release | [20 October connected workspace acceptance](evidence/agentic-workspace-2026-10-20.md), [Configured-model native workflow proposal and publication](evidence/agent-native-workflows-hosted-2026-10-17.md), [17 October native product app lifecycle and repeated original checkout](evidence/native-app-fields-hosted-2026-10-17.md), [16 October hardening and app workflow](evidence/platform-hardening-hosted-2026-10-16.md), [Release overview](current-release.md), [16 October public acceptance](evidence/studio-release-hosted-2026-10-16.json), [15 October storage acceptance](evidence/shared-app-storage-hosted-2026-10-15.json) |
+| Check the latest recorded hosted release | [Current status and public acceptance](status.md#public-acceptance); older releases retain their dates in the [historical release record](current-release.md) |
 
 [Agent controls](agent-authority-controls.md) reuse existing keys/tasks and central inference. [Hosted stop/re-enable and checkout acceptance](evidence/agent-authority-hosted-2026-10-16.md) is recorded separately; it does not close arbitrary app execution or real-provider billing gates.
 
@@ -48,7 +50,7 @@ accept a hosted signed-buyer RFQ or original embedded Storyfront purchase.
 | Versions and private releases | Immutable package versions, current consent/digest, actor-private preview, staging and selected publication through native owners. | Package and record publication are separate selections. Code/data recovery cannot undo sent mail or payments. |
 | Pure decisions | Existing WIT components receive bounded read-only snapshots and return accepted/adjustment/reason results; native money, tax, inventory and checkout validate and apply effects. | Four hooks do not constitute a generated before/after/replace contract for every commerce operation. No arbitrary WASI network/filesystem access. |
 | Executable app goals | Optional `capability` v1: localized intent/assumptions and up to twelve frozen synthetic decision examples; mismatch/trap blocks save or installation. | Expected examples are not server-proven human confirmations, historical business replay or proof over every input. |
-| Saved merchant planning | Existing PostgreSQL tasks/conversations, private completed model checkpoints, fenced Rust workers, current-right/evidence checks, cancellation and explicit continuation. | Bounded read rounds and one reviewed native proposal; no general durable executor for arbitrary app writes or external effects. |
+| Saved merchant planning | Existing PostgreSQL tasks/conversations and fenced Rust workers execute reviewed native plans, retain completed steps, yield to translation work and resume explicitly. Collection preparation can join selected products, a category, translations and a landing page; completed native work can become an inactive Flow draft. | Current rights, scope, revision and personal review still apply. Supported native operations do not establish general durable execution of arbitrary app code or external effects. |
 | Database/browser authority | Separate restricted tenant/system pools, role-bound signed scopes, forced policies; existing HttpOnly session ledgers, exact origins and build-owned Studio scripts. Dedicated bounded planning credentials now have separate authority from ordinary integration keys. | Broader operational/security work and the Apple callback repair remain. Selected negative tests are not exhaustive security certification. |
 
 ### What “build”, “replay” and “workflow” mean today
@@ -57,6 +59,10 @@ accept a hosted signed-buyer RFQ or original embedded Storyfront purchase.
   compile arbitrary Rust/TypeScript source in a microVM.
 - **Event replay** redelivers authorized saved events with original IDs. It does
   not calculate what the last thirty days of orders would have cost under new logic.
+- **Recorded-rule comparison** evaluates a saved condition and unsaved draft on
+  bounded frozen `order.placed` inputs. Its [public acceptance](rule-history-comparison.md)
+  establishes meaningful condition differences without writes, not full historical
+  checkout repricing.
 - Frozen **decision examples** execute a real component with synthetic inputs.
   They do not import customer history or establish a fleet-wide compatibility check.
 - App-record **workflows** guard their own records. The [native lifecycle change](app-native-lifecycles.md) also adds bounded declarative order/RFQ states and version-bound running objects. It does not run arbitrary guard code or grant app control of payment/offer acceptance; hosted delivery is tracked separately.
@@ -72,12 +78,12 @@ The B2B furniture configurator is the acceptance case across the existing owners
 its code belongs in its app package. Shared Core code owns generic admission and
 invariants, not the app's material or furniture business rules.
 
-| Gate | Current gap | Required outcome before calling it complete |
+| Gate | Observed implementation and boundary | Required outcome before calling it complete |
 | --- | --- | --- |
-| B2B configurator | [The connected app-owned implementation](furniture-configurator.md) joins materials, structured dimensions, frozen surcharge cases, native independent purchasing approval, saved inputs and current-rule reorder. The [16 October hosted receipt](evidence/platform-hardening-hosted-2026-10-16.md) also covers the builder, private material write, selected publication and a B2C configured purchase. Independent B2B approval/reorder remain locally accepted; the [purchase-summary follow-up](evidence/configuration-summary-hosted-2026-10-16.md) is separately deployed and visible in checkout, confirmation and merchant order. | Material library → validated dimensions → traceable surcharge → exact-cart independent approval → native order → saved configuration → authorized reorder; later rule changes show their actual consequences and preserve original order snapshots. |
+| B2B configurator | [The connected app-owned implementation](furniture-configurator.md) joins materials, dimensions, frozen surcharges, independent native approval, saved inputs and current-rule reorder. [21 October public acceptance](evidence/furniture-browser-2026-10-21.md#public-configured-company-purchase-and-saved-list-reorder) completes browser purchase/list restoration with a separate native API approver: EUR 427, then EUR 447 after a material change; buyer self-approval is rejected and the old order stays unchanged. The subsequent all-browser repetition on `7f0d4266` completes separate-account approval, `RAC-34c09fc1`, return/reload and reopened order details; current and original configurations remain visible and distinct. | The connected purchase/reorder outcome is observed with simulated payment. Retain exact-cart approval, immutable accepted snapshots, current-rule reorder and the transport-specific evidence; real provider settlement remains separate. |
 | Core entity extensions | [Private version-1 bindings](app-core-extensions.md) now join all four object types to native details, product/customer/order columns and exact filters, current rights, HTTP/MCP and source-bound graph projections. Product/company configuration can clone and publish; customer/order records remain operational. | Namespaced Product/Customer/Order/Company fields share schema/version/current rights across grids, filters/search, API, MCP, supported UCP and knowledge projections; no direct app SQL or cross-tenant/PII leakage. |
 | Native lifecycle extensions | [Declarative v1 implementation](app-native-lifecycles.md) joins app package consent, native order/RFQ states, fixed pure guards, current rights, accepted object snapshots, API/MCP/Flow/history and selected release. Full required CI and the [17 October public order/version-upgrade walkthrough](evidence/native-app-workflows-hosted-2026-10-17.md) passed. RFQ preparation has local/restricted-runtime coverage; a hosted RFQ buyer walkthrough remains separate. | Reviewed declared order/offer states and transitions, pure guards, version-bound running objects and immutable traces; native payment, stock and refund invariants cannot be waived. |
-| Historical business replay | Synthetic component cases and operational event replay exist. | Admitted revision-bound real inputs repeat without mail/payment/order effects; actual money/decision/conflict diffs identify inputs, package digest and uncertainty. |
+| Historical business replay | Synthetic component cases, operational event replay and public read-only comparison of recorded rule conditions exist. | Full checkout repricing still needs admitted revision-bound inputs without mail/payment/order effects; actual money/decision/conflict diffs must identify inputs, package digest and uncertainty. |
 | Isolated source builds | Manifest admission and component validation exist. | Supported Rust/TypeScript source → real isolated build without production secrets → validated immutable artifact → actual runtime consumer; bounded resources, malicious input/egress cases and cleanup verified. |
 | Managed services | Approved independent services have guarded egress, jobs and secrets. | Platform-owned isolated execution, current capability admission, leases, monitoring, costs, restart and uncertain-effect reconciliation. |
 | Commerce Crater | Package-owned frozen cases execute on admission/install. | A Core candidate executes supported app/version cases and authorized tenant replay corpora, detects incompatibility and creates a reviewed repair; report the actual evaluated population. |

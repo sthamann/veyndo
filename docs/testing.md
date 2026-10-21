@@ -77,6 +77,30 @@ measured cold/warm comparison. Northflank's [cache guide](https://northflank.com
 requires persistent cache capacity and an initial successful population build;
 enabling a setting alone is not evidence of a faster release.
 
+### Measured full-run cost: 21 October
+
+The successful [PR #190 full run](https://github.com/sthamann/veyndo/actions/runs/39657005708)
+took approximately 52 minutes. Its timestamped logs show 38.8 minutes in the
+registered integration step, 4.9 minutes in formal mutation controls, 3.1 minutes
+in the complete frontend step and 2.1 minutes in the Rust test/build step. Inside
+the integration step, the signed-runtime repetition took 14.5 minutes and the
+signed transaction-pooler repetition 3.7 minutes; these are nested timings,
+not additional time outside the 38.8 minutes.
+
+The succeeding [PR #191 full run](https://github.com/sthamann/veyndo/actions/runs/39665097450)
+completed in 45 minutes 29 seconds, including 33 minutes 13 seconds in registered
+integration tests. All 133 frontend test files / 779 tests passed alongside the
+Rust workspace, native HTTP/PostgreSQL, formal controls and coverage checks.
+This run-to-run difference is an observation, not an attributed optimization.
+
+The signed-runtime path intentionally repeats the native HTTP registry using the
+separate restricted tenant/system logins. The pooler path additionally checks
+small-pool transactions, current authority and two-replica/key-rotation behavior.
+Removing these repetitions would remove meaningful production-boundary coverage.
+The next optimization to measure is concurrent independent database/runner lanes,
+with separate logs and complete merged coverage. No such speedup is claimed yet;
+the active release keeps the existing complete verification unchanged.
+
 **Merchant catalogue setup:** [Current source/upload workflow, native CSV/model/media suites and evidence limits](merchant-catalogue-setup.md#verification-and-limits).
 
 **Agent authority:** [Current hosted control, checkout and session acceptance](evidence/agent-authority-hosted-2026-10-16.md), including separate full/backend and frontend-only source boundaries; older measurements below retain their original dates.

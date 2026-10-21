@@ -5,6 +5,9 @@ The ordinary public Studio created app `furniture_mvi1n42k` from the app-owned
 `stage-b6a9474f38cd4d53a73a`. F5 preview records and installed sandbox records
 remained separate. All identities, products and payments below are synthetic.
 
+This record follows the successive checks in order. Earlier gaps describe that
+specific observation; the later sections record their subsequent public checks.
+
 ## Observed purchase and immutable order
 
 The native product editor created desk `5d1e8a7c-651c-4492-abfe-1fae901ee526`
@@ -126,3 +129,94 @@ the combined independent-approval/reorder journey is not yet a hosted acceptance
 ![Local simulated reorder after a separate buyer approval](images/furniture-2026-10-21/local-approved-reorder.jpg)
 
 ![Original company order retains its purchased material and surcharge](images/furniture-2026-10-21/local-original-order.jpg)
+
+The repaired reopened-order summary also passed a 390 × 844 browser check: the
+material, 260 × 80 cm dimensions and original EUR 68 surcharge remain visible,
+with no horizontal document overflow. The test viewport was restored afterward.
+
+![Original order configuration at 390 px](images/furniture-2026-10-21/local-order-mobile.jpg)
+
+## Public configured company purchase and saved-list reorder
+
+On 21 October, public Core/Studio `ef093e7a` (`brave-produce-7557`) completed
+the connected journey in the synthetic shop `agent-release-abnahm-0054aa7088`.
+The merchant published furniture app `furniture_mvi1n42k` version 1.0.1 through
+the existing package review, then selected only its test material and desk in
+the sandbox release. Unrelated private drafts were not selected. The product's
+test stock was set through the native live product editor.
+
+The buyer and approver are separate synthetic customer accounts. The buyer has
+buy/list rights; the approver has approval/company-order rights. The buyer used
+the ordinary storefront to select Walnut Select, 260 x 80 cm, save a private
+order list and request approval with a purchase-order reference. A separate
+approver session used the native Store API to review and approve the frozen
+quote. An attempted approval with the buyer identity returned HTTP 403.
+
+| Observed step | First purchase | Saved-list reorder |
+| --- | --- | --- |
+| Material label | Walnut Select | Walnut Select Plus |
+| Dimensions | 260 x 80 cm | 260 x 80 cm, restored from saved inputs |
+| Accepted surcharge | EUR 78.00 | EUR 98.00 |
+| Total / VAT | EUR 427.00 / 68.17 | EUR 447.00 / 71.37 |
+| Approval request | `c8fde9d1ff6c414c8456f89282148c43` | `0af69ad2c7f149e08d0a5cd1d1d6775d` |
+| Simulated order | `RAC-f117d21d` | `RAC-39436999` |
+| Return and full reload | Empty cart | Empty cart |
+
+Between purchases, the merchant renamed the same material and changed its base
+fee from 3,000 to 5,000 minor units through the installed app's native material
+editor. Restoring the list recalculated the existing dimensions against that
+current record. The original approval could not authorize the changed order:
+the checkout remained disabled until the new independent approval was fetched.
+The first frozen approval retained its original label, dimensions, EUR 78 fee
+and EUR 427 total after the update.
+
+Both purchases used the explicit **Demo payment** method. They are persisted
+native orders, not evidence of real external payment processing. This hosted
+acceptance combines browser purchase/reorder with independent native API approval;
+the initial all-browser check was the local run above. The later public repetition
+below verifies the additional approval-inbox/reopened-order presentation. The repeated privacy prompt on a fresh cart remains
+a separately observed usability issue.
+
+![Public first configured purchase after independent approval](images/furniture-2026-10-21/public-approved-first-order.jpg)
+
+![Public saved-list reorder uses current material and price](images/furniture-2026-10-21/public-approved-reorder.jpg)
+
+## Public two-account browser acceptance after the combined release
+
+[PR #191](https://github.com/sthamann/veyndo/pull/191) merged as `7f0d4266` after
+the [complete required verification](https://github.com/sthamann/veyndo/actions/runs/39665097450):
+779 frontend tests in 133 files, Rust workspace tests, native HTTP/PostgreSQL,
+formal controls and coverage checks. Northflank built `offbeat-mind-8124`, waited
+for snapshot `26-10-21-204633-backup`, ran the migration successfully and started
+deployment `vendune-core-6dfdf567bb` at 22:47:53 CEST. The new instance passed
+readiness with zero restarts. No migration, permission or pricing rule was changed
+by the configuration-display repair.
+
+The same saved list was restored in a private Chrome buyer session. A normal
+Chrome session held the separately signed-in approver account. The buyer's
+`PO-HOSTED-BROWSER-20261021` request stayed disabled before approval. On the new
+public version, the approver inbox displayed **Walnut Select Plus, 260 × 80 cm,
+EUR 98 surcharge and EUR 447 total**, and its ordinary approval button succeeded.
+The buyer refreshed approval through the checkout UI; only then did the purchase
+button become available. This repetition used no API shortcut for approval.
+
+Simulated order **`RAC-34c09fc1`** completed with those exact values and EUR 71.37
+VAT. Return and a full reload showed cart zero. After reloading the new frontend,
+the buyer reopened the order and saw the frozen configuration in its item detail.
+The approver separately reopened the original **`RAC-f117d21d`**: it still showed
+Walnut Select, 260 × 80 cm, EUR 78 surcharge and EUR 427 total. Thus the new
+presentation displays historical accepted values rather than today's material
+record. These observations close the public inbox/reopened-order presentation
+gap from the earlier local check.
+
+The fresh-cart privacy choice appeared again and was explicitly declined. All
+accounts and addresses were synthetic, payment was the explicit Demo method,
+and no real charge, email delivery or newly issued invoice was accepted here.
+
+![Separate approver sees the exact configuration before approving](images/furniture-2026-10-21/public-browser-approval.jpg)
+
+![Public simulated purchase after browser-only independent approval](images/furniture-2026-10-21/public-browser-confirmed.png)
+
+![Buyer reopens the accepted material and dimensions after full reload](images/furniture-2026-10-21/public-browser-reopened.png)
+
+![Original company order retains its previous material and surcharge](images/furniture-2026-10-21/public-browser-original-order.jpg)

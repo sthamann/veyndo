@@ -59,7 +59,7 @@ separate screenshots for this extension; generated per-run references are observ
 publicly, while other event-field mappings and competing daily-limit workers are
 covered by local native tests.
 
-## Collection preparation: current development
+## Collection preparation: implementation and public acceptance
 
 The first extension uses the existing Rust task worker, translation queue and
 site-builder app; it adds no independent orchestration service or app tables.
@@ -126,7 +126,7 @@ retaining current model/action/PII rights, environment ownership and digest/CAS
 checks. Activation uses the same tenant/app package fence as installation and
 record writes. The required pooler suite retains staging and collection tests.
 
-## Material and dimensions: next development step
+## Material and dimensions: implementation and public acceptance
 
 The app-owned `1.0.1` pattern adds the existing material records to the native AI
 context and namespaced graph, shared by authorized API/MCP/public reads. Local
@@ -143,8 +143,15 @@ dimensions and surcharge. Return and reload retain an empty cart. This exposed
 missing configuration details in the approval inbox and reopened customer orders;
 both now use the shared frozen-order summary. Reopening the original order still
 shows its original material and EUR 68 surcharge after the app update. The combined
-journey still needs hosted browser acceptance. See the local browser section of
-the evidence page below. The public `fb8d54e0` follow-up restores saved material and dimensions
+journey now also passes on public `ef093e7a`, with browser purchases/list restoration
+and a separate native API approver: EUR 427 for the first order, EUR 447 after
+updating the same material, fresh approval required and empty carts after return
+and reload. The first approval retains its original values. Merged main `7f0d4266`
+also passes the complete two-account browser repetition: the approver sees material,
+dimensions and surcharge, approves, and the buyer completes `RAC-34c09fc1` for
+EUR 447. Reopened buyer/company orders retain accepted values; the older order
+still shows EUR 78 surcharge and EUR 427 total.
+See the local and public sections of the evidence page below. The public `fb8d54e0` follow-up restores saved material and dimensions
 after a full reload even before any line item exists. Simulated order
 `RAC-2246a373` then preserved Walnut Select, 250 x 80 cm, EUR 78 surcharge and
 EUR 427 total; returning to the shop showed cart zero. The earlier `b0b8cba7`

@@ -131,3 +131,79 @@ repetition.
 ![Embedded confirmation after the rule-comparison release](images/storyfront-2026-10-21/rule-release-confirmed.jpg)
 
 ![Original bag remains empty after full reload](images/storyfront-2026-10-21/rule-release-empty-after-reload.jpg)
+
+## Fresh private-session purchase without a retry
+
+At 22:26 CEST, the unchanged public Core `ef093e7a` and original Experience
+`cbb4d283` completed a fresh private Chrome session using native accessibility
+input. This tab was not attached to the browser extension's tab-control API.
+The browser's existing diagnostic banner remained visible; no security setting,
+request interception, cookie policy or application code was changed.
+
+The first **Checkout** click loaded the native iframe, its privacy choice and
+contact/address fields. There was no timeout, retry, page restart or separate
+top-level checkout navigation. Optional tracking was declined. A synthetic guest
+used pickup and the explicitly simulated payment method. Order `RAC-9a338bb0`
+retained the German ceramic-cup name, quantity one, EUR 24.90 total and EUR 3.98
+VAT; its confirmation explicitly reported simulated authorization.
+
+**Back to shop** closed the iframe and emptied the original Storyfront bag.
+A full browser reload and reopening the bag retained the empty state. The
+complete journey required no user-side manual action.
+
+This is a successful first-load acceptance in one fresh session on the same
+deployed code that previously required recovery through extension-controlled
+tabs. It narrows the remaining investigation toward the browser-control path;
+it does not prove the cause of every earlier blank document or establish a
+statistical first-load reliability rate.
+
+![First iframe load with contact and address fields](images/storyfront-2026-10-21/native-first-load.png)
+
+![Simulated order completed without a checkout retry](images/storyfront-2026-10-21/native-confirmed.png)
+
+![Original bag empty after a full reload](images/storyfront-2026-10-21/native-empty.png)
+
+### Normal Chrome window countercheck
+
+At 22:33 CEST, a new normal (non-private) Chrome window repeated the same
+first-open check through native accessibility input, again without attaching its
+tab to the extension's tab-control API. One synthetic cup was added. The first
+Checkout click loaded privacy controls and then the contact/address form without
+retry or top-level checkout navigation. No second order was placed in this
+countercheck. Returning to Storyfront retained the unpurchased item; removing
+that test item left the bag empty, and the temporary window was closed.
+
+Both fresh private and normal-window first opens therefore succeeded on the
+unchanged public deployment. Earlier extension-controlled blank documents remain
+recorded above rather than being reclassified as successful attempts.
+
+## Final combined release: first load, purchase and empty-cart reload
+
+After Core/Studio `7f0d4266` (`offbeat-mind-8124`) became healthy at 22:47 CEST,
+the original public Experience `cbb4d283` was tested again through native Chrome
+accessibility input. The first iframe open loaded its privacy and address fields
+without retry or a separate top-level checkout navigation.
+
+The frequently purchased ceramic-cup fixture had exhausted its stock. Its
+purchase was rejected with the explicit message “Diese Menge ist nicht mehr
+verfügbar. Wähle eine andere Menge oder Variante.” No order was created by that
+attempt. Returning to Storyfront retained the unpurchased cup; only that test
+item was removed before choosing the synthetic matt-blue table lamp.
+
+The lamp's first Checkout action also loaded the iframe normally. A synthetic
+guest declined optional tracking, selected pickup and the explicitly simulated
+payment method, reviewed the quote and completed order **`RAC-4a94c770`**:
+one German-labelled lamp, **EUR 59.90 total**, **EUR 9.56 VAT**, zero shipping.
+The receipt explicitly reported simulated authorization. No real payment or
+external order email was accepted by this test.
+
+The receipt's **Back to shop** action closed the iframe, returned to the original
+Experience and displayed the confirmed-order/updated-cart message. A full browser
+reload and reopening the original bag retained **zero items**. This complete
+journey on the final public runtime needed no user-side testing or checkout retry.
+It complements the earlier fresh-session observations; it does not erase the
+recorded extension-controlled pauses or establish a statistical reliability rate.
+
+![Completed embedded order on the final combined release](images/storyfront-2026-10-21/final-release-confirmed.png)
+
+![Original Storyfront bag empty after full reload on the final release](images/storyfront-2026-10-21/final-release-empty.png)

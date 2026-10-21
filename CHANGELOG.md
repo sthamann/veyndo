@@ -1,9 +1,18 @@
 # Changelog
 
+## Current-status documentation — 2026-10-21
+
+- Condense the current status into one public capability/evidence table and an explicit remaining-work list. Preserve dated deployment notes in a linked history instead of leaving contradictory old open items in the main status.
+- Record the measured full-CI breakdown and mobile configured-order proof without reducing verification coverage or treating local checks as public acceptance.
+- Record a fresh private-browser Storyfront first-load purchase on unchanged public code: no retry, simulated order `RAC-9a338bb0`, receipt return and empty original bag after reload. Preserve earlier extension-controlled loading failures as separate evidence.
+- Repeat the complete embedded purchase on the final public runtime `7f0d4266`: first-open checkout, simulated lamp order `RAC-4a94c770` for EUR 59.90, German confirmation and an empty original bag after return/reload. Preserve the preceding explicit out-of-stock rejection of the exhausted cup fixture. [Final-release screenshots](docs/evidence/storyfront-checkout-2026-10-21.md#final-combined-release-first-load-purchase-and-empty-cart-reload).
+
 ## Configured B2B approval and reopened order details — 2026-10-21
 
 - Display accepted app material, dimensions and surcharge in the existing company approval inbox and customer/company order detail. Reuse the native frozen snapshot renderer without fetching current app labels or recalculating historical prices.
 - Complete the local saved-list → updated configuration price → independent account approval → simulated purchase → empty cart journey. Preserve the original order's older material and surcharge after package/material changes. Add rendered regressions and [browser evidence](docs/evidence/furniture-browser-2026-10-21.md#saved-list-reorder-and-separate-approval-local-browser-21-october); keep local and hosted acceptance distinct.
+- Complete the public configured desk purchase and saved-list reorder on `ef093e7a`: EUR 427 then EUR 447 after a native material update, separate approvals, denied buyer self-approval and empty carts after return/reload. Record browser purchases, native API approval and preserved original frozen values separately from the pending public inbox presentation check. [Public screenshots](docs/evidence/furniture-browser-2026-10-21.md#public-configured-company-purchase-and-saved-list-reorder).
+- Complete the subsequent two-account public browser acceptance on merged main `7f0d4266`: frozen configuration visible before independent approval, simulated order `RAC-34c09fc1`, empty cart after return/reload, reopened buyer details and unchanged original company order. The same release passed full CI, a fresh snapshot, migration and healthy startup. [Final public browser evidence](docs/evidence/furniture-browser-2026-10-21.md#public-two-account-browser-acceptance-after-the-combined-release).
 
 ## Public recorded-rule comparison — 2026-10-21
 
