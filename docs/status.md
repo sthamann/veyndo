@@ -10,7 +10,7 @@ missing records, changed prices/text and image associations. Private page intent
 and bounded reports survive technical job archival and service restart; a changed
 result does not authorize repair or cutover. Local synthetic acceptance is separate
 from the still-pending public migration-service acceptance. Migration 106 was deployed with Core/Studio `b13aedb`; the current Core/Studio
-release is `b0811f8` (20 October, see the workspace section). The separate service image is published,
+release includes `e18fa1b` / merge `4e2f6af` (21 October, see the collection section). The separate service image is published,
 but its hosted gateway/callback configuration and public migration journey remain
 open. Native completion evidence is now
 atomically sealed under current job/creator/package/lease/CAS checks; raw edited
@@ -24,13 +24,29 @@ product intake/replay and tamper rejection are locally tested. This remains
 a historical local checkpoint, now merged in PR #168; it did not establish a
 complete shop migration/cutover. [Scope and evidence](agentic-migration.md).
 
-## 21 October: collection workflow in development
+## 21 October: collection workflow deployed; public acceptance open
 
 The next [connected merchant follow-ups](connected-merchant-followups.md) are being
 implemented in sequence. Scoped translation jobs and a connected private
 category/translation/page task have passed initial local HTTP/PostgreSQL restart
-and selective-release cases. The new extension is not yet publicly deployed;
-the accepted public workspace remains the 20 October release below.
+and selective-release cases. PR #177 is merged; migration 107 completed successfully
+after a fresh snapshot, and the Core deployment is running. The configured-model
+Studio test in a private shop initially stopped on HTTP 400 after four reads.
+Core `693dd33` now runs publicly and fixes the unsupported strict-provider schema
+keyword. Continuing the original task reached the next native validation boundary:
+`Unknown entity field`. Nothing was approved or published by that failed run.
+
+The follow-up supplies authorized installed app field contracts and the app-owned
+page format, names invalid fields and permits one checkpointed correction through
+full native admission. Local HTTP/PostgreSQL acceptance passes collection preparation,
+malicious correction rejection, worker restart and explicit continuation with no
+unapproved writes; Rust workspace tests and clippy pass. This correction (`40b4a97a`)
+is publicly deployed. Continuing the same task reached six saved model steps, but
+the proposed landing page still failed native block validation before approval.
+The next repair supplies explicit block identifiers, localized content shapes and
+field-specific errors instead of a combined rejection. Public acceptance still
+requires the saved task to reach review, actual preview and selected release.
+[Continuation contract](durable-agent-runs.md).
 
 ## 20 October: design onboarding and readable product comparison
 

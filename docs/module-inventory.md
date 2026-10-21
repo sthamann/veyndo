@@ -89,6 +89,7 @@ This lists every checked-in source module in these roots, including files with n
 | [src/apps/ontology.rs](../src/apps/ontology.rs) | Namespaced graph views over current authorized app records; no duplicated source or public-claim authority. |
 | [src/apps/package_fence.rs](../src/apps/package_fence.rs) | Shared package fence prevents native record or document writes racing contract upgrades. |
 | [src/apps/planning.rs](../src/apps/planning.rs) | Registered managed app actions join the same preview/approve transaction as core changes. |
+| [src/apps/planning_contracts.rs](../src/apps/planning_contracts.rs) | Current authorized managed-save models accompany proposals; no records, secrets or new authority. |
 | [src/apps/presentation.rs](../src/apps/presentation.rs) | Optional passive app artwork and localized summaries; omitted metadata preserves published legacy digests. |
 | [src/apps/publication.rs](../src/apps/publication.rs) | Optional server-enforced publication window and channel projection for public app records. |
 | [src/apps/record_history.rs](../src/apps/record_history.rs) | Bounded app-record history, current entity rights and restoration through the normal managed save path. |
@@ -476,6 +477,8 @@ This lists every checked-in source module in these roots, including files with n
 | [src/performance/pool.rs](../src/performance/pool.rs) | Explicit per-process database budgets and bounded queue waits; invalid deployment values fail fast. |
 | [src/performance/row_security.rs](../src/performance/row_security.rs) | Bind each borrowed PostgreSQL connection to task scope, and reject unsafe strict-runtime roles. |
 | [src/performance/settings.rs](../src/performance/settings.rs) | One MVCC snapshot validates base/override UUIDs; warm reads avoid transmitting or decoding JSON. |
+| [src/planner/admission.rs](../src/planner/admission.rs) | Every initial or repaired model proposal traverses the same native read-only admission. |
+| [src/planner/repair.rs](../src/planner/repair.rs) | One checkpointed correction of rejected output; original evidence, budget and native review remain authoritative. |
 | [src/planner.rs](../src/planner.rs) | Grounded model planning: durable input snapshots share native proposal validation and explicit apply. |
 | [src/platform/ai.rs](../src/platform/ai.rs) | Operator-only inference administration: optimistic revision, encrypted write-only keys and audit without secrets. |
 | [src/platform/auth.rs](../src/platform/auth.rs) | Independent platform authorization: live personal sessions, current grants, no integration/bootstrap escalation. |
@@ -1477,10 +1480,12 @@ This lists every checked-in source module in these roots, including files with n
 | [extensions/apps/site-builder/AppElement.tsx](../extensions/apps/site-builder/AppElement.tsx) | Placed native app surfaces use the existing public registry, renderer and server-bound read-only preview grants. |
 | [extensions/apps/site-builder/Renderer.tsx](../extensions/apps/site-builder/Renderer.tsx) | Shared page renderer: Studio previews and published shops use exactly these registered components. |
 | [extensions/apps/site-builder/agent_handoff.rs](../extensions/apps/site-builder/agent_handoff.rs) | Coding agents edit the same page schema through credential-free tasks and explicit native review. |
+| [extensions/apps/site-builder/block_validation.rs](../extensions/apps/site-builder/block_validation.rs) | App-owned block admission with bounded field paths; never echo untrusted content in errors. |
 | [extensions/apps/site-builder/context.rs](../extensions/apps/site-builder/context.rs) | Designer context projects native channels, languages and calculated products; no second catalogue or price engine. |
 | [extensions/apps/site-builder/design_agent.rs](../extensions/apps/site-builder/design_agent.rs) | Scoped visual proposals reuse central inference and native revision-bound tasks; models cannot publish or execute. |
 | [extensions/apps/site-builder/elements.rs](../extensions/apps/site-builder/elements.rs) | Placed app elements resolve only active, public surfaces of this tenant; app code stays in its own package. |
 | [extensions/apps/site-builder/model.ts](../extensions/apps/site-builder/model.ts) | One app-owned document contract for manual editing, agents, API/MCP and the storefront renderer. |
+| [extensions/apps/site-builder/planning.rs](../extensions/apps/site-builder/planning.rs) | App-owned nested page format shared by merchant planning and external coding agents. |
 | [extensions/apps/site-builder/proposals.rs](../extensions/apps/site-builder/proposals.rs) | Native revision-bound proposal validation and persistence shared by every design agent. |
 | [extensions/apps/site-builder/references.rs](../extensions/apps/site-builder/references.rs) | Bounded reference capture uses the shared public-only DNS-pinned egress client; partial failures remain visible. |
 | [extensions/apps/site-builder/server.rs](../extensions/apps/site-builder/server.rs) | Standard-shop page contract. App-owned content and theme validation; no HTML, CSS or script evaluation. |

@@ -7,6 +7,25 @@
 - Complete a second purchase from saved inputs after material/rule changes, require new independent approval, reject replayed stock/order effects and preserve the original accepted order. Public B2B/browser acceptance remains a separate delivery step.
 - Reuse the existing transaction and locked commerce settings when saving roles, avoiding a nested database acquisition while retaining current delegation, language validation and revision checks. Keep role, core-extension, material and UCP purchasing journeys in the required one-backend pooler suite.
 
+## Unreleased — managed app proposal correction
+
+- Describe the complete native page-block format, including stable identifiers,
+  translated content and product selection; return exact field paths for invalid
+  blocks without echoing their content. Preserve the existing admission rules and
+  verify correction through the actual collection task before approval.
+- Give merchant planning the current authorized app field contracts and shared,
+  app-owned page content format. Unknown fields identify their model and names.
+- Correct an invalid proposal once through the existing durable model checkpoint;
+  preserve original evidence, current rights, full native validation and personal
+  approval. Reuse completed calls on explicit continuation after a provider failure.
+
+
+## Unreleased — strict provider selection schema
+
+- Omit unsupported `uniqueItems` only from the OpenAI strict wire schema and reject duplicate selections when restoring the model result; preserve the original domain schema and product/tenant validation.
+- Make the existing real HTTP provider fixture reject that keyword for Responses and Chat Completions, covering the actual merchant planner final request rather than only a synthetic schema.
+- Record the 21 October collection rollout separately from the still-open configured-model acceptance. The saved public task stopped before approval with HTTP 400; this repair must be verified on that task after deployment.
+
 ## Unreleased — connected collection preparation
 
 - Freeze explicit product selections in existing durable translation jobs; reject empty, duplicate, malformed and unavailable IDs instead of silently expanding scope.

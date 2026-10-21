@@ -627,8 +627,8 @@
     },
     "crates/cognition/src/inference/schema.rs": {
       "status": "unproved",
-      "sha256": "87ea0b078500abfd079cd3f8fce80c86c6f586c1a175c3d1aa042ec08543a551",
-      "review": "Independent focused review: restore strict-provider optional non-null typed placeholders to absence; preserve required and explicitly nullable values, current domain validation and authority. Failing-first null-array regression and actual OpenAI wire fixtures cover planner operations and composed lifecycles."
+      "sha256": "3406af7dc0fcdddbe7561d3b48952628c777f88a0e54bf6ef082e65a780ce7cc",
+      "review": "Review strict provider wire-only uniqueItems removal, original-schema duplicate rejection before proposals, nullable/distinct selection tests and rejecting HTTP provider fixture; no commerce policy or authority changes"
     },
     "crates/cognition/src/inference/settings.rs": {
       "status": "unproved",
@@ -1177,8 +1177,13 @@
     },
     "extensions/apps/site-builder/agent_handoff.rs": {
       "status": "unproved",
-      "sha256": "290f05c01e9407a62e21c6595dd45aacac2f602170fff542ac056ea216a58776",
-      "review": "Reviewed native designer transport and shared proposal path: sandbox/current rights and positive saved-page revision before export/import, content/theme-only external results, active tenant-owned public native element references, existing CAS/history/release. Preview grants narrow existing allowed actions using the unchanged verified read policy. Real PostgreSQL/app-surface regressions and clippy pass; async adapters remain unproved."
+      "sha256": "03e25eee856bdc596b02097b3aae5bcf5661a821e6dd63b18b5d4b1c798db303",
+      "review": "Review shared read-only planner admission and one checkpointed correction using original context, current authorized app contracts and unchanged personal approval; managed page fields use app-owned schema; translation and malicious checkout-correction HTTP regressions pass, workspace units and clippy pass"
+    },
+    "extensions/apps/site-builder/block_validation.rs": {
+      "status": "unproved",
+      "sha256": "bf81a59d1d45f081e55c092b5f9857750d4538076299cb9662939babfdc2fbf0",
+      "review": "Reviewed app-owned block validation extraction: all original admission predicates retained, errors contain bounded field paths without content, planner and coding handoff share explicit format and native-validated example; workspace units and clippy plus actual collection correction regression validate the boundary."
     },
     "extensions/apps/site-builder/context.rs": {
       "status": "unproved",
@@ -1195,6 +1200,11 @@
       "sha256": "7210f4df61f7a448e27a1a0a48cf2527d3022e316fc4c5e4dc282b9f5c1f6be6",
       "review": "Reviewed native designer task handoff through existing sandbox, membership, revision and proposal owners; app elements admit only active same-tenant public native surfaces; read-only preview grants narrow server action allowlists. HTTP/PostgreSQL regressions cover own/foreign/private/inactive elements, CAS/release and explicit approval. No verified decision or proof boundary changed."
     },
+    "extensions/apps/site-builder/planning.rs": {
+      "status": "unproved",
+      "sha256": "a65de022b88f3617debf92a2b910042bb2034b1da8c01b63b07c2b8c33c7f707",
+      "review": "Reviewed app-owned block validation extraction: all original admission predicates retained, errors contain bounded field paths without content, planner and coding handoff share explicit format and native-validated example; workspace units and clippy plus actual collection correction regression validate the boundary."
+    },
     "extensions/apps/site-builder/proposals.rs": {
       "status": "unproved",
       "sha256": "352a4e21ac0e29c13e46f9481585ce6032a73c7e65351d74922479b5bd179d7a",
@@ -1207,8 +1217,8 @@
     },
     "extensions/apps/site-builder/server.rs": {
       "status": "unproved",
-      "sha256": "ca08deed75b6fddef2facbd20e776339a9888f1a5c99a83aac156c8d9671b0c0",
-      "review": "Reviewed fixed app-record store, tenant/app/model identity, forced signed RLS, trigger-maintained unique/reference/quota projections, scoped schema/preview/staging/checkout consumers and atomic maintenance consolidation; actual PostgreSQL app/checkout/schema/F5 suites and independent security re-review pass. Existing frozen-record WIT conversion remains equivalent; SQL/async adapters remain outside Lean proof boundary."
+      "sha256": "e39c827b0ea50c92f6d396aa05ced7c3182256557335b147763bbb20fda1ee0d",
+      "review": "Reviewed app-owned block validation extraction: all original admission predicates retained, errors contain bounded field paths without content, planner and coding handoff share explicit format and native-validated example; workspace units and clippy plus actual collection correction regression validate the boundary."
     },
     "extensions/apps/site-forms/server.rs": {
       "status": "unproved",
@@ -1612,8 +1622,8 @@
     },
     "src/apps/field_values.rs": {
       "status": "unproved",
-      "sha256": "4391c6d4d33b8b443562af3b255bdb5841104a640333139893e10c7a812d020c",
-      "review": "Reviewed fixed app-record store, tenant/app/model identity, forced signed RLS, trigger-maintained unique/reference/quota projections, scoped schema/preview/staging/checkout consumers and atomic maintenance consolidation; actual PostgreSQL app/checkout/schema/F5 suites and independent security re-review pass. Existing frozen-record WIT conversion remains equivalent; SQL/async adapters remain outside Lean proof boundary."
+      "sha256": "16623d1d9f6a280e9c4e3ab5568ee7a6e3b98c74198695f8c62f4efbb7045359",
+      "review": "Review shared read-only planner admission and one checkpointed correction using original context, current authorized app contracts and unchanged personal approval; managed page fields use app-owned schema; translation and malicious checkout-correction HTTP regressions pass, workspace units and clippy pass"
     },
     "src/apps/form_layout.rs": {
       "status": "unproved",
@@ -1672,8 +1682,8 @@
     },
     "src/apps/mod.rs": {
       "status": "unproved",
-      "sha256": "66e802243246cf7dd23fa0adcd6d01e6311765f771102c3bce571034a8406f8e",
-      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
+      "sha256": "94812a9fefaadea5fd62e9f4a07cc5b6c46215c0863b8ef6d6aa61092774fefb",
+      "review": "Review shared read-only planner admission and one checkpointed correction using original context, current authorized app contracts and unchanged personal approval; managed page fields use app-owned schema; translation and malicious checkout-correction HTTP regressions pass, workspace units and clippy pass"
     },
     "src/apps/native_data.rs": {
       "status": "unproved",
@@ -1727,8 +1737,13 @@
     },
     "src/apps/planning.rs": {
       "status": "unproved",
-      "sha256": "dd0962ed28b9027edfeb2a8459c45f25d65e4f9f0c88b3500290a6a8a745dc74",
-      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
+      "sha256": "3a0e19c4cdeb0c30269a0c2233695c11604bb7bd3b822992a3a5aef530705afe",
+      "review": "Review shared read-only planner admission and one checkpointed correction using original context, current authorized app contracts and unchanged personal approval; managed page fields use app-owned schema; translation and malicious checkout-correction HTTP regressions pass, workspace units and clippy pass"
+    },
+    "src/apps/planning_contracts.rs": {
+      "status": "unproved",
+      "sha256": "82c03b76a89038f2a81df98fdc25f8420e5c2c2010c7173b5b09f267417182d6",
+      "review": "Review shared read-only planner admission and one checkpointed correction using original context, current authorized app contracts and unchanged personal approval; managed page fields use app-owned schema; translation and malicious checkout-correction HTTP regressions pass, workspace units and clippy pass"
     },
     "src/apps/presentation.rs": {
       "status": "unproved",
@@ -3665,10 +3680,20 @@
       "sha256": "28bd482d3f35217c6c87545fa347172d038d97c25cf0a065784f22aff64534e6",
       "review": "Reviewed native-only static bypass with hosted denial and Lean exact acceptance; one fresh domain/environment/status/channel/mount SQL snapshot and current membership lookup preserve scoped admission, binding identity and revocation; immutable Arc settings retain locked mutation/checkout reads; secret-free compression opt-in and deterministic precompressed assets preserve streams/ranges; batched inventory uses existing checkout locks and ordered idempotent release; bounded overview SQL preserves currency-separated historical facts. Real two-replica read/channel/tenant/checkout and strict-runtime regressions passed; SQL and build inputs now explicitly locked. These adapters remain unproved."
     },
+    "src/planner/admission.rs": {
+      "status": "unproved",
+      "sha256": "8dc2e66239b44da2a1758d241f4729869c3e3aab4f4459757e6e1f24dd9d1dfa",
+      "review": "Review shared read-only planner admission and one checkpointed correction using original context, current authorized app contracts and unchanged personal approval; managed page fields use app-owned schema; translation and malicious checkout-correction HTTP regressions pass, workspace units and clippy pass"
+    },
+    "src/planner/repair.rs": {
+      "status": "unproved",
+      "sha256": "9ddf9b6f9b224e4650c687d032a3e8f2e66b8865779629d6e8115cef3cb4a002",
+      "review": "Review shared read-only planner admission and one checkpointed correction using original context, current authorized app contracts and unchanged personal approval; managed page fields use app-owned schema; translation and malicious checkout-correction HTTP regressions pass, workspace units and clippy pass"
+    },
     "src/planner.rs": {
       "status": "unproved",
-      "sha256": "3b72e33202920b230666d904df114cf4f3a1cb75652a1830814b32c6d784ed6d",
-      "review": "Reviewed scoped translation selection, original task authority, atomic child linking and completion, cancellation/explicit ambiguous continuation, lease fences, central provider admission outside transactions and bounded prompt evidence; real PostgreSQL/HTTP collection and interruption regressions plus 724 UI tests; skipped products store SQL NULL evidence rather than JSON null. Claude supplied code-only review, findings checked and fixed."
+      "sha256": "43b3dbd9528ee79fbfe6be2a1080ce898a116fa8277055a7ee034543e22f1f10",
+      "review": "Review shared read-only planner admission and one checkpointed correction using original context, current authorized app contracts and unchanged personal approval; managed page fields use app-owned schema; translation and malicious checkout-correction HTTP regressions pass, workspace units and clippy pass"
     },
     "src/platform/ai.rs": {
       "status": "reviewed-binding",
@@ -4095,8 +4120,8 @@
       "review": "Reviewed native extension identity/private/unique anchors and current read/write/PII scopes; native projections use bounded fixed-store queries, exact indexed filters bind all input and fence the admitted package digest. Real four-object HTTP/MCP, role revocation, foreign reference, immutable upgrade, product/company clone and selected release tests passed. Added extracted configuration-only release predicate and operational false property; SQL and UI remain explicitly unproved. Reviewed canonical schema, preserved AI bindings and versioned grid prompt provenance without changing existing prompt revisions."
     },
     "crates/cognition/prompts/manifest.json": {
-      "sha256": "76ff1eade502d8d76f86bb59cc02c937294aebbb70545a9a82163b2a0defaa80",
-      "review": "Reviewed final collection work and prompt contracts: scoped native IDs and prior reviewed creates, central provider preflight outside SQL transactions, atomic linked jobs, original actor/stop/cancellation guards, guarded leases, explicit ambiguous-call continuation and non-bypassable child controls. Native negative/restart tests and 724 UI tests; SQL NULL evidence fix follows a failing real skipped-product regression. New versioned prompt separates native private creation from CSV/image intake."
+      "sha256": "dff42177b8fcf2ef55f8a9c1dbe288f14f5c69c4479cb34a1cee8ebe6b3dbdc2",
+      "review": "Review shared read-only planner admission and one checkpointed correction using original context, current authorized app contracts and unchanged personal approval; managed page fields use app-owned schema; translation and malicious checkout-correction HTTP regressions pass, workspace units and clippy pass"
     },
     "crates/cognition/prompts/merchant-planner.v1.txt": {
       "sha256": "6fc1d69faed9342d8b95af531c3c3e0c597f1c4d18a311d3f62e5849236fdfaf",
@@ -4109,6 +4134,10 @@
     "crates/cognition/prompts/merchant-planner.v3.txt": {
       "sha256": "5591a2794cd421adfdb13a772e6ebc5c380e044b9a8e92c775d1224a82187dab",
       "review": "Reviewed final collection work and prompt contracts: scoped native IDs and prior reviewed creates, central provider preflight outside SQL transactions, atomic linked jobs, original actor/stop/cancellation guards, guarded leases, explicit ambiguous-call continuation and non-bypassable child controls. Native negative/restart tests and 724 UI tests; SQL NULL evidence fix follows a failing real skipped-product regression. New versioned prompt separates native private creation from CSV/image intake."
+    },
+    "crates/cognition/prompts/merchant-repair.v1.txt": {
+      "sha256": "703a48219790f0746e893117dfeddc88438de3a6eb123af0722900a3b87220ef",
+      "review": "Review shared read-only planner admission and one checkpointed correction using original context, current authorized app contracts and unchanged personal approval; managed page fields use app-owned schema; translation and malicious checkout-correction HTTP regressions pass, workspace units and clippy pass"
     },
     "crates/commerce/Cargo.toml": {
       "sha256": "aae017a1931861c398001a481dfc3f17c0954cb89cc1247d2947934ebefb1d26",
