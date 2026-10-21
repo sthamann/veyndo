@@ -37,7 +37,7 @@ pub(super) async fn persist(
     }
     // Serialize with recovery. A late provider response cannot publish a ready
     // task once the original worker lost its lease, even before recovery runs.
-    let held:Option<bool>=sqlx::query_scalar("SELECT state='running' AND lease_until>clock_timestamp() FROM flow_jobs WHERE tenant=$1 AND id=$2 FOR UPDATE")
+    let held:Option<bool>=sqlx::query_scalar("WITH held AS MATERIALIZED (SELECT state,lease_until FROM flow_jobs WHERE tenant=$1 AND id=$2 FOR UPDATE) SELECT state='running' AND lease_until>clock_timestamp() FROM held")
         .bind(t).bind(job).fetch_optional(&mut *tx).await?;
     if held != Some(true) {
         return Err(conflict("Flow worker lost its lease"));

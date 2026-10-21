@@ -1427,8 +1427,8 @@
     },
     "src/agent_runs/flow_proposals.rs": {
       "status": "unproved",
-      "sha256": "ba2c8f4b37832a0e2cc7b144c5a46d6e95ae61a955e3bfb223be7a04881b0a65",
-      "review": "Reviewed Flow source job propagation and transaction-locked current lease fence. Actual HTTP/PostgreSQL regressions reproduce rejected late results after expiry, with and without second-worker recovery; personal approval and native replay remain unchanged. SQL authority is outside extracted pure proof scope."
+      "sha256": "2818b6c5267bf25ea78ff602407f6ae8de7aa0c3d36d7100fc0618f50bdad493",
+      "review": "Reviewed Flow result row lock materialization before wall-clock lease check, so lock waits cannot preserve an earlier lease decision. Actual direct and two-worker HTTP/PostgreSQL expiry cases pass; no extracted pure rule changed."
     },
     "src/agent_runs/translation.rs": {
       "status": "unproved",
