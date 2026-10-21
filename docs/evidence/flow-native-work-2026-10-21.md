@@ -79,13 +79,29 @@ button or the misleading read-only notice. The private environment remained sele
 
 ![Completed proposal review after the public update](images/flow-native-2026-10-21/completed-review.jpg)
 
+## Direct Flow-history acceptance
+
+Public Core/Studio `4c0392ae`, image `pure-minute-7985`, started on 21 October at
+19:37 CEST with one healthy replica and no restarts. After a full Studio reload,
+the direct Flow history showed the original task as **Freigegebener Auftrag
+erledigt**, one completed action and **Im Shop angewendet**. The original private
+workspace remained selected. No new approval, model request or commerce write
+was needed. The direct history and personal workspace now use the same durable
+progress card and current-permission control checks.
+
+![Original task restored directly in Flow history after deployment](images/flow-native-2026-10-21/flow-history-after-reload.jpg)
+
+The final regression run passed 761 frontend tests, 27 actual PostgreSQL/HTTP
+durable-agent cases and 43 tenant-isolation cases, plus workspace Rust tests,
+Clippy, formatting, formal checks, mutation rejection and source boundaries.
+Rendered tests cover queued approval, completion, explicit continuation after
+failure, withdrawn controls and legacy immediate proposals. This public check
+covers the direct Flow history; nested graphical-pipeline result presentation is
+not separately claimed by this screenshot.
+
 ## Remaining scope
 
 Turning accepted work into a configurable Flow with mapped event inputs is still
 separate development. The current title-only shortcut does not implement that
 workflow. Flow inference retains its existing uncertainty handling; durable model
 checkpoints are not added to legacy Flow inference by this repair.
-The direct Flow-history review is connected locally to the same durable-progress
-presentation, with 761 frontend tests and the actual native Flow/tenant suites
-passing. Its separate public acceptance is pending; the screenshots above cover
-review through the personal workspace.

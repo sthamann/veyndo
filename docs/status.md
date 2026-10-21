@@ -4,7 +4,13 @@ This is the single starting point for what works, what is implemented but not
 publicly accepted, and what still needs development. Updated 21 October 2026.
 A green test, merged code and a completed public business journey are different evidence.
 
-Latest public acceptance: an ordinary product event prepared a configured-model
+Latest public acceptance: Core/Studio `4c0392ae` (`pure-minute-7985`), deployed
+21 October at 19:37 CEST, restores the original approved task directly in Flow
+history after a full reload: one completed action, the same private workspace,
+no duplicate approval. Direct history and the personal workspace share durable
+progress and permission-aware continuation controls.
+
+The original ordinary product event prepared a configured-model
 Flow proposal; the original proposal was approved in the selected private workspace
 on Core/Studio `09b1aa35` (`giving-insect-7440`). Exactly one hidden native category
 was created at revision one. The completed task survived a full reload and the
@@ -245,9 +251,9 @@ results; hosted service deployment and whole-shop cutover remain open.
 | Money | Exact `Money` exists; compatibility calculation paths still contain `f64` | Exact authoritative arithmetic with the original PHP differential gate |
 | Outbox | Separate cognition/apps/flows/audit checkpoints and durable request/task/event trace IDs are deployed in the 16 October Core | Actual PostgreSQL poison-audit isolation, other-consumer progress, quarantine, cold restart and explicit replay passed; public migration 103 applied successfully after a fresh snapshot |
 
-## Public delivery and current work
+## Earlier public deliveries
 
-The connected workspace is publicly running on `b0811f8`, image
+The connected workspace was publicly accepted on `b0811f8`, image
 `plant-horses-6593`, deployment `vendune-core-6cc7f557d9`.
 Its real model acceptance includes two approved category steps, saved progress
 across reload, private/live isolation, a generated multilingual care-note app,
