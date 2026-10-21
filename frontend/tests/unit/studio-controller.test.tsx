@@ -6,7 +6,9 @@ import { LocaleProvider } from "../../src/shared/i18n/i18n";
 import { ownerRights, overview, providers, session } from "./fixtures";
 import type { Message } from "../../src/admin/shell/studio-types";
 import { shopApi } from "../../src/shared/api/shop-api";
-function network() {
+function network(
+  applyResult: { applied: boolean; queued?: boolean } = { applied: true },
+) {
   const messages: Message[] = [
     {
       id: 1,
@@ -35,8 +37,7 @@ function network() {
           messages,
           run: { taskId: "unit-task", state: "ready", revision: 5 },
         };
-      else if (p === "/api/agent/tasks/unit-task/apply")
-        value = { applied: true };
+      else if (p === "/api/agent/tasks/unit-task/apply") value = applyResult;
       else throw Error("Unexpected fixture path " + p + " " + options?.method);
       return { ok: true, json: async () => value };
     },
@@ -387,4 +388,54 @@ it("keeps a private design handoff through route remounts, scoped to the current
   );
   act(() => result.current.setToken("other-account-token"));
   expect(result.current.designReference).toBeUndefined();
+});
+
+it.each([
+  [{ applied: false, queued: true }, "acceptedWork"],
+  [{ applied: false }, undefined],
+] as const)(
+  "does not report queued or unconfirmed work as applied: %j",
+  async (reply, key) => {
+    sessionStorage.setItem("rac-user-token", "unit-token");
+    const { messages } = network(reply);
+    const { result } = renderHook(
+      () => useStudioController({ onChanged: vi.fn(), onExit: vi.fn() }),
+      { wrapper: LocaleProvider },
+    );
+    await waitFor(() => expect(result.current.connected).toBe(true));
+    await act(() => result.current.apply(messages[0]));
+    expect(result.current.notice?.key).toBe(key);
+  },
+);
+it("does not show a late approval or reopen the old conversation after a new chat", async () => {
+  sessionStorage.setItem("rac-user-token", "unit-token");
+  const { fetcher, messages } = network();
+  const changed = vi.fn();
+  const { result } = renderHook(
+    () => useStudioController({ onChanged: changed, onExit: vi.fn() }),
+    { wrapper: LocaleProvider },
+  );
+  await waitFor(() => expect(result.current.connected).toBe(true));
+  await act(() => result.current.load("c"));
+  let complete!: (value: unknown) => void;
+  const pending = new Promise((resolve) => {
+    complete = resolve;
+  });
+  fetcher.mockImplementationOnce(async () => ({
+    ok: true,
+    json: () => pending,
+  }));
+  let applied!: Promise<void>;
+  act(() => {
+    applied = result.current.apply(messages[0]);
+  });
+  act(() => result.current.newChat());
+  await act(async () => {
+    complete({ applied: false, queued: true });
+    await applied;
+  });
+  expect(result.current.id).toBeUndefined();
+  expect(result.current.messages).toEqual([]);
+  expect(result.current.notice).toBeUndefined();
+  expect(changed).not.toHaveBeenCalled();
 });

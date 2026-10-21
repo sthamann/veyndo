@@ -45,7 +45,9 @@ export default function AgentRunCard({
               ? "preparingDrafts"
               : value.execution && value.state === "ready"
                 ? "workReady"
-                : value.state,
+                : value.execution && value.state === "uncertain"
+                  ? "workUncertain"
+                  : value.state,
           )}
         </strong>
       </div>
@@ -82,7 +84,9 @@ export default function AgentRunCard({
           )}
         </p>
       )}
-      {value.state === "uncertain" && <p>{text("ambiguous")}</p>}
+      {value.state === "uncertain" && (
+        <p>{text(value.execution ? "workAmbiguous" : "ambiguous")}</p>
+      )}
       <div className="agent-run-actions">
         {(value.state === "failed" || value.state === "uncertain") && (
           <button

@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased — truthful saved-work progress
+
+- Distinguish accepted background work from completed changes in Studio. Show native execution interruptions separately from model failures, retain saved step progress and explicit continuation, and suppress late approval notices after a shop or conversation switch.
+
 ## Unreleased — connected material library and completed reorder
 
 - Add native AI-context/graph metadata to furniture pattern `1.0.1`, keeping material names, EUR-cent surcharge and exact package/record provenance consistent across authorized API/MCP/public lists. Preserve reviewed material writes and private order-read rights.

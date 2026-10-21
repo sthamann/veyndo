@@ -154,7 +154,13 @@ export default function StudioConversation({
                 {m.role === "assistant" && !m.data.error ? (
                   <MessageText text={m.content} />
                 ) : (
-                  <p>{m.data.error ? t("errorReply") : m.content}</p>
+                  <p>
+                    {m.data.error
+                      ? savedRun?.execution && savedRun.taskId === m.data.runId
+                        ? runText("workError")
+                        : t("errorReply")
+                      : m.content}
+                  </p>
                 )}
                 {m.data.error && (
                   <details>

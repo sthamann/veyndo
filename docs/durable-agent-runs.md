@@ -138,3 +138,12 @@ Earlier saved prompts and read-response shapes remain unchanged, so an existing
 failed task can reach this correction without replaying its completed model calls.
 The proposal evidence identifies the repair prompt, original provider/model/usage
 and validation error. This is bounded correction, not unrestricted autonomous execution.
+
+## Reading saved-work progress
+
+Approval can return queued work before any changes complete. Studio reports that
+the work was accepted and shows the persisted step progress; only a confirmed
+applied result reports completed changes. Native operation failures are shown as
+execution interruptions, separately from model failures. Explicit continuation
+uses the existing saved work and retains confirmed completed steps. A late
+approval response cannot update the conversation or notice in another shop.

@@ -1,6 +1,6 @@
 /** Durable chat commands reuse native conversations; late responses cannot cross an account/shop/stage boundary. */
 import { useEffect, useRef, useState } from "react";
-import type { Message, RequestFn } from "./studio-types";
+import type { Message, RequestFn, StudioNotice } from "./studio-types";
 export type SavedRun = {
   taskId: string;
   state: "queued" | "running" | "ready" | "failed" | "uncertain" | "cancelled";
@@ -175,6 +175,25 @@ export function useChatTurns(options: Options) {
       }
     });
   };
+  const apply = async (message: Message) => {
+    const o = latest.current;
+    const result = await o.request(
+      `/api/agent/tasks/${message.data.taskId}/apply`,
+      {
+        approve: true,
+      },
+    );
+    if (!same(o.scope, o.id)) return;
+    if (o.id) await load(o.id);
+    if (!same(o.scope, o.id)) return;
+    await o.refresh();
+    const notice: StudioNotice | undefined = result.applied
+      ? { key: "approvedAction" }
+      : result.queued
+        ? { key: "acceptedWork" }
+        : undefined;
+    return same(o.scope, o.id) ? { notice } : undefined;
+  };
   const controlRun = async (action: "resume" | "cancel") => {
     const o = latest.current;
     if (!savedRun) return;
@@ -197,6 +216,7 @@ export function useChatTurns(options: Options) {
     send,
     savedRun,
     controlRun,
+    apply,
     active,
     progressUnavailable,
   };

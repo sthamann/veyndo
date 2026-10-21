@@ -7,7 +7,7 @@ import { useConnectedText } from "../../shared/i18n/connected-i18n";
 import { useLocale } from "../../shared/i18n/i18n";
 import { useWorkbenchText } from "../../shared/i18n/workbench-i18n";
 import { type Environment } from "../environments/EnvironmentManager";
-import type { Message, Overview, Provider } from "./studio-types";
+import type { Message, Overview, Provider, StudioNotice } from "./studio-types";
 
 import { useDesignHandoff } from "./useDesignHandoff";
 import { useEntityNavigation } from "./useEntityNavigation";
@@ -76,10 +76,7 @@ export function useStudioController({
   const [pendingText, setPendingText] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
-  const [notice, setNotice] = useState<{
-    key: "indexed" | "approvedAction" | "copied" | "workspacePinned";
-    count?: number;
-  }>();
+  const [notice, setNotice] = useState<StudioNotice>();
   const [settings, setSettings] = useState(false);
   const [previewOpen, setPreviewOpen] = useState(false);
   const navigation = useEntityNavigation(
@@ -293,11 +290,10 @@ export function useStudioController({
     requestAnimationFrame(() => composer.current?.focus());
   };
   const apply = async (m: Message) => {
-    await request(`/api/agent/tasks/${m.data.taskId}/apply`, { approve: true });
-    if (id) await load(id);
-    await refresh();
+    const result = await chat.apply(m);
+    if (!result) return;
     await onChanged();
-    setNotice({ key: "approvedAction" });
+    setNotice(result.notice);
   };
   const onProduct = (productId: string) => setFocus(productId);
   const selected =

@@ -1,6 +1,24 @@
 /** Durable run states and explicit ambiguous-call continuation, in the shared interface language. */
 import { useLocale } from "./i18n";
 export const agentRunWords = {
+  workUncertain: [
+    "Operation interrupted · review before continuing",
+    "Aktion unterbrochen · vor Fortsetzung prüfen",
+    "Opération interrompue · vérifier avant de continuer",
+    "Operación interrumpida · revisar antes de continuar",
+  ],
+  workAmbiguous: [
+    "A step was interrupted before its completion was confirmed. Check its result before continuing; confirmed steps will not be repeated.",
+    "Ein Schritt wurde unterbrochen, bevor sein Abschluss bestätigt war. Prüfe das Ergebnis vor der Fortsetzung; bestätigte Schritte werden nicht wiederholt.",
+    "Une étape a été interrompue avant confirmation. Vérifiez son résultat avant de continuer ; les étapes confirmées ne seront pas répétées.",
+    "Un paso se interrumpió antes de confirmar su finalización. Revisa el resultado antes de continuar; los pasos confirmados no se repetirán.",
+  ],
+  workError: [
+    "An approved operation stopped. Confirmed steps are saved; see the task progress and error details below.",
+    "Eine freigegebene Aktion wurde angehalten. Bestätigte Schritte sind gespeichert; prüfe den Auftragsfortschritt und die Fehlerdetails unten.",
+    "Une opération approuvée s’est arrêtée. Les étapes confirmées sont conservées ; consultez la progression et les détails de l’erreur ci-dessous.",
+    "Una operación aprobada se detuvo. Los pasos confirmados están guardados; consulta el progreso y los detalles del error abajo.",
+  ],
   preparingDrafts: [
     "Preparing translation drafts · progress is saved",
     "Übersetzungsentwürfe entstehen · Fortschritt ist gespeichert",

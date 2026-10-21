@@ -144,3 +144,13 @@ export type Provider = {
   configured: boolean;
 };
 export type { RequestFn } from "../../shared/api/types";
+
+export type StudioNotice = {
+  key:
+    | "indexed"
+    | "approvedAction"
+    | "acceptedWork"
+    | "copied"
+    | "workspacePinned";
+  count?: number;
+};
