@@ -35,7 +35,7 @@ public acceptance are recorded separately.
 | **Bring your shop** | The [Migration Assistant](docs/agentic-migration.md) connects versioned source profiles, saved background inspection, readable variant review and native imports into private previews. Current implementation and open domains are documented separately. |
 | **Build the business** | Ask for a coherent app with its own data, settings and interface; test real records privately before adoption. Visual editing and coding agents share its versioned definition. [App Studio](docs/app-studio.md), [native object extensions](docs/app-core-extensions.md), [order and quote workflows](docs/app-native-lifecycles.md). |
 | **Shape the shop** | Design standard storefront pages on the actual preview; use original Storyfront for connected Experiences. [Visual design](docs/personal-workspace-and-shop-design.md). |
-| **Automate the work** | Rules, events, durable Flows and app actions reuse native business operations. [Automation](docs/automation.md). |
+| **Automate the work** | Rules, events, durable Flows and app actions reuse native business operations. [Automation](docs/automation.md), [repeating reviewed work](docs/personal-workspace-and-shop-design.md#repeat-completed-work-as-a-flow). |
 | **Stay in control** | Current roles, private sandboxes, immutable versions and selected publication govern changes. [Security](docs/security.md). |
 
 [![Veyndo Studio: a real agent request opens an editable native product filter](docs/assets/agent-workspace-20261020/public-grid.png)](docs/agentic-workspace.md)

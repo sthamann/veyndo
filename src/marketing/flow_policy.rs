@@ -3,10 +3,10 @@ use super::*;
 pub(crate) fn authorize_flow(h: &RequestContext, f: &flows::Flow) -> Result<()> {
     fn action(h: &RequestContext, name: &str) -> Result<()> {
         auth::permit(h, flow_actions::permission(name))?;
-        if name == "ai_proposal" {
+        if matches!(name, "ai_proposal" | "work_proposal") {
             agent::assistant_access(h)?;
         }
-        if matches!(name, "ai_proposal" | "knowledge.extract") {
+        if matches!(name, "ai_proposal" | "work_proposal" | "knowledge.extract") {
             auth::permit(h, "knowledge.read")?;
         }
         Ok(())
@@ -33,6 +33,9 @@ pub(crate) async fn validate_flow_config(
     let f: flows::Flow = serde_json::from_value(value.clone()).map_err(|_| bad("Invalid flow"))?;
     f.validate()?;
     authorize_flow(h, &f)?;
+    if let Some(template) = &f.work_template {
+        super::work_template_source::load(tx, t, h, template).await?;
+    }
     let settings = commerce::decode_config(
         sqlx::query_scalar("SELECT data FROM commerce_settings WHERE tenant=$1 FOR UPDATE")
             .bind(t)

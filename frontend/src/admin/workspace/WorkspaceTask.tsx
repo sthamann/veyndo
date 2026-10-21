@@ -5,6 +5,9 @@ import AgentRunCard from "../shell/AgentRunCard";
 import type { Preview, RequestFn } from "../shell/studio-types";
 import { useWorkspaceText } from "./workspace-i18n";
 import { useTaskExecution } from "../shell/useTaskExecution";
+import { prepareWorkFlow } from "../automation/goal-template";
+import { copyWorkTemplate } from "../automation/work-template";
+import { useWorkTemplateText } from "../automation/work-template-i18n";
 export type WorkspaceTaskValue = {
   id: string;
   preview: Preview;
@@ -15,10 +18,12 @@ export default function WorkspaceTask({
   task,
   request,
   onTranslations,
+  onFlow,
 }: {
   task: WorkspaceTaskValue;
   request: RequestFn;
   onTranslations: (jobId: string) => void;
+  onFlow?: () => void;
 }) {
   const t = useWorkspaceText(),
     [open, setOpen] = useState(false),
@@ -29,6 +34,7 @@ export default function WorkspaceTask({
       task.executionStarted,
     );
   const { busy, applied, error, accepted } = progress;
+  const templateText = useWorkTemplateText();
   return (
     <article className="personal-task">
       <strong>{task.preview.proposal?.summary}</strong>
@@ -36,6 +42,15 @@ export default function WorkspaceTask({
         <span>{t(applied ? "done" : accepted ? "working" : "review")}</span>
       )}
       <button onClick={() => setOpen(!open)}>{t("open")}</button>
+      {onFlow && applied && copyWorkTemplate(task.id, task.preview) && (
+        <button
+          onClick={() => {
+            if (prepareWorkFlow(task.id, task.preview)) onFlow();
+          }}
+        >
+          {templateText("reuse")}
+        </button>
+      )}
       {progress.run && (
         <AgentRunCard
           value={progress.run}

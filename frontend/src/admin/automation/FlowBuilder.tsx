@@ -10,17 +10,22 @@ import { useLegalText } from "../../shared/i18n/legal-i18n";
 import FlowCanvas from "./FlowCanvas";
 import { useAutomationText } from "../../shared/i18n/automation-i18n";
 import FlowInputs from "./FlowInputs";
+import WorkTemplateEditor from "./WorkTemplateEditor";
+import { useWorkTemplateText } from "./work-template-i18n";
 import RuleBuilder, { type AutomationCatalog } from "./RuleBuilder";
 export default function FlowBuilder({
   data,
   update,
   catalog,
+  request,
 }: {
   data: Record<string, any>;
   update: (key: string, value: any) => void;
   catalog: AutomationCatalog;
+  request?: import("../shell/studio-types").RequestFn;
 }) {
   const lifecycle = useLifecycleText();
+  const templateText = useWorkTemplateText();
   const { mainLocale } = useContentLanguage();
   const { a } = useAutomationText();
   const k = useKnowledgeText();
@@ -105,6 +110,8 @@ export default function FlowBuilder({
           value={data.action}
           onChange={(e) => {
             update("action", e.target.value);
+            if (e.target.value !== "work_proposal")
+              update("workTemplate", undefined);
             if (e.target.value === "pipeline" && !data.pipeline)
               update("pipeline", {
                 entry: "first",
@@ -123,8 +130,16 @@ export default function FlowBuilder({
           <option value="pipeline">{a("pipeline")}</option>
           <option value="note">{x("note")}</option>
           <option value="ai_proposal">{x("ai")}</option>
+          <option value="work_proposal">{templateText("title")}</option>
           <option value="app_action">{x("app")}</option>
         </select>
+        {data.action === "work_proposal" && (
+          <WorkTemplateEditor
+            request={request}
+            value={data.workTemplate}
+            onChange={(v) => update("workTemplate", v)}
+          />
+        )}
         {data.action === "pipeline" && (
           <FlowCanvas
             value={

@@ -83,7 +83,22 @@ Further limits: native IDs need an explicit UUID migration map; arbitrary source
 
 ## Native action contract
 
-The sixteen original Core action names are registered, plus `note`, `ai_proposal` and `app_action`. They dispatch actual domain operations rather than descriptive placeholders.
+The sixteen original Core action names are registered, plus `note`, `ai_proposal` and `app_action`. They dispatch actual domain operations rather than descriptive placeholders. A direct Flow can also use `work_proposal` to prepare a fresh review from completed native work; this action is not a graphical pipeline node.
+
+### Repeat completed work
+
+Choose **Reuse as a Flow** on a completed task in your personal workspace. The
+new Flow is initially inactive. Choose its event, map individual text/number fields
+to event values or stable generated references, and set its daily preparation
+limit. [Step-by-step usage](personal-workspace-and-shop-design.md#repeat-completed-work-as-a-flow).
+
+The Flow stores a source task reference, not a copy of private operation inputs.
+The original actor, permissions and private workspace are checked when saving and
+again when an event prepares the next task. Preparation makes no model call and
+never reuses the old approval. The new task follows the same personal review,
+native execution, revision checks and continuation path. Source tasks are not
+published or copied into another workspace. Per-Flow limits and the shared daily
+workspace cap are enforced transactionally across workers.
 
 | Original action family | Native behavior and specific boundary |
 |---|---|

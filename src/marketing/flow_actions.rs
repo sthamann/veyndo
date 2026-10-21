@@ -29,7 +29,7 @@ pub(crate) fn permission(action: &str) -> &'static str {
         match action {
             "action.generate.document" => "documents.create",
             "action.mail.send" | "app_action" => "apps.manage",
-            "ai_proposal" => "catalog.write",
+            "ai_proposal" | "work_proposal" => "catalog.write",
             "knowledge.extract" => "knowledge.write",
             "note" | "action.stop.flow" => "automation.manage",
             _ => "orders.write",

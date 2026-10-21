@@ -67,6 +67,8 @@ def verify_flow_work(call,base,h,actor,mode,sql,start,passed,started,release,cap
         passed('A native product event yields a visible actor-owned Flow proposal; personal approval executes its private native work once and live data stays unchanged')
         definition['active']=False
         call(base,'/api/automation/flows/native_work',{'revision':1,'data':definition},sh,method='PUT')
+        from testing.agent_work_template import verify_work_template
+        verify_work_template(call,base,h,sh,main,task,definition,trigger,wait_job,sql,actor,control,captured,passed,start)
         mode['operations'][0]['arguments_json']=mode['operations'][0]['arguments_json'].replace('flow_work_category','flow_pipeline_category')
         pipeline={**definition,'active':True,'action':'pipeline','pipeline':{'entry':'propose','nodes':[{'id':'propose','kind':'action','action':'ai_proposal','config':{'instruction':definition['instruction']},'next':None}]}}
         call(base,'/api/automation/flows/pipeline_work',{'revision':0,'data':pipeline},sh,method='PUT')

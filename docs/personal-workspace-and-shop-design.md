@@ -49,6 +49,44 @@ Choose the real trigger, conditions, current authorized actions and language;
 review it before saving/activating. This does not create a second autonomous
 scheduler or promise that a sentence automatically completes a whole campaign.
 
+## Repeat completed work as a Flow
+
+After a native configuration task finishes, choose **Reuse as a Flow** in
+**My workspace → Prepared tasks**. This opens an inactive draft in the existing
+Flow Builder:
+
+1. Choose the event and its conditions, for example **Product updated**.
+2. Inspect the protected original operations. For each input, keep its saved value
+   or explicitly map a product/order/document ID or product revision from the event.
+   Product/category creation IDs and matching references start with a shared new
+   identifier per event, so a new execution does not reuse the previous create ID.
+3. Set the daily proposal limit, review the draft and save it with a name/ID.
+   Activation is an explicit setting. Each matching event prepares a fresh task;
+   it does not approve or execute it.
+4. Open that proposal in Flow history or the personal workspace, inspect the actual
+   resolved operations and approve it through the existing personal action.
+5. Follow the original task progress. Repeated approval does not duplicate a write;
+   changed targets still encounter the native revision/create conflict checks.
+
+The Flow stores only `taskId`, field mappings and a daily limit. Source descriptions,
+operation inputs, credentials and execution bindings are not copied into general
+Flow configuration, history or release snapshots. Its editor loads the source through
+actor-private run status; native save and execution require the same workspace,
+original actor and the source task's original permissions. Another actor or reduced
+rights cannot turn this reference into access to the private task. Workspace changes
+hide previous inputs immediately and discard late responses.
+
+This is a direct Flow action for **private configuration work**. Its source task is
+operational evidence and is not a publication unit: moving the Flow to the live shop
+or a different workspace fails admission. Use normal selected publication for the
+resulting product/page configuration. Arbitrary background execution in live shops
+and embedding this template action inside graphical pipeline nodes are not included.
+Preparation itself makes no model call; an explicitly approved translation operation
+can still invoke the normal configured translation provider. Daily limits are 1–100
+per Flow and 100 template proposals per workspace, counted in UTC under the shared
+live-shop lock. Missing event fields, unavailable sources and emergency stop produce
+explicit failed preparations without a new executable task.
+
 ## Design the standard shop
 
 1. Open a Storefront sales channel and choose **Shop design**, or open it from the

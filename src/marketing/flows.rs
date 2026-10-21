@@ -80,6 +80,8 @@ pub(crate) struct Flow {
     pub actor: Option<String>,
     #[serde(default)]
     pub app_action: Option<AppFlowAction>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub work_template: Option<super::work_template::WorkTemplate>,
 }
 #[derive(Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -92,6 +94,14 @@ pub(crate) struct AppFlowAction {
 impl Flow {
     pub(crate) fn validate(&self) -> Result<()> {
         self.condition.validate(0)?;
+        if self.action == "work_proposal" {
+            self.work_template
+                .as_ref()
+                .ok_or(bad("Work template required"))?
+                .validate()?;
+        } else if self.work_template.is_some() {
+            return Err(bad("Work template requires its review action"));
+        }
         if self.action == "pipeline" {
             self.pipeline
                 .as_ref()
@@ -109,7 +119,14 @@ impl Flow {
             return Err(bad("Invalid flow app action"));
         }
         if !EVENTS.contains(&self.event.as_str()) && !valid_app_event(&self.event)
-            || !["note", "ai_proposal", "app_action", "pipeline"].contains(&self.action.as_str())
+            || ![
+                "note",
+                "ai_proposal",
+                "work_proposal",
+                "app_action",
+                "pipeline",
+            ]
+            .contains(&self.action.as_str())
             || !commerce::valid_locale_key(&self.locale)
         {
             return Err(bad("Unsupported flow action, event or locale"));
@@ -238,6 +255,13 @@ pub(crate) async fn flow_once(a: &App) -> Result<bool> {
             Ok(json!({"completed":true}))
         } else {
             super::pipeline_runtime::run(a, &t, &id, &f, &definition, cursor).await
+        }
+    } else if f.action == "work_proposal" {
+        match f.work_template.as_ref() {
+            Some(template) => {
+                super::work_template::prepare(a, &t, &f, &id, template, &definition).await
+            }
+            None => Err(bad("Work template required")),
         }
     } else if f.action == "app_action" {
         execute_app_flow(a, &t, &f, &id, &instruction, &definition).await

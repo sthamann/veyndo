@@ -26,12 +26,23 @@ Public Core/Studio `09b1aa35` now completes the original configured-model propos
 through the personal workspace: exactly one hidden native category, revision one,
 retained completion after reload and no category in the parent live shop.
 [Public browser evidence](evidence/flow-native-work-2026-10-21.md).
-The direct Flow-history review now shares the native progress/continuation card and
-current control checks with the personal workspace; its public delivery is tracked
-separately from the already observed workspace acceptance.
-Turning an accepted task into
-a configurable Flow with mapped inputs and event parameters remains the next part
-of item 4; the existing title-only shortcut is not that complete workflow.
+Public Core/Studio `4c0392ae` also restores that original completed task directly in
+Flow history after reload, retaining the private workspace without asking for
+another approval. Direct history and the personal workspace now share the native
+progress/continuation card and current control checks. The linked evidence includes
+the public direct-history screenshot and 761 frontend, 27 durable-agent and 43
+tenant-isolation checks.
+Public Core/Studio `650529c7` adds **Reuse as a Flow** for completed native work:
+reference-only source tasks, explicit event-field mappings, inactive drafts,
+per-Flow/workspace daily limits and the original personal review/execution path.
+See [the usage and permission boundary](personal-workspace-and-shop-design.md#repeat-completed-work-as-a-flow).
+Its public browser acceptance now covers the completed-task handoff, an inactive
+draft, explicit activation, one real product event, a new personal approval, one
+hidden category at revision one, retained completion after reload and absence from
+the parent live shop. The test Flow is inactive again. The evidence page includes
+separate screenshots for this extension; generated per-run references are observed
+publicly, while other event-field mappings and competing daily-limit workers are
+covered by local native tests.
 
 ## Collection preparation: current development
 
