@@ -22,3 +22,17 @@ when enabled. Private material writes require catalogue authority; purchased
 configuration reads require current `orders.read`. Native company membership,
 independent approval, allocation/budget and stock checks remain authoritative.
 The app has no payment provider, mailer or privileged database connection.
+
+Version `1.0.1` also exposes the current material library through the existing
+AI context and native namespaced graph. API, public catalogue reads and declared
+MCP reads derive the same fields, package version and record revision; the graph
+is a view over the native records. Material amounts are EUR-cent surcharges, not
+complete retail prices. Private purchased configurations retain `orders.read`.
+The immutable original package is retained at `versions/1.0.0.json`; upgrading
+preserves its records and still needs ordinary review and consent.
+
+The app-owned acceptance test is `tests/workflow.py`, registered through
+`scripts/business_capability.py`. It completes both an original purchase and a
+reorder after material/rule changes, requires independent approval again, checks
+idempotent stock/order writes and preserves the original order. No payments are
+settled with an external provider in this test.

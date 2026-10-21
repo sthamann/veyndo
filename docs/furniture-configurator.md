@@ -104,6 +104,14 @@ recalculated under the new version. Its previous completed order remains unchang
 
 ## Shared contracts and rights
 
+Pattern version `1.0.1` adds the material library to the app's native AI context
+and namespaced graph. The same authorized API/MCP list supplies current material
+names and EUR-cent surcharges, with tenant, package version and record revision.
+It creates no second knowledge store and does not turn a surcharge into a complete
+product price or a confirmed product claim. The original `1.0.0` package is
+retained inside the app's `versions/` directory. Its upgrade is explicit and keeps
+the existing material records; installed shops are never silently upgraded.
+
 - Structured `configuration.inputs` declares up to eight required integer,
   boolean or printable string fields and their existing field validation. An
   optional public library record supplies the fee. The guest accepts only declared
@@ -135,6 +143,16 @@ private input-only lists, UCP quote consistency, changed-material checkout denia
 current-price reorder, failed frozen examples, selected package release and old
 order immutability. Existing app/component/B2B, currency, POS, manual-order and
 checkout regressions remain required.
+
+The workflow source lives with the app at
+`extensions/apps/furniture-configurator/tests/workflow.py`; the registered host
+script only invokes it. The extended local acceptance additionally checks an
+original-package upgrade without losing material records, exact API/MCP/public
+graph projections, and a completed second purchase after rule/material changes.
+An old approval cannot authorize that reorder. A separate approver must approve
+the new cart; replay creates neither a second order nor another stock deduction.
+The first order keeps its original price, presentation and package snapshot.
+These additional checks are local until new hosted evidence is recorded.
 
 The full concept additionally requires general core-object extensions, native
 order/offer lifecycle extensions, historical whole-business replay, source build

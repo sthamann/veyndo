@@ -1,6 +1,6 @@
 {
   "id": "furniture_configurator",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "coreApi": "1",
   "runtime": "declarative",
   "name": {
@@ -116,7 +116,8 @@
         "additionalProperties": false
       },
       "public": true,
-      "readOnly": true
+      "readOnly": true,
+      "mcp": true
     },
     {
       "name": "save_materials",
@@ -474,5 +475,37 @@
       }
     ],
     "examples": []
+  },
+  "intelligence": {
+    "description": {
+      "en": "Read the current material library and original purchased configurations. Material surcharges are EUR cents, not complete product prices. Native commerce calculates the final cart price; saved lists use current rules and company approval.",
+      "de": "Lies die aktuelle Materialbibliothek und ursprüngliche gekaufte Konfigurationen. Materialzuschläge sind EUR-Cent, keine vollständigen Produktpreise. Der Commerce-Kern berechnet den Warenkorbpreis; gespeicherte Listen verwenden aktuelle Regeln und Firmenfreigaben.",
+      "fr": "Consultez les matériaux actuels et les configurations achetées d’origine. Les suppléments sont en centimes EUR, pas des prix de produit complets. Le noyau calcule le panier ; les listes suivent les règles actuelles et les approbations entreprise.",
+      "es": "Consulta los materiales actuales y las configuraciones originales compradas. Los recargos son céntimos EUR, no precios completos. El núcleo calcula el carrito; las listas usan las reglas actuales y la aprobación de empresa."
+    },
+    "tools": [
+      "list_materials",
+      "save_materials",
+      "orders"
+    ],
+    "entities": [
+      "materials"
+    ],
+    "ontology": [
+      {
+        "entity": "materials",
+        "nodeType": "material",
+        "label": {
+          "en": "Material library",
+          "de": "Materialbibliothek",
+          "fr": "Bibliothèque de matériaux",
+          "es": "Biblioteca de materiales"
+        },
+        "fields": [
+          "name",
+          "fee_minor"
+        ]
+      }
+    ]
   }
 }

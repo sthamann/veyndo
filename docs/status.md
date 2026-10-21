@@ -43,9 +43,13 @@ malicious correction rejection, worker restart and explicit continuation with no
 unapproved writes; Rust workspace tests and clippy pass. This correction (`40b4a97a`)
 is publicly deployed. Continuing the same task reached six saved model steps, but
 the proposed landing page still failed native block validation before approval.
-The next repair supplies explicit block identifiers, localized content shapes and
-field-specific errors instead of a combined rejection. Public acceptance still
-requires the saved task to reach review, actual preview and selected release.
+Core `1824e159` is publicly deployed with explicit block identifiers, localized
+content shapes and field-specific errors. The original task reached a five-step
+review after seven model steps. Private approval saved the category, then stopped
+on `Invalid product metadata`: the proposed category-only product change did not
+match the full editor payload. Its receipt is retained. A native assignment-only
+contract and product-shape admission are being verified; this latest correction
+is not yet publicly accepted. Actual private preview and selected release remain open.
 [Continuation contract](durable-agent-runs.md).
 
 ## 20 October: design onboarding and readable product comparison

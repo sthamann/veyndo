@@ -123,3 +123,19 @@ continues to identify carts, associations and API routes.
 See [the settings/media guide](settings-media.md) for the current single-language editor, field-level checkout overrides, dependency-safe method removal, gallery and optional private image jobs. These are native prototype extensions; they do not establish additional full Shopware API/DAL parity, current tax law, paid-provider quality or whole-system formal certification.
 
 For Markdown editing, guided variants, integration keys and channel onboarding, see [the Studio integration guide](studio-api-and-channels.md).
+
+## Category-only product edits
+
+The native product save endpoint and `merchant.product.save` accept an explicit
+assignment-only payload: `{"revision":2,"categoryIds":["collection_id"]}`.
+Read `merchant.product.content` first and retain its original revision. The list
+replaces category assignments; include existing IDs when adding a category. An
+optional original `contentRevision` retains content-only concurrency semantics.
+
+This shape cannot contain full-editor fields. The shared native editor expands
+it from the current authorized product, preserves translations, metadata, identity
+and channel selection, omits commerce/stock writes, and still checks the submitted
+clock under the normal product lock. Unknown or foreign categories fail the native
+assignment check transactionally. Full product editing and creation retain their
+existing metadata contract. Agent plans validate the product shape before review
+and receive the same native guidance; approval does not waive current rights or CAS.
