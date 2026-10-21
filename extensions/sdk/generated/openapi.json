@@ -14173,6 +14173,76 @@
                         }
                       }
                     }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "jsonrpc",
+                      "id",
+                      "method",
+                      "params"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "jsonrpc": {
+                        "const": "2.0"
+                      },
+                      "id": {
+                        "type": [
+                          "string",
+                          "integer"
+                        ]
+                      },
+                      "method": {
+                        "const": "tools/call"
+                      },
+                      "params": {
+                        "type": "object",
+                        "required": [
+                          "name",
+                          "arguments"
+                        ],
+                        "additionalProperties": false,
+                        "properties": {
+                          "name": {
+                            "const": "automation.compare_history"
+                          },
+                          "arguments": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "condition": {
+                                "type": "object"
+                              },
+                              "flowId": {
+                                "maxLength": 32,
+                                "type": "string"
+                              },
+                              "limit": {
+                                "maximum": 50,
+                                "minimum": 1,
+                                "type": "integer"
+                              },
+                              "revision": {
+                                "minimum": 1,
+                                "type": "integer"
+                              },
+                              "ruleId": {
+                                "maxLength": 32,
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "ruleId",
+                              "revision",
+                              "flowId",
+                              "condition",
+                              "limit"
+                            ],
+                            "type": "object"
+                          }
+                        }
+                      }
+                    }
                   }
                 ]
               }

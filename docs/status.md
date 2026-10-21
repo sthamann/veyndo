@@ -4,6 +4,13 @@ This is the single starting point for what works, what is implemented but not
 publicly accepted, and what still needs development. Updated 21 October 2026.
 A green test, merged code and a completed public business journey are different evidence.
 
+Current development: the native Regeleditor, HTTP and MCP can compare a saved rule
+with an unsaved draft on existing frozen order-placement Flow inputs. Actual
+HTTP/PostgreSQL, permission/isolation and local browser checks pass. Public
+acceptance is pending. This is a condition comparison with explicit unavailable
+cases; complete historical checkout repricing remains open.
+[Usage and observed scope](rule-history-comparison.md).
+
 Latest public acceptance: Core/Studio `650529c7` (`aromatic-voyage-2152`), deployed
 21 October at 20:22 CEST, completes **Reuse as a Flow** through the public Studio.
 A completed native task opened as an inactive Flow draft, with an explicit daily

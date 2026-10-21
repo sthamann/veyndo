@@ -1,5 +1,6 @@
 /** Typed merchant rule/campaign/flow/channel forms with exact JSON available for advanced review. */
 import { useGoalTemplate } from "./goal-template";
+import { useAutomationAccess } from "./useAutomationAccess";
 import AutomationDefinitions from "./AutomationDefinitions";
 import { useAutomationLanguages } from "./useAutomationLanguages";
 import AutomationDelete from "./AutomationDelete";
@@ -89,12 +90,7 @@ export default function AutomationView({
   );
   const [busy, setBusy] = useState(false);
   const [advanced, setAdvanced] = useState("");
-  const [manage, setManage] = useState(false);
-  useEffect(() => {
-    request("/api/auth/access")
-      .then((v) => setManage(v.permissions.includes("automation.manage")))
-      .catch(() => setManage(false));
-  }, [request]);
+  const { manage, canCompare } = useAutomationAccess(request);
   const choose = (r: Config, k: Kind = kind) => {
     setKind(k);
     setId(r.id);
@@ -260,6 +256,7 @@ export default function AutomationView({
           />
           <section className="studio-card">
             <AutomationEditor
+              canCompare={canCompare}
               run={run}
               request={request}
               kind={kind}

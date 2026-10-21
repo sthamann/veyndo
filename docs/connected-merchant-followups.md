@@ -16,6 +16,17 @@ It is a delivery plan, not a claim that every item below is already available on
 | 6 | Complete inward shop migration and an external integration | Saved source mapping, private destination data/layout, selected cutover and purchase, plus observed external destination result. Local provider fixtures remain separate evidence. |
 | 7 | Keep contracts, money and delivery consistent under load | Exact authoritative amounts and PHP differential cases, generated API contracts, measured bounded/fair workers, required CI and public deployment. |
 
+## Comparing recorded orders: current development
+
+The native rule editor, API and MCP now share a bounded read-only condition
+comparison on existing frozen `order.placed` Flow inputs. It compares a
+revision-bound saved condition with the unsaved draft, preserving frozen references
+and reporting missing facts as unavailable. Actual checkout/Flow PostgreSQL tests
+cover both transports, current/withdrawn rights, foreign shops and unchanged orders,
+receipts and jobs. This is a selected Flow sample, not complete checkout repricing
+or a revenue forecast. [Usage, limits and acceptance](rule-history-comparison.md).
+Public browser acceptance remains pending for this addition.
+
 ## Reusing work: current development
 
 Direct and graphical Flow AI proposals now join the existing ready-task and

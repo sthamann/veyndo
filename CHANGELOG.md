@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased — compare rules on frozen order inputs
+
+- Compare a revision-bound saved rule with an unsaved visual draft on up to 50 recorded `order.placed` Flow cases. Reuse the native interpreter and frozen references; never create orders, execute actions, call providers or substitute current data.
+- Share one Rust handler across Studio, HTTP, MCP and authorized read agents, with generated input contracts, current compound data/PII rights, tenant isolation, bounded snapshots/references and explicit unavailable cases.
+- Show reviewed comparison counts and saved/draft outcomes in EN/DE/FR/ES. Clear stale results when the draft, rule, revision or shop changes. Keep full historical checkout repricing and revenue claims outside this condition-only comparison.
+
 ## Public reusable-work Flow acceptance — 2026-10-21
 
 - Add an inactive Flow draft from completed native work, with explicit event-field mappings and per-Flow/workspace daily review limits. Preparation reuses actual reviewed operations without another model call; personal approval and the existing durable worker still own every write.

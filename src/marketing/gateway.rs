@@ -4,6 +4,7 @@ use super::*;
 pub(crate) fn capability_visible(h: &RequestContext, name: &str) -> bool {
     let any = |scopes: &[&str]| scopes.iter().any(|scope| auth::allowed(h, scope));
     match name {
+        "automation.compare_history" => rule_history::visible(h),
         "automation.catalog" | "automation.preview" => auth::allowed(h, "automation.read"),
         "automation.import" => auth::allowed(h, "automation.manage"),
         "automation.list" | "automation.dependencies" => any(&["automation.read", "channels.read"]),
@@ -14,6 +15,9 @@ pub(crate) fn capability_visible(h: &RequestContext, name: &str) -> bool {
 pub(crate) async fn invoke(a: &App, h: &RequestContext, name: &str, v: &Value) -> Result<Value> {
     merchant(a, h)?;
     let Json(value) = match name {
+        "automation.compare_history" => {
+            rule_history::compare(State(a.clone()), h.clone(), Json(v.clone())).await?
+        }
         "automation.catalog" => catalog::catalog(State(a.clone()), h.clone()).await?,
         "automation.list" => routes::list(State(a.clone()), h.clone()).await?,
         "automation.save" => {

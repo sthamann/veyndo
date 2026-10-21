@@ -39,6 +39,7 @@ pub(crate) static OPERATIONS: LazyLock<Vec<Operation>> = LazyLock::new(|| {
                     | "merchant.company"
                     | "automation.list"
                     | "automation.catalog"
+                    | "automation.compare_history"
                     | "knowledge.claims"
                     | "knowledge.experiments"
                     | "knowledge.experiment.report"

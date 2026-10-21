@@ -2282,8 +2282,8 @@
     },
     "src/capabilities/catalog.rs": {
       "status": "unproved",
-      "sha256": "2ead835abcc5b086a06a0f0574a11e0dcac8ead100b7f45712b20af2afeae5ea",
-      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
+      "sha256": "faf0cd14728e13953f1bc47ad2784684a2b53cc9a831e8c24dcfa3a0162ef3c5",
+      "review": "Reviewed frozen rule comparison: tenant-filtered bounded existing Flow inputs, current compound PII read grants, native checked_matches without current-data reads or action dispatch, reference fanout cap, shared registry and HTTP/MCP parity; real automation and isolation suites pass."
     },
     "src/capabilities/contract.rs": {
       "status": "unproved",
@@ -2302,13 +2302,13 @@
     },
     "src/capabilities/registry.rs": {
       "status": "unproved",
-      "sha256": "29e18e8359bd7677c9805b97b1b1ebe723832136ba9cb2d630591ec81333f6a9",
-      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
+      "sha256": "023ba3b9f70d724fdda5dcf9d27e3218afcb2f04f10036aa98bd9dd4b1defa74",
+      "review": "Reviewed frozen rule comparison: tenant-filtered bounded existing Flow inputs, current compound PII read grants, native checked_matches without current-data reads or action dispatch, reference fanout cap, shared registry and HTTP/MCP parity; real automation and isolation suites pass."
     },
     "src/capabilities/schema.rs": {
       "status": "unproved",
-      "sha256": "0dac9a85031f0eadbad72d68166ef436bfe44ba6ec6c0e0770c0e142693c26dc",
-      "review": "Reviewed scoped translation selection, original task authority, atomic child linking and completion, cancellation/explicit ambiguous continuation, lease fences, central provider admission outside transactions and bounded prompt evidence; real PostgreSQL/HTTP collection and interruption regressions plus 724 UI tests; skipped products store SQL NULL evidence rather than JSON null. Claude supplied code-only review, findings checked and fixed."
+      "sha256": "9773243034a8382e2841769ebdfa7efefcb4b5608638360d8640284ccf65f5b0",
+      "review": "Reviewed frozen rule comparison: tenant-filtered bounded existing Flow inputs, current compound PII read grants, native checked_matches without current-data reads or action dispatch, reference fanout cap, shared registry and HTTP/MCP parity; real automation and isolation suites pass."
     },
     "src/capabilities.rs": {
       "status": "unproved",
@@ -3197,8 +3197,8 @@
     },
     "src/marketing/gateway.rs": {
       "status": "unproved",
-      "sha256": "46612ff613bdb423375fa2d74dee7a2b4b0b48365b1ea347f29ba23a29fe0ae5",
-      "review": "Review knowledge-source staging read/write admission against native knowledge scopes; automation import HTTP and MCP discovery now use the native per-operation scopes. Real denied-source, successful knowledge-only release, immutable history and write-only transport regressions pass. No pure decision or theorem is changed."
+      "sha256": "5943b3b4aa42ec1969fb2aaf32444142f3c7835a260f61f32fe6e28d300607a5",
+      "review": "Reviewed frozen rule comparison: tenant-filtered bounded existing Flow inputs, current compound PII read grants, native checked_matches without current-data reads or action dispatch, reference fanout cap, shared registry and HTTP/MCP parity; real automation and isolation suites pass."
     },
     "src/marketing/jobs.rs": {
       "status": "unproved",
@@ -3222,8 +3222,8 @@
     },
     "src/marketing/mod.rs": {
       "status": "unproved",
-      "sha256": "4f513ae626ccf4d75febdddae281693e55ebe148da3bf759844de10764cfd362",
-      "review": "Reviewed task-reference-only Flow templates, same actor and original scope checks at native save and runtime, scalar event mapping, no copied credentials or source inputs, shared stop/lease and transactional daily limits; actual private event-to-approval write, denial and zero-inference regressions plus UI scope cleanup pass. Async SQL remains outside formal proof."
+      "sha256": "cdfc955bea13bfeffb07044a9e627516d5e00462cbd0af46b42a8e4d969b96b0",
+      "review": "Reviewed frozen rule comparison: tenant-filtered bounded existing Flow inputs, current compound PII read grants, native checked_matches without current-data reads or action dispatch, reference fanout cap, shared registry and HTTP/MCP parity; real automation and isolation suites pass."
     },
     "src/marketing/pipeline.rs": {
       "status": "reviewed-binding",
@@ -3252,13 +3252,18 @@
     },
     "src/marketing/routes.rs": {
       "status": "unproved",
-      "sha256": "ef545a68e4bb1be54a1f4fc5f6692d53d3a2b2b62cab598a50c65765b448b5f2",
-      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
+      "sha256": "664df3eadfdbc866eda09b7bbb59820fc7ada85aae6e9dd9d3c60b7d2bb93d9e",
+      "review": "Reviewed frozen rule comparison: tenant-filtered bounded existing Flow inputs, current compound PII read grants, native checked_matches without current-data reads or action dispatch, reference fanout cap, shared registry and HTTP/MCP parity; real automation and isolation suites pass."
     },
     "src/marketing/rule_fields.rs": {
       "status": "unproved",
       "sha256": "cbde49185e1cc471f60665b168d4cde0f57c675c7405a82c626f21b867c1b753",
       "review": "Identity-only Veyndo namespace and canonical-domain rename; reviewed migration checksum compatibility for six historical SQL versions, unchanged checkout predicates, 42 library and 169 binary tests pass; native component legacy boundary remains configured and guarded."
+    },
+    "src/marketing/rule_history.rs": {
+      "status": "unproved",
+      "sha256": "cc3367df7a81038414c5aa577c7d7c1886e4a6faae633742ca5cf4beac8e0036",
+      "review": "Reviewed frozen rule comparison: tenant-filtered bounded existing Flow inputs, current compound PII read grants, native checked_matches without current-data reads or action dispatch, reference fanout cap, shared registry and HTTP/MCP parity; real automation and isolation suites pass."
     },
     "src/marketing/rule_match.rs": {
       "status": "reviewed-binding",
