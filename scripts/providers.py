@@ -11,6 +11,11 @@ root.joinpath('.run').mkdir(exist_ok=True)
 captured = []; checks = []; behavior = {'mode': 'normal'}; inference_started=threading.Event()
 advisor_started=threading.Event();advisor_release=threading.Event()
 proposal = {'summary':'HTTP provider contract test; not live inference.', 'changes':[{'product_id':'lamp','price':71.23}], 'operations':None, 'view':None, 'experience':None, 'expected_experience_revision':None}
+def unsupported_unique(schema):
+    if not isinstance(schema,dict): return False
+    children=list(schema.get('properties',{}).values())+[schema.get('items',{})]
+    children+=schema.get('anyOf',[])+schema.get('oneOf',[])
+    return 'uniqueItems' in schema or any(unsupported_unique(child) for child in children)
 class Handler(BaseHTTPRequestHandler):
     def log_message(self,*args): pass
     def do_POST(self):
@@ -31,6 +36,9 @@ class Handler(BaseHTTPRequestHandler):
                 result={**proposal,'changes':[],'tool_calls':[{'name':'merchant.commerce.read' if behavior['mode']=='policy-read' else 'merchant.orders' if behavior['mode']=='read-tools' else 'merchant.apply','arguments_json':'{"area":"aiPolicy"}' if behavior['mode']=='policy-read' else '{}'}]}
             behavior['round']+=1
         schema=(body.get('text',{}).get('format',{}).get('schema') or body.get('response_format',{}).get('json_schema',{}).get('schema') or body.get('output_config',{}).get('format',{}).get('schema') or body.get('format',{}))
+        if self.path in ['/v1/responses','/v1/chat/completions'] and not body.get('tools') and unsupported_unique(schema):
+            self.send_response(400);self.send_header('Content-Type','application/json');self.end_headers()
+            self.wfile.write(json.dumps({'error':{'code':'invalid_json_schema','message':'uniqueItems is not permitted'}}).encode());return
         if body.get('tools'):
             result={'tool_calls':result.get('tool_calls',{}) if behavior['mode']=='invalid-read' else result.get('tool_calls',[])}
         elif behavior['mode']=='advisor':
@@ -84,6 +92,9 @@ try:
     assert 'app.planner_ontology.care_advice' in body['input'] and 'app.planner_ontology.applies_to' in body['input'] and 'Exact native care' in body['input'], body['input']
     passed('Native app ontology fields and reference edges reach the actual merchant model request under the existing grants and bounded context')
     assert body['text']['format']['strict'] and body['model']=='contract-openai-model'; passed('OpenAI Responses adapter sends native strict schema and parses structured result')
+    selection=body['text']['format']['schema']['properties']['translation_products']['anyOf'][0]
+    assert 'uniqueItems' not in selection and selection['maxItems']==1000
+    passed('Real planner final request accepts nullable product selection on a provider that rejects unsupported uniqueItems')
     task=message['data']['taskId']; result=call('/api/agent/tasks/'+task+'/apply',{'approve':True}); assert result['applied']
     restored=call('/api/agent/conversations/'+cid); assert restored['messages'][-1]['applied']; passed('Cloud-derived preview uses real approval transaction and persists applied state')
     conversation=call('/api/agent/chat',{'conversationId':cid,'message':'Tell me the previous task.','inference':{'provider':'anthropic','model':'contract-claude-model'}})

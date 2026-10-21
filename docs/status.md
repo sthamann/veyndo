@@ -10,7 +10,7 @@ missing records, changed prices/text and image associations. Private page intent
 and bounded reports survive technical job archival and service restart; a changed
 result does not authorize repair or cutover. Local synthetic acceptance is separate
 from the still-pending public migration-service acceptance. Migration 106 was deployed with Core/Studio `b13aedb`; the current Core/Studio
-release is `b0811f8` (20 October, see the workspace section). The separate service image is published,
+release includes `e18fa1b` / merge `4e2f6af` (21 October, see the collection section). The separate service image is published,
 but its hosted gateway/callback configuration and public migration journey remain
 open. Native completion evidence is now
 atomically sealed under current job/creator/package/lease/CAS checks; raw edited
@@ -24,13 +24,19 @@ product intake/replay and tamper rejection are locally tested. This remains
 a historical local checkpoint, now merged in PR #168; it did not establish a
 complete shop migration/cutover. [Scope and evidence](agentic-migration.md).
 
-## 21 October: collection workflow in development
+## 21 October: collection workflow deployed; public acceptance open
 
 The next [connected merchant follow-ups](connected-merchant-followups.md) are being
 implemented in sequence. Scoped translation jobs and a connected private
 category/translation/page task have passed initial local HTTP/PostgreSQL restart
-and selective-release cases. The new extension is not yet publicly deployed;
-the accepted public workspace remains the 20 October release below.
+and selective-release cases. PR #177 is merged; migration 107 completed successfully
+after a fresh snapshot, and the Core deployment is running. The configured-model
+Studio test in a private shop completed four read steps, then stopped on HTTP 400
+at the final structured proposal request. No proposal was approved or published.
+The provider adapter is being repaired: the new selection schema sent unsupported
+`uniqueItems` to the strict provider. Local wire-contract tests now reject that
+keyword; the host retains duplicate-selection validation. Public acceptance still
+requires continuation of the saved task, draft review, preview and selected release.
 
 ## 20 October: design onboarding and readable product comparison
 
