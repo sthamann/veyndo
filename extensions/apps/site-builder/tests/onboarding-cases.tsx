@@ -93,7 +93,9 @@ it("guides a new shop through private handoff and the required package consent, 
   fireEvent.click(
     await screen.findByRole("button", { name: "Review required apps" }),
   );
-  fireEvent.click(await screen.findByRole("button", { name: "Install" }));
+  const install = await screen.findByRole("button", { name: "Install" });
+  await waitFor(() => expect(install).toBeEnabled());
+  fireEvent.click(install);
   await waitFor(() =>
     expect(
       privateRequest.mock.calls.filter(([path]) => path === "/api/apps"),

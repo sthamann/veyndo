@@ -1,5 +1,28 @@
 # Changelog
 
+## Unreleased — shared progress in direct Flow review
+
+- Connect the direct Flow-history proposal to the existing native task progress, explicit resume/cancel and translation editor. A completed proposal job no longer hides pending approved work; reload observes the original execution without a second approval.
+- Reuse one shared task hook across Flow history and the personal workspace. Preserve current controls, task identity, tenant scope, revision fences and immediate legacy proposals; changing environments remounts the Flow editor.
+- Cover the actual rendered Flow history, permission withdrawal, explicit continuation and legacy approval; actual PostgreSQL checks confirm queued/completed history and parent-shop isolation.
+
+## Public Flow-to-workspace acceptance — 2026-10-21
+
+- Deliver `09b1aa35` / `giving-insect-7440` and complete the original configured-provider Flow proposal through the selected private workspace. Observe one native category at revision one, restored completion after browser reload and no category in the parent live shop. Retain screenshots and exact scope in the public evidence page.
+- Separate execution state from permission labels: accepted/completed proposals no longer show a misleading read-only warning, and accepted work cannot offer a second approval button. Real read-only proposals remain blocked.
+- Make the site-builder onboarding test await the actual package-review response before clicking its enabled installation button; retain the complete consent assertion.
+
+## Unreleased — retain approved workspace tasks after reload
+
+- Load and approve personal-workspace tasks in the currently selected sandbox. Personal layouts continue to use the parent shop; switching environments discards late proposal responses.
+- Keep queued, running and interrupted approved work in the original actor's task list. A read-only execution marker reconnects the shared progress card after reload, without another approval or a second worker.
+- Preserve tenant, actor and current-scope filtering. Actual PostgreSQL tests cover queued/completed, cancelled and interrupted work after a killed worker, plus another actor's empty task list.
+
+## Unreleased — actual execution progress in the personal workspace
+
+- Keep approved native work pending until the existing worker confirms completion. The workspace reuses the assistant's progress card for saved steps, interruptions, explicit continuation/cancellation and translation review.
+- Stop polling at terminal states, show status failures with an explicit refresh, prevent repeated approval and discard late responses after changing task, shop or private request context. Immediate legacy approvals keep their existing behavior.
+
 ## Unreleased — review and execute work prepared by Flows
 
 - Save direct and graphical Flow AI proposals as actor-owned ready tasks, so the existing work area can open, review and approve their native steps. Personal approval supplies the execution credential; preparation never queues writes automatically.

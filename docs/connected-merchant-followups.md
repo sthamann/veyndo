@@ -22,7 +22,14 @@ Direct and graphical Flow AI proposals now join the existing ready-task and
 personal-approval path. Actual local product-event tests cover one private native
 write, replay protection, unchanged live data, emergency stop, rights withdrawn
 during inference and late results after worker lease expiry. [Behavior and acceptance scope](durable-agent-runs.md#review-work-prepared-by-a-flow).
-Public delivery of this repair is not yet accepted. Turning an accepted task into
+Public Core/Studio `09b1aa35` now completes the original configured-model proposal
+through the personal workspace: exactly one hidden native category, revision one,
+retained completion after reload and no category in the parent live shop.
+[Public browser evidence](evidence/flow-native-work-2026-10-21.md).
+The direct Flow-history review now shares the native progress/continuation card and
+current control checks with the personal workspace; its public delivery is tracked
+separately from the already observed workspace acceptance.
+Turning an accepted task into
 a configurable Flow with mapped inputs and event parameters remains the next part
 of item 4; the existing title-only shortcut is not that complete workflow.
 

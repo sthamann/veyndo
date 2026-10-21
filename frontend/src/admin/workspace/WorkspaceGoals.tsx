@@ -149,7 +149,18 @@ export default function WorkspaceGoals({
             {t("tasks")} · {tasks.length}
           </summary>
           {tasks.map((task) => (
-            <WorkspaceTask key={task.id} task={task} request={request} />
+            <WorkspaceTask
+              key={task.id}
+              task={task}
+              request={request}
+              onTranslations={(jobId) => {
+                const target = new URL(location.href);
+                target.searchParams.set("settings", "languages");
+                target.searchParams.set("translationJob", jobId);
+                history.replaceState(null, "", target);
+                onOpen("commerce");
+              }}
+            />
           ))}
         </details>
       )}

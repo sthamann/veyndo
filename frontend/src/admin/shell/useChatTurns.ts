@@ -5,6 +5,7 @@ export type SavedRun = {
   taskId: string;
   state: "queued" | "running" | "ready" | "failed" | "uncertain" | "cancelled";
   revision: number;
+  approvalRequired?: boolean;
   completedModelSteps?: number;
   execution?: {
     completed: number;

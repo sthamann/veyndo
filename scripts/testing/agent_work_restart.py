@@ -61,6 +61,8 @@ def verify_native_cancel(call,base,sh,mode,sql,passed):
         if status['execution']['completed']==1:break
         time.sleep(.1)
     assert status['state']=='cancelled' and status['execution']['completed']==1,status
+    listed=next(item for item in call(base,'/api/agent/tasks',h=sh)['tasks'] if item['id']==task)
+    assert listed['executionStarted'] and not listed['applied'],listed
     assert sql(f"SELECT count(*) FROM categories WHERE tenant='{stage}' AND id='cancel_work_1'")=='1'
     assert sql(f"SELECT count(*) FROM categories WHERE tenant='{stage}' AND id='cancel_work_2'")=='0'
     call(base,'/api/agent/tasks/'+task+'/apply',{'approve':True},sh,409)
@@ -152,6 +154,8 @@ def verify_work_restart(call,base,h,mode,sql,worker,start,passed,account):
         if status['state']=='uncertain':break
         time.sleep(.1)
     assert status['state']=='uncertain' and status['execution']['completed']==1,status
+    listed=next(item for item in call(base,'/api/agent/tasks',h=sh)['tasks'] if item['id']==task)
+    assert listed['executionStarted'] and not listed['applied'],listed
     assert sql(f"SELECT count(*) FROM app_records WHERE tenant='{stage}' AND app='work_restart' AND id='work_2'")=='0'
     sql('DROP TRIGGER work_restart_pause ON app_records; DROP FUNCTION work_restart_pause()')
     call(base,'/api/agent/tasks/'+task+'/apply',{'approve':True},sh,409)

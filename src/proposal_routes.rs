@@ -34,7 +34,7 @@ pub(crate) async fn tasks(State(a): State<App>, h: RequestContext) -> Result<Jso
     agent::assistant_access(&h)?;
     let t = merchant(&a, &h)?;
     let rs = sqlx::query(
-        "SELECT id,proposal,applied FROM tasks WHERE tenant=$1 AND (run_state IS NULL OR run_state='ready') AND coalesce(run_actor,proposal->>'actor')=$2 AND (run_scopes IS NULL OR run_scopes <@ $3) ORDER BY created_at DESC LIMIT 30",
+        "SELECT id,proposal,applied,coalesce(run_request ? 'execution',false) AS execution_started FROM tasks WHERE tenant=$1 AND (run_state IS NULL OR run_state='ready' OR run_request ? 'execution') AND coalesce(run_actor,proposal->>'actor')=$2 AND (run_scopes IS NULL OR run_scopes <@ $3) ORDER BY created_at DESC LIMIT 30",
     )
     .bind(t)
     .bind(header(&h,"x-rac-user"))
@@ -42,6 +42,6 @@ pub(crate) async fn tasks(State(a): State<App>, h: RequestContext) -> Result<Jso
     .fetch_all(&a.db)
     .await?;
     Ok(Json(
-        json!({"tasks":rs.iter().map(|r|json!({"id":r.get::<String,_>("id"),"preview":r.get::<Value,_>("proposal"),"applied":r.get::<bool,_>("applied")})).collect::<Vec<_>>()}),
+        json!({"tasks":rs.iter().map(|r|json!({"id":r.get::<String,_>("id"),"preview":r.get::<Value,_>("proposal"),"applied":r.get::<bool,_>("applied"),"executionStarted":r.get::<bool,_>("execution_started")})).collect::<Vec<_>>()}),
     ))
 }

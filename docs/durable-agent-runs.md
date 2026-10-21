@@ -19,6 +19,17 @@ a compact card shows queued, running, ready, stopped or uncertain progress.
 Reloading the conversation restores its saved run. Completed model-step counts
 report stored responses, not invented percentages or internal reasoning.
 
+The personal workspace uses this same card after approving a saved task. Its
+bounded task list retains approved work while queued, running or stopped; the
+read-only `executionStarted` marker reconnects progress after a reload without
+sending another approval. Original actor, tenant and current-scope checks still
+filter every list result. Planning runs without a finished proposal remain in
+their original conversation until ready. A
+`queued` approval response is an acknowledgement, not a completed change. It
+observes the original run until completion or interruption and exposes the
+existing revision-checked continue/cancel actions. A status outage remains an
+error with explicit refresh; it never becomes a success or another approval.
+
 An interrupted in-flight provider call is **uncertain**: the provider may have
 accepted or charged it. Veyndo does not automatically repeat that call. Continue
 explicitly to permit another attempt, or cancel. Completed earlier responses are
@@ -153,6 +164,21 @@ environment. It does not reload the page into the live shop.
 
 ## Review work prepared by a Flow
 
+The direct Flow history uses the same native task progress and explicit continuation
+as the personal workspace. A completed Flow proposal is distinct from completed
+approved work: queued/running work stays visible, and only its native completion
+receipt marks the operation finished. Reloading the history retains that state
+without another approval. Current `automation.manage` controls approval, continuation
+and cancellation; the task owner still rechecks original identity and domain rights.
+Translation results open their existing editor in the selected environment. Older
+immediate proposals remain reviewable without requiring a durable run endpoint.
+
+
+The personal workspace loads tasks and sends approvals in the selected environment.
+Its saved layout belongs to the parent shop, so changing the sandbox keeps your
+arrangement while changing the actual work under review. A late response from a
+previously selected environment is discarded.
+
 The **AI proposal** action, both directly and inside a graphical pipeline, saves
 its result as a ready task in the same merchant work area. Open the task, inspect
 the proposed changes and approve them using your personal session. In a private
@@ -175,6 +201,10 @@ write, replay protection and unchanged live data. It also covers the graphical
 pipeline, a stop before/during inference, permission withdrawal during inference,
 and expired direct/pipeline jobs with and without a second recovery worker.
 These are local HTTP/PostgreSQL tests with a synthetic model, not public acceptance.
+Separately, [public browser acceptance on 21 October](evidence/flow-native-work-2026-10-21.md)
+uses the configured OpenAI provider and original saved proposal on `09b1aa35`:
+one explicitly approved private category write, revision one, completed progress
+retained after reload and unchanged parent live categories.
 Flow inference still follows its existing job/uncertainty handling; this connection
 does not add durable model checkpoints to legacy Flow calls or turn arbitrary
 accepted work into a parameterized automation automatically.

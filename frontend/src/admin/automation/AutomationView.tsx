@@ -17,15 +17,17 @@ import { type AutomationCatalog } from "./RuleBuilder";
 import { useEffect, useState } from "react";
 
 import { useWorkbenchText } from "../../shared/i18n/workbench-i18n";
-import ProposalCard from "../assistant/ProposalCard";
-import type { Message, RequestFn } from "../shell/studio-types";
+import FlowProposalReview from "./FlowProposalReview";
+import type { RequestFn } from "../shell/studio-types";
 export default function AutomationView({
   request,
   onChannels,
+  onTranslations,
 }: {
   request: RequestFn;
   role: string;
   onChannels?: () => void;
+  onTranslations?: (jobId: string) => void;
 }) {
   const t = useLifecycleText();
   const { x } = useConnectedText();
@@ -355,31 +357,14 @@ export default function AutomationView({
               {j.result?.note && <p>{j.result.note}</p>}
               <FlowExecution job={j} />
               {j.result?.preview && (
-                <ProposalCard
-                  message={
-                    {
-                      id: 0,
-                      role: "assistant",
-                      content: "",
-                      applied: !!j.applied,
-                      data: {
-                        taskId: j.result.taskId,
-                        preview: j.result.preview,
-                      },
-                    } as Message
-                  }
-                  canApply={manage}
-                  busy={busy}
-                  onApply={() =>
-                    void run(async () => {
-                      await request(
-                        `/api/agent/tasks/${j.result.taskId}/apply`,
-                        {
-                          approve: true,
-                        },
-                      );
-                    })
-                  }
+                <FlowProposalReview
+                  taskId={j.result.taskId}
+                  preview={j.result.preview}
+                  applied={!!j.applied}
+                  executionStarted={!!j.executionStarted}
+                  request={request}
+                  manage={manage}
+                  onTranslations={onTranslations}
                 />
               )}{" "}
               {j.error && <p>{j.error}</p>}
