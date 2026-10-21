@@ -16,6 +16,7 @@ export function useWorkspaceTaskRun(
   id: string,
   applied: boolean,
   request: RequestFn,
+  executionStarted = false,
 ) {
   const scope = useRef<Scope>({ id, request });
   if (scope.current.id !== id || scope.current.request !== request)
@@ -24,13 +25,14 @@ export function useWorkspaceTaskRun(
   const initial = (): Progress => ({
     scope: owner,
     busy: false,
-    accepted: false,
+    accepted: executionStarted,
     applied,
     error: "",
     refresh: 0,
   });
   const [saved, setSaved] = useState<Progress>(initial);
   const state = saved.scope === owner ? saved : initial();
+  const accepted = state.accepted || executionStarted;
   const update = (patch: Partial<Progress>) => {
     if (scope.current === owner)
       setSaved((old) => ({
@@ -39,7 +41,7 @@ export function useWorkspaceTaskRun(
       }));
   };
   useEffect(() => {
-    if (!state.accepted) return;
+    if (!accepted) return;
     let cancelled = false;
     let timer: ReturnType<typeof setTimeout> | undefined;
     const poll = async () => {
@@ -64,9 +66,9 @@ export function useWorkspaceTaskRun(
       cancelled = true;
       clearTimeout(timer);
     };
-  }, [owner, state.accepted, state.refresh]);
+  }, [owner, accepted, state.refresh]);
   const approve = async () => {
-    if (state.busy || state.accepted || state.applied) return;
+    if (state.busy || accepted || state.applied || applied) return;
     update({ busy: true, error: "" });
     try {
       const result = await request(
@@ -100,6 +102,8 @@ export function useWorkspaceTaskRun(
   };
   return {
     ...state,
+    accepted,
+    applied: state.applied || applied,
     approve,
     control,
     reload: () => update({ refresh: state.refresh + 1 }),

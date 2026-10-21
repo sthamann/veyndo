@@ -16,6 +16,7 @@ def verify_flow_work(call,base,h,actor,mode,sql,start,passed,started,release,cap
     call(base,'/api/merchant/products/mug',product,sh,method='PUT')
     memory,_=start('memory-worker')
     apps,_=start('app-worker')
+    work=None
     def trigger():
         product=call(base,'/api/merchant/products/mug',h=sh)
         product.pop('id');product.pop('channels')
@@ -36,17 +37,24 @@ def verify_flow_work(call,base,h,actor,mode,sql,start,passed,started,release,cap
         task=job['result']['taskId']
         status=call(base,'/api/agent/runs/'+task,h=sh)
         assert status['state']=='ready' and status['approvalRequired'],status
-        assert any(item['id']==task for item in call(base,'/api/agent/tasks',h=sh)['tasks'])
+        listed=next(item for item in call(base,'/api/agent/tasks',h=sh)['tasks'] if item['id']==task)
+        assert not listed['executionStarted'] and not listed['applied'],listed
         assert sql(f"SELECT run_credential IS NULL AND NOT run_personal FROM tasks WHERE tenant='{stage}' AND id='{task}'")=='t'
         assert sql(f"SELECT run_request->>'sourceJobId' FROM tasks WHERE tenant='{stage}' AND id='{task}'")==job['id']
         assert sql(f"SELECT count(*) FROM categories WHERE tenant='{stage}' AND id='flow_work_category'")=='0'
         approved=call(base,'/api/agent/tasks/'+task+'/apply',{'approve':True},sh)
         assert approved.get('queued') and not approved.get('applied'),approved
+        listed=next(item for item in call(base,'/api/agent/tasks',h=sh)['tasks'] if item['id']==task)
+        assert listed['executionStarted'] and not listed['applied'],listed
+        assert not any(item['id']==task for item in call(base,'/api/agent/tasks',h=h)['tasks'])
+        work,_=start('agent-worker')
         for _ in range(150):
             status=call(base,'/api/agent/runs/'+task,h=sh)
             if status['state'] not in ('queued','running'):break
             time.sleep(.1)
         assert status['state']=='ready' and status['execution']['completed']==1,status
+        listed=next(item for item in call(base,'/api/agent/tasks',h=sh)['tasks'] if item['id']==task)
+        assert listed['executionStarted'] and listed['applied'],listed
         assert sql(f"SELECT revision FROM categories WHERE tenant='{stage}' AND id='flow_work_category'")=='1'
         assert call(base,'/api/agent/tasks/'+task+'/apply',{'approve':True},sh)['replayed']
         assert sql(f"SELECT count(*) FROM categories WHERE tenant='{h['x-tenant']}' AND id='flow_work_category'")=='0'
@@ -130,4 +138,5 @@ def verify_flow_work(call,base,h,actor,mode,sql,start,passed,started,release,cap
         mode['block']=False;release.set();started.clear()
         stop(apps)
         stop(memory)
+        if work:stop(work)
         mode.pop('operations',None)

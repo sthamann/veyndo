@@ -74,7 +74,7 @@ try:
     if env.get('TEST_TRANSACTION_POOLING') == '1' and not env.get('DATABASE_RUNTIME_URL'):
         direct = env['DATABASE_URL']; pooler = Pooler(direct); poolers.append(pooler)
         env.update(DATABASE_URL=pooler.url, DATABASE_LISTENER_URL=direct, DB_POOLER_MODE='transaction')
-    http,base=start('http'); worker,_=start('agent-worker')
+    http,base=start('http')
     # Personal identity is real. Give this synthetic fixture an existing isolated catalog through native membership.
     suffix=uuid.uuid4().hex[:12]
     account=call(base,'/api/auth/register',{'name':'Durable fixture','email':suffix+'@example.test','password':'Synthetic-agent-2026!','workspaceId':'durable-'+suffix})
@@ -83,6 +83,7 @@ try:
     h={'Authorization':'Bearer '+account['token'],'x-tenant':tenant}
     from testing.agent_flow_work import verify_flow_work
     verify_flow_work(call,base,h,actor,mode,sql,start,passed,started,release,captured)
+    worker,_=start('agent-worker')
     mode['block']=True;captured.clear();release.clear()
     before=call(base,'/api/merchant/products/lamp',h=h)['commerce']['price']
     turn={'message':'Prepare lamp price; do not apply.','background':True,'requestId':uuid.uuid4().hex,'inference':{'provider':'openai'}}
@@ -139,6 +140,7 @@ try:
     sql(f"INSERT INTO memberships(tenant,user_id,role) VALUES('{tenant}','{other['user']['id']}','owner')")
     call(base,f'/api/agent/runs/{run_id}',h={**other_h,'x-tenant':tenant},expected=403)
     call(base,f'/api/agent/conversations/{conversation}',h={**other_h,'x-tenant':tenant},expected=404)
+    assert not call(base,'/api/agent/tasks',h={**other_h,'x-tenant':tenant})['tasks']
     passed('Run progress, private evidence and conversations reject both foreign tenants and another actor in the same shop')
     # Hold final inference, revoke the initiating credential, then let the original result arrive.
     mode['block']=True;release.clear();started.clear()

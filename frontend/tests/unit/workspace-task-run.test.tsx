@@ -12,6 +12,37 @@ import WorkspaceTask from "../../src/admin/workspace/WorkspaceTask";
 import { LocaleScope } from "../../src/shared/i18n/i18n";
 import type { SavedRun } from "../../src/admin/shell/useChatTurns";
 afterEach(() => vi.useRealTimers());
+it("restores previously approved work from the task list without sending a new approval", async () => {
+  vi.useFakeTimers();
+  let run = value("running", 9);
+  const request = vi.fn(async () => run);
+  const { result, unmount } = renderHook(() =>
+    useWorkspaceTaskRun("work-1", false, request as any, true),
+  );
+  await act(async () => {});
+  expect(result.current.accepted).toBe(true);
+  expect(result.current.run?.state).toBe("running");
+  await act(() => result.current.approve());
+  expect(request).toHaveBeenCalledTimes(1);
+  expect(request).toHaveBeenCalledWith("/api/agent/runs/work-1");
+  run = value("failed", 10);
+  await act(() => vi.advanceTimersByTimeAsync(1500));
+  expect(result.current.run?.state).toBe("failed");
+  expect(result.current.applied).toBe(false);
+  unmount();
+});
+it("adopts an execution started in another view when the task list refreshes", async () => {
+  const request = vi.fn(async () => value("ready", 11));
+  const { result, rerender } = renderHook(
+    ({ started }) =>
+      useWorkspaceTaskRun("work-1", false, request as any, started),
+    { initialProps: { started: false } },
+  );
+  expect(request).not.toHaveBeenCalled();
+  await act(async () => rerender({ started: true }));
+  expect(result.current.applied).toBe(true);
+  expect(request).toHaveBeenCalledOnce();
+});
 function value(state: SavedRun["state"], revision = 3): SavedRun {
   return {
     taskId: "work-1",

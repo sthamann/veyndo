@@ -19,7 +19,12 @@ a compact card shows queued, running, ready, stopped or uncertain progress.
 Reloading the conversation restores its saved run. Completed model-step counts
 report stored responses, not invented percentages or internal reasoning.
 
-The personal workspace uses this same card after approving a saved task. A
+The personal workspace uses this same card after approving a saved task. Its
+bounded task list retains approved work while queued, running or stopped; the
+read-only `executionStarted` marker reconnects progress after a reload without
+sending another approval. Original actor, tenant and current-scope checks still
+filter every list result. Planning runs without a finished proposal remain in
+their original conversation until ready. A
 `queued` approval response is an acknowledgement, not a completed change. It
 observes the original run until completion or interruption and exposes the
 existing revision-checked continue/cancel actions. A status outage remains an
@@ -158,6 +163,11 @@ Translation draft navigation stays inside the current Studio session and private
 environment. It does not reload the page into the live shop.
 
 ## Review work prepared by a Flow
+
+The personal workspace loads tasks and sends approvals in the selected environment.
+Its saved layout belongs to the parent shop, so changing the sandbox keeps your
+arrangement while changing the actual work under review. A late response from a
+previously selected environment is discarded.
 
 The **AI proposal** action, both directly and inside a graphical pipeline, saves
 its result as a ready task in the same merchant work area. Open the task, inspect

@@ -9,6 +9,7 @@ export type WorkspaceTaskValue = {
   id: string;
   preview: Preview;
   applied: boolean;
+  executionStarted?: boolean;
 };
 export default function WorkspaceTask({
   task,
@@ -21,7 +22,12 @@ export default function WorkspaceTask({
 }) {
   const t = useWorkspaceText(),
     [open, setOpen] = useState(false),
-    progress = useWorkspaceTaskRun(task.id, task.applied, request);
+    progress = useWorkspaceTaskRun(
+      task.id,
+      task.applied,
+      request,
+      task.executionStarted,
+    );
   const { busy, applied, error, accepted } = progress;
   return (
     <article className="personal-task">

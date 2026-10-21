@@ -3822,8 +3822,8 @@
     },
     "src/proposal_routes.rs": {
       "status": "unproved",
-      "sha256": "735554df3375de3d1445fd570baa40507874c1bd37381b6e2e9f3c79a0b75640",
-      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
+      "sha256": "61ecbaf39b49fe98309cf97cb4e25fd8485998a4d5977e74aebd7dde08907667",
+      "review": "Reviewed original-actor tenant-scoped task listing: preserve existing current-scope admission while exposing approved queued and interrupted work; execution marker is read-only, no credentials or checkpoint contents. Native PostgreSQL queued/completed/cancelled/killed-worker and other-actor cases pass."
     },
     "src/request_context.rs": {
       "status": "unproved",

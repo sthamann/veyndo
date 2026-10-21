@@ -20,7 +20,8 @@ import WorkspaceGoals from "./WorkspaceGoals";
 import "./workspace.css";
 export default function PersonalWorkspace() {
   const {
-    liveRequest: request,
+    liveRequest,
+    request,
     access,
     nav,
     tabLabel,
@@ -43,7 +44,9 @@ export default function PersonalWorkspace() {
     const generation = ++scope.current;
     setError("");
     try {
-      const value = (await request("/api/studio/workspace")) as WorkspaceRecord;
+      const value = (await liveRequest(
+        "/api/studio/workspace",
+      )) as WorkspaceRecord;
       if (generation !== scope.current) return;
       setRecord(value);
       setLayout(
@@ -63,7 +66,7 @@ export default function PersonalWorkspace() {
     return () => {
       scope.current++;
     };
-  }, [workspace, request]);
+  }, [workspace, liveRequest]);
   const update = (next: Workspace) => {
     setLayout(next);
     setSaved(false);
@@ -73,7 +76,7 @@ export default function PersonalWorkspace() {
     setBusy(true);
     setError("");
     try {
-      const next = (await request(
+      const next = (await liveRequest(
         "/api/studio/workspace",
         { revision: record.revision, data: draft },
         "PUT",

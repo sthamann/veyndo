@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased — retain approved workspace tasks after reload
+
+- Load and approve personal-workspace tasks in the currently selected sandbox. Personal layouts continue to use the parent shop; switching environments discards late proposal responses.
+- Keep queued, running and interrupted approved work in the original actor's task list. A read-only execution marker reconnects the shared progress card after reload, without another approval or a second worker.
+- Preserve tenant, actor and current-scope filtering. Actual PostgreSQL tests cover queued/completed, cancelled and interrupted work after a killed worker, plus another actor's empty task list.
+
 ## Unreleased — actual execution progress in the personal workspace
 
 - Keep approved native work pending until the existing worker confirms completion. The workspace reuses the assistant's progress card for saved steps, interruptions, explicit continuation/cancellation and translation review.
