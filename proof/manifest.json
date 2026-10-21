@@ -1425,6 +1425,11 @@
       "sha256": "3b7e657659d3998077f35d9996be504f2b37ed8856aff485c18243aa11abc149",
       "review": "Reviewed agent scope construction and locking: synchronously box the child before constructing the task-local future; retain authority only while polling and verify no context leak. Live-root NO KEY UPDATE serializes allocation/enqueue/stop while admitting FK KEY SHARE, avoiding tenant/task inversion. Real held-reference HTTP stop fails before and passes after; actual worker stop and signed-role allocation cases pass. Existing kernel proof unchanged; async/SQL/provider code remains unproved and the Linux instrumented POS repeat is still required."
     },
+    "src/agent_runs/flow_proposals.rs": {
+      "status": "unproved",
+      "sha256": "42eb2481d13b558ea9f8442740f35af4b853c50e48ba65cf7a6e5bb1d0fdec5a",
+      "review": "Reviewed scheduled Flow proposal persistence through native ready tasks: current Flow membership, private scope, original grant ceiling and shop-stop lock; personal approval alone supplies execution authority. Actual product-event, graphical pipeline, isolated approval/replay and stop-during-provider tests pass. No extracted pure policy changed; SQL, async and authorization integration remain unproved."
+    },
     "src/agent_runs/translation.rs": {
       "status": "unproved",
       "sha256": "360762ea22e072bd6c9463c92c51c3d40aa01bb6183f599f35f157d903f68619",
@@ -1452,8 +1457,8 @@
     },
     "src/agent_runs.rs": {
       "status": "unproved",
-      "sha256": "59dc24cd72829e1a139dc7181511720c1d91c02784954be77169fca94cd48ce7",
-      "review": "Reviewed scoped translation selection, original task authority, atomic child linking and completion, cancellation/explicit ambiguous continuation, lease fences, central provider admission outside transactions and bounded prompt evidence; real PostgreSQL/HTTP collection and interruption regressions plus 724 UI tests; skipped products store SQL NULL evidence rather than JSON null. Claude supplied code-only review, findings checked and fixed."
+      "sha256": "fa46b65a53224a80e2ba2fb83d93e4e43f9e3554047e5f8f8c3a9d946fa32099",
+      "review": "Reviewed scheduled Flow proposal persistence through native ready tasks: current Flow membership, private scope, original grant ceiling and shop-stop lock; personal approval alone supplies execution authority. Actual product-event, graphical pipeline, isolated approval/replay and stop-during-provider tests pass. No extracted pure policy changed; SQL, async and authorization integration remain unproved."
     },
     "src/apps/approval.rs": {
       "status": "reviewed-binding",
@@ -3162,13 +3167,13 @@
     },
     "src/marketing/flow_access.rs": {
       "status": "unproved",
-      "sha256": "8efccf05bb75c8a9b75d10592a251d9824bb069da9855c87c759c28ce2537d7b",
-      "review": "Tenant roles and current grants independently reviewed; owner/retained-override/acceptance races repaired and PostgreSQL-blocked regressions passed; PII and Flow projection boundaries documented; B2B feature settings delegate shared CAS/history and preserve financial guards. Existing extracted policies unchanged; SQL/async/UI remain reviewed adapters, not full proofs."
+      "sha256": "646256dd1ed546bedf5d86eb34767ddca19e3a77f652b49971756a20fa79ab7c",
+      "review": "Reviewed scheduled Flow proposal persistence through native ready tasks: current Flow membership, private scope, original grant ceiling and shop-stop lock; personal approval alone supplies execution authority. Actual product-event, graphical pipeline, isolated approval/replay and stop-during-provider tests pass. No extracted pure policy changed; SQL, async and authorization integration remain unproved."
     },
     "src/marketing/flow_actions.rs": {
       "status": "unproved",
-      "sha256": "9b55bd3c2646870f23d65f7c071fa17e3bf076603210045880b4ee1911c861fc",
-      "review": "Tenant roles and current grants independently reviewed; owner/retained-override/acceptance races repaired and PostgreSQL-blocked regressions passed; PII and Flow projection boundaries documented; B2B feature settings delegate shared CAS/history and preserve financial guards. Existing extracted policies unchanged; SQL/async/UI remain reviewed adapters, not full proofs."
+      "sha256": "9d0447db78d99cddf2faca527f3037794eb42ce08173817b048e40ddec61ccbd",
+      "review": "Reviewed scheduled Flow proposal persistence through native ready tasks: current Flow membership, private scope, original grant ceiling and shop-stop lock; personal approval alone supplies execution authority. Actual product-event, graphical pipeline, isolated approval/replay and stop-during-provider tests pass. No extracted pure policy changed; SQL, async and authorization integration remain unproved."
     },
     "src/marketing/flow_mutations.rs": {
       "status": "unproved",
@@ -3187,8 +3192,8 @@
     },
     "src/marketing/flows.rs": {
       "status": "unproved",
-      "sha256": "6c92c3465d919108fea7f8ba59f0c7effb812c7ca68ef40080624ec6292b12ef",
-      "review": "Reviewed migration 104 and all changed Rust/build owners: existing-key planning-only scope, trusted distinct agent identity, live-root lock before budget key, checked integer allocation with existing kernel guard, no network transaction, typed nonretryable quota errors, current credentials and lease-fenced late worker results; actual two-replica allocation/restart and in-flight-stop fixtures plus 623 UI tests pass. SQL/auth/provider integration is not formally proved."
+      "sha256": "603e5fc6de6cafbb3aaa502a1559e24cfdf5ed1af027a4850ace56bab1d4ffcd",
+      "review": "Reviewed scheduled Flow proposal persistence through native ready tasks: current Flow membership, private scope, original grant ceiling and shop-stop lock; personal approval alone supplies execution authority. Actual product-event, graphical pipeline, isolated approval/replay and stop-during-provider tests pass. No extracted pure policy changed; SQL, async and authorization integration remain unproved."
     },
     "src/marketing/gateway.rs": {
       "status": "unproved",
@@ -3217,8 +3222,8 @@
     },
     "src/marketing/mod.rs": {
       "status": "unproved",
-      "sha256": "5171c2cdc74ba000721589e89131047c4cf6de763211cc9eeb7f0245e3364569",
-      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
+      "sha256": "9772180fada9291de82356791f04ecd426cb535c74279a7c2061ef1dfbecf698",
+      "review": "Reviewed scheduled Flow proposal persistence through native ready tasks: current Flow membership, private scope, original grant ceiling and shop-stop lock; personal approval alone supplies execution authority. Actual product-event, graphical pipeline, isolated approval/replay and stop-during-provider tests pass. No extracted pure policy changed; SQL, async and authorization integration remain unproved."
     },
     "src/marketing/pipeline.rs": {
       "status": "reviewed-binding",
@@ -3697,8 +3702,8 @@
     },
     "src/planner.rs": {
       "status": "unproved",
-      "sha256": "43b3dbd9528ee79fbfe6be2a1080ce898a116fa8277055a7ee034543e22f1f10",
-      "review": "Review shared read-only planner admission and one checkpointed correction using original context, current authorized app contracts and unchanged personal approval; managed page fields use app-owned schema; translation and malicious checkout-correction HTTP regressions pass, workspace units and clippy pass"
+      "sha256": "79f349bfca904f89c04242b68c2bfd374f423023c9ff42f3f8343eb2848e2219",
+      "review": "Reviewed scheduled Flow proposal persistence through native ready tasks: current Flow membership, private scope, original grant ceiling and shop-stop lock; personal approval alone supplies execution authority. Actual product-event, graphical pipeline, isolated approval/replay and stop-during-provider tests pass. No extracted pure policy changed; SQL, async and authorization integration remain unproved."
     },
     "src/platform/ai.rs": {
       "status": "reviewed-binding",

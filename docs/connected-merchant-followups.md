@@ -16,6 +16,16 @@ It is a delivery plan, not a claim that every item below is already available on
 | 6 | Complete inward shop migration and an external integration | Saved source mapping, private destination data/layout, selected cutover and purchase, plus observed external destination result. Local provider fixtures remain separate evidence. |
 | 7 | Keep contracts, money and delivery consistent under load | Exact authoritative amounts and PHP differential cases, generated API contracts, measured bounded/fair workers, required CI and public deployment. |
 
+## Reusing work: current development
+
+Direct and graphical Flow AI proposals now join the existing ready-task and
+personal-approval path. Actual local product-event tests cover one private native
+write, replay protection, unchanged live data, emergency stop and rights withdrawn
+during inference. [Behavior and acceptance scope](durable-agent-runs.md#review-work-prepared-by-a-flow).
+Public delivery of this repair is not yet accepted. Turning an accepted task into
+a configurable Flow with mapped inputs and event parameters remains the next part
+of item 4; the existing title-only shortcut is not that complete workflow.
+
 ## Collection preparation: current development
 
 The first extension uses the existing Rust task worker, translation queue and

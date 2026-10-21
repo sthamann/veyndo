@@ -26,6 +26,7 @@ This lists every checked-in source module in these roots, including files with n
 | [src/agent_runs/context.rs](../src/agent_runs/context.rs) | Bounded presentation context is saved with the task; it never supplies identity, rights or trusted object facts. |
 | [src/agent_runs/contract.rs](../src/agent_runs/contract.rs) | HTTP/MCP share revision-bound run controls and safe progress; checkpoints and credentials are never exported. |
 | [src/agent_runs/controls.rs](../src/agent_runs/controls.rs) | Live-only agent stop and existing-key admission; no control becomes a sandbox release or credential snapshot. |
+| [src/agent_runs/flow_proposals.rs](../src/agent_runs/flow_proposals.rs) | Scheduled Flow results become native reviewable tasks; only personal approval supplies execution authority. |
 | [src/agent_runs/translation.rs](../src/agent_runs/translation.rs) | Translation child work reuses native draft storage, original authority and the existing task scheduler. |
 | [src/agent_runs/view.rs](../src/agent_runs/view.rs) | A reviewed grid view contains only native filter criteria; current domain and PII rights are checked before persistence. |
 | [src/agent_runs/work.rs](../src/agent_runs/work.rs) | Approved work uses the existing task lease; each native write is fenced against cancellation and recorded before advancing. |
@@ -1732,6 +1733,7 @@ This lists every checked-in source module in these roots, including files with n
 | [scripts/tenant_isolation.py](../scripts/tenant_isolation.py) | Adversarial two-shop API/MCP/UCP/object and schema isolation with real personal/customer sessions. |
 | [scripts/testing/advisor_privacy.py](../scripts/testing/advisor_privacy.py) | Concurrent privacy mutations across the real concierge/provider path; no live inference. |
 | [scripts/testing/advisor_sources.py](../scripts/testing/advisor_sources.py) | Actual channel-admitted advisor context and concurrent native source mutations; synthetic local model only. |
+| [scripts/testing/agent_flow_work.py](../scripts/testing/agent_flow_work.py) | Native product event -> Flow proposal -> personal approval -> original durable work executor. |
 | [scripts/testing/agent_work.py](../scripts/testing/agent_work.py) | An actual reviewed model plan writes two private records once through the native task worker. |
 | [scripts/testing/agent_work_restart.py](../scripts/testing/agent_work_restart.py) | Kill the actual approved-work Rust worker during its second managed save; checkpoint and record commit together. |
 | [scripts/testing/app_approval.py](../scripts/testing/app_approval.py) | Use the Rust manifest serializer for operator pins; never invent a second canonical digest. |

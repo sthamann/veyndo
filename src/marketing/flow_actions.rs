@@ -166,7 +166,7 @@ pub(crate) async fn execute(
         return crate::cognition::extraction::extract(a, &h, &args).await;
     }
     if action == "ai_proposal" {
-        auth::permit(&h, "knowledge.read")?;
+        let h = super::flow_access::proposal_headers(a, t, f.actor.as_deref()).await?;
         crate::performance::reserve_ai_attempt(a, t).await?;
         let (settings, _) = commerce::config(a, t).await?;
         let instruction =
