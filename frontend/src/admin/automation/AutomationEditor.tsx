@@ -14,6 +14,7 @@ import LocalizedField from "../../shared/i18n/LocalizedField";
 import ContentLanguagePicker from "../../shared/i18n/ContentLanguagePicker";
 import FlowBuilder from "./FlowBuilder";
 import RuleBuilder from "./RuleBuilder";
+import RuleHistory from "./RuleHistory";
 export type AutomationEditorProps = {
   run: (fn: () => Promise<void>) => Promise<void>;
   request: import("../shell/studio-types").RequestFn;
@@ -31,6 +32,7 @@ export type AutomationEditorProps = {
   setImported: React.Dispatch<React.SetStateAction<string>>;
   busy: boolean;
   manage: boolean;
+  canCompare?: boolean;
   catalog: import("./RuleBuilder").AutomationCatalog;
   rows: Record<Kind, Config[]>;
   locale: ReturnType<typeof useWorkbenchText>["locale"];
@@ -53,6 +55,7 @@ export default function AutomationEditor({
   setImported,
   busy,
   manage,
+  canCompare = false,
   catalog,
   rows,
   locale,
@@ -147,6 +150,16 @@ export default function AutomationEditor({
           value={data.condition}
           onChange={(r) => update("condition", r)}
           catalog={catalog}
+        />
+      )}
+      {kind === "rules" && canCompare && (
+        <RuleHistory
+          request={request}
+          id={id}
+          revision={revision}
+          condition={data.condition}
+          flows={rows.flows}
+          advanced={!!advanced.trim()}
         />
       )}
       {kind === "promotions" && (

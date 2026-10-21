@@ -355,6 +355,11 @@
     "source": "src/marketing/catalog.rs"
   },
   {
+    "path": "/api/automation/rules/compare-history",
+    "method": "POST",
+    "source": "src/marketing/routes.rs"
+  },
+  {
     "path": "/api/automation/rules/preview",
     "method": "POST",
     "source": "src/marketing/routes.rs"

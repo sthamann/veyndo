@@ -39,6 +39,8 @@ mod promotions;
 pub(crate) use promotion_import::{PromotionImport, import_promotion, preserve_import};
 mod routes;
 mod rule_fields;
+mod rule_history;
+pub(crate) use rule_history::HISTORY_CAPABILITIES;
 mod rule_match;
 mod rule_snapshot;
 mod rules;

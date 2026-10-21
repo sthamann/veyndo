@@ -114,6 +114,9 @@ pub(crate) fn input(name: &str) -> Value {
             json!({"kind":{"type":"string","enum":["rules","flows","promotions","channels"]},"id":{"type":"string"}})
         }
         "automation.preview" | "automation.import" => json!({"condition":{"type":"object"}}),
+        "automation.compare_history" => {
+            json!({"ruleId":{"type":"string","maxLength":32},"revision":{"type":"integer","minimum":1},"flowId":{"type":"string","maxLength":32},"condition":{"type":"object"},"limit":{"type":"integer","minimum":1,"maximum":50}})
+        }
         "merchant.customer.addresses" => json!({"id":{"type":"string"}}),
         "merchant.customer.address.save" => {
             json!({"id":{"type":"string"},"addressId":{"type":"string"},"revision":{"type":"integer"},"address":{"type":"object"},"defaultBilling":{"type":"boolean"},"defaultShipping":{"type":"boolean"}})
@@ -209,6 +212,7 @@ pub(crate) fn input(name: &str) -> Value {
         "automation.dependencies" => vec!["kind", "id"],
         "automation.save" => vec!["kind", "id", "revision", "data"],
         "automation.preview" | "automation.import" => vec!["condition"],
+        "automation.compare_history" => vec!["ruleId", "revision", "flowId", "condition", "limit"],
         "merchant.customer.addresses" => vec!["id"],
         "merchant.customer.address.save" => vec!["id", "address"],
         "merchant.customer.address.delete" => vec!["id", "addressId", "revision"],

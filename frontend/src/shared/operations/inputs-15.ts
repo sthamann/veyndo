@@ -167,4 +167,11 @@ export interface Inputs15 {
     state?: "approved" | "rejected";
     unitId?: string;
   };
+  "automation.compare_history": {
+    condition: JsonValue;
+    flowId: string;
+    limit: number;
+    revision: number;
+    ruleId: string;
+  };
 }

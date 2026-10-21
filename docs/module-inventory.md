@@ -393,6 +393,7 @@ This lists every checked-in source module in these roots, including files with n
 | [src/marketing/promotions.rs](../src/marketing/promotions.rs) | Server-authoritative coupons and automatic campaigns, with deterministic discounts and atomic usage limits. |
 | [src/marketing/routes.rs](../src/marketing/routes.rs) | Typed configuration CRUD, rule preview and revision-bound coupon edits. |
 | [src/marketing/rule_fields.rs](../src/marketing/rule_fields.rs) | Typed rule fields share the original comparison operators and server-derived checkout/event facts. |
+| [src/marketing/rule_history.rs](../src/marketing/rule_history.rs) | Side-effect-free rule comparison on bounded, tenant-owned frozen Flow order inputs. |
 | [src/marketing/rule_match.rs](../src/marketing/rule_match.rs) | Evaluate typed rule trees against server-owned cart, customer and event facts. |
 | [src/marketing/rule_snapshot.rs](../src/marketing/rule_snapshot.rs) | Resolve only referenced tenant rule IDs with indexed batched reads; freeze active definitions and revisions into the event snapshot. |
 | [src/marketing/rule_tests.rs](../src/marketing/rule_tests.rs) | Regression cases for native rule facts and original container boundaries. |
@@ -646,13 +647,17 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/admin/automation/JsonField.tsx](../frontend/src/admin/automation/JsonField.tsx) | JSON editing retains incomplete input and invalidates the actual payload instead of silently saving the last valid value. |
 | [frontend/src/admin/automation/PromotionSchedule.tsx](../frontend/src/admin/automation/PromotionSchedule.tsx) | Campaign scheduling uses ISO instants in the API and local times in the editor. |
 | [frontend/src/admin/automation/RuleBuilder.tsx](../frontend/src/admin/automation/RuleBuilder.tsx) | Visual recursive rule tree: AND/OR/NOT groups, typed facts and editable leaf conditions. |
+| [frontend/src/admin/automation/RuleHistory.tsx](../frontend/src/admin/automation/RuleHistory.tsx) | Bounded read-only comparison; stale responses cannot cross a rule or workspace. |
 | [frontend/src/admin/automation/SourceRuleFields.tsx](../frontend/src/admin/automation/SourceRuleFields.tsx) | Original metadata drives typed condition inputs, including nested source scopes; unsupported runtimes stay visibly disabled. |
 | [frontend/src/admin/automation/WorkTemplateEditor.tsx](../frontend/src/admin/automation/WorkTemplateEditor.tsx) | Bounded field-to-event mapping over the original native operations, never a second executor. |
 | [frontend/src/admin/automation/automation-types.ts](../frontend/src/admin/automation/automation-types.ts) | Automation editor contracts; content languages come from the selected shop. |
 | [frontend/src/admin/automation/goal-template.ts](../frontend/src/admin/automation/goal-template.ts) | Explicit personal goal handoff into an inactive native Flow draft; no URL, persistence or new scheduler. |
 | [frontend/src/admin/automation/lifecycle-i18n.ts](../frontend/src/admin/automation/lifecycle-i18n.ts) | Shared lifecycle, starting-process and dependency vocabulary for every automation editor. |
 | [frontend/src/admin/automation/pipeline-types.ts](../frontend/src/admin/automation/pipeline-types.ts) | Stable graph data mirrors the Rust pipeline contract, with explicit true/false edges and persistent node identifiers. |
+| [frontend/src/admin/automation/rule-history-i18n.ts](../frontend/src/admin/automation/rule-history-i18n.ts) | Frozen rule comparison copy; the sample and decision boundary remain explicit. |
+| [frontend/src/admin/automation/rule-history.css](../frontend/src/admin/automation/rule-history.css) | Contained comparison controls/results inside the existing rule editor. |
 | [frontend/src/admin/automation/source-rules.ts](../frontend/src/admin/automation/source-rules.ts) | Convert source condition nodes for the graphical editor without losing original payload fields. |
+| [frontend/src/admin/automation/useAutomationAccess.ts](../frontend/src/admin/automation/useAutomationAccess.ts) | Current native automation grants, cleared immediately when the workspace changes. |
 | [frontend/src/admin/automation/useAutomationLanguages.ts](../frontend/src/admin/automation/useAutomationLanguages.ts) | Load the current shop's content-language context and ignore replies after the workspace changes. |
 | [frontend/src/admin/automation/work-template-i18n.ts](../frontend/src/admin/automation/work-template-i18n.ts) | Reviewed-work Flow vocabulary in every Studio interface language. |
 | [frontend/src/admin/automation/work-template.ts](../frontend/src/admin/automation/work-template.ts) | Keep only a protected task reference in Flow configuration; operation inputs stay in actor-private evidence. |
@@ -1773,6 +1778,7 @@ This lists every checked-in source module in these roots, including files with n
 | [scripts/testing/prompt_governance.py](../scripts/testing/prompt_governance.py) | Bind prompt versions and admission fixtures without claiming semantic model accuracy. |
 | [scripts/testing/provider_fleet.py](../scripts/testing/provider_fleet.py) | Configure one encrypted synthetic provider for all test workers, then restore the isolated control-plane row. |
 | [scripts/testing/role_races.py](../scripts/testing/role_races.py) | Force real HTTP delegation to wait behind the same PostgreSQL lifecycle lock as role edits. |
+| [scripts/testing/rule_history.py](../scripts/testing/rule_history.py) | Frozen comparison against real checkout/Flow snapshots; no current-data fallback or effects. |
 | [scripts/testing/runtime.py](../scripts/testing/runtime.py) | Owned synthetic server lifetime, child checks and loopback readiness for verification. |
 | [scripts/testing/site_release.py](../scripts/testing/site_release.py) | Actual selective publication resolves page dependencies atomically; no provider calls. |
 | [scripts/testing/sitecustomize.py](../scripts/testing/sitecustomize.py) | Opt-in subprocess instrumentation for synthetic verification; never loaded by production. |

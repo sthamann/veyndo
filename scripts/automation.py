@@ -159,4 +159,6 @@ assert sql("SELECT state FROM flow_jobs WHERE id='"+queued['id']+"'")=='failed'
 assert sql("SELECT data->'automation'->'tags' FROM orders WHERE id='"+second['id']+"'") in ['','null']
 sql("UPDATE memberships SET active=true WHERE tenant='"+t+"';")
 check('Revoking a delayed flow actor prevents the future mutation')
+from testing.rule_history import verify as verify_rule_history
+verify_rule_history(call, sql, mcp, mh, foreign, t, suffix, check)
 print(json.dumps({'passed':len(checks),'paidProviderCalls':0,'checks':checks}))

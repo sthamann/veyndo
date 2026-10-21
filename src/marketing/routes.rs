@@ -27,6 +27,11 @@ pub(crate) fn router() -> Router<App> {
             post(preview),
         )
         .route("/store-api/checkout/coupons", axum::routing::put(coupons))
+        .secure_route(
+            "/api/automation/rules/compare-history",
+            &[("POST", "read")],
+            post(rule_history::compare),
+        )
 }
 pub(crate) fn configuration_right(kind: &str, write: bool) -> Result<&'static str> {
     match (kind, write) {

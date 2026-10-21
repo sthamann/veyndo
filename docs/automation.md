@@ -83,6 +83,12 @@ Further limits: native IDs need an explicit UUID migration map; arbitrary source
 
 ## Native action contract
 
+Saved rules can also be compared with an unsaved visual draft on existing frozen
+`order.placed` Flow inputs. This read-only comparison uses the original interpreter,
+current compound read permissions and bounded tenant-owned snapshots. It reports
+unavailable inputs separately and never runs actions or recalculates checkout.
+See [compare a rule with recorded order inputs](rule-history-comparison.md).
+
 The sixteen original Core action names are registered, plus `note`, `ai_proposal` and `app_action`. They dispatch actual domain operations rather than descriptive placeholders. A direct Flow can also use `work_proposal` to prepare a fresh review from completed native work; this action is not a graphical pipeline node.
 
 ### Repeat completed work

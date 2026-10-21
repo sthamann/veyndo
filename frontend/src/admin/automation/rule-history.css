@@ -1,0 +1,67 @@
+/* Contained comparison controls/results inside the existing rule editor. */
+.rule-history {
+  margin-block: 1.25rem;
+  padding: 1rem;
+  border: 1px solid var(--studio-border, #d4e2f4);
+  border-radius: 1rem;
+}
+.rule-history > summary {
+  cursor: pointer;
+  font-weight: 650;
+}
+.rule-history-controls {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: 1rem;
+  margin-block: 1rem;
+}
+.rule-history-controls label {
+  display: grid;
+  gap: 0.5rem;
+  min-width: 0;
+}
+.rule-history-controls select {
+  width: 100%;
+  min-width: 0;
+}
+.rule-history-counts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-block: 1rem;
+}
+.rule-history-counts > div {
+  flex: 1;
+  padding: 0.8rem;
+  background: var(--studio-soft, #eef5fd);
+  border-radius: 0.65rem;
+}
+.rule-history-counts dd {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0.3rem 0 0;
+}
+.rule-history-table {
+  overflow-x: auto;
+  margin-block: 1rem;
+}
+.rule-history-table table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: start;
+}
+.rule-history-table th,
+.rule-history-table td {
+  padding: 0.7rem;
+  border-bottom: 1px solid var(--studio-border, #d4e2f4);
+}
+.rule-history-digest {
+  display: block;
+  overflow-wrap: anywhere;
+  margin-block: 0.7rem;
+}
+@media (max-width: 600px) {
+  .rule-history-controls {
+    grid-template-columns: 1fr;
+  }
+}
