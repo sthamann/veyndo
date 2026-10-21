@@ -106,7 +106,7 @@ try:
             requested=selected.split(',')
             assert set(requested)<=set(registered),'Only registered HTTP suites can be selected'
             suites=[s for s in registered if s in requested]
-        for suite in [s for s in suites if s not in ['checkout_review','merchant_operations','tenant_isolation']]:
+        for suite in [s for s in suites if s not in ['checkout_review','merchant_operations','tenant_isolation','translations']]:
             command=['python3',f'scripts/{suite}.py']
             if suite=='scalability':command+=['--container',env['TEST_DB_CONTAINER']]
             subprocess.run(command,cwd=ROOT,env={**env,'PROCESS_ROLE':'all','BASE_URL':one,'TEST_SERVER_LOG':str(ROOT/'artifacts/production-replica-0.log')},check=True)
@@ -250,6 +250,11 @@ try:
         for process, log in processes:
             stop(process); log.close()
         processes.clear()
+        # Translation acceptance owns its provider-configured worker. The shared
+        # replicas intentionally use an unavailable provider and must not claim
+        # its queued jobs. Keep the real restricted logins/poolers for this test.
+        if 'translations' in suites:
+            subprocess.run(['python3','scripts/translations.py'],cwd=ROOT,env=env,check=True)
         if not tenant_pooler:
             subprocess.run(['python3','scripts/agent_authorities.py'],cwd=ROOT,env=env,check=True)
         subprocess.run(['python3','scripts/durable_agents.py'],cwd=ROOT,env=env,check=True)
