@@ -13,7 +13,8 @@ advisor_started=threading.Event();advisor_release=threading.Event()
 proposal = {'summary':'HTTP provider contract test; not live inference.', 'changes':[{'product_id':'lamp','price':71.23}], 'operations':None, 'view':None, 'experience':None, 'expected_experience_revision':None}
 def unsupported_unique(schema):
     if not isinstance(schema,dict): return False
-    children=list(schema.get('properties',{}).values())+[schema.get('items',{})]
+    children=list(schema.get('properties',{}).values())
+    if 'items' in schema: children.append(schema['items'])
     children+=schema.get('anyOf',[])+schema.get('oneOf',[])
     return 'uniqueItems' in schema or any(unsupported_unique(child) for child in children)
 class Handler(BaseHTTPRequestHandler):
