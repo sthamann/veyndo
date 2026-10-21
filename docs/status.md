@@ -7,7 +7,10 @@ A green test, merged code and a completed public business journey are different 
 Current additional repair: saved material/dimensions now have an app/product-scoped
 representation in the native cart response, so forms can restore them after a
 reload before the first line item is added. Actual HTTP/PostgreSQL and rendered
-tests pass; public deployment/reload acceptance remains pending. See the
+tests pass. Public image `dainty-ray-8892` (`fb8d54e0`) passed the browser reload
+check with an empty cart, followed by simulated order `RAC-2246a373`: Walnut
+Select, 250 x 80 cm, EUR 78 surcharge, EUR 427 total. Return showed cart zero.
+See the
 [furniture browser evidence](evidence/furniture-browser-2026-10-21.md).
 
 Migration implementation (19 October): saved plans now connect all eight supported

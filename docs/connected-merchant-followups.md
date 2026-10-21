@@ -94,8 +94,11 @@ inside the plugin directory. The hosted private browser journey now completes
 material/dimensions configuration, simulated EUR 417 purchase, empty cart return,
 native order/Flow inspection and immutable order display after a material update.
 Independent B2B approval and saved-input reorder still need hosted browser
-acceptance. The public `b0b8cba7` follow-up also retains configuration controls and the saved
-message when a subsequent purchase creates a fresh cart.
+acceptance. The public `fb8d54e0` follow-up restores saved material and dimensions
+after a full reload even before any line item exists. Simulated order
+`RAC-2246a373` then preserved Walnut Select, 250 x 80 cm, EUR 78 surcharge and
+EUR 427 total; returning to the shop showed cart zero. The earlier `b0b8cba7`
+repair retains configuration controls when a subsequent purchase starts a fresh cart.
 [Evidence and continuation repairs](evidence/furniture-browser-2026-10-21.md).
 
 The expanded one-backend check also caught a nested settings read when saving
