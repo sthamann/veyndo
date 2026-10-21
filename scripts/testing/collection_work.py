@@ -184,5 +184,10 @@ def verify_category_edit(req, sh, merchant, check):
     req('/api/merchant/products/mug',{'revision':after['revision'],'categoryIds':['assignment_only'],'commerce':{'stock':999}},sh,method='PUT',expected=400)
     req('/api/merchant/products/mug',{'revision':after['revision'],'categoryIds':['live_only_assignment']},sh,method='PUT',expected=400)
     assert req('/api/merchant/products/mug',h=sh)==after
-    req('/api/merchant/products/mug',{'revision':after['revision'],'contentRevision':after['contentRevision'],'categoryIds':before['catalog']['categoryIds']},sh,method='PUT')
+    restore={'revision':after['revision'],'contentRevision':after['contentRevision'],'categoryIds':before['catalog']['categoryIds']}
+    req('/api/merchant/products/mug',restore,sh,method='PUT')
+    restored=req('/api/merchant/products/mug',h=sh)
+    assert restored['contentRevision']>after['contentRevision']
+    req('/api/merchant/products/mug',restore,sh,method='PUT',expected=409)
+    assert req('/api/merchant/products/mug',h=sh)==restored
     check('native category-only edit preserves commerce, translations, identity and channels; stale/mixed/foreign-category writes leave the product unchanged')
