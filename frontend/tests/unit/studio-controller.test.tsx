@@ -439,3 +439,52 @@ it("does not show a late approval or reopen the old conversation after a new cha
   expect(result.current.notice).toBeUndefined();
   expect(changed).not.toHaveBeenCalled();
 });
+
+it.each(["conversation", "refresh"])(
+  "keeps a new chat intact when approval is waiting for %s",
+  async (boundary) => {
+    sessionStorage.setItem("rac-user-token", "unit-token");
+    const { fetcher, messages } = network();
+    let complete!: () => void;
+    const wait = new Promise<void>((resolve) => {
+      complete = resolve;
+    });
+    const changed = vi.fn(() =>
+      boundary === "refresh" ? wait : Promise.resolve(),
+    );
+    const { result } = renderHook(
+      () => useStudioController({ onChanged: changed, onExit: vi.fn() }),
+      { wrapper: LocaleProvider },
+    );
+    await waitFor(() => expect(result.current.connected).toBe(true));
+    await act(() => result.current.load("c"));
+    const original = fetcher.getMockImplementation()!;
+    let waiting = false;
+    if (boundary === "conversation")
+      fetcher.mockImplementation(async (path, options) => {
+        if (String(path) === "/api/agent/conversations/c") {
+          waiting = true;
+          await wait;
+        }
+        return original(path, options);
+      });
+    let applied!: Promise<void>;
+    act(() => {
+      applied = result.current.apply(messages[0]);
+    });
+    await waitFor(() =>
+      expect(
+        boundary === "conversation" ? waiting : changed.mock.calls.length > 0,
+      ).toBe(true),
+    );
+    act(() => result.current.newChat());
+    await act(async () => {
+      complete();
+      await applied;
+    });
+    expect(result.current.id).toBeUndefined();
+    expect(result.current.messages).toEqual([]);
+    expect(result.current.notice).toBeUndefined();
+    if (boundary === "conversation") expect(changed).not.toHaveBeenCalled();
+  },
+);

@@ -111,9 +111,9 @@ export function useChatTurns(options: Options) {
   const load = async (id: string) => {
     const o = latest.current;
     const scope = o.scope;
+    const generation = ++pollGeneration.current;
     const value = await o.request(`/api/agent/conversations/${id}`);
-    if (latest.current.scope !== scope) return;
-    pollGeneration.current++;
+    if (!same(scope, o.id) || generation !== pollGeneration.current) return;
     o.setId(value.conversationId);
     o.setMessages(value.messages);
     setSaved(value.run ? { scope, id, value: value.run } : undefined);
@@ -186,13 +186,16 @@ export function useChatTurns(options: Options) {
     if (!same(o.scope, o.id)) return;
     if (o.id) await load(o.id);
     if (!same(o.scope, o.id)) return;
+    const generation = pollGeneration.current;
+    const current = () =>
+      same(o.scope, o.id) && generation === pollGeneration.current;
     await o.refresh();
     const notice: StudioNotice | undefined = result.applied
       ? { key: "approvedAction" }
       : result.queued
         ? { key: "acceptedWork" }
         : undefined;
-    return same(o.scope, o.id) ? { notice } : undefined;
+    return current() ? { notice, current } : undefined;
   };
   const controlRun = async (action: "resume" | "cancel") => {
     const o = latest.current;

@@ -293,7 +293,7 @@ export function useStudioController({
     const result = await chat.apply(m);
     if (!result) return;
     await onChanged();
-    setNotice(result.notice);
+    if (result.current()) setNotice(result.notice);
   };
   const onProduct = (productId: string) => setFocus(productId);
   const selected =
