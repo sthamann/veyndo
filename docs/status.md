@@ -69,8 +69,9 @@ pages, distinguishes queued work from completed changes and fences late conversa
 responses. Its frontend baseline passes 732 tests and the existing coverage
 thresholds; four additional checks cover the new actionable release errors.
 The release-order repair is deployed. Native full CI passed for PR #178, now
-merged. PR #182 stopped at a test-file formatting check; the formatting is
-corrected and the new verification run is in progress.
+merged. PR #182 passed the complete required verification run
+[39602839351](https://github.com/sthamann/veyndo/actions/runs/39602839351)
+and merged as `6ef9a240`. Its subsequent documentation update is published.
 
 The [hosted private furniture journey](evidence/furniture-browser-2026-10-21.md)
 now completes a EUR 417 simulated purchase with material, dimensions and native
@@ -94,6 +95,17 @@ Independent hosted B2B approval and saved
 selection/reorder acceptance remain open.
 See [the ordered follow-ups](connected-merchant-followups.md) and the
 [saved-work contract](durable-agent-runs.md).
+
+## 21 October: original Storyfront purchase scene
+
+Experience image `sole-shield-9134` (`56ae7b8`, original pin `a08a0f5`)
+restores scrolling inside the original long-description Purchase scene. The
+public browser reached Add to bag using the pointer and completed embedded
+simulated order `RAC-3bce945b`: EUR 24.90 total, EUR 3.98 VAT and the German
+product name. Receipt return closed the iframe; a full reload retained an
+empty original Storyfront bag. [Screenshots and exact acceptance boundary](evidence/storyfront-checkout-2026-10-21.md#pointer-acceptance-on-the-original-scrollable-purchase-scene).
+The first iframe open required its visible retry, so first-load reliability
+remains open. No real payment was made.
 
 ## 20 October: design onboarding and readable product comparison
 
