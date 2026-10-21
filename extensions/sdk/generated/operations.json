@@ -670,6 +670,7 @@
               },
               "provider": {
                 "enum": [
+                  "platform",
                   "ollama",
                   "openai",
                   "anthropic"
@@ -681,6 +682,17 @@
           },
           "overwrite": {
             "type": "boolean"
+          },
+          "productIds": {
+            "items": {
+              "maxLength": 160,
+              "minLength": 1,
+              "type": "string"
+            },
+            "maxItems": 1000,
+            "minItems": 1,
+            "type": "array",
+            "uniqueItems": true
           },
           "targetLocale": {
             "type": "string"
