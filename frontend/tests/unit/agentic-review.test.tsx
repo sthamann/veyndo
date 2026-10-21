@@ -70,6 +70,49 @@ it("links incomplete declarations to editors and agent tests without asserting e
     expect.stringContaining("denied, retry and rollback"),
   );
 });
+it("keeps actual read-only review blocked without mislabelling accepted or completed work", () => {
+  const approve = vi.fn();
+  const message: any = {
+    id: 1,
+    applied: false,
+    data: {
+      preview: {
+        catalogBefore: [],
+        proposal: {
+          changes: [],
+          operations: [
+            {
+              name: "merchant.category.create",
+              label: "Create category",
+              arguments_json: "{}",
+            },
+          ],
+        },
+      },
+    },
+  };
+  const view = (applied = false, approvalStarted = false) => (
+    <LocaleScope locale="en-GB">
+      <ProposalCard
+        message={{ ...message, applied }}
+        onApply={approve}
+        busy={false}
+        canApply={false}
+        approvalStarted={approvalStarted}
+      />
+    </LocaleScope>
+  );
+  const { rerender } = render(view());
+  expect(screen.getByText(/read.only/i)).toBeVisible();
+  expect(screen.getByRole("button", { name: /approve/i })).toBeDisabled();
+  rerender(view(false, true));
+  expect(screen.queryByText(/read.only/i)).toBeNull();
+  expect(screen.queryByRole("button", { name: /approve/i })).toBeNull();
+  rerender(view(true));
+  expect(screen.queryByText(/read.only/i)).toBeNull();
+  expect(screen.queryByRole("button", { name: /approve/i })).toBeNull();
+  expect(approve).not.toHaveBeenCalled();
+});
 it("compares stable block identity, theme changes and real responsive preview entry", () => {
   const before = { ...newPage("default", "en-GB", "Home"), revision: 2 };
   before.content.blocks = [newBlock("text", "en-GB", "Old")];

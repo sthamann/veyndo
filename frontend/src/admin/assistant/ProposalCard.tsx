@@ -10,12 +10,14 @@ export default function ProposalCard({
   onApply,
   busy,
   canApply,
+  approvalStarted = false,
   onOpenView,
 }: {
   message: Message;
   onApply: () => void;
   busy: boolean;
   canApply: boolean;
+  approvalStarted?: boolean;
   onOpenView?: (
     view: NonNullable<
       NonNullable<Message["data"]["preview"]>["proposal"]["view"]
@@ -47,7 +49,9 @@ export default function ProposalCard({
     <section
       className={`proposal-review ${message.applied ? "is-applied" : ""}`}
     >
-      {!canApply && <p>{t("readOnly")}</p>}
+      {!canApply && !busy && !message.applied && !approvalStarted && (
+        <p>{t("readOnly")}</p>
+      )}
       <header>
         <div className="review-status">
           <Icon name={message.applied ? "check" : "pulse"} size={18} />
@@ -177,7 +181,7 @@ export default function ProposalCard({
           <blockquote>{preview.proposal.experience.headline}</blockquote>
         </div>
       )}
-      {!message.applied && !preview.proposal.view && (
+      {!message.applied && !approvalStarted && !preview.proposal.view && (
         <footer>
           <span>
             <Icon name="lock" size={14} />

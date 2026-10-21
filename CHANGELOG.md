@@ -1,5 +1,11 @@
 # Changelog
 
+## Public Flow-to-workspace acceptance — 2026-10-21
+
+- Deliver `09b1aa35` / `giving-insect-7440` and complete the original configured-provider Flow proposal through the selected private workspace. Observe one native category at revision one, restored completion after browser reload and no category in the parent live shop. Retain screenshots and exact scope in the public evidence page.
+- Separate execution state from permission labels: accepted/completed proposals no longer show a misleading read-only warning, and accepted work cannot offer a second approval button. Real read-only proposals remain blocked.
+- Make the site-builder onboarding test await the actual package-review response before clicking its enabled installation button; retain the complete consent assertion.
+
 ## Unreleased — retain approved workspace tasks after reload
 
 - Load and approve personal-workspace tasks in the currently selected sandbox. Personal layouts continue to use the parent shop; switching environments discards late proposal responses.

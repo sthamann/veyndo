@@ -66,6 +66,7 @@ export default function WorkspaceTask({
               },
             }}
             busy={busy}
+            approvalStarted={accepted}
             canApply={!applied && !accepted}
             onApply={progress.approve}
           />

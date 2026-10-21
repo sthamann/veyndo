@@ -79,6 +79,7 @@ it("reviews and approves private work in the sandbox while saving the personal l
   fireEvent.click(screen.getByRole("button", { name: "Open" }));
   fireEvent.click(screen.getByRole("button", { name: /approve/i }));
   await screen.findByText("Done");
+  expect(screen.queryByText(/read.only/i)).toBeNull();
   expect(request).toHaveBeenCalledWith(
     "/api/agent/tasks/private-flow-task/apply",
     { approve: true },

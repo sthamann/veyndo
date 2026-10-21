@@ -4,6 +4,16 @@ This is the single starting point for what works, what is implemented but not
 publicly accepted, and what still needs development. Updated 21 October 2026.
 A green test, merged code and a completed public business journey are different evidence.
 
+Latest public acceptance: an ordinary product event prepared a configured-model
+Flow proposal; the original proposal was approved in the selected private workspace
+on Core/Studio `09b1aa35` (`giving-insect-7440`). Exactly one hidden native category
+was created at revision one. The completed task survived a full reload and the
+category was absent from the parent live shop. The repair also keeps previously
+approved queued or interrupted tasks available to their original actor.
+[Flow-to-workspace evidence and screenshots](evidence/flow-native-work-2026-10-21.md).
+Turning accepted work into a configurable Flow with mapped event inputs remains
+the next development step; it is not claimed by this acceptance.
+
 Current additional repair: saved material/dimensions now have an app/product-scoped
 representation in the native cart response, so forms can restore them after a
 reload before the first line item is added. Actual HTTP/PostgreSQL and rendered

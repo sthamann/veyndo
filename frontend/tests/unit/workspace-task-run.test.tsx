@@ -218,6 +218,8 @@ it("renders worker progress in the same shared card rather than declaring comple
   expect(screen.getByText("Saved · waiting for a worker")).toBeInTheDocument();
   expect(screen.queryByText("Done")).toBeNull();
   expect(screen.queryByText("Approved work completed")).toBeNull();
+  expect(screen.queryByText(/read.only/i)).toBeNull();
+  expect(screen.queryByRole("button", { name: /approve/i })).toBeNull();
   unmount();
 });
 it("stops polling after cancellation and discards an older in-flight status response", async () => {

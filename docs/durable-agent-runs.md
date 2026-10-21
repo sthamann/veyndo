@@ -191,6 +191,10 @@ write, replay protection and unchanged live data. It also covers the graphical
 pipeline, a stop before/during inference, permission withdrawal during inference,
 and expired direct/pipeline jobs with and without a second recovery worker.
 These are local HTTP/PostgreSQL tests with a synthetic model, not public acceptance.
+Separately, [public browser acceptance on 21 October](evidence/flow-native-work-2026-10-21.md)
+uses the configured OpenAI provider and original saved proposal on `09b1aa35`:
+one explicitly approved private category write, revision one, completed progress
+retained after reload and unchanged parent live categories.
 Flow inference still follows its existing job/uncertainty handling; this connection
 does not add durable model checkpoints to legacy Flow calls or turn arbitrary
 accepted work into a parameterized automation automatically.
