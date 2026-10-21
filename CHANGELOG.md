@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased — strict provider selection schema
+
+- Omit unsupported `uniqueItems` only from the OpenAI strict wire schema and reject duplicate selections when restoring the model result; preserve the original domain schema and product/tenant validation.
+- Make the existing real HTTP provider fixture reject that keyword for Responses and Chat Completions, covering the actual merchant planner final request rather than only a synthetic schema.
+- Record the 21 October collection rollout separately from the still-open configured-model acceptance. The saved public task stopped before approval with HTTP 400; this repair must be verified on that task after deployment.
+
 ## Unreleased — connected collection preparation
 
 - Freeze explicit product selections in existing durable translation jobs; reject empty, duplicate, malformed and unavailable IDs instead of silently expanding scope.

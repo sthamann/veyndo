@@ -627,8 +627,8 @@
     },
     "crates/cognition/src/inference/schema.rs": {
       "status": "unproved",
-      "sha256": "87ea0b078500abfd079cd3f8fce80c86c6f586c1a175c3d1aa042ec08543a551",
-      "review": "Independent focused review: restore strict-provider optional non-null typed placeholders to absence; preserve required and explicitly nullable values, current domain validation and authority. Failing-first null-array regression and actual OpenAI wire fixtures cover planner operations and composed lifecycles."
+      "sha256": "3406af7dc0fcdddbe7561d3b48952628c777f88a0e54bf6ef082e65a780ce7cc",
+      "review": "Review strict provider wire-only uniqueItems removal, original-schema duplicate rejection before proposals, nullable/distinct selection tests and rejecting HTTP provider fixture; no commerce policy or authority changes"
     },
     "crates/cognition/src/inference/settings.rs": {
       "status": "unproved",

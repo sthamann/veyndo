@@ -1,6 +1,11 @@
 //! Provider wire adaptation for strict fixed-object schemas; dynamic JSON is encoded only on the model wire and restored before domain validation.
 use serde_json::{Value, json};
 pub(super) fn strict_schema(mut v: Value) -> Value {
+    // OpenAI's strict array subset excludes uniqueItems. Preserve the domain
+    // schema and reject duplicates during restoration before any proposal exists.
+    if let Some(object) = v.as_object_mut() {
+        object.remove("uniqueItems");
+    }
     if v.is_object()
         && ((v["type"] == "object" && !v["properties"].is_object())
             || (v.get("type").is_none() && v.get("anyOf").is_none() && v.get("enum").is_none()))
@@ -85,8 +90,16 @@ pub(super) fn restore(schema: &Value, mut value: Value) -> Result<Value, String>
     if let Some(items) = schema.get("items")
         && let Some(array) = value.as_array_mut()
     {
-        for v in array {
+        for v in array.iter_mut() {
             *v = restore(items, v.clone())?;
+        }
+        if schema["uniqueItems"] == true {
+            let mut seen = std::collections::HashSet::new();
+            for item in array {
+                if !seen.insert(item.to_string()) {
+                    return Err("Model returned duplicate items in a unique selection".into());
+                }
+            }
         }
     }
     Ok(value)
@@ -94,6 +107,28 @@ pub(super) fn restore(schema: &Value, mut value: Value) -> Result<Value, String>
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn unique_product_selection_is_enforced_by_host_not_provider_schema() {
+        let schema = json!({"type":"object","properties":{
+            "translation_products":{"type":["array","null"],"minItems":1,
+                "maxItems":1000,"uniqueItems":true,"items":{"type":"string"}}
+        }});
+        let wire = strict_schema(schema.clone());
+        let selection = &wire["properties"]["translation_products"]["anyOf"][0];
+        assert!(selection.get("uniqueItems").is_none());
+        assert_eq!(selection["maxItems"], 1000);
+        assert!(restore(&schema, json!({"translation_products":["a","a"]})).is_err());
+        let distinct = json!({"translation_products":["a","b"]});
+        assert_eq!(restore(&schema, distinct.clone()).unwrap(), distinct);
+        assert_eq!(
+            restore(&schema, json!({"translation_products":null})).unwrap(),
+            json!({"translation_products":null})
+        );
+        assert_eq!(
+            schema["properties"]["translation_products"]["uniqueItems"],
+            true
+        );
+    }
     #[test]
     fn wire_only_optional_nulls_restore_absence_without_clearing_domain_values() {
         let schema = json!({"type":"object","required":["changes"],"properties":{
