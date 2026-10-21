@@ -48,16 +48,20 @@ export default function ProductPage({
   const detailContext = JSON.stringify([
     id,
     locale,
-    cart?.token,
+    cart?.customerId,
     cart?.customerGroup,
     cart?.checkout.country,
+    cart?.price.currency,
+    cart?.b2b?.unitId,
   ]);
   const loadedContext = useRef("");
   useEffect(() => {
     ++detailRequest.current;
     let active = true;
     // Repricing the current cart must not unmount app controls, lose unsaved
-    // inputs or erase their saved confirmation. A changed identity still resets.
+    // inputs or erase their saved confirmation, including a new cart after a
+    // purchase. Tokens still trigger a fresh native read below; buyer, country,
+    // currency and company changes reset the controls rather than leaking input.
     const reset = loadedContext.current !== detailContext;
     loadedContext.current = detailContext;
     if (reset) {

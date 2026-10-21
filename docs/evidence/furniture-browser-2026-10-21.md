@@ -33,7 +33,23 @@ again; a denied sandbox stays closed. An explicit Live shop action remains
 available to recover. Tests cover reload, changed shops, revoked access, explicit
 return to live and unavailable browser storage.
 
-These two continuation repairs are locally verified, awaiting public rollout.
-The full frontend suite passes 743 tests in 127 files with unchanged coverage
-gates. This browser session does not yet accept independent B2B approval or the
+Public image `shallow-place-4222` (`fa33a003`) started as deployment
+`vendune-core-647d66b84d` at 14:13 CEST, with one passing replica and zero restarts.
+The hosted browser completed another simulated order, `RAC-6c9f8c4f`, at 14:17:51:
+Walnut Select, 260 x 80 cm, EUR 78 surcharge, EUR 427 total and EUR 68.17 VAT.
+The German product label, native order record and order.placed Flow note agree.
+Return showed cart zero. Without reloading, a new 180 x 80 cm configuration and
+add-to-cart succeeded at EUR 379 with the correct EUR 30 surcharge. The previous
+completed-cart conflict no longer occurs. The Studio orders page also retained
+the private workspace and both original amounts across a full browser reload.
+
+That continuation exposed a remaining presentation bug: replacing a completed
+cart cleared the configuration controls even though the native selection and
+new cart were correct. The follow-up preserves controls while refetching prices
+for a new cart token, but resets them for a different buyer, country, currency or
+company. A rendered regression first reproduced the empty field, then passed both
+cart rollover and changed-buyer reset. This additional presentation repair awaits
+rollout; the full frontend suite now passes 744 tests with unchanged coverage gates.
+
+This browser session does not yet accept independent B2B approval or the
 saved-input reorder journey; those have separate local HTTP/PostgreSQL coverage.

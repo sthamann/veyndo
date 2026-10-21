@@ -61,13 +61,19 @@ responses. Its frontend baseline passes 732 tests and the existing coverage
 thresholds; four additional checks cover the new actionable release errors.
 The release-order repair is deployed. Native full CI passed for PR #178, now
 merged. PR #182 stopped at a test-file formatting check; the formatting is
-corrected and the new verification run is pending.
+corrected and the new verification run is in progress.
 
 The [hosted private furniture journey](evidence/furniture-browser-2026-10-21.md)
 now completes a EUR 417 simulated purchase with material, dimensions and native
 order/Flow records; later material edits leave the order unchanged. Continuation
-after purchase and Studio sandbox reload repairs pass 743 frontend tests locally;
-these two repairs still await rollout. Independent hosted B2B approval and saved
+after purchase and Studio sandbox reload repairs are public in `fa33a003`, image
+`shallow-place-4222`, deployed at 14:13 CEST. A second simulated order
+`RAC-6c9f8c4f` for EUR 427, empty-cart return, a fresh EUR 379 configuration/cart
+without reload, and the retained private Studio order list after reload passed.
+The subsequent control-reset presentation repair passes the now 744-test frontend
+suite but awaits rollout. [One selected product's missing German text](evidence/product-gaps-2026-10-21.md)
+was also prepared, reviewed and applied without changing its price or stock.
+Independent hosted B2B approval and saved
 selection/reorder acceptance remain open.
 See [the ordered follow-ups](connected-merchant-followups.md) and the
 [saved-work contract](durable-agent-runs.md).

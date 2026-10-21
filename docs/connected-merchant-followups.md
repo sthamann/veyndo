@@ -101,3 +101,12 @@ roles. Role writes now use the existing locked commerce configuration reader in
 their current transaction. Current delegation and revision checks remain in the
 same owner. Required transaction-pool acceptance includes roles, native object
 extensions, material graph/upgrade/reorder and UCP purchasing.
+
+## Product gaps: current hosted acceptance
+
+The public assistant inspected one selected private product, identified missing
+German text/media and prepared a translation job for exactly that product.
+Separate review/apply produced visible German storefront text while preserving
+price and stock. [Observed scope and remaining limits](evidence/product-gaps-2026-10-21.md).
+This establishes a bounded correction path; it does not claim whole-catalogue
+coverage or completed image generation.

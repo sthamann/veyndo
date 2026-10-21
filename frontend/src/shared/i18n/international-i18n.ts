@@ -430,6 +430,12 @@ export const internationalWords = {
   resume: ["Resume", "Fortsetzen", "Reprendre", "Reanudar"],
   cancel: ["Cancel", "Abbrechen", "Annuler", "Cancelar"],
   applied: ["Applied", "Übernommen", "Appliqué", "Aplicado"],
+  applyDraft: [
+    "Apply this draft",
+    "Diesen Entwurf übernehmen",
+    "Appliquer ce brouillon",
+    "Aplicar este borrador",
+  ],
   conflict: [
     "Changed since translation",
     "Seit Übersetzung geändert",

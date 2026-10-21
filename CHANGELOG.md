@@ -2,6 +2,7 @@
 
 ## Unreleased — continuation after purchase and Studio reload
 
+- Preserve app configuration fields while a fresh cart replaces a completed purchase and native prices refresh. A changed buyer, country, currency or company still resets those inputs. Label individual translation application as an action rather than an already-completed state in EN/DE/FR/ES.
 - Route app product configuration through the same serialized native cart owner as add/quantity actions. A completed purchase creates a fresh cart before the next configuration; conflicts are shown without silent retries, and abandoned shop scopes cannot adopt late results.
 - Remember the selected Studio sandbox separately for each live shop and browser tab. Reload revalidates its current rights; failed access stays closed with an explicit return-to-live action instead of silently switching the destination.
 
