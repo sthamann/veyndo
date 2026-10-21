@@ -5,6 +5,7 @@
 - Add native AI-context/graph metadata to furniture pattern `1.0.1`, keeping material names, EUR-cent surcharge and exact package/record provenance consistent across authorized API/MCP/public lists. Preserve reviewed material writes and private order-read rights.
 - Retain the immutable `1.0.0` package inside its plugin and test upgrade without losing records. Keep the executable purchasing workflow with the app; the registered host test only invokes it.
 - Complete a second purchase from saved inputs after material/rule changes, require new independent approval, reject replayed stock/order effects and preserve the original accepted order. Public B2B/browser acceptance remains a separate delivery step.
+- Reuse the existing transaction and locked commerce settings when saving roles, avoiding a nested database acquisition while retaining current delegation, language validation and revision checks. Keep role, core-extension, material and UCP purchasing journeys in the required one-backend pooler suite.
 
 ## Unreleased — connected collection preparation
 

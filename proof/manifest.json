@@ -2042,8 +2042,8 @@
     },
     "src/auth/roles.rs": {
       "status": "unproved",
-      "sha256": "5938ac48748cc995e7b12b6881759ed5361e043f23f727a4d0f64b689ddd856b",
-      "review": "Tenant roles and current grants independently reviewed; owner/retained-override/acceptance races repaired and PostgreSQL-blocked regressions passed; PII and Flow projection boundaries documented; B2B feature settings delegate shared CAS/history and preserve financial guards. Existing extracted policies unchanged; SQL/async/UI remain reviewed adapters, not full proofs."
+      "sha256": "9dbbdc8a01222c1dfee981cac935a3d659184bc8b3667f37ba7682c334f80bfe",
+      "review": "Role-save locale validation reuses the existing scoped_locked commerce owner and current transaction; preserves tenant lifecycle lock, refreshed delegation, role CAS and history while preventing nested pool acquisition and fencing locale edits. Existing workspace_roles and app extension signed one-backend regressions exercise this path."
     },
     "src/auth/route_policy.rs": {
       "status": "unproved",

@@ -68,3 +68,9 @@ acceptance now completes a second independently approved purchase after saved-in
 reorder and material/rule changes, checks idempotent order/stock effects and keeps
 the first order immutable. The original `1.0.0` definition and workflow tests stay
 inside the plugin directory. Public B2B/browser acceptance remains outstanding.
+
+The expanded one-backend check also caught a nested settings read when saving
+roles. Role writes now use the existing locked commerce configuration reader in
+their current transaction. Current delegation and revision checks remain in the
+same owner. Required transaction-pool acceptance includes roles, native object
+extensions, material graph/upgrade/reorder and UCP purchasing.

@@ -198,7 +198,9 @@ pub(crate) async fn invoke(a: &App, h: &RequestContext, name: &str, v: &Value) -
             return Err(bad("Invalid role definition"));
         }
         auth::validate_permissions(&actor, &d["permissions"])?;
-        let (settings, _) = commerce::config(a, &t).await?;
+        // Keep locale validation on the acquired connection and fence concurrent
+        // settings edits until this role commits; a cached/pool read can deadlock.
+        let (settings, _) = commerce::scoped_locked(&mut tx, &t, "default").await?;
         commerce::validate_names(&d["name"], &settings, 100)?;
         if row.is_none() {
             let count: i64 =
