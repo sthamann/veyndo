@@ -208,3 +208,34 @@ retained after reload and unchanged parent live categories.
 Flow inference still follows its existing job/uncertainty handling; this connection
 does not add durable model checkpoints to legacy Flow calls or turn arbitrary
 accepted work into a parameterized automation automatically.
+
+## Reuse a completed native plan
+
+The direct `work_proposal` Flow action accepts a bounded `workTemplate` containing
+`taskId`, `bindings` (`step`, JSON `pointer`, `source`) and `dailyLimit`. It uses the
+existing automation save/revision owner, outbox job and native ready-task persistence.
+Source lookup requires an applied, completed native work task in the same private
+workspace, its original actor and current coverage of its original run scopes. The
+Flow configuration contains no copy of source arguments; the editor reads those
+through the existing protected `merchant.run.status` contract.
+
+Sources are explicit scalar event fields (`productId`, `revision`, `orderId`,
+`documentId`) or stable `run.key:<identifier>` values scoped to the original Flow job.
+There is no text interpolation, model-produced SQL or new executor. The existing
+work binder revalidates native schemas, app packages, rights and expected revisions
+before the new proposal becomes ready. Explicit personal approval binds the actual
+session before any write, and the original worker retains its checkpoint/replay fences.
+
+Saving, restoring or publishing a template goes through the same Flow validator.
+Tasks are not cloned or published; a missing/different-workspace source is rejected.
+The current template action is direct/private, not a generic live scheduler or a
+new graphical pipeline node. Preparation uses zero model calls. Translation steps,
+once approved, retain their normal provider and usage path. The shared live-shop
+lock serializes the 1–100 daily Flow limit and 100-per-workspace UTC limit. All
+asynchronous SQL/authorization code remains outside the extracted formal proof.
+
+The actual HTTP/PostgreSQL suite `durable_agents` exercises completed work → template
+save → native product event → review → approval → private write, current-source-right
+withdrawal, wrong/missing event mappings, foreign workspace denial, emergency stop,
+zero new inference and two workers competing for the last daily proposal slot.
+[Merchant steps](personal-workspace-and-shop-design.md#repeat-completed-work-as-a-flow).

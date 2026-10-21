@@ -32,9 +32,12 @@ another approval. Direct history and the personal workspace now share the native
 progress/continuation card and current control checks. The linked evidence includes
 the public direct-history screenshot and 761 frontend, 27 durable-agent and 43
 tenant-isolation checks.
-Turning an accepted task into
-a configurable Flow with mapped inputs and event parameters remains the next part
-of item 4; the existing title-only shortcut is not that complete workflow.
+The next implementation adds **Reuse as a Flow** for completed native work:
+reference-only source tasks, explicit event-field mappings, inactive drafts,
+per-Flow/workspace daily limits and the original personal review/execution path.
+See [the usage and permission boundary](personal-workspace-and-shop-design.md#repeat-completed-work-as-a-flow).
+This new extension still needs its own public browser acceptance; the 4c0392ae
+screenshots establish shared progress, not this new handoff.
 
 ## Collection preparation: current development
 

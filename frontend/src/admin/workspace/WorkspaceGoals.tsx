@@ -153,6 +153,11 @@ export default function WorkspaceGoals({
               key={task.id}
               task={task}
               request={request}
+              onFlow={
+                rights.includes("automation.manage")
+                  ? () => onOpen("automation")
+                  : undefined
+              }
               onTranslations={(jobId) => {
                 const target = new URL(location.href);
                 target.searchParams.set("settings", "languages");

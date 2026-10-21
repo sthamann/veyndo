@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased — reuse completed private work as a Flow
+
+- Add an inactive Flow draft from completed native work, with explicit event-field mappings and per-Flow/workspace daily review limits. Preparation reuses actual reviewed operations without another model call; personal approval and the existing durable worker still own every write.
+- Keep original task inputs actor-private. Configuration/history store only a source-task reference; current original scopes, workspace, actor, native revision and app checks apply again. Source tasks cannot be published to another workspace.
+- Connect the original Flow Builder and personal workspace with EN/DE/FR/ES controls, protected-source reload and scope-change cleanup. Verify native outbox execution, replay, foreign/source-right denial, stop, absent event fields and competing workers.
+
 ## Unreleased — shared progress in direct Flow review
 
 - Connect the direct Flow-history proposal to the existing native task progress, explicit resume/cancel and translation editor. A completed proposal job no longer hides pending approved work; reload observes the original execution without a second approval.

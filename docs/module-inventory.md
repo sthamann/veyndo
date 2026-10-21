@@ -397,6 +397,8 @@ This lists every checked-in source module in these roots, including files with n
 | [src/marketing/rule_snapshot.rs](../src/marketing/rule_snapshot.rs) | Resolve only referenced tenant rule IDs with indexed batched reads; freeze active definitions and revisions into the event snapshot. |
 | [src/marketing/rule_tests.rs](../src/marketing/rule_tests.rs) | Regression cases for native rule facts and original container boundaries. |
 | [src/marketing/rules.rs](../src/marketing/rules.rs) | Bounded Shopware-style boolean/numeric rule AST. Unknown operators/conditions fail closed. |
+| [src/marketing/work_template.rs](../src/marketing/work_template.rs) | Bounded copies of reviewed native work: event values replace explicit scalar fields, never executable text. |
+| [src/marketing/work_template_source.rs](../src/marketing/work_template_source.rs) | Templates reference actor-private task evidence; configuration/history/release never copy its inputs. |
 | [src/mcp/protocol.rs](../src/mcp/protocol.rs) | JSON-RPC envelope errors differ from actionable domain/tool failures; no transport invents authorization. |
 | [src/mcp/transport.rs](../src/mcp/transport.rs) | MCP visibility and shared read-scope memoization, independent of internal planning tools. |
 | [src/mcp.rs](../src/mcp.rs) | Typed MCP schemas and JSON-RPC transport. |
@@ -645,12 +647,15 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/admin/automation/PromotionSchedule.tsx](../frontend/src/admin/automation/PromotionSchedule.tsx) | Campaign scheduling uses ISO instants in the API and local times in the editor. |
 | [frontend/src/admin/automation/RuleBuilder.tsx](../frontend/src/admin/automation/RuleBuilder.tsx) | Visual recursive rule tree: AND/OR/NOT groups, typed facts and editable leaf conditions. |
 | [frontend/src/admin/automation/SourceRuleFields.tsx](../frontend/src/admin/automation/SourceRuleFields.tsx) | Original metadata drives typed condition inputs, including nested source scopes; unsupported runtimes stay visibly disabled. |
+| [frontend/src/admin/automation/WorkTemplateEditor.tsx](../frontend/src/admin/automation/WorkTemplateEditor.tsx) | Bounded field-to-event mapping over the original native operations, never a second executor. |
 | [frontend/src/admin/automation/automation-types.ts](../frontend/src/admin/automation/automation-types.ts) | Automation editor contracts; content languages come from the selected shop. |
 | [frontend/src/admin/automation/goal-template.ts](../frontend/src/admin/automation/goal-template.ts) | Explicit personal goal handoff into an inactive native Flow draft; no URL, persistence or new scheduler. |
 | [frontend/src/admin/automation/lifecycle-i18n.ts](../frontend/src/admin/automation/lifecycle-i18n.ts) | Shared lifecycle, starting-process and dependency vocabulary for every automation editor. |
 | [frontend/src/admin/automation/pipeline-types.ts](../frontend/src/admin/automation/pipeline-types.ts) | Stable graph data mirrors the Rust pipeline contract, with explicit true/false edges and persistent node identifiers. |
 | [frontend/src/admin/automation/source-rules.ts](../frontend/src/admin/automation/source-rules.ts) | Convert source condition nodes for the graphical editor without losing original payload fields. |
 | [frontend/src/admin/automation/useAutomationLanguages.ts](../frontend/src/admin/automation/useAutomationLanguages.ts) | Load the current shop's content-language context and ignore replies after the workspace changes. |
+| [frontend/src/admin/automation/work-template-i18n.ts](../frontend/src/admin/automation/work-template-i18n.ts) | Reviewed-work Flow vocabulary in every Studio interface language. |
+| [frontend/src/admin/automation/work-template.ts](../frontend/src/admin/automation/work-template.ts) | Keep only a protected task reference in Flow configuration; operation inputs stay in actor-private evidence. |
 | [frontend/src/admin/b2b/B2BWorkspace.tsx](../frontend/src/admin/b2b/B2BWorkspace.tsx) | Tenant-scoped company workspace; canonical API operations are also exposed through MCP. |
 | [frontend/src/admin/b2b/CompanyCreate.tsx](../frontend/src/admin/b2b/CompanyCreate.tsx) | Guided company creation is one atomic native API command; the main-language name is always visible. |
 | [frontend/src/admin/b2b/CustomerPicker.tsx](../frontend/src/admin/b2b/CustomerPicker.tsx) | B2B reuses the shared native customer picker; purchasing policy stays in its domain owner. |
@@ -1738,6 +1743,7 @@ This lists every checked-in source module in these roots, including files with n
 | [scripts/testing/agent_flow_work.py](../scripts/testing/agent_flow_work.py) | Native product event -> Flow proposal -> personal approval -> original durable work executor. |
 | [scripts/testing/agent_work.py](../scripts/testing/agent_work.py) | An actual reviewed model plan writes two private records once through the native task worker. |
 | [scripts/testing/agent_work_restart.py](../scripts/testing/agent_work_restart.py) | Kill the actual approved-work Rust worker during its second managed save; checkpoint and record commit together. |
+| [scripts/testing/agent_work_template.py](../scripts/testing/agent_work_template.py) | Repeat completed native work through real outbox/Flow/approval owners; source evidence stays private. |
 | [scripts/testing/app_approval.py](../scripts/testing/app_approval.py) | Use the Rust manifest serializer for operator pins; never invent a second canonical digest. |
 | [scripts/testing/app_discovery.py](../scripts/testing/app_discovery.py) | Exercise real app discovery beyond an alphabetical sample and enforce read-only native dispatch. |
 | [scripts/testing/b2b_checkout_race.py](../scripts/testing/b2b_checkout_race.py) | Force the real customer-share/unit-update checkout interleaving; no business handler is mocked. |

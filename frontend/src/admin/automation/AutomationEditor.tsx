@@ -229,7 +229,12 @@ export default function AutomationEditor({
       )}
       {kind === "flows" && (
         <>
-          <FlowBuilder data={data} update={update} catalog={catalog} />
+          <FlowBuilder
+            request={request}
+            data={data}
+            update={update}
+            catalog={catalog}
+          />
           {data.action !== "pipeline" && (
             <LocalizedField
               label={w("instruction")}

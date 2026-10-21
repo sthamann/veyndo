@@ -1427,8 +1427,8 @@
     },
     "src/agent_runs/flow_proposals.rs": {
       "status": "unproved",
-      "sha256": "2818b6c5267bf25ea78ff602407f6ae8de7aa0c3d36d7100fc0618f50bdad493",
-      "review": "Reviewed Flow result row lock materialization before wall-clock lease check, so lock waits cannot preserve an earlier lease decision. Actual direct and two-worker HTTP/PostgreSQL expiry cases pass; no extracted pure rule changed."
+      "sha256": "5ddd3031d46fe91aa89bd9dc3781332e93c51a6887034df29837b7eb7e6b3056",
+      "review": "Reviewed task-reference-only Flow templates, same actor and original scope checks at native save and runtime, scalar event mapping, no copied credentials or source inputs, shared stop/lease and transactional daily limits; actual private event-to-approval write, denial and zero-inference regressions plus UI scope cleanup pass. Async SQL remains outside formal proof."
     },
     "src/agent_runs/translation.rs": {
       "status": "unproved",
@@ -3172,8 +3172,8 @@
     },
     "src/marketing/flow_actions.rs": {
       "status": "unproved",
-      "sha256": "0b4746b30d3f645562adbb839ef508f1af86aca7d9c4d2adb522857415b5aaca",
-      "review": "Reviewed Flow source job propagation and transaction-locked current lease fence. Actual HTTP/PostgreSQL regressions reproduce rejected late results after expiry, with and without second-worker recovery; personal approval and native replay remain unchanged. SQL authority is outside extracted pure proof scope."
+      "sha256": "2935e0a7f3b82606f5a5906b9541eb89a5f6ce0da7a3f4599e07725c2366a213",
+      "review": "Reviewed task-reference-only Flow templates, same actor and original scope checks at native save and runtime, scalar event mapping, no copied credentials or source inputs, shared stop/lease and transactional daily limits; actual private event-to-approval write, denial and zero-inference regressions plus UI scope cleanup pass. Async SQL remains outside formal proof."
     },
     "src/marketing/flow_mutations.rs": {
       "status": "unproved",
@@ -3182,8 +3182,8 @@
     },
     "src/marketing/flow_policy.rs": {
       "status": "unproved",
-      "sha256": "52ab66406ed33fa99240a4cae274ded1ad30c4b7c8a908e2b9ba5f7fb059c2f4",
-      "review": "Tenant roles and current grants independently reviewed; owner/retained-override/acceptance races repaired and PostgreSQL-blocked regressions passed; PII and Flow projection boundaries documented; B2B feature settings delegate shared CAS/history and preserve financial guards. Existing extracted policies unchanged; SQL/async/UI remain reviewed adapters, not full proofs."
+      "sha256": "acf30cf093d7b7f78d744fc31be37a1371571ef66df77f660d22a3eb0cba034e",
+      "review": "Reviewed task-reference-only Flow templates, same actor and original scope checks at native save and runtime, scalar event mapping, no copied credentials or source inputs, shared stop/lease and transactional daily limits; actual private event-to-approval write, denial and zero-inference regressions plus UI scope cleanup pass. Async SQL remains outside formal proof."
     },
     "src/marketing/flow_text.rs": {
       "status": "unproved",
@@ -3192,8 +3192,8 @@
     },
     "src/marketing/flows.rs": {
       "status": "unproved",
-      "sha256": "dbc1173ed5a1051c38b961f7ddff0f379fb9593b6442ff2227c3df5748b04968",
-      "review": "Reviewed Flow source job propagation and transaction-locked current lease fence. Actual HTTP/PostgreSQL regressions reproduce rejected late results after expiry, with and without second-worker recovery; personal approval and native replay remain unchanged. SQL authority is outside extracted pure proof scope."
+      "sha256": "f0352962bb3457aa50044d3f1ee820d9c5eef0922367a55dbd5187d8e655cb82",
+      "review": "Reviewed task-reference-only Flow templates, same actor and original scope checks at native save and runtime, scalar event mapping, no copied credentials or source inputs, shared stop/lease and transactional daily limits; actual private event-to-approval write, denial and zero-inference regressions plus UI scope cleanup pass. Async SQL remains outside formal proof."
     },
     "src/marketing/gateway.rs": {
       "status": "unproved",
@@ -3222,8 +3222,8 @@
     },
     "src/marketing/mod.rs": {
       "status": "unproved",
-      "sha256": "9772180fada9291de82356791f04ecd426cb535c74279a7c2061ef1dfbecf698",
-      "review": "Reviewed scheduled Flow proposal persistence through native ready tasks: current Flow membership, private scope, original grant ceiling and shop-stop lock; personal approval alone supplies execution authority. Actual product-event, graphical pipeline, isolated approval/replay and stop-during-provider tests pass. No extracted pure policy changed; SQL, async and authorization integration remain unproved."
+      "sha256": "4f513ae626ccf4d75febdddae281693e55ebe148da3bf759844de10764cfd362",
+      "review": "Reviewed task-reference-only Flow templates, same actor and original scope checks at native save and runtime, scalar event mapping, no copied credentials or source inputs, shared stop/lease and transactional daily limits; actual private event-to-approval write, denial and zero-inference regressions plus UI scope cleanup pass. Async SQL remains outside formal proof."
     },
     "src/marketing/pipeline.rs": {
       "status": "reviewed-binding",
@@ -3279,6 +3279,16 @@
       "status": "unproved",
       "sha256": "80f1e23235bb4140c79fd089867ed566b00ff0a7b1dd942dcc16e55b48b2867e",
       "review": "Identity-only Veyndo namespace and canonical-domain rename; reviewed migration checksum compatibility for six historical SQL versions, unchanged checkout predicates, 42 library and 169 binary tests pass; native component legacy boundary remains configured and guarded."
+    },
+    "src/marketing/work_template.rs": {
+      "status": "unproved",
+      "sha256": "48de681daa6073361dd44227ae546d00148f0a92a27c4b201085ebbbbabe107c",
+      "review": "Reviewed task-reference-only Flow templates, same actor and original scope checks at native save and runtime, scalar event mapping, no copied credentials or source inputs, shared stop/lease and transactional daily limits; actual private event-to-approval write, denial and zero-inference regressions plus UI scope cleanup pass. Async SQL remains outside formal proof."
+    },
+    "src/marketing/work_template_source.rs": {
+      "status": "unproved",
+      "sha256": "f89b5bf1fc2a4cda6b60d2b8bc67db04f738997faa051f537e71d4e79ee393b7",
+      "review": "Reviewed task-reference-only Flow templates, same actor and original scope checks at native save and runtime, scalar event mapping, no copied credentials or source inputs, shared stop/lease and transactional daily limits; actual private event-to-approval write, denial and zero-inference regressions plus UI scope cleanup pass. Async SQL remains outside formal proof."
     },
     "src/mcp/protocol.rs": {
       "status": "unproved",

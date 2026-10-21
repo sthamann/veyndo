@@ -28,6 +28,8 @@ mod flow_mutations;
 mod flow_text;
 mod flows;
 mod lifecycle;
+mod work_template;
+mod work_template_source;
 pub(crate) use lifecycle::{lock as lock_config, validate_references};
 mod line_facts;
 mod pipeline;
