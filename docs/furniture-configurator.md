@@ -5,15 +5,24 @@ rule with native company approval, checkout and reusable order lists. Its busine
 code and Manifest live in `extensions/apps/furniture-configurator/`. It adds no
 physical database table and no second cart, price calculator or approval queue.
 
-**Acceptance boundary:** the automated local HTTP/PostgreSQL workflow uses
-simulated payment and synthetic customers. The [hosted app workflow](evidence/platform-hardening-hosted-2026-10-16.md)
-now covers pattern creation, actual private material writes, immutable version,
-reviewed sandbox install and selected publication. The [public summary follow-up](evidence/configuration-summary-hosted-2026-10-16.md)
-completed Eiche, 260 × 80 cm, EUR 349 plus EUR 48, EUR 397 total with the choices
-visible in checkout, confirmation and native merchant order. Independent B2B
-approval/current-rule reorder remain connected local acceptance; real provider
-settlement and the full [business-capability programme](app-system-status.md)
-remain separate.
+**Public acceptance, 21 October:** a buyer configured Walnut Select, 260 × 80 cm,
+saved the selection and bought after a separate account's approval: EUR 78
+surcharge and EUR 427 total. Updating the same material to Walnut Select Plus
+changed the saved-list reorder to EUR 98 surcharge and EUR 447 total, requiring
+fresh approval. The original order retained its old configuration and price;
+return/reload retained empty carts. The initial check combined browser purchases
+with native API approval. After the combined release, a separately signed-in buyer
+and approver completed the entire path in the browser: `RAC-34c09fc1`, EUR 447.
+Approval inbox and reopened customer/company orders display their frozen material,
+dimensions and surcharge. See the
+[exact public steps and screenshots](evidence/furniture-browser-2026-10-21.md#public-two-account-browser-acceptance-after-the-combined-release)
+and [current release](status.md).
+
+The [earlier hosted app workflow](evidence/platform-hardening-hosted-2026-10-16.md)
+covers pattern creation, private material writes, immutable version, reviewed
+sandbox install and selected publication. All these purchasing tests use synthetic
+customers and simulated payment. Real settlement and the wider
+[business-capability programme](app-system-status.md) remain separate.
 
 ## Build and try it
 

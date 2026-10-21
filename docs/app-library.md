@@ -35,7 +35,7 @@ anything; installation does not publish or generate an Experience. A hosted app
 with frontend dependencies cannot be disabled until those bindings are disconnected.
 Pause a channel when you want to stop public traffic without removing its connection.
 See [ownership and lifecycle](channel-management.md#storyfront-app-ownership-for-experience-shops)
-and [the current release review](current-release.md).
+and [current public status](status.md).
 
 ## Published artwork and localized summaries
 

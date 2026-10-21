@@ -10,6 +10,7 @@ It opens on the Veyndo website and uses the repository's Markdown as its source.
 | Your goal | Start here |
 | --- | --- |
 | Understand what Veyndo does | [Feature guide](features.md) and [connected cognition](cognitive-commerce.md) |
+| See what is online and actually tested | [Current status](status.md): one entry point for the deployed version, observed journeys and remaining work |
 | Try a complete working round | [First tour](first-tour.md) |
 | Give an agent a bounded job | [Agent workshop](agent-workshop.md) |
 | Create an extension | [Visual App Studio](app-studio.md) and [five illustrated workshops](app-tutorials/README.md) |
@@ -79,6 +80,12 @@ public repository.
 
 ## Publication and current facts
 
+The 21 October update consolidates current release and acceptance information in
+[Status](status.md). Dated deployment notes move to the linked history; app and
+configurator guides link the specific public purchasing evidence. Read the current
+status first, then a dated receipt when its exact test scope matters. Build checks
+also cover all archived Markdown, screenshots and links.
+
 The 16 October app review reconciles shared storage, saved agent work and enforced
 database/browser authority across README, app guides, architecture notes and the
 release tracker. [App-system status](app-system-status.md) is the reader's entry
@@ -113,7 +120,7 @@ The 8 October review reconciled README, the full feature tour, app/Experience/ch
 guides, the homepage and `llms.txt` with `706102f`. It corrected obsolete main-channel
 pause restrictions, EUR-only wording, the API/formal inventories and manually installed
 Storyfront claims. Three unretouched public demo captures complement the retained
-6 October recordings. [Current release](current-release.md) and
+6 October recordings. [Historical release record](current-release.md) and
 [capture provenance](assets/showcase/README.md) distinguish deployed behavior,
 isolated tests and remaining native/provider activation work.
 
