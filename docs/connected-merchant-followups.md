@@ -16,7 +16,7 @@ It is a delivery plan, not a claim that every item below is already available on
 | 6 | Complete inward shop migration and an external integration | Saved source mapping, private destination data/layout, selected cutover and purchase, plus observed external destination result. Local provider fixtures remain separate evidence. |
 | 7 | Keep contracts, money and delivery consistent under load | Exact authoritative amounts and PHP differential cases, generated API contracts, measured bounded/fair workers, required CI and public deployment. |
 
-## Comparing recorded orders: current development
+## Comparing recorded orders: hosted acceptance
 
 The native rule editor, API and MCP now share a bounded read-only condition
 comparison on existing frozen `order.placed` Flow inputs. It compares a
@@ -25,9 +25,13 @@ and reporting missing facts as unavailable. Actual checkout/Flow PostgreSQL test
 cover both transports, current/withdrawn rights, foreign shops and unchanged orders,
 receipts and jobs. This is a selected Flow sample, not complete checkout repricing
 or a revenue forecast. [Usage, limits and acceptance](rule-history-comparison.md).
-Public browser acceptance remains pending for this addition.
+Public Core/Studio `6a71d072` now compares the existing EUR 49.90 test order in
+the original Studio: saved threshold EUR 100 is false, draft threshold EUR 1 is
+true. Editing clears the answer, an empty Flow is explained, and reload retains
+the saved rule at revision one and the single original order. See the linked
+guide for screenshots and the exact selected-sample boundary.
 
-## Reusing work: current development
+## Reusing work: hosted acceptance
 
 Direct and graphical Flow AI proposals now join the existing ready-task and
 personal-approval path. Actual local product-event tests cover one private native
@@ -132,8 +136,15 @@ the first order immutable. The original `1.0.0` definition and workflow tests st
 inside the plugin directory. The hosted private browser journey now completes
 material/dimensions configuration, simulated EUR 417 purchase, empty cart return,
 native order/Flow inspection and immutable order display after a material update.
-Independent B2B approval and saved-input reorder still need hosted browser
-acceptance. The public `fb8d54e0` follow-up restores saved material and dimensions
+Independent B2B approval and saved-input reorder now also pass in the local browser:
+the buyer restores a saved configuration, a separately signed-in approver reviews
+the exact quote, and simulated order `RAC-b30bec87` retains the updated material,
+dimensions and surcharge. Return and reload retain an empty cart. This exposed
+missing configuration details in the approval inbox and reopened customer orders;
+both now use the shared frozen-order summary. Reopening the original order still
+shows its original material and EUR 68 surcharge after the app update. The combined
+journey still needs hosted browser acceptance. See the local browser section of
+the evidence page below. The public `fb8d54e0` follow-up restores saved material and dimensions
 after a full reload even before any line item exists. Simulated order
 `RAC-2246a373` then preserved Walnut Select, 250 x 80 cm, EUR 78 surcharge and
 EUR 427 total; returning to the shop showed cart zero. The earlier `b0b8cba7`

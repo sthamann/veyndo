@@ -4,14 +4,35 @@ This is the single starting point for what works, what is implemented but not
 publicly accepted, and what still needs development. Updated 21 October 2026.
 A green test, merged code and a completed public business journey are different evidence.
 
-Current development: the native Regeleditor, HTTP and MCP can compare a saved rule
-with an unsaved draft on existing frozen order-placement Flow inputs. Actual
-HTTP/PostgreSQL, permission/isolation and local browser checks pass. Public
-acceptance is pending. This is a condition comparison with explicit unavailable
-cases; complete historical checkout repricing remains open.
+Latest public acceptance: Core/Studio `6a71d072` (`jubilant-plane-2874`), deployed
+21 October at 21:04 CEST, compares a saved rule with an unsaved draft on existing
+frozen order-placement Flow inputs. The public Studio evaluated the existing
+EUR 49.90 test order: the saved EUR 100 threshold did not match; the draft EUR 1
+threshold did. Editing cleared the result, an empty Flow showed its empty-history
+message, and reload retained the original threshold and revision. The order list
+still contained exactly the original order. Actual HTTP/PostgreSQL tests cover
+MCP parity, current permissions, isolation and unavailable inputs. Complete
+historical checkout repricing remains open.
 [Usage and observed scope](rule-history-comparison.md).
+The responsive follow-up `ef093e7a` (`brave-produce-7557`), deployed at 21:14
+CEST, also completes that comparison in the public 390 × 844 Studio. Its shared
+language selector stays in normal flow on narrow screens, leaving editor controls
+accessible. The guide includes the public mobile screenshot.
+The same public Core also completes a repeated original Storyfront iframe
+purchase, simulated order `RAC-14a61722` (EUR 24.90), receipt return and an empty
+original bag after full reload. Controlled-browser first loads still timed out;
+the complete journey succeeded after the documented normal-navigation recovery.
+[Exact checkout observations and screenshots](evidence/storyfront-checkout-2026-10-21.md#regression-after-reusable-work-and-rule-comparison).
 
-Latest public acceptance: Core/Studio `650529c7` (`aromatic-voyage-2152`), deployed
+Additional local browser acceptance restores a saved material/dimensions list at
+current prices, requires a different buyer account to approve the exact cart,
+and completes simulated order `RAC-b30bec87` for EUR 155.41 with an empty cart
+after reload. The approver inbox and reopened customer/company order now display
+the accepted app configuration using the existing snapshot renderer. The original
+order retains its older material and EUR 135.41 total. This combined B2B journey
+remains local acceptance. [Steps and screenshots](evidence/furniture-browser-2026-10-21.md#saved-list-reorder-and-separate-approval-local-browser-21-october).
+
+Earlier public acceptance: Core/Studio `650529c7` (`aromatic-voyage-2152`), deployed
 21 October at 20:22 CEST, completes **Reuse as a Flow** through the public Studio.
 A completed native task opened as an inactive Flow draft, with an explicit daily
 limit and a fresh reference per run. After activation, a real product update

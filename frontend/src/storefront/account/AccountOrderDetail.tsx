@@ -9,6 +9,8 @@ import { safeRichUrl } from "../../shared/content/rich-document";
 import AddressCard from "../../shared/customer/AddressCard";
 import { shopApi } from "../../shared/api/shop-api";
 import AccountDownloads from "./AccountDownloads";
+import ConfigurationSummary from "../../shared/apps/ConfigurationSummary";
+import { configurationSnapshots } from "../../shared/api/configuration-types";
 import type { CustomerOrder, CustomerDownload } from "./account-types";
 export default function AccountOrderDetail({
   id,
@@ -134,6 +136,10 @@ export default function AccountOrderDetail({
                   <div>
                     <strong>{item.label}</strong>
                     <small>× {item.quantity}</small>
+                    <ConfigurationSummary
+                      configurations={configurationSnapshots(item)}
+                      language={locale}
+                    />
                   </div>
                   <strong>{money(item.price.totalPrice)}</strong>
                 </div>

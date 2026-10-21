@@ -56,6 +56,20 @@
   font-size: 10px;
   padding-bottom: 10px;
 }
+/* A wrapped language card must not cover the editor on a narrow viewport. */
+@media (max-width: 600px) {
+  .studio .intl-language-switcher {
+    position: static;
+    box-shadow: none;
+  }
+  .studio .intl-language-switcher label {
+    width: 100%;
+    min-width: 0;
+  }
+  .studio .intl-language-switcher small {
+    padding-bottom: 0;
+  }
+}
 .studio .intl-translated-field > input,
 .studio .intl-translated-field > textarea {
   width: 100%;

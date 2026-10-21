@@ -272,3 +272,95 @@ it("shows lookup errors and loads existing member grants", async () => {
     4000,
   );
 });
+
+it("lets a separate approver inspect the frozen configuration before deciding", async () => {
+  const user = userEvent.setup();
+  api.mockClear();
+  api.mockImplementation(async (path: string) => {
+    if (path.endsWith("/contexts"))
+      return {
+        mainLocale: "it-IT",
+        locales: ["it-IT", "en-GB"],
+        elements: [
+          {
+            id: "it",
+            companyId: "firm",
+            company: { name: { "it-IT": "Impresa" } },
+            data: unit,
+            member: { permissions: ["approve"] },
+          },
+        ],
+      };
+    if (path.endsWith("/approvals"))
+      return {
+        elements: [
+          {
+            id: "approval",
+            revision: 4,
+            buyerId: "buyer",
+            state: "pending",
+            data: {
+              quote: {
+                ...cart,
+                lineItems: [
+                  {
+                    ...cart.lineItems[0],
+                    appConfigurations: [
+                      {
+                        app: "furniture",
+                        appVersion: "1.0.0",
+                        ruleRevision: 1,
+                        fields: { material: "internal-reference" },
+                        feeMinor: 6800,
+                        currency: "EUR",
+                        presentation: {
+                          title: { "it-IT": "Configurazione richiesta" },
+                          mainLocale: "it-IT",
+                          fields: [
+                            {
+                              label: { "it-IT": "Materiale" },
+                              value: { "it-IT": "Noce originale" },
+                            },
+                            { label: { "it-IT": "Larghezza" }, value: 260 },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                ],
+              },
+            },
+          },
+        ],
+      };
+    return { elements: [] };
+  });
+  render(
+    <CompanyPurchasing
+      onCart={() => {}}
+      customerId="approver"
+      busy={false}
+      run={run}
+    />,
+    { wrapper },
+  );
+  expect(await screen.findByText("Noce originale")).toBeVisible();
+  expect(screen.getByText("260")).toBeVisible();
+  expect(screen.getByText(/68\.00/)).toBeVisible();
+  expect(screen.queryByText("internal-reference")).toBeNull();
+  expect(
+    api.mock.calls.every(([path]) => !String(path).includes("/apps/")),
+  ).toBe(true);
+  await user.click(screen.getByRole("button", { name: "Approve purchases" }));
+  await waitFor(() =>
+    expect(api).toHaveBeenCalledWith(
+      "/store-api/b2b/approval.decide",
+      {
+        id: "approval",
+        revision: 4,
+        state: "approved",
+      },
+      undefined,
+    ),
+  );
+});

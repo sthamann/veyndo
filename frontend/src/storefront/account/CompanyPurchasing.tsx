@@ -9,6 +9,8 @@ import { useB2BText } from "../../shared/i18n/b2b-i18n";
 import { useLocale } from "../../shared/i18n/i18n";
 import { contentText } from "../../shared/i18n/content-language";
 import { AppSurfaceSlot } from "../../shared/apps/AppSurfaces";
+import ConfigurationSummary from "../../shared/apps/ConfigurationSummary";
+import { configurationSnapshots } from "../../shared/api/configuration-types";
 import type { CompanyContext } from "../../shared/b2b/types";
 import "../../shared/b2b/b2b.css";
 type Approval = {
@@ -239,6 +241,10 @@ export default function CompanyPurchasing({
                 {v.data.quote.lineItems.map((i) => (
                   <li key={i.id}>
                     {i.quantity} × {i.label}
+                    <ConfigurationSummary
+                      configurations={configurationSnapshots(i)}
+                      language={locale}
+                    />
                   </li>
                 ))}
               </ul>

@@ -106,3 +106,28 @@ jobs. No user-side manual verification was needed.
 ![Embedded order on the provider-recovery deployment](images/storyfront-2026-10-21/recovery-confirmed.png)
 
 ![Original bag empty after reload on the repaired deployment](images/storyfront-2026-10-21/recovery-empty-after-reload.png)
+
+## Regression after reusable work and rule comparison
+
+With Core/Studio `ef093e7a` (`brave-produce-7557`) running on 21 October at
+21:29 CEST, the original Lumen Experience completed simulated order
+`RAC-14a61722`: one German-labelled ceramic cup, EUR 24.90 total and EUR 3.98
+VAT. Contact/address entry, review and the confirmation all appeared inside the
+original Storyfront iframe. Its receipt return closed the iframe, displayed the
+confirmed-order feedback and cleared the original bag. A full reload and opening
+the bag again retained zero items. Only synthetic contact/address data and the
+explicitly simulated payment method were used.
+
+The initial controlled-tab attempts, including a fresh tab, again timed out with
+an empty document. Browser diagnostics explicitly reported a paused document
+response. Opening the exact checkout document normally in a separate diagnostic
+tab showed its contact/address form; no order was placed there. After closing
+that tab, the next ordinary Storyfront Checkout action loaded the iframe and
+completed the purchase above. No interception or browser security setting was
+changed. This accepts the complete purchase/return/cart journey after recovery;
+the initial-load issue remains unresolved and is not hidden by the successful
+repetition.
+
+![Embedded confirmation after the rule-comparison release](images/storyfront-2026-10-21/rule-release-confirmed.jpg)
+
+![Original bag remains empty after full reload](images/storyfront-2026-10-21/rule-release-empty-after-reload.jpg)
