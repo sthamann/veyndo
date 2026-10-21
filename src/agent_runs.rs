@@ -5,6 +5,7 @@ pub(crate) mod checkpoint;
 pub(crate) mod context;
 mod contract;
 pub(crate) mod controls;
+pub(crate) mod translation;
 pub(crate) mod view;
 pub(crate) mod work;
 pub(crate) mod work_plan;

@@ -15,6 +15,7 @@ const NATIVE: &[&str] = &[
     "merchant.category.create",
     "merchant.category.save",
     "automation.save",
+    "merchant.translations.create",
 ];
 pub(crate) fn schema() -> Value {
     json!({"type":"array","maxItems":12,"items":{"type":"object","required":["name","label","arguments_json"],"additionalProperties":false,"properties":{"name":{"type":"string","maxLength":160},"label":{"type":"string","minLength":1,"maxLength":200},"arguments_json":{"type":"string","maxLength":8192}}}})
@@ -36,6 +37,7 @@ pub(crate) async fn bind(a: &App, t: &str, h: &RequestContext, steps: &mut [Step
     if staging::parent(a, t).await?.is_none() {
         return Err(bad("Agent configuration work requires a private workspace"));
     }
+    let mut created_products: Vec<String> = Vec::new();
     for step in steps.iter_mut() {
         step.binding = None;
         if step.label.is_empty() || step.label.len() > 200 || step.arguments_json.len() > 8192 {
@@ -64,6 +66,10 @@ pub(crate) async fn bind(a: &App, t: &str, h: &RequestContext, steps: &mut [Step
                     "Operation is not admitted for private configuration work",
                 ))?;
             apps::validate_native_input(&op.input_schema(), &args)?;
+            if step.name == "merchant.translations.create" {
+                translation::validate(a, t, &args, &created_products).await?;
+                continue;
+            }
             if step.name.starts_with("merchant.category.") {
                 categories::admit_configuration(
                     a,
@@ -100,6 +106,12 @@ pub(crate) async fn bind(a: &App, t: &str, h: &RequestContext, steps: &mut [Step
                     .fetch_one(&a.db)
                     .await?
                 };
+                if key == "product" {
+                    if created_products.iter().any(|existing| existing == id) {
+                        return Err(bad("Duplicate product create in reviewed work"));
+                    }
+                    created_products.push(id.to_owned());
+                }
                 if exists {
                     return Err(conflict("Planned create target already exists"));
                 }

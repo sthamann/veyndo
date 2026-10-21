@@ -114,3 +114,102 @@ it("creates guidance directly in the active enabled language without requiring a
     "POST",
   );
 });
+it("shows exactly the reviewed collection rather than claiming a whole-catalogue translation", () => {
+  const apply = vi.fn();
+  const message: any = {
+    data: {
+      taskId: "selected-translation",
+      preview: {
+        catalogBefore: [{ id: "mug", name: "Ceramic mug" }],
+        proposal: {
+          summary: "Translate the mug",
+          changes: [],
+          translation: "it-IT",
+          translation_products: ["mug"],
+        },
+      },
+    },
+  };
+  render(
+    <LocaleScope locale="en-GB">
+      <ProposalCard message={message} onApply={apply} busy={false} canApply />
+    </LocaleScope>,
+  );
+  expect(
+    screen.getByText(/only for these 1 selected products/),
+  ).toBeInTheDocument();
+  expect(screen.getByText("Ceramic mug")).toBeInTheDocument();
+  expect(screen.queryByText(/for the entire catalogue/)).toBeNull();
+  expect(apply).not.toHaveBeenCalled();
+});
+
+import AgentRunCard from "../../src/admin/shell/AgentRunCard";
+it("opens the actual linked translation drafts from work progress while retaining the current shop URL", () => {
+  history.replaceState(null, "", "?shop=private-collection&lang=de-DE");
+  render(
+    <LocaleScope locale="de-DE">
+      <AgentRunCard
+        value={{
+          taskId: "task-1",
+          state: "queued",
+          revision: 3,
+          execution: {
+            total: 2,
+            completed: 1,
+            steps: [
+              {
+                name: "merchant.translations.create",
+                label: "Italienische Produkttexte",
+                completed: false,
+                translationJobId: "work-task-1-1",
+              },
+            ],
+          },
+        }}
+        control={vi.fn()}
+      />
+    </LocaleScope>,
+  );
+  const link = screen.getByRole("link", {
+    name: "Übersetzungsentwürfe prüfen",
+  });
+  const target = new URL(link.getAttribute("href")!);
+  expect(target.searchParams.get("shop")).toBe("private-collection");
+  expect(target.searchParams.get("translationJob")).toBe("work-task-1-1");
+  expect(target.searchParams.get("settings")).toBe("languages");
+  expect(screen.queryByText("Freigegebener Auftrag erledigt")).toBeNull();
+});
+
+import TranslationJobs from "../../src/admin/settings/TranslationJobs";
+it("keeps linked translation lifecycle controls in the original task while retaining draft review", async () => {
+  history.replaceState(null, "", "?translationJob=linked-job");
+  const request = vi.fn(async (path: string) => {
+    if (path === "/api/agent/providers") return { providers: [] };
+    if (path === "/api/merchant/translations")
+      return {
+        jobs: [
+          {
+            id: "linked-job",
+            run_task: "task-1",
+            target_locale: "it-IT",
+            status: "failed",
+            total: 1,
+            processed: 0,
+          },
+        ],
+      };
+    return { items: [], counts: {}, nextCursor: null };
+  });
+  render(
+    <LocaleScope locale="en-GB">
+      <TranslationJobs
+        request={request as any}
+        config={{ mainLocale: "es-ES", locales: ["es-ES", "it-IT"] } as any}
+        disabled={false}
+      />
+    </LocaleScope>,
+  );
+  await screen.findByText(/Managed by an agent task/);
+  expect(screen.queryByRole("button", { name: /resume|cancel/i })).toBeNull();
+  expect(request.mock.calls.every((call) => call.length === 1)).toBe(true);
+});

@@ -4,6 +4,8 @@ import copy,json,os,socket,threading,time,urllib.request,urllib.error,uuid
 from testing.native_tools import response as native_response
 from http.server import BaseHTTPRequestHandler,ThreadingHTTPServer
 from testing.runtime import ROOT,serve,stop
+from testing.database import psql
+import subprocess
 behavior={'reject':False,'invalid':False};captured=[]
 class Handler(BaseHTTPRequestHandler):
  def log_message(self,*args):pass
@@ -20,9 +22,13 @@ class Handler(BaseHTTPRequestHandler):
   raw=body['input'] if 'input'in body else body['messages'][-1]['content']
   if not raw.startswith('{'):
    value={'tool_calls':[]} if 'read-decision phase' in raw else {'summary':'Prepare missing whole catalogue translations for review','changes':[],'translation':'it-IT','experience':None,'app_action':None}
+   if behavior.get('selection') is not None and 'summary' in value:value['translation_products']=behavior['selection']
+   if behavior.get('operations') is not None and 'summary' in value:value.update(translation=None,operations=behavior['operations'])
    text=json.dumps(value)
    self.send_response(200);self.send_header('Content-Type','application/json');self.end_headers();self.wfile.write(json.dumps({'message':{'content':text},'done_reason':'stop'}).encode());return
   prompt=json.loads(raw);assert prompt['targetLocale']=='it-IT'
+  if behavior.get('translation_started'):
+   behavior['translation_started'].set();behavior['translation_release'].wait(20)
   entries=[{'path':v['path'],'text':'IT '+v['text']}for v in prompt['texts']]
   if behavior['invalid']:entries.append({'path':'/price','text':'0'})
   text=json.dumps({'translations':entries})
@@ -60,6 +66,31 @@ try:
  public={'x-tenant':w['workspace']};merchant={**public,'Authorization':'Bearer '+w['token']}
  conf=req('/api/merchant/commerce',h=merchant);conf['data']['locales'].append('it-IT');conf['data']['mainLocale']='es-ES';req('/api/merchant/commerce',{'data':conf['data'],'revision':conf['revision']},merchant,'PUT')
  p=req('/api/merchant/products/mug',h=merchant);p['translations']['es']={'name':'Taza fuente','description':'Descripción fuente'};p['extra']['seo']={'es':{'title':'Título fuente','description':'SEO fuente','slug':'taza'}};p['extra']['specifications']={'es':{'material':'Cerámica'}};p['extra']['richDescription']={'es':[{'type':'image','url':'https://example.test/picture.png','alt':'Taza'},{'type':'document','doc':{'type':'doc','content':[{'type':'paragraph','content':[{'type':'text','text':'Descripción enriquecida','marks':[{'type':'link','attrs':{'href':'https://example.test/manual'}}]}]}]}}]};req('/api/merchant/products/mug',p,merchant,'PUT')
+ selected=req('/api/merchant/translations',{'targetLocale':'it-IT','productIds':['mug'],'inference':{'provider':'ollama','model':'translation-fixture'}},merchant)['id']
+ scoped=wait(selected)
+ assert scoped['job']['total']==1 and [i['product_id'] for i in scoped['items']]==['mug'],scoped
+ assert scoped['job']['product_ids']==['mug'],scoped
+ assert scoped['items'][0]['evidence']['prompt']['templates'][0]['id']=='catalogue-translation@1',scoped
+ selected_mcp=req('/mcp',{'jsonrpc':'2.0','id':9,'method':'tools/call','params':{'name':'merchant.translations.create','arguments':{'targetLocale':'it-IT','productIds':['mug'],'inference':{'provider':'ollama','model':'translation-fixture'}}}},merchant)
+ assert not selected_mcp['result'].get('isError'),selected_mcp
+ assert wait(selected_mcp['result']['structuredContent']['id'])['job']['product_ids']==['mug']
+ before=len(captured)
+ corpus=json.loads((ROOT/'crates/cognition/evals/collection-translation.v1.json').read_text())
+ for case in corpus['cases']:
+  req('/api/merchant/translations',{'targetLocale':'it-IT','productIds':case['productIds'],'inference':{'provider':'ollama'}},merchant,expected=case['status'])
+ assert len(captured)==before
+ check('explicit collection scope produces only selected private drafts and rejects empty, duplicate, foreign and malformed selections before inference')
+ behavior['selection']=['mug']
+ proposal=req('/api/agent/plan',{'instruction':'Translate only the selected mug into Italian as a draft','inference':{'provider':'ollama','model':'translation-fixture'}},merchant)
+ assert proposal['preview']['proposal']['translation_products']==['mug']
+ subset_task=proposal['taskId']
+ req('/api/agent/tasks/'+subset_task+'/apply',{'approve':True},merchant)
+ subset=wait(subset_task)
+ assert subset['job']['total']==1 and [i['product_id'] for i in subset['items']]==['mug']
+ req('/api/agent/tasks/'+subset_task+'/apply',{'approve':True},merchant)
+ assert req('/api/merchant/products/mug',h=merchant)['translations']['it']['name'] is None
+ behavior['selection']=None
+ check('actual planner review and repeated approval preserve exact collection selection through the existing translation queue without applying texts')
  id=job();d=wait(id);assert d['job']['processed']==d['job']['total'] and len(d['items'])==d['job']['total']
  assert any('Descripción fuente' in json.dumps(x,ensure_ascii=False)for x in captured)
  original=req('/api/merchant/products/mug',h=merchant);assert original['translations']['it']['name'] is None
@@ -85,6 +116,10 @@ try:
  assert req('/store-api/product/mug',{},h={'x-commerce-locale':'it-IT'})['product']['name']=='IT Taza fuente'
  assert req('/api/merchant/translations/'+id+'/apply',{},merchant)['applied']==0
  check('cold restart preserves drafts; apply is idempotent and stale products conflict; SEO/specs/rich text translate while links, media and source remain intact')
+ skipped=wait(job())
+ assert skipped['counts'].get('skipped',0)>=skipped['job']['total']-1,skipped
+ assert all(item['evidence'] is None for item in skipped['items'] if item['status']=='skipped'),skipped
+ check('already complete translations are skipped without invented inference evidence or additional draft writes')
  # Missing permission + foreign tenancy cannot trigger inference or access private drafts.
  inv=req('/api/workspace/invitations',{'email':'translate-viewer-'+suffix+'@example.test','role':'viewer'},merchant);viewer=req('/api/auth/accept',{'invitationToken':inv['token'],'name':'Fixture viewer','password':'Synthetic-translation-2026!'})
  vh={**public,'Authorization':'Bearer '+viewer['token']};req('/api/merchant/translations',{'targetLocale':'it-IT'},vh,expected=403)
@@ -98,5 +133,14 @@ try:
  behavior['invalid']=True;invalid=job('anthropic',True);bad=wait(invalid,'failed');assert not bad['items'];req('/api/merchant/translations/'+invalid+'/apply',{},merchant,expected=409);req('/api/merchant/translations/'+invalid,{'action':'cancel'},merchant,'PUT');assert detail(invalid)['job']['status']=='cancelled'
  behavior['invalid']=False
  check('Ollama, OpenAI and Claude wire adapters work with the fixture; provider rejection resumes and invalid field-path output fails closed')
+ from testing.collection_work import verify as verify_collection
+ def stop_replica():stop(process)
+ def start_replica():
+  global process
+  process=serve(env,BASE,log)
+ def expire_child(task):
+  assert all(c in '0123456789abcdef' for c in task)
+  subprocess.run(psql(env['DB_CONTAINER'],'commerce',env['TEST_DATABASE'],'-XqAt','-v','ON_ERROR_STOP=1'),input="UPDATE translation_jobs SET lease_until=now()-interval '1 second' WHERE run_task='"+task+"' AND status='processing';",text=True,check=True,capture_output=True)
+ verify_collection(req,behavior,merchant,check,stop_replica,start_replica,expire_child,captured,{'email':w['user']['email'],'password':'Synthetic-translation-2026!'})
  print(json.dumps({'passed':len(checks),'paidCalls':0,'checks':checks}))
 finally:stop(process);log.close();provider.shutdown();provider.server_close()

@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased — connected collection preparation
+
+- Freeze explicit product selections in existing durable translation jobs; reject empty, duplicate, malformed and unavailable IDs instead of silently expanding scope.
+- Connect scoped translation preparation to reviewed private native/app work, with durable child links, worker yielding, explicit failed-task continuation and current-authority/cancellation fences.
+- Expose actual translation-job links in work progress and exact product scope in translation proposals; preserve separate draft review and selected publication.
+- Resolve translation provider availability through central configuration before taking transaction-pool backends, and include the platform selection in the native API/MCP schema.
+- Add real PostgreSQL/HTTP collection, process-restart and selective-publication regressions. This section describes development; it is not a public deployment receipt.
+
 ## Public connected workspace acceptance — 2026-10-20
 
 - Record actual configured-model context/guidance recall, native editable-grid handoff, current-stock work cards, one approval completing two private category steps and saved progress after reload.

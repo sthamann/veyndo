@@ -81,7 +81,7 @@ pub(crate) fn input(name: &str) -> Value {
             json!({"id":{"type":"string"},"revision":{"type":"integer","minimum":1}})
         }
         "merchant.translations.create" => {
-            json!({"targetLocale":{"type":"string"},"overwrite":{"type":"boolean"},"inference":{"type":"object","properties":{"provider":{"type":"string","enum":["ollama","openai","anthropic"]},"model":{"type":["string","null"]}},"additionalProperties":false}})
+            json!({"productIds":{"type":"array","minItems":1,"maxItems":1000,"uniqueItems":true,"items":{"type":"string","minLength":1,"maxLength":160}},"targetLocale":{"type":"string"},"overwrite":{"type":"boolean"},"inference":{"type":"object","properties":{"provider":{"type":"string","enum":["platform","ollama","openai","anthropic"]},"model":{"type":["string","null"]}},"additionalProperties":false}})
         }
         "merchant.translations.detail" => {
             json!({"id":{"type":"string"},"cursor":{"type":"string"}})

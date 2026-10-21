@@ -122,7 +122,23 @@ export default function ProposalCard({
           <b>
             {b("translationDrafts")} · {preview.proposal.translation}
           </b>
-          <p>{b("translationBoundary")}</p>
+          <p>
+            {preview.proposal.translation_products
+              ? b("selectedTranslationBoundary").replace(
+                  "{count}",
+                  String(preview.proposal.translation_products.length),
+                )
+              : b("translationBoundary")}
+          </p>
+          {preview.proposal.translation_products && (
+            <ul>
+              {preview.proposal.translation_products.map((id) => (
+                <li key={id}>
+                  {preview.catalogBefore.find((p) => p.id === id)?.name ?? id}
+                </li>
+              ))}
+            </ul>
+          )}
           {message.applied && (
             <a className="studio-secondary" href={translations.href}>
               {b("reviewTranslations")}

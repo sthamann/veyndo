@@ -57,6 +57,12 @@ export const buildingWords = {
     "Brouillons de traduction du catalogue",
     "Borradores de traducción del catálogo",
   ],
+  selectedTranslationBoundary: [
+    "Creates drafts only for these {count} selected products. Review and apply them in Settings → Languages; other products remain unchanged.",
+    "Erstellt Entwürfe nur für diese {count} ausgewählten Produkte. Unter Einstellungen → Sprachen prüfen und übernehmen; andere Produkte bleiben unverändert.",
+    "Crée des brouillons uniquement pour ces {count} produits sélectionnés. Vérifiez-les dans Paramètres → Langues ; les autres produits restent inchangés.",
+    "Crea borradores solo para estos {count} productos seleccionados. Revisa en Ajustes → Idiomas; los demás productos no cambian.",
+  ],
   translationBoundary: [
     "Queues missing translations for the entire catalogue. Review and apply them in Settings → Languages. Existing translations remain unchanged; products keep their version history and restore controls.",
     "Erstellt fehlende Übersetzungsentwürfe für den gesamten Katalog. Unter Einstellungen → Sprachen prüfen und übernehmen. Bestehende Übersetzungen bleiben erhalten; die Produkthistorie erlaubt die Wiederherstellung.",

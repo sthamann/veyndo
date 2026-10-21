@@ -1,6 +1,12 @@
 /** Durable run states and explicit ambiguous-call continuation, in the shared interface language. */
 import { useLocale } from "./i18n";
 export const agentRunWords = {
+  preparingDrafts: [
+    "Preparing translation drafts · progress is saved",
+    "Übersetzungsentwürfe entstehen · Fortschritt ist gespeichert",
+    "Traductions en préparation · progression enregistrée",
+    "Preparando traducciones · progreso guardado",
+  ],
   workReady: [
     "Approved work completed",
     "Freigegebener Auftrag erledigt",
