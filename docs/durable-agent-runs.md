@@ -116,3 +116,25 @@ continuation does not duplicate step one. A killed managed-save worker verifies
 the atomic app-write/receipt boundary. The signed-runtime fixture repeats these
 paths with separate restricted tenant/system logins.
 No real paid provider, mail, payment or private customer data is used by these tests.
+
+## Correcting invalid proposals
+
+The planner supplies the current installed managed-save fields, required flags,
+localization, choices and validation constraints separately from sampled app records.
+Shop-page nested content/theme guidance stays with the site-builder package and is
+shared with external coding-agent handoffs. App contracts contain no settings or secrets.
+
+If native proposal admission returns invalid input (HTTP 400), the same saved run
+can request **one** correction under `merchant-repair@1`. It receives the original
+instruction, completed authorized reads, rejected candidate and native validation
+error. It uses the same provider choice, central budget and checkpoint owner.
+Every corrected proposal traverses the complete original native admission again.
+Permission failures, revision conflicts and ambiguous provider effects are not
+validation retries. A second invalid candidate stops the task; a failed correction
+can be explicitly resumed, reusing completed model calls. Nothing is written to
+commerce or app records before ordinary personal approval.
+
+Earlier saved prompts and read-response shapes remain unchanged, so an existing
+failed task can reach this correction without replaying its completed model calls.
+The proposal evidence identifies the repair prompt, original provider/model/usage
+and validation error. This is bounded correction, not unrestricted autonomous execution.

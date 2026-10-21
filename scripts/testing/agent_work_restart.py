@@ -110,6 +110,27 @@ def verify_work_restart(call,base,h,mode,sql,worker,start,passed,account):
     verify_native_cancel(call,base,sh,mode,sql,passed)
     verify_native_expiry(call,base,sh,mode,sql,passed)
     steps=[{'name':'app.work_restart.save_guides','label':'Save guide '+str(n),'arguments_json':json.dumps({'id':'work_'+str(n),'fields':{'product_id':'mug','title':{'en':'Guide '+str(n)}}})} for n in (1,2)]
+    invalid=json.loads(json.dumps(steps));arg=json.loads(invalid[0]['arguments_json']);arg['fields']['unknown']='invalid';invalid[0]['arguments_json']=json.dumps(arg)
+    mode.update(block=False,operations=invalid,repairOperations=steps,repairUnavailable=True)
+    repair=call(base,'/api/agent/runs',{'instruction':'Prepare two private care guides; recover malformed fields','inference':{'provider':'openai'}},sh)['taskId']
+    for _ in range(150):
+        status=call(base,'/api/agent/runs/'+repair,h=sh)
+        if status['state']=='uncertain':break
+        time.sleep(.1)
+    assert status['state']=='uncertain' and status['completedModelSteps']==2,status
+    assert sql(f"SELECT count(*) FROM app_records WHERE tenant='{stage}' AND app='work_restart'")=='0'
+    worker.kill();worker.wait(timeout=10);worker,_=start('agent-worker')
+    mode['repairUnavailable']=False
+    call(base,'/api/agent/runs/'+repair+'/resume',{'revision':status['revision'],'approve':True},sh)
+    for _ in range(150):
+        status=call(base,'/api/agent/runs/'+repair,h=sh)
+        if status['state']=='ready':break
+        time.sleep(.1)
+    assert status['state']=='ready' and status['completedModelSteps']==3,status
+    assert status['preview']['proposalRepair']['promptId']=='merchant-repair@1'
+    assert sql(f"SELECT count(*) FROM app_records WHERE tenant='{stage}' AND app='work_restart'")=='0'
+    mode.pop('repairOperations');mode.pop('repairUnavailable')
+    passed('A failed correction resumes the original saved run, reuses both completed model steps and produces only a reviewed proposal with no app writes')
     mode.update(block=False,operations=steps)
     created=call(base,'/api/agent/chat',{'message':'Save two private care guides','inference':{'provider':'openai'}},sh);task=created['messages'][-1]['data']['taskId']
     # A new personal login can approve the saved actor's work; an expired old credential is not reused.

@@ -240,6 +240,11 @@ pub(crate) async fn validate_owned(
     }
     Ok(())
 }
+/// App-owned nested format shared by merchant and external coding agents.
+pub(crate) fn planning_contract() -> Value {
+    json!({"content":{"blocks":"max 24; id, kind=hero/text/products/image/form/articles/app, text=localized map, rich=localized safe rich blocks, image=owned media, products=owned IDs, productMode=all/selected, fields=form fields; app kind requires extension={app,surface}"},"theme":{"accent":"#rrggbb","background":"#rrggbb","foreground":"#rrggbb","font":"sans/serif/mono","radius":"0..32","spacing":"12..96","columns":"1..4"}})
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

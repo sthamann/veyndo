@@ -20,10 +20,16 @@ class Handler(BaseHTTPRequestHandler):
   if body.get('tools'):
    self.send_response(200);self.send_header('Content-Type','application/json');self.end_headers();self.wfile.write(json.dumps(native_response(body,provider='ollama' if self.path=='/api/chat' else 'anthropic' if self.path.endswith('/messages') else 'openai')).encode());return
   raw=body['input'] if 'input'in body else body['messages'][-1]['content']
-  if not raw.startswith('{'):
+  repair=raw.startswith('{') and 'rejectedCandidate' in json.loads(raw)
+  if not raw.startswith('{') or repair:
    value={'tool_calls':[]} if 'read-decision phase' in raw else {'summary':'Prepare missing whole catalogue translations for review','changes':[],'translation':'it-IT','experience':None,'app_action':None}
    if behavior.get('selection') is not None and 'summary' in value:value['translation_products']=behavior['selection']
    if behavior.get('operations') is not None and 'summary' in value:value.update(translation=None,operations=behavior['operations'])
+   if repair and behavior.get('repaired_operations') is not None:
+    context=json.loads(raw);contract=next(c for c in context['managedSaveContracts'] if c['app']=='site_builder')
+    assert {f['name'] for f in contract['fields']} >= {'title','content','theme','channel'}
+    assert contract['nestedFormat']['content'] and 'headline' in context['validationError']
+    value['operations']=behavior['repaired_operations']
    text=json.dumps(value)
    self.send_response(200);self.send_header('Content-Type','application/json');self.end_headers();self.wfile.write(json.dumps({'message':{'content':text},'done_reason':'stop'}).encode());return
   prompt=json.loads(raw);assert prompt['targetLocale']=='it-IT'

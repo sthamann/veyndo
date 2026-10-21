@@ -135,7 +135,7 @@ See [international commerce](international-commerce.md) for the exact contract.
 | [`src/order_checkout.rs`](../src/order_checkout.rs) | Atomic checkout, stock locks, extension policy and idempotency. | `integration.py + commerce.py + protocols.py + users.py + restart.py` |
 | [`src/order_routes.rs`](../src/order_routes.rs) | Merchant order read adapter. | `integration.py + commerce.py + protocols.py + users.py + restart.py` |
 | [`src/outbox.rs`](../src/outbox.rs) | Durable outbox and audit projection worker. | `integration.py + protocols.py + studio.py + restart.py` |
-| [`src/planner.rs`](../src/planner.rs) | Grounded model planning, recorded inputs and proposed changes. | `providers.py + live intelligence.py/studio.py + protocols.py` |
+| [`src/planner.rs`](../src/planner.rs), `planner/{admission,repair}.rs` | Grounded model planning, shared native admission and one checkpointed correction of invalid output. | `providers.py + live intelligence.py/studio.py + protocols.py` |
 | [`crates/commerce/src/pricing.rs`](../crates/commerce/src/pricing.rs) | Behavioral port of Shopware 6.7.14.2 quantity calculators. | `differential.py + delivery_differential.py + Rust numeric regressions + commerce.py` |
 | [`src/proposal_apply.rs`](../src/proposal_apply.rs) | Transactional application of approved, revision-bound proposals. | `providers.py + live intelligence.py/studio.py + protocols.py` |
 | [`src/proposal_model.rs`](../src/proposal_model.rs) | Typed proposals and validation before persistence or execution. | `providers.py + live intelligence.py/studio.py + protocols.py` |
@@ -156,7 +156,7 @@ See [international commerce](international-commerce.md) for the exact contract.
 | [`src/apps/gateway.rs`](../src/apps/gateway.rs) | One permission-aware action gateway serves HTTP, UI and MCP; service egress is operator configured. | `apps.py + services.py + providers.py + app_inference.py` |
 | [`src/apps/manifest.rs`](../src/apps/manifest.rs) | Strict package contract; identifiers and limits are checked before logical model registration. | `apps.py + services.py + providers.py + app_inference.py` |
 | [`src/apps/mod.rs`](../src/apps/mod.rs) | Versioned app packages: managed data, UI slots, agent tools and isolated service calls. | `apps.py + services.py + providers.py + app_inference.py` |
-| [`src/apps/planning.rs`](../src/apps/planning.rs) | Registered managed app actions join the same preview/approve transaction as core changes. | `apps.py + services.py + providers.py + app_inference.py` |
+| [`src/apps/planning.rs`](../src/apps/planning.rs), `apps/planning_contracts.rs` | Current authorized field contracts and registered managed app actions join the same preview/approve transaction as core changes. | `apps.py + services.py + providers.py + app_inference.py` |
 | [`src/apps/registry.rs`](../src/apps/registry.rs) | Atomic consent-bound installation, explicit tenant schema migrations and immutable version digests. | `apps.py + services.py + providers.py + app_inference.py` |
 | [`src/apps/routes.rs`](../src/apps/routes.rs) | Tenant-scoped package lifecycle, generated data endpoints and a shared action adapter. | `apps.py + services.py + providers.py + app_inference.py` |
 | [`src/cognition/context.rs`](../src/cognition/context.rs) | Bounded localized catalog retrieval before inference; full catalog size never expands the prompt. | `apps.py + live intelligence.py/studio.py + restart.py` |
