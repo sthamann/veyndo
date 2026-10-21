@@ -2,6 +2,7 @@
 
 ## Unreleased — truthful saved-work progress
 
+- Publish selected native settings and channels before dependent app records in the same transaction. Newly enabled languages and new page channels can accompany their translated pages in one release. Missing dependencies, stale digests and repeated releases remain rejected atomically; Studio explains missing page languages/channels in all four interface languages.
 - Keep translation-review navigation in its current private Studio session. Require the form-receiver package only when the selected page contains a form; ordinary landing pages and design assistance use the site-builder package alone.
 - Distinguish accepted background work from completed changes in Studio. Show native execution interruptions separately from model failures, retain saved step progress and explicit continuation, and suppress late approval notices after a shop or conversation switch.
 

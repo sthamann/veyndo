@@ -1762,6 +1762,7 @@ This lists every checked-in source module in these roots, including files with n
 | [scripts/testing/provider_fleet.py](../scripts/testing/provider_fleet.py) | Configure one encrypted synthetic provider for all test workers, then restore the isolated control-plane row. |
 | [scripts/testing/role_races.py](../scripts/testing/role_races.py) | Force real HTTP delegation to wait behind the same PostgreSQL lifecycle lock as role edits. |
 | [scripts/testing/runtime.py](../scripts/testing/runtime.py) | Owned synthetic server lifetime, child checks and loopback readiness for verification. |
+| [scripts/testing/site_release.py](../scripts/testing/site_release.py) | Actual selective publication resolves page dependencies atomically; no provider calls. |
 | [scripts/testing/sitecustomize.py](../scripts/testing/sitecustomize.py) | Opt-in subprocess instrumentation for synthetic verification; never loaded by production. |
 | [scripts/testing/source_inventory.py](../scripts/testing/source_inventory.py) | Generate/check exact production and verification module inventory; listings are not coverage. |
 | [scripts/testing/test_ci_scope.py](../scripts/testing/test_ci_scope.py) | CI routing regressions exercise real Git renames, missing history and sensitive mixed changes. |

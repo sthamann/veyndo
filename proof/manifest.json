@@ -3927,8 +3927,8 @@
     },
     "src/staging/release.rs": {
       "status": "unproved",
-      "sha256": "0b1daf906d6bc2093f684fc9865d5f1f79d03e05c8452fa6e4a122548ecc9241",
-      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
+      "sha256": "08e135d523201c3b07bc4d4831d9a6e889cdb0137cbc86ae2023cdf59af57297",
+      "review": "Reviewed selective release ordering: selected native configuration precedes dependent app records in the same transaction. Actual HTTP/PostgreSQL regressions cover new locale/channel/package/page, omitted-dependency rollback, stale digest and replay. Native ownership, domain rights, CAS, locks and final configuration checks unchanged."
     },
     "src/staging/snapshot.rs": {
       "status": "unproved",
