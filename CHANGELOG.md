@@ -1,5 +1,10 @@
 # Changelog
 
+## Configured B2B approval and reopened order details — 2026-10-21
+
+- Display accepted app material, dimensions and surcharge in the existing company approval inbox and customer/company order detail. Reuse the native frozen snapshot renderer without fetching current app labels or recalculating historical prices.
+- Complete the local saved-list → updated configuration price → independent account approval → simulated purchase → empty cart journey. Preserve the original order's older material and surcharge after package/material changes. Add rendered regressions and [browser evidence](docs/evidence/furniture-browser-2026-10-21.md#saved-list-reorder-and-separate-approval-local-browser-21-october); keep local and hosted acceptance distinct.
+
 ## Public recorded-rule comparison — 2026-10-21
 
 - Compare a revision-bound saved rule with an unsaved visual draft on up to 50 recorded `order.placed` Flow cases. Reuse the native interpreter and frozen references; never create orders, execute actions, call providers or substitute current data.

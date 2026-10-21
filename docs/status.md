@@ -24,6 +24,14 @@ original bag after full reload. Controlled-browser first loads still timed out;
 the complete journey succeeded after the documented normal-navigation recovery.
 [Exact checkout observations and screenshots](evidence/storyfront-checkout-2026-10-21.md#regression-after-reusable-work-and-rule-comparison).
 
+Additional local browser acceptance restores a saved material/dimensions list at
+current prices, requires a different buyer account to approve the exact cart,
+and completes simulated order `RAC-b30bec87` for EUR 155.41 with an empty cart
+after reload. The approver inbox and reopened customer/company order now display
+the accepted app configuration using the existing snapshot renderer. The original
+order retains its older material and EUR 135.41 total. This combined B2B journey
+remains local acceptance. [Steps and screenshots](evidence/furniture-browser-2026-10-21.md#saved-list-reorder-and-separate-approval-local-browser-21-october).
+
 Earlier public acceptance: Core/Studio `650529c7` (`aromatic-voyage-2152`), deployed
 21 October at 20:22 CEST, completes **Reuse as a Flow** through the public Studio.
 A completed native task opened as an inactive Flow draft, with an explicit daily

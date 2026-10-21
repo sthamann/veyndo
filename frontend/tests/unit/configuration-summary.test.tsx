@@ -4,9 +4,11 @@ import { expect, it, vi } from "vitest";
 import ConfigurationSummary from "../../src/shared/apps/ConfigurationSummary";
 import CheckoutSummary from "../../src/storefront/checkout/CheckoutSummary";
 import OrderCompletion from "../../src/storefront/checkout/OrderCompletion";
+import AccountOrderDetail from "../../src/storefront/account/AccountOrderDetail";
 import { LocaleProvider } from "../../src/shared/i18n/i18n";
 import type { ConfigurationSnapshot } from "../../src/shared/api/configuration-types";
 import type { Cart, Order } from "../../src/shared/api/shop-api";
+import type { CustomerOrder } from "../../src/storefront/account/account-types";
 import { cart } from "./fixtures";
 
 const config: ConfigurationSnapshot = {
@@ -103,4 +105,50 @@ it("shows the same accepted configuration before purchase and after completion",
   });
   expect(screen.getByText("Rovere originale")).toBeVisible();
   expect(screen.getByText("260")).toBeVisible();
+});
+
+it("retains the purchased configuration when reopening an account or company order", async () => {
+  const loadOrder = vi.fn(
+    async () =>
+      ({
+        id: "order",
+        orderNumber: "RAC-original",
+        revision: 1,
+        state: "open",
+        cart: {
+          ...cart,
+          lineItems: [
+            {
+              id: "p",
+              label: "Custom item",
+              quantity: 1,
+              minPurchase: 1,
+              purchaseSteps: 1,
+              price: { unitPrice: 397, totalPrice: 397 },
+              appConfigurations: [config],
+            },
+          ],
+        },
+        payment: { provider: "simulated", state: "authorized" },
+      }) as CustomerOrder,
+  );
+  render(
+    <AccountOrderDetail
+      id="order"
+      onBack={vi.fn()}
+      onOrder={vi.fn()}
+      downloads={[]}
+      download={vi.fn()}
+      busy={false}
+      run={async (fn) => fn()}
+      onError={vi.fn()}
+      loadOrder={loadOrder}
+    />,
+    { wrapper: LocaleProvider },
+  );
+  expect(await screen.findByText("Rovere originale")).toBeVisible();
+  expect(screen.getByText("260")).toBeVisible();
+  expect(screen.getByText(/4,800/)).toBeVisible();
+  expect(screen.queryByText("record-1")).toBeNull();
+  expect(loadOrder).toHaveBeenCalledTimes(1);
 });

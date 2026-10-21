@@ -92,3 +92,37 @@ and EUR 68.17 VAT. Return showed cart zero and product stock five.
 
 This verifies the saved-input reload repair on the named public image. It does
 not replace the separate independent B2B approval or saved-list reorder check.
+
+## Saved-list reorder and separate approval: local browser, 21 October
+
+An isolated local shop `capability-fb000eff` was prepared through the existing
+app-owned HTTP/PostgreSQL workflow. Its furniture package was upgraded from
+1.0.0 to 1.1.0, the material renamed to Walnut Select and its fee updated. The
+saved order list retained material ID and dimensions, rather than an old price.
+The fixture deliberately uses the small native lamp catalogue item to exercise
+the generic app contract; the hosted desk journey is documented above.
+
+Two ordinary Chrome tabs used separate local origins and existing synthetic
+buyer/approver accounts. The buyer selected the company unit and purchase-order
+reference, restored the saved list, and reviewed Walnut Select, 260 x 80 cm,
+EUR 88 surcharge and EUR 155.41 total. The purchase action remained disabled
+until the different customer approved that exact request. Refresh then enabled
+purchase. Simulated order `RAC-b30bec87` completed; receipt return and full reload
+showed an empty cart. No real payment provider was used.
+
+The browser exposed two presentation gaps: the approver inbox and reopened
+customer/company order detail omitted the stored app configuration. Both now use
+the existing read-only `ConfigurationSummary`, displaying only the accepted
+snapshot already returned by the native owner. There is no extra app lookup,
+new permission, pricing path or mutable reconstruction of historical labels.
+Rendered regressions cover a separate approver, current request revision,
+fifth-language fallback, source currency and reopening an immutable order.
+
+After the UI repair, the local browser showed the original order
+`RAC-b7c32b36` still at EUR 135.41, with Walnut and EUR 68 surcharge. The newer
+approval showed Walnut Select and EUR 88. This is local browser acceptance;
+the combined independent-approval/reorder journey is not yet a hosted acceptance.
+
+![Local simulated reorder after a separate buyer approval](images/furniture-2026-10-21/local-approved-reorder.jpg)
+
+![Original company order retains its purchased material and surcharge](images/furniture-2026-10-21/local-original-order.jpg)
