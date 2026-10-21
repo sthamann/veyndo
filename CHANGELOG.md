@@ -1,5 +1,10 @@
 # Changelog
 
+## Public provider recovery and checkout repetition — 2026-10-21
+
+- Record Experience `cbb4d283` / `alert-light-1076`, the original typed-Date reconciliation repair and an observed three-receipt recovery cycle with no technical failures. External results remain pending.
+- Repeat the actual embedded simulated purchase as `RAC-386cdc4c`, receipt return and persistent empty Storyfront bag after reload. Include screenshots and retain the separate initial iframe retry limitation.
+
 ## Public original Storyfront purchase acceptance — 2026-10-21
 
 - Record the original scrollable Purchase scene, pointer add-to-bag, embedded simulated order `RAC-3bce945b`, receipt return and empty original bag after full reload on public Experience `56ae7b8` and Core `fb8d54e0`. Include actual screenshots and retain the separate first-load retry limitation.
