@@ -136,8 +136,15 @@ the first order immutable. The original `1.0.0` definition and workflow tests st
 inside the plugin directory. The hosted private browser journey now completes
 material/dimensions configuration, simulated EUR 417 purchase, empty cart return,
 native order/Flow inspection and immutable order display after a material update.
-Independent B2B approval and saved-input reorder still need hosted browser
-acceptance. The public `fb8d54e0` follow-up restores saved material and dimensions
+Independent B2B approval and saved-input reorder now also pass in the local browser:
+the buyer restores a saved configuration, a separately signed-in approver reviews
+the exact quote, and simulated order `RAC-b30bec87` retains the updated material,
+dimensions and surcharge. Return and reload retain an empty cart. This exposed
+missing configuration details in the approval inbox and reopened customer orders;
+both now use the shared frozen-order summary. Reopening the original order still
+shows its original material and EUR 68 surcharge after the app update. The combined
+journey still needs hosted browser acceptance. See the local browser section of
+the evidence page below. The public `fb8d54e0` follow-up restores saved material and dimensions
 after a full reload even before any line item exists. Simulated order
 `RAC-2246a373` then preserved Walnut Select, 250 x 80 cm, EUR 78 surcharge and
 EUR 427 total; returning to the shop showed cart zero. The earlier `b0b8cba7`
