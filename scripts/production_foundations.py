@@ -215,20 +215,30 @@ try:
     # Existing real SQL suites are repeated with the strict runtime, not only privileged DB fixtures.
     for suite in ['checkout_review', 'merchant_operations', 'tenant_isolation']:
         subprocess.run(['python3', f'scripts/{suite}.py'], cwd=ROOT, env={**env,'BASE_URL':one}, check=True)
+    # Isolate the cache experiment from earlier shops' still-running outbox jobs.
+    cache_id='cache-'+uuid.uuid4().hex[:10]
+    cache_session=call(one,'/api/auth/register',{'name':'Cache proof','email':cache_id+'@example.test','password':'Synthetic-cache-password!','workspaceId':cache_id})
+    cache_h={'x-tenant':cache_session['workspace'],'Authorization':'Bearer '+cache_session['token']}
+    cache_id=cache_session['workspace']
     for base in bases:
-        call(base, '/api/merchant/commerce', h=h)
+        call(base, '/api/merchant/commerce', h=cache_h)
     before = [call(base, '/api/runtime', h=h)['performance']['reads']['eventInvalidations'] for base in bases]
-    sql("UPDATE commerce_settings SET revision=revision+1 WHERE tenant='atelier';")
+    committed=sql(f"LISTEN veyndo_read_invalidation; UPDATE commerce_settings SET revision=revision+1 WHERE tenant='{cache_id}'; SELECT pg_sleep(.2);")
+    assert 'veyndo_read_invalidation' in committed and cache_id in committed,committed
     for _ in range(50):
         after = [call(base, '/api/runtime', h=h)['performance']['reads']['eventInvalidations'] for base in bases]
         if all(b > a for a,b in zip(before,after)): break
         time.sleep(.05)
     assert all(b > a for a,b in zip(before,after)), (before,after)
-    rollback = after
-    sql("BEGIN; UPDATE commerce_settings SET revision=revision+1 WHERE tenant='atelier'; ROLLBACK;")
-    time.sleep(.2)
-    assert [call(base, '/api/runtime', h=h)['performance']['reads']['eventInvalidations'] for base in bases] == rollback
-    print('PASS committed outbox event invalidates both replicas; rollback emits no notification')
+    revision=sql(f"SELECT revision FROM commerce_settings WHERE tenant='{cache_id}'")
+    events=sql(f"SELECT count(*) FROM outbox WHERE tenant='{cache_id}' AND kind='cache.invalidate'")
+    rolled_back=sql(f"LISTEN veyndo_read_invalidation; BEGIN; UPDATE commerce_settings SET revision=revision+1 WHERE tenant='{cache_id}'; ROLLBACK; SELECT pg_sleep(.2);")
+    assert cache_id not in rolled_back,rolled_back
+    assert sql(f"SELECT revision FROM commerce_settings WHERE tenant='{cache_id}'")==revision
+    assert sql(f"SELECT count(*) FROM outbox WHERE tenant='{cache_id}' AND kind='cache.invalidate'")==events
+    for base in bases:
+        assert call(base, '/api/merchant/commerce', h=cache_h)['revision']==int(revision)
+    print('PASS committed event reaches both replicas; isolated rollback preserves revision/outbox and emits no notification')
     # Accepted native tasks consume one durable attempt across replicas; malformed chat does not create work.
     ai_h = {'x-tenant':sessions[0]['workspace'],'Authorization':'Bearer '+sessions[0]['token']}
     if tenant_role:
