@@ -182,9 +182,17 @@ export default function StudioRoutes() {
     />
   ) : tab === "automation" ? (
     <AutomationView
+      key={environment || workspace}
       request={request}
       role={role}
       onChannels={() => selectTab("channels")}
+      onTranslations={(jobId) => {
+        const url = new URL(location.href);
+        url.searchParams.set("settings", "languages");
+        url.searchParams.set("translationJob", jobId);
+        history.replaceState(null, "", url);
+        selectTab("commerce");
+      }}
     />
   ) : tab === "b2b" ? (
     <B2BWorkspace

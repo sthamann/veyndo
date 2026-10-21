@@ -639,6 +639,7 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/admin/automation/FlowCanvas.tsx](../frontend/src/admin/automation/FlowCanvas.tsx) | Branching flow canvas edits the actual server graph, including true/false edges, reusable actions and durable delays. |
 | [frontend/src/admin/automation/FlowExecution.tsx](../frontend/src/admin/automation/FlowExecution.tsx) | Actual persisted execution traces show branch decisions, confirmed steps and the scheduled continuation. |
 | [frontend/src/admin/automation/FlowInputs.tsx](../frontend/src/admin/automation/FlowInputs.tsx) | Schema-derived flow parameters; runtime-bound event fields are intentionally supplied by the server. |
+| [frontend/src/admin/automation/FlowProposalReview.tsx](../frontend/src/admin/automation/FlowProposalReview.tsx) | Flow review observes the original native task, including approval made in another Studio view. |
 | [frontend/src/admin/automation/FlowTopology.tsx](../frontend/src/admin/automation/FlowTopology.tsx) | Readable connected overview of the persisted graph; selecting a node opens its matching editor card. |
 | [frontend/src/admin/automation/JsonField.tsx](../frontend/src/admin/automation/JsonField.tsx) | JSON editing retains incomplete input and invalidates the actual payload instead of silently saving the last valid value. |
 | [frontend/src/admin/automation/PromotionSchedule.tsx](../frontend/src/admin/automation/PromotionSchedule.tsx) | Campaign scheduling uses ISO instants in the API and local times in the editor. |
@@ -902,6 +903,7 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/admin/shell/useStudioPermissions.ts](../frontend/src/admin/shell/useStudioPermissions.ts) | Recheck current server grants; discard previously loaded views when a live role changes. |
 | [frontend/src/admin/shell/useStudioSession.ts](../frontend/src/admin/shell/useStudioSession.ts) | Revalidate visible Studio sessions and route authenticated failures to the active controller. |
 | [frontend/src/admin/shell/useStudioTheme.ts](../frontend/src/admin/shell/useStudioTheme.ts) | Persist only the presentation theme; account, agent context and commerce state never enter this preference. |
+| [frontend/src/admin/shell/useTaskExecution.ts](../frontend/src/admin/shell/useTaskExecution.ts) | Observe the original task worker; an accepted command is not a completed write. |
 | [frontend/src/admin/styles/agentic-channels.css](../frontend/src/admin/styles/agentic-channels.css) | Inbound catalogue setup keeps actions, permission state and external approval readable at every width. |
 | [frontend/src/admin/styles/api-console.css](../frontend/src/admin/styles/api-console.css) | Responsive developer key management and bounded API explorer using Studio theme tokens. |
 | [frontend/src/admin/styles/app-agent-drawer.css](../frontend/src/admin/styles/app-agent-drawer.css) | Contextual AI dialog presentation; native dialog owns modal focus and the editing canvas remains mounted. |
@@ -973,7 +975,6 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/admin/workspace/WorkspaceGoals.tsx](../frontend/src/admin/workspace/WorkspaceGoals.tsx) | Goals reference the existing proposal owner; no parallel worker, executor or approval queue. |
 | [frontend/src/admin/workspace/WorkspacePinBridge.tsx](../frontend/src/admin/workspace/WorkspacePinBridge.tsx) | The shared grid pins criteria in the existing actor-private workspace; rows and credentials are never copied. |
 | [frontend/src/admin/workspace/WorkspaceTask.tsx](../frontend/src/admin/workspace/WorkspaceTask.tsx) | Personal goals open the native proposal review and apply owner; no second approval/execution path. |
-| [frontend/src/admin/workspace/useWorkspaceTaskRun.ts](../frontend/src/admin/workspace/useWorkspaceTaskRun.ts) | Observe the original task worker; an accepted command is not a completed write. |
 | [frontend/src/admin/workspace/workspace-i18n.ts](../frontend/src/admin/workspace/workspace-i18n.ts) | Personal workspace vocabulary; UI language never changes saved content language. |
 | [frontend/src/admin/workspace/workspace-model.ts](../frontend/src/admin/workspace/workspace-model.ts) | Layouts are private presentation preferences, never roles or delegated permissions. |
 | [frontend/src/admin/workspace/workspace.css](../frontend/src/admin/workspace/workspace.css) | Personal workspace: stable shell, accessible rearrangement and scoped cards. |

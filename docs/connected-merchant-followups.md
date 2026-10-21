@@ -26,6 +26,9 @@ Public Core/Studio `09b1aa35` now completes the original configured-model propos
 through the personal workspace: exactly one hidden native category, revision one,
 retained completion after reload and no category in the parent live shop.
 [Public browser evidence](evidence/flow-native-work-2026-10-21.md).
+The direct Flow-history review now shares the native progress/continuation card and
+current control checks with the personal workspace; its public delivery is tracked
+separately from the already observed workspace acceptance.
 Turning an accepted task into
 a configurable Flow with mapped inputs and event parameters remains the next part
 of item 4; the existing title-only shortcut is not that complete workflow.

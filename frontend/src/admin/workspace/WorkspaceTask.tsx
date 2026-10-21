@@ -4,7 +4,7 @@ import ProposalCard from "../assistant/ProposalCard";
 import AgentRunCard from "../shell/AgentRunCard";
 import type { Preview, RequestFn } from "../shell/studio-types";
 import { useWorkspaceText } from "./workspace-i18n";
-import { useWorkspaceTaskRun } from "./useWorkspaceTaskRun";
+import { useTaskExecution } from "../shell/useTaskExecution";
 export type WorkspaceTaskValue = {
   id: string;
   preview: Preview;
@@ -22,7 +22,7 @@ export default function WorkspaceTask({
 }) {
   const t = useWorkspaceText(),
     [open, setOpen] = useState(false),
-    progress = useWorkspaceTaskRun(
+    progress = useTaskExecution(
       task.id,
       task.applied,
       request,

@@ -7,7 +7,7 @@ import {
   screen,
 } from "@testing-library/react";
 import { afterEach, expect, it, vi } from "vitest";
-import { useWorkspaceTaskRun } from "../../src/admin/workspace/useWorkspaceTaskRun";
+import { useTaskExecution } from "../../src/admin/shell/useTaskExecution";
 import WorkspaceTask from "../../src/admin/workspace/WorkspaceTask";
 import { LocaleScope } from "../../src/shared/i18n/i18n";
 import type { SavedRun } from "../../src/admin/shell/useChatTurns";
@@ -17,7 +17,7 @@ it("restores previously approved work from the task list without sending a new a
   let run = value("running", 9);
   const request = vi.fn(async () => run);
   const { result, unmount } = renderHook(() =>
-    useWorkspaceTaskRun("work-1", false, request as any, true),
+    useTaskExecution("work-1", false, request as any, true),
   );
   await act(async () => {});
   expect(result.current.accepted).toBe(true);
@@ -34,8 +34,7 @@ it("restores previously approved work from the task list without sending a new a
 it("adopts an execution started in another view when the task list refreshes", async () => {
   const request = vi.fn(async () => value("ready", 11));
   const { result, rerender } = renderHook(
-    ({ started }) =>
-      useWorkspaceTaskRun("work-1", false, request as any, started),
+    ({ started }) => useTaskExecution("work-1", false, request as any, started),
     { initialProps: { started: false } },
   );
   expect(request).not.toHaveBeenCalled();
@@ -69,7 +68,7 @@ it("shows queued and running work without completion or a duplicate approval, th
     path.endsWith("/apply") ? { queued: true, applied: false } : run,
   );
   const { result, unmount } = renderHook(() =>
-    useWorkspaceTaskRun("work-1", false, request as any),
+    useTaskExecution("work-1", false, request as any),
   );
   await act(() => result.current.approve());
   expect(result.current.accepted).toBe(true);
@@ -98,15 +97,13 @@ it("does not confuse a ready proposal with applied work and accepts an immediate
       : { ...value("ready"), approvalRequired: true },
   );
   const first = renderHook(() =>
-    useWorkspaceTaskRun("work-1", false, request as any),
+    useTaskExecution("work-1", false, request as any),
   );
   await act(() => first.result.current.approve());
   expect(first.result.current.applied).toBe(false);
   first.unmount();
   const immediate = vi.fn(async () => ({ applied: true }));
-  const next = renderHook(() =>
-    useWorkspaceTaskRun("legacy-1", false, immediate),
-  );
+  const next = renderHook(() => useTaskExecution("legacy-1", false, immediate));
   await act(() => next.result.current.approve());
   expect(next.result.current.applied).toBe(true);
   expect(immediate).toHaveBeenCalledOnce();
@@ -119,7 +116,7 @@ it("does not turn a status outage into success and offers an explicit refresh", 
     return value("ready");
   });
   const { result } = renderHook(() =>
-    useWorkspaceTaskRun("work-1", false, request as any),
+    useTaskExecution("work-1", false, request as any),
   );
   await act(() => result.current.approve());
   expect(result.current.applied).toBe(false);
@@ -137,7 +134,7 @@ it("retains failed work and resumes only on an explicit command with the observe
     return run;
   });
   const { result } = renderHook(() =>
-    useWorkspaceTaskRun("work-1", false, request as any),
+    useTaskExecution("work-1", false, request as any),
   );
   await act(() => result.current.approve());
   expect(result.current.run?.state).toBe("failed");
@@ -162,7 +159,7 @@ it("discards a late approval across a request identity change, even after return
   );
   const next = vi.fn(async () => value("ready"));
   const { result, rerender } = renderHook(
-    ({ request }) => useWorkspaceTaskRun("work-1", false, request),
+    ({ request }) => useTaskExecution("work-1", false, request),
     { initialProps: { request: old as any } },
   );
   let pending!: Promise<void>;
@@ -237,7 +234,7 @@ it("stops polling after cancellation and discards an older in-flight status resp
     return reads === 1 ? value("running", 5) : value("cancelled", 6);
   });
   const { result, unmount } = renderHook(() =>
-    useWorkspaceTaskRun("work-1", false, request as any),
+    useTaskExecution("work-1", false, request as any),
   );
   await act(() => result.current.approve());
   await act(() => vi.advanceTimersByTimeAsync(1500));
@@ -267,7 +264,7 @@ it("preserves a failed approval for retry and ignores late status after switchin
     });
   });
   const { result, rerender } = renderHook(
-    ({ id }) => useWorkspaceTaskRun(id, false, request as any),
+    ({ id }) => useTaskExecution(id, false, request as any),
     { initialProps: { id: "work-1" } },
   );
   await act(() => result.current.approve());

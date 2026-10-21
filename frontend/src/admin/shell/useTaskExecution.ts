@@ -1,7 +1,7 @@
 /** Observe the original task worker; an accepted command is not a completed write. */
 import { useEffect, useRef, useState } from "react";
-import type { RequestFn } from "../shell/studio-types";
-import type { SavedRun } from "../shell/useChatTurns";
+import type { RequestFn } from "./studio-types";
+import type { SavedRun } from "./useChatTurns";
 type Scope = { id: string; request: RequestFn };
 type Progress = {
   scope: Scope;
@@ -12,7 +12,7 @@ type Progress = {
   error: string;
   refresh: number;
 };
-export function useWorkspaceTaskRun(
+export function useTaskExecution(
   id: string,
   applied: boolean,
   request: RequestFn,

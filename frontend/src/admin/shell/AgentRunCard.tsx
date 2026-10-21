@@ -8,9 +8,11 @@ export default function AgentRunCard({
   value,
   control,
   onTranslations,
+  canControl = true,
 }: {
   value: SavedRun;
-  onTranslations: (jobId: string) => void;
+  canControl?: boolean;
+  onTranslations?: (jobId: string) => void;
   control: (action: "resume" | "cancel") => Promise<void>;
 }) {
   const [busy, setBusy] = useState(false);
@@ -52,7 +54,7 @@ export default function AgentRunCard({
             <li key={index}>
               <Icon name={step.completed ? "check" : "pulse"} size={14} />
               {step.label}
-              {step.translationJobId && (
+              {step.translationJobId && onTranslations && (
                 <button
                   type="button"
                   onClick={() => onTranslations(step.translationJobId!)}
@@ -88,14 +90,17 @@ export default function AgentRunCard({
         {(value.state === "failed" || value.state === "uncertain") && (
           <button
             className="primary"
-            disabled={busy}
+            disabled={busy || !canControl}
             onClick={() => void act("resume")}
           >
             {text("resume")}
           </button>
         )}
         {value.state !== "ready" && value.state !== "cancelled" && (
-          <button disabled={busy} onClick={() => void act("cancel")}>
+          <button
+            disabled={busy || !canControl}
+            onClick={() => void act("cancel")}
+          >
             {text("cancel")}
           </button>
         )}

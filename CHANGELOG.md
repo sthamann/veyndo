@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased — shared progress in direct Flow review
+
+- Connect the direct Flow-history proposal to the existing native task progress, explicit resume/cancel and translation editor. A completed proposal job no longer hides pending approved work; reload observes the original execution without a second approval.
+- Reuse one shared task hook across Flow history and the personal workspace. Preserve current controls, task identity, tenant scope, revision fences and immediate legacy proposals; changing environments remounts the Flow editor.
+- Cover the actual rendered Flow history, permission withdrawal, explicit continuation and legacy approval; actual PostgreSQL checks confirm queued/completed history and parent-shop isolation.
+
 ## Public Flow-to-workspace acceptance — 2026-10-21
 
 - Deliver `09b1aa35` / `giving-insect-7440` and complete the original configured-provider Flow proposal through the selected private workspace. Observe one native category at revision one, restored completion after browser reload and no category in the parent live shop. Retain screenshots and exact scope in the public evidence page.

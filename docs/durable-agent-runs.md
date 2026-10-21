@@ -164,6 +164,16 @@ environment. It does not reload the page into the live shop.
 
 ## Review work prepared by a Flow
 
+The direct Flow history uses the same native task progress and explicit continuation
+as the personal workspace. A completed Flow proposal is distinct from completed
+approved work: queued/running work stays visible, and only its native completion
+receipt marks the operation finished. Reloading the history retains that state
+without another approval. Current `automation.manage` controls approval, continuation
+and cancellation; the task owner still rechecks original identity and domain rights.
+Translation results open their existing editor in the selected environment. Older
+immediate proposals remain reviewable without requiring a durable run endpoint.
+
+
 The personal workspace loads tasks and sends approvals in the selected environment.
 Its saved layout belongs to the parent shop, so changing the sandbox keeps your
 arrangement while changing the actual work under review. A late response from a

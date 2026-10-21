@@ -3202,8 +3202,8 @@
     },
     "src/marketing/jobs.rs": {
       "status": "unproved",
-      "sha256": "dd18f8c6fddb2113e93a68aaf3cb7ec4ae5b4f2bdb08c931e72876946688e4cf",
-      "review": "Tenant roles and current grants independently reviewed; owner/retained-override/acceptance races repaired and PostgreSQL-blocked regressions passed; PII and Flow projection boundaries documented; B2B feature settings delegate shared CAS/history and preserve financial guards. Existing extracted policies unchanged; SQL/async/UI remain reviewed adapters, not full proofs."
+      "sha256": "2602e171f2706e7d2320a698ebc478e580e666853fe30c541103eaf2a145f378",
+      "review": "Flow history adds a tenant-bound join to the original task for applied/execution-started metadata only; existing source-permission projection is unchanged. The shared frontend observes original native runs and preserves approval, actor, revision and domain authority. Native Flow fixture verifies pending/completed history plus parent isolation."
     },
     "src/marketing/lifecycle.rs": {
       "status": "unproved",

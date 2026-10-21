@@ -70,11 +70,22 @@ remains blocked. The final frontend suite includes this distinction. A flaky
 onboarding test now waits for the existing consent review to enable installation
 before clicking; it does not weaken or skip the real consent check.
 
+## Public review follow-up
+
+Public image `oval-station-7696`, commit `4ec94006`, passed its health check on
+21 October. A full browser reload and opening the original completed proposal
+showed one completed operation and “Im Shop angewendet”, without another approval
+button or the misleading read-only notice. The private environment remained selected.
+
+![Completed proposal review after the public update](images/flow-native-2026-10-21/completed-review.jpg)
+
 ## Remaining scope
 
 Turning accepted work into a configurable Flow with mapped event inputs is still
 separate development. The current title-only shortcut does not implement that
 workflow. Flow inference retains its existing uncertainty handling; durable model
 checkpoints are not added to legacy Flow inference by this repair.
-The direct Flow-history review still needs the same complete durable-progress
-presentation; this acceptance covers review through the personal workspace.
+The direct Flow-history review is connected locally to the same durable-progress
+presentation, with 761 frontend tests and the actual native Flow/tenant suites
+passing. Its separate public acceptance is pending; the screenshots above cover
+review through the personal workspace.
