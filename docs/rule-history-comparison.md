@@ -88,6 +88,36 @@ reference fan-out and reject missing references under negation.
 This page describes the implemented comparison. Public release and observed
 browser acceptance are recorded in [current status](status.md).
 
+### Public browser, 21 October
+
+Core/Studio `6a71d072` (`jubilant-plane-2874`) started at 21:04:50 CEST and
+reached one passing replica with zero restarts. In the synthetic shop
+`agent-release-abnahm-0054aa7088`, the existing `default_order_received` record
+from 11:37:09 UTC was evaluated through the normal Studio. The saved rule
+`default_cart_100` was compared with an unsaved threshold of EUR 1: one evaluated
+case, one changed result, zero unavailable; saved **does not match**, draft
+**matches**.
+
+Changing the draft cleared the result. Selecting **Payment received**, which
+had no records, showed the empty-history message. A full reload retained the
+original EUR 100 threshold at revision one. The native order list still showed
+only `RAC-484bd556` for EUR 49.90. No configuration was saved and no order was
+created by this comparison. HTTP/MCP parity and permission revocation are covered
+by the separate actual PostgreSQL tests, not inferred from this owner session.
+
+![Public Studio comparing the saved rule and draft](evidence/images/rule-history-2026-10-21/public-comparison.jpg)
+
+The responsive follow-up `ef093e7a` (`brave-produce-7557`) started at 21:14:41
+CEST and reached one passing replica with zero restarts. The same public rule
+comparison completed at 390 × 844 pixels: one evaluated case, one changed answer
+and zero unavailable. The language selector no longer covers the inputs or
+comparison controls. Returning the unsaved threshold to EUR 100 cleared the
+result; the test saved no configuration. Temporary browser emulation was removed.
+
+![Public mobile Studio with an unobstructed comparison](evidence/images/rule-history-2026-10-21/public-mobile-comparison.jpg)
+
+### Local and responsive checks
+
 Local browser acceptance on 21 October used a synthetic native order and completed
 Flow. Changing the draft threshold from 1 to 1,000 showed one evaluated case and
 one changed result. Editing the draft cleared that result; selecting a Flow with

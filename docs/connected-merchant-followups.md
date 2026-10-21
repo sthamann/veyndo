@@ -16,7 +16,7 @@ It is a delivery plan, not a claim that every item below is already available on
 | 6 | Complete inward shop migration and an external integration | Saved source mapping, private destination data/layout, selected cutover and purchase, plus observed external destination result. Local provider fixtures remain separate evidence. |
 | 7 | Keep contracts, money and delivery consistent under load | Exact authoritative amounts and PHP differential cases, generated API contracts, measured bounded/fair workers, required CI and public deployment. |
 
-## Comparing recorded orders: current development
+## Comparing recorded orders: hosted acceptance
 
 The native rule editor, API and MCP now share a bounded read-only condition
 comparison on existing frozen `order.placed` Flow inputs. It compares a
@@ -25,9 +25,13 @@ and reporting missing facts as unavailable. Actual checkout/Flow PostgreSQL test
 cover both transports, current/withdrawn rights, foreign shops and unchanged orders,
 receipts and jobs. This is a selected Flow sample, not complete checkout repricing
 or a revenue forecast. [Usage, limits and acceptance](rule-history-comparison.md).
-Public browser acceptance remains pending for this addition.
+Public Core/Studio `6a71d072` now compares the existing EUR 49.90 test order in
+the original Studio: saved threshold EUR 100 is false, draft threshold EUR 1 is
+true. Editing clears the answer, an empty Flow is explained, and reload retains
+the saved rule at revision one and the single original order. See the linked
+guide for screenshots and the exact selected-sample boundary.
 
-## Reusing work: current development
+## Reusing work: hosted acceptance
 
 Direct and graphical Flow AI proposals now join the existing ready-task and
 personal-approval path. Actual local product-event tests cover one private native

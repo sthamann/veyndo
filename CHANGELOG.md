@@ -1,10 +1,12 @@
 # Changelog
 
-## Unreleased — compare rules on frozen order inputs
+## Public recorded-rule comparison — 2026-10-21
 
 - Compare a revision-bound saved rule with an unsaved visual draft on up to 50 recorded `order.placed` Flow cases. Reuse the native interpreter and frozen references; never create orders, execute actions, call providers or substitute current data.
 - Share one Rust handler across Studio, HTTP, MCP and authorized read agents, with generated input contracts, current compound data/PII rights, tenant isolation, bounded snapshots/references and explicit unavailable cases.
 - Show reviewed comparison counts and saved/draft outcomes in EN/DE/FR/ES. Clear stale results when the draft, rule, revision or shop changes. Keep full historical checkout repricing and revenue claims outside this condition-only comparison.
+- Deliver `6a71d072` / `jubilant-plane-2874` and compare an existing EUR 49.90 public test order: the saved EUR 100 threshold is false and the unsaved EUR 1 threshold true. Verify cleared stale results, empty history, retained saved revision and unchanged order count. [Usage and browser evidence](docs/rule-history-comparison.md).
+- Keep the shared language card in normal page flow below 600 px so it cannot cover editor controls. Deliver `ef093e7a` / `brave-produce-7557`, complete the 390 × 844 public browser comparison and preserve its screenshot.
 
 ## Public reusable-work Flow acceptance — 2026-10-21
 
