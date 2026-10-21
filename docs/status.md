@@ -4,11 +4,15 @@ This is the single starting point for what works, what is implemented but not
 publicly accepted, and what still needs development. Updated 21 October 2026.
 A green test, merged code and a completed public business journey are different evidence.
 
-Latest public acceptance: Core/Studio `4c0392ae` (`pure-minute-7985`), deployed
-21 October at 19:37 CEST, restores the original approved task directly in Flow
-history after a full reload: one completed action, the same private workspace,
-no duplicate approval. Direct history and the personal workspace share durable
-progress and permission-aware continuation controls.
+Latest public acceptance: Core/Studio `650529c7` (`aromatic-voyage-2152`), deployed
+21 October at 20:22 CEST, completes **Reuse as a Flow** through the public Studio.
+A completed native task opened as an inactive Flow draft, with an explicit daily
+limit and a fresh reference per run. After activation, a real product update
+prepared one new review. Personal approval created one hidden category at revision
+one; completion survived reload and the category remained absent from the parent
+live shop. The test Flow is inactive again and the trigger product text is restored.
+The previous `4c0392ae` repair is retained: direct Flow history and the personal
+workspace share durable progress and permission-aware continuation controls.
 
 The original ordinary product event prepared a configured-model
 Flow proposal; the original proposal was approved in the selected private workspace
@@ -17,8 +21,11 @@ was created at revision one. The completed task survived a full reload and the
 category was absent from the parent live shop. The repair also keeps previously
 approved queued or interrupted tasks available to their original actor.
 [Flow-to-workspace evidence and screenshots](evidence/flow-native-work-2026-10-21.md).
-Turning accepted work into a configurable Flow with mapped event inputs remains
-the next development step; it is not claimed by this acceptance.
+The public journey covers one native category operation with a generated per-run
+reference. Event-field mappings, limits across competing workers, withdrawn rights,
+stop and cross-workspace rejection additionally have actual local HTTP/PostgreSQL
+coverage. It does not establish unrestricted automation or live publication of
+private source tasks. [Configure and use a repeatable Flow](personal-workspace-and-shop-design.md#repeat-completed-work-as-a-flow).
 
 Current additional repair: saved material/dimensions now have an app/product-scoped
 representation in the native cart response, so forms can restore them after a

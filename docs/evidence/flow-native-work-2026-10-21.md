@@ -99,9 +99,56 @@ failure, withdrawn controls and legacy immediate proposals. This public check
 covers the direct Flow history; nested graphical-pipeline result presentation is
 not separately claimed by this screenshot.
 
+## Reusing completed work: public acceptance
+
+Core/Studio `650529c7`, image `aromatic-voyage-2152`, was deployed on 21 October
+at 20:22 CEST. Northflank reported one passing replica with no restarts. The public
+Studio journey used the existing **Agentic Workspace Abnahme 20 Okt** private shop
+and the completed category task above; no new identity or access was created.
+
+1. **Als Flow wiederverwenden** opened an inactive native Flow draft. The source
+   category ID was mapped to a generated per-run reference. The daily limit was
+   explicitly set to one. `repeat_work_20261021` saved inactive at revision one,
+   then activated at revision two.
+2. A reversible German description edit on `DESK-ACCEPTANCE-20261021` emitted the
+   ordinary `product.updated` event. The Flow history showed one fresh **Bereit
+   zur Prüfung** proposal with the new category ID
+   `work_489931d9c5da55d1a2323f0c`. It had its own approval button; preparation did
+   not apply the change or reuse the original approval.
+3. Personal approval started the existing native worker. A full browser reload
+   retained **Freigegebener Auftrag erledigt**, one completed action and **Im Shop
+   angewendet** in direct Flow history.
+4. The native category editor and its history showed the generated ID at revision
+   one, created at 20:28:14 CEST, active and hidden. The original category remained
+   separately present. The parent live category list contained neither Flow test
+   category.
+5. The Flow was deactivated at revision three before restoring the product's
+   original German description. Product price remained EUR 349 and stock five.
+   No publication, payment or external message was part of this test.
+
+![Fresh event proposal with its own approval and generated category reference](images/flow-native-2026-10-21/reusable-flow-ready.jpg)
+
+![One completed native action retained after a full browser reload](images/flow-native-2026-10-21/reusable-flow-completed.jpg)
+
+![New private category and its first revision in native history](images/flow-native-2026-10-21/reusable-flow-category.jpg)
+
+![Parent live shop without either private Flow category](images/flow-native-2026-10-21/reusable-flow-live-control.jpg)
+
+Local verification passed 768 frontend tests, 31 actual HTTP/PostgreSQL
+durable-agent cases and 43 tenant-isolation cases, plus Rust workspace checks,
+Clippy, formatting, formal/mutation and structure/localization checks. The native
+cases additionally cover typed event mappings, replay, original-source privacy,
+missing event values, foreign workspaces, withdrawn rights, stop and two workers
+competing for the final daily preparation slot. These checks are additional
+evidence; the public screenshot journey itself used one generated reference and
+one native category operation.
+
 ## Remaining scope
 
-Turning accepted work into a configurable Flow with mapped event inputs is still
-separate development. The current title-only shortcut does not implement that
-workflow. Flow inference retains its existing uncertainty handling; durable model
-checkpoints are not added to legacy Flow inference by this repair.
+Repeatable native work is a direct Flow action for private configuration tasks.
+It stores a protected source reference, not copied private inputs; source tasks
+are neither publication units nor transferred to other shops. Every new proposal
+needs personal approval. It does not establish arbitrary autonomous live writes
+or historical order replay. The new preparation path needs no model call. Legacy
+Flow inference retains its existing uncertainty handling; this extension does
+not add durable model checkpoints to that inference path.

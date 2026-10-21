@@ -32,12 +32,17 @@ another approval. Direct history and the personal workspace now share the native
 progress/continuation card and current control checks. The linked evidence includes
 the public direct-history screenshot and 761 frontend, 27 durable-agent and 43
 tenant-isolation checks.
-The next implementation adds **Reuse as a Flow** for completed native work:
+Public Core/Studio `650529c7` adds **Reuse as a Flow** for completed native work:
 reference-only source tasks, explicit event-field mappings, inactive drafts,
 per-Flow/workspace daily limits and the original personal review/execution path.
 See [the usage and permission boundary](personal-workspace-and-shop-design.md#repeat-completed-work-as-a-flow).
-This new extension still needs its own public browser acceptance; the 4c0392ae
-screenshots establish shared progress, not this new handoff.
+Its public browser acceptance now covers the completed-task handoff, an inactive
+draft, explicit activation, one real product event, a new personal approval, one
+hidden category at revision one, retained completion after reload and absence from
+the parent live shop. The test Flow is inactive again. The evidence page includes
+separate screenshots for this extension; generated per-run references are observed
+publicly, while other event-field mappings and competing daily-limit workers are
+covered by local native tests.
 
 ## Collection preparation: current development
 
