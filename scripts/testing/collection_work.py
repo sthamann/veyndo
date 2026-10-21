@@ -7,6 +7,7 @@ def verify(req,behavior,merchant,check,stop_replica,start_replica,expire_child,c
     req('/api/apps',consent({'builtIn':'site_builder'}),merchant)
     stage=req('/api/environments',{'name':'Connected collection'},merchant)['id']
     sh={**merchant,'x-tenant':stage}
+    verify_category_edit(req, sh, merchant, check)
     original=req('/api/merchant/products/mug',h=merchant)['translations']['it']['name']
     fields={'channel':'default','slug':'italian-collection','title':{'es-ES':'Colección italiana'},'kind':'landing','status':'published','content':{'blocks':[{'id':'products','kind':'products','products':['mug'],'productMode':'selected'}]},'theme':{},'seo':None,'author':None,'category':None,'starts_at':None}
     product=req('/api/merchant/products/mug',h=sh)
@@ -14,9 +15,11 @@ def verify(req,behavior,merchant,check,stop_replica,start_replica,expire_child,c
     product.update(id='collection_mug',revision=0)
     product['catalog'].update(productNumber='COLLECTION-MUG',categoryIds=['collection_italy'])
     product['translations']['it']={'name':None,'description':None}
+    existing=req('/api/merchant/products/mug',h=sh)
     operations=[
         {'name':'merchant.category.create','label':'Prepare collection category','arguments_json':json.dumps({'category':{'id':'collection_italy','position':1,'data':{'active':True,'visible':False,'type':'folder','translations':{'es-ES':{'name':'Colección italiana'}}}}})},
         {'name':'merchant.product.create','label':'Prepare the collection product','arguments_json':json.dumps({'product':product})},
+        {'name':'merchant.product.save','label':'Assign only the existing collection product','arguments_json':json.dumps({'id':'mug','product':{'revision':existing['revision'],'categoryIds':existing['catalog']['categoryIds']+['collection_italy']}})},
         {'name':'merchant.translations.create','label':'Prepare Italian product drafts','arguments_json':json.dumps({'targetLocale':'it-IT','productIds':['mug','collection_mug'],'overwrite':True,'inference':{'provider':'ollama','model':'translation-fixture'}})},
         {'name':'app.site_builder.save_page','label':'Prepare collection landing page','arguments_json':json.dumps({'id':'collection_italy','revision':0,'fields':fields})},
     ]
@@ -41,6 +44,12 @@ def verify(req,behavior,merchant,check,stop_replica,start_replica,expire_child,c
     assert correction['validationError'].startswith('content.blocks[0].id:'),correction
     assert not req('/api/apps/site_builder/actions/editor_pages',{},sh)['elements']
     behavior.pop('expected_repair_error')
+    malformed_product=copy.deepcopy(operations[2]);args=json.loads(malformed_product['arguments_json']);args['product'].pop('categoryIds');malformed_product['arguments_json']=json.dumps(args)
+    behavior.update(operations=[malformed_product],repaired_operations=[operations[2]],expected_repair_error='Product edit requires')
+    repaired_product=req('/api/agent/plan',{'instruction':'Prepare a category-only product assignment','inference':{'provider':'ollama'}},sh)['taskId']
+    assert 'Product edit requires' in req('/api/agent/runs/'+repaired_product,h=sh)['preview']['proposalRepair']['validationError']
+    assert req('/api/merchant/products/mug',h=sh)==existing
+    behavior.pop('expected_repair_error')
     behavior.pop('repaired_operations');behavior['operations']=operations
     check('an invalid page block receives its exact field path and one native-admitted correction without writing before review')
     # Fail translation output after the category commits. Parent completion must wait.
@@ -53,8 +62,8 @@ def verify(req,behavior,merchant,check,stop_replica,start_replica,expire_child,c
             time.sleep(.1)
         raise AssertionError(current)
     failed=state(('failed','uncertain'))
-    assert failed['state']=='failed' and failed['execution']['completed']==2,failed
-    job='work-'+task+'-2'
+    assert failed['state']=='failed' and failed['execution']['completed']==3,failed
+    job='work-'+task+'-3'
     assert req('/api/merchant/translations/'+job,h=sh)['job']['status']=='failed'
     assert not req('/api/apps/site_builder/actions/editor_pages',{},sh)['elements']
     assert not req('/api/apps/site_builder/actions/editor_pages',{},merchant)['elements']
@@ -63,7 +72,7 @@ def verify(req,behavior,merchant,check,stop_replica,start_replica,expire_child,c
     failed=state(('failed',))
     req('/api/agent/runs/'+task+'/resume',{'revision':failed['revision'],'approve':True},sh)
     done=state(('ready','failed','uncertain'))
-    assert done['state']=='ready' and done['execution']['completed']==4,done
+    assert done['state']=='ready' and done['execution']['completed']==5,done
     categories=req('/api/merchant/categories',h=sh)['elements']
     assert next(c for c in categories if c['id']=='collection_italy')['revision']==1,categories
     rows=req('/api/apps/site_builder/actions/editor_pages',{},sh)['elements']
@@ -93,12 +102,12 @@ def verify(req,behavior,merchant,check,stop_replica,start_replica,expire_child,c
     behavior.pop('repaired_operations')
     check('a malicious correction requesting checkout fails native admission; at most one correction is called and no app record is created')
     # A collection job without an explicit selection must not silently target all products.
-    malformed=copy.deepcopy(operations[2]);args=json.loads(malformed['arguments_json']);args.pop('productIds');malformed['arguments_json']=json.dumps(args)
+    malformed=copy.deepcopy(operations[3]);args=json.loads(malformed['arguments_json']);args.pop('productIds');malformed['arguments_json']=json.dumps(args)
     behavior['operations']=[malformed]
     req('/api/agent/plan',{'instruction':'Ambiguous collection must be rejected','inference':{'provider':'ollama'}},sh,expected=400)
-    operations[2]['arguments_json']=json.dumps({'targetLocale':'it-IT','productIds':['mug'],'overwrite':True,'inference':{'provider':'ollama','model':'translation-fixture'}})
+    operations[3]['arguments_json']=json.dumps({'targetLocale':'it-IT','productIds':['mug'],'overwrite':True,'inference':{'provider':'ollama','model':'translation-fixture'}})
     for control in ("cancel","revoke","crash"):
-        behavior['operations']=[operations[2]]
+        behavior['operations']=[operations[3]]
         started=threading.Event();release=threading.Event()
         behavior.update(translation_started=started,translation_release=release)
         task=req('/api/agent/plan',{'instruction':'Prepare selected private drafts with current rights','inference':{'provider':'ollama'}},sh)['taskId']
@@ -152,3 +161,33 @@ def verify(req,behavior,merchant,check,stop_replica,start_replica,expire_child,c
             assert recovered['state']=='ready' and recovered['execution']['completed']==1,recovered
     check('linked translation calls release database backends; parent cancellation and revoked original sessions fence in-flight drafts and a killed translation call needs explicit continuation without automatic provider retry')
     behavior.pop('operations')
+
+
+def verify_category_edit(req, sh, merchant, check):
+    category={'id':'assignment_only','position':1,'data':{'active':False,'visible':False,'type':'folder','translations':{'es-ES':{'name':'Asignación privada'}}}}
+    req('/api/merchant/categories',category,sh)
+    foreign=copy.deepcopy(category);foreign['id']='live_only_assignment'
+    req('/api/merchant/categories',foreign,merchant)
+    before=req('/api/merchant/products/mug',h=sh)
+    patch={'revision':before['revision'],'categoryIds':before['catalog']['categoryIds']+['assignment_only']}
+    req('/api/merchant/products/mug',patch,sh,method='PUT')
+    after=req('/api/merchant/products/mug',h=sh)
+    assert after['catalog']['categoryIds']==sorted(patch['categoryIds']),after
+    assert after['commerce']==before['commerce'] and after['translations']==before['translations']
+    for key,value in before['catalog'].items():
+        if key!='categoryIds':assert after['catalog'][key]==value,(key,after)
+    before_extra=copy.deepcopy(before['extra']);after_extra=copy.deepcopy(after['extra'])
+    for extra in (before_extra,after_extra):
+        if isinstance(extra.get('automation'),dict):extra['automation'].pop('categoryIds',None)
+    assert after_extra==before_extra,(before_extra,after_extra)
+    req('/api/merchant/products/mug',patch,sh,method='PUT',expected=409)
+    req('/api/merchant/products/mug',{'revision':after['revision'],'categoryIds':['assignment_only'],'commerce':{'stock':999}},sh,method='PUT',expected=400)
+    req('/api/merchant/products/mug',{'revision':after['revision'],'categoryIds':['live_only_assignment']},sh,method='PUT',expected=400)
+    assert req('/api/merchant/products/mug',h=sh)==after
+    restore={'revision':after['revision'],'contentRevision':after['contentRevision'],'categoryIds':before['catalog']['categoryIds']}
+    req('/api/merchant/products/mug',restore,sh,method='PUT')
+    restored=req('/api/merchant/products/mug',h=sh)
+    assert restored['contentRevision']>after['contentRevision']
+    req('/api/merchant/products/mug',restore,sh,method='PUT',expected=409)
+    assert req('/api/merchant/products/mug',h=sh)==restored
+    check('native category-only edit preserves commerce, translations, identity and channels; stale/mixed/foreign-category writes leave the product unchanged')

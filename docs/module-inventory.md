@@ -281,6 +281,7 @@ This lists every checked-in source module in these roots, including files with n
 | [src/commerce/product_create.rs](../src/commerce/product_create.rs) | Product creation accepts validated stable import IDs; the shared domain save handler retains pricing, ownership and history checks. |
 | [src/commerce/product_edit.rs](../src/commerce/product_edit.rs) | Revision-bound multilingual product metadata: specifications, SEO, cross-selling and free shipping. |
 | [src/commerce/product_fields.rs](../src/commerce/product_fields.rs) | Native product fields preserve stock unless an explicit absolute quantity passes aggregate CAS. |
+| [src/commerce/product_input.rs](../src/commerce/product_input.rs) | Admit native product edits and expand explicit category-only changes through the same revisioned editor. |
 | [src/commerce/product_languages.rs](../src/commerce/product_languages.rs) | Enabled content languages, NULL field inheritance and stable global language registration. |
 | [src/commerce/product_metadata.rs](../src/commerce/product_metadata.rs) | Typed product edit payload and multilingual metadata including exact currency prices. |
 | [src/commerce/review_import.rs](../src/commerce/review_import.rs) | Native historical review admission preserves source provenance, explicit moderation and unverified customer identity. |

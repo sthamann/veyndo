@@ -24,7 +24,13 @@ pub(crate) fn catalogue(a: &App, h: &RequestContext) -> Vec<Value> {
     capabilities::OPERATIONS
         .iter()
         .filter(|o| NATIVE.contains(&o.name) && o.admitted(a, h))
-        .map(|o| json!({"name":o.name,"inputSchema":o.input_schema()}))
+        .map(|o| {
+            let mut entry = json!({"name":o.name,"inputSchema":o.input_schema()});
+            if o.name.starts_with("merchant.product.") {
+                entry["productContract"] = commerce::product_write_guidance();
+            }
+            entry
+        })
         .collect()
 }
 pub(crate) async fn bind(a: &App, t: &str, h: &RequestContext, steps: &mut [Step]) -> Result<()> {
@@ -66,6 +72,9 @@ pub(crate) async fn bind(a: &App, t: &str, h: &RequestContext, steps: &mut [Step
                     "Operation is not admitted for private configuration work",
                 ))?;
             apps::validate_native_input(&op.input_schema(), &args)?;
+            if step.name.starts_with("merchant.product.") {
+                commerce::admit_product_write(&args["product"], step.name.ends_with(".create"))?;
+            }
             if step.name == "merchant.translations.create" {
                 translation::validate(a, t, &args, &created_products).await?;
                 continue;

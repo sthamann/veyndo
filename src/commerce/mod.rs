@@ -44,9 +44,11 @@ pub(crate) use selection::*;
 pub(crate) mod catalog_intake;
 mod product_create;
 mod product_edit;
+mod product_input;
 mod product_metadata;
 pub(crate) use product_create::create_product;
 pub(crate) use product_edit::*;
+pub(crate) use product_input::{admit_product_write, product_write_guidance};
 
 mod order_machine;
 pub(crate) use order_machine::*;

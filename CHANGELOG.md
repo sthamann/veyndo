@@ -9,6 +9,8 @@
 
 ## Unreleased — managed app proposal correction
 
+- Product category-only changes retain native revisions, metadata, translations, prices, stock and channel selection; reviewed agent work validates product shapes before approval.
+
 - Describe the complete native page-block format, including stable identifiers,
   translated content and product selection; return exact field paths for invalid
   blocks without echoing their content. Preserve the existing admission rules and

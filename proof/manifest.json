@@ -1442,8 +1442,8 @@
     },
     "src/agent_runs/work_plan.rs": {
       "status": "unproved",
-      "sha256": "565639e8949fa6cd94a31d4ae62d082b4f54017af9c6c2f645acb526f5150dc1",
-      "review": "Reviewed scoped translation selection, original task authority, atomic child linking and completion, cancellation/explicit ambiguous continuation, lease fences, central provider admission outside transactions and bounded prompt evidence; real PostgreSQL/HTTP collection and interruption regressions plus 724 UI tests; skipped products store SQL NULL evidence rather than JSON null. Claude supplied code-only review, findings checked and fixed."
+      "sha256": "7e6f7f868e181b13056f3ab60b6fc87cdd2efac2c0906cebb201ea69b9965b98",
+      "review": "Reviewed native category-only product expansion: explicit bounded shape, original aggregate/content CAS retained through native product lock, no commerce or channel write, tenant-owned category assignment and unchanged native rights; pre-review full-product deserialization. Reproduced public Invalid product metadata through old-binary HTTP, replacement preserves metadata and denies stale/mixed/foreign writes. No extracted business predicate changed."
     },
     "src/agent_runs/worker.rs": {
       "status": "unproved",
@@ -2652,8 +2652,8 @@
     },
     "src/commerce/mod.rs": {
       "status": "unproved",
-      "sha256": "803f0dc01781eec5cabb2f103c2e2e8e68551cc7a45f0e9eb61782979ed91c2b",
-      "review": "Reviewed native historical review admission, immutable coupon provenance and explicit activation policy; independent review findings on malformed usage limits, imported-review PII projection and source-currency spend bounds reproduced and fixed with actual CLI/HTTP/checkout regressions. Existing package, creator, lease and tenant fences retained; SQL, networking and provider parity remain outside the extracted pure activation proof."
+      "sha256": "d388a7f05a3558a2812d0c55785dd7dcfbbf6cbaba320fb8493f93d5c25c4497",
+      "review": "Reviewed native category-only product expansion: explicit bounded shape, original aggregate/content CAS retained through native product lock, no commerce or channel write, tenant-owned category assignment and unchanged native rights; pre-review full-product deserialization. Reproduced public Invalid product metadata through old-binary HTTP, replacement preserves metadata and denies stale/mixed/foreign writes. No extracted business predicate changed."
     },
     "src/commerce/order_fields.rs": {
       "status": "unproved",
@@ -2692,13 +2692,18 @@
     },
     "src/commerce/product_edit.rs": {
       "status": "unproved",
-      "sha256": "b7e2f0241ef8cc4cdfbb10b5cb8af84dddb2a308b1a409aafc0a26ac390c42c3",
-      "review": "Reviewed native extension identity/private/unique anchors and current read/write/PII scopes; native projections use bounded fixed-store queries, exact indexed filters bind all input and fence the admitted package digest. Real four-object HTTP/MCP, role revocation, foreign reference, immutable upgrade, product/company clone and selected release tests passed. Added extracted configuration-only release predicate and operational false property; SQL and UI remain explicitly unproved. Reviewed canonical schema, preserved AI bindings and versioned grid prompt provenance without changing existing prompt revisions."
+      "sha256": "8c02f8901d1e2c8818a8388419f4d050fe1a56a42ba4d7bbc6fdf2d77c22c89d",
+      "review": "Reviewed native category-only product expansion: explicit bounded shape, original aggregate/content CAS retained through native product lock, no commerce or channel write, tenant-owned category assignment and unchanged native rights; pre-review full-product deserialization. Reproduced public Invalid product metadata through old-binary HTTP, replacement preserves metadata and denies stale/mixed/foreign writes. No extracted business predicate changed."
     },
     "src/commerce/product_fields.rs": {
       "status": "unproved",
       "sha256": "dbd0f80f4b34ed41d4c3f7a20421d68fe3c3b945b495dbc5750a8823b53e2805",
       "review": "Review additive product content clock and rolling-writer trigger; preserve aggregate CAS for explicit stock and legacy clients; content-only HTTP/MCP edits omit stock under the locked native owner; preserve live stock in history and release snapshots. Actual two-replica purchase/cancellation and editor regressions exercise stale writes; async SQL and UI remain outside the existing unchanged Lean proof boundary."
+    },
+    "src/commerce/product_input.rs": {
+      "status": "unproved",
+      "sha256": "5b4727f0302009f300ea273a4a13db168a45ba41409bf6251d452159e5a4ccb6",
+      "review": "Reviewed native category-only product expansion: explicit bounded shape, original aggregate/content CAS retained through native product lock, no commerce or channel write, tenant-owned category assignment and unchanged native rights; pre-review full-product deserialization. Reproduced public Invalid product metadata through old-binary HTTP, replacement preserves metadata and denies stale/mixed/foreign writes. No extracted business predicate changed."
     },
     "src/commerce/product_languages.rs": {
       "status": "unproved",
