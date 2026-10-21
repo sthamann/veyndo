@@ -897,6 +897,7 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/admin/shell/useServerHealth.ts](../frontend/src/admin/shell/useServerHealth.ts) | Public server health is independent of the personal Studio session. |
 | [frontend/src/admin/shell/useStudioAccess.ts](../frontend/src/admin/shell/useStudioAccess.ts) | Central Studio identity boundary: initial login, expiry suspension and same-account resume. |
 | [frontend/src/admin/shell/useStudioController.ts](../frontend/src/admin/shell/useStudioController.ts) | Studio session/controller: authentication context, tenant/staging state and chat commands. |
+| [frontend/src/admin/shell/useStudioEnvironment.ts](../frontend/src/admin/shell/useStudioEnvironment.ts) | Remember only the selected environment ID per live shop/tab; native requests still revalidate access. |
 | [frontend/src/admin/shell/useStudioPermissions.ts](../frontend/src/admin/shell/useStudioPermissions.ts) | Recheck current server grants; discard previously loaded views when a live role changes. |
 | [frontend/src/admin/shell/useStudioSession.ts](../frontend/src/admin/shell/useStudioSession.ts) | Revalidate visible Studio sessions and route authenticated failures to the active controller. |
 | [frontend/src/admin/shell/useStudioTheme.ts](../frontend/src/admin/shell/useStudioTheme.ts) | Persist only the presentation theme; account, agent context and commerce state never enter this preference. |

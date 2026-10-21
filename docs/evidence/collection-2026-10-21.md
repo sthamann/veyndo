@@ -52,4 +52,8 @@ Storyfront iframe acceptance.
 The public page rendering exposed a separate content/interface-language mismatch.
 The app-owned renderer and SEO now use the same selected content locale as native
 product reads. The Italian regression fails before this fix and passes afterward;
-a French shop-main-language fallback control also passes. Rollout pending.
+a French shop-main-language fallback control also passes. Image `quack-sand-8930`
+(commit `f3255dab`) deployed at 13:54 CEST with one healthy instance. The actual
+public Italian page now shows all three headings, original paragraphs, exactly
+the two selected products and an Italian document title. The public cart remains
+empty. This follow-up is a browser observation, not just the local rendering test.

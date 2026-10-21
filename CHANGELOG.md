@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased — continuation after purchase and Studio reload
+
+- Route app product configuration through the same serialized native cart owner as add/quantity actions. A completed purchase creates a fresh cart before the next configuration; conflicts are shown without silent retries, and abandoned shop scopes cannot adopt late results.
+- Remember the selected Studio sandbox separately for each live shop and browser tab. Reload revalidates its current rights; failed access stays closed with an explicit return-to-live action instead of silently switching the destination.
+
 ## Unreleased — truthful saved-work progress
 
 - Render published page headings, rich text and SEO in the selected shop content language, independently of the language of interface controls. Keep the configured shop-main-language fallback and scope page/product refreshes to the same content language.

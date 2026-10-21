@@ -18,6 +18,7 @@ import { useServerHealth } from "./useServerHealth";
 import { useStudioPermissions } from "./useStudioPermissions";
 import { useStudioAccess } from "./useStudioAccess";
 import { useChatTurns } from "./useChatTurns";
+import { useStudioEnvironment } from "./useStudioEnvironment";
 import { useStudioTheme } from "./useStudioTheme";
 import { useAgentWorkspaceContext } from "./useAgentWorkspaceContext";
 
@@ -36,7 +37,6 @@ export function useStudioController({
   const { tabLabel, nav } = useStudioNavigation();
   const [access, setAccess] = useState<string[]>([]);
   const [environments, setEnvironments] = useState<Environment[]>([]);
-  const [environment, setEnvironment] = useState("");
   const [token, setToken] = useState(browserCredential);
   const [workspace, setWorkspace] = useState(
     () =>
@@ -45,6 +45,7 @@ export function useStudioController({
       sessionStorage.getItem("rac-user-workspace") ??
       "nord-atelier",
   );
+  const [environment, setEnvironment] = useStudioEnvironment(workspace);
   useEffect(() => {
     if (token && !new URLSearchParams(location.search).has("shop")) {
       const url = new URL(location.href);
@@ -149,7 +150,6 @@ export function useStudioController({
     [liveRequest],
   );
   useEffect(() => {
-    setEnvironment("");
     setEnvironments([]);
   }, [workspace]);
   useEffect(() => {

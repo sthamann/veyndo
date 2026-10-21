@@ -27,7 +27,7 @@ export type ProductPurchaseProps = {
     React.SetStateAction<import("../../shared/api/shop-api").Detail | undefined>
   >;
   setError: React.Dispatch<React.SetStateAction<string>>;
-  onCart: (c: import("../../shared/api/shop-api").Cart) => void;
+  onConfigure: import("../../shared/apps/AppSlot").Props["onConfigure"];
   quantity: number;
   setQuantity: React.Dispatch<React.SetStateAction<number>>;
   effective: number;
@@ -48,7 +48,7 @@ export default function ProductPurchase({
   cart,
   setData,
   setError,
-  onCart,
+  onConfigure,
   quantity,
   setQuantity,
   effective,
@@ -183,7 +183,7 @@ export default function ProductPurchase({
         productId={p.id}
         familyId={p.parent_id ?? p.id}
         cart={cart}
-        onCart={onCart}
+        onConfigure={onConfigure}
       />
       <div className="pdp-buy">
         <label>

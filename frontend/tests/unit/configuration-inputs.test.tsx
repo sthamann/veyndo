@@ -4,6 +4,7 @@ import userEvent from "@testing-library/user-event";
 import { it, expect, vi, beforeEach } from "vitest";
 import ConfigurationForm from "../../src/shared/apps/ConfigurationForm";
 import { LocaleProvider } from "../../src/shared/i18n/i18n";
+import { createStorefrontActions } from "../../src/storefront/shell/storefront-actions";
 import type { Slot } from "../../src/shared/apps/AppSlot";
 vi.mock("../../src/shared/api/shop-api", async (original) => ({
   ...(await original<object>()),
@@ -65,14 +66,22 @@ it("loads localized choices and sends typed dimensions through current cart revi
   api.mockImplementation(async (path: string) =>
     path.endsWith("/materials")
       ? { elements: [{ id: "oak", name: { de: "Eiche", en: "Oak" } }] }
-      : { revision: 8 },
+      : { revision: 8, lineItems: [], price: {} },
   );
   render(
     <ConfigurationForm
       slot={slot}
       productId="desk"
       cart={{ token: "fixture", revision: 7 } as any}
-      onCart={onCart}
+      onConfigure={
+        createStorefrontActions({
+          request: api,
+          getCart: () =>
+            ({ token: "fixture", revision: 7, status: "open" }) as any,
+          saveCart: onCart,
+          reviewCheckout: vi.fn(),
+        }).configureProduct
+      }
       language="de-DE"
       mainLocale="de-DE"
     />,
@@ -84,7 +93,11 @@ it("loads localized choices and sends typed dimensions through current cart revi
   await user.type(screen.getByLabelText("Tiefe"), "80");
   expect(screen.getByLabelText("Breite")).toHaveAttribute("max", "400");
   await user.click(screen.getByRole("button", { name: "Review & save" }));
-  await waitFor(() => expect(onCart).toHaveBeenCalledWith({ revision: 8 }));
+  await waitFor(() =>
+    expect(onCart).toHaveBeenCalledWith(
+      expect.objectContaining({ revision: 8 }),
+    ),
+  );
   expect(api).toHaveBeenCalledWith(
     "/store-api/apps/furniture/configure",
     {
@@ -101,7 +114,7 @@ it("shows library failures instead of silently presenting an empty choice", asyn
     <ConfigurationForm
       slot={slot}
       productId="desk"
-      onCart={() => {}}
+      onConfigure={vi.fn()}
       language="de-DE"
       mainLocale="de-DE"
     />,
@@ -130,7 +143,7 @@ it("pages the material library without losing the chosen record", async () => {
     <ConfigurationForm
       slot={slot}
       productId="desk"
-      onCart={() => {}}
+      onConfigure={vi.fn()}
       language="de-DE"
       mainLocale="de-DE"
     />,

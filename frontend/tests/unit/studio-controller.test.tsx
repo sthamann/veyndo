@@ -488,3 +488,50 @@ it.each(["conversation", "refresh"])(
     if (boundary === "conversation") expect(changed).not.toHaveBeenCalled();
   },
 );
+it("restores the chosen sandbox after reload and keeps denied sandbox access closed", async () => {
+  sessionStorage.setItem("rac-user-token", "unit-token");
+  const { fetcher } = network();
+  const mount = () =>
+    renderHook(
+      () => useStudioController({ onChanged: vi.fn(), onExit: vi.fn() }),
+      { wrapper: LocaleProvider },
+    );
+  const first = mount();
+  await waitFor(() => expect(first.result.current.connected).toBe(true));
+  act(() => first.result.current.setEnvironment("stage"));
+  await waitFor(() => expect(first.result.current.connected).toBe(true));
+  first.unmount();
+  fetcher.mockClear();
+  sessionStorage.setItem("rac-user-token", "unit-token");
+  const second = mount();
+  await waitFor(() => expect(second.result.current.connected).toBe(true));
+  expect(second.result.current.environment).toBe("stage");
+  const accesses = fetcher.mock.calls.filter(
+    ([path]) => path === "/api/auth/access",
+  );
+  expect(accesses.length).toBeGreaterThan(0);
+  expect(
+    accesses.every(
+      ([, options]) =>
+        new Headers(options?.headers).get("x-tenant") === "stage",
+    ),
+  ).toBe(true);
+  second.unmount();
+  const original = fetcher.getMockImplementation()!;
+  fetcher.mockImplementation((path, options) =>
+    path === "/api/auth/access"
+      ? Promise.reject(new Error("Sandbox access revoked"))
+      : original(path, options),
+  );
+  sessionStorage.setItem("rac-user-token", "unit-token");
+  const denied = mount();
+  await waitFor(() =>
+    expect(denied.result.current.error).toContain("Sandbox access revoked"),
+  );
+  expect(denied.result.current.environment).toBe("stage");
+  expect(denied.result.current.connected).toBe(false);
+  fetcher.mockImplementation(original);
+  act(() => denied.result.current.setEnvironment(""));
+  await waitFor(() => expect(denied.result.current.connected).toBe(true));
+  expect(denied.result.current.environment).toBe("");
+});

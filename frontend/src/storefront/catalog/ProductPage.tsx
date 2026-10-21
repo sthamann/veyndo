@@ -27,13 +27,13 @@ export default function ProductPage({
   cart,
   busy,
   onAdd,
-  onCart,
+  onConfigure,
 }: {
   id: string;
   cart?: Cart;
   busy: boolean;
   onAdd: (id: string, q: number) => void;
-  onCart: (c: Cart) => void;
+  onConfigure: import("../../shared/apps/AppSlot").Props["onConfigure"];
 }) {
   const { s, money, locale } = useShopText();
   const contentLanguage = getContentLocale().split("-")[0];
@@ -227,7 +227,7 @@ export default function ProductPage({
           cart={cart}
           setData={setData}
           setError={setError}
-          onCart={onCart}
+          onConfigure={onConfigure}
           quantity={quantity}
           setQuantity={setQuantity}
           effective={effective}

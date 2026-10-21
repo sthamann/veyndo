@@ -149,7 +149,7 @@ export default function Storefront(props: { onMerchant: () => void }) {
                     cart={cart}
                     busy={busy}
                     onAdd={add}
-                    onCart={save}
+                    onConfigure={c.actions.configureProduct}
                   />
                 ) : (
                   <ShopSite fallback={<StorefrontHome />} />

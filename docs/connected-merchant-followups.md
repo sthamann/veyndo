@@ -72,8 +72,9 @@ that correction, and the native preview reflects it. Selected publication expose
 a dependency-order defect, repaired and publicly deployed in `be620bfd`. All six
 selected units published together, and the public simulated purchase retained the
 Italian product name and left an empty cart after return. Published page text still
-used the interface locale; the app-owned content-locale repair is locally tested
-and awaiting rollout. See the current status page.
+used the interface locale; the app-owned content-locale repair is publicly running
+as `f3255dab`, with headings, paragraphs, exact products and title observed in the
+browser. See the current status page.
 
 The one-backend transaction-pool checks additionally exposed nested database
 acquisition in publication diffs, reviewed app staging and app reactivation.
@@ -89,7 +90,11 @@ context and namespaced graph, shared by authorized API/MCP/public reads. Local
 acceptance now completes a second independently approved purchase after saved-input
 reorder and material/rule changes, checks idempotent order/stock effects and keeps
 the first order immutable. The original `1.0.0` definition and workflow tests stay
-inside the plugin directory. Public B2B/browser acceptance remains outstanding.
+inside the plugin directory. The hosted private browser journey now completes
+material/dimensions configuration, simulated EUR 417 purchase, empty cart return,
+native order/Flow inspection and immutable order display after a material update.
+Independent B2B approval and saved-input reorder still need hosted browser
+acceptance. [Evidence and two continuation repairs](evidence/furniture-browser-2026-10-21.md).
 
 The expanded one-backend check also caught a nested settings read when saving
 roles. Role writes now use the existing locked commerce configuration reader in

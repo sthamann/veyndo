@@ -33,8 +33,8 @@ export function createStorefrontActions(owner: Owner) {
     if (owner.active?.() === false || signal?.aborted)
       throw new Error(text("scope"));
   }
-  function mutate(
-    change: (cart: Cart) => { id: string; quantity: number }[],
+  function withCart<T>(
+    operation: (cart: Cart) => Promise<T>,
     create = false,
     signal?: AbortSignal,
   ) {
@@ -46,40 +46,70 @@ export function createStorefrontActions(owner: Owner) {
           session: owner.session ?? "",
         });
         guard(signal);
-        owner.saveCart(cart);
+        // Publish the completed mutation, not an intermediate empty cart that
+        // would unmount product inputs while configuration is still running.
       }
       if (!cart || cart.status !== "open") throw new Error(text("open"));
-      const items = change(cart);
-      if (
-        !Array.isArray(items) ||
-        items.length > 100 ||
-        items.some(
-          (item) =>
-            typeof item.id !== "string" ||
-            !item.id ||
-            item.id.length > 200 ||
-            !Number.isInteger(item.quantity) ||
-            item.quantity < 1 ||
-            item.quantity > 10000,
-        ) ||
-        new Set(items.map((item) => item.id)).size !== items.length
-      )
-        throw new Error(text("items"));
-      const next = await owner.request<Cart>(
-        "/store-api/checkout/cart",
-        { revision: cart.revision, items },
-        cart.token,
-        "PUT",
-      );
-      guard(signal);
-      owner.saveCart(next);
-      return publicCart(next);
+      return operation(cart);
     };
     const result = serial.then(execute);
     serial = result.catch(() => {});
     return result;
   }
+  function mutate(
+    change: (cart: Cart) => { id: string; quantity: number }[],
+    create = false,
+    signal?: AbortSignal,
+  ) {
+    return withCart(
+      async (cart) => {
+        const items = change(cart);
+        if (
+          !Array.isArray(items) ||
+          items.length > 100 ||
+          items.some(
+            (item) =>
+              typeof item.id !== "string" ||
+              !item.id ||
+              item.id.length > 200 ||
+              !Number.isInteger(item.quantity) ||
+              item.quantity < 1 ||
+              item.quantity > 10000,
+          ) ||
+          new Set(items.map((item) => item.id)).size !== items.length
+        )
+          throw new Error(text("items"));
+        const next = await owner.request<Cart>(
+          "/store-api/checkout/cart",
+          { revision: cart.revision, items },
+          cart.token,
+          "PUT",
+        );
+        guard(signal);
+        owner.saveCart(next);
+        return publicCart(next);
+      },
+      create,
+      signal,
+    );
+  }
   return {
+    configureProduct(
+      app: string,
+      productId: string,
+      fields: Record<string, unknown>,
+    ) {
+      return withCart(async (cart) => {
+        const next = await owner.request<Cart>(
+          `/store-api/apps/${encodeURIComponent(app)}/configure`,
+          { productId, fields, revision: cart.revision },
+          cart.token,
+        );
+        guard();
+        owner.saveCart(next);
+        return publicCart(next);
+      }, true);
+    },
     async searchCatalog(
       { query, limit = 10 }: { query: string; limit?: number },
       options?: { signal?: AbortSignal },

@@ -130,3 +130,81 @@ it("uses abortable registration and contains unavailable experimental APIs", asy
   expect(signal.aborted).toBe(true);
   dispose();
 });
+it("starts a fresh cart after purchase and serializes configuration before adding the product", async () => {
+  let current: any = {
+    status: "completed",
+    token: "old",
+    revision: 8,
+    lineItems: [],
+    price: {},
+  };
+  const request = vi.fn(async (path: string, body: any, token?: string) => {
+    if (!token)
+      return {
+        status: "open",
+        token: "new",
+        revision: 0,
+        lineItems: [],
+        price: {},
+      };
+    expect(token).toBe("new");
+    expect(body.revision).toBe(path.endsWith("/configure") ? 0 : 1);
+    if (path.endsWith("/configure"))
+      return {
+        ...current,
+        status: "open",
+        token: "new",
+        revision: 1,
+        configuration: body.fields,
+      };
+    return { ...current, revision: 2, lineItems: body.items };
+  });
+  const actions = createStorefrontActions({
+    request: request as any,
+    getCart: () => current,
+    saveCart: (next) => {
+      current = next;
+    },
+    reviewCheckout: vi.fn(),
+    session: "test-session",
+  });
+  await Promise.all([
+    actions.configureProduct("furniture", "desk", { width: 260 }),
+    actions.addProduct("desk", 1),
+  ]);
+  expect(request.mock.calls.map(([path]) => path)).toEqual([
+    "/store-api/checkout/cart",
+    "/store-api/apps/furniture/configure",
+    "/store-api/checkout/cart",
+  ]);
+  expect(current.configuration).toEqual({ width: 260 });
+  expect(current.revision).toBe(2);
+  expect(current.lineItems).toEqual([{ id: "desk", quantity: 1 }]);
+});
+it("does not repeat a conflicting configuration or write its result into an abandoned shop", async () => {
+  let active = true;
+  const current: any = { status: "open", token: "cart", revision: 1 };
+  const save = vi.fn();
+  const request = vi
+    .fn()
+    .mockRejectedValueOnce(new Error("Conflict"))
+    .mockImplementationOnce(async () => {
+      active = false;
+      return current;
+    });
+  const actions = createStorefrontActions({
+    request,
+    getCart: () => current,
+    saveCart: save,
+    reviewCheckout: vi.fn(),
+    active: () => active,
+  });
+  await expect(
+    actions.configureProduct("furniture", "desk", {}),
+  ).rejects.toThrow("Conflict");
+  expect(request).toHaveBeenCalledTimes(1);
+  await expect(
+    actions.configureProduct("furniture", "desk", {}),
+  ).rejects.toThrow();
+  expect(save).not.toHaveBeenCalled();
+});

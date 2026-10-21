@@ -9,6 +9,7 @@ import {
 import userEvent from "@testing-library/user-event";
 import { expect, it, vi } from "vitest";
 import { useState } from "react";
+import { useStorefrontActions } from "../../src/storefront/shell/useStorefrontActions";
 import ProductPage from "../../src/storefront/catalog/ProductPage";
 import { LocaleProvider } from "../../src/shared/i18n/i18n";
 import { cart, detail, product } from "./fixtures";
@@ -59,13 +60,21 @@ it("keeps a saved configuration visible while refreshing current product prices"
   );
   function Purchase() {
     const [current, setCurrent] = useState(cart);
+    const actions = useStorefrontActions(
+      current,
+      setCurrent,
+      () => {},
+      "test",
+      "test",
+      "en-GB",
+    );
     return (
       <ProductPage
         id="lamp"
         cart={current}
         busy={false}
         onAdd={() => {}}
-        onCart={setCurrent}
+        onConfigure={actions.configureProduct}
       />
     );
   }
@@ -163,7 +172,7 @@ it("switches gallery/variants, applies normalized quantity and displays authorit
       cart={cart}
       busy={false}
       onAdd={onAdd}
-      onCart={() => {}}
+      onConfigure={vi.fn()}
     />,
     { wrapper: LocaleProvider },
   );
@@ -200,7 +209,7 @@ it("submits a review using checkout identity and confirms pending moderation", a
       cart={cart}
       busy={false}
       onAdd={() => {}}
-      onCart={() => {}}
+      onConfigure={vi.fn()}
     />,
     { wrapper: LocaleProvider },
   );
@@ -236,7 +245,7 @@ it("reports a failed detail load instead of rendering purchase controls", async 
       cart={cart}
       busy={false}
       onAdd={() => {}}
-      onCart={() => {}}
+      onConfigure={vi.fn()}
     />,
     { wrapper: LocaleProvider },
   );
@@ -260,7 +269,7 @@ it("renders an honest empty gallery and merchant product number for a new produc
       cart={cart}
       busy={false}
       onAdd={() => {}}
-      onCart={() => {}}
+      onConfigure={vi.fn()}
     />,
     { wrapper: LocaleProvider },
   );

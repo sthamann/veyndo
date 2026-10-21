@@ -17,7 +17,7 @@ it.each([
     expect(error.message).toContain(recovery);
     expect(error).toMatchObject({ diagnostic, status: 400 });
   }
-  expect(responseError("private-value@example.test", 400).message).not.toContain(
-    "private-value@example.test",
-  );
+  expect(
+    responseError("private-value@example.test", 400).message,
+  ).not.toContain("private-value@example.test");
 });

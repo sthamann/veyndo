@@ -51,14 +51,24 @@ at 13:34 CEST. The published product completed simulated order `RAC-484bd556`
 for EUR 49.90 with its Italian order label; return and empty cart were observed.
 The public page exposed one further rendering defect: its text used the interface
 language instead of the selected content language. The app-owned correction and
-Italian/French-fallback regressions are locally tested; its rollout remains pending.
+Italian/French-fallback regressions pass. Public image `quack-sand-8930` (`f3255dab`)
+started healthy at 13:54 CEST; the browser now shows the Italian headings, paragraphs,
+two selected products and document title.
 PR #182 fixes the translation handoff retaining
 the private environment, removes an optional form-package requirement for ordinary
 pages, distinguishes queued work from completed changes and fences late conversation
 responses. Its frontend baseline passes 732 tests and the existing coverage
 thresholds; four additional checks cover the new actionable release errors.
 The release-order repair is deployed. Native full CI passed for PR #178, now
-merged; the newer PR #182 verification remains running.
+merged. PR #182 stopped at a test-file formatting check; the formatting is
+corrected and the new verification run is pending.
+
+The [hosted private furniture journey](evidence/furniture-browser-2026-10-21.md)
+now completes a EUR 417 simulated purchase with material, dimensions and native
+order/Flow records; later material edits leave the order unchanged. Continuation
+after purchase and Studio sandbox reload repairs pass 743 frontend tests locally;
+these two repairs still await rollout. Independent hosted B2B approval and saved
+selection/reorder acceptance remain open.
 See [the ordered follow-ups](connected-merchant-followups.md) and the
 [saved-work contract](durable-agent-runs.md).
 
