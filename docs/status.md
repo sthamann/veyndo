@@ -46,13 +46,19 @@ ordering defect: page validation ran before its jointly selected language settin
 The repair applies selected configuration before app records within the same
 transaction. Actual local HTTP/PostgreSQL checks cover a new language, channel,
 package and page together, missing-dependency rollback, stale selection and replay.
-The repaired public release and subsequent purchase remain **not yet accepted**.
+Public Core/Studio `be620bfd` accepted all six selected units together on 21 October
+at 13:34 CEST. The published product completed simulated order `RAC-484bd556`
+for EUR 49.90 with its Italian order label; return and empty cart were observed.
+The public page exposed one further rendering defect: its text used the interface
+language instead of the selected content language. The app-owned correction and
+Italian/French-fallback regressions are locally tested; its rollout remains pending.
 PR #182 fixes the translation handoff retaining
 the private environment, removes an optional form-package requirement for ordinary
 pages, distinguishes queued work from completed changes and fences late conversation
 responses. Its frontend baseline passes 732 tests and the existing coverage
 thresholds; four additional checks cover the new actionable release errors.
-The final release repair is not yet deployed. Native full CI is also still running.
+The release-order repair is deployed. Native full CI passed for PR #178, now
+merged; the newer PR #182 verification remains running.
 See [the ordered follow-ups](connected-merchant-followups.md) and the
 [saved-work contract](durable-agent-runs.md).
 

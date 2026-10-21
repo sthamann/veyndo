@@ -63,10 +63,17 @@ public task completed all five steps; both Italian translation drafts were revie
 and applied in the private environment. The category was retained instead of being
 created again. Browser verification found two additional editor handoff issues:
 translation-review links reloaded into the live shop, and ordinary page editing
-required the optional form receiver. Repairs are tested in PR #182; their public
-rollout is still pending.
-Final public collection preview and selective publication remain open; see the
-current status page.
+required the optional form receiver. Repairs in PR #182 are publicly running as `498ced45`: translation review
+retains the private environment and ordinary page editing no longer requires the
+optional form receiver. The private Italian preview shows exactly both selected
+products. A second configured-model request shortened the headings and moved the
+existing descriptions unchanged into paragraph blocks; explicit approval applied
+that correction, and the native preview reflects it. Selected publication exposed
+a dependency-order defect, repaired and publicly deployed in `be620bfd`. All six
+selected units published together, and the public simulated purchase retained the
+Italian product name and left an empty cart after return. Published page text still
+used the interface locale; the app-owned content-locale repair is locally tested
+and awaiting rollout. See the current status page.
 
 The one-backend transaction-pool checks additionally exposed nested database
 acquisition in publication diffs, reviewed app staging and app reactivation.
