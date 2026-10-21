@@ -147,6 +147,11 @@ export type Order = {
   }[];
 };
 export type Cart = {
+  savedConfigurations?: {
+    app: string;
+    productId: string;
+    fields: Record<string, unknown>;
+  }[];
   b2b?: {
     quoteId?: string;
     unitId: string;

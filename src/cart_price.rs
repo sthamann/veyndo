@@ -229,5 +229,15 @@ pub(crate) async fn cart_json(a: &App, c: &StoredCart) -> Result<Value> {
     b2b::preview(a, c, &mut result).await?;
     result["locale"] = json!(locale);
     result["languageIdChain"] = json!(chain);
+    // Restore accepted inputs even before the product is added. Fees and rule
+    // snapshots remain native pricing data, not editable form state.
+    let mut saved = c.data.app_configurations.values().collect::<Vec<_>>();
+    saved.sort_by(|a, b| (&a.app, &a.product_id).cmp(&(&b.app, &b.product_id)));
+    result["savedConfigurations"] = json!(
+        saved
+            .iter()
+            .map(|v| json!({"app":v.app,"productId":v.product_id,"fields":v.fields}))
+            .collect::<Vec<_>>()
+    );
     Ok(result)
 }

@@ -47,6 +47,15 @@ assert call('/mcp',materials_rpc,h)['result']['structuredContent']['ontology']==
 assert call(f'/store-api/apps/{app}/actions/list_materials',{},pub)['ontology']==graph
 slots=call('/store-api/apps/slots',h=pub)['slots'];slot=next(s for s in slots if s['app']==app)
 assert slot['configuration']['inputs']['recordField']=='material' and 'wasmSource'not in slot['configuration'] and 'examples'not in slot['configuration']['inputs']
+# Saving before adding a line survives a fresh cart read; another cart receives no inputs.
+empty=call('/store-api/checkout/cart',{},pub)
+eh={**pub,'sw-context-token':empty['token']}
+inputs={'material':'walnut','width_cm':240,'depth_cm':80}
+configured=call(f'/store-api/apps/{app}/configure',{'productId':'lamp','revision':empty['revision'],'fields':inputs},eh)
+expected=[{'app':app,'productId':'lamp','fields':inputs}]
+assert configured['lineItems']==[] and configured['savedConfigurations']==expected
+assert call('/store-api/checkout/cart',h=eh)['savedConfigurations']==expected
+assert call('/store-api/checkout/cart',{},pub)['savedConfigurations']==[]
 def new_cart():
     c=call('/store-api/checkout/cart',{},bh);bh['sw-context-token']=c['token']
     return employee('select',{'unitId':'design','revision':c['revision'],'purchaseOrder':'PO-FURNITURE'})

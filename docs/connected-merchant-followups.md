@@ -94,7 +94,9 @@ inside the plugin directory. The hosted private browser journey now completes
 material/dimensions configuration, simulated EUR 417 purchase, empty cart return,
 native order/Flow inspection and immutable order display after a material update.
 Independent B2B approval and saved-input reorder still need hosted browser
-acceptance. [Evidence and two continuation repairs](evidence/furniture-browser-2026-10-21.md).
+acceptance. The public `b0b8cba7` follow-up also retains configuration controls and the saved
+message when a subsequent purchase creates a fresh cart.
+[Evidence and continuation repairs](evidence/furniture-browser-2026-10-21.md).
 
 The expanded one-backend check also caught a nested settings read when saving
 roles. Role writes now use the existing locked commerce configuration reader in

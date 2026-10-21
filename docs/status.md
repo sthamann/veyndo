@@ -4,6 +4,12 @@ This is the single starting point for what works, what is implemented but not
 publicly accepted, and what still needs development. Updated 21 October 2026.
 A green test, merged code and a completed public business journey are different evidence.
 
+Current additional repair: saved material/dimensions now have an app/product-scoped
+representation in the native cart response, so forms can restore them after a
+reload before the first line item is added. Actual HTTP/PostgreSQL and rendered
+tests pass; public deployment/reload acceptance remains pending. See the
+[furniture browser evidence](evidence/furniture-browser-2026-10-21.md).
+
 Migration implementation (19 October): saved plans now connect all eight supported
 domains in a review-gated page sequence. Native current-field comparison detects
 missing records, changed prices/text and image associations. Private page intents
@@ -70,8 +76,16 @@ after purchase and Studio sandbox reload repairs are public in `fa33a003`, image
 `shallow-place-4222`, deployed at 14:13 CEST. A second simulated order
 `RAC-6c9f8c4f` for EUR 427, empty-cart return, a fresh EUR 379 configuration/cart
 without reload, and the retained private Studio order list after reload passed.
-The subsequent control-reset presentation repair passes the now 744-test frontend
-suite but awaits rollout. [One selected product's missing German text](evidence/product-gaps-2026-10-21.md)
+The subsequent control-reset presentation repair is deployed as `b0b8cba7`,
+image `tangible-cat-3650`, with one healthy replica. A freshly loaded browser
+completed simulated order `RAC-1c51b79e` (EUR 379), returned to an empty cart,
+then saved and added a new 240 x 80 cm configuration without reloading; the
+controls and saved message remained visible. The 744-test frontend suite passes.
+[Original Storyfront embedded checkout](evidence/storyfront-checkout-2026-10-21.md)
+also completed simulated order `RAC-585cbb53` (EUR 24.90), returned to the original
+Experience and retained an empty bag after reload. Its first iframe navigation
+required the visible retry; first-load reliability remains separate from the
+accepted purchase/return path. [One selected product's missing German text](evidence/product-gaps-2026-10-21.md)
 was also prepared, reviewed and applied without changing its price or stock.
 Independent hosted B2B approval and saved
 selection/reorder acceptance remain open.

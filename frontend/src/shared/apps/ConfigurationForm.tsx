@@ -13,9 +13,13 @@ export default function ConfigurationForm({
   mainLocale,
 }: Props & { slot: Slot; language: string; mainLocale: string }) {
   const { a } = useAppText();
-  const stored = cart?.lineItems
-    ?.find((line) => line.id === productId)
-    ?.appConfigurations?.find((config) => config.app === slot.app)?.fields;
+  const stored =
+    cart?.savedConfigurations?.find(
+      (config) => config.app === slot.app && config.productId === productId,
+    )?.fields ??
+    cart?.lineItems
+      ?.find((line) => line.id === productId)
+      ?.appConfigurations?.find((config) => config.app === slot.app)?.fields;
   const [text, setText] = useState(() =>
     String(stored?.[slot.configuration!.inputField] ?? ""),
   );

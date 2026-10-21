@@ -23,6 +23,8 @@ next action, not an observed outcome of this request.
 The copilot review link still lost the private environment on this deployed
 version; selecting the original environment recovered the same saved job. The
 sandbox persistence repair subsequently passed a full private order-list reload
-on deployed `fa33a003`; the same review-link click still needs its own recheck. The individual apply
+on deployed `fa33a003`. Reopening the original assistant conversation and clicking
+its actual translation-review link also preserved the private workspace and
+opened the same job with one applied draft. The individual apply
 button also incorrectly used the completed-state label; its four-language caption
 is corrected to "Apply this draft" in the follow-up source change.

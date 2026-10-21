@@ -60,6 +60,50 @@ const slot: Slot = {
 beforeEach(() => {
   api.mockReset();
 });
+it("restores saved inputs before adding an item and scopes them to the app and product", async () => {
+  api.mockResolvedValue({ elements: [{ id: "oak", name: { de: "Eiche" } }] });
+  const saved = {
+    lineItems: [],
+    savedConfigurations: [
+      { app: "other", productId: "desk", fields: { width: 399 } },
+      { app: "furniture", productId: "other", fields: { width: 398 } },
+      {
+        app: "furniture",
+        productId: "desk",
+        fields: { material: "oak", width: 240, depth: 80 },
+      },
+    ],
+  };
+  const { unmount } = render(
+    <ConfigurationForm
+      slot={slot}
+      productId="desk"
+      cart={saved as any}
+      onConfigure={vi.fn()}
+      language="de-DE"
+      mainLocale="de-DE"
+    />,
+    { wrapper: LocaleProvider },
+  );
+  await screen.findByRole("option", { name: "Eiche" });
+  expect(screen.getByLabelText("Material")).toHaveValue("oak");
+  expect(screen.getByLabelText("Breite")).toHaveValue(240);
+  expect(screen.getByLabelText("Tiefe")).toHaveValue(80);
+  unmount();
+  render(
+    <ConfigurationForm
+      slot={slot}
+      productId="desk"
+      cart={{ lineItems: [], savedConfigurations: [] } as any}
+      onConfigure={vi.fn()}
+      language="de-DE"
+      mainLocale="de-DE"
+    />,
+    { wrapper: LocaleProvider },
+  );
+  expect(screen.getByLabelText("Breite")).toHaveValue(null);
+  expect(screen.getByLabelText("Tiefe")).toHaveValue(null);
+});
 it("loads localized choices and sends typed dimensions through current cart revision", async () => {
   const user = userEvent.setup(),
     onCart = vi.fn();

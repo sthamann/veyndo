@@ -48,8 +48,37 @@ cart cleared the configuration controls even though the native selection and
 new cart were correct. The follow-up preserves controls while refetching prices
 for a new cart token, but resets them for a different buyer, country, currency or
 company. A rendered regression first reproduced the empty field, then passed both
-cart rollover and changed-buyer reset. This additional presentation repair awaits
-rollout; the full frontend suite now passes 744 tests with unchanged coverage gates.
+cart rollover and changed-buyer reset. The full frontend suite passes 744 tests with unchanged coverage gates.
+
+Image `tangible-cat-3650` (`b0b8cba7`) is now running as deployment
+`vendune-core-5457d5668b`, with one passing replica and zero restarts. An early
+observation during the rolling deployment still showed empty controls; it is
+retained as a failed observation rather than attributed to a speculative cause.
+After explicitly reloading the storefront, simulated order `RAC-1c51b79e`
+completed at EUR 379 (Walnut Select, 180 x 80 cm, EUR 30 surcharge). Return
+showed an empty cart. Without another reload, the shopper reopened the product,
+changed width to 240 cm and saved. Material, width, depth and the saved message
+remained visible after cart renewal and the repeated privacy choice. Adding the
+product retained all three values and EUR 379 in the native checkout. Observed
+order/cart responses retained the same customer, country and currency context.
+This verifies the control-preservation fix in the loaded public build. The
+repeated privacy prompt on a new cart remains a separate usability issue.
 
 This browser session does not yet accept independent B2B approval or the
 saved-input reorder journey; those have separate local HTTP/PostgreSQL coverage.
+
+## Saved inputs before adding a product
+
+A further public browser check found that reloading after saving a configuration,
+before adding the product, retained the native price but displayed empty input
+fields. The configuration was stored in the cart; the form restored inputs only
+from cart line items, which did not yet exist.
+
+The follow-up extends the existing cart response with `savedConfigurations`:
+accepted fields identified by app and product. It does not expose fee/rule
+snapshots or introduce another persistence or calculation path. The form restores
+the matching entry, with the line-item representation as a compatibility fallback.
+Rendered tests reject entries for a different app or product and clear values for
+a new cart. The actual HTTP/PostgreSQL app workflow verifies saving with no line
+items, a fresh cart read, and isolation from a second cart. Public deployment and
+browser reload acceptance of this additional repair are still pending.

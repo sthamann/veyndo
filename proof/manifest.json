@@ -2322,8 +2322,8 @@
     },
     "src/cart_price.rs": {
       "status": "unproved",
-      "sha256": "d2a11def1d6bf816c0ba46e798463f5970ca67231e6e78f05150ba8339d563bf",
-      "review": "Review combined native business capability and hardening: typed material/dimension guests remain app-owned and bounded; native CAS/FX/current B2B approval and immutable order snapshots; isolated app crate consumer preserves compiler boundary; independent per-event subscriber retry/quarantine preserves healthy events, commit gaps and explicit recovery; signed tenant/system authority, provider-native read tools and real document withdrawal, workspace image closure and source inventory. SQL/async/provider adapters remain tested, not proved."
+      "sha256": "c2b9bad2838b4cd5c148d765c66b2ad177d03cf8a35da586d244d93dc89e5fee",
+      "review": "Review cart response projection: expose only app/product IDs and accepted input fields from the already scoped cart; no fee authority, SQL, pricing, payment or permission changes. Rendered tests scope restoration by app/product; native workflow checks empty-cart reload and another cart isolation."
     },
     "src/cart_routes.rs": {
       "status": "unproved",
