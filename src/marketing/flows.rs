@@ -248,7 +248,7 @@ pub(crate) async fn flow_once(a: &App) -> Result<bool> {
             "Flow event {}. {}. Create a reviewable proposal only.",
             definition["event"], instruction
         );
-        match super::flow_access::proposal_headers(a, &t, f.actor.as_deref()).await {
+        match super::flow_access::proposal_headers(a, &t, f.actor.as_deref(), &id).await {
             Ok(h) => match crate::performance::reserve_ai_attempt(a, &t).await {
                 Ok(()) => plan_with(a, &t, &context, f.inference.as_ref(), "", &f.locale, &h).await,
                 Err(e) => Err(e),

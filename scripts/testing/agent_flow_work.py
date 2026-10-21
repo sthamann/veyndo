@@ -38,6 +38,7 @@ def verify_flow_work(call,base,h,actor,mode,sql,start,passed,started,release,cap
         assert status['state']=='ready' and status['approvalRequired'],status
         assert any(item['id']==task for item in call(base,'/api/agent/tasks',h=sh)['tasks'])
         assert sql(f"SELECT run_credential IS NULL AND NOT run_personal FROM tasks WHERE tenant='{stage}' AND id='{task}'")=='t'
+        assert sql(f"SELECT run_request->>'sourceJobId' FROM tasks WHERE tenant='{stage}' AND id='{task}'")==job['id']
         assert sql(f"SELECT count(*) FROM categories WHERE tenant='{stage}' AND id='flow_work_category'")=='0'
         approved=call(base,'/api/agent/tasks/'+task+'/apply',{'approve':True},sh)
         assert approved.get('queued') and not approved.get('applied'),approved
@@ -91,6 +92,40 @@ def verify_flow_work(call,base,h,actor,mode,sql,start,passed,started,release,cap
         finally:
             sql(f"UPDATE memberships SET role='owner',permissions='null'::jsonb WHERE tenant='{h['x-tenant']}' AND user_id='{actor}'")
         passed('Withdrawing Flow owner rights during inference rejects the late result without saving an executable task')
+        started.clear();release.clear();trigger()
+        assert started.wait(15),'Flow never reached inference before lease loss'
+        job_id=sql(f"SELECT id FROM flow_jobs WHERE tenant='{stage}' AND flow='pipeline_work' ORDER BY event_id DESC LIMIT 1")
+        sql(f"UPDATE flow_jobs SET lease_until=now()-interval '1 second' WHERE id='{job_id}'")
+        recovery,_=start('app-worker')
+        try:
+            for _ in range(100):
+                if sql(f"SELECT state FROM flow_jobs WHERE id='{job_id}'")=='uncertain':break
+                time.sleep(.1)
+            assert sql(f"SELECT state FROM flow_jobs WHERE id='{job_id}'")=='uncertain'
+            release.set()
+            for _ in range(100):
+                state=sql(f"SELECT state FROM flow_steps WHERE job='{job_id}' AND node='propose'")
+                if state!='running':break
+                time.sleep(.1)
+            assert state=='failed',state
+            assert sql(f"SELECT count(*) FROM tasks WHERE tenant='{stage}'")==before
+        finally:
+            stop(recovery)
+        passed('A second Flow worker marks an expired inference uncertain; its late result cannot create a ready task')
+        # Direct proposals use the same persistence fence even before recovery.
+        pipeline['active']=False
+        call(base,'/api/automation/flows/pipeline_work',{'revision':1,'data':pipeline},sh,method='PUT')
+        definition['active']=True
+        call(base,'/api/automation/flows/native_work',{'revision':2,'data':definition},sh,method='PUT')
+        started.clear();release.clear();trigger()
+        assert started.wait(15),'Direct Flow never reached inference before lease expiry'
+        direct=sql(f"SELECT id FROM flow_jobs WHERE tenant='{stage}' AND flow='native_work' ORDER BY event_id DESC LIMIT 1")
+        sql(f"UPDATE flow_jobs SET lease_until=now()-interval '1 second' WHERE id='{direct}'")
+        release.set()
+        expired=wait_job('native_work',[job['id']])
+        assert expired['state']=='failed',expired
+        assert sql(f"SELECT count(*) FROM tasks WHERE tenant='{stage}'")==before
+        passed('Direct Flow proposals also reject an expired lease before a recovery worker claims uncertainty')
     finally:
         mode['block']=False;release.set();started.clear()
         stop(apps)

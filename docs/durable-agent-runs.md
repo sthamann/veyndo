@@ -164,11 +164,16 @@ Membership, private workspace access and the live shop's emergency stop are chec
 before inference and again before storing its result. The task contains no invented
 personal session or execution credential; approval binds the real current session.
 The stop also applies to scheduled proposals in the shop's private environments.
+The task records its originating Flow job. Saving the result locks that job in the
+same transaction and requires an unexpired running lease. A delayed model response
+cannot create a ready task after expiry or after another worker marks the job
+uncertain; recovery does not silently repeat the inference.
 
 The registered `durable_agents` test follows an actual product update through the
 outbox and Flow worker, opens its task, approves it and confirms one private category
 write, replay protection and unchanged live data. It also covers the graphical
-pipeline, a stop before/during inference and permission withdrawal during inference.
+pipeline, a stop before/during inference, permission withdrawal during inference,
+and expired direct/pipeline jobs with and without a second recovery worker.
 These are local HTTP/PostgreSQL tests with a synthetic model, not public acceptance.
 Flow inference still follows its existing job/uncertainty handling; this connection
 does not add durable model checkpoints to legacy Flow calls or turn arbitrary

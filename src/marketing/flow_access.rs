@@ -42,8 +42,13 @@ pub(crate) async fn proposal_headers(
     a: &App,
     t: &str,
     actor: Option<&str>,
+    job: &str,
 ) -> Result<RequestContext> {
-    let h = headers(a, t, actor).await?;
+    let mut h = headers(a, t, actor).await?;
+    h.insert(
+        "x-rac-flow-job",
+        job.parse().map_err(|_| bad("Invalid Flow job"))?,
+    );
     agent::assistant_access(&h)?;
     auth::permit(&h, "catalog.write")?;
     auth::permit(&h, "knowledge.read")?;

@@ -20,8 +20,8 @@ It is a delivery plan, not a claim that every item below is already available on
 
 Direct and graphical Flow AI proposals now join the existing ready-task and
 personal-approval path. Actual local product-event tests cover one private native
-write, replay protection, unchanged live data, emergency stop and rights withdrawn
-during inference. [Behavior and acceptance scope](durable-agent-runs.md#review-work-prepared-by-a-flow).
+write, replay protection, unchanged live data, emergency stop, rights withdrawn
+during inference and late results after worker lease expiry. [Behavior and acceptance scope](durable-agent-runs.md#review-work-prepared-by-a-flow).
 Public delivery of this repair is not yet accepted. Turning an accepted task into
 a configurable Flow with mapped inputs and event parameters remains the next part
 of item 4; the existing title-only shortcut is not that complete workflow.

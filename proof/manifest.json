@@ -1427,8 +1427,8 @@
     },
     "src/agent_runs/flow_proposals.rs": {
       "status": "unproved",
-      "sha256": "42eb2481d13b558ea9f8442740f35af4b853c50e48ba65cf7a6e5bb1d0fdec5a",
-      "review": "Reviewed scheduled Flow proposal persistence through native ready tasks: current Flow membership, private scope, original grant ceiling and shop-stop lock; personal approval alone supplies execution authority. Actual product-event, graphical pipeline, isolated approval/replay and stop-during-provider tests pass. No extracted pure policy changed; SQL, async and authorization integration remain unproved."
+      "sha256": "ba2c8f4b37832a0e2cc7b144c5a46d6e95ae61a955e3bfb223be7a04881b0a65",
+      "review": "Reviewed Flow source job propagation and transaction-locked current lease fence. Actual HTTP/PostgreSQL regressions reproduce rejected late results after expiry, with and without second-worker recovery; personal approval and native replay remain unchanged. SQL authority is outside extracted pure proof scope."
     },
     "src/agent_runs/translation.rs": {
       "status": "unproved",
@@ -3167,13 +3167,13 @@
     },
     "src/marketing/flow_access.rs": {
       "status": "unproved",
-      "sha256": "646256dd1ed546bedf5d86eb34767ddca19e3a77f652b49971756a20fa79ab7c",
-      "review": "Reviewed scheduled Flow proposal persistence through native ready tasks: current Flow membership, private scope, original grant ceiling and shop-stop lock; personal approval alone supplies execution authority. Actual product-event, graphical pipeline, isolated approval/replay and stop-during-provider tests pass. No extracted pure policy changed; SQL, async and authorization integration remain unproved."
+      "sha256": "4c8f22c8ffc02e7811e6358f79d892e61bf8f0d9c4415c1832e22be701037324",
+      "review": "Reviewed Flow source job propagation and transaction-locked current lease fence. Actual HTTP/PostgreSQL regressions reproduce rejected late results after expiry, with and without second-worker recovery; personal approval and native replay remain unchanged. SQL authority is outside extracted pure proof scope."
     },
     "src/marketing/flow_actions.rs": {
       "status": "unproved",
-      "sha256": "9d0447db78d99cddf2faca527f3037794eb42ce08173817b048e40ddec61ccbd",
-      "review": "Reviewed scheduled Flow proposal persistence through native ready tasks: current Flow membership, private scope, original grant ceiling and shop-stop lock; personal approval alone supplies execution authority. Actual product-event, graphical pipeline, isolated approval/replay and stop-during-provider tests pass. No extracted pure policy changed; SQL, async and authorization integration remain unproved."
+      "sha256": "0b4746b30d3f645562adbb839ef508f1af86aca7d9c4d2adb522857415b5aaca",
+      "review": "Reviewed Flow source job propagation and transaction-locked current lease fence. Actual HTTP/PostgreSQL regressions reproduce rejected late results after expiry, with and without second-worker recovery; personal approval and native replay remain unchanged. SQL authority is outside extracted pure proof scope."
     },
     "src/marketing/flow_mutations.rs": {
       "status": "unproved",
@@ -3192,8 +3192,8 @@
     },
     "src/marketing/flows.rs": {
       "status": "unproved",
-      "sha256": "603e5fc6de6cafbb3aaa502a1559e24cfdf5ed1af027a4850ace56bab1d4ffcd",
-      "review": "Reviewed scheduled Flow proposal persistence through native ready tasks: current Flow membership, private scope, original grant ceiling and shop-stop lock; personal approval alone supplies execution authority. Actual product-event, graphical pipeline, isolated approval/replay and stop-during-provider tests pass. No extracted pure policy changed; SQL, async and authorization integration remain unproved."
+      "sha256": "dbc1173ed5a1051c38b961f7ddff0f379fb9593b6442ff2227c3df5748b04968",
+      "review": "Reviewed Flow source job propagation and transaction-locked current lease fence. Actual HTTP/PostgreSQL regressions reproduce rejected late results after expiry, with and without second-worker recovery; personal approval and native replay remain unchanged. SQL authority is outside extracted pure proof scope."
     },
     "src/marketing/gateway.rs": {
       "status": "unproved",
