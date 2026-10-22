@@ -4,55 +4,55 @@
 > local LLMs, partial MCP/UCP adapters and selected original Shopware behavior ports.
 
 ## Start
-- [Overview](https://sthamann.github.io/veyndo/)
-- [Measured local performance](https://sthamann.github.io/veyndo/benchmarks.html)
-- [Local quickstart](https://sthamann.github.io/veyndo/quickstart.html)
-- [Local MCP bridge](https://sthamann.github.io/veyndo/mcp.html)
-- [Shopware behavior ports](https://sthamann.github.io/veyndo/shopware.html)
+- [Overview](https://www.veyndo.ai/)
+- [Measured local performance](https://www.veyndo.ai/docs/benchmarks.html)
+- [Local quickstart](https://www.veyndo.ai/docs/quickstart.html)
+- [Local MCP bridge](https://www.veyndo.ai/docs/mcp.html)
+- [Shopware behavior ports](https://www.veyndo.ai/docs/shopware-parity.html)
 
-- [Connected playground](https://sthamann.github.io/veyndo/playground.html)
+- [Connected playground](https://www.veyndo.ai/docs/playground.html)
 
 ## Current release
 - [Current status and recorded public journeys](https://www.veyndo.ai/docs/status.html): Canonical current deployment, observed acceptance and remaining work.
 - [Visual shopper selection](https://www.veyndo.ai/docs/ui-experience.html#standard-storefront-and-customer-account): Catalogue-grounded intent produces editable native product cards; variants, app configuration, basket and checkout keep their existing owners.
 - [Private customer scenarios](https://www.veyndo.ai/docs/customer-scenarios.html): One to six fictional shopping agents, exact budgets, native simulated orders and saved before/after observations. This is native API testing, not visual usability or a real-customer conversion forecast.
 - [Catalogue preparation](https://www.veyndo.ai/docs/product-management.html): Paged product language coverage, durable image-job progress and native repair links.
-- [Core hardening](https://sthamann.github.io/veyndo/docs/core-hardening.html): Eighteen review findings, trusted request identity, explicit API permissions, non-owner forced RLS, transaction-local scoping, real PgBouncer tests, shared resource leases and durable outbox recovery. Deployment cutover and proof boundaries are explicit.
-- [Latest recorded release and dated acceptance](https://sthamann.github.io/veyndo/docs/current-release.html): Managed Storyfront apps, domains/editor links, channel pause/private previews, guest buyers and merchant enrollment; public/native deployment boundaries.
-- [Sales channels and domains](https://sthamann.github.io/veyndo/docs/channel-management.html)
-- [Currencies and pricing](https://sthamann.github.io/veyndo/docs/currencies.html)
-- [Rust app services](https://sthamann.github.io/veyndo/docs/rust-services.html)
+- [Core hardening](https://www.veyndo.ai/docs/core-hardening.html): Eighteen review findings, trusted request identity, explicit API permissions, non-owner forced RLS, transaction-local scoping, real PgBouncer tests, shared resource leases and durable outbox recovery. Deployment cutover and proof boundaries are explicit.
+- [Historical release record](https://www.veyndo.ai/docs/current-release.html): Older dated deployment observations; use the canonical current status above for the running release.
+- [Sales channels and domains](https://www.veyndo.ai/docs/channel-management.html)
+- [Currencies and pricing](https://www.veyndo.ai/docs/currencies.html)
+- [Rust app services](https://www.veyndo.ai/docs/rust-services.html)
 
 ## App-system implementation status
-- [Delivered, partial and open app capabilities](https://sthamann.github.io/veyndo/docs/app-system-status.html): Current source owners, dated hosted evidence and outstanding acceptance gates.
-- [Fixed shared app storage](https://sthamann.github.io/veyndo/docs/app-data-storage.html): Four physical tables; no table/index per installation.
-- [Saved agent work](https://sthamann.github.io/veyndo/docs/durable-agent-runs.html): Bounded merchant planning, private checkpoints, current rights and explicit uncertain-call continuation.
-- [Business-capability direction](https://sthamann.github.io/veyndo/docs/business-capabilities.html): Intent and frozen pure-decision examples are implemented; complete B2B, historical replay, managed source builds/runtimes and fleet compatibility remain open.
+- [Delivered, partial and open app capabilities](https://www.veyndo.ai/docs/app-system-status.html): Current source owners, dated hosted evidence and outstanding acceptance gates.
+- [Fixed shared app storage](https://www.veyndo.ai/docs/app-data-storage.html): Four physical tables; no table/index per installation.
+- [Saved agent work](https://www.veyndo.ai/docs/durable-agent-runs.html): Bounded merchant planning, private checkpoints, current rights and explicit uncertain-call continuation.
+- [Business-capability direction](https://www.veyndo.ai/docs/business-capabilities.html): Intent, frozen decision examples and the connected material/dimensions B2B purchase/reorder are implemented. Complete historical repricing, arbitrary-source builds/runtimes and fleet compatibility retain separate gates.
 
 - [Connected AI workspace](https://veyndo.ai/docs/agentic-workspace.html): Context, reviewed private multi-step work, complete native app composition, real preview, editable grids and versioned merchant preferences. Implementation and hosted acceptance are documented separately.
 
 ## Full HTML documentation
-- [Production architecture](https://sthamann.github.io/veyndo/docs/production-architecture.html): Illustrated request, checkout, tenant security, cache, quota and grounded AI paths, with source locations, deployment configuration and explicit proof limits.
-- [All guides and developer notes](https://sthamann.github.io/veyndo/docs/)
-- [Shop knowledge](https://sthamann.github.io/veyndo/docs/knowledge-workspace.html)
-- [App Studio](https://sthamann.github.io/veyndo/docs/app-studio.html)
-- [Five illustrated app workshops](https://sthamann.github.io/veyndo/docs/app-tutorials/README.html): Product advice, private returns, customer fields, UTC review flows and ERP handoff; current English screenshots, agent prompts, rights and staging/release steps.
+- [Production architecture](https://www.veyndo.ai/docs/production-architecture.html): Illustrated request, checkout, tenant security, cache, quota and grounded AI paths, with source locations, deployment configuration and explicit proof limits.
+- [All guides and developer notes](https://www.veyndo.ai/docs/)
+- [Shop knowledge](https://www.veyndo.ai/docs/knowledge-workspace.html)
+- [App Studio](https://www.veyndo.ai/docs/app-studio.html)
+- [Five illustrated app workshops](https://www.veyndo.ai/docs/app-tutorials/README.html): Product advice, private returns, customer fields, UTC review flows and ERP handoff; current English screenshots, agent prompts, rights and staging/release steps.
 
 ## Original documentation
 - [Repository](https://github.com/sthamann/veyndo)
-- [Feature matrix](https://sthamann.github.io/veyndo/docs/shopware-parity.html)
+- [Feature matrix](https://www.veyndo.ai/docs/shopware-parity.html)
 - [Recorded verification](https://github.com/sthamann/veyndo/blob/main/docs/verification.json)
-- [Security and SaaS boundaries](https://sthamann.github.io/veyndo/docs/security.html)
+- [Security and SaaS boundaries](https://www.veyndo.ai/docs/security.html)
 
-- [Rules and durable flows](https://sthamann.github.io/veyndo/docs/automation.html)
-- [Full app contract](https://sthamann.github.io/veyndo/docs/app-platform.html)
-- [Measured test coverage](https://sthamann.github.io/veyndo/docs/testing.html)
+- [Rules and durable flows](https://www.veyndo.ai/docs/automation.html)
+- [Full app contract](https://www.veyndo.ai/docs/app-platform.html)
+- [Measured test coverage](https://www.veyndo.ai/docs/testing.html)
 
 ## Limits
 Working prototype. The tour uses simulated/manual payments. Configured PayPal Sandbox/Live is supported; actual PSP transactions remain unverified.
 Not a full Shopware replacement or validated production SaaS.
-MCP/UCP are partial bindings. Hosted merchant/password enrollment and the private Experience service exist; Google/Apple OAuth requires explicit configuration and is not certified by the deployment review.
-Experience mounts install the public integration package; the original renderer/editor runs in the private Experience service. The 15 October hosted receipt records original Storyfront embedded simulated purchases and bag clearing. This does not establish complete localization or live provider acceptance.
+MCP/UCP are partial bindings. Hosted merchant/password enrollment and the private Experience service exist; OAuth requires explicit provider configuration. Google entry was observed publicly; the Apple account-return acceptance remains open.
+Experience mounts install the public integration package; the original renderer/editor runs in the private Experience service. The 22 October acceptance records original Storyfront embedded simulated purchase, receipt return and bag clearing after both service deployments. This does not establish complete localization or live provider acceptance.
 Live cloud quality, production scale and causal sales uplift are unverified.
 
 ## License
@@ -60,4 +60,4 @@ Own-business storefronts are permitted. Commercial shop platforms, managed hosti
 white-label or embedded commerce SaaS for independent merchants need separate written permission.
 Previously distributed MIT versions retain their terms. Third-party licenses remain intact.
 - [License](https://github.com/sthamann/veyndo/blob/main/LICENSE)
-- [Usage guide](https://sthamann.github.io/veyndo/docs/licensing.html)
+- [Usage guide](https://www.veyndo.ai/docs/licensing.html)

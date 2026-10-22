@@ -1,8 +1,9 @@
 # Completing the connected merchant workspace
 
-Implementation sequence approved on 21 October 2026. This page tracks the remaining
-work after the publicly accepted [20 October workspace](agentic-workspace.md).
-It is a delivery plan, not a claim that every item below is already available online.
+Original implementation sequence approved on 21 October 2026, following the
+[20 October workspace](agentic-workspace.md). The sequence below preserves the
+original acceptance criteria; dated sections record the work delivered since then.
+Do not read every row as still open or as already publicly accepted.
 [Current public status](status.md) remains the release entry point.
 
 | Order | Merchant outcome | Completion evidence |

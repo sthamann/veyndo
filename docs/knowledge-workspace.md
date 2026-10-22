@@ -1,8 +1,14 @@
 # Knowledge workspace
 
-See the [connected AI workspace](agentic-workspace.md) for the 20 October context,
+See the [connected AI workspace](agentic-workspace.md) for current editor context,
 reviewed private execution, complete app composition, real preview, editable list
 handoff and remembered merchant-guidance workflow. [Current status](status.md).
+
+The 22 October release adds **Customer simulator / Kundensimulator** to this same
+workspace. Open a private sandbox, give fictional customers a concrete goal and
+inspect their saved native shopping actions and before/after results.
+[Illustrated instructions](customer-scenarios.md) ·
+[Public acceptance and screenshots](evidence/customer-scenarios-2026-10-22.md).
 
 Open **VEYNDO Studio → Shop intelligence** (German: **Shopwissen**). The workspace separates authoritative
 catalogue data, merchant-managed sources, curated graph connections, order-derived
