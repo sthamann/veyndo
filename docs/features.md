@@ -1,8 +1,14 @@
 # VEYNDO feature guide
 
-See the [connected AI workspace](agentic-workspace.md) for the 20 October context,
+See the [connected AI workspace](agentic-workspace.md) for current editor context,
 reviewed private execution, complete app composition, real preview, editable list
 handoff and remembered merchant-guidance workflow. [Current status](status.md).
+
+**22 October connected release:** [private customer-agent scenarios](customer-scenarios.md),
+[catalogue language/image preparation](product-management.md#preparing-a-catalogue-together),
+[app connection diagnostics](app-system-status.md) and
+[editable visual shopper selections](ui-experience.md#standard-storefront-and-customer-account)
+are online. [Public screenshots and completed purchases](evidence/customer-scenarios-2026-10-22.md#public-acceptance-after-the-final-rollout).
 
 **Personal workspace and standard-shop editor:** [Illustrated workflow, shared models, rights, history, forms and publication](personal-workspace-and-shop-design.md).
 
@@ -36,9 +42,9 @@ and ERP handoff using the same visual/coding-agent Manifest and version lifecycl
 
 [Documentation home](documentation-site.md) · [Get started](quickstart.md) · [Exact Shopware scope](shopware-parity.md) · [Source map](source-map.md)
 
-**Baseline tour: 9 October 2026, merged Core `598bbec`; current entry links refreshed 21 October.** This guide follows the storefront, Studio workspaces and the separate platform console. The original connected intelligence, app ontology, source/consent fences and runtime hardening are described in the [dated change and acceptance record](release-acceptance-2026-10-09.md). The media captures retain their original provenance. Use [current status](status.md) for the newer connected workspace, app and public checkout outcomes.
+**Baseline tour: 9 October 2026, merged Core `598bbec`; current entry links refreshed 22 October.** This guide follows the storefront, Studio workspaces and the separate platform console. The original connected intelligence, app ontology, source/consent fences and runtime hardening are described in the [dated change and acceptance record](release-acceptance-2026-10-09.md). The media captures retain their original provenance. Use [current status](status.md) for the newer connected workspace, app and public checkout outcomes.
 
-The current screenshots, twelve GIFs and films use fresh VEYNDO captures from 13 October 2026. They show actual UI with synthetic accounts and records; individual source revisions and editing boundaries are retained in the metadata. GIF timing is not a performance measurement. Commerce examples use simulated payments. Draft setup, disabled provider settings and completed local actions are identified separately. Earlier public acceptance captures remain dated archive links. [Current capture provenance](assets/README.md) · [Showcase files and limits](assets/showcase/README.md).
+The baseline screenshots, twelve GIFs and films retain their VEYNDO capture date of 13 October 2026. The 22 October additions above link to their own current screenshots. They show actual UI with synthetic accounts and records; individual source revisions and editing boundaries are retained in the metadata. GIF timing is not a performance measurement. Commerce examples use simulated payments. Draft setup, disabled provider settings and completed local actions are identified separately. Earlier public acceptance captures remain dated archive links. [Current capture provenance](assets/README.md) · [Showcase files and limits](assets/showcase/README.md).
 
 ![Current Nord Atelier storefront with the generated Harbor coat photograph](assets/feature-tour/storefront.jpg)
 

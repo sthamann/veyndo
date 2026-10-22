@@ -1,5 +1,11 @@
 # Changelog
 
+## Current documentation entry points — 22 October 2026
+
+- Align the README, feature/app/knowledge/workspace guides and machine-readable index with the publicly accepted customer simulator, catalogue preparation, app diagnostics and visual shopping.
+- Use the 22 October public comparison as the README's current screenshot; retain older capture dates and link their provenance. Place customer scenarios beside shop knowledge in the handbook navigation.
+- Route current-status links to the single public status page and label the older release record as historical. Preserve remaining implementation and provider acceptance boundaries.
+
 ## Connected catalogue, apps and visual shopping — 22 October 2026
 
 - Add one paged catalogue-preparation view with explicit language coverage and durable image-job state, native repair links, actionable app-reference diagnostics and shared private simulator entry points.

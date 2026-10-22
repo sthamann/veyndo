@@ -32,6 +32,7 @@ public acceptance are recorded separately.
 | Work | What connects it |
 | --- | --- |
 | **Ask, review, act** | Start from the selected product, describe the work, review private steps and follow saved progress. App discovery, editable grid filters and explicit merchant preferences stay connected. [AI workspace](docs/agentic-workspace.md). |
+| **Prepare the catalogue** | Inspect each product's enabled-language coverage and saved image-job progress, then open its native editor to repair missing content. [Catalogue preparation](docs/product-management.md#preparing-a-catalogue-together). |
 | **Bring your shop** | The [Migration Assistant](docs/agentic-migration.md) connects versioned source profiles, saved background inspection, readable variant review and native imports into private previews. Current implementation and open domains are documented separately. |
 | **Build the business** | Connect an app's data, settings and interface to native commerce: for example, materials and custom dimensions flow through company approval, checkout and saved-list reorder. Visual editing and coding agents share its versioned definition. [App Studio](docs/app-studio.md), [connected configurator](docs/furniture-configurator.md), [native object extensions](docs/app-core-extensions.md). |
 | **Shape the shop** | Design standard storefront pages on the actual preview; use original Storyfront for connected Experiences. [Visual design](docs/personal-workspace-and-shop-design.md). |
@@ -40,11 +41,11 @@ public acceptance are recorded separately.
 | **Test before release** | Let a small group of fictional customers try native search, baskets and simulated purchases in a private shop; compare saved runs and inspect the actual failures. [Customer simulator](docs/customer-scenarios.md). |
 | **Stay in control** | Current roles, private sandboxes, immutable versions and selected publication govern changes. [Security](docs/security.md). |
 
-[![Veyndo Studio: a real agent request opens an editable native product filter](docs/assets/agent-workspace-20261020/public-grid.png)](docs/agentic-workspace.md)
+[![Veyndo Studio: actual private customer-agent comparison before and after restoring product stock, 22 October 2026](docs/assets/customer-scenarios-20261022/public-purchases-comparison.png)](docs/customer-scenarios.md)
 
 Screenshots use synthetic shops; payments are simulated. Recordings retain their
 capture dates and are edited for readability, not performance measurements.
-[Watch the tours](docs/video-tours.md) · [Current screenshot and acceptance](docs/agentic-workspace.md#verification-and-extension) · [Tour provenance](docs/assets/launch-20261014/README.md).
+[Current screenshots and public purchase acceptance](docs/customer-scenarios.md#verification) · [Watch the dated tours](docs/video-tours.md) · [Tour provenance](docs/assets/launch-20261014/README.md).
 
 ## Try one complete round
 

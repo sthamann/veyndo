@@ -46,12 +46,12 @@
         "docs/durable-agent-runs.md",
         "docs/agent-authority-controls.md",
         "docs/knowledge-workspace.md",
+        "docs/customer-scenarios.md",
         "docs/agent-workshop.md",
         "docs/connectors.md",
         "docs/behavior-intelligence.md",
         "docs/agentic-grids.md",
-        "docs/connected-workbench.md",
-        "docs/customer-scenarios.md"
+        "docs/connected-workbench.md"
       ]
     },
     {

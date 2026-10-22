@@ -5,9 +5,12 @@ journeys. The [connected AI workspace](agentic-workspace.md) explains contextual
 planning, reviewed private execution, app composition, real preview, editable list
 handoff and remembered merchant guidance.
 
-**Updated 21 October 2026:** connected collection preparation and selected
+**Updated 22 October 2026:** the public release includes app-reference diagnostics,
+shared private customer-agent testing, catalogue language/image readiness and
+editable native shopper selections. The [current illustrated acceptance](evidence/customer-scenarios-2026-10-22.md#public-acceptance-after-the-final-rollout)
+records the deployed result. Connected collection preparation and selected
 publication, configured B2B purchase/reorder, reuse as a Flow and recorded-rule
-comparison now have public evidence. The tables below retain the wider programme's
+comparison retain their 21 October public evidence. The tables below retain the wider programme's
 remaining boundaries. The integrated app builder is usable. The complete
 business-capability proposal — describe an individual business model and have
 Veyndo build, verify, operate and maintain it — remains an implementation programme.
@@ -27,6 +30,7 @@ branch, build or documentation change does not update a hosted result by itself.
 | Extend native object fields | [Core object extensions](app-core-extensions.md): canonical private bindings, native details/grids/exact filters and current rights; hosted acceptance is separate |
 | Understand data, permissions and API/Flow/MCP calls | [App platform](app-platform.md), [security](app-security.md), [shared storage](app-data-storage.md) |
 | Continue saved merchant-agent work | [Durable runs and their boundaries](durable-agent-runs.md) |
+| Check app connections and test private shopping | [App Studio diagnostics](app-studio.md), [customer simulator](customer-scenarios.md), [public screenshots and outcomes](evidence/customer-scenarios-2026-10-22.md) |
 | Understand the full product direction | [Business capabilities](business-capabilities.md) |
 | Check the latest recorded hosted release | [Current status and public acceptance](status.md#public-acceptance); older releases retain their dates in the [historical release record](current-release.md) |
 

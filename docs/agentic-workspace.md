@@ -3,8 +3,15 @@
 The merchant agent now carries the current editor into a conversation, discovers
 installed apps by relevance and prepares bounded work that the merchant can
 review. App Studio, graphical editors, native operations and private previews
-continue to own the actual data. This guide describes the 20 October implementation;
-[current status](status.md) separates local verification from public deployment.
+continue to own the actual data. This guide follows the original 20 October
+workspace and the publicly accepted collection/catalogue extensions through
+22 October; [current status](status.md) records each deployed journey.
+
+Prepare missing translations and images in the
+[catalogue-preparation grid](product-management.md#preparing-a-catalogue-together),
+check an app's connections in App Studio and try a saved private change with the
+[customer simulator](customer-scenarios.md). These entry points use the same
+native editors, current rights and selected publication path.
 
 ## 1. Start from the work you are doing
 
@@ -61,14 +68,14 @@ payment through this path. Existing payment, order, import and release workflows
 retain their own explicit native admission. Dedicated budgeted planning keys keep
 their read-only scope.
 
-**21 October development extension:** reviewed work can also prepare translation
+**21 October collection extension, publicly accepted:** reviewed work can also prepare translation
 drafts for exact selected product IDs, including products created earlier in the
 same plan. The existing translation worker retains original task authority and
 returns a real job link. The parent waits for ready drafts, stops on child failure
 and resumes only after explicit continuation. Draft review/apply and selected
 publication remain separate. See [the delivery tracker](connected-merchant-followups.md)
-for local acceptance and public rollout status; the public screenshots above are
-from the accepted 20 October release.
+for the actual source and [public collection acceptance](evidence/release-history-through-2026-10-21.md#21-october-connected-collection-preparation-runs-publicly).
+The workspace screenshots above retain their 20 October capture date.
 
 ```mermaid
 flowchart TD
