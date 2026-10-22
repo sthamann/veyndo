@@ -6,16 +6,19 @@ journey are tracked separately. All purchases below use **simulated payments**.
 
 ## What is online now
 
-Core and Studio run the combined customer-scenario, catalogue-preparation, app-
-diagnostics and visual-shopping release from [PR #195](https://github.com/sthamann/veyndo/pull/195),
-[PR #199](https://github.com/sthamann/veyndo/pull/199) and
-[PR #200](https://github.com/sthamann/veyndo/pull/200). Main includes the code as
-`07812240`; the initial `affluent-week-4541` image was built from the identical
-runtime tree at `f74d8ff9` and activated on **22 October at 17:20 CEST**. The same
-code was subsequently observed as `golden-horse-2498` from main `07812240`,
-activated at 17:40 CEST with its health check passing. The
-complete required backend/integration CI and the separate 811-test frontend
-verification passed. [Exact runtime and browser evidence](evidence/customer-scenarios-2026-10-22.md).
+Core and Studio now include editable catalogue-based test customers from
+[PR #203](https://github.com/sthamann/veyndo/pull/203), alongside the connected
+customer-scenario, catalogue-preparation, app-diagnostics and visual-shopping
+release. Image `loyal-line-5143`, source `2bb5a99f`, activated on **22 October at
+19:55 CEST** after a fresh snapshot and successful migration-only job. The public
+German-Studio / French-only-channel journey completed two private simulated
+purchases and an exact-budget refusal. Reload and reuse retained the original
+profiles and orders; the 390 px mobile view fits without horizontal overflow.
+The [complete required CI run](https://github.com/sthamann/veyndo/actions/runs/39824617289)
+passed on the final source, including all 816 frontend tests and the native
+database integration. PR #203 merged normally as `35755608`; its complete Git
+tree is identical to the publicly accepted `2bb5a99f` tree.
+[Exact runtime and browser evidence](evidence/customer-scenarios-2026-10-22.md#public-catalogue-profile-acceptance).
 
 The preceding catalogue/privacy release was accepted on the same date; its
 [earlier exact evidence](evidence/merchant-journey-2026-10-22.md#public-delivery-and-acceptance)
@@ -57,8 +60,13 @@ The customer simulator is online on existing durable agent tasks: one to six
 editable fictional profiles, bounded concurrent native shopping, exact budgets,
 saved observations, resume/stop and before/after comparison. Designer, installed
 sandbox apps and migration targets open the same workbench.
-[Usage and exact scope](customer-scenarios.md). Public acceptance used the actual
-configured model and a private notebook stock change. The connected catalogue
+[Usage and exact scope](customer-scenarios.md). **Test customers from my catalogue**
+now prepares three editable suggestions from visible channel products, without
+customer records or an additional model call. Preview, adoption and test start
+are separate actions. Profiles use the channel's enabled shopper languages even
+when Studio uses another interface language. Public acceptance used the actual
+configured model, exact-budget refusal, Germany/Austria purchases and the earlier
+private notebook stock change. The connected catalogue
 preparation grid, actionable app-reference diagnostics and visual shopper selection
 are included in the combined public artifact; [implementation and browser evidence](evidence/customer-scenarios-2026-10-22.md#connected-catalogue-and-app-follow-through).
 
@@ -66,6 +74,7 @@ are included in the combined public artifact; [implementation and browser eviden
 
 | Journey | What was observed | Evidence |
 | --- | --- | --- |
+| Catalogue-based test customers | German Studio prepared three French profiles from the channel's only notebook. The EUR 28.89 profile stopped; Germany and Austria orders completed for EUR 28.90 and EUR 29.14 with the stored French product name. Private orders increased from four to exactly six. Reload, profile reuse and 390 px mobile layout passed. | [Public profile preparation and purchases](evidence/customer-scenarios-2026-10-22.md#public-catalogue-profile-acceptance) |
 | Visual shopping, catalogue preparation and app diagnostics | Final public cards showed the actual notebook and holder, EUR 63.40 together. Removal survived detail/back; restore retained cart zero. Native purchase `RAC-eb78b7d7` completed for EUR 28.90 including EUR 4.61 VAT; return/reload retained an empty cart and privacy rejection. Five-language readiness opened the correct media editor; app diagnostics retained draft protection. | [Final combined release acceptance](evidence/customer-scenarios-2026-10-22.md#public-acceptance-after-the-final-rollout) |
 | Private customer scenarios | Three agents stopped at stock zero; after restoring private stock, two native EUR 28.90 orders completed while the EUR 1.00 buyer still stopped. Exact profiles and saved comparison survived reload. | [22 October simulator acceptance](evidence/customer-scenarios-2026-10-22.md#public-rollout-and-customer-scenario-acceptance) |
 | Catalogue from the conversation | Actual composer CSV attachment, editable two-product preview, private save, publication of only the named chair, retained private side table and native image editing. Description and URL handoffs retained the current sandbox. | [22 October public journey](evidence/merchant-journey-2026-10-22.md#public-delivery-and-acceptance) |

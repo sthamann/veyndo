@@ -458,3 +458,79 @@ passes 816 tests across 140 files.
 ![Actual local model outcomes: exact-budget stop and two native simulated orders](../assets/customer-scenarios-20261022/profile-suggestions-local-results.png)
 
 ![Local mobile profile workspace at 390 px](../assets/customer-scenarios-20261022/profile-suggestions-local-mobile.png)
+
+## Public catalogue-profile acceptance
+
+The follow-up from [PR #203](https://github.com/sthamann/veyndo/pull/203) was tested
+on the actual public Core and Studio. The exact feature image was activated while
+the final required GitHub run continued. That [complete run](https://github.com/sthamann/veyndo/actions/runs/39824617289)
+passed on `2bb5a99f` at **20:27:09 CEST**; regular protected merge followed at
+20:27:28 CEST as `35755608472bff2690d77f76f7317bf146100084`. Git comparison
+confirmed that the complete feature and merge trees are identical
+(`fb25173baf3a24e49c4f009a7ef6c0a122178018`).
+
+| Rollout step | Observed result |
+| --- | --- |
+| Core image | `loyal-line-5143`, source `2bb5a99f8776d0d9bbcd6da4ef32f1fae6a19a7c`; native Docker build completed in 8 min 32 sec. |
+| Fresh backup | Disk snapshot `scenario-profiles-20261022-2bb5a99`, successful in 1 min 2 sec. Existing backups and schedules retained. |
+| Existing migration-only job | Run `58ff1939-f4fd-4de4-a22f-e2817fc98cfc`, same image; native setup complete, exit 0, 20 sec. No new schema change or credential. |
+| Public activation | `vendune-core-5d6dc8bffb`, 22 October 19:55:49 CEST, Running 1/1, health check passing, zero restarts. |
+| Public model | Existing configured Ollama `qwen3.6:35b`; actual model decisions, not the controlled test-provider responses. Payment remains explicitly simulated. |
+
+The existing authenticated Studio session survived the rollout and full reload.
+Inside private sandbox `stage-62ddd2bbd80642e38c4f`, the native channel wizard
+created **FR Customer Scenarios 22 October**, ID `shop_72a18e285109`, with only
+French enabled and only the notebook product
+`624eff3d-b57a-4d40-aa11-24c73f4e42e0`. This channel was not published to the live
+shop. The Studio interface stayed German throughout.
+
+**Testkunden aus meinem Sortiment** showed three fictional profiles from the one
+native product, **Carnet « Pages silencieuses »**. The preview and explicit
+adoption retained the merchant's original instruction. All shopper profiles used
+French; Germany and Austria came from the enabled destinations. Only the later
+**Kunden testen lassen** action started the actual model tasks.
+
+![Public preview before adopting the fictional profiles](../assets/customer-scenarios-20261022/public-profile-suggestions-preview.png)
+
+Saved cohort `4b450a8a-31bd-4f04-9284-f51a9304cb7e` produced these outcomes:
+
+| Profile | Budget | Observed native result |
+| --- | --- | --- |
+| Price-conscious buyer | EUR 28.89 | Stopped: the EUR 28.90 notebook exceeds the budget by one cent. No purchase for this profile. |
+| First visitor, Germany | EUR 34.68 | Completed `RAC-95a1a609`, full order ID `95a1a60906a54e8cb86bca087f6dd9c4`, EUR 28.90. |
+| Focused buyer, Austria | EUR 34.68 | Completed `RAC-455d1538`, full order ID `455d153835d44572be1485be97ff9c81`, EUR 29.14. |
+
+![Actual configured-model decisions and both native private totals](../assets/customer-scenarios-20261022/public-profile-suggestions-results.png)
+
+The native private order grid increased from four existing orders to **exactly
+six**; both new IDs appeared alongside the original four. Opening the Austria
+order showed quantity one, the French product name, the Austrian destination,
+EUR 29.14, simulated payment, pickup and the native `order.placed` Flow history.
+The model's earlier prose mentioned EUR 28.90; the engine's country-specific
+EUR 29.14 total is authoritative. These fictional addresses do not establish
+physical shipping-provider validation or real settlement.
+
+![Reopened native order with its stored French name and Austria total](../assets/customer-scenarios-20261022/public-profile-suggestions-order-detail.png)
+
+After a complete browser reload, selecting the saved cohort retained its original
+two order IDs, journals and outcomes. **Diese Kunden erneut testen** restored the
+original instruction, all three profiles and budgets, French, Germany/Austria,
+without starting another cohort. No additional purchase was requested.
+
+At 390 × 844, document width stayed 390 px and the suggestion panel measured
+358 px. The temporary device override was cleared afterwards.
+
+![Public mobile catalogue-profile preview at 390 px](../assets/customer-scenarios-20261022/public-profile-suggestions-mobile.png)
+
+Local verification on this exact source includes the full **816-test frontend
+suite**, TypeScript, production build, four-language localization, Rust format
+and clippy, native projection unit tests, formal contracts and mutation negative
+controls. Actual PostgreSQL integration repeated scenario cancellation, lease/
+rights guards, cold restart, HTTP/MCP parity, native channel management,
+international commerce and tenant isolation. Its German-interface request
+prepared and purchased from the French-only channel, while English profiles were
+rejected before queueing. The latest-head full CI run independently passed Rust,
+formal, differential, frontend, native PostgreSQL/provider, signed runtime,
+transaction-pooler and coverage gates. It took 47 min 37 sec; native integration
+accounted for 34 min 40 sec. The earlier successful run on `1a60d6b8` is retained
+as prior evidence, separate from this final result.
