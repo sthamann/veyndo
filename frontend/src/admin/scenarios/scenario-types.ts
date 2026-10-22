@@ -49,11 +49,18 @@ export type Run = {
   error?: { detail: string };
 };
 export type Report = { id: string; runs: Run[] };
+export type CatalogueSample = {
+  id: string;
+  name: string;
+  priceMinor: number;
+  stock: number;
+};
 export type Configuration = {
   channel: string;
   mainLocale: string;
   locales: string[];
   countries: string[];
+  catalogue?: CatalogueSample[];
   currency: string;
   scale: number;
 };

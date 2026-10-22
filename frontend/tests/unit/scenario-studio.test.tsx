@@ -440,3 +440,61 @@ it("waits for complete snapshots before claiming a changed shop", () => {
     screen.getByText(/Shop-Konfiguration oder betrachteter Katalog verändert/),
   ).toBeVisible();
 });
+
+it("reviews catalogue suggestions before adopting them, keeps the merchant brief and starts only on explicit request", async () => {
+  studio.environment = "suggestion-stage";
+  const api = vi.fn(async (_path: string, body?: unknown) => {
+    if (body) throw new Error("Stop before execution");
+    return {
+      scenarios: [],
+      configuration: {
+        channel: "web",
+        mainLocale: "de-DE",
+        locales: ["de-DE"],
+        countries: ["DE"],
+        currency: "EUR",
+        scale: 2,
+        catalogue: [
+          { id: "lamp", name: "Kanal-Lampe", priceMinor: 2890, stock: 5 },
+        ],
+      },
+    };
+  });
+  render(
+    <LocaleProvider>
+      <ScenarioStudio request={api} channel="web" />
+    </LocaleProvider>,
+  );
+  const brief = await screen.findByLabelText(
+    "Was sollen die Kunden versuchen?",
+  );
+  await userEvent.type(brief, "Meine unveränderte Testaufgabe");
+  await userEvent.click(
+    await screen.findByRole("button", {
+      name: "Testkunden aus meinem Sortiment",
+    }),
+  );
+  expect(api.mock.calls.some((c) => c[1])).toBe(false);
+  await userEvent.click(
+    screen.getByRole("button", { name: "Diese Vorschläge übernehmen" }),
+  );
+  expect(brief).toHaveValue("Meine unveränderte Testaufgabe");
+  expect(
+    (
+      screen.getByLabelText(
+        "Was sollen die Kunden versuchen? · Preisbewusster Käufer",
+      ) as HTMLTextAreaElement
+    ).value,
+  ).toContain("Kanal-Lampe");
+  expect(api.mock.calls.some((c) => c[1])).toBe(false);
+  await userEvent.click(
+    screen.getByRole("button", { name: "Kunden testen lassen" }),
+  );
+  const body = api.mock.calls.find((c) => c[1])![1] as {
+    profiles: { budgetMinor: number }[];
+  };
+  expect(body.profiles[0].budgetMinor).toBe(2889);
+  expect(await screen.findByRole("alert")).toHaveTextContent(
+    "Stop before execution",
+  );
+});

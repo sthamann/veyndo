@@ -304,6 +304,48 @@ const words = {
     "Trouver un produit disponible adapté et acheter en peu d’étapes.",
     "Encontrar un producto disponible adecuado y comprar en pocos pasos.",
   ],
+  suggest: [
+    "Test customers from my catalogue",
+    "Testkunden aus meinem Sortiment",
+    "Clients de test depuis mon catalogue",
+    "Clientes de prueba desde mi catálogo",
+  ],
+  suggestApply: [
+    "Use these suggestions",
+    "Diese Vorschläge übernehmen",
+    "Utiliser ces suggestions",
+    "Usar estas sugerencias",
+  ],
+  suggestIntro: [
+    "Editable fictional customers from a sample of {count} channel products. No customer data or extra model call. Review the goals and budgets before starting.",
+    "Bearbeitbare fiktive Kunden aus einer Auswahl von {count} Kanalprodukten. Keine Kundendaten und kein zusätzlicher Modellaufruf. Prüfe Ziele und Budgets vor dem Start.",
+    "Clients fictifs modifiables à partir de {count} produits du canal. Aucune donnée client ni requête de modèle supplémentaire. Vérifiez les objectifs et budgets avant le test.",
+    "Clientes ficticios editables a partir de {count} productos del canal. Sin datos de clientes ni llamada adicional al modelo. Revisa objetivos y presupuestos antes de empezar.",
+  ],
+  suggestEmpty: [
+    "No suitable products are available in this channel. Check the catalogue or write your own profiles.",
+    "In diesem Kanal sind keine passenden Produkte verfügbar. Prüfe den Katalog oder beschreibe eigene Profile.",
+    "Aucun produit adapté dans ce canal. Vérifiez le catalogue ou rédigez vos propres profils.",
+    "No hay productos adecuados en este canal. Revisa el catálogo o escribe tus propios perfiles.",
+  ],
+  suggestBudget: [
+    "Inspect {product}. Attempt checkout only if the final total fits my deliberately tight budget; otherwise stop and explain the price difference.",
+    "Prüfe {product}. Versuche den Kauf nur, wenn der Gesamtpreis in mein bewusst knappes Budget passt; sonst brich ab und erkläre den Preisunterschied.",
+    "Examiner {product}. Acheter seulement si le total respecte mon budget volontairement limité ; sinon arrêter et expliquer la différence.",
+    "Revisa {product}. Compra solo si el total cabe en mi presupuesto deliberadamente ajustado; si no, detente y explica la diferencia.",
+  ],
+  suggestFirst: [
+    "Read the information for {product}. Buy only if the information is sufficient and the total fits my budget; explain any missing details.",
+    "Lies die Informationen zu {product}. Kaufe nur bei ausreichenden Informationen und passendem Gesamtpreis; erkläre fehlende Angaben.",
+    "Lire les informations sur {product}. Acheter seulement si elles suffisent et si le total respecte mon budget ; expliquer les éléments manquants.",
+    "Lee la información de {product}. Compra solo si es suficiente y el total cabe en mi presupuesto; explica los datos que faltan.",
+  ],
+  suggestFast: [
+    "Find {product}, check availability and the total for my destination, then buy within my budget or explain why it is unavailable.",
+    "Finde {product}, prüfe Verfügbarkeit und Gesamtpreis für mein Lieferland und kaufe in meinem Budget oder erkläre, warum es nicht verfügbar ist.",
+    "Trouver {product}, vérifier la disponibilité et le total pour mon pays, puis acheter dans mon budget ou expliquer l’indisponibilité.",
+    "Busca {product}, comprueba disponibilidad y total para mi destino y compra dentro de mi presupuesto o explica por qué no está disponible.",
+  ],
   comparisonHint: [
     "Compare matching goals, profiles and starting stock. Agent choices can vary between runs.",
     "Vergleiche gleiche Ziele, Profile und Anfangsbestände. Agenten können zwischen Läufen unterschiedlich entscheiden.",

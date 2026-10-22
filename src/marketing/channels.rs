@@ -19,12 +19,12 @@ pub(crate) struct Channel {
 fn public_visibility() -> String {
     "public".into()
 }
-pub(crate) async fn channel(
+/// Native channel metadata keeps type and activation admission independent of Studio's interface language.
+pub(crate) async fn channel_configuration(
     a: &App,
     h: &RequestContext,
     id: &str,
-    locale: &str,
-) -> Result<Option<Channel>> {
+) -> Result<Channel> {
     let t = tenant(h)?;
     let data: Value =
         sqlx::query_scalar("SELECT data FROM sales_channels WHERE tenant=$1 AND id=$2")
@@ -53,12 +53,27 @@ pub(crate) async fn channel(
     if id == "default" {
         c.locales = commerce::config(a, &t).await?.0.locales.clone();
     }
+    if !c.active && header(h, "x-rac-channel-preview") != Some(id) {
+        return Err(Error(
+            StatusCode::FORBIDDEN,
+            "Sales channel or language unavailable".into(),
+        ));
+    }
+    Ok(c)
+}
+pub(crate) async fn channel(
+    a: &App,
+    h: &RequestContext,
+    id: &str,
+    locale: &str,
+) -> Result<Option<Channel>> {
+    let c = channel_configuration(a, h, id).await?;
     let allowed = c.locales.contains(&locale.to_string())
         || (id == "default"
             && c.locales
                 .iter()
                 .any(|enabled| enabled.split('-').next() == locale.split('-').next()));
-    if (!c.active && header(h, "x-rac-channel-preview") != Some(id)) || !allowed {
+    if !allowed {
         return Err(Error(
             StatusCode::FORBIDDEN,
             "Sales channel or language unavailable".into(),

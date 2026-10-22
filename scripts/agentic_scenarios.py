@@ -56,8 +56,8 @@ with socket.socket() as probe:
 env.update(DB_POOL_MAX='4' if env.get('DATABASE_TENANT_URL') else '2', DB_POOL_MIN='0', OPENAI_API_KEY='synthetic-scenario-provider', OPENAI_BASE_URL=f'http://127.0.0.1:{provider.server_address[1]}/v1', PROCESS_ROLE='all', BIND_ADDR=base.removeprefix('http://'), BOOTSTRAP_MODE='serve')
 
 
-def call(path, body=None, headers=None, expected=200):
-    request = urllib.request.Request(base + path, data=None if body is None else json.dumps(body).encode(), headers={'Content-Type': 'application/json', **(headers or {})})
+def call(path, body=None, headers=None, expected=200, method=None):
+    request = urllib.request.Request(base + path, data=None if body is None else json.dumps(body).encode(), headers={'Content-Type': 'application/json', **(headers or {})}, method=method)
     try:
         with urllib.request.urlopen(request, timeout=30) as response:
             status, value = response.status, json.load(response)
@@ -93,7 +93,33 @@ with (ROOT / 'artifacts/scenarios.log').open('w') as log:
         sql("INSERT INTO tenant_resource_limits(tenant,daily_ai) VALUES('workshop',1000) ON CONFLICT(tenant) DO UPDATE SET daily_ai=1000")
         stage = call('/api/environments', {'name': 'Scenario isolated shop'}, live)['id']
         headers = {**live, 'x-tenant': stage}
+        listing = call('/api/agent/scenarios', headers=headers)
+        sample = listing['configuration']['catalogue']
+        assert 0 < len(sample) <= 12 and not calls, listing
+        assert all(set(p) == {'id','name','priceMinor','stock'} and 0 < p['priceMinor'] <= 100000000 for p in sample)
+        public_sample = call('/store-api/product', {}, headers)['elements']
+        by_id = {p['id']: p for p in public_sample}
+        from decimal import Decimal, ROUND_HALF_UP
+        for product in sample:
+            source = by_id[product['id']]
+            assert product['name'] == source['name'] and product['stock'] == source['stock']
+            assert product['priceMinor'] == int((Decimal(str(source['price'])) * 100).quantize(Decimal('1'), rounding=ROUND_HALF_UP))
+        narrowed = {'id':'scenario_only_lamp','revision':0,'data':{'name':{'en-GB':'Lamp only'},'kind':'storefront','active':True,'visibility':'public','locales':['fr-FR'],'productIds':['lamp']}}
+        call('/api/automation/channels/scenario_only_lamp', {'revision':0,'data':narrowed['data']}, headers, method='PUT')
+        # Studio stays German while the selected channel serves French shoppers.
+        scoped = {**headers, 'sw-sales-channel-id':'scenario_only_lamp', 'x-commerce-locale':'de-DE'}
+        channel_configuration = call('/api/agent/scenarios', headers=scoped)['configuration']
+        assert channel_configuration['locales'] == ['fr-FR'], channel_configuration
+        channel_sample = channel_configuration['catalogue']
+        assert [p['id'] for p in channel_sample] == ['lamp'], channel_sample
+        localized = call('/store-api/product', {}, {**scoped, 'x-commerce-locale':'fr-FR'})['elements'][0]
+        assert channel_sample[0]['name'] == localized['name']
+        mcp = call('/mcp', {'jsonrpc':'2.0','id':1,'method':'tools/call','params':{'name':'merchant.scenario.list','arguments':{}}}, scoped)
+        assert mcp['result']['structuredContent']['configuration']['catalogue'] == channel_sample, mcp
+        assert not calls, 'Profile suggestions must not create an inference request or customer task'
+        print('PASS native channel-only product samples, exact prices, HTTP/MCP parity and no extra inference', flush=True)
         body = {'requestId': suffix, 'title': 'Lamp purchase', 'instruction': 'Buy one lamp within your budget.', 'inference': {'provider': 'openai'}, 'profiles': [{'id': 'budget', 'name': 'Budget shopper', 'goal': 'Buy a lamp', 'budgetMinor': 100000, 'locale': 'en-GB', 'country': 'DE'}]}
+        call('/api/agent/scenarios', body, scoped, 400)
         call('/api/agent/scenarios', body, live, 409)
         before = sql("SELECT jsonb_build_array((SELECT count(*) FROM orders WHERE tenant='workshop'),(SELECT stock FROM products WHERE tenant='workshop' AND id='lamp'))::text")
         started = call('/api/agent/scenarios', body, headers)
@@ -258,6 +284,12 @@ with (ROOT / 'artifacts/scenarios.log').open('w') as log:
         wait(expiring['requestId'], headers)
         assert sql(f"SELECT count(*) FROM orders WHERE tenant='{stage}'") == orders
         print('PASS lease expiry while waiting for the task lock prevents a late commerce commit', flush=True)
+        french = {**body, 'requestId':uuid.uuid4().hex, 'profiles':[{**body['profiles'][0], 'locale':'fr-FR'}]}
+        call('/api/agent/scenarios', french, scoped)
+        french_report = wait(french['requestId'], scoped)
+        assert french_report['runs'][0]['preview']['scenario']['outcome'] == 'purchased', french_report
+        assert int(sql(f"SELECT count(*) FROM orders WHERE tenant='{stage}'")) == int(orders)+1
+        print('PASS German Studio prepares and purchases through a French-only channel; unsupported shopper languages still reject', flush=True)
         another = call('/api/environments', {'name': 'Other scenario sandbox'}, live)['id']
         call('/api/agent/scenarios/' + suffix, headers={**headers, 'x-tenant': another}, expected=404)
         control = call('/api/agent/control', headers=live)

@@ -30,6 +30,38 @@ or a claim about the shop's actual customer demographics. No real customer data
 is needed. You may use any enabled content language for a profile; the workbench
 controls are available in English, German, French and Spanish.
 
+## Start from the selected catalogue
+
+Choose **Test customers from my catalogue** to review three editable suggestions
+before adopting them. They use a bounded sample of up to twelve visible products
+from the selected private channel, with the native localized names, stock and
+minor-unit prices. This is not a claim that the sample represents a large catalogue
+or actual customer demographics. An empty sample keeps manual profile editing available.
+
+- A price-conscious customer deliberately has one minor unit less than the sampled
+  product price, to exercise the native budget guard.
+- A first-time visitor checks product information and has a suggested 20% price
+  allowance. A second enabled content language is selected when available.
+- A focused buyer checks a different sampled price point and a second enabled
+  destination when available. Out-of-stock products stay testable.
+
+Review the names, goals, budgets and countries, then choose **Use these suggestions**.
+Your overall task stays unchanged; adopting profiles does not start a run or replace
+saved results. All profile fields remain editable before **Let customers test**.
+The suggestion preview uses no customer records and makes no additional model call.
+Studio may stay in your interface language even when the chosen channel serves a
+different language. Profiles use only that channel's enabled shopper languages;
+its type, activation and ordinary native shopper admission still apply.
+The existing AI shopper tasks make their own bounded decisions only after explicit
+start; actual checkout totals, shipping, tax, availability and exact budget enforcement
+remain native. A suggested 20% allowance is not a calculated delivery quote.
+
+A channel switch discards the previous channel's sample and edited draft. If the
+shop main language is excluded from this channel, profiles use an enabled channel
+language. Currency scales of zero, two and three digits keep their native minor units.
+The same sample is available through HTTP and MCP `merchant.scenario.list` under
+the existing private-sandbox and catalogue/order rights.
+
 ## What a comparison means
 
 Matching goals, profiles, inference selection, channel and currency are identified

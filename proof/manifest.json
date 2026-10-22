@@ -1430,6 +1430,11 @@
       "sha256": "5ddd3031d46fe91aa89bd9dc3781332e93c51a6887034df29837b7eb7e6b3056",
       "review": "Reviewed task-reference-only Flow templates, same actor and original scope checks at native save and runtime, scalar event mapping, no copied credentials or source inputs, shared stop/lease and transactional daily limits; actual private event-to-approval write, denial and zero-inference regressions plus UI scope cleanup pass. Async SQL remains outside formal proof."
     },
+    "src/agent_runs/scenarios/catalogue.rs": {
+      "status": "unproved",
+      "sha256": "ff6ee5b7a53894880ed6465882fd45eedd947fa64621435dd88aa6f93dd23764",
+      "review": "Separate native channel metadata admission from the caller interface language: preserve tenant lookup, activation, type and preview guards; existing shopper channel calls retain their explicit enabled-language check, while scenario metadata uses the actual channel locales. Verify German Studio against French-only native catalogue and purchase without extra grants or inference during preview."
+    },
     "src/agent_runs/scenarios/journey.rs": {
       "status": "unproved",
       "sha256": "07f7efe16356b111812e6e059d29adf02fdeba9662059b24c897ac51c35093d1",
@@ -1437,8 +1442,8 @@
     },
     "src/agent_runs/scenarios/mod.rs": {
       "status": "unproved",
-      "sha256": "b95db647c59b137d7860f29a450c300946c8e2e85680017509b711d4d6983e2a",
-      "review": "Customer scenarios: independent scenario_security_review completed; native signed-role, cohort, replay, injection, cancellation and post-lock lease-expiry regressions pass. Shared checkout preflight avoids nested-pool deadlock; authority is rechecked at the fenced transaction commit."
+      "sha256": "f7aee62eb535bf5adc82394c864563e31da038e0279912e525fb94c59ca5e8c6",
+      "review": "Review actual channel language intersection for fictional-profile admission and native catalogue sampling; keep shared channel visibility and enabled-language checks fail-closed, no extra scopes or customer data, no new pricing path"
     },
     "src/agent_runs/scenarios/shopper.rs": {
       "status": "unproved",
@@ -3162,8 +3167,8 @@
     },
     "src/marketing/channels.rs": {
       "status": "unproved",
-      "sha256": "b7f02eb525990486a7ecd1e8b09a4b32e052bc61acc07237261062674adfb1e5",
-      "review": "Reviewed generic tenant-scoped paid external-order/channel exchange, native exact source amounts, existing stock/customer/document/outbox ownership, app capability/FK/ID lookup boundaries and app-owned bounded seller protocols/jobs; local provider PostgreSQL replay restart isolation and UI regressions. Async provider integration remains unproved."
+      "sha256": "09ba865ca68b1b86107d3acc5844a958b92f022e8d708fb4323394d3e7435dcb",
+      "review": "Separate native channel metadata admission from the caller interface language: preserve tenant lookup, activation, type and preview guards; existing shopper channel calls retain their explicit enabled-language check, while scenario metadata uses the actual channel locales. Verify German Studio against French-only native catalogue and purchase without extra grants or inference during preview."
     },
     "src/marketing/condition_gateway.rs": {
       "status": "unproved",
