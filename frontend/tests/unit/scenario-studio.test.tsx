@@ -113,7 +113,7 @@ it("drops late results and edited profiles when the shop scope changes", async (
       <ScenarioStudio request={fresh} />
     </LocaleProvider>,
   );
-  expect(await screen.findAllByDisplayValue("FR")).toHaveLength(3);
+  expect(await screen.findAllByText("Frankreich")).toHaveLength(3);
   resolve({
     scenarios: [{ id: "foreign", title: "Other shop secret" }],
     configuration: {
@@ -127,7 +127,7 @@ it("drops late results and edited profiles when the shop scope changes", async (
   });
   await new Promise((r) => setTimeout(r, 0));
   expect(screen.queryByText("Other shop secret")).not.toBeInTheDocument();
-  expect(screen.queryByDisplayValue("DE")).not.toBeInTheDocument();
+  expect(screen.queryByText("Deutschland")).not.toBeInTheDocument();
 });
 
 it("repeats saved customer conditions and uses the selected native channel", async () => {
