@@ -6,7 +6,7 @@ import { useLegalText } from "../../shared/i18n/legal-i18n";
 import { useCrmText } from "../../shared/i18n/crm-i18n";
 import EntityHistory from "../../shared/history/EntityHistory";
 import { ContentLanguage } from "../../shared/i18n/ContentLanguage";
-import ProductEditorNav from "./ProductEditorNav";
+import ProductEditorNav, { productTabs as tabs } from "./ProductEditorNav";
 import { useEffect, useRef, useState } from "react";
 import { AppSurfaceView, useAppSurfaces } from "../../shared/apps/AppSurfaces";
 import type { RequestFn } from "../shell/studio-types";
@@ -34,8 +34,10 @@ export default function ProductEditor({
   onBack,
   onCreated,
   canWrite = true,
+  initialTab = "general",
 }: {
   canWrite?: boolean;
+  initialTab?: string;
   id: string;
   request: RequestFn;
   categories: Category[];
@@ -53,7 +55,7 @@ export default function ProductEditor({
   const [reloadIndex, setReloadIndex] = useState(0);
   const [baseline, setBaseline] = useState("");
   const [lang, setLang] = useState(locale.slice(0, 2));
-  const [tab, setTab] = useState("general");
+  const [tab, setTab] = useState(initialTab);
   const selectedApp = appTabs.find(
     (s) => tab === `app:${s.app}:${s.surface.id}`,
   );
@@ -193,19 +195,6 @@ export default function ProductEditor({
   useEffect(() => {
     if (!languageKeys.includes(lang)) setLang(languageKeys[0]);
   }, [languageKeys.join(","), lang]);
-  const tabs = [
-    "general",
-    "prices",
-    "media",
-    "variants",
-    "assignments",
-    "specs",
-    "seo",
-    "related",
-    "attachments",
-    "reviews",
-    "compliance",
-  ] as const;
   if (loading) return <p role="status">{c("loading")}</p>;
   return (
     <ContentLanguage

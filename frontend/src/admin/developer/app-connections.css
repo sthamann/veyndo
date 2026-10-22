@@ -1,0 +1,21 @@
+/* Broken manifest references stay next to a direct repair action. */
+.app-connection-issues {
+  list-style: none;
+  margin: 1rem 0;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+.app-connection-issues button {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  text-align: start;
+}
+.app-connection-issues small {
+  display: block;
+  margin-top: 0.25rem;
+  overflow-wrap: anywhere;
+  opacity: 0.75;
+}

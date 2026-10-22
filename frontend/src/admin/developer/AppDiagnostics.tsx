@@ -2,6 +2,8 @@
 import type { Manifest } from "../../shared/apps/native/types";
 import type { AppStudioKey } from "../../shared/i18n/app-studio-i18n";
 import { useAppDiagnosticText } from "./app-diagnostic-i18n";
+import "./app-connections.css";
+import { diagnoseConnections } from "./app-connections";
 import Icon from "../../shared/ui/Icon";
 export default function AppDiagnostics({
   manifest: m,
@@ -13,6 +15,7 @@ export default function AppDiagnostics({
   onAssist?: (prompt: string) => void;
 }) {
   const t = useAppDiagnosticText();
+  const issues = diagnoseConnections(m);
   const rows = [
     {
       key: "surfaces",
@@ -58,6 +61,29 @@ export default function AppDiagnostics({
           </button>
         ))}
       </div>
+      <h3>{t("connections")}</h3>
+      {issues.length ? (
+        <ul className="app-connection-issues">
+          {issues.map((issue) => (
+            <li key={`${issue.kind}:${issue.reference}`}>
+              <button
+                type="button"
+                className="studio-secondary"
+                disabled={!onNavigate}
+                onClick={() => onNavigate?.(issue.tab)}
+              >
+                <span>
+                  {t(issue.kind)}
+                  <small>{issue.reference}</small>
+                </span>
+                <Icon name="arrow" size={16} />
+              </button>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>{t("connectionsClear")}</p>
+      )}
       <ol>
         {(["sandbox", "rights", "release"] as const).map((key) => (
           <li key={key}>{t(key)}</li>

@@ -48,6 +48,13 @@
 
 ## Unreleased — shared progress in direct Flow review
 
+- Connect catalogue preparation to native saved products, explicit language progress,
+  durable image failures and direct text/media repair; reconcile image creation
+  after a language refresh without repeating provider work.
+- Add actionable app connection hints for missing views/models/actions, API/agent
+  references and commerce decision examples, linked to the existing editors.
+
+
 - Connect the direct Flow-history proposal to the existing native task progress, explicit resume/cancel and translation editor. A completed proposal job no longer hides pending approved work; reload observes the original execution without a second approval.
 - Reuse one shared task hook across Flow history and the personal workspace. Preserve current controls, task identity, tenant scope, revision fences and immediate legacy proposals; changing environments remounts the Flow editor.
 - Cover the actual rendered Flow history, permission withdrawal, explicit continuation and legacy approval; actual PostgreSQL checks confirm queued/completed history and parent-shop isolation.

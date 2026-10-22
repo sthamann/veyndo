@@ -139,3 +139,28 @@ clock under the normal product lock. Unknown or foreign categories fail the nati
 assignment check transactionally. Full product editing and creation retain their
 existing metadata contract. Agent plans validate the product shape before review
 and receive the same native guidance; approval does not waive current rights or CAS.
+
+## Preparing a catalogue together
+
+**Products → Prepare catalogue** keeps native saved products, explicit translated
+names/descriptions, the latest durable image job and current-environment visibility
+in one server-paged grid. The optional `preparation=true` projection on
+`merchant.products` / `GET /api/merchant/products` fetches only the authorized page;
+it does not scan or download all products, create a second import ledger or fetch
+image binaries. HTTP and MCP use the same contract and `catalog.read` admission.
+
+Open a text step to enter the existing product editor, or an image step to open
+its media workspace. Failed image jobs remain visible after reopening/reloading;
+review the provider configuration and explicitly start a new draft there. Successful
+or uncertain provider requests are never repeated just by opening this overview.
+A UI-language change during job creation re-reads the committed native job and
+continues progress display without a second provider POST. Scoped late responses
+cannot append media into a different product or sandbox.
+
+The language indicators count explicit non-empty name / description fields in the
+shop’s enabled languages. Missing translations may still inherit the configured
+main language. These counts are editorial guidance, not an automated content-quality
+score. **Active in this environment** is native product visibility; it does not
+claim a sandbox change has reached the live shop. Use the linked existing translation
+jobs and selected-publication workspace for those steps. Operational image/translation
+jobs and private test orders are not configuration release units.

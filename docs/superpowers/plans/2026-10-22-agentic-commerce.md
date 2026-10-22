@@ -45,7 +45,7 @@ owners execute approved simulation actions. Reports contain observations, not to
   effects, comparison, idempotency, stop/restart and tenant/role denial.
 - [x] Implement profile/step schemas, native action adapter and durable task execution.
 - [x] Reuse current model accounting and task fencing; run the affected native suites.
-- [ ] Commit the tested backend slice.
+- [x] Commit the tested backend slice (PR 195).
 
 ### Task 2: Visual simulator workspace and entry points
 
@@ -57,7 +57,7 @@ owners execute approved simulation actions. Reports contain observations, not to
 - [x] Add tests for editable profiles, progress, stop/continue, comparison and scope switch.
 - [x] Implement compact cohort cards, action timeline, baseline comparison and direct
   repair links. Persist selection via saved server runs, not secrets in local storage.
-- [ ] Verify localized responsive UI and native browser flow; commit.
+- [x] Verify localized responsive UI and native browser flow; commit (PR 195).
 
 ### Task 3: Connected catalogue and personal daily work
 
@@ -67,10 +67,10 @@ owners execute approved simulation actions. Reports contain observations, not to
 **Interfaces:** existing intake, translation/media job IDs, native products and staging;
 Task 2 receives selected private channel/work context.
 
-- [ ] Test incomplete products and failed media jobs through reload and selected release.
-- [ ] Connect source/text/image/review readiness and scoped follow-up actions in one view.
+- [x] Test incomplete products and failed media jobs through reload and selected release.
+- [x] Connect source/text/image/review readiness and scoped follow-up actions in one view.
 - [x] Connect completed work to existing Flow templates and contextual task results.
-- [ ] Run native/UI regressions and commit.
+- [x] Run native/UI regressions and commit.
 
 ### Task 4: Complete app connection diagnostics and guided functionality
 
@@ -80,9 +80,9 @@ Task 2 receives selected private channel/work context.
 configuration/order history and scenario entry point; no alternative app schema.
 
 - [x] Test one material/configuration app through native edit, cart, order and upgrade.
-- [ ] Surface missing connections with repair links and a guided test-before-release path.
+- [x] Surface missing connections with repair links and a guided test-before-release path.
 - [x] Preserve package-owned code/settings, current rights and historic order snapshots.
-- [ ] Run app and private publication regressions; commit.
+- [x] Run app and private publication regressions; commit.
 
 ### Task 5: Intent-driven shopper workspace
 
@@ -122,10 +122,10 @@ public site/README entry links and existing CI owners when affected.
 - Existing connected app/configuration, agentic cart/UCP, catalogue, staging and
   five-source migration suites passed again. Checked items above may reuse those
   owners; they do not mean a second implementation was introduced in this branch.
-- The broader per-product image/translation readiness view, its deliberate failed
-  media-job browser exercise and the expanded app diagnostic guidance are still
-  separate unfinished items. They must not be presented as completed by the new
-  simulator, or by an older public purchase.
+- The connected per-product language/image readiness projection and app reference
+  diagnostics are implemented in a separate follow-up. Native catalogue reload,
+  failed-image persistence, foreign scope and selected publication passed; Chrome
+  opened the failed-image repair path. See the same evidence document.
 - Independent critical-path review completed. Late UI selection, incomplete
   snapshot comparison, cancellation and post-lock lease-expiry findings were fixed
   and regressed. Public CI, landing and hosted simulator acceptance remain pending.

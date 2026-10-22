@@ -129,6 +129,7 @@ interface inputs {
     %limit: option<s64>,
     %low-stock: option<bool>,
     %parent-id: option<string>,
+    %preparation: option<bool>,
     %search: option<string>,
     %sort: option<string>,
   }

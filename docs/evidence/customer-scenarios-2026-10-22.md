@@ -74,3 +74,23 @@ The agent journey uses native APIs. The screenshots prove the merchant workbench
 was rendered in Chrome; they do not imply customer agents navigated a browser or
 that synthetic purchase rates predict real conversion. No real payment or mail
 delivery was performed. Public rollout and acceptance are recorded separately.
+
+## Connected catalogue and app follow-through
+
+The follow-up adds **Products → Prepare catalogue** over the same paged native
+product read, with explicit enabled-language name/description coverage, latest
+image-job state and direct native text/media editor links. Chrome verified the
+private Workshop catalogue, including an explicitly injected failed-provider
+fixture for `chair`, reopening the media tab and its retained German failure
+message. Other saved product images remained present. No paid image call was made.
+Legacy main-language source columns are counted exactly as in the native editor.
+
+![Native persisted catalogue preparation and image repair entry](../assets/customer-scenarios-20261022/catalog-preparation.png)
+
+The catalogue HTTP/PostgreSQL/MCP suite passed with failure persistence, foreign-shop
+absence, unauthorized denial and selected publication. Image UI regressions cover
+locale refresh during creation, delayed post-commit reconciliation, keeping writes
+blocked through that reconciliation, and discarded results from a previous scope.
+The app diagnostics now identify missing view/model/action references, nested calls,
+API routes and Intelligence references, with direct links to the existing editors.
+They remain draft feedback; native authorization and installation validation apply.

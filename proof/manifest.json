@@ -1932,8 +1932,8 @@
     },
     "src/assets/image_jobs.rs": {
       "status": "unproved",
-      "sha256": "96307ea1ffa762b032884c2a08e1c3bbda074efd3923198e31fedac5b3ed6b40",
-      "review": "Reviewed eighteen core findings: typed trusted identity and explicit route rights; consolidated current grants; durable auth and fenced shared limits; scoped transactions and one-backend PgBouncer including nested borrow fixes; bounded Wasm/PNG work; notified workers, savepoint quarantine and conservative retention; separate runtime roles and startup configuration. Real PostgreSQL/provider regressions preserve current tenant/customer/payment behavior. SQL/network adapters remain unproved."
+      "sha256": "124d84279ff48a521ffd41ab8088b2c366d335668f40d0a89881c67425f3488a",
+      "review": "Reviewed opt-in paged catalogue preparation: current catalogue.read and tenant-owned products, enabled-language translation flags and durable image states only; no mutation, provider retry, credential or authority widening. Failed image jobs remain inspectable after reload."
     },
     "src/assets/image_provider.rs": {
       "status": "unproved",
@@ -2322,8 +2322,8 @@
     },
     "src/capabilities/schema.rs": {
       "status": "unproved",
-      "sha256": "9773243034a8382e2841769ebdfa7efefcb4b5608638360d8640284ccf65f5b0",
-      "review": "Reviewed frozen rule comparison: tenant-filtered bounded existing Flow inputs, current compound PII read grants, native checked_matches without current-data reads or action dispatch, reference fanout cap, shared registry and HTTP/MCP parity; real automation and isolation suites pass."
+      "sha256": "3507f7cd4014f3b53673627bf65567baf5aa3d8d218f93db4b2b8cedddb332d5",
+      "review": "Reviewed opt-in paged catalogue preparation: current catalogue.read and tenant-owned products, enabled-language translation flags and durable image states only; no mutation, provider retry, credential or authority widening. Failed image jobs remain inspectable after reload."
     },
     "src/capabilities.rs": {
       "status": "unproved",
@@ -2672,8 +2672,8 @@
     },
     "src/commerce/mod.rs": {
       "status": "unproved",
-      "sha256": "d388a7f05a3558a2812d0c55785dd7dcfbbf6cbaba320fb8493f93d5c25c4497",
-      "review": "Reviewed native category-only product expansion: explicit bounded shape, original aggregate/content CAS retained through native product lock, no commerce or channel write, tenant-owned category assignment and unchanged native rights; pre-review full-product deserialization. Reproduced public Invalid product metadata through old-binary HTTP, replacement preserves metadata and denies stale/mixed/foreign writes. No extracted business predicate changed."
+      "sha256": "9c5e1fab1d034528fa2c846af1156cc07b829097e3e192ff32ea363e2f695d1b",
+      "review": "Reviewed opt-in paged catalogue preparation: current catalogue.read and tenant-owned products, enabled-language translation flags and durable image states only; no mutation, provider retry, credential or authority widening. Failed image jobs remain inspectable after reload."
     },
     "src/commerce/order_fields.rs": {
       "status": "unproved",
@@ -2697,8 +2697,8 @@
     },
     "src/commerce/product_admin.rs": {
       "status": "unproved",
-      "sha256": "90c3d618abe42cc91e624090eaef93100ebe4f5640c2d1a589378a380a7034bf",
-      "review": "Reviewed native extension identity/private/unique anchors and current read/write/PII scopes; native projections use bounded fixed-store queries, exact indexed filters bind all input and fence the admitted package digest. Real four-object HTTP/MCP, role revocation, foreign reference, immutable upgrade, product/company clone and selected release tests passed. Added extracted configuration-only release predicate and operational false property; SQL and UI remain explicitly unproved. Reviewed canonical schema, preserved AI bindings and versioned grid prompt provenance without changing existing prompt revisions."
+      "sha256": "b990fe464a13aec0ccc39f4e36e7419acb0acbd084b2d793ae15e2cee0ab35f7",
+      "review": "Reviewed bounded read-only catalogue preparation with native editor main-language fallback for legacy source columns; current tenant/catalogue admission and exact page bound retained. Retain failed image jobs for explicit recovery, with no provider retry or state mutation from reads."
     },
     "src/commerce/product_channels.rs": {
       "status": "unproved",
@@ -2734,6 +2734,11 @@
       "status": "unproved",
       "sha256": "71dbafddab190a012c43fc3acfbc2a91018722245f02c7418ceea05b04540824",
       "review": "Codex source review 2026-10-16: native catalogue intake CSV/HTTPS/model preparation and explicit stage-only creation reuse current permissions, stable IDs, locked settings CAS, product/history/outbox and bounded image jobs; native catalog_management, durable_agents and image_jobs checks recorded for this branch. Connected guardrail UI keeps the extracted pricing/autonomy predicates unchanged; authorized paged commerce policy read and merchant instructions verified by users, knowledge_workspace and providers plus 192 Rust tests. All changed transport/SQL/provider adapters remain unproved; no new formal correctness claim."
+    },
+    "src/commerce/product_preparation.rs": {
+      "status": "unproved",
+      "sha256": "a555a308bafdb93e8087a3ff6c2eeb7eecc03eac6a28f0b45277e1213aae495e",
+      "review": "Reviewed bounded read-only catalogue preparation with native editor main-language fallback for legacy source columns; current tenant/catalogue admission and exact page bound retained. Retain failed image jobs for explicit recovery, with no provider retry or state mutation from reads."
     },
     "src/commerce/review_import.rs": {
       "status": "unproved",

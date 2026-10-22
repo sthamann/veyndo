@@ -1,6 +1,54 @@
 /** Actionable package review vocabulary distinguishes declarations, runtime checks and publication. */
 import { useLocale } from "../../shared/i18n/i18n";
 const words = {
+  connections: [
+    "Connections to finish",
+    "Offene Verbindungen",
+    "Connexions à terminer",
+    "Conexiones pendientes",
+  ],
+  viewMissing: [
+    "Placement points to a missing view",
+    "Einbauort verweist auf eine fehlende Ansicht",
+    "Vue d’emplacement absente",
+    "Falta la vista de la ubicación",
+  ],
+  modelMissing: [
+    "Block points to a missing data model",
+    "Baustein verweist auf ein fehlendes Datenmodell",
+    "Modèle du bloc absent",
+    "Falta el modelo del bloque",
+  ],
+  actionMissing: [
+    "Referenced action is not declared",
+    "Verwendete Aktion ist nicht definiert",
+    "Action référencée non déclarée",
+    "Acción referenciada sin declarar",
+  ],
+  relationMissing: [
+    "Related data model is missing",
+    "Verknüpftes Datenmodell fehlt",
+    "Modèle lié absent",
+    "Falta el modelo relacionado",
+  ],
+  agentUnavailable: [
+    "Agent tool is missing or not explicitly enabled",
+    "Agenten-Tool fehlt oder ist nicht ausdrücklich freigegeben",
+    "Outil agent absent ou non activé",
+    "Herramienta de agente ausente o sin activar",
+  ],
+  examplesMissing: [
+    "Add examples for commerce decisions",
+    "Beispiele für Commerce-Entscheidungen ergänzen",
+    "Ajouter des exemples de décisions commerce",
+    "Añadir ejemplos de decisiones comerciales",
+  ],
+  connectionsClear: [
+    "No broken references found in this draft. Test the installed version next.",
+    "In diesem Entwurf wurden keine ungültigen Verweise gefunden. Teste als Nächstes die installierte Version.",
+    "Aucune référence rompue trouvée. Testez ensuite la version installée.",
+    "No se encontraron referencias rotas. Prueba ahora la versión instalada.",
+  ],
   title: [
     "Before publishing",
     "Vor dem Veröffentlichen",

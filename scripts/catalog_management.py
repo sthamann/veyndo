@@ -40,6 +40,14 @@ req('/api/merchant/products',draft,merchant,expected=409)
 assert len(req('/api/merchant/products?search='+draft['catalog']['productNumber'],h=merchant)['elements'])==1
 assert req('/api/merchant/products?limit=101',h=merchant,expected=400)
 first=req('/api/merchant/products?limit=2',h=merchant);second=req('/api/merchant/products?limit=2&after='+first['nextCursor'],h=merchant);assert not set(p['id'] for p in first['elements'])&set(p['id'] for p in second['elements']);check('server search, bounded filtering and cursor pagination work without duplicates')
+legacy=next(p for p in req('/api/merchant/products?preparation=true',h=merchant)['elements'] if p['id']=='chair')
+assert 'en-GB' in legacy['preparation']['namedLocales']
+prepared=req('/api/merchant/products?preparation=true&search='+draft['catalog']['productNumber'],h=merchant)['elements'][0]['preparation']
+assert prepared['imageJob'] is None and prepared['namedLocales'] and prepared['describedLocales']
+assert 'preparation' not in first['elements'][0]
+check('bounded catalogue preparation projects saved translations and durable image state only when requested')
+from testing.catalog_preparation_checks import check_preparation
+check_preparation(req,merchant,pid,draft['catalog']['productNumber'])
 nav=req('/store-api/navigation',{},h={'x-commerce-locale':'de-DE'})['elements'];assert any(c['id']==child and c['name']=='Child-de' for c in nav) and not any(c['id']==foreign for c in nav)
 listing=req('/store-api/product',{'categoryId':parent})['elements'];assert pid in [p['id'] for p in listing];check('translated public navigation and parent listings include child-category products')
 req('/store-api/product',{'categoryId':foreign},expected=404)
@@ -97,6 +105,7 @@ w2=req('/api/auth/register',{'workspaceId':'catalog-other-'+suffix,'workspaceNam
 other={'x-tenant':w2['workspace'],'Authorization':'Bearer '+w2['token']};
 foreign_variant=copy.deepcopy(variant);foreign_variant['catalog'].update({'categoryIds':[],'productNumber':'FOREIGN-'+suffix});req('/api/merchant/products',foreign_variant,other,expected=400);
 req('/api/merchant/products/'+pid,h=other,expected=404)
+assert not req('/api/merchant/products?preparation=true&search='+draft['catalog']['productNumber'],h=other)['elements']
 invalid=copy.deepcopy(draft);invalid['catalog']['productNumber']='OTHER';req('/api/merchant/products',invalid,other,expected=400);check('tenant boundary protects product reads and category assignments')
 stage=req('/api/environments',{'name':'Catalog staging'},merchant)['id'];sh={**merchant,'x-tenant':stage}
 assert any(c['id']==child for c in req('/api/merchant/categories',h=sh)['elements'])

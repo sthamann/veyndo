@@ -1,7 +1,8 @@
 /** Optional image-provider jobs create private previews; applying a reviewed image is explicit and revision checked. */
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useWorkspaceText } from "../../shared/i18n/workspace-i18n";
 import type { RequestFn } from "../shell/studio-types";
+import { useImageJob } from "./useImageJob";
 import type { GalleryImage } from "./media-model";
 export default function AiImageStudio({
   productId,
@@ -20,16 +21,16 @@ export default function AiImageStudio({
 }) {
   const { w } = useWorkspaceText();
   const [configured, setConfigured] = useState(false),
-    [prompt, setPrompt] = useState(""),
-    [job, setJob] = useState<any>(),
-    [busy, setBusy] = useState(false),
-    [error, setError] = useState("");
-  const current = useRef(request);
-  current.current = request;
+    [prompt, setPrompt] = useState("");
+  const { job, busy, error, start, apply } = useImageJob(
+    request,
+    productId,
+    w("imageFailed"),
+  );
   useEffect(() => {
     let active = true;
-    current
-      .current("/api/merchant/media/provider")
+    setConfigured(false);
+    request("/api/merchant/media/provider")
       .then((v) => {
         if (active) setConfigured(v.configured);
       })
@@ -37,65 +38,14 @@ export default function AiImageStudio({
     return () => {
       active = false;
     };
-  }, []);
-  useEffect(() => {
-    let active = true;
-    setJob(undefined);
-    current
-      .current(`/api/merchant/products/${productId}/media/jobs`)
-      .then(async (v) => {
-        const latest = v.jobs?.[0];
-        if (latest) {
-          const detail = await current.current(
-            `/api/merchant/media/jobs/${latest.id}`,
-          );
-          if (active) setJob(detail);
-        }
-      })
-      .catch(() => {});
-    return () => {
-      active = false;
-    };
-  }, [productId]);
-  useEffect(() => {
-    if (!job || !["queued", "processing"].includes(job.state)) return;
-    let active = true;
-    const timer = setInterval(() => {
-      current
-        .current(`/api/merchant/media/jobs/${job.id}`)
-        .then((v) => {
-          if (active) {
-            setJob(v);
-            if (v.state === "failed") setError(w("imageFailed"));
-          }
-        })
-        .catch((e) => {
-          if (active) setError(e.message);
-        });
-    }, 2000);
-    return () => {
-      active = false;
-      clearInterval(timer);
-    };
-  }, [job?.id, job?.state]);
-  const start = async (mode: string) => {
-    setBusy(true);
-    setError("");
-    try {
-      setJob(
-        await request(`/api/merchant/products/${productId}/media/jobs`, {
-          prompt,
-          mode,
-          sourceId: mode === "optimize" ? sourceId : null,
-          revision,
-        }),
-      );
-    } catch (e) {
-      setError((e as Error).message);
-    } finally {
-      setBusy(false);
-    }
-  };
+  }, [request]);
+  const create = (mode: string) =>
+    start({
+      prompt,
+      mode,
+      sourceId: mode === "optimize" ? sourceId : null,
+      revision,
+    });
   const waiting = job && ["queued", "processing"].includes(job.state);
   return (
     <details className="media-ai-studio">
@@ -119,7 +69,7 @@ export default function AiImageStudio({
           disabled={
             !configured || busy || waiting || disabled || !prompt.trim()
           }
-          onClick={() => void start("generate")}
+          onClick={() => void create("generate")}
         >
           {w("generate")}
         </button>
@@ -134,7 +84,7 @@ export default function AiImageStudio({
             disabled ||
             !prompt.trim()
           }
-          onClick={() => void start("optimize")}
+          onClick={() => void create("optimize")}
         >
           {w("optimize")}
         </button>
@@ -148,21 +98,7 @@ export default function AiImageStudio({
             type="button"
             className="studio-primary"
             disabled={busy || disabled}
-            onClick={async () => {
-              setBusy(true);
-              try {
-                const v = await request(
-                  `/api/merchant/media/jobs/${job.id}/apply`,
-                  { revision },
-                );
-                onImage(v);
-                setJob(undefined);
-              } catch (e) {
-                setError((e as Error).message);
-              } finally {
-                setBusy(false);
-              }
-            }}
+            onClick={() => void apply(revision, onImage)}
           >
             {w("applyImage")}
           </button>

@@ -94,6 +94,7 @@ pub(crate) fn input(name: &str) -> Value {
         }
         "merchant.products" => {
             let mut p = operations::grid_fields("products").unwrap();
+            p["preparation"] = json!({"type":"boolean"});
             p["after"] = json!({"type":"string"});
             p["limit"] = json!({"type":"integer","minimum":1,"maximum":100});
             p

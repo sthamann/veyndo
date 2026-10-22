@@ -45,7 +45,9 @@ one to six editable fictional profiles, bounded concurrent native shopping,
 exact budgets, saved observations, resume/stop and before/after comparison.
 Designer, installed sandbox apps and migration targets open the same workbench.
 [Usage and exact scope](customer-scenarios.md). This entry is not a public deployment
-claim; the release and public check are still pending.
+claim; the release and public check are still pending. The connected catalogue
+preparation grid and actionable app-reference diagnostics are also verified locally
+and awaiting that delivery; [details and browser evidence](evidence/customer-scenarios-2026-10-22.md#connected-catalogue-and-app-follow-through).
 
 ## Public acceptance
 
