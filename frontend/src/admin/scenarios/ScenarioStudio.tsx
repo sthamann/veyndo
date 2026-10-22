@@ -6,6 +6,7 @@ import Icon from "../../shared/ui/Icon";
 import { useScenarioText } from "./scenario-i18n";
 import { canTestCustomers } from "./scenario-access";
 import ScenarioProfiles from "./ScenarioProfiles";
+import ScenarioSuggestions from "./ScenarioSuggestions";
 import ScenarioReport from "./ScenarioReport";
 import ScenarioComparison from "./ScenarioComparison";
 import type {
@@ -78,7 +79,9 @@ export default function ScenarioStudio({
             name: t(`${id}Name`),
             goal: t(`${id}Goal`),
             budgetMinor: 300 * 10 ** c.scale,
-            locale: c.mainLocale,
+            locale: c.locales.includes(c.mainLocale)
+              ? c.mainLocale
+              : (c.locales[0] ?? ""),
             country: c.countries[0] ?? "",
           })),
         );
@@ -259,6 +262,11 @@ export default function ScenarioStudio({
           </label>
           {config && (
             <>
+              <ScenarioSuggestions
+                config={config}
+                onApply={setProfiles}
+                disabled={busy}
+              />
               <ScenarioProfiles
                 profiles={profiles}
                 config={config}

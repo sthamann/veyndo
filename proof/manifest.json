@@ -1430,6 +1430,11 @@
       "sha256": "5ddd3031d46fe91aa89bd9dc3781332e93c51a6887034df29837b7eb7e6b3056",
       "review": "Reviewed task-reference-only Flow templates, same actor and original scope checks at native save and runtime, scalar event mapping, no copied credentials or source inputs, shared stop/lease and transactional daily limits; actual private event-to-approval write, denial and zero-inference regressions plus UI scope cleanup pass. Async SQL remains outside formal proof."
     },
+    "src/agent_runs/scenarios/catalogue.rs": {
+      "status": "unproved",
+      "sha256": "dad27f214654005a392bcb52e8d64af03626c2dc4b776251cacdf872097ba469",
+      "review": "Review bounded scenario catalogue projection: current private/channel admission, native pricing and locale fallback, positive field projection, no customer data, inference or state mutation; existing native shopper/task guards unchanged"
+    },
     "src/agent_runs/scenarios/journey.rs": {
       "status": "unproved",
       "sha256": "07f7efe16356b111812e6e059d29adf02fdeba9662059b24c897ac51c35093d1",
@@ -1437,8 +1442,8 @@
     },
     "src/agent_runs/scenarios/mod.rs": {
       "status": "unproved",
-      "sha256": "b95db647c59b137d7860f29a450c300946c8e2e85680017509b711d4d6983e2a",
-      "review": "Customer scenarios: independent scenario_security_review completed; native signed-role, cohort, replay, injection, cancellation and post-lock lease-expiry regressions pass. Shared checkout preflight avoids nested-pool deadlock; authority is rechecked at the fenced transaction commit."
+      "sha256": "eaec4c8a154e71ab06e1bd5b311a009417eb1075204d3eafb8d4d877daec1b6e",
+      "review": "Review bounded scenario catalogue projection: current private/channel admission, native pricing and locale fallback, positive field projection, no customer data, inference or state mutation; existing native shopper/task guards unchanged"
     },
     "src/agent_runs/scenarios/shopper.rs": {
       "status": "unproved",

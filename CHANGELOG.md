@@ -1,5 +1,11 @@
 # Changelog
 
+## Catalogue-based fictional customer drafts — 22 October 2026
+
+- Preview three editable customer profiles from a bounded native channel catalogue: exact-budget refusal, product-information review and a second available destination/language.
+- Keep the merchant brief, saved runs and explicit start separate from profile adoption. Sample only visible channel products with positive projections, native currency conversion and enabled-language fallback; no customer data or extra inference.
+- Reuse the existing private scenario HTTP/MCP contract and durable shopper tasks. Retain current rights, tenant/channel isolation, cancellation, replay and simulated checkout owners.
+
 ## Current documentation entry points — 22 October 2026
 
 - Align the README, feature/app/knowledge/workspace guides and machine-readable index with the publicly accepted customer simulator, catalogue preparation, app diagnostics and visual shopping.

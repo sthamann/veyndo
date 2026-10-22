@@ -198,3 +198,26 @@
   margin: 16px 0;
   background: var(--studio-panel, #fff);
 }
+.scenario-suggestions {
+  margin: 1rem 0;
+}
+.scenario-suggestion-preview {
+  margin-top: 0.75rem;
+  padding: 1rem;
+  border: 1px solid var(--border, #d6e2ef);
+  border-radius: 1rem;
+  background: var(--panel, #fff);
+}
+.scenario-suggestion-preview .scenario-profiles {
+  margin-bottom: 1rem;
+}
+.scenario-suggestion-preview article {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 0;
+}
+.scenario-suggestion-preview article > span {
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}

@@ -412,3 +412,19 @@ native input with synthetic contacts and no user manual test.
 ![Original embedded receipt after the final Experience restart](../assets/customer-scenarios-20261022/public-restarted-storyfront-receipt.png)
 
 ![Original empty bag after the final Experience restart and reload](../assets/customer-scenarios-20261022/public-restarted-storyfront-empty.png)
+
+## Catalogue-based profile drafts: local follow-up
+
+The follow-up adds a reviewed profile preview to the existing customer workbench.
+Native HTTP/PostgreSQL verification checks the bounded product sample against the
+actual public catalogue projection, restricts a second channel to one lamp, verifies
+HTTP/MCP equality and confirms zero model requests during suggestion preparation.
+The existing suite also repeats simulated purchases, exact-budget refusal, stock
+failure/repair, cold restart after a lost checkout acknowledgement, permission
+withdrawal and cancellation/lease expiry during native lock waits.
+
+The new field projection has separate Rust checks for allowed fields, bounded size,
+wrong currency, invalid prices and zero/two/three-digit scales. UI regressions cover
+preview-before-adoption, retained merchant brief, explicit start, channel replacement,
+empty samples and enabled-language fallback. Public deployment of this follow-up
+remains separate from the earlier accepted release above until recorded here.

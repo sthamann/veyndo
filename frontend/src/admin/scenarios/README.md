@@ -5,7 +5,9 @@ Consumes Studio scope and the registered scenario/task API; it owns no commerce,
 identity, inference or publication logic. Reports contain fictional profiles and
 native observations, never provider credentials or cart capabilities.
 
-`ScenarioStudio` coordinates scoped requests; `ScenarioReport` renders evidence;
+`ScenarioStudio` coordinates scoped requests; `ScenarioSuggestions` previews
+bounded native catalogue-derived fictional profiles before explicit adoption,
+without customer records, inference, auto-start or a second executor; `ScenarioReport` renders evidence;
 `scenario-types` defines safe projections; `scenario-i18n` supplies EN/DE/FR/ES;
 `scenarios.css` owns responsive presentation. Browser coverage and conversion
 predictions must not be inferred from these API journeys.

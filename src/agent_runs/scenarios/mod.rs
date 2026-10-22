@@ -1,5 +1,6 @@
 //! Fictional shopper cohorts reuse native task authority, checkpoints and private commerce operations.
 use super::*;
+mod catalogue;
 mod journey;
 mod shopper;
 pub(super) use journey::execute;
@@ -172,8 +173,25 @@ pub(crate) async fn invoke(a: &App, h: &RequestContext, name: &str, v: &Value) -
         }
         let (settings, _) = commerce::scoped_config(a, &t, marketing::channel_id(h)).await?;
         let currency = settings.currencies.selected("")?;
+        let sample_locale = settings
+            .locales
+            .iter()
+            .find(|l| *l == &settings.main_locale)
+            .or_else(|| settings.locales.first())
+            .ok_or(bad(
+                "Enable a channel language before preparing test customers",
+            ))?;
+        let catalogue = catalogue::sample(
+            a,
+            &t,
+            marketing::channel_id(h),
+            sample_locale,
+            &currency.code,
+            currency.scale,
+        )
+        .await?;
         return Ok(
-            json!({"scenarios":items,"configuration":{"channel":marketing::channel_id(h),"mainLocale":settings.main_locale,"locales":settings.locales,"countries":settings.countries,"currency":currency.code,"scale":currency.scale}}),
+            json!({"scenarios":items,"configuration":{"channel":marketing::channel_id(h),"mainLocale":settings.main_locale,"locales":settings.locales,"countries":settings.countries,"currency":currency.code,"scale":currency.scale,"catalogue":catalogue}}),
         );
     }
     if rows.is_empty() {

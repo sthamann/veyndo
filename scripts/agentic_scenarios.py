@@ -56,8 +56,8 @@ with socket.socket() as probe:
 env.update(DB_POOL_MAX='4' if env.get('DATABASE_TENANT_URL') else '2', DB_POOL_MIN='0', OPENAI_API_KEY='synthetic-scenario-provider', OPENAI_BASE_URL=f'http://127.0.0.1:{provider.server_address[1]}/v1', PROCESS_ROLE='all', BIND_ADDR=base.removeprefix('http://'), BOOTSTRAP_MODE='serve')
 
 
-def call(path, body=None, headers=None, expected=200):
-    request = urllib.request.Request(base + path, data=None if body is None else json.dumps(body).encode(), headers={'Content-Type': 'application/json', **(headers or {})})
+def call(path, body=None, headers=None, expected=200, method=None):
+    request = urllib.request.Request(base + path, data=None if body is None else json.dumps(body).encode(), headers={'Content-Type': 'application/json', **(headers or {})}, method=method)
     try:
         with urllib.request.urlopen(request, timeout=30) as response:
             status, value = response.status, json.load(response)
@@ -93,6 +93,26 @@ with (ROOT / 'artifacts/scenarios.log').open('w') as log:
         sql("INSERT INTO tenant_resource_limits(tenant,daily_ai) VALUES('workshop',1000) ON CONFLICT(tenant) DO UPDATE SET daily_ai=1000")
         stage = call('/api/environments', {'name': 'Scenario isolated shop'}, live)['id']
         headers = {**live, 'x-tenant': stage}
+        listing = call('/api/agent/scenarios', headers=headers)
+        sample = listing['configuration']['catalogue']
+        assert 0 < len(sample) <= 12 and not calls, listing
+        assert all(set(p) == {'id','name','priceMinor','stock'} and 0 < p['priceMinor'] <= 100000000 for p in sample)
+        public_sample = call('/store-api/product', {}, headers)['elements']
+        by_id = {p['id']: p for p in public_sample}
+        from decimal import Decimal, ROUND_HALF_UP
+        for product in sample:
+            source = by_id[product['id']]
+            assert product['name'] == source['name'] and product['stock'] == source['stock']
+            assert product['priceMinor'] == int((Decimal(str(source['price'])) * 100).quantize(Decimal('1'), rounding=ROUND_HALF_UP))
+        narrowed = {'id':'scenario_only_lamp','revision':0,'data':{'name':{'en-GB':'Lamp only'},'kind':'storefront','active':True,'visibility':'public','locales':['en-GB'],'productIds':['lamp']}}
+        call('/api/automation/channels/scenario_only_lamp', {'revision':0,'data':narrowed['data']}, headers, method='PUT')
+        scoped = {**headers, 'sw-sales-channel-id':'scenario_only_lamp'}
+        channel_sample = call('/api/agent/scenarios', headers=scoped)['configuration']['catalogue']
+        assert [p['id'] for p in channel_sample] == ['lamp'], channel_sample
+        mcp = call('/mcp', {'jsonrpc':'2.0','id':1,'method':'tools/call','params':{'name':'merchant.scenario.list','arguments':{}}}, scoped)
+        assert mcp['result']['structuredContent']['configuration']['catalogue'] == channel_sample, mcp
+        assert not calls, 'Profile suggestions must not create an inference request or customer task'
+        print('PASS native channel-only product samples, exact prices, HTTP/MCP parity and no extra inference', flush=True)
         body = {'requestId': suffix, 'title': 'Lamp purchase', 'instruction': 'Buy one lamp within your budget.', 'inference': {'provider': 'openai'}, 'profiles': [{'id': 'budget', 'name': 'Budget shopper', 'goal': 'Buy a lamp', 'budgetMinor': 100000, 'locale': 'en-GB', 'country': 'DE'}]}
         call('/api/agent/scenarios', body, live, 409)
         before = sql("SELECT jsonb_build_array((SELECT count(*) FROM orders WHERE tenant='workshop'),(SELECT stock FROM products WHERE tenant='workshop' AND id='lamp'))::text")
