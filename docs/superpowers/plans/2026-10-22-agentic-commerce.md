@@ -129,4 +129,7 @@ public site/README entry links and existing CI owners when affected.
   opened the failed-image repair path. See the same evidence document.
 - Independent critical-path review completed. Late UI selection, incomplete
   snapshot comparison, cancellation and post-lock lease-expiry findings were fixed
-  and regressed. Public CI, landing and hosted simulator acceptance remain pending.
+  and regressed. PR 195 passed complete CI, merged and was deployed; hosted
+  stock-failure/repair, exact-budget rejection, two purchases, saved comparison
+  and original embedded checkout passed. The connected catalogue/app and visual
+  shopper follow-ups are consolidated in PR 199 for one final rollout.
