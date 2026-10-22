@@ -258,3 +258,16 @@ including its actual database/provider suites and coverage gates. Its delivery
 is consolidated with visual shopping in PR 199 rather than landing intermediate
 release branches separately. The shared runtime tree at `db6acdb4` is identical
 to the built source `aa1dd115`; only merge ancestry changed.
+
+
+### Readable profile destinations
+
+A presentation follow-up uses localized locale names and the shared searchable
+country picker, while retaining the native channel's exact allowed codes. Its
+**811 frontend tests across 139 files** passed, including destination search,
+original payloads, exclusion of unavailable countries and prior-scope dismissal.
+Local Chrome selected the German profile language and searched Germany by name
+and by ISO alias. At 390 × 844, the document and cards stayed at 390 px / 358 px;
+the expanded picker stayed between x=37 and x=353. Device emulation was cleared.
+
+![Contained mobile country search](../assets/customer-scenarios-20261022/scenario-country-mobile.png)
