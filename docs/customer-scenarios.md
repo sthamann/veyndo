@@ -12,9 +12,10 @@ happens in native search, the basket and simulated checkout.
    design**, the current App Studio sandbox, or a migration's private target.
 3. Describe a concrete goal, for example: “Find a desk lamp, read its product
    information and buy only if the final price fits your budget.”
-4. Edit one to six customer profiles. The initial profiles are a budget buyer, a
-   first-time visitor and a focused buyer. Their goals are editable; languages,
-   countries and currency come from the selected shop channel.
+4. Choose **Test customers from my catalogue**, review the three suggestions and
+   adopt them, or edit the initial profiles manually. Keep one to six customers;
+   their names, goals and budgets remain editable. Languages, countries and currency
+   come from the selected shop channel.
 5. Start the test. Up to two customers progress concurrently. Each gets its own
    native basket, bounded model calls and a saved action journal.
 6. Inspect the results. A purchase has a real **private, simulated order ID** and
@@ -39,15 +40,19 @@ minor-unit prices. This is not a claim that the sample represents a large catalo
 or actual customer demographics. An empty sample keeps manual profile editing available.
 
 - A price-conscious customer deliberately has one minor unit less than the sampled
-  product price, to exercise the native budget guard.
+  product price, with a minimum budget of one minor unit, to exercise the native
+  budget guard where the product price permits it.
 - A first-time visitor checks product information and has a suggested 20% price
   allowance. A second enabled content language is selected when available.
-- A focused buyer checks a different sampled price point and a second enabled
+- A focused buyer checks the highest sampled price point and a second enabled
   destination when available. Out-of-stock products stay testable.
 
 Review the names, goals, budgets and countries, then choose **Use these suggestions**.
 Your overall task stays unchanged; adopting profiles does not start a run or replace
 saved results. All profile fields remain editable before **Let customers test**.
+
+![Actual public Studio: preview catalogue-based fictional customers before adopting them](assets/customer-scenarios-20261022/public-profile-suggestions-preview.png)
+
 The suggestion preview uses no customer records and makes no additional model call.
 Studio may stay in your interface language even when the chosen channel serves a
 different language. Profiles use only that channel's enabled shopper languages;
@@ -61,6 +66,15 @@ shop main language is excluded from this channel, profiles use an enabled channe
 language. Currency scales of zero, two and three digits keep their native minor units.
 The same sample is available through HTTP and MCP `merchant.scenario.list` under
 the existing private-sandbox and catalogue/order rights.
+
+In the public 22 October acceptance, a German Studio prepared a French-only
+notebook channel. The EUR 28.89 profile declined the EUR 28.90 notebook; the two
+EUR 34.68 profiles completed native simulated orders for Germany (EUR 28.90) and
+Austria (EUR 29.14). Reload retained both orders and their journals; **Use these
+customers again** restored the exact original task and profiles without starting
+another purchase. [Exact deployment and browser evidence](evidence/customer-scenarios-2026-10-22.md#public-catalogue-profile-acceptance).
+
+![Actual configured-model decisions and authoritative private order totals](assets/customer-scenarios-20261022/public-profile-suggestions-results.png)
 
 ## What a comparison means
 

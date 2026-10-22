@@ -38,10 +38,10 @@ public acceptance are recorded separately.
 | **Shape the shop** | Design standard storefront pages on the actual preview; use original Storyfront for connected Experiences. [Visual design](docs/personal-workspace-and-shop-design.md). |
 | **Automate the work** | Repeat reviewed work as a Flow and compare rule drafts with recorded order inputs before saving. [Automation](docs/automation.md), [reusable work](docs/personal-workspace-and-shop-design.md#repeat-completed-work-as-a-flow), [rule comparison](docs/rule-history-comparison.md). |
 | **Shop by intent** | Describe a gift, budget or comparison; edit the visual selection with real product cards, then use native variants, app configuration and checkout. [Shopper workspace](docs/ui-experience.md#standard-storefront-and-customer-account). |
-| **Test before release** | Let a small group of fictional customers try native search, baskets and simulated purchases in a private shop; compare saved runs and inspect the actual failures. [Customer simulator](docs/customer-scenarios.md). |
+| **Test before release** | Preview editable fictional customers from the selected catalogue, adjust their goals and budgets, then let them try native search, baskets and simulated purchases in a private shop. Compare saved runs and inspect actual failures. [Customer simulator](docs/customer-scenarios.md). |
 | **Stay in control** | Current roles, private sandboxes, immutable versions and selected publication govern changes. [Security](docs/security.md). |
 
-[![Veyndo Studio: actual private customer-agent comparison before and after restoring product stock, 22 October 2026](docs/assets/customer-scenarios-20261022/public-purchases-comparison.png)](docs/customer-scenarios.md)
+[![Actual public Veyndo Studio: a budget refusal and two completed private purchases in a French-only channel, 22 October 2026](docs/assets/customer-scenarios-20261022/public-profile-suggestions-results.png)](docs/customer-scenarios.md)
 
 Screenshots use synthetic shops; payments are simulated. Recordings retain their
 capture dates and are edited for readability, not performance measurements.

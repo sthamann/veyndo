@@ -5,6 +5,8 @@
 - Preview three editable customer profiles from a bounded native channel catalogue: exact-budget refusal, product-information review and a second available destination/language.
 - Keep the merchant brief, saved runs and explicit start separate from profile adoption. Sample only visible channel products with positive projections, native currency conversion and enabled-language fallback; no customer data or extra inference.
 - Reuse the existing private scenario HTTP/MCP contract and durable shopper tasks. Retain current rights, tenant/channel isolation, cancellation, replay and simulated checkout owners.
+- Separate protected channel configuration reads from shopper-language admission: a German Studio can prepare a French-only channel, while actual native shopper requests still require an enabled language.
+- Accept the public configured-model journey with a one-cent-under-budget refusal and two native private purchases for Germany/Austria. Preserve reload/reuse, French stored names, mobile screenshots and exact runtime provenance in the published guide.
 
 ## Current documentation entry points — 22 October 2026
 

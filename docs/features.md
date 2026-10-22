@@ -10,6 +10,11 @@ handoff and remembered merchant-guidance workflow. [Current status](status.md).
 [editable visual shopper selections](ui-experience.md#standard-storefront-and-customer-account)
 are online. [Public screenshots and completed purchases](evidence/customer-scenarios-2026-10-22.md#public-acceptance-after-the-final-rollout).
 
+**Catalogue-based test customers:** preview three editable fictional profiles from
+the selected private channel before starting a run. The public German-Studio /
+French-channel test produced an exact-budget refusal and two native simulated
+purchases with different destination totals. [Illustrated steps](customer-scenarios.md#start-from-the-selected-catalogue).
+
 **Personal workspace and standard-shop editor:** [Illustrated workflow, shared models, rights, history, forms and publication](personal-workspace-and-shop-design.md).
 
 **Admin workflow update:** grouped/searchable settings, native CRM creation and reviewed manual orders use the same Rust owners and current role/PII checks. [Step-by-step guide and current boundaries](admin-workflows.md).
