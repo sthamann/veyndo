@@ -100,6 +100,33 @@ payment into a new charge or treat a B2B approval as an ordinary imported field.
 for the same final stock. Each admitted sale has one order and one native downstream
 effect; replays stay idempotent and failures cannot oversell or invent payment capture.
 
+## 6. Return useful release feedback sooner
+
+**Developer task:** find a broken UI test quickly while the complete Rust and
+database checks continue, then promote the already built immutable runtime image.
+
+The current workflow runs compilation, formal mutations, frontend verification and
+native integration sequentially. In PR #193, formal mutation checks took 5m08 and
+frontend verification 4m01 before native integration started. These are observed
+step durations, not a projected speedup.
+
+A further bounded Claude review proposed separate Rust, frontend and integration
+jobs. Start with the smaller safe split: cheap source/scope admission, then frontend
+in parallel with the existing Rust/formal/native lane. Rust unit and HTTP integration
+coverage currently depend on the same instrumented binaries and environment; do not
+separate them without an explicit matching binary/profile/toolchain artifact contract.
+Keep the existing conservative docs/frontend/full classification and a required
+aggregate that rejects failed, cancelled or unexpectedly skipped required lanes.
+
+Keep database fixtures and coverage profiles fresh. Retain authorization, privacy,
+revocation, payment replay and stock checks as required work. Publish per-lane coverage
+artifacts and combine their actual reports before enforcing the existing floors.
+Do not cache business state or weaken branch protection to obtain a faster green run.
+
+**Acceptance:** the same changed source and deliberately broken UI/privacy cases
+produce the same final verdict; the UI failure appears independently of Rust's
+duration. Measure total wall time and runner consumption before claiming improvement.
+
 ## Suggested order
 
 Complete the connected catalogue progress first, then the app connection diagnostics

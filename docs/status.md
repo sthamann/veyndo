@@ -6,16 +6,25 @@ journey are tracked separately. All purchases below use **simulated payments**.
 
 ## What is online now
 
-Core and Studio run merged main `7f0d4266`, image `offbeat-mind-8124`, deployed on
-21 October at 22:47 CEST. Original Storyfront remains a separate service on
-`cbb4d283`, image `alert-light-1076`. The final combined release in
-[PR #191](https://github.com/sthamann/veyndo/pull/191) passed full required CI,
-snapshot-backed migration, the public two-account company-purchase check and
-the original embedded Storyfront purchase/return/empty-cart check.
-The approver inbox and reopened orders now show their accepted app configuration.
+Core and Studio run the runtime from [PR #193](https://github.com/sthamann/veyndo/pull/193),
+merged as `8ffb2ca4`, image `jolly-love-1426`, deployed on 22 October at 10:27 CEST.
+The image source is `a287814c`; merged main differs only in two test files. The
+complete required CI, fresh snapshot, migration 108 and public catalogue/purchase
+journeys passed. [Exact delivery and browser evidence](evidence/merchant-journey-2026-10-22.md#public-delivery-and-acceptance).
+
+Original Storyfront remains a separate service on `cbb4d283`, image
+`alert-light-1076`. The prior combined release, [PR #191](https://github.com/sthamann/veyndo/pull/191),
+passed the public two-account company purchase and original embedded Storyfront
+purchase/return/empty-cart checks. The approver inbox and reopened orders show their
+accepted app configuration. Those broader journeys were not repeated by the
+22 October native catalogue/privacy acceptance.
 
 The connected merchant workspace now supports these concrete journeys:
 
+- Attach a CSV in the conversation, carry a product description or URL into the
+  private source workflow, edit the preview and publish selected native products.
+- Complete a purchase, return to an empty cart and retain the original revocable
+  privacy choice without answering the same prompt again.
 - Describe a collection task; prepare a native category, selected product changes,
   translations and a landing page in a private workspace; review and publish the
   chosen changes together.
@@ -33,6 +42,8 @@ The connected merchant workspace now supports these concrete journeys:
 
 | Journey | What was observed | Evidence |
 | --- | --- | --- |
+| Catalogue from the conversation | Actual composer CSV attachment, editable two-product preview, private save, publication of only the named chair, retained private side table and native image editing. Description and URL handoffs retained the current sandbox. | [22 October public journey](evidence/merchant-journey-2026-10-22.md#public-delivery-and-acceptance) |
+| Purchase privacy continuation | Public simulated order `RAC-65c8482b`, EUR 59.00, German product name and EUR 9.42 VAT. Return and full reload retained an empty cart and the prior optional privacy rejection; settings remained editable. Native expiry, revocation, concurrency and company-identity cases also passed in CI. | [Public purchase and tests](evidence/merchant-journey-2026-10-22.md) |
 | Collection preparation and selected publication | The configured model prepared five connected steps for two selected products. The same task resumed without duplicating its category. Reviewed Italian translations and the landing page were published together; a EUR 49.90 purchase retained the Italian product name. | [Collection and release history](evidence/release-history-through-2026-10-21.md#21-october-connected-collection-preparation-runs-publicly) |
 | Personal workspace and generated app | Current editor context, saved private guidance, editable product filters, two approved native category steps, reload continuation and a generated English/German care-note app with retained records and central settings. | [Workspace browser evidence](evidence/agentic-workspace-2026-10-20.md) |
 | Configured company purchase and reorder | First order `RAC-f117d21d`: Walnut Select, 260 × 80 cm, EUR 78 surcharge, EUR 427 total. After a material change, saved-list reorder used Walnut Select Plus, EUR 98 surcharge and EUR 447 total. The final all-browser repetition `RAC-34c09fc1` used separately signed-in buyer/approver sessions; approval and reopened orders displayed those exact values. Return/reload retained an empty cart; the original order still shows its older material and price. | [Public steps and screenshots](evidence/furniture-browser-2026-10-21.md#public-two-account-browser-acceptance-after-the-combined-release) |
@@ -43,7 +54,7 @@ The connected merchant workspace now supports these concrete journeys:
 | Native app extensions and workflows | Visual product fields, retained data on upgrade, native grid/filter integration, selected publication and distinct old/new order workflows were accepted publicly. | [Product fields](evidence/native-app-fields-hosted-2026-10-17.md), [app workflows](evidence/native-app-workflows-hosted-2026-10-17.md) |
 | Inward agentic commerce | Native UCP transfer purchase, private Shopify variant intake, app declaration diagnostics and original embedded checkout passed. | [18 October acceptance](evidence/agentic-commerce-hosted-2026-10-18.md) |
 | Native POS and documents | Fictional POS sale, native invoice/PDF and guarded app-bound completion passed on 17 October. Physical printers and real settlement were not part of that acceptance. | [Buyer/POS evidence](evidence/buyer-pos-hosted-2026-10-17.md), [PDF follow-up](evidence/receipt-pdf-hosted-2026-10-17.md) |
-| Browser entry and retained sessions | Public Google and password sign-in, reload and logout passed on 16 October, alongside new SaaS creation and its single-use Studio handoff. Apple still requires its Service ID callback correction. | [Browser session contract](browser-sessions.md), [historical observations](evidence/release-history-through-2026-10-21.md#public-acceptance) |
+| Browser entry and retained sessions | Public Google entry, workspace selection and single-use Studio handoff repeated on 22 October; reload after rollout retained the authenticated workspace. Password sign-in/reload/logout last passed publicly on 16 October. Apple still awaits its Service ID Save and actual sign-in. | [22 October evidence](evidence/merchant-journey-2026-10-22.md), [browser session contract](browser-sessions.md) |
 
 ## App system and architecture
 
@@ -58,15 +69,12 @@ The connected merchant workspace now supports these concrete journeys:
 | Contracts, boundaries and money | Generated operation input contracts, five real workspace libraries, exact money primitives and original PHP differential checks. | Response/domain DTOs and root-handler extraction remain incomplete; compatibility calculation paths still contain `f64`. [Hardening owners](platform-hardening.md) |
 | Prompts and evidence | Versioned prompt files with IDs/digests; actual provider/admission and injection cases in the registered tests. | Passing admission checks does not establish semantic model quality for every merchant task. [Testing](testing.md) |
 
-## Prepared for the next delivery
+## Proposed next improvements
 
-The merchant composer now accepts a CSV attachment and carries descriptions/URLs
-into the existing private catalogue workflow. Local Chrome acceptance completed
-editable import, native image editing and selected publication with product names.
-Native purchase tests additionally verify shared, revocable privacy choices across
-new carts, including the same authenticated company buyer, expiry and concurrent
-withdrawal. [22 October evidence](evidence/merchant-journey-2026-10-22.md). These
-changes are not included in the public runtime identified above yet.
+The 22 October merchant catalogue and privacy continuation changes are online and
+accepted as described above. A connected progress view for images/translations,
+better app connection diagnostics, consistent background-job controls and measured
+import/query improvements remain proposed next work.
 [Concrete architecture improvements discussed with Claude](architecture-followups-2026-10-22.md)
 are proposals, separate from this implementation.
 
@@ -98,9 +106,9 @@ are proposals, separate from this implementation.
    established by the public demo journeys. Current payment testing deliberately
    remains simulated. [Ordered follow-ups](connected-merchant-followups.md)
 
-The public reorder previously reopened privacy choice for a fresh native cart.
-The prepared fix above retains the original server receipt and its revocation;
-public acceptance is still required.
+The earlier fresh-cart privacy regression is fixed and accepted in the public
+native purchase above. Same-buyer company continuation, expiry and withdrawal
+were additionally checked through actual native PostgreSQL transactions in CI.
 
 ## Start testing
 

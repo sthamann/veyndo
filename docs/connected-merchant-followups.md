@@ -7,7 +7,7 @@ It is a delivery plan, not a claim that every item below is already available on
 
 | Order | Merchant outcome | Completion evidence |
 | --- | --- | --- |
-| 0 | Apple sign-in returns to the selected Studio shop | Correct Service ID return URLs, real sign-in, reload and logout. Apple Developer authentication is currently required. |
+| 0 | Apple sign-in returns to the selected Studio shop | Correct Service ID return URLs, real sign-in, reload and logout. The authenticated Service ID review is prepared; final Save awaits action-time approval. No successful Apple sign-in is claimed. |
 | 1 | Prepare a selected collection, translations and landing page together | Exact product scope, private native/app drafts, progress, interrupted task continuation, current rights, real preview and selected publication. |
 | 2 | A material/dimensions app works throughout the shop | Product configuration, surcharge, cart, order, saved selection, reorder, rights, API/MCP, relevant UCP/knowledge projection and immutable upgrade. |
 | 3 | Find actual missing data and prepare useful corrections | Native current records, identified gaps, explicit evidence and reviewed bounded proposals; no invented product facts. |

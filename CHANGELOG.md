@@ -6,7 +6,8 @@
 - Show source/review/private progress, hand saved products to their real editor and open the exact sandbox publication review. Display localized product names in release selection, with main-language inheritance and technical details available separately.
 - Retain the current privacy choice after purchase through a capability-bound reference to one shared server receipt. Preserve expiry, denials and revocation across subsequent carts; erase related preferences and observations on withdrawal. Never carry terms, basket contents or company approval forward.
 - Add migration 108 on the existing scoped receipt table; old runtimes fail closed on references. Verify actual native purchases, same-buyer company continuation, foreign/session-only denial, expiry, repeated purchase and concurrent withdrawal. Ignore late browser reads/writes from prior carts.
-- Document local Chrome CSV/edit/private-save/image/selected-publication acceptance and retain its screenshots. Public rollout and Apple callback/sign-in acceptance remain separate recorded steps.
+- Deploy the runtime from PR #193 after full CI, a fresh snapshot and successful migration 108. Public Chrome acceptance covers CSV/edit/private-save/image/selected publication, description/URL handoff and simulated order `RAC-65c8482b` with an empty cart and retained privacy choice after return/reload. Retain screenshots and exact source/image provenance. Apple callback Save and actual sign-in remain open.
+- Correct two test defects exposed by full CI: give the decided privacy fixture its required expiry and await enabled app-review controls. Keep production admission unchanged; all 789 frontend tests pass.
 
 ## Current-status documentation — 2026-10-21
 

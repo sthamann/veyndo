@@ -141,5 +141,9 @@ remain authoritative for broader system acceptance.
 ## 22 October continuation
 
 The composer attachment, description/URL handoff, native image editing and selected
-one-product publication were exercised in Chrome with synthetic local data.
+one-product publication were exercised in Chrome locally and on the public runtime
+from PR #193. The public test created two private CSV products, published only the
+reviewed chair and retained the side table privately. It then saved a demo image
+through the native product editor. Source handoff is distinct from a paid model or
+image-provider acceptance.
 [Steps, screenshots and exact acceptance boundary](evidence/merchant-journey-2026-10-22.md).
