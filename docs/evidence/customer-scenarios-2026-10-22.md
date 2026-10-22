@@ -220,3 +220,31 @@ browser security-setting change was used for this accepted journey.
 ![Original Storyfront embedded receipt on the simulator Core](../assets/customer-scenarios-20261022/public-storyfront-receipt.png)
 
 ![Original Storyfront empty bag after full reload](../assets/customer-scenarios-20261022/public-storyfront-empty.png)
+
+
+## Editable visual shopper selection
+
+The follow-up replaces text-only product links with native product cards and a
+reversible shortlist. Local Chrome and the real `qwen3.6:35b` model compared Field
+Notizbuch (EUR 12.50) and Terra Becher (EUR 24.90). The cards displayed native
+images, descriptions, stock and prices. Removing the cup changed only the
+shortlist; opening the notebook and returning preserved that removal. Restore
+returned both cards without changing the basket.
+
+The selected notebook used its ordinary detail page, including the installed
+Product Advisor slot, then native checkout. Simulated order **`RAC-fcbe27c7`**
+completed for EUR 12.50 including EUR 0.82 VAT with the German product name. Return
+and full browser reload retained **cart 0**. A 390 × 844 check measured a 390 px
+document and 312 px selection. Switching to Spanish removed the preceding German
+answer immediately. Temporary device emulation was cleared.
+
+![Local native receipt after choosing a visual suggestion](../assets/customer-scenarios-20261022/visual-selection-local-receipt.png)
+
+![Mobile native product selection](../assets/customer-scenarios-20261022/visual-selection-mobile.png)
+
+All **810 frontend tests across 138 files**, TypeScript, production build,
+localization and structure checks passed. Targeted regressions verify native
+product facts, duplicate/missing IDs, reversible removal, detail/back retention
+and rejection of late provider results and errors after a scope change. Independent
+review confirmed the navigation and stale-error repairs. This section records
+local browser acceptance; public delivery is recorded separately.
