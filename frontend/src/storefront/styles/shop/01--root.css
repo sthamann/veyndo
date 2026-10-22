@@ -204,7 +204,7 @@ body {
 .shop-advice {
   grid-column: 1/-1;
 }
-.shop-advice a {
+.shop-advice > a {
   display: inline-block;
   padding: 10px;
   background: white;

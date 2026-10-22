@@ -1,5 +1,10 @@
 # Changelog
 
+## Visual shopper selection — unreleased
+
+- Turn catalogue-grounded recommendations into native product cards with images, prices, availability and reversible selection controls. Detail navigation preserves the edited shortlist and retains native variants, app configuration and checkout.
+- Bind saved advice to the current buyer/shop/channel/language/country/currency context and discard late provider results and errors after context changes. Add localized responsive controls and regression coverage.
+
 ## Private customer scenarios — unreleased
 
 - Add one to six editable fictional customer profiles on existing durable tasks, with two concurrent native shopper journeys, exact budgets, observed catalogue, locale/country and simulated checkout. Reuse shared HTTP/MCP capability rights, model accounting and private sandbox isolation.

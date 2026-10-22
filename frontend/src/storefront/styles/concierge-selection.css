@@ -1,0 +1,60 @@
+/* Native product shortlist: responsive cards and reversible selection controls. */
+.concierge-explanation {
+  white-space: pre-line;
+  line-height: 1.65;
+  max-width: 80ch;
+}
+.concierge-selection {
+  min-width: 0;
+  margin-top: 24px;
+}
+.concierge-selection > header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.concierge-selection h3 {
+  margin: 0 0 8px;
+}
+.concierge-selection > header p {
+  margin: 0;
+  max-width: 640px;
+}
+.concierge-selection-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+  gap: 24px;
+}
+.concierge-selection-item {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.concierge-selection .shop-product {
+  flex: 1;
+}
+.concierge-selection-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  align-self: start;
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--ink);
+}
+.concierge-selection-remove:hover {
+  background: white;
+  border-color: var(--blue);
+}
+.concierge-selection :is(button, a):focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+}

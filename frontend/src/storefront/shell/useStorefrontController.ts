@@ -1,4 +1,5 @@
 /** Cart lifecycle, authoritative checkout commands and storefront coordination. */
+import { useShopperAdvice } from "./useShopperAdvice";
 import { useStorefrontActions } from "./useStorefrontActions";
 import { routeProductId } from "../catalog/product-url";
 import { shopScope } from "../../shared/api/shop-scope";
@@ -66,10 +67,12 @@ export function useStorefrontController({
   const [account, setAccount] = useState<AccountPage | false>(false);
   const [order, setOrder] = useState<Order>();
   const [wish, setWish] = useState("");
-  const [advice, setAdvice] = useState<{
-    explanation: string;
-    recommended_ids: string[];
-  }>();
+  const [advice, setAdvice, adviceContext, shortlist] = useShopperAdvice(
+    shopTenant,
+    salesChannel,
+    locale,
+    cart,
+  );
   const [experience, setExperience] = useState<{
     variant: string;
     headline?: string;
@@ -370,6 +373,8 @@ export function useStorefrontController({
     setWish,
     advice,
     setAdvice,
+    adviceContext,
+    shortlist,
     ranked,
     setRanked,
     personalized,

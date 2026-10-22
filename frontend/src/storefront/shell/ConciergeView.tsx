@@ -1,12 +1,12 @@
 /** ConciergeView: storefront view composed from the scoped cart/controller. */
-import { productURL } from "../catalog/product-url";
+import ConciergeSelection from "./ConciergeSelection";
 import { shopApi } from "../../shared/api/shop-api";
 import "../../shared/styles/apps.css";
 import "../../shared/styles/workbench.css";
 import "../styles/shop.css";
 
 import { useStorefront } from "./StorefrontContext";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useExperienceUIText } from "../../shared/i18n/experience-ui-i18n";
 import Icon from "../../shared/ui/Icon";
 export default function ConciergeView() {
@@ -24,7 +24,19 @@ export default function ConciergeView() {
     busy,
     advice,
     products,
+    money,
+    adviceContext: scope,
+    shortlist,
   } = useStorefront();
+  const generation = useRef(0);
+  const currentScope = useRef(scope);
+  currentScope.current = scope;
+  useEffect(() => {
+    ++generation.current;
+    return () => {
+      ++generation.current;
+    };
+  }, [scope]);
   const prompt = products.some((p) =>
     p.media[0]?.url.startsWith("/media/demo/fashion/"),
   )
@@ -49,16 +61,31 @@ export default function ConciergeView() {
       <form
         onSubmit={(e) => {
           e.preventDefault();
+          if (busy) return;
+          const current = ++generation.current;
           run(async () => {
-            const v = await shopApi<{
-              answer: {
-                explanation: string;
-                recommended_ids: string[];
-              };
-            }>("/api/concierge", { request: wish }, cart?.token);
-            setAdvice(v.answer);
-            setQuery("");
-            setCategory("all");
+            try {
+              const v = await shopApi<{
+                answer: {
+                  explanation: string;
+                  recommended_ids: string[];
+                };
+              }>("/api/concierge", { request: wish }, cart?.token);
+              if (
+                current !== generation.current ||
+                scope !== currentScope.current
+              )
+                return;
+              setAdvice(v.answer);
+              setQuery("");
+              setCategory("all");
+            } catch (error) {
+              if (
+                current === generation.current &&
+                scope === currentScope.current
+              )
+                throw error;
+            }
           });
         }}
       >
@@ -97,12 +124,19 @@ export default function ConciergeView() {
       </div>
       {advice && (
         <div className="shop-advice" role="status">
-          <p>{advice.explanation}</p>
-          {advice.recommended_ids.map((pid) => (
-            <a key={pid} href={productURL({ id: pid })}>
-              {products.find((p) => p.id === pid)?.name} ↗
-            </a>
-          ))}
+          <p className="concierge-explanation">{advice.explanation}</p>
+          {advice.recommended_ids.length > 0 && (
+            <ConciergeSelection
+              key={JSON.stringify([scope, advice])}
+              ids={advice.recommended_ids}
+              removed={shortlist.removed}
+              onRemove={shortlist.remove}
+              onRestore={shortlist.restore}
+              products={products}
+              money={money}
+              business={cart?.price.taxStatus === "net"}
+            />
+          )}
         </div>
       )}
     </section>

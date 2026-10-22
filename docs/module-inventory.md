@@ -1285,6 +1285,7 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/storefront/shell/ChannelPreview.tsx](../frontend/src/storefront/shell/ChannelPreview.tsx) | Explain the server-authorized, session-bound preview and clear its HttpOnly cookie on exit. |
 | [frontend/src/storefront/shell/CollectionView.tsx](../frontend/src/storefront/shell/CollectionView.tsx) | CollectionView: storefront view composed from the scoped cart/controller. |
 | [frontend/src/storefront/shell/CompanyLegalPage.tsx](../frontend/src/storefront/shell/CompanyLegalPage.tsx) | Directly reachable channel legal page; renders only the server's explicit public projection as text. |
+| [frontend/src/storefront/shell/ConciergeSelection.tsx](../frontend/src/storefront/shell/ConciergeSelection.tsx) | Editable suggestions reuse native cards; variants and app inputs stay on the native detail page. |
 | [frontend/src/storefront/shell/ConciergeView.tsx](../frontend/src/storefront/shell/ConciergeView.tsx) | ConciergeView: storefront view composed from the scoped cart/controller. |
 | [frontend/src/storefront/shell/HomeHero.tsx](../frontend/src/storefront/shell/HomeHero.tsx) | Shared native home hero for the storefront and visual preview; no commerce commands. |
 | [frontend/src/storefront/shell/ProductTile.tsx](../frontend/src/storefront/shell/ProductTile.tsx) | Single native product card, reused by the storefront and read-only visual preview. |
@@ -1304,12 +1305,14 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/storefront/shell/useCompanyIdentity.ts](../frontend/src/storefront/shell/useCompanyIdentity.ts) | Channel-scoped public brand/legal identity; stale responses cannot leak across tenants or languages. |
 | [frontend/src/storefront/shell/useConsentedExperience.ts](../frontend/src/storefront/shell/useConsentedExperience.ts) | Assign experiments only after current personalization consent; discard stale responses on withdrawal. |
 | [frontend/src/storefront/shell/usePersonalization.ts](../frontend/src/storefront/shell/usePersonalization.ts) | Opt-in behavior signals and stable product ordering; no authoritative prices are changed. |
+| [frontend/src/storefront/shell/useShopperAdvice.ts](../frontend/src/storefront/shell/useShopperAdvice.ts) | Keep editable recommendations across product navigation within the original buyer/channel context. |
 | [frontend/src/storefront/shell/useStorefrontActions.ts](../frontend/src/storefront/shell/useStorefrontActions.ts) | Share current native cart commands with UI/browser agents; registration is scoped and removed when the storefront changes. |
 | [frontend/src/storefront/shell/useStorefrontAnchors.ts](../frontend/src/storefront/shell/useStorefrontAnchors.ts) | Restore native section navigation after SPA rendering, with cancellation and reduced-motion support. |
 | [frontend/src/storefront/shell/useStorefrontController.ts](../frontend/src/storefront/shell/useStorefrontController.ts) | Cart lifecycle, authoritative checkout commands and storefront coordination. |
 | [frontend/src/storefront/styles/checkout-fields.css](../frontend/src/storefront/styles/checkout-fields.css) | Checkout-owned form layout, independent of previously mounted account/admin stylesheets. |
 | [frontend/src/storefront/styles/checkout.css](../frontend/src/storefront/styles/checkout.css) | One-page checkout: calm responsive workspace with a sticky, readable order review. |
 | [frontend/src/storefront/styles/company-identity.css](../frontend/src/storefront/styles/company-identity.css) | Public company branding and readable legal identity across storefront channels. |
+| [frontend/src/storefront/styles/concierge-selection.css](../frontend/src/storefront/styles/concierge-selection.css) | Native product shortlist: responsive cards and reversible selection controls. |
 | [frontend/src/storefront/styles/experience-polish.css](../frontend/src/storefront/styles/experience-polish.css) | Shared storefront interaction layer: stable navigation, editorial surfaces and catalogue-grounded AI discovery. |
 | [frontend/src/storefront/styles/legal.css](../frontend/src/storefront/styles/legal.css) | Responsive, equally weighted consent controls and readable legal/customer forms. |
 | [frontend/src/storefront/styles/order-completion.css](../frontend/src/storefront/styles/order-completion.css) | Order receipt page and finite transform-only celebration; honors reduced motion. |
