@@ -88,7 +88,7 @@
   border-top: 1px solid var(--line);
   padding-top: 20px;
 }
-.shop-advice a {
+.shop-advice > a {
   border-radius: 12px;
   min-height: 44px;
   margin-bottom: 8px;

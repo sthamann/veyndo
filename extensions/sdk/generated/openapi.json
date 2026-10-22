@@ -1852,6 +1852,9 @@
                                 "maxLength": 200,
                                 "type": "string"
                               },
+                              "preparation": {
+                                "type": "boolean"
+                              },
                               "search": {
                                 "maxLength": 200,
                                 "type": "string"

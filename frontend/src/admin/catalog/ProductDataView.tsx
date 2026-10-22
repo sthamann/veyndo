@@ -6,6 +6,8 @@ import type { OpenEntity } from "../shell/useEntityNavigation";
 import { useCatalogText } from "../../shared/i18n/catalog-i18n";
 import type { Category } from "./catalog-model";
 const ProductEditor = lazy(() => import("./ProductEditor"));
+import CatalogPreparation from "./CatalogPreparation";
+import { usePreparationText } from "./preparation-i18n";
 import CatalogDirectory from "./CatalogDirectory";
 import CategoriesWorkspace from "./CategoriesWorkspace";
 import "../styles/catalog.css";
@@ -26,6 +28,8 @@ export default function ProductDataView({
   const [gridCursor, setGridCursor] = useState("");
   const [gridCriteria, setGridCriteria] = useState<GridCriteria>({});
   const { c } = useCatalogText();
+  const preparation = usePreparationText();
+  const [initialTab, setInitialTab] = useState("general");
   const [mainLocale, setMainLocale] = useState("en-GB");
   const [view, setView] = useState("products"),
     [id, setId] = useState<string | null>(null),
@@ -54,6 +58,7 @@ export default function ProductDataView({
       <ProductEditor
         key={id}
         id={id}
+        initialTab={initialTab}
         request={request}
         categories={categories}
         canWrite={canWrite}
@@ -77,13 +82,23 @@ export default function ProductDataView({
           <button
             type="button"
             className="studio-primary"
-            onClick={() => setId("")}
+            onClick={() => {
+              setInitialTab("general");
+              setId("");
+            }}
           >
             + {c("newProduct")}
           </button>
         )}
       </div>
       <div className="catalog-tabs" role="tablist">
+        <button
+          role="tab"
+          aria-selected={view === "preparation"}
+          onClick={() => setView("preparation")}
+        >
+          {preparation("title")}
+        </button>
         <button
           role="tab"
           aria-selected={view === "products"}
@@ -100,7 +115,16 @@ export default function ProductDataView({
         </button>
       </div>
       {error && <p role="alert">{error}</p>}
-      {view === "categories" ? (
+      {view === "preparation" ? (
+        <CatalogPreparation
+          request={request}
+          onOpen={(id, tab) => {
+            setInitialTab(tab);
+            if (onEntity) onEntity("productData", id);
+            else setId(id);
+          }}
+        />
+      ) : view === "categories" ? (
         <CategoriesWorkspace
           request={request}
           categories={categories}
@@ -120,7 +144,11 @@ export default function ProductDataView({
           mainLocale={mainLocale}
           canWrite={canWrite}
           onNew={() => setId("")}
-          onOpen={(id) => (onEntity ? onEntity("productData", id) : setId(id))}
+          onOpen={(id) => {
+            setInitialTab("general");
+            if (onEntity) onEntity("productData", id);
+            else setId(id);
+          }}
         />
       )}
     </div>

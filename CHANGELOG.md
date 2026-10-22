@@ -1,5 +1,10 @@
 # Changelog
 
+## Visual shopper selection — unreleased
+
+- Turn catalogue-grounded recommendations into native product cards with images, prices, availability and reversible selection controls. Detail navigation preserves the edited shortlist and retains native variants, app configuration and checkout.
+- Bind saved advice to the current buyer/shop/channel/language/country/currency context and discard late provider results and errors after context changes. Add localized responsive controls and regression coverage.
+
 ## Private customer scenarios — unreleased
 
 - Add one to six editable fictional customer profiles on existing durable tasks, with two concurrent native shopper journeys, exact budgets, observed catalogue, locale/country and simulated checkout. Reuse shared HTTP/MCP capability rights, model accounting and private sandbox isolation.
@@ -47,6 +52,13 @@
 - Deliver `650529c7` / `aromatic-voyage-2152` and complete the public inactive-draft → real product event → fresh review → personal approval → one native category journey. Retain completion after reload and verify absence from the parent live shop; deactivate the test Flow and restore the trigger text. Keep screenshots and exact scope in the [public evidence](docs/evidence/flow-native-work-2026-10-21.md#reusing-completed-work-public-acceptance).
 
 ## Unreleased — shared progress in direct Flow review
+
+- Connect catalogue preparation to native saved products, explicit language progress,
+  durable image failures and direct text/media repair; reconcile image creation
+  after a language refresh without repeating provider work.
+- Add actionable app connection hints for missing views/models/actions, API/agent
+  references and commerce decision examples, linked to the existing editors.
+
 
 - Connect the direct Flow-history proposal to the existing native task progress, explicit resume/cancel and translation editor. A completed proposal job no longer hides pending approved work; reload observes the original execution without a second approval.
 - Reuse one shared task hook across Flow history and the personal workspace. Preserve current controls, task identity, tenant scope, revision fences and immediate legacy proposals; changing environments remounts the Flow editor.

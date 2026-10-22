@@ -73,6 +73,8 @@ pub(crate) struct ProductCriteria {
     parent_id: Option<String>,
     low_stock: Option<bool>,
     #[serde(default)]
+    preparation: bool,
+    #[serde(default)]
     sort: String,
     #[serde(default)]
     direction: String,
@@ -212,6 +214,9 @@ pub(crate) async fn list_products(
         &mut elements,
     )
     .await?;
+    if c.preparation {
+        super::product_preparation::attach(&a, &t, &mut elements, &rows).await?;
+    }
     let cursor = has_more.then(|| elements.last().unwrap()["id"].clone());
     Ok(Json(
         json!({"elements":elements,"hasMore":has_more,"nextCursor":cursor,"limit":limit}),

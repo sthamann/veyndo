@@ -1,0 +1,47 @@
+/* Readiness uses the shared paged grid; compact step controls route to native editors. */
+.catalog-preparation-hint {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.catalog-preparation-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 1rem 0;
+}
+.catalog-preparation-step {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--line, #dbe5ef);
+  border-radius: 0.6rem;
+  background: var(--surface, #fff);
+  color: inherit;
+  text-align: start;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+.catalog-preparation-step:hover {
+  border-color: var(--accent);
+}
+.catalog-preparation-step.is-failed {
+  color: var(--danger, #b42318);
+}
+.catalog-preparation-step.is-ready {
+  color: var(--accent);
+}
+.catalog-preparation {
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
+}
+.catalog-preparation > .agent-grid {
+  min-width: 0;
+  max-width: 100%;
+}
+.catalog-preparation-actions > button {
+  max-width: 100%;
+  white-space: normal;
+}

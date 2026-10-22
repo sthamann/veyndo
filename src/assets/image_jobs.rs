@@ -82,7 +82,7 @@ pub(super) async fn list_jobs(
 ) -> Result<Json<Value>> {
     auth::permit(&h, "catalog.read")?;
     let t = merchant(&a, &h)?;
-    let rows = sqlx::query("SELECT id,state FROM media_jobs WHERE tenant=$1 AND product_id=$2 AND state IN ('queued','processing','ready') ORDER BY created_at DESC LIMIT 5")
+    let rows = sqlx::query("SELECT id,state FROM media_jobs WHERE tenant=$1 AND product_id=$2 ORDER BY created_at DESC,id DESC LIMIT 5")
         .bind(t).bind(product).fetch_all(&a.db).await?;
     Ok(Json(
         json!({"jobs":rows.iter().map(|r| json!({"id":r.get::<String,_>("id"),"state":r.get::<String,_>("state")})).collect::<Vec<_>>()}),

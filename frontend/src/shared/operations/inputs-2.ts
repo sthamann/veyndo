@@ -35,6 +35,7 @@ export interface Inputs2 {
     limit?: number;
     lowStock?: boolean;
     parentId?: string;
+    preparation?: boolean;
     search?: string;
     sort?: "id" | "name" | "number" | "price" | "stock";
   };

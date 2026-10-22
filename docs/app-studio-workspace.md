@@ -222,3 +222,18 @@ private sandbox version path. Responsive selection was checked at 1280 px and
 390 px, with no horizontal overflow in the creation card. Dark appearance uses
 the actual Studio tokens. Screenshots are from the real built UI. This is local
 acceptance; it does not imply a production rollout or external AI/provider test.
+
+## Find an unfinished app connection
+
+The existing **Before publishing** panel now checks references in the current draft:
+placements to native views, blocks/actions to models, model relations, nested UI
+calls, API routes, schedules/webhooks, and Intelligence model/tool declarations.
+A broken reference names the affected object and opens its existing design, data or
+connection editor. Commerce hooks without frozen decision examples link to the app
+idea/checks view. Optional features are not demanded from an ordinary content app.
+
+These are actionable draft hints. Rust validation at save/install, current runtime
+rights and explicit MCP tool admission remain authoritative. Required settings are
+listed as declarations; the panel does not read secrets or pretend installation
+configuration has been completed. Use **Versions & releases → Customer simulator**
+to test the version actually installed in a private sandbox before selected release.

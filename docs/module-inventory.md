@@ -288,6 +288,7 @@ This lists every checked-in source module in these roots, including files with n
 | [src/commerce/product_input.rs](../src/commerce/product_input.rs) | Admit native product edits and expand explicit category-only changes through the same revisioned editor. |
 | [src/commerce/product_languages.rs](../src/commerce/product_languages.rs) | Enabled content languages, NULL field inheritance and stable global language registration. |
 | [src/commerce/product_metadata.rs](../src/commerce/product_metadata.rs) | Typed product edit payload and multilingual metadata including exact currency prices. |
+| [src/commerce/product_preparation.rs](../src/commerce/product_preparation.rs) | Opt-in bounded catalogue preparation projection. Existing products, translations and image jobs remain the owners. |
 | [src/commerce/review_import.rs](../src/commerce/review_import.rs) | Native historical review admission preserves source provenance, explicit moderation and unverified customer identity. |
 | [src/commerce/review_moderation.rs](../src/commerce/review_moderation.rs) | Merchant authorization and review publication. |
 | [src/commerce/reviews.rs](../src/commerce/reviews.rs) | Customer review submission with server-derived purchase verification. |
@@ -680,6 +681,7 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/admin/catalog/CatalogIntake.tsx](../frontend/src/admin/catalog/CatalogIntake.tsx) | Merchant source chooser and explicit staged creation reuse native product, media and environment owners. |
 | [frontend/src/admin/catalog/CatalogIntakeReview.tsx](../frontend/src/admin/catalog/CatalogIntakeReview.tsx) | Editable catalogue review is distinct from native creation and later publication; AI images reuse the product editor's job workflow. |
 | [frontend/src/admin/catalog/CatalogIntakeSource.tsx](../frontend/src/admin/catalog/CatalogIntakeSource.tsx) | Source-specific input remains a compact part of the existing reviewed catalogue intake. |
+| [frontend/src/admin/catalog/CatalogPreparation.tsx](../frontend/src/admin/catalog/CatalogPreparation.tsx) | One paged native projection connects saved content and durable image jobs to their existing editors. |
 | [frontend/src/admin/catalog/CategoriesWorkspace.tsx](../frontend/src/admin/catalog/CategoriesWorkspace.tsx) | Localized category tree editor; parent moves and revisions are validated in the API. |
 | [frontend/src/admin/catalog/CategoryFactQuery.tsx](../frontend/src/admin/catalog/CategoryFactQuery.tsx) | One saved predicate on current public evidence; reuses category CAS and the editor's selected content language. |
 | [frontend/src/admin/catalog/MediaDropzone.tsx](../frontend/src/admin/catalog/MediaDropzone.tsx) | Accessible multi-file upload with drag/drop, visible progress and the same validated asset API as attachments. |
@@ -704,6 +706,8 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/admin/catalog/catalog-intake-model.ts](../frontend/src/admin/catalog/catalog-intake-model.ts) | Review state carries stable native IDs; source changes discard the entire prior proposal, never overwrite existing products. |
 | [frontend/src/admin/catalog/catalog-model.ts](../frontend/src/admin/catalog/catalog-model.ts) | Editable native product aggregate and defaults shared by creation, detail and variant workflows. |
 | [frontend/src/admin/catalog/media-model.ts](../frontend/src/admin/catalog/media-model.ts) | Pure gallery operations preserve order, explicit alt translations and upload bounds without fabricating language values. |
+| [frontend/src/admin/catalog/preparation-i18n.ts](../frontend/src/admin/catalog/preparation-i18n.ts) | Preparation vocabulary describes persisted native progress, never an invented publication approval. |
+| [frontend/src/admin/catalog/useImageJob.ts](../frontend/src/admin/catalog/useImageJob.ts) | Restore and reconcile native image jobs across request/locale changes; only explicit merchant actions create provider work. |
 | [frontend/src/admin/catalog/variant-family.ts](../frontend/src/admin/catalog/variant-family.ts) | Cursor-based family lookup for duplicate review, bounded independently of the 50-row creation limit. |
 | [frontend/src/admin/catalog/variant-i18n.ts](../frontend/src/admin/catalog/variant-i18n.ts) | Guided variant creation and editing vocabulary; content still follows shop language inheritance. |
 | [frontend/src/admin/catalog/variant-model.ts](../frontend/src/admin/catalog/variant-model.ts) | Bounded option combinations and metadata-free child payloads shared by the guided variant creator. |
@@ -790,6 +794,8 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/admin/developer/api/IntegrationKeys.tsx](../frontend/src/admin/developer/api/IntegrationKeys.tsx) | Personal, expiring, least-privilege integration keys; plaintext stays in component memory and is never reloaded. |
 | [frontend/src/admin/developer/api/agent-control-i18n.ts](../frontend/src/admin/developer/api/agent-control-i18n.ts) | Agent delegation and live stop controls share explicit four-language operational vocabulary. |
 | [frontend/src/admin/developer/api/api-i18n.ts](../frontend/src/admin/developer/api/api-i18n.ts) | Four-language developer API console vocabulary; no credentials are persisted in UI storage. |
+| [frontend/src/admin/developer/app-connections.css](../frontend/src/admin/developer/app-connections.css) | Broken manifest references stay next to a direct repair action. |
+| [frontend/src/admin/developer/app-connections.ts](../frontend/src/admin/developer/app-connections.ts) | Draft-only connection hints reference the canonical Manifest; Rust still validates and authorizes save/install/runtime. |
 | [frontend/src/admin/developer/app-diagnostic-i18n.ts](../frontend/src/admin/developer/app-diagnostic-i18n.ts) | Actionable package review vocabulary distinguishes declarations, runtime checks and publication. |
 | [frontend/src/admin/developer/app-model-actions.ts](../frontend/src/admin/developer/app-model-actions.ts) | Native model actions and extension scopes compile once for manual and agent-generated views. |
 | [frontend/src/admin/developer/app-model.ts](../frontend/src/admin/developer/app-model.ts) | Pure schema edits preserve unsupported extension properties; compilation binds native UI to real actions. |
@@ -952,6 +958,7 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/admin/styles/behavior.css](../frontend/src/admin/styles/behavior.css) | Consent-bound insights use the existing Studio tokens and a responsive, inspectable visual hierarchy. |
 | [frontend/src/admin/styles/catalog-editor.css](../frontend/src/admin/styles/catalog-editor.css) | Visual editor and category workspace responsive styles. |
 | [frontend/src/admin/styles/catalog-intake.css](../frontend/src/admin/styles/catalog-intake.css) | Catalogue setup uses the Studio palette, native modal focus containment and bounded review cards. |
+| [frontend/src/admin/styles/catalog-preparation.css](../frontend/src/admin/styles/catalog-preparation.css) | Readiness uses the shared paged grid; compact step controls route to native editors. |
 | [frontend/src/admin/styles/catalog.css](../frontend/src/admin/styles/catalog.css) | Light, precise catalog workspace with accessible tables, focused detail panels and visual authoring. |
 | [frontend/src/admin/styles/commerce-manager.css](../frontend/src/admin/styles/commerce-manager.css) | commerce manager: Studio visual system and merchant operational layouts. |
 | [frontend/src/admin/styles/company-settings.css](../frontend/src/admin/styles/company-settings.css) | Company editor: structured addresses, visible scope inheritance and compact upload controls. |
@@ -1278,6 +1285,7 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/storefront/shell/ChannelPreview.tsx](../frontend/src/storefront/shell/ChannelPreview.tsx) | Explain the server-authorized, session-bound preview and clear its HttpOnly cookie on exit. |
 | [frontend/src/storefront/shell/CollectionView.tsx](../frontend/src/storefront/shell/CollectionView.tsx) | CollectionView: storefront view composed from the scoped cart/controller. |
 | [frontend/src/storefront/shell/CompanyLegalPage.tsx](../frontend/src/storefront/shell/CompanyLegalPage.tsx) | Directly reachable channel legal page; renders only the server's explicit public projection as text. |
+| [frontend/src/storefront/shell/ConciergeSelection.tsx](../frontend/src/storefront/shell/ConciergeSelection.tsx) | Editable suggestions reuse native cards; variants and app inputs stay on the native detail page. |
 | [frontend/src/storefront/shell/ConciergeView.tsx](../frontend/src/storefront/shell/ConciergeView.tsx) | ConciergeView: storefront view composed from the scoped cart/controller. |
 | [frontend/src/storefront/shell/HomeHero.tsx](../frontend/src/storefront/shell/HomeHero.tsx) | Shared native home hero for the storefront and visual preview; no commerce commands. |
 | [frontend/src/storefront/shell/ProductTile.tsx](../frontend/src/storefront/shell/ProductTile.tsx) | Single native product card, reused by the storefront and read-only visual preview. |
@@ -1297,12 +1305,14 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/storefront/shell/useCompanyIdentity.ts](../frontend/src/storefront/shell/useCompanyIdentity.ts) | Channel-scoped public brand/legal identity; stale responses cannot leak across tenants or languages. |
 | [frontend/src/storefront/shell/useConsentedExperience.ts](../frontend/src/storefront/shell/useConsentedExperience.ts) | Assign experiments only after current personalization consent; discard stale responses on withdrawal. |
 | [frontend/src/storefront/shell/usePersonalization.ts](../frontend/src/storefront/shell/usePersonalization.ts) | Opt-in behavior signals and stable product ordering; no authoritative prices are changed. |
+| [frontend/src/storefront/shell/useShopperAdvice.ts](../frontend/src/storefront/shell/useShopperAdvice.ts) | Keep editable recommendations across product navigation within the original buyer/channel context. |
 | [frontend/src/storefront/shell/useStorefrontActions.ts](../frontend/src/storefront/shell/useStorefrontActions.ts) | Share current native cart commands with UI/browser agents; registration is scoped and removed when the storefront changes. |
 | [frontend/src/storefront/shell/useStorefrontAnchors.ts](../frontend/src/storefront/shell/useStorefrontAnchors.ts) | Restore native section navigation after SPA rendering, with cancellation and reduced-motion support. |
 | [frontend/src/storefront/shell/useStorefrontController.ts](../frontend/src/storefront/shell/useStorefrontController.ts) | Cart lifecycle, authoritative checkout commands and storefront coordination. |
 | [frontend/src/storefront/styles/checkout-fields.css](../frontend/src/storefront/styles/checkout-fields.css) | Checkout-owned form layout, independent of previously mounted account/admin stylesheets. |
 | [frontend/src/storefront/styles/checkout.css](../frontend/src/storefront/styles/checkout.css) | One-page checkout: calm responsive workspace with a sticky, readable order review. |
 | [frontend/src/storefront/styles/company-identity.css](../frontend/src/storefront/styles/company-identity.css) | Public company branding and readable legal identity across storefront channels. |
+| [frontend/src/storefront/styles/concierge-selection.css](../frontend/src/storefront/styles/concierge-selection.css) | Native product shortlist: responsive cards and reversible selection controls. |
 | [frontend/src/storefront/styles/experience-polish.css](../frontend/src/storefront/styles/experience-polish.css) | Shared storefront interaction layer: stable navigation, editorial surfaces and catalogue-grounded AI discovery. |
 | [frontend/src/storefront/styles/legal.css](../frontend/src/storefront/styles/legal.css) | Responsive, equally weighted consent controls and readable legal/customer forms. |
 | [frontend/src/storefront/styles/order-completion.css](../frontend/src/storefront/styles/order-completion.css) | Order receipt page and finite transform-only celebration; honors reduced motion. |
@@ -1770,6 +1780,7 @@ This lists every checked-in source module in these roots, including files with n
 | [scripts/testing/app_discovery.py](../scripts/testing/app_discovery.py) | Exercise real app discovery beyond an alphabetical sample and enforce read-only native dispatch. |
 | [scripts/testing/b2b_checkout_race.py](../scripts/testing/b2b_checkout_race.py) | Force the real customer-share/unit-update checkout interleaving; no business handler is mocked. |
 | [scripts/testing/catalog_intake_checks.py](../scripts/testing/catalog_intake_checks.py) | Native catalogue intake through HTTP/MCP; real stage saves, exact replay, current rights and selected release, no model calls. |
+| [scripts/testing/catalog_preparation_checks.py](../scripts/testing/catalog_preparation_checks.py) | Durable preparation projection through the native catalogue API/MCP; fixture SQL creates an explicit failed provider result only. |
 | [scripts/testing/ci_scope.py](../scripts/testing/ci_scope.py) | Choose prototype CI by the complete Git diff; unknown or sensitive changes retain full verification. |
 | [scripts/testing/collection_work.py](../scripts/testing/collection_work.py) | Exercise one reviewed collection task through native categories, pages and durable translation drafts. |
 | [scripts/testing/consistency_boundaries.py](../scripts/testing/consistency_boundaries.py) | Real transport/permission regressions for knowledge publication and automation discovery. |

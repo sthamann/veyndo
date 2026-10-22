@@ -3,6 +3,19 @@ import { useLegalText } from "../../shared/i18n/legal-i18n";
 import ContentLanguagePicker from "../../shared/i18n/ContentLanguagePicker";
 import { useAppSurfaces, surfaceLabel } from "../../shared/apps/AppSurfaces";
 import { useCatalogText } from "../../shared/i18n/catalog-i18n";
+export const productTabs = [
+  "general",
+  "prices",
+  "media",
+  "variants",
+  "assignments",
+  "specs",
+  "seo",
+  "related",
+  "attachments",
+  "reviews",
+  "compliance",
+] as const;
 export default function ProductEditorNav({
   tabs,
   tab,
