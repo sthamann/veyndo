@@ -1432,8 +1432,8 @@
     },
     "src/agent_runs/scenarios/catalogue.rs": {
       "status": "unproved",
-      "sha256": "092bf53868181488a5c94b1f7833b7cc6a165872bf12c5c5204539640325d8b5",
-      "review": "Review actual channel language intersection for fictional-profile admission and native catalogue sampling; keep shared channel visibility and enabled-language checks fail-closed, no extra scopes or customer data, no new pricing path"
+      "sha256": "ff6ee5b7a53894880ed6465882fd45eedd947fa64621435dd88aa6f93dd23764",
+      "review": "Separate native channel metadata admission from the caller interface language: preserve tenant lookup, activation, type and preview guards; existing shopper channel calls retain their explicit enabled-language check, while scenario metadata uses the actual channel locales. Verify German Studio against French-only native catalogue and purchase without extra grants or inference during preview."
     },
     "src/agent_runs/scenarios/journey.rs": {
       "status": "unproved",
@@ -3167,8 +3167,8 @@
     },
     "src/marketing/channels.rs": {
       "status": "unproved",
-      "sha256": "b7f02eb525990486a7ecd1e8b09a4b32e052bc61acc07237261062674adfb1e5",
-      "review": "Reviewed generic tenant-scoped paid external-order/channel exchange, native exact source amounts, existing stock/customer/document/outbox ownership, app capability/FK/ID lookup boundaries and app-owned bounded seller protocols/jobs; local provider PostgreSQL replay restart isolation and UI regressions. Async provider integration remains unproved."
+      "sha256": "09ba865ca68b1b86107d3acc5844a958b92f022e8d708fb4323394d3e7435dcb",
+      "review": "Separate native channel metadata admission from the caller interface language: preserve tenant lookup, activation, type and preview guards; existing shopper channel calls retain their explicit enabled-language check, while scenario metadata uses the actual channel locales. Verify German Studio against French-only native catalogue and purchase without extra grants or inference during preview."
     },
     "src/marketing/condition_gateway.rs": {
       "status": "unproved",

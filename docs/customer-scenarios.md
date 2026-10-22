@@ -49,6 +49,9 @@ Review the names, goals, budgets and countries, then choose **Use these suggesti
 Your overall task stays unchanged; adopting profiles does not start a run or replace
 saved results. All profile fields remain editable before **Let customers test**.
 The suggestion preview uses no customer records and makes no additional model call.
+Studio may stay in your interface language even when the chosen channel serves a
+different language. Profiles use only that channel's enabled shopper languages;
+its type, activation and ordinary native shopper admission still apply.
 The existing AI shopper tasks make their own bounded decisions only after explicit
 start; actual checkout totals, shipping, tax, availability and exact budget enforcement
 remain native. A suggested 20% allowance is not a calculated delivery quote.

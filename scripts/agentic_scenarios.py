@@ -106,7 +106,8 @@ with (ROOT / 'artifacts/scenarios.log').open('w') as log:
             assert product['priceMinor'] == int((Decimal(str(source['price'])) * 100).quantize(Decimal('1'), rounding=ROUND_HALF_UP))
         narrowed = {'id':'scenario_only_lamp','revision':0,'data':{'name':{'en-GB':'Lamp only'},'kind':'storefront','active':True,'visibility':'public','locales':['fr-FR'],'productIds':['lamp']}}
         call('/api/automation/channels/scenario_only_lamp', {'revision':0,'data':narrowed['data']}, headers, method='PUT')
-        scoped = {**headers, 'sw-sales-channel-id':'scenario_only_lamp', 'x-commerce-locale':'fr-FR'}
+        # Studio stays German while the selected channel serves French shoppers.
+        scoped = {**headers, 'sw-sales-channel-id':'scenario_only_lamp', 'x-commerce-locale':'de-DE'}
         channel_configuration = call('/api/agent/scenarios', headers=scoped)['configuration']
         assert channel_configuration['locales'] == ['fr-FR'], channel_configuration
         channel_sample = channel_configuration['catalogue']
@@ -283,6 +284,12 @@ with (ROOT / 'artifacts/scenarios.log').open('w') as log:
         wait(expiring['requestId'], headers)
         assert sql(f"SELECT count(*) FROM orders WHERE tenant='{stage}'") == orders
         print('PASS lease expiry while waiting for the task lock prevents a late commerce commit', flush=True)
+        french = {**body, 'requestId':uuid.uuid4().hex, 'profiles':[{**body['profiles'][0], 'locale':'fr-FR'}]}
+        call('/api/agent/scenarios', french, scoped)
+        french_report = wait(french['requestId'], scoped)
+        assert french_report['runs'][0]['preview']['scenario']['outcome'] == 'purchased', french_report
+        assert int(sql(f"SELECT count(*) FROM orders WHERE tenant='{stage}'")) == int(orders)+1
+        print('PASS German Studio prepares and purchases through a French-only channel; unsupported shopper languages still reject', flush=True)
         another = call('/api/environments', {'name': 'Other scenario sandbox'}, live)['id']
         call('/api/agent/scenarios/' + suffix, headers={**headers, 'x-tenant': another}, expected=404)
         control = call('/api/agent/control', headers=live)

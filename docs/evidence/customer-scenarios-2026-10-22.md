@@ -426,7 +426,9 @@ withdrawal and cancellation/lease expiry during native lock waits.
 The new field projection has separate Rust checks for allowed fields, bounded size,
 wrong currency, invalid prices and zero/two/three-digit scales. UI regressions cover
 preview-before-adoption, retained merchant brief, explicit start, channel replacement,
-empty samples and enabled-language fallback. Public deployment of this follow-up
+empty samples and enabled-language fallback. A German-interface request also prepares
+the French-only channel and completes its French-profile native purchase; English
+profiles are rejected before queueing. Public deployment of this follow-up
 remains separate from the earlier accepted release above until recorded here.
 
 ### Actual local model and browser result
