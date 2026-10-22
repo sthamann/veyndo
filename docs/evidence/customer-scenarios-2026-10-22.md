@@ -104,3 +104,256 @@ table keeps its own horizontal scroll.
 ![Native app review and simulator entry](../assets/customer-scenarios-20261022/app-diagnostics.png)
 
 ![Mobile catalogue preparation](../assets/customer-scenarios-20261022/mobile-catalog-preparation.png)
+
+## Native intent-to-purchase browser journey
+
+After the connected changes, Chrome completed an ordinary shopper journey on the
+same private local shop. The actual Ollama `qwen3.6:35b` model compared the Field
+notebook (EUR 12.50) and Terra cup (EUR 24.90) as gifts within EUR 40. The shopper
+opened the notebook's native product detail, added it to the native cart, entered
+synthetic `example.test` contact data, selected free pickup and completed the
+explicitly simulated payment.
+
+Order `RAC-c29bc2b9` retained the German notebook name, EUR 12.50 total and EUR 0.82
+VAT. Returning to the shop and fully reloading both showed **cart 0**. The earlier
+optional-privacy rejection remained in effect without a repeated prompt. The
+privately installed Product Advisor view was present on the native detail page.
+This acceptance concerns the native shopper route; it is not a fresh certification
+of the separate Storyfront iframe or of real settlement/mail delivery.
+
+![Native German receipt after the intent-driven product choice](../assets/customer-scenarios-20261022/native-intent-purchase.png)
+
+The final connected frontend run passed 805 tests across 137 files, including the
+image-job reconciliation and app-reference diagnostics regressions. Rust unit
+checks, Clippy, operation contracts, source inventory, structure checks and the
+extracted formal-policy/conformance checks passed again for that branch.
+
+## Public rollout and customer-scenario acceptance
+
+After the complete required [GitHub verification](https://github.com/sthamann/veyndo/actions/runs/39781601614)
+passed, [PR 195](https://github.com/sthamann/veyndo/pull/195) merged as `bbb8b5ab`.
+Northflank Core was updated at **15:43 CEST on 22 October** from
+`sunset-spoon-5707` (`defac3dc`) to the already-built `distinct-giants-7353`
+(`2253a627`). The new instance passed its health check with zero restarts. There
+was no schema migration or change of database credentials for this release.
+
+Chrome resumed the existing merchant session on `app.veyndo.ai`. All acceptance
+below uses the separate full private sandbox `stage-62ddd2bbd80642e38c4f`, named
+**Kundensimulator Abnahme 22 Oktober**. No catalogue/stock change was published.
+The actual configured `qwen3.6:35b` model chose the shopper actions.
+
+The shared goal was to buy only **Notizbuch »Stille Seiten«**, inspect details,
+check stock and the complete price, and choose no substitute. Profiles used
+German/Germany, with budgets of EUR 1.00, EUR 100.00 and EUR 100.00.
+
+1. Set the notebook's private stock to zero. All three customers stopped without
+   buying. The budget buyer also correctly identified EUR 28.90 as over EUR 1.00.
+2. Restore only that private stock to 20. **Use these customers again** restored
+   the exact goal, profiles, budgets, languages and inference selection.
+3. In the repeated run the budget buyer still stopped. The first-time and focused
+   buyers inspected the notebook, created separate native carts and completed
+   simulated orders `da90888b26e0456ca681b37dbcd6b265` and
+   `c6b82f0fe7274034af388e9977cafbcc`, each for **EUR 28.90**.
+4. The comparison identified matching inputs and a changed observed catalogue.
+   The ordinary private order grid contained exactly those two orders. Opening
+   `RAC-c6b82f0f` showed the German product name, quantity one, Demo payment,
+   pickup and the native `order.placed` Flow history.
+
+![Public editable customer profiles](../assets/customer-scenarios-20261022/public-profiles.png)
+
+![Public saved comparison controls](../assets/customer-scenarios-20261022/public-comparison.png)
+
+![Stock-related abandonment and completed purchases side by side](../assets/customer-scenarios-20261022/public-purchases-comparison.png)
+
+![The two native private simulator orders](../assets/customer-scenarios-20261022/public-test-orders.png)
+
+![Native order detail and Flow history](../assets/customer-scenarios-20261022/public-order-detail.png)
+
+Full Studio reload, reselecting the same sandbox and reopening saved groups
+`b0055539-5fd2-4439-9d50-5a8665384d5a` and
+`37ab55ad-c97a-4ca0-b0a6-3a1303aacda5` restored both action journals and the original
+order IDs without starting another customer. The public 390 × 844 viewport had a
+390 px document and 358 px scenario area; editable cards and selectors remained
+inside that area. Temporary viewport emulation was cleared after the check.
+
+![Public mobile customer profile](../assets/customer-scenarios-20261022/public-mobile.png)
+
+### Public native shopper regression after the rollout
+
+A separate Chrome tab rejected optional tracking, asked the real shopper assistant
+to compare the notebook and Stiftehalter »Tonruhe« within EUR 40, followed the
+notebook's returned native detail link and bought one notebook with synthetic
+contact/address data. The assistant correctly quoted EUR 28.90 and EUR 34.50,
+and rejected the pair's EUR 63.40 as over the combined budget.
+
+The normal checkout completed **`RAC-90aa93a4`**, EUR 28.90 including EUR 4.61 VAT,
+with the German product name and explicitly simulated payment. Return and full
+browser reload both retained **cart 0**, optional personalization remained off,
+and no repeated privacy prompt appeared. The admin then contained exactly three
+orders: the two simulator orders plus this separate browser purchase.
+
+![Public native receipt following AI product comparison](../assets/customer-scenarios-20261022/public-native-receipt.png)
+
+These are public native API/checkout observations in a private sandbox. They do
+not constitute visual customer-agent navigation, a controlled conversion study,
+real provider settlement or mail delivery. A separate original Storyfront check
+is recorded below.
+
+### Original Storyfront iframe regression on the simulator Core
+
+The separate original Lumen Experience was tested against Core `2253a627` as well.
+A fresh extension-controlled tab timed out with an empty iframe on its first open
+and ordinary retry; no console error was captured. Its unpurchased diagnostic
+basket item was removed afterward. This observation is retained as a browser-control
+reliability limit rather than labelled a successful first load.
+
+A separately reloaded native Chrome incognito session then added the synthetic
+**Kleine Tischleuchte Mattblau**. Its first ordinary Checkout action loaded the
+embedded native privacy/contact/address form. Native browser input completed
+**`RAC-cf96e844`**, quantity one, German product name, EUR 59.90 total and EUR 9.56
+VAT, using pickup and explicitly simulated payment. The receipt return closed the
+iframe and the original Storyfront bag showed the order-confirmed message and no
+purchased item. A full reload, hydration and reopening the original Bag retained
+**Nothing yet**. No manual user test, separate-checkout purchase, interception or
+browser security-setting change was used for this accepted journey.
+
+![Original Storyfront embedded receipt on the simulator Core](../assets/customer-scenarios-20261022/public-storyfront-receipt.png)
+
+![Original Storyfront empty bag after full reload](../assets/customer-scenarios-20261022/public-storyfront-empty.png)
+
+
+## Editable visual shopper selection
+
+![Native desktop selection with actual catalogue facts](../assets/customer-scenarios-20261022/visual-selection-desktop.png)
+
+The follow-up replaces text-only product links with native product cards and a
+reversible shortlist. Local Chrome and the real `qwen3.6:35b` model compared Field
+Notizbuch (EUR 12.50) and Terra Becher (EUR 24.90). The cards displayed native
+images, descriptions, stock and prices. Removing the cup changed only the
+shortlist; opening the notebook and returning preserved that removal. Restore
+returned both cards without changing the basket.
+
+The selected notebook used its ordinary detail page, including the installed
+Product Advisor slot, then native checkout. Simulated order **`RAC-fcbe27c7`**
+completed for EUR 12.50 including EUR 0.82 VAT with the German product name. Return
+and full browser reload retained **cart 0**. A 390 × 844 check measured a 390 px
+document and 312 px selection. Switching to Spanish removed the preceding German
+answer immediately. Temporary device emulation was cleared.
+
+![Local native receipt after choosing a visual suggestion](../assets/customer-scenarios-20261022/visual-selection-local-receipt.png)
+
+![Mobile native product selection](../assets/customer-scenarios-20261022/visual-selection-mobile.png)
+
+All **810 frontend tests across 138 files**, TypeScript, production build,
+localization and structure checks passed. Targeted regressions verify native
+product facts, duplicate/missing IDs, reversible removal, detail/back retention
+and rejection of late provider results and errors after a scope change. Independent
+review confirmed the navigation and stale-error repairs. This section records
+local browser acceptance; public delivery is recorded separately.
+
+
+The complete catalogue/app follow-up CI also passed on `6b314459`
+([run 39789784144](https://github.com/sthamann/veyndo/actions/runs/39789784144)),
+including its actual database/provider suites and coverage gates. Its delivery
+is consolidated with visual shopping in PR 199 rather than landing intermediate
+release branches separately. The shared runtime tree at `db6acdb4` is identical
+to the built source `aa1dd115`; only merge ancestry changed.
+
+
+### Readable profile destinations
+
+A presentation follow-up uses localized locale names and the shared searchable
+country picker, while retaining the native channel's exact allowed codes. Its
+**811 frontend tests across 139 files** passed, including destination search,
+original payloads, exclusion of unavailable countries and prior-scope dismissal.
+Local Chrome selected the German profile language and searched Germany by name
+and by ISO alias. At 390 × 844, the document and cards stayed at 390 px / 358 px;
+the expanded picker stayed between x=37 and x=353. Device emulation was cleared.
+
+![Contained mobile country search](../assets/customer-scenarios-20261022/scenario-country-mobile.png)
+
+
+## Final combined public rollout
+
+The complete [PR 199 verification](https://github.com/sthamann/veyndo/actions/runs/39797001796)
+passed. It merged as `c948bccb`. The profile-label follow-up passed its complete
+frontend/coverage lane again after the strict branch update
+([run 39802944161](https://github.com/sthamann/veyndo/actions/runs/39802944161))
+and [PR 200](https://github.com/sthamann/veyndo/pull/200) merged as `07812240`.
+The full runtime tree of `07812240` is identical to the built source `f74d8ff9`.
+The intermediate PR 196 and 197 implementations are included in PR 199; their
+separate delivery branches were closed as superseded.
+
+Northflank activated **`affluent-week-4541` / `f74d8ff9` at 17:20:12 CEST on
+22 October**, deployment `vendune-core-66fcd94d4c`. Immediately before this rollout,
+the service showed `teal-farm-4382` / `bbb8b5ab`, the unchanged merged PR 195 tree,
+activated at 15:54:30. The first simulator deployment at 15:43 and the earlier
+observations above retain their dates. No schema, credential, permission or
+resource-size change was needed for this final rollout.
+
+One automatically triggered post-merge main verification was explicitly cancelled
+as a duplicate: `c948bccb` and the fully verified `db6acdb4` have identical complete
+Git trees. The required PR check was successful, not bypassed. The separate UI and
+documentation changes retain their own required checks.
+
+### Public acceptance after the final rollout
+
+The new Core passed its health check with PostgreSQL, knowledge retrieval and
+explicitly simulated payment; its pod was running with 1/1 checks passing and
+zero restarts. Full Studio reload retained the authenticated merchant and selected
+private environment. Saved baseline `b0055539` and comparison `37ab55ad` retained
+their original observations and order IDs across that restart.
+
+The public profile editor now shows readable enabled language names and the shared
+country search, including **Deutschland**. The catalogue-preparation grid shows
+all five enabled content languages and actual saved-image state. For example,
+the notebook has four completed languages and missing Italian; the test chair
+has only English and no saved image. **Bild ergänzen** on that chair opened its
+correct native product's **Medien** editor, retaining the private environment.
+No image-generation request or paid retry was submitted for this check.
+
+![Public readable profile destinations](../assets/customer-scenarios-20261022/public-readable-profiles.png)
+
+![Public catalogue preparation with actual language and image coverage](../assets/customer-scenarios-20261022/public-catalog-preparation.png)
+
+The existing Furniture Configurator's release view displayed its new connection
+diagnostics: one view, one model, four agent tools, seven declared examples and
+no unresolved references. Those counts describe the package; they do not by
+themselves prove successful execution. Its existing unsaved draft kept the
+scenario-launch button disabled, preserving the save-before-testing control.
+The draft was neither overwritten nor discarded during this read-only check.
+
+![Public app reference diagnostics](../assets/customer-scenarios-20261022/public-app-diagnostics.png)
+
+The actual configured `qwen3.6:35b` model answered the German request for a notebook
+and pen holder under EUR 70 with **Notizbuch »Stille Seiten«** (EUR 28.90) and
+**Stiftehalter »Tonruhe«** (EUR 34.50): EUR 63.40 before shipping. Native cards
+displayed their stored images, descriptions, stock and prices. Removing the holder,
+opening the notebook and returning retained the one-item selection; Restore
+returned both cards without adding anything to the cart.
+
+![Public editable visual product selection](../assets/customer-scenarios-20261022/public-visual-selection.png)
+
+Opening the notebook card, adding quantity one and completing the ordinary native
+checkout produced **`RAC-eb78b7d7`**, EUR 28.90 including EUR 4.61 VAT, German
+product name, pickup and simulated payment. Return and full reload retained
+**Warenkorb 0**, optional personalization off and no repeated privacy prompt.
+Temporary device emulation was cleared before the purchase.
+
+![Final public native receipt](../assets/customer-scenarios-20261022/public-final-native-receipt.png)
+
+![Final native return and reload with an empty cart](../assets/customer-scenarios-20261022/public-final-native-empty.png)
+
+The original Lumen Storyfront was then tested again against this final Core,
+using ordinary native Chrome input in the existing incognito session. Its first
+Checkout action loaded the embedded privacy and contact/address steps. After
+rejecting optional processing, **`RAC-3b44ea85`** completed for one German-named
+demo lamp, EUR 59.90 including EUR 9.56 VAT, pickup and simulated payment. Receipt
+return closed the iframe and showed the original bag's order-confirmed message
+with no item. Full reload and reopening Bag retained **Nothing yet**. There was
+no separate-checkout navigation, user manual test or security-setting change.
+The earlier controlled-tab blank-load observation remains recorded above.
+
+![Final original Storyfront embedded receipt](../assets/customer-scenarios-20261022/public-final-storyfront-receipt.png)
+
+![Final original Storyfront empty bag after reload](../assets/customer-scenarios-20261022/public-final-storyfront-empty.png)

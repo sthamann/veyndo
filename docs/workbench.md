@@ -57,8 +57,11 @@ Database versions/digests are immutable and exportable JSON, not a hosted Git ID
 A sandbox clones product content/translations/metadata, commerce settings,
 experience configuration, rules, campaigns, flows, channels, declarative apps,
 public app records, source documents/chunks and B2B company/unit policies/catalog selections. It has a separate tenant ID and
-inherits access from current live-shop memberships. Anonymous APIs and checkout
-are rejected. External service calls and app payment methods are disabled.
+inherits access from current live-shop memberships. Unauthenticated access to
+the private tenant is rejected. An authorized member can exercise synthetic guest
+checkout in a full sandbox; personal read-only previews cannot order. The
+[customer simulator](customer-scenarios.md) uses the same native private commerce
+path. External service calls and app payment methods are disabled.
 
 Inventory is a simulation copy. Live customers, orders, payment credentials,
 payment attempts, behavior signals, learned order observations and B2B employees/spending/approvals/quotes/lists are excluded.

@@ -292,7 +292,7 @@ Choose configured **Ollama**, **OpenAI Responses** or **Anthropic Messages** ada
 
 ![Assistant and live product/price context; this capture makes no model call](assets/feature-tour/assistant.jpg)
 
-### Five views of the knowledge workspace
+### Connected views of the knowledge workspace
 
 | View | Use it for |
 | --- | --- |
@@ -301,6 +301,10 @@ Choose configured **Ollama**, **OpenAI Responses** or **Anthropic Messages** ada
 | Sources | Private documents, published product/shop sources and connected app evidence |
 | Learning & decisions | Observed co-purchases, simulation provenance and explicit recommendation decisions |
 | Test & use | Question/product/audience selection and exact available evidence |
+| AI guardrails | Explicit bounded pricing autonomy, current rights and product-specific limits |
+| Visitor behavior | Consented traffic and behavioral observations, connected to shop knowledge |
+| Experiments | Recorded experiment context, observations and evidence boundaries |
+| Customer simulator | One to six editable fictional buyers test private native search, baskets and simulated purchases; saved runs support stock/budget/failure comparison. [Guide](customer-scenarios.md) |
 
 Catalog facts, curated demo relationships, private app evidence, observed purchases and merchant-approved recommendations remain distinguishable. Transactional event projection deduplicates repeated order/capture evidence. Publishing/dismissing a hypothesis changes eligibility for customer recommendations; marking an experiment does not run a randomized trial. Memory is durable shop evidence, not online model-weight training. [Knowledge workspace](knowledge-workspace.md).
 
@@ -529,7 +533,7 @@ Create named, hashed, scoped integration keys valid for **1–90 days**. They ar
 
 ### Private stages and selected publication
 
-A sandbox clones catalog/translations/categories, settings/company, experience state, rules/flows/campaigns/channels, app packages, selected public app data/documents and B2B company/unit policies/catalog selections. It excludes live customer accounts/orders, payment attempts/provider keys, observed shopper behavior, private app records and B2B employees/financial decisions. Sandbox inventory is simulated; publishing product content preserves live stock. Anonymous checkout and external service effects are blocked.
+A sandbox clones catalog/translations/categories, settings/company, experience state, rules/flows/campaigns/channels, app packages, selected public app data/documents and B2B company/unit policies/catalog selections. It excludes live customer accounts/orders, payment attempts/provider keys, observed shopper behavior, private app records and B2B employees/financial decisions. Sandbox inventory is simulated; publishing product content preserves live stock. Unauthenticated access to the private tenant is blocked. Authorized members can run synthetic guest purchases and customer scenarios in a full sandbox; personal read-only previews cannot place orders. External service effects remain blocked.
 
 **Review changes** compares stage content with its recorded live baseline. Select only the needed units: products, categories, apps, app data, assets/documents, rules, campaigns, flows, channels, settings, company/channel overrides, experience, order workflow and B2B company/unit policy/catalog selections. Each selected domain requires its own current rights. A release is atomic and rejects concurrent live baseline conflicts; there is no automatic conflict merge or universal rollback button. [Clone and release boundary](workbench.md#what-a-sandbox-contains).
 

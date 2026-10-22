@@ -93,7 +93,8 @@ configuration/order history and scenario entry point; no alternative app schema.
 - [x] Test a budgeted multi-product request, rejected selection and editable cart handoff.
 - [x] Connect intent, visual comparison/configuration and native checkout; keep UI and
   customer-agent actions aligned without model-supplied executable frontend code.
-- [ ] Verify native browser purchase and scope/language regressions; commit.
+- [x] Verify native browser purchase and scope/language regressions; record the native
+  German simulated receipt, return, empty-cart reload and retained privacy choice.
 
 ### Task 6: Migration-to-preview, documentation and delivery
 
@@ -106,7 +107,7 @@ public site/README entry links and existing CI owners when affected.
 - [x] Connect preview, missing-field repair and scenario testing in migration UI.
 - [x] Update truthful feature docs, tutorials and public entry points.
 - [x] Run relevant full checks and fresh whole-branch review; fix important findings.
-- [ ] Land and deploy the verified artifact using the existing authorized path, then
+- [x] Land and deploy the verified artifact using the existing authorized path, then
   repeat public simulated acceptance and record what was actually delivered.
 
 ## Progress
@@ -128,4 +129,11 @@ public site/README entry links and existing CI owners when affected.
   opened the failed-image repair path. See the same evidence document.
 - Independent critical-path review completed. Late UI selection, incomplete
   snapshot comparison, cancellation and post-lock lease-expiry findings were fixed
-  and regressed. Public CI, landing and hosted simulator acceptance remain pending.
+  and regressed. PR 195 passed complete CI, merged and was deployed; hosted
+  stock-failure/repair, exact-budget rejection, two purchases, saved comparison
+  and original embedded checkout passed. The connected catalogue/app and visual
+  shopper follow-ups landed in PR 199, with readable profile destinations in
+  PR 200. The final `f74d8ff9` artifact is public. Catalogue repair links, app
+  diagnostics, saved simulator comparison, visual selection and native purchase
+  `RAC-eb78b7d7` passed there; original Storyfront embedded order `RAC-3b44ea85`
+  returned to an empty bag after full reload. Payments remained simulated.
