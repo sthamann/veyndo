@@ -63,7 +63,7 @@ checks the policy actually reaching the model read transcript, rejected proposal
 autonomy budgets and settings-revision invalidation. These are synthetic provider
 contracts, not proof of real-model interpretation or measured revenue benefit.
 
-## Five connected views
+## Connected knowledge and testing views
 
 - **Overview**: whole-shop product/source/active-app counts, publication coverage,
   co-purchase associations, approved suggestions, the collect → connect → review
@@ -87,6 +87,18 @@ contracts, not proof of real-model interpretation or measured revenue benefit.
   This preview shares the source scope and language rules of product answers but
   performs lexical retrieval only: no embedding or LLM call and no write. Live
   product answers and the merchant planner may additionally use indexed vectors.
+
+- **AI guardrails**: inspect and save the bounded pricing policy described above;
+  current rights, revisions and limits still govern each action.
+- **Visitor behavior**: explore consented [traffic and behavior evidence](behavior-intelligence.md)
+  connected to the same shop knowledge.
+- **Experiments**: inspect declared experiment context and recorded observations;
+  a saved declaration is not a randomized trial or a conversion forecast.
+- **Customer simulator**: edit one to six fictional buyer profiles and a shopping
+  goal, run native search/basket/simulated checkout in a full private sandbox, and
+  compare saved observations before and after a change. Open the original product,
+  checkout settings or test order from a result. This uses durable agent tasks,
+  current authority and the native commerce owners. [Guide and illustrated evidence](customer-scenarios.md).
 
 ![Product knowledge and evidence](assets/feature-tour/product-knowledge-current.png)
 
