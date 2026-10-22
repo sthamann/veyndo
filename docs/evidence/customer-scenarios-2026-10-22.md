@@ -271,3 +271,89 @@ and by ISO alias. At 390 × 844, the document and cards stayed at 390 px / 358 p
 the expanded picker stayed between x=37 and x=353. Device emulation was cleared.
 
 ![Contained mobile country search](../assets/customer-scenarios-20261022/scenario-country-mobile.png)
+
+
+## Final combined public rollout
+
+The complete [PR 199 verification](https://github.com/sthamann/veyndo/actions/runs/39797001796)
+passed. It merged as `c948bccb`. The profile-label follow-up passed its complete
+frontend/coverage lane again after the strict branch update
+([run 39802944161](https://github.com/sthamann/veyndo/actions/runs/39802944161))
+and [PR 200](https://github.com/sthamann/veyndo/pull/200) merged as `07812240`.
+The full runtime tree of `07812240` is identical to the built source `f74d8ff9`.
+The intermediate PR 196 and 197 implementations are included in PR 199; their
+separate delivery branches were closed as superseded.
+
+Northflank activated **`affluent-week-4541` / `f74d8ff9` at 17:20:12 CEST on
+22 October**, deployment `vendune-core-66fcd94d4c`. Immediately before this rollout,
+the service showed `teal-farm-4382` / `bbb8b5ab`, the unchanged merged PR 195 tree,
+activated at 15:54:30. The first simulator deployment at 15:43 and the earlier
+observations above retain their dates. No schema, credential, permission or
+resource-size change was needed for this final rollout.
+
+One automatically triggered post-merge main verification was explicitly cancelled
+as a duplicate: `c948bccb` and the fully verified `db6acdb4` have identical complete
+Git trees. The required PR check was successful, not bypassed. The separate UI and
+documentation changes retain their own required checks.
+
+### Public acceptance after the final rollout
+
+The new Core passed its health check with PostgreSQL, knowledge retrieval and
+explicitly simulated payment; its pod was running with 1/1 checks passing and
+zero restarts. Full Studio reload retained the authenticated merchant and selected
+private environment. Saved baseline `b0055539` and comparison `37ab55ad` retained
+their original observations and order IDs across that restart.
+
+The public profile editor now shows readable enabled language names and the shared
+country search, including **Deutschland**. The catalogue-preparation grid shows
+all five enabled content languages and actual saved-image state. For example,
+the notebook has four completed languages and missing Italian; the test chair
+has only English and no saved image. **Bild ergänzen** on that chair opened its
+correct native product's **Medien** editor, retaining the private environment.
+No image-generation request or paid retry was submitted for this check.
+
+![Public readable profile destinations](../assets/customer-scenarios-20261022/public-readable-profiles.png)
+
+![Public catalogue preparation with actual language and image coverage](../assets/customer-scenarios-20261022/public-catalog-preparation.png)
+
+The existing Furniture Configurator's release view displayed its new connection
+diagnostics: one view, one model, four agent tools, seven declared examples and
+no unresolved references. Those counts describe the package; they do not by
+themselves prove successful execution. Its existing unsaved draft kept the
+scenario-launch button disabled, preserving the save-before-testing control.
+The draft was neither overwritten nor discarded during this read-only check.
+
+![Public app reference diagnostics](../assets/customer-scenarios-20261022/public-app-diagnostics.png)
+
+The actual configured `qwen3.6:35b` model answered the German request for a notebook
+and pen holder under EUR 70 with **Notizbuch »Stille Seiten«** (EUR 28.90) and
+**Stiftehalter »Tonruhe«** (EUR 34.50): EUR 63.40 before shipping. Native cards
+displayed their stored images, descriptions, stock and prices. Removing the holder,
+opening the notebook and returning retained the one-item selection; Restore
+returned both cards without adding anything to the cart.
+
+![Public editable visual product selection](../assets/customer-scenarios-20261022/public-visual-selection.png)
+
+Opening the notebook card, adding quantity one and completing the ordinary native
+checkout produced **`RAC-eb78b7d7`**, EUR 28.90 including EUR 4.61 VAT, German
+product name, pickup and simulated payment. Return and full reload retained
+**Warenkorb 0**, optional personalization off and no repeated privacy prompt.
+Temporary device emulation was cleared before the purchase.
+
+![Final public native receipt](../assets/customer-scenarios-20261022/public-final-native-receipt.png)
+
+![Final native return and reload with an empty cart](../assets/customer-scenarios-20261022/public-final-native-empty.png)
+
+The original Lumen Storyfront was then tested again against this final Core,
+using ordinary native Chrome input in the existing incognito session. Its first
+Checkout action loaded the embedded privacy and contact/address steps. After
+rejecting optional processing, **`RAC-3b44ea85`** completed for one German-named
+demo lamp, EUR 59.90 including EUR 9.56 VAT, pickup and simulated payment. Receipt
+return closed the iframe and showed the original bag's order-confirmed message
+with no item. Full reload and reopening Bag retained **Nothing yet**. There was
+no separate-checkout navigation, user manual test or security-setting change.
+The earlier controlled-tab blank-load observation remains recorded above.
+
+![Final original Storyfront embedded receipt](../assets/customer-scenarios-20261022/public-final-storyfront-receipt.png)
+
+![Final original Storyfront empty bag after reload](../assets/customer-scenarios-20261022/public-final-storyfront-empty.png)

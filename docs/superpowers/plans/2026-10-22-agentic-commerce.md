@@ -107,7 +107,7 @@ public site/README entry links and existing CI owners when affected.
 - [x] Connect preview, missing-field repair and scenario testing in migration UI.
 - [x] Update truthful feature docs, tutorials and public entry points.
 - [x] Run relevant full checks and fresh whole-branch review; fix important findings.
-- [ ] Land and deploy the verified artifact using the existing authorized path, then
+- [x] Land and deploy the verified artifact using the existing authorized path, then
   repeat public simulated acceptance and record what was actually delivered.
 
 ## Progress
@@ -132,4 +132,8 @@ public site/README entry links and existing CI owners when affected.
   and regressed. PR 195 passed complete CI, merged and was deployed; hosted
   stock-failure/repair, exact-budget rejection, two purchases, saved comparison
   and original embedded checkout passed. The connected catalogue/app and visual
-  shopper follow-ups are consolidated in PR 199 for one final rollout.
+  shopper follow-ups landed in PR 199, with readable profile destinations in
+  PR 200. The final `f74d8ff9` artifact is public. Catalogue repair links, app
+  diagnostics, saved simulator comparison, visual selection and native purchase
+  `RAC-eb78b7d7` passed there; original Storyfront embedded order `RAC-3b44ea85`
+  returned to an empty bag after full reload. Payments remained simulated.
