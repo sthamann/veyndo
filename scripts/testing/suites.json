@@ -64,8 +64,8 @@
     "migration_assistant"
   ],
   "providers": [
-    "agentic_scenarios",
     "outbox_subscribers",
+    "agentic_scenarios",
     "providers",
     "app_surfaces",
     "durable_agents",
