@@ -104,11 +104,13 @@ with (ROOT / 'artifacts/scenarios.log').open('w') as log:
             source = by_id[product['id']]
             assert product['name'] == source['name'] and product['stock'] == source['stock']
             assert product['priceMinor'] == int((Decimal(str(source['price'])) * 100).quantize(Decimal('1'), rounding=ROUND_HALF_UP))
-        narrowed = {'id':'scenario_only_lamp','revision':0,'data':{'name':{'en-GB':'Lamp only'},'kind':'storefront','active':True,'visibility':'public','locales':['en-GB'],'productIds':['lamp']}}
+        narrowed = {'id':'scenario_only_lamp','revision':0,'data':{'name':{'en-GB':'Lamp only'},'kind':'storefront','active':True,'visibility':'public','locales':['fr-FR'],'productIds':['lamp']}}
         call('/api/automation/channels/scenario_only_lamp', {'revision':0,'data':narrowed['data']}, headers, method='PUT')
         scoped = {**headers, 'sw-sales-channel-id':'scenario_only_lamp'}
         channel_sample = call('/api/agent/scenarios', headers=scoped)['configuration']['catalogue']
         assert [p['id'] for p in channel_sample] == ['lamp'], channel_sample
+        localized = call('/store-api/product', {}, {**scoped, 'x-commerce-locale':'fr-FR'})['elements'][0]
+        assert channel_sample[0]['name'] == localized['name']
         mcp = call('/mcp', {'jsonrpc':'2.0','id':1,'method':'tools/call','params':{'name':'merchant.scenario.list','arguments':{}}}, scoped)
         assert mcp['result']['structuredContent']['configuration']['catalogue'] == channel_sample, mcp
         assert not calls, 'Profile suggestions must not create an inference request or customer task'

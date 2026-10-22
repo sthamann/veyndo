@@ -428,3 +428,31 @@ wrong currency, invalid prices and zero/two/three-digit scales. UI regressions c
 preview-before-adoption, retained merchant brief, explicit start, channel replacement,
 empty samples and enabled-language fallback. Public deployment of this follow-up
 remains separate from the earlier accepted release above until recorded here.
+
+### Actual local model and browser result
+
+Chrome used the real local Rust application and a new disposable PostgreSQL shop.
+The suggestion preview showed six sampled channel products; adoption retained the
+merchant's original task and populated editable goals, budgets, native languages
+and destinations. Explicit start used the existing `agent-worker` with actual
+Ollama `qwen3.6:35b`, not the synthetic provider fixture.
+
+- The price-conscious profile stopped: Field Notes costs EUR 12.50 and its suggested
+  budget was EUR 12.49. No order was created for that profile.
+- The first-time German profile purchased the notebook for EUR 12.50, native private
+  order ID `69f57816331f40579b6e2e1e14d789e2`.
+- The focused Austria profile purchased the desk for EUR 452.77, native private
+  order ID `e996ee766d6b432bb774df786791a5cc`. The engine's total differs from the
+  model's earlier EUR 449 explanation; the native order is authoritative.
+
+The private database contains exactly two orders and the parent live shop zero.
+The 390 × 844 browser view has document width 390 px and suggestion width 358 px;
+the temporary viewport override was cleared. These are local acceptance captures,
+not a public rollout or real-customer conversion estimate. The full frontend suite
+passes 816 tests across 140 files.
+
+![Actual local catalogue-based profile preview](../assets/customer-scenarios-20261022/profile-suggestions-local-preview.png)
+
+![Actual local model outcomes: exact-budget stop and two native simulated orders](../assets/customer-scenarios-20261022/profile-suggestions-local-results.png)
+
+![Local mobile profile workspace at 390 px](../assets/customer-scenarios-20261022/profile-suggestions-local-mobile.png)
