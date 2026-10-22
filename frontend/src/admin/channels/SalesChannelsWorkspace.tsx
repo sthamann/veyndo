@@ -22,6 +22,7 @@ export default function SalesChannelsWorkspace({
   workspace,
   onTeam,
   onDesign,
+  onTest,
   sandbox = false,
 }: {
   request: RequestFn;
@@ -34,6 +35,7 @@ export default function SalesChannelsWorkspace({
     reference?: string,
   ) => void | Promise<void>;
   sandbox?: boolean;
+  onTest?: (target: string) => void | Promise<void>;
 }) {
   const migrationText = useMigrationText();
   const [migration, setMigration] = useState(false);
@@ -97,6 +99,7 @@ export default function SalesChannelsWorkspace({
   if (migration)
     return (
       <MigrationWorkspace
+        onTest={onTest}
         key={workspace}
         request={request}
         scopedRequest={scopedRequest}

@@ -523,6 +523,28 @@ interface inputs {
     %revision: s64,
     %workspace-context: option<merchant-run-resume-input-workspace-context>,
   }
+  record merchant-scenario-create-input-inference {
+    %model: option<option<string>>,
+    %provider: string,
+  }
+  record merchant-scenario-create-input-profiles-item {
+    %budget-minor: s64,
+    %country: string,
+    %goal: string,
+    %id: string,
+    %locale: string,
+    %name: string,
+  }
+  record merchant-scenario-create-input {
+    %inference: option<merchant-scenario-create-input-inference>,
+    %instruction: string,
+    %profiles: list<merchant-scenario-create-input-profiles-item>,
+    %request-id: string,
+    %title: string,
+  }
+  record merchant-scenario-status-input {
+    %id: string,
+  }
   record merchant-apps-search-input {
     %after: option<string>,
     %limit: option<s64>,
@@ -1630,6 +1652,9 @@ interface inputs {
   merchant-run-status: func(input: merchant-run-status-input) -> result<string, string>;
   merchant-run-cancel: func(input: merchant-run-cancel-input) -> result<string, string>;
   merchant-run-resume: func(input: merchant-run-resume-input) -> result<string, string>;
+  merchant-scenario-create: func(input: merchant-scenario-create-input) -> result<string, string>;
+  merchant-scenario-status: func(input: merchant-scenario-status-input) -> result<string, string>;
+  merchant-scenario-list: func(input: string) -> result<string, string>;
   merchant-apps-search: func(input: merchant-apps-search-input) -> result<string, string>;
   merchant-apps-read: func(input: merchant-apps-read-input) -> result<string, string>;
   merchant-agents-status: func(input: string) -> result<string, string>;

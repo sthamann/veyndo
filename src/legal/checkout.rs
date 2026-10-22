@@ -26,6 +26,7 @@ pub(super) async fn accept(
     }
     sqlx::query("INSERT INTO legal_acceptances(tenant,cart_id,data) VALUES($1,$2,$3) ON CONFLICT(tenant,cart_id) DO UPDATE SET data=EXCLUDED.data")
       .bind(&c.tenant).bind(&c.id).bind(&data).execute(&mut *tx).await?;
+    agent_runs::checkpoint::fence_commit(&a, &mut tx).await?;
     tx.commit().await?;
     Ok(Json(data))
 }

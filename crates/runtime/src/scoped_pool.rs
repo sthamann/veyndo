@@ -34,6 +34,10 @@ impl ScopedPool {
             signer: Some(Arc::new(RwLock::new(signer))),
         }
     }
+    /// Native commit guards may use system authority without reacquiring the tenant pool.
+    pub fn has_separate_authority(&self) -> bool {
+        self.system.is_some()
+    }
     pub fn size(&self) -> u32 {
         self.pool.size() + self.system.as_ref().map_or(0, sqlx::PgPool::size)
     }

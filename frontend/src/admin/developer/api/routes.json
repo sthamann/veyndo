@@ -80,6 +80,21 @@
     "source": "src/agent_runs/contract.rs"
   },
   {
+    "path": "/api/agent/scenarios",
+    "method": "GET",
+    "source": "src/agent_runs/scenarios/mod.rs"
+  },
+  {
+    "path": "/api/agent/scenarios",
+    "method": "POST",
+    "source": "src/agent_runs/scenarios/mod.rs"
+  },
+  {
+    "path": "/api/agent/scenarios/{id}",
+    "method": "GET",
+    "source": "src/agent_runs/scenarios/mod.rs"
+  },
+  {
     "path": "/api/agent/tasks",
     "method": "GET",
     "source": "src/routes.rs"

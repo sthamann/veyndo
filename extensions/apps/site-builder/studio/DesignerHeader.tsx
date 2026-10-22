@@ -1,4 +1,5 @@
 /** Channel, private save and agent entry remain visible above the shared preview. */
+import { canTestCustomers } from "../../../../frontend/src/admin/scenarios/scenario-access";
 import Icon from "../../../../frontend/src/shared/ui/Icon";
 import { contentText } from "../../../../frontend/src/shared/i18n/content-language";
 import { useContentLanguage } from "../../../../frontend/src/shared/i18n/ContentLanguage";
@@ -18,6 +19,7 @@ export default function DesignerHeader({
   onEnvironments,
   onAgent,
   agentOpen,
+  onTest,
 }: {
   d: Designer;
   rights: string[];
@@ -30,6 +32,7 @@ export default function DesignerHeader({
   onEnvironments: () => void;
   onAgent: () => void;
   agentOpen: boolean;
+  onTest?: (channel: string) => void;
 }) {
   const t = useDesignText(),
     e = useEditorText(),
@@ -109,6 +112,16 @@ export default function DesignerHeader({
           <Icon name="spark" size={17} />
           {w("agent")}
         </button>
+        {onTest && sandbox && canTestCustomers(rights) && (
+          <button
+            disabled={d.dirty || d.busy || d.channel === "*"}
+            title={d.dirty ? t("saveBeforeTest") : undefined}
+            onClick={() => onTest(d.channel)}
+          >
+            <Icon name="people" />
+            {t("testCustomers")}
+          </button>
+        )}
       </div>
       <p className="designer-scope-hint">
         {d.draft && sandbox ? t("draftHint") : t("previewHint")}

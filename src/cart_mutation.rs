@@ -137,6 +137,7 @@ async fn set_cart_transaction(
     if let Some((policy, choices)) = consent {
         legal::consent_locked(&mut tx, &c, &policy, choices, true).await?;
     }
+    agent_runs::checkpoint::fence_commit(a, &mut tx).await?;
     tx.commit().await?;
     Ok(c)
 }

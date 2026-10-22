@@ -1,0 +1,322 @@
+/** Simulator vocabulary distinguishes actual native outcomes from fictional customer reasoning. */
+import { useLocale } from "../../shared/i18n/i18n";
+const words = {
+  title: [
+    "Customer simulator",
+    "Kundensimulator",
+    "Simulateur client",
+    "Simulador de clientes",
+  ],
+  intro: [
+    "Let a small group of fictional customers try a change in your shop.",
+    "Lass eine kleine Gruppe simulierter Kunden eine Änderung im Shop ausprobieren.",
+    "Faites tester une modification par un petit groupe de clients fictifs.",
+    "Un pequeño grupo de clientes ficticios prueba un cambio en tu tienda.",
+  ],
+  sandbox: [
+    "Open sandbox",
+    "Sandbox öffnen",
+    "Ouvrir la sandbox",
+    "Abrir sandbox",
+  ],
+  installedSandbox: [
+    "Test the apps currently installed in the selected sandbox. Install your saved version there first; a historical build is not activated by starting a test.",
+    "Teste die aktuell installierten Apps der gewählten Sandbox. Installiere deine gespeicherte Version zuerst dort; ein Test aktiviert keine historische Version.",
+    "Testez les apps installées dans la sandbox sélectionnée. Installez d’abord votre version enregistrée ; le test n’active pas une version historique.",
+    "Prueba las apps instaladas en la sandbox seleccionada. Instala primero tu versión guardada; la prueba no activa una versión histórica.",
+  ],
+  repairProducts: [
+    "Check products",
+    "Produkte prüfen",
+    "Vérifier les produits",
+    "Revisar productos",
+  ],
+  repairSettings: [
+    "Check checkout settings",
+    "Checkout-Einstellungen prüfen",
+    "Vérifier les paramètres d’achat",
+    "Revisar ajustes de compra",
+  ],
+  openOrders: [
+    "Open test orders",
+    "Testbestellungen öffnen",
+    "Ouvrir les commandes test",
+    "Abrir pedidos de prueba",
+  ],
+  private: [
+    "Choose a private sandbox first. Test orders use its products and stock.",
+    "Wähle zuerst eine private Sandbox. Testbestellungen verwenden deren Produkte und Bestand.",
+    "Choisissez une sandbox privée. Les commandes de test utilisent son catalogue et son stock.",
+    "Elige una sandbox privada. Los pedidos de prueba usan su catálogo y stock.",
+  ],
+  rights: [
+    "Your role needs assistant, catalogue, channel, sandbox and order access.",
+    "Deine Rolle benötigt Zugriff auf Assistent, Katalog, Kanäle, Sandbox und Bestellungen.",
+    "Votre rôle doit accéder à l’assistant, au catalogue, aux canaux, à la sandbox et aux commandes.",
+    "Tu rol necesita acceso al asistente, catálogo, canales, sandbox y pedidos.",
+  ],
+  goal: [
+    "What should the customers try?",
+    "Was sollen die Kunden versuchen?",
+    "Que doivent essayer les clients ?",
+    "¿Qué deben intentar los clientes?",
+  ],
+  profiles: [
+    "Your test customers",
+    "Deine Testkunden",
+    "Vos clients de test",
+    "Tus clientes de prueba",
+  ],
+  profile: [
+    "Customer profile",
+    "Kundenprofil",
+    "Profil client",
+    "Perfil de cliente",
+  ],
+  budget: ["Budget", "Budget", "Budget", "Presupuesto"],
+  language: ["Language", "Sprache", "Langue", "Idioma"],
+  country: ["Country", "Land", "Pays", "País"],
+  start: [
+    "Let customers test",
+    "Kunden testen lassen",
+    "Lancer le test client",
+    "Iniciar prueba de clientes",
+  ],
+  starting: ["Starting…", "Wird gestartet…", "Démarrage…", "Iniciando…"],
+  boundary: [
+    "Native search, cart and simulated checkout. This test does not measure visual usability or real conversion.",
+    "Native Suche, Warenkorb und simulierter Checkout. Dieser Test misst keine visuelle Bedienbarkeit oder echte Conversion.",
+    "Recherche native, panier et paiement simulé. Ce test ne mesure ni l’ergonomie visuelle ni la conversion réelle.",
+    "Búsqueda nativa, carrito y pago simulado. No mide usabilidad visual ni conversión real.",
+  ],
+  history: [
+    "Saved tests",
+    "Gespeicherte Tests",
+    "Tests enregistrés",
+    "Pruebas guardadas",
+  ],
+  refresh: ["Refresh", "Aktualisieren", "Actualiser", "Actualizar"],
+  compare: ["Compare with", "Vergleichen mit", "Comparer avec", "Comparar con"],
+  before: [
+    "Previous test",
+    "Vorheriger Test",
+    "Test précédent",
+    "Prueba anterior",
+  ],
+  after: [
+    "Selected test",
+    "Ausgewählter Test",
+    "Test sélectionné",
+    "Prueba seleccionada",
+  ],
+  repeat: [
+    "Use these customers again",
+    "Diese Kunden erneut testen",
+    "Réutiliser ces clients",
+    "Volver a usar estos clientes",
+  ],
+  repeated: [
+    "Customers and goal restored. Save your shop change, then start the next test.",
+    "Kunden und Ziel übernommen. Speichere deine Shop-Änderung und starte den nächsten Test.",
+    "Clients et objectif repris. Enregistrez la modification, puis relancez le test.",
+    "Clientes y objetivo recuperados. Guarda el cambio y ejecuta otra prueba.",
+  ],
+  matching: [
+    "Same goals, profiles, channel and currency",
+    "Gleiche Ziele, Profile, Kanal und Währung",
+    "Mêmes objectifs, profils, canal et devise",
+    "Mismos objetivos, perfiles, canal y moneda",
+  ],
+  pendingComparison: [
+    "The shop comparison will be available when both customer runs have results.",
+    "Der Shop-Vergleich folgt, sobald beide Kundenläufe Ergebnisse haben.",
+    "La comparaison sera disponible lorsque les deux parcours auront des résultats.",
+    "La comparación estará disponible cuando ambos recorridos tengan resultados.",
+  ],
+  mismatch: [
+    "Different test conditions — these runs are not a matched comparison.",
+    "Andere Testbedingungen – diese Läufe sind kein Vergleich mit gleichen Voraussetzungen.",
+    "Conditions différentes : ces tests ne sont pas appariés.",
+    "Condiciones diferentes: no es una comparación equivalente.",
+  ],
+  changedSnapshot: [
+    "Shop configuration or observed catalogue changed. Starting stock can also affect results.",
+    "Shop-Konfiguration oder betrachteter Katalog verändert. Auch der Anfangsbestand kann Ergebnisse beeinflussen.",
+    "Configuration ou catalogue observé modifié. Le stock initial peut aussi influencer les résultats.",
+    "Configuración o catálogo observado cambiado. El stock inicial también influye.",
+  ],
+  testOrder: [
+    "Simulated order",
+    "Simulierte Bestellung",
+    "Commande simulée",
+    "Pedido simulado",
+  ],
+  addProfile: [
+    "Add customer",
+    "Kunden hinzufügen",
+    "Ajouter un client",
+    "Añadir cliente",
+  ],
+  removeProfile: [
+    "Remove customer",
+    "Kunden entfernen",
+    "Retirer le client",
+    "Quitar cliente",
+  ],
+  contextChanged: [
+    "The saved test uses another channel or currency. Reopen that context to repeat it.",
+    "Der gespeicherte Test verwendet einen anderen Kanal oder eine andere Währung. Öffne diesen Kontext zum Wiederholen.",
+    "Le test enregistré utilise un autre canal ou une autre devise. Rouvrez ce contexte.",
+    "La prueba usa otro canal o moneda. Vuelve a abrir ese contexto.",
+  ],
+  none: [
+    "No comparison",
+    "Kein Vergleich",
+    "Sans comparaison",
+    "Sin comparación",
+  ],
+  observed: [
+    "Observed journey",
+    "Beobachteter Ablauf",
+    "Parcours observé",
+    "Recorrido observado",
+  ],
+  cancel: [
+    "Stop customer",
+    "Kundenlauf stoppen",
+    "Arrêter le client",
+    "Detener cliente",
+  ],
+  resume: [
+    "Continue explicitly",
+    "Bewusst fortsetzen",
+    "Reprendre explicitement",
+    "Continuar explícitamente",
+  ],
+  purchase: [
+    "Purchase completed",
+    "Kauf abgeschlossen",
+    "Achat terminé",
+    "Compra completada",
+  ],
+  blocked: [
+    "Obstacle found",
+    "Hindernis gefunden",
+    "Obstacle détecté",
+    "Obstáculo detectado",
+  ],
+  stopped_by_customer: [
+    "Customer stopped",
+    "Kunde hat abgebrochen",
+    "Client arrêté",
+    "Cliente detenido",
+  ],
+  step_limit: [
+    "Step limit reached",
+    "Schrittlimit erreicht",
+    "Limite d’étapes atteinte",
+    "Límite de pasos alcanzado",
+  ],
+  queued: ["Waiting", "Wartet", "En attente", "En espera"],
+  running: ["Testing", "Testet", "Test en cours", "Probando"],
+  uncertain: [
+    "Interrupted · check before continuing",
+    "Unterbrochen · vor Fortsetzung prüfen",
+    "Interrompu · vérifier avant de reprendre",
+    "Interrumpido · revisar antes de continuar",
+  ],
+  failed: [
+    "Run failed",
+    "Lauf fehlgeschlagen",
+    "Échec du test",
+    "Prueba fallida",
+  ],
+  cancelled: ["Stopped", "Gestoppt", "Arrêté", "Detenido"],
+  ready: [
+    "Test completed",
+    "Test abgeschlossen",
+    "Test terminé",
+    "Prueba completada",
+  ],
+  search: [
+    "Search products",
+    "Produkte suchen",
+    "Rechercher des produits",
+    "Buscar productos",
+  ],
+  detail: [
+    "Read product",
+    "Produkt ansehen",
+    "Consulter le produit",
+    "Ver producto",
+  ],
+  add: [
+    "Set test basket",
+    "Testwarenkorb zusammenstellen",
+    "Composer le panier test",
+    "Preparar carrito de prueba",
+  ],
+  checkout: [
+    "Try checkout",
+    "Kauf versuchen",
+    "Essayer l’achat",
+    "Intentar compra",
+  ],
+  finish: [
+    "End journey",
+    "Ablauf beenden",
+    "Terminer le parcours",
+    "Finalizar recorrido",
+  ],
+  budgetName: [
+    "Price-conscious buyer",
+    "Preisbewusster Käufer",
+    "Client attentif au prix",
+    "Cliente atento al precio",
+  ],
+  budgetGoal: [
+    "Find a suitable product, compare its total price with my budget, then buy.",
+    "Finde ein passendes Produkt, prüfe den Gesamtpreis gegen mein Budget und kaufe es.",
+    "Trouver un produit adapté, vérifier le prix total selon mon budget et acheter.",
+    "Encontrar un producto adecuado, comprobar el precio total y comprar.",
+  ],
+  firstName: [
+    "First-time visitor",
+    "Erstbesucher",
+    "Nouveau visiteur",
+    "Primera visita",
+  ],
+  firstGoal: [
+    "Read the product information before deciding. Stop if essential information is missing.",
+    "Lies vor der Entscheidung die Produktinformationen. Brich ab, wenn Wesentliches fehlt.",
+    "Lire les informations produit avant de décider. Arrêter si des informations essentielles manquent.",
+    "Leer la información del producto antes de decidir. Detenerse si falta información esencial.",
+  ],
+  fastName: [
+    "Focused buyer",
+    "Zielgerichteter Käufer",
+    "Acheteur déterminé",
+    "Comprador decidido",
+  ],
+  fastGoal: [
+    "Find a suitable available product and complete the purchase with few steps.",
+    "Finde ein passendes verfügbares Produkt und kaufe mit wenigen Schritten.",
+    "Trouver un produit disponible adapté et acheter en peu d’étapes.",
+    "Encontrar un producto disponible adecuado y comprar en pocos pasos.",
+  ],
+  comparisonHint: [
+    "Compare matching goals, profiles and starting stock. Agent choices can vary between runs.",
+    "Vergleiche gleiche Ziele, Profile und Anfangsbestände. Agenten können zwischen Läufen unterschiedlich entscheiden.",
+    "Comparez des objectifs, profils et stocks initiaux identiques. Les choix des agents peuvent varier.",
+    "Compara objetivos, perfiles y stock inicial iguales. Las decisiones pueden variar.",
+  ],
+} as const;
+export type ScenarioWord = keyof typeof words;
+export function useScenarioText() {
+  const { locale } = useLocale();
+  const index =
+    ({ en: 0, de: 1, fr: 2, es: 3 } as Record<string, number>)[
+      locale.slice(0, 2)
+    ] ?? 0;
+  return (key: ScenarioWord) => words[key][index];
+}

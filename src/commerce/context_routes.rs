@@ -54,16 +54,10 @@ pub(crate) async fn select_checkout(
     {
         ad.country = requested.country.clone();
     }
-    let mut tx = a.db.begin().await?;
-    let r = sqlx::query("SELECT * FROM carts WHERE tenant=$1 AND token=$2 FOR UPDATE")
-        .bind(tenant(&h)?)
-        .bind(token(&h)?)
-        .fetch_optional(&mut *tx)
-        .await?
-        .ok_or(Error(StatusCode::NOT_FOUND, "Cart not found".into()))?;
-    let mut c = stored(&r)?;
-    pos::guard_cart(&h, &c)?;
-    b2b::guard_conn(&mut tx, &h, &c).await?;
+    // Quote a candidate before locking its cart: pricing/settings use the pool.
+    // Concurrent requests must not each hold one connection while asking for another.
+    let mut c = load_cart(&a, &h).await?;
+    let original_revision = c.revision;
     if c.status != "open" {
         return Err(conflict("Cart is terminal"));
     }
@@ -78,6 +72,7 @@ pub(crate) async fn select_checkout(
                 "Address selection requires the owning authenticated cart".into(),
             ));
         }
+        let mut tx = a.db.begin().await?;
         if let Some(id) = &requested.billing_address_id {
             requested.billing_address =
                 Some(accounts::address_get(&mut tx, &c.tenant, &email, id).await?);
@@ -86,6 +81,7 @@ pub(crate) async fn select_checkout(
             requested.address = Some(accounts::address_get(&mut tx, &c.tenant, &email, id).await?);
             requested.country = requested.address.as_ref().unwrap().country.clone();
         }
+        tx.commit().await?;
     }
     if let Some(email) = &requested.customer_email {
         let email = auth::email(&json!({"email":email}))?;
@@ -120,12 +116,26 @@ pub(crate) async fn select_checkout(
     if q["selectionNeedsConfirmation"] == true {
         return Err(bad("Selected country, shipping or payment is unavailable"));
     }
+    let mut tx = a.db.begin().await?;
+    let locked =
+        sqlx::query("SELECT revision,status FROM carts WHERE tenant=$1 AND token=$2 FOR UPDATE")
+            .bind(&c.tenant)
+            .bind(&c.token)
+            .fetch_one(&mut *tx)
+            .await?;
+    if locked.get::<String, _>("status") != "open"
+        || locked.get::<i64, _>("revision") != original_revision
+    {
+        return Err(conflict("Cart revision changed; reload before editing"));
+    }
+    b2b::guard_conn(&mut tx, &h, &c).await?;
     sqlx::query("UPDATE carts SET data=$1,revision=$2 WHERE id=$3")
         .bind(json!(c.data))
         .bind(c.revision)
         .bind(c.id)
         .execute(&mut *tx)
         .await?;
+    agent_runs::checkpoint::fence_commit(&a, &mut tx).await?;
     tx.commit().await?;
     Ok(Json(q))
 }

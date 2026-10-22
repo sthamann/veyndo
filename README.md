@@ -36,6 +36,7 @@ public acceptance are recorded separately.
 | **Build the business** | Connect an app's data, settings and interface to native commerce: for example, materials and custom dimensions flow through company approval, checkout and saved-list reorder. Visual editing and coding agents share its versioned definition. [App Studio](docs/app-studio.md), [connected configurator](docs/furniture-configurator.md), [native object extensions](docs/app-core-extensions.md). |
 | **Shape the shop** | Design standard storefront pages on the actual preview; use original Storyfront for connected Experiences. [Visual design](docs/personal-workspace-and-shop-design.md). |
 | **Automate the work** | Repeat reviewed work as a Flow and compare rule drafts with recorded order inputs before saving. [Automation](docs/automation.md), [reusable work](docs/personal-workspace-and-shop-design.md#repeat-completed-work-as-a-flow), [rule comparison](docs/rule-history-comparison.md). |
+| **Test before release** | Let a small group of fictional customers try native search, baskets and simulated purchases in a private shop; compare saved runs and inspect the actual failures. [Customer simulator](docs/customer-scenarios.md). |
 | **Stay in control** | Current roles, private sandboxes, immutable versions and selected publication govern changes. [Security](docs/security.md). |
 
 [![Veyndo Studio: a real agent request opens an editable native product filter](docs/assets/agent-workspace-20261020/public-grid.png)](docs/agentic-workspace.md)

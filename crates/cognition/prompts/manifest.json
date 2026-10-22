@@ -42,6 +42,11 @@
       "sha256": "d50b1c4d06588f5cfc93baa2c06d27ea5d01f32d3fbd0104596f6f8dac9db68e"
     },
     {
+      "id": "customer-scenario@1",
+      "path": "prompts/customer-scenario.v1.txt",
+      "sha256": "7152ef16376490cc9a0727ca2ec75fd6856acc3dce4f6c79578d5f61345b24eb"
+    },
+    {
       "id": "grid-filter@1",
       "path": "prompts/grid-filter.v1.txt",
       "sha256": "d3e9261f4f96530f3e47c65a1d8b320283a5a56a187f66439a00c0a13cd1e77e"

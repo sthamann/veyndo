@@ -17,6 +17,7 @@ import KnowledgeExplorer from "./KnowledgeExplorer";
 import KnowledgePreview from "./KnowledgePreview";
 import ExternalKnowledge from "./ExternalKnowledge";
 import ExperimentStudio from "./ExperimentStudio";
+import ScenarioStudio from "../scenarios/ScenarioStudio";
 import GuardrailSettings from "./GuardrailSettings";
 import EvidenceReview from "./EvidenceReview";
 import MemoryView from "./MemoryView";
@@ -48,11 +49,22 @@ export function KnowledgeView({
     if (dirty) setPending(next);
     else setTab(next);
   };
-  const [tab, setTab] = useState("overview"),
+  const [tab, setTab] = useState(() =>
+      new URLSearchParams(location.search).get("knowledgeSection") ===
+      "scenarios"
+        ? "scenarios"
+        : "overview",
+    ),
     [workspace, setWorkspace] = useState<Workspace>(),
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false),
     [create, setCreate] = useState(false);
+  useEffect(() => {
+    const url = new URL(location.href);
+    if (tab === "scenarios") url.searchParams.set("knowledgeSection", tab);
+    else url.searchParams.delete("knowledgeSection");
+    history.replaceState(null, "", url);
+  }, [tab]);
   const load = async () => {
     setBusy(true);
     setError("");
@@ -184,6 +196,16 @@ export function KnowledgeView({
                 />
               )}
               {tab === "experiments" && <ExperimentStudio request={request} />}
+              {tab === "scenarios" && (
+                <ScenarioStudio
+                  request={request}
+                  channel={
+                    new URLSearchParams(location.search).get(
+                      "scenarioChannel",
+                    ) || "default"
+                  }
+                />
+              )}
               {tab === "guardrails" && (
                 <GuardrailSettings
                   request={request}

@@ -269,6 +269,8 @@ try:
         if not tenant_pooler:
             subprocess.run(['python3','scripts/agent_authorities.py'],cwd=ROOT,env=env,check=True)
         subprocess.run(['python3','scripts/durable_agents.py'],cwd=ROOT,env=env,check=True)
+        if tenant_role and not tenant_pooler:
+            subprocess.run(['python3','scripts/agentic_scenarios.py'],cwd=ROOT,env=env,check=True)
 finally:
     for process, log in processes:
         stop(process); log.close()

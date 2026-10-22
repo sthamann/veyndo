@@ -2997,6 +2997,140 @@
       "readOnly": false
     },
     {
+      "description": "Run a bounded fictional customer cohort in a private sandbox",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "inference": {
+            "additionalProperties": false,
+            "properties": {
+              "model": {
+                "maxLength": 128,
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "provider": {
+                "enum": [
+                  "platform",
+                  "ollama",
+                  "openai",
+                  "anthropic"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "provider"
+            ],
+            "type": "object"
+          },
+          "instruction": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "type": "string"
+          },
+          "profiles": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "budgetMinor": {
+                  "maximum": 100000000,
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "country": {
+                  "maxLength": 2,
+                  "minLength": 2,
+                  "type": "string"
+                },
+                "goal": {
+                  "maxLength": 800,
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "id": {
+                  "maxLength": 24,
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "locale": {
+                  "maxLength": 35,
+                  "type": "string"
+                },
+                "name": {
+                  "maxLength": 80,
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "name",
+                "goal",
+                "budgetMinor",
+                "locale",
+                "country"
+              ],
+              "type": "object"
+            },
+            "maxItems": 6,
+            "minItems": 1,
+            "type": "array"
+          },
+          "requestId": {
+            "maxLength": 40,
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": {
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "requestId",
+          "title",
+          "instruction",
+          "profiles"
+        ],
+        "type": "object"
+      },
+      "name": "merchant.scenario.create",
+      "readOnly": false
+    },
+    {
+      "description": "Read actor-private customer journey observations",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "maxLength": 40,
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "type": "object"
+      },
+      "name": "merchant.scenario.status",
+      "readOnly": true
+    },
+    {
+      "description": "List the current actor's sandbox scenarios",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {},
+        "type": "object"
+      },
+      "name": "merchant.scenario.list",
+      "readOnly": true
+    },
+    {
       "description": "Find relevant installed apps and their admitted read tools by query; follow nextAfter",
       "inputSchema": {
         "additionalProperties": false,

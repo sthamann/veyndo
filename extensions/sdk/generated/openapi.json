@@ -6087,6 +6087,236 @@
                         "additionalProperties": false,
                         "properties": {
                           "name": {
+                            "const": "merchant.scenario.create"
+                          },
+                          "arguments": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "inference": {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "model": {
+                                    "maxLength": 128,
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "provider": {
+                                    "enum": [
+                                      "platform",
+                                      "ollama",
+                                      "openai",
+                                      "anthropic"
+                                    ],
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "provider"
+                                ],
+                                "type": "object"
+                              },
+                              "instruction": {
+                                "maxLength": 2000,
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "profiles": {
+                                "items": {
+                                  "additionalProperties": false,
+                                  "properties": {
+                                    "budgetMinor": {
+                                      "maximum": 100000000,
+                                      "minimum": 1,
+                                      "type": "integer"
+                                    },
+                                    "country": {
+                                      "maxLength": 2,
+                                      "minLength": 2,
+                                      "type": "string"
+                                    },
+                                    "goal": {
+                                      "maxLength": 800,
+                                      "minLength": 1,
+                                      "type": "string"
+                                    },
+                                    "id": {
+                                      "maxLength": 24,
+                                      "minLength": 1,
+                                      "type": "string"
+                                    },
+                                    "locale": {
+                                      "maxLength": 35,
+                                      "type": "string"
+                                    },
+                                    "name": {
+                                      "maxLength": 80,
+                                      "minLength": 1,
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "id",
+                                    "name",
+                                    "goal",
+                                    "budgetMinor",
+                                    "locale",
+                                    "country"
+                                  ],
+                                  "type": "object"
+                                },
+                                "maxItems": 6,
+                                "minItems": 1,
+                                "type": "array"
+                              },
+                              "requestId": {
+                                "maxLength": 40,
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "title": {
+                                "maxLength": 100,
+                                "minLength": 1,
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "requestId",
+                              "title",
+                              "instruction",
+                              "profiles"
+                            ],
+                            "type": "object"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "jsonrpc",
+                      "id",
+                      "method",
+                      "params"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "jsonrpc": {
+                        "const": "2.0"
+                      },
+                      "id": {
+                        "type": [
+                          "string",
+                          "integer"
+                        ]
+                      },
+                      "method": {
+                        "const": "tools/call"
+                      },
+                      "params": {
+                        "type": "object",
+                        "required": [
+                          "name",
+                          "arguments"
+                        ],
+                        "additionalProperties": false,
+                        "properties": {
+                          "name": {
+                            "const": "merchant.scenario.status"
+                          },
+                          "arguments": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "id": {
+                                "maxLength": 40,
+                                "minLength": 1,
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id"
+                            ],
+                            "type": "object"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "jsonrpc",
+                      "id",
+                      "method",
+                      "params"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "jsonrpc": {
+                        "const": "2.0"
+                      },
+                      "id": {
+                        "type": [
+                          "string",
+                          "integer"
+                        ]
+                      },
+                      "method": {
+                        "const": "tools/call"
+                      },
+                      "params": {
+                        "type": "object",
+                        "required": [
+                          "name",
+                          "arguments"
+                        ],
+                        "additionalProperties": false,
+                        "properties": {
+                          "name": {
+                            "const": "merchant.scenario.list"
+                          },
+                          "arguments": {
+                            "additionalProperties": false,
+                            "properties": {},
+                            "type": "object"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "jsonrpc",
+                      "id",
+                      "method",
+                      "params"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "jsonrpc": {
+                        "const": "2.0"
+                      },
+                      "id": {
+                        "type": [
+                          "string",
+                          "integer"
+                        ]
+                      },
+                      "method": {
+                        "const": "tools/call"
+                      },
+                      "params": {
+                        "type": "object",
+                        "required": [
+                          "name",
+                          "arguments"
+                        ],
+                        "additionalProperties": false,
+                        "properties": {
+                          "name": {
                             "const": "merchant.apps.search"
                           },
                           "arguments": {

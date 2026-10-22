@@ -1,5 +1,12 @@
 # Changelog
 
+## Private customer scenarios — unreleased
+
+- Add one to six editable fictional customer profiles on existing durable tasks, with two concurrent native shopper journeys, exact budgets, observed catalogue, locale/country and simulated checkout. Reuse shared HTTP/MCP capability rights, model accounting and private sandbox isolation.
+- Save each action, prompt provenance and private order result; support explicit resume, cancellation, lost-response recovery and before/after comparison. Add compact localized Studio controls and entry points from shop design, installed sandbox apps and migration targets.
+- Fence native cart, selection, legal and checkout commits against cancellation, revoked authority and lease expiry after database lock waits. Remove nested pool acquisition from checkout selection while preserving revision checks.
+- Verify native private purchase/repair, two concurrent customers on a minimal pool, cold restart, revoked roles, injection denial and stop/lease races. Correct UI polling and late-response selection races. Document API coverage separately from visual browser testing and conversion estimates.
+
 ## Merchant catalogue handoff and privacy continuation — 2026-10-22
 
 - Attach or drop an actual product CSV directly into the merchant composer; carry a description or HTTPS URL into the existing private intake. Keep current rights, scope cleanup, editable preview, explicit save and native image/translation/inventory owners.

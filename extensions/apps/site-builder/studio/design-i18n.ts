@@ -1,6 +1,18 @@
 /** Complete interface vocabulary for the standard-shop designer, independent of page translations. */
 import { useLocale } from "../../../../frontend/src/shared/i18n/i18n";
 const words = {
+  testCustomers: [
+    "Test with customers",
+    "Mit Kunden testen",
+    "Tester avec des clients",
+    "Probar con clientes",
+  ],
+  saveBeforeTest: [
+    "Save your draft before testing",
+    "Entwurf vor dem Test speichern",
+    "Enregistrer avant de tester",
+    "Guardar antes de probar",
+  ],
   app: ["App element", "App-Baustein", "Élément d’app", "Elemento de app"],
   channel: [
     "Sales channel",

@@ -1,6 +1,5 @@
 /** App-owned inward migration workflow: native consent, exact reviewed pages, private product targets and durable jobs. */
 import { useEffect, useRef, useState } from "react";
-import type { RequestFn } from "../../../../frontend/src/shared/api/types";
 import InstallConsent from "./InstallConsent";
 import Icon from "../../../../frontend/src/shared/ui/Icon";
 import Connection from "./Connection";
@@ -27,6 +26,7 @@ import {
   reviewPriceBasis,
   type Kind,
   type Review,
+  type MigrationWorkspaceProps,
 } from "./model";
 import "./migration.css";
 export default function MigrationWorkspace({
@@ -37,15 +37,8 @@ export default function MigrationWorkspace({
   mainLocale,
   onBack,
   onDesign,
-}: {
-  request: RequestFn;
-  scopedRequest?: (target: string) => RequestFn;
-  workspace: string;
-  rights: string[];
-  mainLocale: string;
-  onBack: () => void;
-  onDesign?: (target: string, reference?: string) => void | Promise<void>;
-}) {
+  onTest,
+}: MigrationWorkspaceProps) {
   const t = useMigrationText(),
     current = useRef(request);
   current.current = request;
@@ -163,7 +156,6 @@ export default function MigrationWorkspace({
     setError,
     name: t("title"),
   });
-  const agentContext = { kind, review, plan };
   return (
     <div className="studio-page migration-workspace">
       <header className="page-intro">
@@ -224,6 +216,7 @@ export default function MigrationWorkspace({
               setCursor(undefined);
             }}
             onDesign={design}
+            onTest={onTest && target ? () => onTest(target) : undefined}
           />
           <main>
             {canManage && (
@@ -248,7 +241,6 @@ export default function MigrationWorkspace({
                 }}
               />
             )}
-
             {plan && (
               <RunProgress
                 plan={plan}
@@ -393,7 +385,14 @@ export default function MigrationWorkspace({
           }}
         />
       )}
-      {agent && <Agent onClose={() => setAgent(false)} {...agentContext} />}
+      {agent && (
+        <Agent
+          onClose={() => setAgent(false)}
+          kind={kind}
+          review={review}
+          plan={plan}
+        />
+      )}
     </div>
   );
 }

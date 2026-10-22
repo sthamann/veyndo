@@ -672,8 +672,8 @@
     },
     "crates/cognition/src/prompts.rs": {
       "status": "unproved",
-      "sha256": "18a86d7b9c67765fb4e6dce7d4a172fbc5541e527252cf892e3aff64e5d08f59",
-      "review": "Reviewed scoped translation selection, original task authority, atomic child linking and completion, cancellation/explicit ambiguous continuation, lease fences, central provider admission outside transactions and bounded prompt evidence; real PostgreSQL/HTTP collection and interruption regressions plus 724 UI tests; skipped products store SQL NULL evidence rather than JSON null. Claude supplied code-only review, findings checked and fixed."
+      "sha256": "43583a7417c72783b98f770af37981b1cb626989aad30fdb7e5504af182ae645",
+      "review": "Customer scenarios: independent scenario_security_review completed; native signed-role, cohort, replay, injection, cancellation and post-lock lease-expiry regressions pass. Shared checkout preflight avoids nested-pool deadlock; authority is rechecked at the fenced transaction commit."
     },
     "crates/commerce/src/discount.rs": {
       "status": "reviewed-binding",
@@ -742,8 +742,8 @@
     },
     "crates/runtime/src/scoped_pool.rs": {
       "status": "unproved",
-      "sha256": "adaa010da268cde2f79023424ab795f81b475d7bb96a327c6c59eb42a142a84c",
-      "review": "Review compiler-enforced foundation crates with unchanged native owners; native provider read-tool aliases and current authorization, private checkpoint continuation and versioned prompt evidence; fixed subscriber acknowledgements preserve commit gaps, independent quarantine and explicit replay; traced requests/tasks/outbox without payloads; exact decimal-to-minor-unit rounding retains legacy price boundary; real SQL poison-isolation regression passes and workspace unit/clippy checks pass"
+      "sha256": "ccec178a1aae0ac3fdaed391742fbb1d55af34f6307be7fc1780bccf3139232d",
+      "review": "Customer scenarios: independent scenario_security_review completed; native signed-role, cohort, replay, injection, cancellation and post-lock lease-expiry regressions pass. Shared checkout preflight avoids nested-pool deadlock; authority is rechecked at the fenced transaction commit."
     },
     "crates/runtime/src/tenant_scope.rs": {
       "status": "unproved",
@@ -1402,13 +1402,13 @@
     },
     "src/agent_runs/authority.rs": {
       "status": "unproved",
-      "sha256": "def989f12a350e28081b65e118a1e5175cd38b2b868f6853911b4a516011eb64",
-      "review": "Reviewed migration 104 and all changed Rust/build owners: existing-key planning-only scope, trusted distinct agent identity, live-root lock before budget key, checked integer allocation with existing kernel guard, no network transaction, typed nonretryable quota errors, current credentials and lease-fenced late worker results; actual two-replica allocation/restart and in-flight-stop fixtures plus 623 UI tests pass. SQL/auth/provider integration is not formally proved."
+      "sha256": "e9064bf507809fbd0f97748024e16969e6edcb4b849d35b68a778e4839331d3e",
+      "review": "Customer scenarios: independent scenario_security_review completed; native signed-role, cohort, replay, injection, cancellation and post-lock lease-expiry regressions pass. Shared checkout preflight avoids nested-pool deadlock; authority is rechecked at the fenced transaction commit."
     },
     "src/agent_runs/checkpoint.rs": {
       "status": "unproved",
-      "sha256": "7fbc80d5ffb369e0d5b7d90e69ab81af531d771739cbf11445bd1ff2a23f5eb6",
-      "review": "Reviewed migration 104 and all changed Rust/build owners: existing-key planning-only scope, trusted distinct agent identity, live-root lock before budget key, checked integer allocation with existing kernel guard, no network transaction, typed nonretryable quota errors, current credentials and lease-fenced late worker results; actual two-replica allocation/restart and in-flight-stop fixtures plus 623 UI tests pass. SQL/auth/provider integration is not formally proved."
+      "sha256": "efa799bd6885ea0fa952503bbe0892cb9b9c3c649758a8f136fa6909cafdcdbb",
+      "review": "Customer scenarios: independent scenario_security_review completed; native signed-role, cohort, replay, injection, cancellation and post-lock lease-expiry regressions pass. Shared checkout preflight avoids nested-pool deadlock; authority is rechecked at the fenced transaction commit."
     },
     "src/agent_runs/context.rs": {
       "status": "unproved",
@@ -1417,8 +1417,8 @@
     },
     "src/agent_runs/contract.rs": {
       "status": "unproved",
-      "sha256": "1e312a4b98413c13166a672ff6f7283eebfedb5f2177b32043ee15a6663afd60",
-      "review": "Reviewed scoped translation selection, original task authority, atomic child linking and completion, cancellation/explicit ambiguous continuation, lease fences, central provider admission outside transactions and bounded prompt evidence; real PostgreSQL/HTTP collection and interruption regressions plus 724 UI tests; skipped products store SQL NULL evidence rather than JSON null. Claude supplied code-only review, findings checked and fixed."
+      "sha256": "689f4560624c3a97e0282f7bf03b2a701bcabc3cccd718b96c6ccb0702e4ab9f",
+      "review": "Customer scenarios: independent scenario_security_review completed; native signed-role, cohort, replay, injection, cancellation and post-lock lease-expiry regressions pass. Shared checkout preflight avoids nested-pool deadlock; authority is rechecked at the fenced transaction commit."
     },
     "src/agent_runs/controls.rs": {
       "status": "unproved",
@@ -1429,6 +1429,21 @@
       "status": "unproved",
       "sha256": "5ddd3031d46fe91aa89bd9dc3781332e93c51a6887034df29837b7eb7e6b3056",
       "review": "Reviewed task-reference-only Flow templates, same actor and original scope checks at native save and runtime, scalar event mapping, no copied credentials or source inputs, shared stop/lease and transactional daily limits; actual private event-to-approval write, denial and zero-inference regressions plus UI scope cleanup pass. Async SQL remains outside formal proof."
+    },
+    "src/agent_runs/scenarios/journey.rs": {
+      "status": "unproved",
+      "sha256": "07f7efe16356b111812e6e059d29adf02fdeba9662059b24c897ac51c35093d1",
+      "review": "Customer scenarios: independent scenario_security_review completed; native signed-role, cohort, replay, injection, cancellation and post-lock lease-expiry regressions pass. Shared checkout preflight avoids nested-pool deadlock; authority is rechecked at the fenced transaction commit."
+    },
+    "src/agent_runs/scenarios/mod.rs": {
+      "status": "unproved",
+      "sha256": "b95db647c59b137d7860f29a450c300946c8e2e85680017509b711d4d6983e2a",
+      "review": "Customer scenarios: independent scenario_security_review completed; native signed-role, cohort, replay, injection, cancellation and post-lock lease-expiry regressions pass. Shared checkout preflight avoids nested-pool deadlock; authority is rechecked at the fenced transaction commit."
+    },
+    "src/agent_runs/scenarios/shopper.rs": {
+      "status": "unproved",
+      "sha256": "8dbdb71e7fb49bd89295d32ed1cd38d3522810131200b6067c8b8a5375b2424a",
+      "review": "Customer scenarios: independent scenario_security_review completed; native signed-role, cohort, replay, injection, cancellation and post-lock lease-expiry regressions pass. Shared checkout preflight avoids nested-pool deadlock; authority is rechecked at the fenced transaction commit."
     },
     "src/agent_runs/translation.rs": {
       "status": "unproved",
@@ -1452,13 +1467,13 @@
     },
     "src/agent_runs/worker.rs": {
       "status": "unproved",
-      "sha256": "ee04d3d7d51c1510e9486727e04e9732697a00da9c75e5911666ffd10c6eeae6",
-      "review": "Reviewed scoped translation selection, original task authority, atomic child linking and completion, cancellation/explicit ambiguous continuation, lease fences, central provider admission outside transactions and bounded prompt evidence; real PostgreSQL/HTTP collection and interruption regressions plus 724 UI tests; skipped products store SQL NULL evidence rather than JSON null. Claude supplied code-only review, findings checked and fixed."
+      "sha256": "4c5a01509d94a11b1d6f3ca4fe8f2594370ca550f8978aa4176e75dd5180a6c4",
+      "review": "Customer scenarios: independent scenario_security_review completed; native signed-role, cohort, replay, injection, cancellation and post-lock lease-expiry regressions pass. Shared checkout preflight avoids nested-pool deadlock; authority is rechecked at the fenced transaction commit."
     },
     "src/agent_runs.rs": {
       "status": "unproved",
-      "sha256": "fa46b65a53224a80e2ba2fb83d93e4e43f9e3554047e5f8f8c3a9d946fa32099",
-      "review": "Reviewed scheduled Flow proposal persistence through native ready tasks: current Flow membership, private scope, original grant ceiling and shop-stop lock; personal approval alone supplies execution authority. Actual product-event, graphical pipeline, isolated approval/replay and stop-during-provider tests pass. No extracted pure policy changed; SQL, async and authorization integration remain unproved."
+      "sha256": "f7cb4fe39eed5c848083538752a7dffbe837434e03e0f9fe95e03cf3ab01b842",
+      "review": "Customer scenarios: independent scenario_security_review completed; native signed-role, cohort, replay, injection, cancellation and post-lock lease-expiry regressions pass. Shared checkout preflight avoids nested-pool deadlock; authority is rechecked at the fenced transaction commit."
     },
     "src/apps/approval.rs": {
       "status": "reviewed-binding",
@@ -2277,13 +2292,13 @@
     },
     "src/capabilities/admission.rs": {
       "status": "unproved",
-      "sha256": "1eb260b160af436c4efe027f17de13e93239821521627c33cbf8bf6b467d808a",
-      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
+      "sha256": "a1b89d8b01547f8d0cba631da46599381adf9a70c8b5dac1793aa45413b5e5d7",
+      "review": "Customer scenarios: independent scenario_security_review completed; native signed-role, cohort, replay, injection, cancellation and post-lock lease-expiry regressions pass. Shared checkout preflight avoids nested-pool deadlock; authority is rechecked at the fenced transaction commit."
     },
     "src/capabilities/catalog.rs": {
       "status": "unproved",
-      "sha256": "faf0cd14728e13953f1bc47ad2784684a2b53cc9a831e8c24dcfa3a0162ef3c5",
-      "review": "Reviewed frozen rule comparison: tenant-filtered bounded existing Flow inputs, current compound PII read grants, native checked_matches without current-data reads or action dispatch, reference fanout cap, shared registry and HTTP/MCP parity; real automation and isolation suites pass."
+      "sha256": "3cf7ca4dfe4124cc6b1d243bc371409bc080d89eb6e03be44e825fe0ac94b90f",
+      "review": "Customer scenarios: independent scenario_security_review completed; native signed-role, cohort, replay, injection, cancellation and post-lock lease-expiry regressions pass. Shared checkout preflight avoids nested-pool deadlock; authority is rechecked at the fenced transaction commit."
     },
     "src/capabilities/contract.rs": {
       "status": "unproved",
@@ -2297,13 +2312,13 @@
     },
     "src/capabilities/dispatch.rs": {
       "status": "unproved",
-      "sha256": "c9ca29a214408688ea350c579b78224dcfb4ce35d9bde32a30cb9d49403b3e64",
-      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
+      "sha256": "8e9fc966613fd0822fc6a657d647f209554b06384984367231f0d0b5ddb346ab",
+      "review": "Customer scenarios: independent scenario_security_review completed; native signed-role, cohort, replay, injection, cancellation and post-lock lease-expiry regressions pass. Shared checkout preflight avoids nested-pool deadlock; authority is rechecked at the fenced transaction commit."
     },
     "src/capabilities/registry.rs": {
       "status": "unproved",
-      "sha256": "023ba3b9f70d724fdda5dcf9d27e3218afcb2f04f10036aa98bd9dd4b1defa74",
-      "review": "Reviewed frozen rule comparison: tenant-filtered bounded existing Flow inputs, current compound PII read grants, native checked_matches without current-data reads or action dispatch, reference fanout cap, shared registry and HTTP/MCP parity; real automation and isolation suites pass."
+      "sha256": "f0914e7fc2bf4641ae65eb1b8e1da051371d291c820d6058e807942a1a444017",
+      "review": "Customer scenarios: independent scenario_security_review completed; native signed-role, cohort, replay, injection, cancellation and post-lock lease-expiry regressions pass. Shared checkout preflight avoids nested-pool deadlock; authority is rechecked at the fenced transaction commit."
     },
     "src/capabilities/schema.rs": {
       "status": "unproved",
@@ -2322,8 +2337,8 @@
     },
     "src/cart_mutation.rs": {
       "status": "unproved",
-      "sha256": "f4fb45ed9e0e75553b450667a8efd9d4d7affd98641d2c2b92623536fca51870",
-      "review": "Reviewed inbound UCP/native cart and consent transactions, native finalization contact guard, immutable order snapshots, explicit optional negotiation, public HTTPS app-owned catalogue adapters; independent whole-branch review findings repaired and six isolated HTTP/PG suites pass. No extracted kernel policy changed; SQL/provider behavior remains unproved."
+      "sha256": "6e2c9b6dbbc2b054302157b689f8d8fad1fc5b59237ab66961de9fa756fb57a3",
+      "review": "Customer scenarios: independent scenario_security_review completed; native signed-role, cohort, replay, injection, cancellation and post-lock lease-expiry regressions pass. Shared checkout preflight avoids nested-pool deadlock; authority is rechecked at the fenced transaction commit."
     },
     "src/cart_price.rs": {
       "status": "unproved",
@@ -2587,8 +2602,8 @@
     },
     "src/commerce/context_routes.rs": {
       "status": "unproved",
-      "sha256": "b304f72a27f96af48fc2232299da6c67d9a74a5456b0bf2d0d86fee6b08b15f1",
-      "review": "Reviewed native B2B authority, unit-first locking, revision-bound approvals and offers, exact budget allocation/release, private variant pagination, current app callbacks and forced tenant FKs/RLS; EDI codecs remain app-owned and bounded. Real PostgreSQL approval/concurrent budget/revocation/PDF/MCP and app/checkout baseline suites passed; schema/build/proof and changed Rust owners reviewed. Two extracted decisions add four Lean properties, not whole-server verification."
+      "sha256": "0ccd4ca9bb4ebc52ad6823b5cfe6645cae45f3c718827201d03a924941808820",
+      "review": "Customer scenarios: independent scenario_security_review completed; native signed-role, cohort, replay, injection, cancellation and post-lock lease-expiry regressions pass. Shared checkout preflight avoids nested-pool deadlock; authority is rechecked at the fenced transaction commit."
     },
     "src/commerce/customer_groups.rs": {
       "status": "reviewed-binding",
@@ -3067,8 +3082,8 @@
     },
     "src/legal/checkout.rs": {
       "status": "reviewed-binding",
-      "sha256": "7879f69ae41ee3d364093a7320d27647466e4b5eef9ec53d97a625166f382f17",
-      "review": "Reviewed capability-authenticated consent aliases and tenant/channel composite FK. Readers, processing and checkout resolve one canonical receipt; withdrawal erases related preferences in batch. PostgreSQL legal_privacy exercises original expiry, no copied checkout acceptance, second purchase and seven concurrent continuation/withdrawal requests; behavior_intelligence and tenant_isolation passed. SQL adapter remains unproved. Staging diff only adds authorized main-language metadata for product labels."
+      "sha256": "278a2203a1694848cd40c674dbb377c564d0b15c5f6820ca3f59cee226ab5923",
+      "review": "Customer scenarios: independent scenario_security_review completed; native signed-role, cohort, replay, injection, cancellation and post-lock lease-expiry regressions pass. Shared checkout preflight avoids nested-pool deadlock; authority is rechecked at the fenced transaction commit."
     },
     "src/legal/consent.rs": {
       "status": "reviewed-binding",
@@ -3537,8 +3552,8 @@
     },
     "src/order_checkout.rs": {
       "status": "reviewed-binding",
-      "sha256": "fb8369912516bdc3339585ea8d3540839cfae79830cedf0761f31b75f1678c90",
-      "review": "Native lifecycle and B2B deadlock repair reviewed: accepted package snapshots, current scopes and private projections preserve existing native invariants. Optional last-payment preference now updates after financial commit and only if changed, removing the proved customer/unit lock inversion without relaxing active-session/budget checks or retrying uncertain effects."
+      "sha256": "fb8f796153cd75d249f48e310a403aacbe59a96a26f09edfc7b5c0cc7b0fce30",
+      "review": "Customer scenarios: independent scenario_security_review completed; native signed-role, cohort, replay, injection, cancellation and post-lock lease-expiry regressions pass. Shared checkout preflight avoids nested-pool deadlock; authority is rechecked at the fenced transaction commit."
     },
     "src/order_routes.rs": {
       "status": "unproved",
@@ -4145,13 +4160,17 @@
       "sha256": "d50b1c4d06588f5cfc93baa2c06d27ea5d01f32d3fbd0104596f6f8dac9db68e",
       "review": "Reviewed scoped translation selection, original task authority, atomic child linking and completion, cancellation/explicit ambiguous continuation, lease fences, central provider admission outside transactions and bounded prompt evidence; real PostgreSQL/HTTP collection and interruption regressions plus 724 UI tests; skipped products store SQL NULL evidence rather than JSON null. Claude supplied code-only review, findings checked and fixed."
     },
+    "crates/cognition/prompts/customer-scenario.v1.txt": {
+      "sha256": "7152ef16376490cc9a0727ca2ec75fd6856acc3dce4f6c79578d5f61345b24eb",
+      "review": "Customer scenarios: independent scenario_security_review completed; native signed-role, cohort, replay, injection, cancellation and post-lock lease-expiry regressions pass. Shared checkout preflight avoids nested-pool deadlock; authority is rechecked at the fenced transaction commit."
+    },
     "crates/cognition/prompts/grid-filter.v1.txt": {
       "sha256": "d3e9261f4f96530f3e47c65a1d8b320283a5a56a187f66439a00c0a13cd1e77e",
       "review": "Reviewed native extension identity/private/unique anchors and current read/write/PII scopes; native projections use bounded fixed-store queries, exact indexed filters bind all input and fence the admitted package digest. Real four-object HTTP/MCP, role revocation, foreign reference, immutable upgrade, product/company clone and selected release tests passed. Added extracted configuration-only release predicate and operational false property; SQL and UI remain explicitly unproved. Reviewed canonical schema, preserved AI bindings and versioned grid prompt provenance without changing existing prompt revisions."
     },
     "crates/cognition/prompts/manifest.json": {
-      "sha256": "dff42177b8fcf2ef55f8a9c1dbe288f14f5c69c4479cb34a1cee8ebe6b3dbdc2",
-      "review": "Review shared read-only planner admission and one checkpointed correction using original context, current authorized app contracts and unchanged personal approval; managed page fields use app-owned schema; translation and malicious checkout-correction HTTP regressions pass, workspace units and clippy pass"
+      "sha256": "f2a4e8a4781368b8601e7747416f5c307a958074ba785b975abeac64a4d95ff2",
+      "review": "Customer scenarios: independently reviewed native authority and checkout changes; signed roles, post-lock lease expiry, cancellation, exact budgets and actual model/native purchases verified. Add registry-generated input contracts and digest-bound customer prompt."
     },
     "crates/cognition/prompts/merchant-planner.v1.txt": {
       "sha256": "6fc1d69faed9342d8b95af531c3c3e0c597f1c4d18a311d3f62e5849236fdfaf",

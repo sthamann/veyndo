@@ -6,6 +6,12 @@ import { guardrailWorkspaceWords } from "./guardrail-workspace-i18n";
 import { guardrailWords } from "./guardrail-i18n";
 import { useLocale } from "./i18n";
 export const knowledgeWords = {
+  scenarios: [
+    "Customer simulator",
+    "Kundensimulator",
+    "Simulateur client",
+    "Simulador de clientes",
+  ],
   guidance: [
     "Merchant instructions",
     "Händlervorgaben",

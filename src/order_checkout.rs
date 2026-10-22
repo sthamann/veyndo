@@ -307,6 +307,7 @@ pub(crate) async fn checkout(a: &App, h: &RequestContext, key: &str) -> Result<V
         .bind(json!({"orderId":id,"totalMinor":minor}))
         .execute(&mut *tx)
         .await?;
+    agent_runs::checkpoint::fence_commit(a, &mut tx).await?;
     tx.commit().await?;
     accounts::remember_payment(a, &c, &selected.payment_method_id).await;
     Ok(order)

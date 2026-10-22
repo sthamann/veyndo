@@ -1,4 +1,5 @@
 /** Compact migration step navigation keeps source, reviewed domains and the native design handoff together. */
+import ScenarioLaunch from "../../../../frontend/src/admin/scenarios/ScenarioLaunch";
 import { isPrivate, type Kind } from "./model";
 import { useMigrationText } from "./i18n";
 export default function MigrationSteps({
@@ -8,6 +9,7 @@ export default function MigrationSteps({
   onSettings,
   onKind,
   onDesign,
+  onTest,
 }: {
   rights: string[];
   kind: Kind;
@@ -15,6 +17,7 @@ export default function MigrationSteps({
   onSettings: () => void;
   onKind: (kind: Kind) => void;
   onDesign?: () => void | Promise<void>;
+  onTest?: () => void | Promise<void>;
 }) {
   const t = useMigrationText();
   return (
@@ -78,6 +81,13 @@ export default function MigrationSteps({
           </button>
           <small>{t("designHint")}</small>
         </>
+      )}
+      {onTest && (
+        <ScenarioLaunch
+          rights={rights}
+          disabled={busy}
+          onClick={() => void onTest()}
+        />
       )}
     </aside>
   );

@@ -30,6 +30,7 @@ import AppVersions from "./AppVersions";
 import AppLibrary from "./AppLibrary";
 import { useAppPreview } from "./useAppPreview";
 import AppStudioStatus from "./AppStudioStatus";
+import AppCurrentIdentity from "./AppCurrentIdentity";
 import AppStudioIntro from "./AppStudioIntro";
 import { useDesignerKeys } from "./useDesignerKeys";
 import "../styles/app-studio.css";
@@ -50,6 +51,7 @@ export default function DeveloperView({
   onFlows,
   rights,
   homeRevision,
+  onTest,
 }: {
   request: RequestFn;
   environments: Environment[];
@@ -59,6 +61,7 @@ export default function DeveloperView({
   sandboxRequest: (environment: string) => RequestFn;
   onRefresh: () => Promise<void>;
   onFlows: () => void;
+  onTest?: (target: string) => void | Promise<void>;
 }) {
   useEffect(() => {
     if (homeRevision) setAssistant(true);
@@ -185,26 +188,18 @@ export default function DeveloperView({
             disabled={!manage || studio.busy}
           >
             <div className="app-studio-toolbar">
-              <div className="app-current">
-                <span className="app-logo">
-                  <Icon name="layers" size={20} />
-                </span>
-                <div>
-                  <strong>
-                    {contentText(m.name, locale, studio.mainLocale) || m.id}
-                  </strong>
-                  <small>
-                    {m.id} · {m.version} ·{" "}
-                    {a(
-                      studio.draftStorage.pending
-                        ? "autosaving"
-                        : studio.dirty
-                          ? "draftSaved"
-                          : "saved",
-                    )}
-                  </small>
-                </div>
-              </div>
+              <AppCurrentIdentity
+                title={contentText(m.name, locale, studio.mainLocale) || m.id}
+                id={m.id}
+                version={m.version}
+                status={a(
+                  studio.draftStorage.pending
+                    ? "autosaving"
+                    : studio.dirty
+                      ? "draftSaved"
+                      : "saved",
+                )}
+              />
               <div className="app-toolbar-actions">
                 <button
                   type="button"
@@ -365,14 +360,14 @@ export default function DeveloperView({
               )}
               {section === "data" && (
                 <AppDataEditor manifest={m} onChange={studio.edit} />
-              )}{" "}
+              )}
               {section === "connect" && (
                 <AppConnections
                   manifest={m}
                   onChange={studio.edit}
                   onFlows={onFlows}
                 />
-              )}{" "}
+              )}
               {section === "payments" && (
                 <AppPayments
                   manifest={m}
@@ -383,6 +378,8 @@ export default function DeveloperView({
               {section === "versions" && (
                 <AppVersions
                   studio={studio}
+                  onTest={onTest}
+                  rights={rights}
                   onEdit={openForEditing}
                   onNavigate={setSection}
                   onAssist={agent.show}

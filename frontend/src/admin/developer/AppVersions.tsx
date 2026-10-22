@@ -1,4 +1,6 @@
 /** Saved version inspection, digest-approved stage install and conflict-aware package-only live release. */
+import ScenarioLaunch from "../scenarios/ScenarioLaunch";
+import { useScenarioText } from "../scenarios/scenario-i18n";
 import AppDiagnostics from "./AppDiagnostics";
 import type { AppStudioKey } from "../../shared/i18n/app-studio-i18n";
 import { contentText } from "../../shared/i18n/content-language";
@@ -7,17 +9,22 @@ import { useWorkbenchText } from "../../shared/i18n/workbench-i18n";
 import type { AppStudio, Build } from "./useAppStudio";
 export default function AppVersions({
   studio,
+  onTest,
+  rights,
   onEdit,
   onNavigate,
   onAssist,
 }: {
   studio: AppStudio;
+  onTest?: (target: string) => void | Promise<void>;
+  rights?: string[];
   onNavigate?: (tab: AppStudioKey) => void;
   onAssist?: (prompt: string) => void;
   onEdit: (build: Build) => void;
 }) {
   const { a, locale } = useAppStudioText(),
-    { w } = useWorkbenchText();
+    { w } = useWorkbenchText(),
+    scenario = useScenarioText();
   return (
     <div className="app-versions">
       <AppDiagnostics
@@ -25,6 +32,17 @@ export default function AppVersions({
         onNavigate={onNavigate}
         onAssist={onAssist}
       />
+      {onTest && studio.env && (
+        <section className="app-model-card">
+          <h2>{scenario("title")}</h2>
+          <p>{scenario("installedSandbox")}</p>
+          <ScenarioLaunch
+            rights={rights ?? []}
+            disabled={studio.busy || studio.dirty}
+            onClick={() => void onTest(studio.env)}
+          />
+        </section>
+      )}
       <section className="app-model-card">
         <h2>{a("versions")}</h2>
         {!studio.builds.length && <p>{w("noBuilds")}</p>}
