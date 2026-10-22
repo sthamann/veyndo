@@ -76,6 +76,14 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
 }
+.scenario-profile-context {
+  grid-template-columns: 1fr;
+}
+.scenario-profile-context .geo-popover {
+  box-sizing: border-box;
+  min-width: 0;
+  max-width: 100%;
+}
 .scenario-section-title,
 .scenario-start {
   display: flex;

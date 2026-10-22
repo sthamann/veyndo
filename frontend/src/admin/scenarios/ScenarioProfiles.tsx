@@ -1,5 +1,7 @@
 /** Editable fictional customers share the channel's actual languages, countries and currency. */
 import type { Dispatch, SetStateAction } from "react";
+import EntityPicker from "../../shared/geography/EntityPicker";
+import { useLocale } from "../../shared/i18n/i18n";
 import Icon from "../../shared/ui/Icon";
 import { useScenarioText } from "./scenario-i18n";
 import type { Profile, Configuration } from "./scenario-types";
@@ -13,6 +15,9 @@ export default function ScenarioProfiles({
   onChange: Dispatch<SetStateAction<Profile[]>>;
 }) {
   const t = useScenarioText();
+  const { locale } = useLocale();
+  const languageNames = new Intl.DisplayNames([locale], { type: "language" });
+  const countryNames = new Intl.DisplayNames([locale], { type: "region" });
   const edit = (index: number, patch: Partial<Profile>) =>
     onChange((ps) => ps.map((p, i) => (i === index ? { ...p, ...patch } : p)));
   return (
@@ -87,21 +92,26 @@ export default function ScenarioProfiles({
                   onChange={(e) => edit(index, { locale: e.target.value })}
                 >
                   {config.locales.map((l) => (
-                    <option key={l}>{l}</option>
+                    <option key={l} value={l}>
+                      {languageNames.of(l) ?? l}
+                    </option>
                   ))}
                 </select>
               </label>
-              <label>
-                {t("country")}
-                <select
-                  value={p.country}
-                  onChange={(e) => edit(index, { country: e.target.value })}
-                >
-                  {config.countries.map((c) => (
-                    <option key={c}>{c}</option>
-                  ))}
-                </select>
-              </label>
+              <EntityPicker
+                label={t("country")}
+                single
+                value={[p.country]}
+                options={config.countries.map((code) => ({
+                  code,
+                  label: countryNames.of(code) ?? code,
+                  search: code,
+                }))}
+                onChange={([country]) => {
+                  if (config.countries.includes(country))
+                    edit(index, { country });
+                }}
+              />
             </div>
           </article>
         ))}
