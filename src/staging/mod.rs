@@ -106,6 +106,6 @@ async fn diff(
         }
     }
     Ok(Json(
-        json!({"environment":id,"changes":changes,"excluded":["inventory","customers","orders","payments","credentials","observations","b2b-employees","b2b-spending","b2b-approvals","b2b-quotes","b2b-lists"]}),
+        json!({"environment":id,"mainLocale":current["settings"]["mainLocale"],"changes":changes,"excluded":["inventory","customers","orders","payments","credentials","observations","b2b-employees","b2b-spending","b2b-approvals","b2b-quotes","b2b-lists"]}),
     ))
 }

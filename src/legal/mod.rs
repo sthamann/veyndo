@@ -7,7 +7,9 @@ pub(crate) use consent::{
     policy, read as consent_receipt, require, require_locked, write_locked as consent_locked,
 };
 mod buyer_consent;
+mod continuation;
 pub(crate) use buyer_consent::missing_contact;
+pub(crate) use continuation::continue_consent;
 mod checkout;
 pub(crate) use checkout::snapshot;
 mod product;

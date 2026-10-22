@@ -25,3 +25,37 @@ it("opens release review for the active editor sandbox", async () => {
   );
   expect(request).not.toHaveBeenCalledWith("/api/environments/unrelated/diff");
 });
+
+it("labels product releases in the shop main language when the interface translation is absent", async () => {
+  const request = vi.fn(async (path: string) =>
+    path.endsWith("/diff")
+      ? {
+          mainLocale: "it-IT",
+          changes: [
+            {
+              key: "product:chair",
+              before: null,
+              after: {
+                name: { "it-IT": "Poltrona", "en-GB": "Wrong fallback" },
+              },
+              digest: "reviewed",
+              conflict: false,
+            },
+          ],
+        }
+      : { releases: [] },
+  );
+  render(
+    <EnvironmentManager
+      request={request}
+      environments={[{ id: "draft", name: "Draft" }]}
+      onRefresh={async () => {}}
+      onSelect={() => {}}
+      role="owner"
+    />,
+  );
+  expect(
+    await screen.findByRole("checkbox", { name: "Poltrona" }),
+  ).toBeEnabled();
+  expect(screen.queryByText("Wrong fallback")).not.toBeInTheDocument();
+});

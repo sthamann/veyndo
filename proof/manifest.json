@@ -2332,8 +2332,8 @@
     },
     "src/cart_routes.rs": {
       "status": "unproved",
-      "sha256": "b541038c9a8651f0ff28b200cdf70153a7d50dde79bd7c007613aee598bb583e",
-      "review": "Reviewed eighteen core findings: typed trusted identity and explicit route rights; consolidated current grants; durable auth and fenced shared limits; scoped transactions and one-backend PgBouncer including nested borrow fixes; bounded Wasm/PNG work; notified workers, savepoint quarantine and conservative retention; separate runtime roles and startup configuration. Real PostgreSQL/provider regressions preserve current tenant/customer/payment behavior. SQL/network adapters remain unproved."
+      "sha256": "92b3ebebd9af1a982d76a9f58a8bd493677e07985658b448f206da1c3b2bcb0b",
+      "review": "Reviewed completed-cart consent continuation: original cart capability, matching tenant/channel/session/customer, current locked policy and unexpired receipt, unchanged deadline, no purchase acceptance transfer. Real PostgreSQL legal_privacy and tenant_isolation passed. SQL adapter remains unproved."
     },
     "src/cart_storage.rs": {
       "status": "unproved",
@@ -2507,8 +2507,8 @@
     },
     "src/cognition/preferences.rs": {
       "status": "unproved",
-      "sha256": "2dd2f50c721ed517b638381d58fa29144499a5d09c99b65b7c21bc02ae60354c",
-      "review": "Reviewed request-only private preference fingerprint and post-inference consent/revision fence; existing extracted predicates unchanged, SQL and privacy response timing remain unproved adapters"
+      "sha256": "65779efa343211fd99dd53b1689d960ce29abb1a81d20fe673b80c930b5b8630",
+      "review": "Reviewed capability-authenticated consent aliases and tenant/channel composite FK. Readers, processing and checkout resolve one canonical receipt; withdrawal erases related preferences in batch. PostgreSQL legal_privacy exercises original expiry, no copied checkout acceptance, second purchase and seven concurrent continuation/withdrawal requests; behavior_intelligence and tenant_isolation passed. SQL adapter remains unproved. Staging diff only adds authorized main-language metadata for product labels."
     },
     "src/cognition/projection.rs": {
       "status": "unproved",
@@ -3067,18 +3067,23 @@
     },
     "src/legal/checkout.rs": {
       "status": "reviewed-binding",
-      "sha256": "bee386aa97678776b8616239f5aae72748c3a2cad89d6d231f25f673162379a3",
-      "review": "Reviewed inbound UCP/native cart and consent transactions, native finalization contact guard, immutable order snapshots, explicit optional negotiation, public HTTPS app-owned catalogue adapters; independent whole-branch review findings repaired and six isolated HTTP/PG suites pass. No extracted kernel policy changed; SQL/provider behavior remains unproved."
+      "sha256": "7879f69ae41ee3d364093a7320d27647466e4b5eef9ec53d97a625166f382f17",
+      "review": "Reviewed capability-authenticated consent aliases and tenant/channel composite FK. Readers, processing and checkout resolve one canonical receipt; withdrawal erases related preferences in batch. PostgreSQL legal_privacy exercises original expiry, no copied checkout acceptance, second purchase and seven concurrent continuation/withdrawal requests; behavior_intelligence and tenant_isolation passed. SQL adapter remains unproved. Staging diff only adds authorized main-language metadata for product labels."
     },
     "src/legal/consent.rs": {
       "status": "reviewed-binding",
-      "sha256": "7e9fc5f88c80b1bdba9d57eb631098c66d7312f7b45c19c638503c024791f03e",
-      "review": "Reviewed inbound UCP/native cart and consent transactions, native finalization contact guard, immutable order snapshots, explicit optional negotiation, public HTTPS app-owned catalogue adapters; independent whole-branch review findings repaired and six isolated HTTP/PG suites pass. No extracted kernel policy changed; SQL/provider behavior remains unproved."
+      "sha256": "76ba5eab144279d94783c5993be52444ee77e7d67bcce128f6dba6912cd96a7f",
+      "review": "Reviewed capability-authenticated consent aliases and tenant/channel composite FK. Readers, processing and checkout resolve one canonical receipt; withdrawal erases related preferences in batch. PostgreSQL legal_privacy exercises original expiry, no copied checkout acceptance, second purchase and seven concurrent continuation/withdrawal requests; behavior_intelligence and tenant_isolation passed. SQL adapter remains unproved. Staging diff only adds authorized main-language metadata for product labels."
+    },
+    "src/legal/continuation.rs": {
+      "status": "unproved",
+      "sha256": "2fa47a90fc99b24a14bdf19e0ac257b672d36436d133f1be6b90cdf422a5e07d",
+      "review": "Reviewed migration 108 scoped receipt references, authenticated original-cart and same-customer continuation including current B2B guard, shared root locking/revocation and preference erasure; native legal/UCP purchases, expiry, denial and concurrency regressions pass. Existing pure policies unchanged; SQL and browser behavior remain outside the formal proof."
     },
     "src/legal/mod.rs": {
       "status": "unproved",
-      "sha256": "80fd55b21877aa1e2f85256201465e68c8ab0ed2f3e0dab95400e2248240cd91",
-      "review": "Reviewed inbound UCP/native cart and consent transactions, native finalization contact guard, immutable order snapshots, explicit optional negotiation, public HTTPS app-owned catalogue adapters; independent whole-branch review findings repaired and six isolated HTTP/PG suites pass. No extracted kernel policy changed; SQL/provider behavior remains unproved."
+      "sha256": "56bff0e7fe758d7ef64164c9cae2147f3c42d3ed83fb9cde8a9ca0cda136b365",
+      "review": "Reviewed completed-cart consent continuation: original cart capability, matching tenant/channel/session/customer, current locked policy and unexpired receipt, unchanged deadline, no purchase acceptance transfer. Real PostgreSQL legal_privacy and tenant_isolation passed. SQL adapter remains unproved."
     },
     "src/legal/model.rs": {
       "status": "unproved",
@@ -3317,8 +3322,8 @@
     },
     "src/migrations/recent_schema.rs": {
       "status": "unproved",
-      "sha256": "9bfc99029e6097351938d42b99ffbe79f1f613d122209db8dbb74cb815485db5",
-      "review": "Reviewed scoped translation selection, original task authority, atomic child linking and completion, cancellation/explicit ambiguous continuation, lease fences, central provider admission outside transactions and bounded prompt evidence; real PostgreSQL/HTTP collection and interruption regressions plus 724 UI tests; skipped products store SQL NULL evidence rather than JSON null. Claude supplied code-only review, findings checked and fixed."
+      "sha256": "33fdac68820b213f3f31a61771fa9a75062096d90eb2257c2981c9e7c2a055d0",
+      "review": "Reviewed capability-authenticated consent aliases and tenant/channel composite FK. Readers, processing and checkout resolve one canonical receipt; withdrawal erases related preferences in batch. PostgreSQL legal_privacy exercises original expiry, no copied checkout acceptance, second purchase and seven concurrent continuation/withdrawal requests; behavior_intelligence and tenant_isolation passed. SQL adapter remains unproved. Staging diff only adds authorized main-language metadata for product labels."
     },
     "src/migrations/schema.rs": {
       "status": "unproved",
@@ -3937,8 +3942,8 @@
     },
     "src/staging/mod.rs": {
       "status": "unproved",
-      "sha256": "550e23143345bab66936df3ead5167d2e26552fa379d47f7ae58874d2e340b8a",
-      "review": "Reviewed native app staging: retain live/stage/preview-owner checks on the existing privileged build transaction instead of recursively acquiring another system backend. Existing digest, actor, package fences and installation transaction unchanged; real PgBouncer staging and foreign-build rejection cover the path."
+      "sha256": "987237ba1a2a78dcc7dcd1a16d978e5620ee2c2d1d8cad9787de961f8f671fb8",
+      "review": "Reviewed capability-authenticated consent aliases and tenant/channel composite FK. Readers, processing and checkout resolve one canonical receipt; withdrawal erases related preferences in batch. PostgreSQL legal_privacy exercises original expiry, no copied checkout acceptance, second purchase and seven concurrent continuation/withdrawal requests; behavior_intelligence and tenant_isolation passed. SQL adapter remains unproved. Staging diff only adds authorized main-language metadata for product labels."
     },
     "src/staging/products.rs": {
       "status": "unproved",
@@ -4639,6 +4644,10 @@
     "migrations/107-translation-selection.sql": {
       "sha256": "08fce73d745571d681bf00df74c81f7b4008e1aaafc3b6d23b998620a6ae4500",
       "review": "Reviewed scoped translation selection, original task authority, atomic child linking and completion, cancellation/explicit ambiguous continuation, lease fences, central provider admission outside transactions and bounded prompt evidence; real PostgreSQL/HTTP collection and interruption regressions plus 724 UI tests; skipped products store SQL NULL evidence rather than JSON null. Claude supplied code-only review, findings checked and fixed."
+    },
+    "migrations/108-consent-continuation.sql": {
+      "sha256": "a3608c7d8ebb51e24dd18f2948f3681c7b1d869c98d9f06c978a78d19b9f8e86",
+      "review": "Reviewed capability-authenticated consent aliases and tenant/channel composite FK. Readers, processing and checkout resolve one canonical receipt; withdrawal erases related preferences in batch. PostgreSQL legal_privacy exercises original expiry, no copied checkout acceptance, second purchase and seven concurrent continuation/withdrawal requests; behavior_intelligence and tenant_isolation passed. SQL adapter remains unproved. Staging diff only adds authorized main-language metadata for product labels."
     },
     "proof/Commerce/Claims.lean": {
       "sha256": "65bd43ec36f301365e4f327061e68fa2492a3cf51cec7da4e9f19f1b425f579c",

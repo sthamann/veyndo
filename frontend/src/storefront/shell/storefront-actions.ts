@@ -42,9 +42,13 @@ export function createStorefrontActions(owner: Owner) {
       guard(signal);
       let cart = owner.getCart();
       if (create && (!cart || cart.status !== "open")) {
-        cart = await owner.request<Cart>("/store-api/checkout/cart", {
-          session: owner.session ?? "",
-        });
+        cart = await owner.request<Cart>(
+          "/store-api/checkout/cart",
+          {
+            session: owner.session ?? "",
+          },
+          cart?.token,
+        );
         guard(signal);
         // Publish the completed mutation, not an intermediate empty cart that
         // would unmount product inputs while configuration is still running.

@@ -1,5 +1,13 @@
 # Changelog
 
+## Merchant catalogue handoff and privacy continuation — 2026-10-22
+
+- Attach or drop an actual product CSV directly into the merchant composer; carry a description or HTTPS URL into the existing private intake. Keep current rights, scope cleanup, editable preview, explicit save and native image/translation/inventory owners.
+- Show source/review/private progress, hand saved products to their real editor and open the exact sandbox publication review. Display localized product names in release selection, with main-language inheritance and technical details available separately.
+- Retain the current privacy choice after purchase through a capability-bound reference to one shared server receipt. Preserve expiry, denials and revocation across subsequent carts; erase related preferences and observations on withdrawal. Never carry terms, basket contents or company approval forward.
+- Add migration 108 on the existing scoped receipt table; old runtimes fail closed on references. Verify actual native purchases, same-buyer company continuation, foreign/session-only denial, expiry, repeated purchase and concurrent withdrawal. Ignore late browser reads/writes from prior carts.
+- Document local Chrome CSV/edit/private-save/image/selected-publication acceptance and retain its screenshots. Public rollout and Apple callback/sign-in acceptance remain separate recorded steps.
+
 ## Current-status documentation — 2026-10-21
 
 - Condense the current status into one public capability/evidence table and an explicit remaining-work list. Preserve dated deployment notes in a linked history instead of leaving contradictory old open items in the main status.

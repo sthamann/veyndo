@@ -85,3 +85,78 @@ assert call('/store-api/checkout/order',{},dh,expected=400)['errors'][0]['detail
 call('/store-api/legal/acceptance',{'policyVersion':p3['policyVersion'],'terms':True,'digitalImmediate':True},dh,method='PUT')
 digital=call('/store-api/checkout/order',{},dh);assert digital['legal']['acceptance']['digitalImmediate']==True
 print('PASS real digital checkout rejects missing immediate-supply acknowledgement and records explicit approval',flush=True)
+
+# A new basket after purchase keeps only the current server-verified browser choice.
+# No browser-stored Boolean, email or client session alone is authorization.
+x=call('/store-api/checkout/cart',{'session':'continuation-'+u},sh)
+xh={**sh,'sw-context-token':x['token']}
+px=call('/store-api/legal',h=xh)
+accepted=call('/store-api/privacy/consent',{'policyVersion':px['policyVersion'],'choices':{'analytics':True}},xh,method='PUT')
+# An open cart cannot copy a grant to an unrelated cart, even with its capability.
+open_next=call('/store-api/checkout/cart',{'session':'continuation-'+u},xh)
+assert not call('/store-api/privacy/consent',h={**sh,'sw-context-token':open_next['token']})['decided']
+call('/store-api/checkout/cart/line-item',{'items':[{'referencedId':'mug','quantity':1}]},xh)
+call('/store-api/legal/acceptance',{'policyVersion':px['policyVersion'],'terms':True,'digitalImmediate':False},xh,method='PUT')
+call('/store-api/checkout/order',{}, {**xh,'Idempotency-Key':uuid.uuid4().hex})
+y=call('/store-api/checkout/cart',{'session':'continuation-'+u},xh)
+yh={**sh,'sw-context-token':y['token']}
+assert y['lineItems']==[]
+assert call('/store-api/privacy/consent',h=yh)==accepted
+# Terms are purchase-specific and have not been carried to the fresh cart.
+call('/store-api/checkout/cart/line-item',{'items':[{'referencedId':'mug','quantity':1}]},yh)
+call('/store-api/checkout/order',{}, {**yh,'Idempotency-Key':uuid.uuid4().hex},expected=400)
+other=call('/store-api/checkout/cart',{'session':'different-'+u},xh)
+assert not call('/store-api/privacy/consent',h={**sh,'sw-context-token':other['token']})['decided']
+anonymous=call('/store-api/checkout/cart',{'session':'continuation-'+u},sh)
+assert not call('/store-api/privacy/consent',h={**sh,'sw-context-token':anonymous['token']})['decided']
+call('/store-api/checkout/cart',{'session':'continuation-'+u},{**xh,'x-tenant':b['workspace']},expected=404)
+# A denial is also remembered, with its original deadline, rather than asking repeatedly.
+denied=call('/store-api/privacy/consent',{'policyVersion':px['policyVersion'],'choices':{}},xh,method='PUT')
+z=call('/store-api/checkout/cart',{'session':'continuation-'+u},xh)
+assert call('/store-api/privacy/consent',h={**sh,'sw-context-token':z['token']})==denied
+# Every linked cart sees the same withdrawal, including already-created successors.
+assert call('/store-api/privacy/consent',h=yh)==denied
+call('/store-api/personalization/events',signal,yh,expected=403)
+call('/store-api/privacy/consent',{'policyVersion':px['policyVersion'],'choices':{'personalization':True}},yh,method='PUT')
+call('/store-api/intelligence/preferences',{'revision':0,'graph':{'nodes':[{'id':'style','kind':'style','value':'minimal','productId':None}],'edges':[]},'useForAdvice':True},yh,method='PUT')
+assert call('/store-api/intelligence/preferences',h=yh)['graph']['nodes']
+call('/store-api/privacy/consent',{'policyVersion':px['policyVersion'],'choices':{}},xh,method='PUT')
+call('/store-api/intelligence/preferences',h=yh,expected=403)
+call('/store-api/privacy/consent',{'policyVersion':px['policyVersion'],'choices':{'personalization':True}},xh,method='PUT')
+assert call('/store-api/intelligence/preferences',h=yh)['graph']['nodes']==[]
+# A second purchase inherits the original receipt in one hop, not an alias chain.
+call('/store-api/legal/acceptance',{'policyVersion':px['policyVersion'],'terms':True,'digitalImmediate':False},yh,method='PUT')
+call('/store-api/checkout/order',{}, {**yh,'Idempotency-Key':uuid.uuid4().hex})
+second_generation=call('/store-api/checkout/cart',{'session':'continuation-'+u},yh)
+sgh={**sh,'sw-context-token':second_generation['token']}
+assert call('/store-api/privacy/consent',h=sgh)['choices']['personalization']
+# Concurrent continuation never resurrects a grant; whichever commits first, all
+# successors observe the original receipt's final withdrawal, not a copied grant.
+from concurrent.futures import ThreadPoolExecutor
+from threading import Barrier
+barrier=Barrier(7)
+def race(i):
+ barrier.wait()
+ if i==0:return call('/store-api/privacy/consent',{'policyVersion':px['policyVersion'],'choices':{}},sgh,method='PUT')
+ return call('/store-api/checkout/cart',{'session':'continuation-'+u},xh)
+with ThreadPoolExecutor(max_workers=7) as pool: raced=list(pool.map(race,range(7)))
+for token in [x['token'],y['token'],z['token'],second_generation['token']]+[cart['token'] for cart in raced[1:]]:
+ receipt=call('/store-api/privacy/consent',h={**sh,'sw-context-token':token})
+ assert receipt['decided'] and not any(receipt['choices'].values()),receipt
+print('PASS shared consent withdrawal, related preference erasure, second purchase and concurrent successor creation',flush=True)
+# Expiry is owned by the root receipt, including aliases created before it expires.
+import subprocess
+from testing.database import psql
+assert os.environ['TEST_DATABASE'].startswith('commerce_'), 'Expiry fixture requires an isolated test database'
+subprocess.run(psql(os.environ['TEST_DB_CONTAINER'],'commerce',os.environ['TEST_DATABASE'],'-X','-q','-v','ON_ERROR_STOP=1'),input="UPDATE privacy_consents SET expires_at=now()-interval '1 second' WHERE tenant='"+a['workspace']+"' AND cart_id='"+x['id']+"';",text=True,check=True)
+assert not call('/store-api/privacy/consent',h=yh)['decided']
+expired=call('/store-api/checkout/cart',{'session':'continuation-'+u},xh)
+assert not call('/store-api/privacy/consent',h={**sh,'sw-context-token':expired['token']})['decided']
+# Renew the source explicitly so the following policy-change control is independent.
+call('/store-api/privacy/consent',{'policyVersion':px['policyVersion'],'choices':{}},xh,method='PUT')
+settings=call('/api/merchant/commerce',h=mh)
+settings['data']['legal']['documents']['terms']['en-GB']='Changed after continuation'
+call('/api/merchant/commerce',settings,mh,method='PUT')
+stale=call('/store-api/checkout/cart',{'session':'continuation-'+u},xh)
+assert not call('/store-api/privacy/consent',h={**sh,'sw-context-token':stale['token']})['decided']
+print('PASS completed-cart privacy continuation preserves expiry and denial; no copied terms, session-only grants, foreign-tenant grants or stale policy',flush=True)

@@ -6,7 +6,10 @@ a buyer’s reading-corner example or a hard-coded demo SKU.
 
 Open **Assistant → Upload CSV / Product or shop URL / Describe sample products**.
 These actions also stay next to the composer after a conversation has started.
-They require current catalogue write permission. AI extraction/generation also
+Attach the CSV directly with the composer paperclip or drop it onto the conversation.
+A description or complete HTTPS URL already in the message is carried into its
+matching source dialog. Changing shop, private environment, language or permissions
+discards an unfinished attachment handoff. They require current catalogue read and write permission. AI extraction/generation also
 requires `assistant.use`; deterministic CSV preparation does not.
 
 ![Source chooser and actual CSV upload in an isolated synthetic shop](assets/catalog-intake-20261016/source.jpg)
@@ -27,8 +30,15 @@ requires `assistant.use`; deterministic CSV preparation does not.
 5. Explicitly create the selection **in the sandbox**. Each product reports its own
    saved/error state. Open it in the ordinary native product editor. Opening across
    the environment boundary retains the exact product ID only for that destination.
-6. Inspect **Staging & releases** and use the existing selected publication process
-   when ready. This dialog cannot publish live products or overwrite existing ones.
+6. Use **Review publication** after saving. This opens the same selected private
+   environment in **Staging & releases**. Product selections show their localized
+   names, with technical identifiers available in details. Publish only the chosen
+   changes. This dialog cannot publish live products or overwrite existing ones.
+
+A compact progress row follows source → review → private products. After creation,
+the product editor remains the place to review/apply prepared images, add your own
+media, maintain inventory and review translations. These are actual native products,
+not a second set of import-only records. Sandbox stock is never published.
 
 ### CSV format
 
@@ -127,3 +137,9 @@ These checks prove the wiring and state effects; they do not establish the seman
 quality of a real paid model, extraction accuracy across arbitrary shops or a public
 rollout. The existing [testing guide](testing.md) and [browser session boundaries](browser-sessions.md)
 remain authoritative for broader system acceptance.
+
+## 22 October continuation
+
+The composer attachment, description/URL handoff, native image editing and selected
+one-product publication were exercised in Chrome with synthetic local data.
+[Steps, screenshots and exact acceptance boundary](evidence/merchant-journey-2026-10-22.md).

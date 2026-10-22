@@ -139,7 +139,8 @@ it("starts a fresh cart after purchase and serializes configuration before addin
     price: {},
   };
   const request = vi.fn(async (path: string, body: any, token?: string) => {
-    if (!token)
+    if (body.session) {
+      expect(token).toBe("old");
       return {
         status: "open",
         token: "new",
@@ -147,6 +148,7 @@ it("starts a fresh cart after purchase and serializes configuration before addin
         lineItems: [],
         price: {},
       };
+    }
     expect(token).toBe("new");
     expect(body.revision).toBe(path.endsWith("/configure") ? 0 : 1);
     if (path.endsWith("/configure"))
@@ -207,4 +209,42 @@ it("does not repeat a conflicting configuration or write its result into an aban
     actions.configureProduct("furniture", "desk", {}),
   ).rejects.toThrow();
   expect(save).not.toHaveBeenCalled();
+});
+
+it("continues the original completed cart capability without exposing it to agents", async () => {
+  const previous: any = {
+    status: "completed",
+    token: "original-private-token",
+    id: "paid-cart",
+  };
+  const next: any = {
+    status: "open",
+    token: "new-private-token",
+    revision: 1,
+    lineItems: [],
+    price: { totalPrice: 0, currency: "EUR" },
+  };
+  const request = vi
+    .fn()
+    .mockResolvedValueOnce(next)
+    .mockResolvedValueOnce({
+      ...next,
+      lineItems: [{ id: "desk", quantity: 1 }],
+    });
+  const actions = createStorefrontActions({
+    request,
+    getCart: () => previous,
+    saveCart: vi.fn(),
+    reviewCheckout: vi.fn(),
+    session: "same-browser",
+  });
+  const result = await actions.addProduct("desk", 1);
+  expect(request).toHaveBeenNthCalledWith(
+    1,
+    "/store-api/checkout/cart",
+    { session: "same-browser" },
+    "original-private-token",
+  );
+  expect(request.mock.calls[1][2]).toBe("new-private-token");
+  expect(JSON.stringify(result)).not.toContain("private-token");
 });

@@ -124,14 +124,22 @@ pub(crate) async fn forget(
     tx: &mut sqlx::Transaction<'_, sqlx::Postgres>,
     c: &StoredCart,
 ) -> Result<()> {
-    sqlx::query("DELETE FROM private_preferences WHERE tenant=$1 AND cart_id=$2")
-        .bind(&c.tenant)
-        .bind(&c.id)
+    forget_many(tx, &c.tenant, std::slice::from_ref(&c.id)).await
+}
+/// Erase explicitly resolved cart capabilities together; never group by caller-supplied session.
+pub(crate) async fn forget_many(
+    tx: &mut sqlx::Transaction<'_, sqlx::Postgres>,
+    tenant: &str,
+    carts: &[String],
+) -> Result<()> {
+    sqlx::query("DELETE FROM private_preferences WHERE tenant=$1 AND cart_id=ANY($2)")
+        .bind(tenant)
+        .bind(carts)
         .execute(&mut **tx)
         .await?;
     // Erasure invalidates inference rather than silently introducing differential attrition into a randomized test.
-    sqlx::query("WITH removed AS (DELETE FROM intelligence_assignments WHERE tenant=$1 AND cart_id=$2 RETURNING experiment_id) UPDATE intelligence_experiments e SET withdrawn=e.withdrawn+1 FROM removed r WHERE e.tenant=$1 AND e.id=r.experiment_id").bind(&c.tenant).bind(&c.id).execute(&mut **tx).await?;
-    sqlx::query("UPDATE knowledge_relations r SET data=jsonb_set(jsonb_set(data,'{causalUpliftProven}','false'),'{interval95}','null') WHERE r.tenant=$1 AND r.kind='EXPERIMENT_RESULT' AND EXISTS(SELECT 1 FROM intelligence_experiments e WHERE e.tenant=r.tenant AND e.id=r.source_id AND e.withdrawn>0)").bind(&c.tenant).execute(&mut **tx).await?;
+    sqlx::query("WITH removed AS (DELETE FROM intelligence_assignments WHERE tenant=$1 AND cart_id=ANY($2) RETURNING experiment_id) UPDATE intelligence_experiments e SET withdrawn=e.withdrawn+r.count FROM (SELECT experiment_id,count(*)::int AS count FROM removed GROUP BY experiment_id) r WHERE e.tenant=$1 AND e.id=r.experiment_id").bind(tenant).bind(carts).execute(&mut **tx).await?;
+    sqlx::query("UPDATE knowledge_relations r SET data=jsonb_set(jsonb_set(data,'{causalUpliftProven}','false'),'{interval95}','null') WHERE r.tenant=$1 AND r.kind='EXPERIMENT_RESULT' AND EXISTS(SELECT 1 FROM intelligence_experiments e WHERE e.tenant=r.tenant AND e.id=r.source_id AND e.withdrawn>0)").bind(tenant).execute(&mut **tx).await?;
     Ok(())
 }
 /// A request-only source stamp; never persisted as a second memory ledger or exposed to the model.

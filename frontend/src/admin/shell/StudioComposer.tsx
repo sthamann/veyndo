@@ -1,5 +1,5 @@
 /** StudioComposer: focused Studio view; state and commands come from the session-scoped controller. */
-import { lazy, Suspense, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { useCatalogIntakeText } from "../../shared/i18n/catalog-intake-i18n";
 import type { IntakeMode } from "../catalog/catalog-intake-model";
 import "../styles/catalog-intake.css";
@@ -18,9 +18,15 @@ export default function StudioComposer({ context }: { context?: string } = {}) {
   const c = useCatalogIntakeText(),
     aw = useAgentWorkspaceText();
   const [source, setSource] = useState<"document" | "guidance">();
-  const [intake, setIntake] = useState<IntakeMode>();
+  const [intake, setIntake] = useState<{
+    mode: IntakeMode;
+    source: string;
+    file?: File;
+    scope: string;
+  }>();
   const {
     access,
+    token,
     request,
     workspaceContext,
     tabLabel,
@@ -35,8 +41,40 @@ export default function StudioComposer({ context }: { context?: string } = {}) {
     busy,
     locale,
   } = useStudio();
+  const intakeScope = JSON.stringify([token, workspace, environment, locale]);
+  const canImport =
+    connected &&
+    access.includes("catalog.read") &&
+    access.includes("catalog.write");
+  useEffect(() => {
+    setIntake(undefined);
+    setSource(undefined);
+  }, [token, workspace, environment, locale]);
+  const openIntake = (mode: IntakeMode, file?: File) =>
+    setIntake({
+      mode,
+      file,
+      scope: intakeScope,
+      source:
+        mode === "demo"
+          ? draft
+          : mode === "url" && /^https:\/\/\S+$/.test(draft.trim())
+            ? draft.trim()
+            : "",
+    });
   return (
-    <div className="composer-wrap">
+    <div
+      className="composer-wrap"
+      onDragOver={(e) => {
+        if (canImport && !busy && e.dataTransfer.types.includes("Files"))
+          e.preventDefault();
+      }}
+      onDrop={(e) => {
+        if (!e.dataTransfer.files.length) return;
+        e.preventDefault();
+        if (canImport && !busy) openIntake("csv", e.dataTransfer.files[0]);
+      }}
+    >
       {workspaceContext && (
         <small>
           {aw("context")}:{" "}
@@ -44,7 +82,7 @@ export default function StudioComposer({ context }: { context?: string } = {}) {
           {workspaceContext.selected && ` · ${workspaceContext.selected.id}`}
         </small>
       )}
-      {connected && access.includes("catalog.write") && (
+      {canImport && (
         <div className="merchant-catalog-actions">
           {(
             [
@@ -59,7 +97,7 @@ export default function StudioComposer({ context }: { context?: string } = {}) {
               disabled={
                 busy || (mode !== "csv" && !access.includes("assistant.use"))
               }
-              onClick={() => setIntake(mode)}
+              onClick={() => openIntake(mode)}
             >
               <Icon name={icon} size={15} />
               {c(mode)}
@@ -90,11 +128,13 @@ export default function StudioComposer({ context }: { context?: string } = {}) {
           onClose={() => setSource(undefined)}
         />
       )}
-      {intake && connected && access.includes("catalog.write") && (
+      {intake && intake.scope === intakeScope && canImport && (
         <Suspense fallback={null}>
           <CatalogIntake
             key={`${workspace}:${environment}:${locale}`}
-            initialMode={intake}
+            initialMode={intake.mode}
+            initialSource={intake.source}
+            initialFile={intake.file}
             onClose={() => setIntake(undefined)}
           />
         </Suspense>
@@ -129,6 +169,23 @@ export default function StudioComposer({ context }: { context?: string } = {}) {
           placeholder={t("placeholder")}
         />
         <div>
+          {canImport && (
+            <label className="composer-file" title={c("dropCsv")}>
+              <Icon name="plus" size={18} />
+              <span>{c("csv")}</span>
+              <input
+                type="file"
+                accept=".csv,text/csv"
+                disabled={busy}
+                aria-label={c("attachCsv")}
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) openIntake("csv", file);
+                  e.target.value = "";
+                }}
+              />
+            </label>
+          )}
           <span>
             <Icon name="lock" size={13} />
             {t("trust")}

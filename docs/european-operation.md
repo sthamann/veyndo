@@ -84,11 +84,29 @@ not extend expiry. `consentDays` (1–365; default 180) is a configurable validi
 period, **not** a universally prescribed legal interval or an automatic database
 retention policy.
 
+After a completed purchase, the native storefront sends the original cart token
+when creating the next cart. The server verifies that capability, the same shop,
+sales channel, nonempty browser session and immutable customer identity. For a
+company purchase, the original cart also requires the currently authenticated
+buyer and current purchasing grant. POS/operator carts do not participate.
+
+Migration 108 adds a scoped reference on the existing receipt table. Successive
+carts resolve the same original receipt in one hop; they do not copy grants or
+extend the deadline. Withdrawing through any linked cart changes the shared
+receipt and removes their private preferences, observations and experiment
+assignments in the native transaction. Expired or changed policies require a new
+choice. Session strings and browser storage alone cannot authorize continuation.
+Terms, immediate digital-supply acknowledgements, company approvals, negotiated
+prices and basket contents remain specific to each purchase. The browser also
+ignores late reads/writes from a previous cart and does not depend on local
+storage succeeding. This is native storefront behavior; separate frontends must
+use the same original-capability contract.
+
 - Analytics uses the shared current receipt; the SDK loads after analytics consent.
   Revocation disables GA and removes its SDK script and GA cookies. Existing legacy
   local-storage grants cannot authorize the native storefront.
 - Personalization and experiment exposure require fresh affirmative consent in
-  the server transaction. Withdrawal removes that cart/session's behavior signals
+  the server transaction. Withdrawal removes the linked carts' behavior signals, private preferences
   and experiment exposure. The displayed ranking returns to static discovery.
 - Remote video is mounted only with external-media consent; necessary local
   product media can still render. Google Places additionally requires map consent
