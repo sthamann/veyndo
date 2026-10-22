@@ -224,6 +224,8 @@ browser security-setting change was used for this accepted journey.
 
 ## Editable visual shopper selection
 
+![Native desktop selection with actual catalogue facts](../assets/customer-scenarios-20261022/visual-selection-desktop.png)
+
 The follow-up replaces text-only product links with native product cards and a
 reversible shortlist. Local Chrome and the real `qwen3.6:35b` model compared Field
 Notizbuch (EUR 12.50) and Terra Becher (EUR 24.90). The cards displayed native
@@ -248,3 +250,11 @@ product facts, duplicate/missing IDs, reversible removal, detail/back retention
 and rejection of late provider results and errors after a scope change. Independent
 review confirmed the navigation and stale-error repairs. This section records
 local browser acceptance; public delivery is recorded separately.
+
+
+The complete catalogue/app follow-up CI also passed on `6b314459`
+([run 39789784144](https://github.com/sthamann/veyndo/actions/runs/39789784144)),
+including its actual database/provider suites and coverage gates. Its delivery
+is consolidated with visual shopping in PR 199 rather than landing intermediate
+release branches separately. The shared runtime tree at `db6acdb4` is identical
+to the built source `aa1dd115`; only merge ancestry changed.
