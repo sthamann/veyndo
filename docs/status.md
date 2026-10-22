@@ -18,6 +18,9 @@ The [complete required CI run](https://github.com/sthamann/veyndo/actions/runs/3
 passed on the final source, including all 816 frontend tests and the native
 database integration. PR #203 merged normally as `35755608`; its complete Git
 tree is identical to the publicly accepted `2bb5a99f` tree.
+The regular main release then completed at **20:39 CEST**: image
+`jovial-steel-7373`, a second fresh snapshot, successful migration job and a healthy
+Core instance with zero restarts. The saved cohort remained available after reload.
 [Exact runtime and browser evidence](evidence/customer-scenarios-2026-10-22.md#public-catalogue-profile-acceptance).
 
 The preceding catalogue/privacy release was accepted on the same date; its

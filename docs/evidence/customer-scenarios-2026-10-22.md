@@ -534,3 +534,20 @@ formal, differential, frontend, native PostgreSQL/provider, signed runtime,
 transaction-pooler and coverage gates. It took 47 min 37 sec; native integration
 accounted for 34 min 40 sec. The earlier successful run on `1a60d6b8` is retained
 as prior evidence, separate from this final result.
+
+### Regular main rollout
+
+The existing main-triggered workflow
+`a9bbbf4b-8d1e-4c4a-aef7-e77e12130d94` then rebuilt exact main `35755608` as
+`jovial-steel-7373` (8 min 56 sec), completed disk snapshot
+`26-10-22-183633-backup` (1 min 12 sec) and ran the same image in the existing
+migration-only job `acf281e1-917f-41a2-a931-27cbbf63bd9c` successfully (25 sec).
+Core deployment `vendune-core-76ff6f475d`, created at **20:38:11 CEST**, reached
+Running with **1/1 health checks passing and zero restarts**. The preceding pod
+terminated normally. The full workflow completed successfully at 20:39:20 CEST.
+No resource, provider, credential or permission setting was added.
+
+A complete public Studio reload retained the authenticated private workspace,
+all three saved cohorts and the French-only channel's language restriction.
+Reopening the accepted cohort retained the budget refusal and the same two order
+IDs. No customer test was started again after the main rollout.
