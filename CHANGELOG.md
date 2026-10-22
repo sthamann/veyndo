@@ -1,11 +1,12 @@
 # Changelog
 
-## Visual shopper selection — unreleased
+## Connected catalogue, apps and visual shopping — 22 October 2026
 
+- Add one paged catalogue-preparation view with explicit language coverage and durable image-job state, native repair links, actionable app-reference diagnostics and shared private simulator entry points.
 - Turn catalogue-grounded recommendations into native product cards with images, prices, availability and reversible selection controls. Detail navigation preserves the edited shortlist and retains native variants, app configuration and checkout.
 - Bind saved advice to the current buyer/shop/channel/language/country/currency context and discard late provider results and errors after context changes. Add localized responsive controls and regression coverage.
 
-## Private customer scenarios — unreleased
+## Private customer scenarios — 22 October 2026
 
 - Use localized language/country names and the shared searchable destination picker for fictional profiles. Retain exact native codes and the channel's allowed destinations.
 
