@@ -357,3 +357,58 @@ The earlier controlled-tab blank-load observation remains recorded above.
 ![Final original Storyfront embedded receipt](../assets/customer-scenarios-20261022/public-final-storyfront-receipt.png)
 
 ![Final original Storyfront empty bag after reload](../assets/customer-scenarios-20261022/public-final-storyfront-empty.png)
+
+### Public homepage follow-through
+
+A final apex check found that the React homepage is served by the separate private
+Experience application, not the public Core static index. Its shared four-language
+homepage was therefore updated in [Experience PR 77](https://github.com/sthamann/veyndo-experience/pull/77),
+merged as `e53ae44a`. It explains private customer scenarios, catalogue readiness
+and editable native shopping, with the actual saved public comparison screenshot
+and links to these published instructions. The original Storyfront submodule pin,
+identity, creation, provider and checkout code are unchanged.
+
+The exact committed tree passed `bun run check` in an isolated temporary export:
+TypeScript, 255 module boundaries, 951 localization keys, **249 tests in 58 files**
+with 1,254 assertions, and the production frontend/team build. GitHub's separate
+private application jobs did not start: the account annotation reports failed
+recent payments or an insufficient spending limit. No test step ran there, no
+workflow control or billing setting was changed, and that failed admission is not
+labelled a successful CI run. Public Core CI and documentation deployment passed
+independently.
+
+The existing Northflank native build `adorable-mist-5131` from `e53ae44a` succeeded
+in 1 minute 21 seconds, including both original Astro applications and the shared
+homepage. It used the existing Dockerfile, runtime configuration and persistent
+volume; no service, provider or credential was added.
+
+A later Core observation showed `golden-horse-2498` from main `07812240`, activated
+at 17:40:48 CEST, with 1/1 health checks and zero restarts. That source has the same
+complete runtime tree as the originally accepted `f74d8ff9` artifact above.
+
+The Experience artifact activated at **17:50:35 CEST**, deployment
+`vendune-experience-675fc75c96`. After its ordinary startup the pod was Running,
+1/1 checks passing with zero restarts. A request during the replacement briefly
+returned **no healthy upstream**; the healthy-state public reload then displayed
+the new section and the real comparison image. English and German rendered copy
+was inspected. At 390 × 844, the document stayed at 390 px and the section at
+350 px; the image loaded at its native width of 2,060 px. Device emulation was
+cleared. Its three cards link to the simulator, native catalogue preparation and
+shopper UI guides, while the evidence link opens this acceptance.
+
+![New connected features on the actual public homepage](../assets/customer-scenarios-20261022/public-homepage-desktop.png)
+
+![Public homepage at mobile width](../assets/customer-scenarios-20261022/public-homepage-mobile.png)
+
+After the Experience restart, the original Lumen page was fully reloaded and its
+retained one-item bag opened the embedded native checkout on the first action.
+The new cart displayed its optional privacy choice; optional processing was
+rejected for this purchase. **`RAC-b39c3fe0`** completed for one German-named demo
+lamp, EUR 59.90 including EUR 9.56 VAT, pickup and simulated payment. The receipt
+return closed the iframe and emptied the original bag. A second full page reload
+and reopening Bag retained **Nothing yet**. This final repetition used ordinary
+native input with synthetic contacts and no user manual test.
+
+![Original embedded receipt after the final Experience restart](../assets/customer-scenarios-20261022/public-restarted-storyfront-receipt.png)
+
+![Original empty bag after the final Experience restart and reload](../assets/customer-scenarios-20261022/public-restarted-storyfront-empty.png)
