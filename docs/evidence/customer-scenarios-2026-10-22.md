@@ -94,3 +94,13 @@ blocked through that reconciliation, and discarded results from a previous scope
 The app diagnostics now identify missing view/model/action references, nested calls,
 API routes and Intelligence references, with direct links to the existing editors.
 They remain draft feedback; native authorization and installation validation apply.
+
+The native Product Advisor template was saved and installed privately in Chrome.
+Its app review panel and **Customer simulator** button opened the same private
+scenario workbench. A 390 × 844 check found and repaired intrinsic grid overflow;
+the repeated check measured a 390 px page and a 358 px preparation area. The shared
+table keeps its own horizontal scroll.
+
+![Native app review and simulator entry](../assets/customer-scenarios-20261022/app-diagnostics.png)
+
+![Mobile catalogue preparation](../assets/customer-scenarios-20261022/mobile-catalog-preparation.png)

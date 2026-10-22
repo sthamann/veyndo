@@ -32,3 +32,16 @@
 .catalog-preparation-step.is-ready {
   color: var(--accent);
 }
+.catalog-preparation {
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
+}
+.catalog-preparation > .agent-grid {
+  min-width: 0;
+  max-width: 100%;
+}
+.catalog-preparation-actions > button {
+  max-width: 100%;
+  white-space: normal;
+}
