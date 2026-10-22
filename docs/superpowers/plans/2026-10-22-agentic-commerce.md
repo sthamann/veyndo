@@ -93,7 +93,8 @@ configuration/order history and scenario entry point; no alternative app schema.
 - [x] Test a budgeted multi-product request, rejected selection and editable cart handoff.
 - [x] Connect intent, visual comparison/configuration and native checkout; keep UI and
   customer-agent actions aligned without model-supplied executable frontend code.
-- [ ] Verify native browser purchase and scope/language regressions; commit.
+- [x] Verify native browser purchase and scope/language regressions; record the native
+  German simulated receipt, return, empty-cart reload and retained privacy choice.
 
 ### Task 6: Migration-to-preview, documentation and delivery
 

@@ -6,18 +6,24 @@ journey are tracked separately. All purchases below use **simulated payments**.
 
 ## What is online now
 
-Core and Studio run the runtime from [PR #193](https://github.com/sthamann/veyndo/pull/193),
-merged as `8ffb2ca4`, image `jolly-love-1426`, deployed on 22 October at 10:27 CEST.
-The image source is `a287814c`; merged main differs only in two test files. The
-complete required CI, fresh snapshot, migration 108 and public catalogue/purchase
-journeys passed. [Exact delivery and browser evidence](evidence/merchant-journey-2026-10-22.md#public-delivery-and-acceptance).
+Core and Studio run the customer-scenario runtime from [PR #195](https://github.com/sthamann/veyndo/pull/195),
+merged as `bbb8b5ab`, image `distinct-giants-7353` from `2253a627`, deployed on
+22 October at 15:43 CEST. The complete required CI passed. The public private-shop
+acceptance observed stock-related abandonment, exact-budget refusal, two native
+agent purchases, saved before/after comparison and a separate browser purchase with
+empty-cart reload. [Exact runtime and browser evidence](evidence/customer-scenarios-2026-10-22.md#public-rollout-and-customer-scenario-acceptance).
 
+The preceding catalogue/privacy release was accepted on the same date; its
+[earlier exact evidence](evidence/merchant-journey-2026-10-22.md#public-delivery-and-acceptance)
+remains available.
 Original Storyfront remains a separate service on `cbb4d283`, image
 `alert-light-1076`. The prior combined release, [PR #191](https://github.com/sthamann/veyndo/pull/191),
 passed the public two-account company purchase and original embedded Storyfront
 purchase/return/empty-cart checks. The approver inbox and reopened orders show their
-accepted app configuration. Those broader journeys were not repeated by the
-22 October native catalogue/privacy acceptance.
+accepted app configuration. The original embedded journey was repeated against the simulator Core on
+22 October: `RAC-cf96e844`, EUR 59.90, receipt return and empty original Bag after
+reload. A native incognito session loaded the iframe on its first open; a separate
+extension-controlled tab still timed out. [Both observations](evidence/customer-scenarios-2026-10-22.md#original-storyfront-iframe-regression-on-the-simulator-core).
 
 The connected merchant workspace now supports these concrete journeys:
 
@@ -38,21 +44,22 @@ The connected merchant workspace now supports these concrete journeys:
 - Compare a saved rule with an unsaved draft on recorded order-placement inputs,
   with the same native interpreter and no changes to existing orders.
 
-## In verification: private customer scenarios
+## Private customer scenarios
 
-The customer simulator is implemented locally on existing durable agent tasks:
-one to six editable fictional profiles, bounded concurrent native shopping,
-exact budgets, saved observations, resume/stop and before/after comparison.
-Designer, installed sandbox apps and migration targets open the same workbench.
-[Usage and exact scope](customer-scenarios.md). This entry is not a public deployment
-claim; the release and public check are still pending. The connected catalogue
-preparation grid and actionable app-reference diagnostics are also verified locally
-and awaiting that delivery; [details and browser evidence](evidence/customer-scenarios-2026-10-22.md#connected-catalogue-and-app-follow-through).
+The customer simulator is online on existing durable agent tasks: one to six
+editable fictional profiles, bounded concurrent native shopping, exact budgets,
+saved observations, resume/stop and before/after comparison. Designer, installed
+sandbox apps and migration targets open the same workbench.
+[Usage and exact scope](customer-scenarios.md). Public acceptance used the actual
+configured model and a private notebook stock change. The connected catalogue
+preparation grid and actionable app-reference diagnostics remain in verification
+for the next artifact; [implementation and browser evidence](evidence/customer-scenarios-2026-10-22.md#connected-catalogue-and-app-follow-through).
 
 ## Public acceptance
 
 | Journey | What was observed | Evidence |
 | --- | --- | --- |
+| Private customer scenarios | Three agents stopped at stock zero; after restoring private stock, two native EUR 28.90 orders completed while the EUR 1.00 buyer still stopped. Exact profiles and saved comparison survived reload. | [22 October simulator acceptance](evidence/customer-scenarios-2026-10-22.md#public-rollout-and-customer-scenario-acceptance) |
 | Catalogue from the conversation | Actual composer CSV attachment, editable two-product preview, private save, publication of only the named chair, retained private side table and native image editing. Description and URL handoffs retained the current sandbox. | [22 October public journey](evidence/merchant-journey-2026-10-22.md#public-delivery-and-acceptance) |
 | Purchase privacy continuation | Public simulated order `RAC-65c8482b`, EUR 59.00, German product name and EUR 9.42 VAT. Return and full reload retained an empty cart and the prior optional privacy rejection; settings remained editable. Native expiry, revocation, concurrency and company-identity cases also passed in CI. | [Public purchase and tests](evidence/merchant-journey-2026-10-22.md) |
 | Collection preparation and selected publication | The configured model prepared five connected steps for two selected products. The same task resumed without duplicating its category. Reviewed Italian translations and the landing page were published together; a EUR 49.90 purchase retained the Italian product name. | [Collection and release history](evidence/release-history-through-2026-10-21.md#21-october-connected-collection-preparation-runs-publicly) |
@@ -83,9 +90,9 @@ and awaiting that delivery; [details and browser evidence](evidence/customer-sce
 ## Proposed next improvements
 
 The 22 October merchant catalogue and privacy continuation changes are online and
-accepted as described above. A connected progress view for images/translations,
-better app connection diagnostics, consistent background-job controls and measured
-import/query improvements remain proposed next work.
+accepted as described above. The connected image/translation progress view and app-reference diagnostics are
+implemented and completing delivery. Measured import/query improvements remain
+separate next work.
 [Concrete architecture improvements discussed with Claude](architecture-followups-2026-10-22.md)
 are proposals, separate from this implementation.
 

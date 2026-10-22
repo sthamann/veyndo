@@ -13,6 +13,9 @@
 - [Connected playground](https://sthamann.github.io/veyndo/playground.html)
 
 ## Current release
+- [Current status and recorded public journeys](https://www.veyndo.ai/docs/status.html): Canonical current deployment, observed acceptance and remaining work.
+- [Private customer scenarios](https://www.veyndo.ai/docs/customer-scenarios.html): One to six fictional shopping agents, exact budgets, native simulated orders and saved before/after observations. This is native API testing, not visual usability or a real-customer conversion forecast.
+- [Catalogue preparation](https://www.veyndo.ai/docs/product-management.html): Paged product language coverage, durable image-job progress and native repair links.
 - [Core hardening](https://sthamann.github.io/veyndo/docs/core-hardening.html): Eighteen review findings, trusted request identity, explicit API permissions, non-owner forced RLS, transaction-local scoping, real PgBouncer tests, shared resource leases and durable outbox recovery. Deployment cutover and proof boundaries are explicit.
 - [Latest recorded release and dated acceptance](https://sthamann.github.io/veyndo/docs/current-release.html): Managed Storyfront apps, domains/editor links, channel pause/private previews, guest buyers and merchant enrollment; public/native deployment boundaries.
 - [Sales channels and domains](https://sthamann.github.io/veyndo/docs/channel-management.html)
