@@ -1432,8 +1432,8 @@
     },
     "src/agent_runs/scenarios/catalogue.rs": {
       "status": "unproved",
-      "sha256": "dad27f214654005a392bcb52e8d64af03626c2dc4b776251cacdf872097ba469",
-      "review": "Review bounded scenario catalogue projection: current private/channel admission, native pricing and locale fallback, positive field projection, no customer data, inference or state mutation; existing native shopper/task guards unchanged"
+      "sha256": "092bf53868181488a5c94b1f7833b7cc6a165872bf12c5c5204539640325d8b5",
+      "review": "Review actual channel language intersection for fictional-profile admission and native catalogue sampling; keep shared channel visibility and enabled-language checks fail-closed, no extra scopes or customer data, no new pricing path"
     },
     "src/agent_runs/scenarios/journey.rs": {
       "status": "unproved",
@@ -1442,8 +1442,8 @@
     },
     "src/agent_runs/scenarios/mod.rs": {
       "status": "unproved",
-      "sha256": "eaec4c8a154e71ab06e1bd5b311a009417eb1075204d3eafb8d4d877daec1b6e",
-      "review": "Review bounded scenario catalogue projection: current private/channel admission, native pricing and locale fallback, positive field projection, no customer data, inference or state mutation; existing native shopper/task guards unchanged"
+      "sha256": "f7aee62eb535bf5adc82394c864563e31da038e0279912e525fb94c59ca5e8c6",
+      "review": "Review actual channel language intersection for fictional-profile admission and native catalogue sampling; keep shared channel visibility and enabled-language checks fail-closed, no extra scopes or customer data, no new pricing path"
     },
     "src/agent_runs/scenarios/shopper.rs": {
       "status": "unproved",

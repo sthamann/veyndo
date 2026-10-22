@@ -106,8 +106,10 @@ with (ROOT / 'artifacts/scenarios.log').open('w') as log:
             assert product['priceMinor'] == int((Decimal(str(source['price'])) * 100).quantize(Decimal('1'), rounding=ROUND_HALF_UP))
         narrowed = {'id':'scenario_only_lamp','revision':0,'data':{'name':{'en-GB':'Lamp only'},'kind':'storefront','active':True,'visibility':'public','locales':['fr-FR'],'productIds':['lamp']}}
         call('/api/automation/channels/scenario_only_lamp', {'revision':0,'data':narrowed['data']}, headers, method='PUT')
-        scoped = {**headers, 'sw-sales-channel-id':'scenario_only_lamp'}
-        channel_sample = call('/api/agent/scenarios', headers=scoped)['configuration']['catalogue']
+        scoped = {**headers, 'sw-sales-channel-id':'scenario_only_lamp', 'x-commerce-locale':'fr-FR'}
+        channel_configuration = call('/api/agent/scenarios', headers=scoped)['configuration']
+        assert channel_configuration['locales'] == ['fr-FR'], channel_configuration
+        channel_sample = channel_configuration['catalogue']
         assert [p['id'] for p in channel_sample] == ['lamp'], channel_sample
         localized = call('/store-api/product', {}, {**scoped, 'x-commerce-locale':'fr-FR'})['elements'][0]
         assert channel_sample[0]['name'] == localized['name']
@@ -116,6 +118,7 @@ with (ROOT / 'artifacts/scenarios.log').open('w') as log:
         assert not calls, 'Profile suggestions must not create an inference request or customer task'
         print('PASS native channel-only product samples, exact prices, HTTP/MCP parity and no extra inference', flush=True)
         body = {'requestId': suffix, 'title': 'Lamp purchase', 'instruction': 'Buy one lamp within your budget.', 'inference': {'provider': 'openai'}, 'profiles': [{'id': 'budget', 'name': 'Budget shopper', 'goal': 'Buy a lamp', 'budgetMinor': 100000, 'locale': 'en-GB', 'country': 'DE'}]}
+        call('/api/agent/scenarios', body, scoped, 400)
         call('/api/agent/scenarios', body, live, 409)
         before = sql("SELECT jsonb_build_array((SELECT count(*) FROM orders WHERE tenant='workshop'),(SELECT stock FROM products WHERE tenant='workshop' AND id='lamp'))::text")
         started = call('/api/agent/scenarios', body, headers)

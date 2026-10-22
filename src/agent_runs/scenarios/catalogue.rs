@@ -1,5 +1,21 @@
 //! A bounded native channel sample seeds editable fictional profiles; it never reads customer data or invokes inference.
 use super::*;
+pub(super) async fn settings(
+    a: &App,
+    h: &RequestContext,
+    tenant: &str,
+) -> Result<commerce::Settings> {
+    let channel = marketing::channel_id(h);
+    let (settings, _) = commerce::scoped_config(a, tenant, channel).await?;
+    let mut settings = (*settings).clone();
+    let locale = language_context(a, h).await?.0;
+    if let Some(channel) = marketing::channel(a, h, channel, &locale).await? {
+        settings
+            .locales
+            .retain(|locale| channel.locales.contains(locale));
+    }
+    Ok(settings)
+}
 pub(super) async fn sample(
     a: &App,
     tenant: &str,

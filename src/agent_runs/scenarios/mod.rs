@@ -118,7 +118,7 @@ pub(crate) async fn invoke(a: &App, h: &RequestContext, name: &str, v: &Value) -
             return Err(bad("Invalid scenario request ID"));
         }
         let profiles = v["profiles"].as_array().unwrap();
-        let (settings, _) = commerce::scoped_config(a, &t, marketing::channel_id(h)).await?;
+        let settings = catalogue::settings(a, h, &t).await?;
         let mut ids = std::collections::HashSet::new();
         for p in profiles {
             if !identifier(p["id"].as_str().unwrap()) || !ids.insert(p["id"].as_str().unwrap()) {
@@ -171,7 +171,7 @@ pub(crate) async fn invoke(a: &App, h: &RequestContext, name: &str, v: &Value) -
                 items.push(json!({"id":s["group"],"title":s["title"],"members":s["members"],"updatedAt":row.get::<String,_>("updated_text")}));
             }
         }
-        let (settings, _) = commerce::scoped_config(a, &t, marketing::channel_id(h)).await?;
+        let settings = catalogue::settings(a, h, &t).await?;
         let currency = settings.currencies.selected("")?;
         let sample_locale = settings
             .locales
