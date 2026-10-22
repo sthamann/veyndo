@@ -65,6 +65,7 @@
   ],
   "providers": [
     "outbox_subscribers",
+    "agentic_scenarios",
     "providers",
     "app_surfaces",
     "durable_agents",

@@ -43,6 +43,7 @@ type Props = {
   rights: string[];
   sandbox: boolean;
   onEnvironments: () => void;
+  onTest?: (channel: string) => void;
   onSandbox?: (id: string, current?: () => boolean) => Promise<void>;
 };
 export default function ShopDesigner(props: Props) {
@@ -69,6 +70,7 @@ function DesignerView({
   rights,
   sandbox,
   onEnvironments,
+  onTest,
   onSandbox,
   d,
 }: Props & { d: Designer }) {
@@ -220,6 +222,7 @@ function DesignerView({
           }}
           onSandbox={() => beginSetup("edit")}
           onEnvironments={onEnvironments}
+          onTest={onTest}
           onAgent={() => {
             if (!writable || missing) beginSetup("agent");
             else setMode("agent");

@@ -53,6 +53,8 @@ pub(crate) static OPERATIONS: LazyLock<Vec<Operation>> = LazyLock::new(|| {
             let read = agent_read
                 || name == "merchant.import.inspect"
                 || name == "merchant.run.status"
+                || name == "merchant.scenario.status"
+                || name == "merchant.scenario.list"
                 || name == "merchant.agents.status"
                 || matches!(name, "catalog.facts" | "checkout.options" | "cart.quote");
             Operation {

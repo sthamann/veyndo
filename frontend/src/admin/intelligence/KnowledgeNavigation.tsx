@@ -21,6 +21,7 @@ const groups: { title: KnowledgeWord; items: [KnowledgeWord, IconName][] }[] = [
       ["observations", "check"],
       ["behavior", "chart"],
       ["experiments", "gauge"],
+      ["scenarios", "people"],
     ],
   },
 ];

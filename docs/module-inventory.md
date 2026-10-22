@@ -27,6 +27,9 @@ This lists every checked-in source module in these roots, including files with n
 | [src/agent_runs/contract.rs](../src/agent_runs/contract.rs) | HTTP/MCP share revision-bound run controls and safe progress; checkpoints and credentials are never exported. |
 | [src/agent_runs/controls.rs](../src/agent_runs/controls.rs) | Live-only agent stop and existing-key admission; no control becomes a sandbox release or credential snapshot. |
 | [src/agent_runs/flow_proposals.rs](../src/agent_runs/flow_proposals.rs) | Scheduled Flow results become native reviewable tasks; only personal approval supplies execution authority. |
+| [src/agent_runs/scenarios/journey.rs](../src/agent_runs/scenarios/journey.rs) | Each fictional customer has an independent durable provider journal and an authoritative native journey. |
+| [src/agent_runs/scenarios/mod.rs](../src/agent_runs/scenarios/mod.rs) | Fictional shopper cohorts reuse native task authority, checkpoints and private commerce operations. |
+| [src/agent_runs/scenarios/shopper.rs](../src/agent_runs/scenarios/shopper.rs) | A closed shopper adapter uses native carts and exact reviewed totals; no model-supplied authority or payment mode. |
 | [src/agent_runs/translation.rs](../src/agent_runs/translation.rs) | Translation child work reuses native draft storage, original authority and the existing task scheduler. |
 | [src/agent_runs/view.rs](../src/agent_runs/view.rs) | A reviewed grid view contains only native filter criteria; current domain and PII rights are checked before persistence. |
 | [src/agent_runs/work.rs](../src/agent_runs/work.rs) | Approved work uses the existing task lease; each native write is fenced against cancellation and recorded before advancing. |
@@ -740,6 +743,7 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/admin/developer/AppControlProperties.tsx](../frontend/src/admin/developer/AppControlProperties.tsx) | DataField and one-level container references are edited against the current typed model rather than free text. |
 | [frontend/src/admin/developer/AppControlThumbnail.tsx](../frontend/src/admin/developer/AppControlThumbnail.tsx) | Lightweight control illustrations communicate structure; no sample data or runtime is executed. |
 | [frontend/src/admin/developer/AppCreationSummary.tsx](../frontend/src/admin/developer/AppCreationSummary.tsx) | Draft summary mirrors chosen locations without changing publication state or generated permissions. |
+| [frontend/src/admin/developer/AppCurrentIdentity.tsx](../frontend/src/admin/developer/AppCurrentIdentity.tsx) | Current app identity and save state stay visible across the editor's sections. |
 | [frontend/src/admin/developer/AppDataEditor.tsx](../frontend/src/admin/developer/AppDataEditor.tsx) | Managed app models expose typed fields and opt-in public reads; removal cleans dependent bindings. |
 | [frontend/src/admin/developer/AppDesignPreview.tsx](../frontend/src/admin/developer/AppDesignPreview.tsx) | Schema-based, non-interactive design illustration. Never fetches data or executes app actions. |
 | [frontend/src/admin/developer/AppDesignWorkspace.tsx](../frontend/src/admin/developer/AppDesignWorkspace.tsx) | Shared design workspace composes the existing preview, palette and inspector with bounded personal panel widths. |
@@ -868,6 +872,16 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/admin/pos/useRegisterViewport.ts](../frontend/src/admin/pos/useRegisterViewport.ts) | Size the register pane from its actual header position, including translated toolbars and tablet wraps. |
 | [frontend/src/admin/preview/PreviewDialog.tsx](../frontend/src/admin/preview/PreviewDialog.tsx) | PreviewDialog keeps merchant interaction separate from workspace orchestration. |
 | [frontend/src/admin/preview/PreviewPanel.tsx](../frontend/src/admin/preview/PreviewPanel.tsx) | PreviewPanel renders verified shop state and typed user actions. |
+| [frontend/src/admin/scenarios/ScenarioComparison.tsx](../frontend/src/admin/scenarios/ScenarioComparison.tsx) | Matching test inputs and changed observed snapshots are separate evidence. |
+| [frontend/src/admin/scenarios/ScenarioLaunch.tsx](../frontend/src/admin/scenarios/ScenarioLaunch.tsx) | Shared customer-test entry; installing/saving a draft remains the owning workspace's action. |
+| [frontend/src/admin/scenarios/ScenarioProfiles.tsx](../frontend/src/admin/scenarios/ScenarioProfiles.tsx) | Editable fictional customers share the channel's actual languages, countries and currency. |
+| [frontend/src/admin/scenarios/ScenarioReport.tsx](../frontend/src/admin/scenarios/ScenarioReport.tsx) | Native findings stay separate from simulated customer reasoning. |
+| [frontend/src/admin/scenarios/ScenarioStudio.tsx](../frontend/src/admin/scenarios/ScenarioStudio.tsx) | A compact private customer lab on the existing Studio scope and durable run controls. |
+| [frontend/src/admin/scenarios/scenario-access.ts](../frontend/src/admin/scenarios/scenario-access.ts) | Keep every scenario entry aligned with the native compound admission. |
+| [frontend/src/admin/scenarios/scenario-i18n.ts](../frontend/src/admin/scenarios/scenario-i18n.ts) | Simulator vocabulary distinguishes actual native outcomes from fictional customer reasoning. |
+| [frontend/src/admin/scenarios/scenario-types.ts](../frontend/src/admin/scenarios/scenario-types.ts) | Safe public projections; cart tokens and provider checkpoints are never part of this contract. |
+| [frontend/src/admin/scenarios/scenarios.css](../frontend/src/admin/scenarios/scenarios.css) | Private customer lab: compact profiles, scoped progress and evidence comparison. |
+| [frontend/src/admin/scenarios/useScenarioNavigation.ts](../frontend/src/admin/scenarios/useScenarioNavigation.ts) | Scope-fenced entry from native design, app and migration workspaces. |
 | [frontend/src/admin/settings/B2BSettings.tsx](../frontend/src/admin/settings/B2BSettings.tsx) | B2B controls edit the shared revisioned settings aggregate; no separate policy store or checkout engine. |
 | [frontend/src/admin/settings/CommerceSettings.tsx](../frontend/src/admin/settings/CommerceSettings.tsx) | One revisioned international settings aggregate: drafts survive navigation between countries, taxes, methods and languages. |
 | [frontend/src/admin/settings/CompanyField.tsx](../frontend/src/admin/settings/CompanyField.tsx) | One factual field with visible channel inheritance, an explicit reset and searchable geographic selection. |
@@ -1190,6 +1204,7 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/shared/operations/inputs-13.ts](../frontend/src/shared/operations/inputs-13.ts) | Generated native operation input contracts; do not edit. |
 | [frontend/src/shared/operations/inputs-14.ts](../frontend/src/shared/operations/inputs-14.ts) | Generated native operation input contracts; do not edit. |
 | [frontend/src/shared/operations/inputs-15.ts](../frontend/src/shared/operations/inputs-15.ts) | Generated native operation input contracts; do not edit. |
+| [frontend/src/shared/operations/inputs-16.ts](../frontend/src/shared/operations/inputs-16.ts) | Generated native operation input contracts; do not edit. |
 | [frontend/src/shared/operations/inputs-2.ts](../frontend/src/shared/operations/inputs-2.ts) | Generated native operation input contracts; do not edit. |
 | [frontend/src/shared/operations/inputs-3.ts](../frontend/src/shared/operations/inputs-3.ts) | Generated native operation input contracts; do not edit. |
 | [frontend/src/shared/operations/inputs-4.ts](../frontend/src/shared/operations/inputs-4.ts) | Generated native operation input contracts; do not edit. |
@@ -1612,6 +1627,7 @@ This lists every checked-in source module in these roots, including files with n
 | [scripts/admin_creation.py](../scripts/admin_creation.py) | Native Admin customer/manual-order HTTP+MCP state, isolation, replay and private token regressions. No provider calls. |
 | [scripts/agent_authorities.py](../scripts/agent_authorities.py) | Real HTTP/PostgreSQL agent-key allocations, two replicas, stop, revocation and restart; local model only. |
 | [scripts/agentic_commerce.py](../scripts/agentic_commerce.py) | Real UCP cart transfer into native checkout: scoped single-use capability and one durable order. |
+| [scripts/agentic_scenarios.py](../scripts/agentic_scenarios.py) | Customer agents use the native isolated shop, cart and checkout; only inference is synthetic. |
 | [scripts/api_catalogue.py](../scripts/api_catalogue.py) | Generate a drift-checked static HTTP route catalogue from the compiled Rust router declarations. |
 | [scripts/app_assets.py](../scripts/app_assets.py) | Actual native scoped file upload, callback read, product/digest/key fences and public-file policy. |
 | [scripts/app_assistants.py](../scripts/app_assistants.py) | Real assistant packages: editor context, rights, MCP opt-out, cron, signed webhooks, flows and local service fixtures. |

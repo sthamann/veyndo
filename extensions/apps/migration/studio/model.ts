@@ -1,4 +1,15 @@
 /** Review projections retain exact minor units and source IDs; UI never invents native purchase or identity authority. */
+import type { RequestFn } from "../../../../frontend/src/shared/api/types";
+export type MigrationWorkspaceProps = {
+  request: RequestFn;
+  scopedRequest?: (target: string) => RequestFn;
+  workspace: string;
+  rights: string[];
+  mainLocale: string;
+  onBack: () => void;
+  onDesign?: (target: string, reference?: string) => void | Promise<void>;
+  onTest?: (target: string) => void | Promise<void>;
+};
 export type SourceAddress = {
   name?: string;
   company?: string;

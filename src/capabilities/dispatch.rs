@@ -30,7 +30,10 @@ impl Owner {
             Self::AppDiscovery
         } else if name.starts_with("merchant.catalog.") {
             Self::CatalogIntake
-        } else if name.starts_with("merchant.run.") || name.starts_with("merchant.agents.") {
+        } else if name.starts_with("merchant.run.")
+            || name.starts_with("merchant.agents.")
+            || name.starts_with("merchant.scenario.")
+        {
             Self::Runs
         } else if name.starts_with("studio.workspace.") {
             Self::Personal

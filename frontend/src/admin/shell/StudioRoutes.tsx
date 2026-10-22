@@ -1,4 +1,5 @@
 /** StudioRoutes: focused Studio view; state and commands come from the session-scoped controller. */
+import { useScenarioNavigation } from "../scenarios/useScenarioNavigation";
 import { lazy, useCallback } from "react";
 import { createStudioRequest } from "./requests";
 import { useLocale } from "../../shared/i18n/i18n";
@@ -102,6 +103,7 @@ export default function StudioRoutes() {
     (id: string) => createStudioRequest(token, id, locale),
     [token, locale],
   );
+  const openScenarios = useScenarioNavigation();
   // Keep the conversation draft mounted through session recovery; data workspaces wait for their new scope.
   if (!connected && auth.active)
     return (
@@ -155,6 +157,7 @@ export default function StudioRoutes() {
           : undefined
       }
       onEnvironments={() => selectTab("environments")}
+      onTest={(channel) => void openScenarios(channel)}
       onSandbox={async (id, current) => {
         await refreshEnvironments();
         if (current?.() !== false) setEnvironment(id);
@@ -222,6 +225,7 @@ export default function StudioRoutes() {
     />
   ) : tab === "channels" ? (
     <SalesChannelsWorkspace
+      onTest={(target) => openScenarios("default", target)}
       scopedRequest={sandboxRequest}
       key={environment || workspace}
       request={request}
@@ -275,6 +279,7 @@ export default function StudioRoutes() {
     />
   ) : tab === "developers" ? (
     <DeveloperView
+      onTest={(target) => openScenarios("default", target)}
       key={workspace}
       workspace={workspace}
       sandboxRequest={sandboxRequest}

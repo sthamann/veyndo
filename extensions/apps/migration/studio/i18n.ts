@@ -1,6 +1,12 @@
 /** Migration controls use the same four interface locales; source content keeps its own explicit locale. */
 import { useLocale } from "../../../../frontend/src/shared/i18n/i18n";
 const words = {
+  testCustomers: [
+    "Test imported shop with customers",
+    "Importierten Shop mit Kunden testen",
+    "Tester la boutique importée avec des clients",
+    "Probar la tienda importada con clientes",
+  ],
   reviews: [
     "Historical reviews",
     "Historische Bewertungen",

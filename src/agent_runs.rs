@@ -6,6 +6,7 @@ pub(crate) mod context;
 mod contract;
 pub(crate) mod controls;
 mod flow_proposals;
+pub(crate) mod scenarios;
 pub(crate) mod translation;
 pub(crate) mod view;
 pub(crate) mod work;
@@ -97,17 +98,21 @@ pub(crate) async fn enqueue(
                 .ok_or(bad("Invalid agent request ID"))
         })
         .transpose()?;
-    let fingerprint = hash(
-        &json!([
-            request["instruction"],
-            request["inference"],
-            request["locale"],
-            request["channel"],
-            request["requestedConversation"],
-            request["workspaceContext"]
-        ])
-        .to_string(),
-    );
+    let mut fingerprint_input = json!([
+        request["instruction"],
+        request["inference"],
+        request["locale"],
+        request["channel"],
+        request["requestedConversation"],
+        request["workspaceContext"]
+    ]);
+    if request["scenario"].is_object() {
+        fingerprint_input
+            .as_array_mut()
+            .unwrap()
+            .push(request["scenario"].clone());
+    }
+    let fingerprint = hash(&fingerprint_input.to_string());
     if let Some(key)=request_key && let Some(existing)=sqlx::query("SELECT *,run_updated::text AS updated_text FROM tasks WHERE tenant=$1 AND run_actor=$2 AND run_key=$3 AND (run_request->>'agentId') IS NOT DISTINCT FROM $4").bind(&t).bind(actor).bind(key).bind(&h.principal.agent_key).fetch_optional(&mut *tx).await? {
         if existing.get::<Option<String>,_>("run_fingerprint").as_deref()!=Some(&fingerprint) {return Err(conflict("Agent request ID was already used with different input"));}
         let admitted:Value=existing.get("run_scopes");

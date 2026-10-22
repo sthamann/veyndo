@@ -210,5 +210,21 @@ export interface Inputs7 {
         | "users";
     };
   };
-  "merchant.apps.search": { after?: string; limit?: number; query?: string };
+  "merchant.scenario.create": {
+    inference?: {
+      model?: string | null;
+      provider: "platform" | "ollama" | "openai" | "anthropic";
+    };
+    instruction: string;
+    profiles: Array<{
+      budgetMinor: number;
+      country: string;
+      goal: string;
+      id: string;
+      locale: string;
+      name: string;
+    }>;
+    requestId: string;
+    title: string;
+  };
 }

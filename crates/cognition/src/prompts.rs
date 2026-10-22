@@ -38,6 +38,10 @@ const TEMPLATES: &[(&str, &str)] = &[
     ("app-edit@2", include_str!("../prompts/app-edit.v2.txt")),
     ("app-edit@3", include_str!("../prompts/app-edit.v3.txt")),
     (
+        "customer-scenario@1",
+        include_str!("../prompts/customer-scenario.v1.txt"),
+    ),
+    (
         "grid-filter@1",
         include_str!("../prompts/grid-filter.v1.txt"),
     ),

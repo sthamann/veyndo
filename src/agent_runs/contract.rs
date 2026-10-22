@@ -19,6 +19,9 @@ pub(crate) const CAPABILITIES: &[(&str, &str)] = &[
     ),
 ];
 pub(crate) fn schema(name: &str) -> Option<Value> {
+    if let Some(schema) = scenarios::schema(name) {
+        return Some(schema);
+    }
     if let Some(schema) = super::controls::schema(name) {
         return Some(schema);
     }
@@ -26,6 +29,7 @@ pub(crate) fn schema(name: &str) -> Option<Value> {
 }
 pub(crate) fn router() -> Router<App> {
     Router::new()
+        .merge(scenarios::router())
         .merge(super::controls::router())
         .secure_route(
             "/api/agent/runs",
@@ -83,6 +87,9 @@ async fn resume(
     Ok(Json(invoke(&a, &h, "merchant.run.resume", &v).await?))
 }
 pub(crate) async fn invoke(a: &App, h: &RequestContext, name: &str, v: &Value) -> Result<Value> {
+    if scenarios::schema(name).is_some() {
+        return Box::pin(scenarios::invoke(a, h, name, v)).await;
+    }
     if super::controls::schema(name).is_some() {
         return super::controls::invoke(a, h, name, v).await;
     }
@@ -244,5 +251,10 @@ pub(super) fn project(row: &sqlx::postgres::PgRow) -> Value {
     let steps = cp
         .as_object()
         .map_or(0, |o| o.keys().filter(|k| k.starts_with("model-")).count());
-    json!({"taskId":row.get::<String,_>("id"),"agentId":row.get::<Value,_>("run_request")["agentId"],"state":state,"revision":row.get::<i64,_>("run_revision"),"completedModelSteps":steps,"execution":execution,"error":row.get::<Option<Value>,_>("run_error"),"conversationId":row.get::<Option<String>,_>("conversation_id"),"approvalRequired":!row.get::<bool,_>("applied"),"preview":if state=="ready" {row.get::<Value,_>("proposal")}else{Value::Null},"updatedAt":row.get::<String,_>("updated_text")})
+    let scenario = request.get("scenario").map(|s| {
+        let mut result = s.clone();
+        result["steps"] = cp["scenario-state"]["steps"].clone();
+        result
+    });
+    json!({"taskId":row.get::<String,_>("id"),"agentId":row.get::<Value,_>("run_request")["agentId"],"state":state,"revision":row.get::<i64,_>("run_revision"),"completedModelSteps":steps,"scenario":scenario,"execution":execution,"error":row.get::<Option<Value>,_>("run_error"),"conversationId":row.get::<Option<String>,_>("conversation_id"),"approvalRequired":!row.get::<bool,_>("applied"),"preview":if state=="ready" {row.get::<Value,_>("proposal")}else{Value::Null},"updatedAt":row.get::<String,_>("updated_text")})
 }

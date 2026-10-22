@@ -2,6 +2,22 @@
 /** Native input DTOs; opaque JSON fields remain explicit. */
 import type { JsonValue } from "./value";
 export interface Inputs10 {
+  "knowledge.claim.review": {
+    approve?: boolean;
+    id?: string;
+    revision?: number;
+    state?: "evidenced" | "confirmed" | "rejected";
+  };
+  "knowledge.extract": {
+    inference?: JsonValue;
+    locale?: string;
+    productId?: string;
+    sourceId?: string;
+  };
+  "knowledge.compile": {
+    claims?: Array<{ id: string; text: string }>;
+    productId?: string;
+  };
   "merchant.app.history": {
     app: string;
     approve?: boolean;
@@ -48,64 +64,4 @@ export interface Inputs10 {
   "studio.workspace.work.read": JsonValue;
   "studio.workspace.read": JsonValue;
   "studio.workspace.save": { data: JsonValue; revision: number };
-  "merchant.import.inspect": {
-    details?: boolean;
-    options: {
-      acknowledgedWarnings?: Array<string>;
-      channelId?: string;
-      customerGroup?: string;
-      destinationDigest?: string;
-      locale?: string;
-      sourcePriceBasis?: "gross" | "net";
-      taxRate?: number;
-    };
-    record: {
-      data: JsonValue;
-      kind:
-        | "products"
-        | "categories"
-        | "pages"
-        | "customers"
-        | "orders"
-        | "assets"
-        | "reviews"
-        | "coupons";
-      source: string;
-      sourceId: string;
-      sourceShop: string;
-      version: 1;
-      warnings: Array<string>;
-    };
-  };
-  "merchant.import.record": {
-    approve: boolean;
-    assetChunks?: Array<string>;
-    options: {
-      acknowledgedWarnings?: Array<string>;
-      channelId?: string;
-      customerGroup?: string;
-      destinationDigest?: string;
-      locale?: string;
-      sourcePriceBasis?: "gross" | "net";
-      taxRate?: number;
-    };
-    record: {
-      data: JsonValue;
-      kind:
-        | "products"
-        | "categories"
-        | "pages"
-        | "customers"
-        | "orders"
-        | "assets"
-        | "reviews"
-        | "coupons";
-      source: string;
-      sourceId: string;
-      sourceShop: string;
-      version: 1;
-      warnings: Array<string>;
-    };
-  };
-  "merchant.customer.creation": JsonValue;
 }

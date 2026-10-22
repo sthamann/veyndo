@@ -2,6 +2,14 @@
 /** Native input DTOs; opaque JSON fields remain explicit. */
 import type { JsonValue } from "./value";
 export interface Inputs12 {
+  "pos.discount": {
+    cartToken: string;
+    channelId: string;
+    discount: JsonValue;
+    revision: number;
+  };
+  "pos.receipt": { channelId: string; orderId: string; receiptId: string };
+  "pos.channels": JsonValue;
   "pos.payment": { cartToken: string; channelId: string };
   "pos.reconcile": { cartToken: string; channelId: string; requestKey: string };
   "pos.catalog": {
@@ -32,23 +40,4 @@ export interface Inputs12 {
   };
   "pos.create": { channelId: string };
   "pos.cart": { cartToken: string; channelId: string };
-  "pos.replace": {
-    cartToken: string;
-    channelId: string;
-    items: Array<{ id: string; quantity: number }>;
-    revision: number;
-  };
-  "pos.select": {
-    cartToken: string;
-    channelId: string;
-    checkout: JsonValue;
-    revision: number;
-  };
-  "pos.accept": {
-    cartToken: string;
-    channelId: string;
-    digitalImmediate: boolean;
-    policyVersion: string;
-    terms: boolean;
-  };
 }
