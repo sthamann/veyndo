@@ -57,6 +57,19 @@ This first round works without an LLM. After [configuring a model](connectors.md
 you can ask for a bounded product proposal and inspect its fields before approval.
 Model configuration or a generated summary alone does not prove a completed action.
 
+## Let fictional customers test the private change
+
+After [configuring a model](connectors.md), stay in the full private sandbox and
+open **Shop knowledge → Customer simulator**, or **Shop design → Test with
+customers**. Describe one shopping goal, edit the customer budgets and run the
+test. Inspect the saved native observations and test orders. Change one private
+setting, choose **Use these customers again**, and compare the two runs before
+selecting a release. [Illustrated simulator guide and evidence](customer-scenarios.md).
+
+A public shopper can separately ask for a gift or comparison, edit the visual
+product selection and use the ordinary product options and checkout.
+[Visual shopping guide](ui-experience.md#standard-storefront-and-customer-account).
+
 ## Stop, return and share what happened
 
 ```sh
