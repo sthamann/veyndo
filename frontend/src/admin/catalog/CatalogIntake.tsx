@@ -16,9 +16,13 @@ import CatalogIntakeReview from "./CatalogIntakeReview";
 import "../styles/catalog-intake.css";
 export default function CatalogIntake({
   initialMode,
+  initialSource = "",
+  initialFile,
   onClose,
 }: {
   initialMode: IntakeMode;
+  initialSource?: string;
+  initialFile?: File;
   onClose: () => void;
 }) {
   const c = useCatalogIntakeText();
@@ -37,7 +41,7 @@ export default function CatalogIntake({
     canAi || !needsCatalogModel(initialMode) ? initialMode : "csv",
   );
   const [stage, setStage] = useState(environment);
-  const [source, setSource] = useState("");
+  const [source, setSource] = useState(initialSource);
   const [shopDomain, setShopDomain] = useState("");
   const [fileName, setFileName] = useState("");
   const [count, setCount] = useState(3);
@@ -109,6 +113,9 @@ export default function CatalogIntake({
         setError(c("fileInvalid"));
     }
   }
+  useEffect(() => {
+    if (initialFile) void file(initialFile);
+  }, [initialFile]);
   async function prepare() {
     const version = ++revision.current;
     setBusy(true);
@@ -209,6 +216,21 @@ export default function CatalogIntake({
         </button>
       </header>
       <p>{c("intro")}</p>
+      <ol className="catalog-intake-steps" aria-label={c("steps")}>
+        {(["sourceStep", "reviewStep", "savedStep"] as const).map((step, i) => (
+          <li
+            key={step}
+            aria-current={
+              i === (!preview ? 0 : rows.some((r) => r.saved) ? 2 : 1)
+                ? "step"
+                : undefined
+            }
+          >
+            <span>{i + 1}</span>
+            {c(step)}
+          </li>
+        ))}
+      </ol>
       <div className="catalog-intake-stage">
         <label>
           {c("sandbox")}
@@ -339,6 +361,24 @@ export default function CatalogIntake({
               onClose();
             }}
           />
+          {rows.some((r) => r.saved) && (
+            <aside className="catalog-intake-next">
+              <h3>{c("nextTitle")}</h3>
+              <p>{c("nextHint")}</p>
+              <button
+                type="button"
+                className="studio-secondary"
+                disabled={busy}
+                onClick={() => {
+                  studio.setEnvironment(stage);
+                  studio.setTab("environments");
+                  onClose();
+                }}
+              >
+                {c("release")}
+              </button>
+            </aside>
+          )}
           <button
             type="button"
             className="studio-secondary"

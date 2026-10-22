@@ -1,6 +1,61 @@
 /** Merchant-only catalogue setup copy; shopper recommendation prompts remain separate. */
 import { useLocale } from "./i18n";
 export const catalogIntakeWords = {
+  attachCsv: [
+    "Attach product CSV",
+    "Produkt-CSV anhängen",
+    "Joindre un CSV de produits",
+    "Adjuntar CSV de productos",
+  ],
+  dropCsv: [
+    "Choose a CSV or drop it onto the conversation",
+    "CSV auswählen oder ins Gespräch ziehen",
+    "Choisir un CSV ou le déposer dans la conversation",
+    "Elige un CSV o arrástralo a la conversación",
+  ],
+  steps: [
+    "Product import progress",
+    "Fortschritt der Produktübernahme",
+    "Progression de l’import",
+    "Progreso de importación",
+  ],
+  sourceStep: [
+    "Choose source",
+    "Quelle wählen",
+    "Choisir la source",
+    "Elegir origen",
+  ],
+  reviewStep: [
+    "Review products",
+    "Produkte prüfen",
+    "Vérifier les produits",
+    "Revisar productos",
+  ],
+  savedStep: [
+    "Private products",
+    "Private Produkte",
+    "Produits privés",
+    "Productos privados",
+  ],
+  nextTitle: [
+    "Your products are ready to work on",
+    "Deine Produkte sind bereit zum Weiterarbeiten",
+    "Vos produits sont prêts à être modifiés",
+    "Tus productos están listos para editar",
+  ],
+  nextHint: [
+    "Open a product to review images, translations and stock. When you are happy, review the selected changes for publication.",
+    "Öffne ein Produkt, um Bilder, Übersetzungen und Bestand zu prüfen. Wenn alles passt, prüfe die ausgewählten Änderungen zur Veröffentlichung.",
+    "Ouvrez un produit pour vérifier images, traductions et stock. Ensuite, vérifiez les modifications à publier.",
+    "Abre un producto para revisar imágenes, traducciones y existencias. Después revisa los cambios que quieras publicar.",
+  ],
+  release: [
+    "Review publication",
+    "Veröffentlichung prüfen",
+    "Vérifier la publication",
+    "Revisar publicación",
+  ],
+
   shopify_csv: ["Shopify CSV", "Shopify CSV", "Shopify CSV", "Shopify CSV"],
   shop_mcp: [
     "Supplier catalogue",

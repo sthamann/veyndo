@@ -208,3 +208,78 @@ describe("Checkout and declarations", () => {
     expect(JSON.parse(fetcher.mock.calls[0][1].body).kind).toBe("withdrawal");
   });
 });
+
+it("keeps a confirmed server decision when browser storage is unavailable", async () => {
+  transport();
+  view();
+  await screen.findByRole("button", { name: "Reject optional" });
+  const storage = vi
+    .spyOn(Storage.prototype, "setItem")
+    .mockImplementation(() => {
+      throw new Error("storage disabled");
+    });
+  try {
+    fireEvent.click(screen.getByRole("button", { name: "Accept optional" }));
+    await waitFor(() => expect(consentChoice().choices.analytics).toBe(true));
+    expect(screen.queryByRole("dialog")).toBeNull();
+    expect(screen.queryByRole("alert")).toBeNull();
+  } finally {
+    storage.mockRestore();
+  }
+});
+it("a late save for the previous cart cannot grant consent to the next cart", async () => {
+  const fetcher = transport();
+  let finish!: (v: any) => void;
+  const original = fetcher.getMockImplementation()!;
+  fetcher.mockImplementation((url, init) =>
+    init.method === "PUT"
+      ? new Promise((resolve) => {
+          finish = resolve;
+        })
+      : original(url, init),
+  );
+  const tree = (token: string) => (
+    <LocaleProvider>
+      <PrivacyProvider token={token}>{null}</PrivacyProvider>
+    </LocaleProvider>
+  );
+  const rendered = render(tree("first"));
+  await screen.findByRole("button", { name: "Accept optional" });
+  fireEvent.click(screen.getByRole("button", { name: "Accept optional" }));
+  rendered.rerender(tree("second"));
+  await screen.findByRole("button", { name: "Reject optional" });
+  await act(async () =>
+    finish(
+      reply({
+        choices: { analytics: true },
+        decided: true,
+        policyVersion: "v1",
+        expiresAt: "2099-01-01",
+      }),
+    ),
+  );
+  expect(consentChoice().decided).toBe(false);
+  expect(screen.getByRole("button", { name: "Accept optional" })).toBeEnabled();
+});
+it("an older refresh cannot undo a newly saved decision", async () => {
+  const fetcher = transport();
+  view();
+  await screen.findByRole("button", { name: "Accept optional" });
+  let finish!: (v: any) => void;
+  const original = fetcher.getMockImplementation()!;
+  fetcher.mockImplementation((url, init) =>
+    url === "/store-api/privacy/consent" && init.method !== "PUT"
+      ? new Promise((resolve) => {
+          finish = resolve;
+        })
+      : original(url, init),
+  );
+  await act(async () => window.dispatchEvent(new Event("focus")));
+  fireEvent.click(screen.getByRole("button", { name: "Accept optional" }));
+  await waitFor(() => expect(consentChoice().choices.analytics).toBe(true));
+  await act(async () =>
+    finish(reply({ choices: {}, decided: false, policyVersion: "v1" })),
+  );
+  expect(consentChoice().choices.analytics).toBe(true);
+  expect(screen.queryByRole("dialog")).toBeNull();
+});

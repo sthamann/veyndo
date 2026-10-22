@@ -356,6 +356,7 @@ This lists every checked-in source module in these roots, including files with n
 | [src/legal/capabilities.rs](../src/legal/capabilities.rs) | MCP legal tools delegate to the same ownership/permission-checked HTTP domain handlers. |
 | [src/legal/checkout.rs](../src/legal/checkout.rs) | Explicit document/digital acknowledgement and immutable order policy snapshots; transport-neutral checkout guard. |
 | [src/legal/consent.rs](../src/legal/consent.rs) | Cart/channel-bound affirmative choices; stale/expired policy receipts never authorize processing. |
+| [src/legal/continuation.rs](../src/legal/continuation.rs) | Capability-bound consent continuation: successive carts share one revocable receipt, never copied grants. |
 | [src/legal/mod.rs](../src/legal/mod.rs) | Connected legal/privacy boundary: configuration, consent, checkout snapshots and durable requests. |
 | [src/legal/model.rs](../src/legal/model.rs) | Bounded multilingual legal configuration; policy changes invalidate optional-purpose consent. |
 | [src/legal/product.rs](../src/legal/product.rs) | Explicit product safety/sector facts, with market-language fallback; no inference of certifications. |
@@ -1273,7 +1274,7 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/storefront/shell/StorefrontHeaderView.tsx](../frontend/src/storefront/shell/StorefrontHeaderView.tsx) | Shared native shop header markup; callers supply authorized commands or a read-only preview. |
 | [frontend/src/storefront/shell/StorefrontHome.tsx](../frontend/src/storefront/shell/StorefrontHome.tsx) | Native home composition; previews reuse the same presentational hero and catalogue cards. |
 | [frontend/src/storefront/shell/StorefrontLanguage.tsx](../frontend/src/storefront/shell/StorefrontLanguage.tsx) | Shop-configured content languages, including custom locales; the interface keeps its supported language vocabulary. |
-| [frontend/src/storefront/shell/cart-commands.ts](../frontend/src/storefront/shell/cart-commands.ts) | Revision-bound quantity update, preserving SKU minimum and server pricing authority. |
+| [frontend/src/storefront/shell/cart-commands.ts](../frontend/src/storefront/shell/cart-commands.ts) | Native cart lifecycle and revision-bound quantity updates; retain original consent capability after purchase. |
 | [frontend/src/storefront/shell/channel-preview-i18n.ts](../frontend/src/storefront/shell/channel-preview-i18n.ts) | Personal preview copy in every supported language; exported through the shared translation catalogue. |
 | [frontend/src/storefront/shell/storefront-actions-i18n.ts](../frontend/src/storefront/shell/storefront-actions-i18n.ts) | Shared UI/browser-agent command descriptions and errors follow the active storefront language. |
 | [frontend/src/storefront/shell/storefront-actions.ts](../frontend/src/storefront/shell/storefront-actions.ts) | Shared native storefront commands for UI, apps and WebMCP; never expose capabilities or submit a financial order. |

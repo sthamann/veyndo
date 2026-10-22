@@ -81,10 +81,17 @@ pub(crate) async fn snapshot(
             )));
         }
     }
-    let consent = sqlx::query("SELECT data,policy_version,expires_at>now() AS fresh FROM privacy_consents WHERE tenant=$1 AND cart_id=$2 AND channel_id=$3 FOR SHARE")
-        .bind(&c.tenant).bind(&c.id).bind(&c.data.sales_channel).fetch_optional(&mut *tx).await?
-        .filter(|r|r.get::<String,_>("policy_version")==version(&s.legal) && r.get::<bool,_>("fresh"))
-        .map(|r|r.get::<Value,_>("data")).unwrap_or(json!({"choices":{},"decided":false}));
+    let consent = sqlx::query(super::continuation::RECEIPT_SQL)
+        .bind(&c.tenant)
+        .bind(&c.id)
+        .bind(&c.data.sales_channel)
+        .fetch_optional(&mut *tx)
+        .await?
+        .filter(|r| {
+            r.get::<String, _>("policy_version") == version(&s.legal) && r.get::<bool, _>("fresh")
+        })
+        .map(|r| r.get::<Value, _>("data"))
+        .unwrap_or(json!({"choices":{},"decided":false}));
     super::buyer_consent::check(c, &consent)?;
     Ok(
         json!({"consent":consent,"buyerConsent":c.data.buyer.as_ref().and_then(|b|b.get("consent")),"policyVersion":version(&s.legal),"documents":s.legal.documents,"acceptance":acceptance,"strictCheckout":s.legal.strict_checkout,"salesChannelId":c.data.sales_channel}),

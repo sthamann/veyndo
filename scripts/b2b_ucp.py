@@ -35,7 +35,7 @@ assert call('/ucp/2026-10-13/b2b-negotiation.json',h={'x-tenant':'nonexistent-sc
 assert schema['version']==VERSION and 'dev.ucp.shopping.checkout' in schema['$defs']
 assert schema['$id']==profile['capabilities'][EXT][0]['schema']
 def checkout(h=bh):
-    c=call('/ucp/v1/checkout-sessions',{'line_items':[{'item':{'id':'lamp'},'quantity':2}],'buyer':{'email':email}},h)
+    c=call('/ucp/v1/checkout-sessions',{'session':'ucp-buyer-'+suffix,'line_items':[{'item':{'id':'lamp'},'quantity':2}],'buyer':{'email':email}},h)
     return c,{**h,'sw-context-token':c['context_token']},'/ucp/v1/checkout-sessions/'+c['id']
 c,h,path=checkout()
 def command(op,v,hdr=None,status=200):return call(path+'/b2b/'+op,v,hdr or h,status=status)
@@ -93,6 +93,8 @@ call('/store-api/b2b/approval.decide',{'id':request['id'],'revision':request['re
 assert call(path,h=h)['status']=='ready_for_complete'
 stock=call('/store-api/product/lamp',h=public)['product']['stock']
 key='ucp-company-'+suffix
+policy=call('/store-api/legal',h=h)
+consent=call('/store-api/privacy/consent',{'policyVersion':policy['policyVersion'],'choices':{'analytics':True}},h,'PUT')
 completed=call(path+'/complete',{}, {**h,'Idempotency-Key':key})
 assert completed['status']=='completed' and completed['b2b_negotiation']['quotes'][0]['state']=='ordered'
 assert call(path+'/complete',{}, {**h,'Idempotency-Key':key})['order']['id']==completed['order']['id']
@@ -100,6 +102,16 @@ assert call('/store-api/product/lamp',h=public)['product']['stock']==stock-2
 order=call('/api/merchant/orders/'+completed['order']['id'],h=mh)
 assert order['b2b']['purchaseOrder']=='UCP-PO-1' and order['b2b']['quoteId']==rfq['id']
 assert int(order['cart']['price']['totalMinor'])==int(cart['price']['totalMinor'])
+# A completed company purchase can retain the same buyer's privacy choice, but
+# never its purchasing approvals, quote or company context in the next basket.
+successor=call('/store-api/checkout/cart',{'session':'ucp-buyer-'+suffix},h)
+successor_h={**bh,'sw-context-token':successor['token']}
+assert successor['lineItems']==[] and not successor.get('b2b')
+assert call('/store-api/privacy/consent',h=successor_h)==consent
+for identity in ['',oh['x-customer-token']]:
+    call('/store-api/checkout/cart',{'session':'ucp-buyer-'+suffix},{**h,'x-customer-token':identity},status=401 if not identity else 403)
+withdrawn=call('/store-api/privacy/consent',{'policyVersion':policy['policyVersion'],'choices':{}},successor_h,'PUT')
+assert call('/store-api/privacy/consent',h=h)==withdrawn
 for _ in range(100):
     current=call('/api/merchant/orders/'+order['id'],h=mh)
     if current.get('automation',{}).get('tags')==['ucp-negotiated']:break
@@ -109,6 +121,7 @@ command('quote.request',{'revision':completed['b2b_negotiation']['checkout_revis
 # Revocation blocks previously valid UCP sessions immediately, without changing the order.
 admin('member.save',{'unitId':'it','customerId':buyer,'revision':1,'data':{'active':False,'permissions':['buy','quotes']}})
 call(path,h=h,status=403)
+call('/store-api/checkout/cart',{'session':'ucp-buyer-'+suffix},h,status=403)
 assert call('/api/merchant/orders/'+order['id'],h=mh)['id']==order['id']
 tools=call('/mcp',{'jsonrpc':'2.0','id':1,'method':'tools/list'},ah)['result']['tools']
 assert {'b2b.quote.get','b2b.quote.current'} <= {t['name']for t in tools}

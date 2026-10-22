@@ -45,17 +45,29 @@ export default function PrivacyProvider({
   const receipt = useConsent();
   const lastReceipt = useRef("");
   const current = useRef(0);
+  const operation = useRef(0);
+  const saving = useRef(false);
   useEffect(() => {
     let active = true;
     const n = ++current.current;
     publishConsent(undefined, scope);
     lastReceipt.current = "";
+    ++operation.current;
+    saving.current = false;
+    setBusy(false);
+    setOpen(false);
+    setDetail(false);
+    setChoices({});
     setPolicy(undefined);
     setError("");
     const refresh = async () => {
+      if (saving.current) return;
+      const read = ++operation.current;
+      const valid = () =>
+        active && current.current === n && operation.current === read;
       try {
         const p = await shopApi<LegalPolicy>("/store-api/legal");
-        if (!active || current.current !== n) return;
+        if (!valid()) return;
         setPolicy(p);
         if (!token) return;
         const c = await shopApi<Consent>(
@@ -63,7 +75,7 @@ export default function PrivacyProvider({
           undefined,
           token,
         );
-        if (!active || current.current !== n) return;
+        if (!valid()) return;
         publishConsent(
           consentCurrent(c, p.policyVersion) ? c : undefined,
           scope,
@@ -72,10 +84,10 @@ export default function PrivacyProvider({
         if (lastReceipt.current !== signature) {
           lastReceipt.current = signature;
           setChoices(c.decided ? c.choices : {});
-          if (!c.decided) setOpen(true);
+          if (!consentCurrent(c, p.policyVersion)) setOpen(true);
         }
       } catch (e) {
-        if (active) {
+        if (valid()) {
           publishConsent(undefined, scope);
           setError((e as Error).message);
         }
@@ -93,6 +105,7 @@ export default function PrivacyProvider({
     window.addEventListener("veyndo:privacy-open", show);
     return () => {
       active = false;
+      ++current.current;
       window.clearInterval(interval);
       window.removeEventListener("focus", focus);
       window.removeEventListener("storage", focus);
@@ -101,7 +114,11 @@ export default function PrivacyProvider({
     };
   }, [scope, token]);
   const save = async (next: Partial<Record<Purpose, boolean>>) => {
-    if (!policy || !token || busy) return;
+    if (!policy || !token || saving.current) return;
+    const n = current.current,
+      write = ++operation.current;
+    const valid = () => current.current === n && operation.current === write;
+    saving.current = true;
     setBusy(true);
     setError("");
     try {
@@ -111,16 +128,28 @@ export default function PrivacyProvider({
         token,
         "PUT",
       );
-      publishConsent(c, scope);
+      if (!valid()) return;
+      publishConsent(
+        consentCurrent(c, policy.policyVersion) ? c : undefined,
+        scope,
+      );
       lastReceipt.current = JSON.stringify(c);
-      localStorage.setItem(key, JSON.stringify(c));
+      try {
+        localStorage.setItem(key, JSON.stringify(c));
+      } catch {
+        // Storage only notifies other tabs; the server receipt is authoritative.
+      }
       setChoices(c.choices);
       setOpen(false);
     } catch (e) {
+      if (!valid()) return;
       setError((e as Error).message);
       publishConsent(undefined, scope);
     } finally {
-      setBusy(false);
+      if (valid()) {
+        saving.current = false;
+        setBusy(false);
+      }
     }
   };
   useEffect(() => {

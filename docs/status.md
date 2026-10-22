@@ -1,6 +1,6 @@
 # Veyndo: current status
 
-Updated 21 October 2026. Start here for the public product, observed journeys and
+Updated 22 October 2026. Start here for the public product, observed journeys and
 remaining delivery work. Source code, passing tests and a successful public
 journey are tracked separately. All purchases below use **simulated payments**.
 
@@ -58,6 +58,18 @@ The connected merchant workspace now supports these concrete journeys:
 | Contracts, boundaries and money | Generated operation input contracts, five real workspace libraries, exact money primitives and original PHP differential checks. | Response/domain DTOs and root-handler extraction remain incomplete; compatibility calculation paths still contain `f64`. [Hardening owners](platform-hardening.md) |
 | Prompts and evidence | Versioned prompt files with IDs/digests; actual provider/admission and injection cases in the registered tests. | Passing admission checks does not establish semantic model quality for every merchant task. [Testing](testing.md) |
 
+## Prepared for the next delivery
+
+The merchant composer now accepts a CSV attachment and carries descriptions/URLs
+into the existing private catalogue workflow. Local Chrome acceptance completed
+editable import, native image editing and selected publication with product names.
+Native purchase tests additionally verify shared, revocable privacy choices across
+new carts, including the same authenticated company buyer, expiry and concurrent
+withdrawal. [22 October evidence](evidence/merchant-journey-2026-10-22.md). These
+changes are not included in the public runtime identified above yet.
+[Concrete architecture improvements discussed with Claude](architecture-followups-2026-10-22.md)
+are proposals, separate from this implementation.
+
 ## What remains to finish
 
 1. **Isolate the remaining controlled-browser iframe failures.** A fresh private
@@ -67,8 +79,9 @@ The connected merchant workspace now supports these concrete journeys:
    documents on the same deployed code. Preserve both observations; the cause of
    those earlier pauses and a broader reliability rate are not yet established.
 2. **Complete Apple login configuration.** The new `start.veyndo.ai` callback
-   returns `invalid_request: Invalid web redirect url`. Apple Developer access is
-   required to change the Service ID and perform the actual sign-in.
+   returns `invalid_request: Invalid web redirect url`. The existing Service ID review now contains both new domains and their
+   callback URLs; its final Save awaits the requested action-time approval.
+   An actual Apple sign-in must then be observed.
 3. **Accept the separate hosted migration service.** The Rust application and
    five source protocol fixtures reach private native products, media, pages,
    customer/address records, history, reviews and coupons. Saved mapping/comparison
@@ -85,9 +98,9 @@ The connected merchant workspace now supports these concrete journeys:
    established by the public demo journeys. Current payment testing deliberately
    remains simulated. [Ordered follow-ups](connected-merchant-followups.md)
 
-A fresh native cart also asks for the privacy choice again. This was observed in
-the public reorder test and remains a usability follow-up; no consent was inferred
-or silently granted to hide it.
+The public reorder previously reopened privacy choice for a fresh native cart.
+The prepared fix above retains the original server receipt and its revocation;
+public acceptance is still required.
 
 ## Start testing
 

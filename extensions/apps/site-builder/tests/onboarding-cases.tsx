@@ -73,6 +73,13 @@ function view(
     </LocaleScope>
   );
 }
+async function reviewRequiredApps() {
+  const review = await screen.findByRole("button", {
+    name: "Review required apps",
+  });
+  await waitFor(() => expect(review).toBeEnabled());
+  fireEvent.click(review);
+}
 it("guides a new shop through private handoff and the required package consent, then returns to the agent", async () => {
   const live = api(),
     enter = vi.fn(async () => {}),
@@ -90,9 +97,7 @@ it("guides a new shop through private handoff and the required package consent, 
   expect(live.mock.calls.some(([path]) => path === "/api/apps")).toBe(false);
   const privateRequest = api();
   page.rerender(view(privateRequest, true));
-  fireEvent.click(
-    await screen.findByRole("button", { name: "Review required apps" }),
-  );
+  await reviewRequiredApps();
   const install = await screen.findByRole("button", { name: "Install" });
   await waitFor(() => expect(install).toBeEnabled());
   fireEvent.click(install);
@@ -171,13 +176,11 @@ it("cancels app consent without installing and retries a failed explicit install
     return base(path, body);
   });
   render(view(request, true));
-  fireEvent.click(
-    await screen.findByRole("button", { name: "Review required apps" }),
-  );
+  await reviewRequiredApps();
   await screen.findByRole("button", { name: "Install" });
   fireEvent.click(screen.getByRole("button", { name: "Cancel" }));
   expect(base.mock.calls.some(([path]) => path === "/api/apps")).toBe(false);
-  fireEvent.click(screen.getByRole("button", { name: "Review required apps" }));
+  await reviewRequiredApps();
   fireEvent.click(await screen.findByRole("button", { name: "Install" }));
   expect(await screen.findByRole("alert")).toHaveTextContent(
     "Installation interrupted",

@@ -6,7 +6,15 @@ pub(crate) async fn create_cart(
     h: RequestContext,
     Json(v): Json<Value>,
 ) -> Result<Json<Value>> {
+    let previous = if header(&h, "sw-context-token").is_some() {
+        Some(load_cart(&a, &h).await?)
+    } else {
+        None
+    };
     let c = new_cart_context(&a, &h, v["session"].as_str().unwrap_or(""), "storefront").await?;
+    if let Some(previous) = previous {
+        legal::continue_consent(&a, &previous, &c).await?;
+    }
     Ok(Json(cart_json(&a, &c).await?))
 }
 pub(crate) async fn get_cart(State(a): State<App>, h: RequestContext) -> Result<Json<Value>> {

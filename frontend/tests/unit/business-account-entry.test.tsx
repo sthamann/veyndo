@@ -27,6 +27,7 @@ function storefrontFixture(signed = false) {
         decided: true,
         policyVersion: "fixture-policy",
         choices: {},
+        expiresAt: new Date(Date.now() + 86400000).toISOString(),
       },
       "/store-api/account/profile": {
         id: "own-buyer",
@@ -78,7 +79,9 @@ it("opens sign-in from business entry without trying demo credentials", async ()
   });
   await waitFor(() => expect(business).toBeEnabled());
   await userEvent.click(business);
-  expect(await screen.findByRole("dialog")).toBeInTheDocument();
+  expect(
+    await screen.findByRole("dialog", { name: "Your account" }),
+  ).toBeInTheDocument();
   expect(screen.getByLabelText("Email")).toHaveValue("");
   expect(
     fetcher.mock.calls.some(([path]) => path === "/store-api/account/login"),

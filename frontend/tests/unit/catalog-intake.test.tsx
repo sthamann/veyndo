@@ -22,11 +22,17 @@ const studio = (overrides = {}) =>
     workspace: "shop-a",
     workspaceName: "Synthetic merchant",
     environment: "stage-a",
-    access: ["catalog.read", "catalog.write", "assistant.use"],
+    access: [
+      "catalog.read",
+      "catalog.write",
+      "assistant.use",
+      "environments.read",
+    ],
     environments: [{ id: "stage-a", name: "Private catalogue" }],
     liveRequest: vi.fn(),
     refreshEnvironments: vi.fn(),
     setEnvironment: vi.fn(),
+    setTab: vi.fn(),
     openEntity: vi.fn(),
     provider: "platform",
     model: "",
@@ -267,4 +273,99 @@ it("offers inbound Shopify exports and supplier catalogue reads without model pe
   ).toBeEnabled();
   fireEvent.click(screen.getByRole("button", { name: "Shopify CSV" }));
   expect(screen.getByLabelText("Shopify CSV")).toHaveAttribute("type", "file");
+});
+
+it("the agent composer accepts a real CSV attachment without sending it to the chat model or saving products", async () => {
+  mockRequests();
+  const state = studio();
+  render(<StudioComposer />, { wrapper: wrapper(state) });
+  const contents = "name,price\nDesk,29.9";
+  fireEvent.change(screen.getByLabelText("Attach product CSV"), {
+    target: {
+      files: [new File([contents], "direct.csv", { type: "text/csv" })],
+    },
+  });
+  await screen.findByText("direct.csv");
+  expect(state.send).not.toHaveBeenCalled();
+  expect(request.mock.calls.some((c) => c[2]?.mode)).toBe(false);
+  fireEvent.click(
+    screen.getByRole("button", { name: "Prepare product preview" }),
+  );
+  await screen.findByRole("heading", { name: "Review and edit products" });
+  expect(request.mock.calls.find((c) => c[2]?.mode)?.[2].source).toBe(contents);
+  expect(request.mock.calls.some((c) => c[1].endsWith("/save"))).toBe(false);
+});
+it.each([
+  [
+    "demo",
+    "Describe sample products",
+    "Create blue reading chairs",
+    "What products do you want to try?",
+  ],
+  [
+    "url",
+    "Product or shop URL",
+    "https://catalog.example.test/products",
+    "Product source",
+  ],
+])(
+  "the %s source preserves the merchant's composed request for review",
+  async (_, button, draft, field) => {
+    mockRequests();
+    render(<StudioComposer />, { wrapper: wrapper(studio({ draft })) });
+    fireEvent.click(screen.getByRole("button", { name: button }));
+    expect(await screen.findByRole("textbox", { name: field })).toHaveValue(
+      draft,
+    );
+    expect(request.mock.calls.some((c) => c[2]?.mode)).toBe(false);
+  },
+);
+it("drops a CSV into the conversation and discards it on account change", async () => {
+  mockRequests();
+  const state = studio();
+  const tree = (s: any) => (
+    <LocaleProvider>
+      <StudioContext.Provider value={s}>
+        <StudioComposer />
+      </StudioContext.Provider>
+    </LocaleProvider>
+  );
+  const result = render(tree(state));
+  fireEvent.drop(screen.getByRole("textbox", { name: "message" }), {
+    dataTransfer: {
+      files: [new File(["name,price\nDesk,12"], "dropped.csv")],
+      types: ["Files"],
+    },
+  });
+  await screen.findByText("dropped.csv");
+  result.rerender(tree({ ...state, token: "another-account" }));
+  await waitFor(() => expect(screen.queryByText("dropped.csv")).toBeNull());
+  expect(request.mock.calls.some((c) => c[2]?.mode)).toBe(false);
+});
+it("hands saved products to the existing publication review in the selected sandbox", async () => {
+  mockRequests();
+  const state = studio(),
+    close = vi.fn();
+  render(
+    <CatalogIntake
+      initialMode="demo"
+      initialSource="Blue chairs"
+      onClose={close}
+    />,
+    { wrapper: wrapper(state) },
+  );
+  fireEvent.click(
+    await screen.findByRole("button", { name: "Prepare product preview" }),
+  );
+  fireEvent.click(
+    await screen.findByRole("button", {
+      name: /Create selected products in sandbox/,
+    }),
+  );
+  fireEvent.click(
+    await screen.findByRole("button", { name: "Review publication" }),
+  );
+  expect(state.setEnvironment).toHaveBeenCalledWith("stage-a");
+  expect(state.setTab).toHaveBeenCalledWith("environments");
+  expect(close).toHaveBeenCalled();
 });

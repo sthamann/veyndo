@@ -1,4 +1,4 @@
-/** Revision-bound quantity update, preserving SKU minimum and server pricing authority. */
+/** Native cart lifecycle and revision-bound quantity updates; retain original consent capability after purchase. */
 import { shopApi, type Cart } from "../../shared/api/shop-api";
 export async function updateCartQuantity(cart: Cart, pid: string, q: number) {
   return shopApi<Cart>(
@@ -12,4 +12,8 @@ export async function updateCartQuantity(cart: Cart, pid: string, q: number) {
     cart.token,
     "PUT",
   );
+}
+
+export function newStorefrontCart(session: string, previousToken?: string) {
+  return shopApi<Cart>("/store-api/checkout/cart", { session }, previousToken);
 }

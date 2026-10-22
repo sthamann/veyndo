@@ -209,3 +209,77 @@
     white-space: normal;
   }
 }
+
+/* Direct attachments and clear progress reuse the existing private review. */
+.composer-file {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+  color: var(--accent);
+  cursor: pointer;
+  font-size: 12px;
+}
+.composer-file input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+.composer-file:focus-within {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+.catalog-intake-steps {
+  display: flex;
+  gap: 16px;
+  list-style: none;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+}
+.catalog-intake-steps li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.catalog-intake-steps li > span {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--panel);
+  flex-shrink: 0;
+}
+.catalog-intake-steps li[aria-current] {
+  color: var(--accent);
+  font-weight: 700;
+}
+.catalog-intake-steps li[aria-current] > span {
+  background: var(--accent);
+  color: white;
+}
+.catalog-intake-next {
+  padding: 18px;
+  margin: 16px 0;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.catalog-intake-next h3 {
+  margin-top: 0;
+}
+@media (max-width: 600px) {
+  .catalog-intake-steps {
+    gap: 8px;
+  }
+  .catalog-intake-steps li {
+    flex: 1;
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 12px;
+  }
+}

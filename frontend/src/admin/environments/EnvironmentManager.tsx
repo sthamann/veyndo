@@ -1,6 +1,7 @@
 /** Private environment creation and digest-bound selective release. */
 import { useEffect, useState } from "react";
 import { useWorkbenchText } from "../../shared/i18n/workbench-i18n";
+import { contentText } from "../../shared/i18n/content-language";
 import type { RequestFn } from "../shell/studio-types";
 export type Environment = { id: string; name: string };
 type Change = {
@@ -27,7 +28,8 @@ export default function EnvironmentManager({
   onSelect: (id: string) => void;
   initialId?: string;
 }) {
-  const { w, date } = useWorkbenchText();
+  const { w, date, locale } = useWorkbenchText();
+  const [mainLocale, setMainLocale] = useState("");
   const [name, setName] = useState("");
   const [id, setId] = useState(
     environments.some((e) => e.id === initialId)
@@ -54,7 +56,9 @@ export default function EnvironmentManager({
     const data = await request("/api/environments");
     setHistory(data.releases);
     if (id) {
-      setChanges((await request(`/api/environments/${id}/diff`)).changes);
+      const diff = await request(`/api/environments/${id}/diff`);
+      setChanges(diff.changes);
+      setMainLocale(diff.mainLocale ?? "");
       setSelected([]);
     }
   };
@@ -72,6 +76,7 @@ export default function EnvironmentManager({
         .then((v) => {
           if (active) {
             setChanges(v.changes);
+            setMainLocale(v.mainLocale ?? "");
             setSelected([]);
           }
         })
@@ -178,11 +183,12 @@ export default function EnvironmentManager({
                     )
                   }
                 />
-                <strong>{c.key}</strong>
+                <strong>{changeTitle(c, locale, mainLocale)}</strong>
               </label>
               {c.conflict && <p role="alert">{w("conflict")}</p>}
               <details>
                 <summary>{w("details")}</summary>
+                <code>{c.key}</code>
                 <div className="diff-columns">
                   <div>
                     <b>{w("before")}</b>
@@ -228,4 +234,17 @@ export default function EnvironmentManager({
       </section>
     </div>
   );
+}
+
+function changeTitle(change: Change, language: string, mainLocale: string) {
+  if (!change.key.startsWith("product:")) return change.key;
+  const value = change.after ?? change.before;
+  if (!value || typeof value !== "object" || !("name" in value))
+    return change.key;
+  if (typeof value.name === "string") return value.name || change.key;
+  if (!value.name || typeof value.name !== "object") return change.key;
+  const names = Object.fromEntries(
+    Object.entries(value.name).filter(([, name]) => typeof name === "string"),
+  );
+  return contentText(names, language, mainLocale) || change.key;
 }

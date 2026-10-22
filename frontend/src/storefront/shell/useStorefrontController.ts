@@ -16,6 +16,7 @@ import {
   type Order,
   type Selection,
 } from "../../shared/api/shop-api";
+import { newStorefrontCart } from "./cart-commands";
 import { placeCheckoutOrder } from "../checkout/checkout-order";
 import type { AccountPage } from "../account/account-types";
 import { useShopText } from "../../shared/i18n/shop-i18n";
@@ -201,9 +202,9 @@ export function useStorefrontController({
               !location.hash.startsWith("#payment/") &&
               location.hash !== "#order-confirmed"
             )
-              c = await shopApi<Cart>("/store-api/checkout/cart", { session });
+              c = await newStorefrontCart(session, c.token);
           } catch {
-            c = await shopApi<Cart>("/store-api/checkout/cart", { session });
+            c = await newStorefrontCart(session);
           }
         if (!active) return;
         save(c);
@@ -237,7 +238,7 @@ export function useStorefrontController({
   const openBag = () =>
     run(async () => {
       if (cart?.status === "completed") {
-        save(await shopApi<Cart>("/store-api/checkout/cart", { session }));
+        save(await newStorefrontCart(session, cart.token));
         setOrder(undefined);
       }
       setBag(true);
