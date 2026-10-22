@@ -109,6 +109,36 @@ export const experienceUIWords = {
     "Du catalogue de cette boutique",
     "Del catálogo de esta tienda",
   ],
+  yourSelection: [
+    "Your selection",
+    "Deine Auswahl",
+    "Votre sélection",
+    "Tu selección",
+  ],
+  selectionHint: [
+    "Compare real products. Open a product to choose its options and continue to the basket.",
+    "Vergleiche echte Produkte. Öffne ein Produkt, wähle seine Optionen und lege es in den Warenkorb.",
+    "Comparez les produits. Ouvrez un produit pour choisir ses options et continuer vers le panier.",
+    "Compara productos reales. Abre un producto para elegir sus opciones y continuar al carrito.",
+  ],
+  removeSelection: [
+    "Remove from selection",
+    "Aus Auswahl entfernen",
+    "Retirer de la sélection",
+    "Quitar de la selección",
+  ],
+  restoreSelection: [
+    "Restore selection",
+    "Auswahl wiederherstellen",
+    "Rétablir la sélection",
+    "Restaurar selección",
+  ],
+  emptySelection: [
+    "Your selection is empty. Restore the suggestions or ask a new question.",
+    "Deine Auswahl ist leer. Stelle die Vorschläge wieder her oder stelle eine neue Frage.",
+    "Votre sélection est vide. Rétablissez les suggestions ou posez une autre question.",
+    "Tu selección está vacía. Restaura las sugerencias o haz otra pregunta.",
+  ],
   accountBenefits: [
     "Everything after your purchase",
     "Alles nach deinem Einkauf",
