@@ -1,8 +1,9 @@
 # Formal guarantees and module audit — 23 October 2026
 
-This is a local source verification of the changes based on `fc47503745bd9820c8a526f1b9e8b7dfefb7a602`.
-It does not record a new hosted deployment. The [machine-readable results](formal-modularity-2026-10-23.json)
-retain the source base, dirty-worktree flag, exact checks and selected larger files.
+The initial local source verification is based on `fc47503745bd9820c8a526f1b9e8b7dfefb7a602`.
+Its [machine-readable results](formal-modularity-2026-10-23.json) retain the source
+base, dirty-worktree flag, exact checks and selected larger files. The subsequent
+complete CI and public Core rollout are recorded separately below.
 The [formal guide](../formal-verification.md) explains the trust boundary;
 the [current status](../status.md) records public runtime acceptance separately.
 
@@ -12,7 +13,12 @@ The subsequent [Linux CI formal result](formal-verification-2026-10-23.json) and
 That clean checkout has source `bd1fc0e4f7b499bb72aaebd8ae7c0d46c09b679b` and tree
 `c48dbf804423c5de33916dc65342553caaf7f230`, identical to PR #206's `d68b2940`.
 It independently reproduces the 63-policy / 149-property / 156,741-case result
-and all formal mutation controls. Public rollout is a separate status.
+and all formal mutation controls. The complete required run passed, including
+native database integration, strict signed runtime, transaction pooling and
+coverage gates: 317 Rust workspace tests and 816 frontend tests in 140 files.
+Measured line coverage is 86.62% for Rust, 69.92% for the frontend and 80.72%
+for Python development/test tooling. These percentages retain their CI source
+and do not imply whole-system proof.
 
 ## What changed
 
@@ -117,5 +123,22 @@ python3 scripts/check_site.py
 
 The integration runner creates its own disposable database using the configured
 local test server; use `TEST_PSQL` for an installed native PostgreSQL client.
-The complete required Linux CI remains the merge requirement. Local green checks
-do not substitute for it or for a public release acceptance.
+The complete required Linux CI remains the merge requirement and passed for this
+release. Local green checks do not substitute for it or public release acceptance.
+
+## Public Core rollout
+
+[PR #206](https://github.com/sthamann/veyndo/pull/206) merged normally at
+10:25:25 UTC on 23 October as `a7089747200a87e391527ec0798e5b26336239d2`.
+Its complete tree is identical to the tested source `d68b2940` and CI checkout
+listed above. The already-built image `marked-act-7677` was activated at
+**12:26 CEST**; the observed deployment is `vendune-core-55f7c95bc5`.
+Northflank reports one running instance, 1/1 health checks passing and zero
+restarts. No schema, database role, service resource or provider setting changed.
+
+Anonymous `https://app.veyndo.ai/health` returned HTTP 200 and `status=ok` with
+the PostgreSQL check passing. The public test shop opened its German catalogue
+with current prices and stock and retained cart count zero. Studio displayed
+the normal sign-in screen for this browser session. This is a post-release
+availability/read smoke check, not a fresh sign-in or purchase acceptance; the
+dated public purchases remain linked in [current status](../status.md).

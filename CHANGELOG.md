@@ -4,6 +4,7 @@
 
 - Split the 1,037-line shared stylesheet into nine documented modules, each below 320 lines. Keep the original rules and cascade unchanged.
 - Publish one flattened asset at the existing marketing and handbook URLs, preserving cache paths and avoiding additional browser stylesheet requests. Validate ownership, module registration and exact published bundle contents in the existing website checks.
+- Record the successful complete Linux CI and the healthy 23 October Core rollout, preserving the distinct dates and scope of earlier public purchase acceptance.
 
 ## Sequential formal guarantees and domain boundaries — 23 October 2026
 
