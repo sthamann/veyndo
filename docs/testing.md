@@ -123,11 +123,42 @@ the complete suite. The required check is not removed for fast paths.
 
 `scripts/testing/ci_scope.py` uses the actual base/checkout commit, includes both
 names of renamed files and falls back to full verification for missing history,
-unknown events or paths. Two-commit checkout history is sufficient for normal
-PR merge commits and single pushes; a larger push whose base is unavailable
-deliberately uses the full path. Changes to CI itself also require the full path.
+unknown events or paths. Admission fetches complete history to compare the actual
+base of multi-commit pushes; unavailable history deliberately uses the full path.
+Changes to CI itself also require the full path.
 The registered scope regression uses real Git commits/renames and mixed sensitive
 changes, rather than trusting a filename count or an untrusted PR label.
+
+### Independent frontend feedback
+
+Cheap admission checks run first. Frontend formatting, build, architecture,
+localization, all unit tests and frontend coverage then run in parallel with the
+Rust/formal/native job. Both depend only on admission. The existing required
+`verify` job waits for the selected work and rejects failed, cancelled, missing or
+unexpectedly skipped jobs, unknown scopes and missing coverage artifact IDs.
+Documentation-only changes still build and check the whole handbook.
+
+Rust unit tests and HTTP/provider integration retain the same instrumented binaries,
+profile directory and fresh disposable database. The native job installs and builds
+the frontend locally for its real HTTP tests and TypeScript locale contracts; it
+does not wait for the UI test job or repeat its unit suite. This adds one small
+frontend build while removing UI verification from the native job's critical path.
+No Rust binaries, databases or live state move between runners.
+
+Each job uploads an immutable coverage artifact. The final job downloads the exact
+IDs returned by those jobs, checks the checkout SHA, workflow run and SHA-256 of
+each actual report, then runs the existing combined coverage policy and complete
+source inventory checks. A successful job from an earlier attempt of the same run
+can be reused when retrying failed jobs. Different commits/runs, future attempts,
+missing reports and changed contents are rejected. Artifact names include attempts
+so reruns cannot overwrite earlier evidence. Full HTML reports and integration logs
+remain available beside the final combined summary; coverage floors are unchanged.
+
+Run `python3 scripts/testing/test_ci_gate.py` for failed/skipped job and report
+transfer controls. It is also registered in the native tooling suite. Workflow
+syntax is checked with `actionlint .github/workflows/verify.yml`. Current full-run
+measurements are recorded separately from the older sequential baselines below;
+parallel scheduling alone is not a measured total-runtime improvement.
 
 Frontend-only coverage reuses the same policy and source completeness check; it
 does not fabricate fresh Rust/Python measurements or change their full-run floors.

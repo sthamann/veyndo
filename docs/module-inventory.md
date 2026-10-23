@@ -1794,6 +1794,7 @@ This lists every checked-in source module in these roots, including files with n
 | [scripts/testing/b2b_checkout_race.py](../scripts/testing/b2b_checkout_race.py) | Force the real customer-share/unit-update checkout interleaving; no business handler is mocked. |
 | [scripts/testing/catalog_intake_checks.py](../scripts/testing/catalog_intake_checks.py) | Native catalogue intake through HTTP/MCP; real stage saves, exact replay, current rights and selected release, no model calls. |
 | [scripts/testing/catalog_preparation_checks.py](../scripts/testing/catalog_preparation_checks.py) | Durable preparation projection through the native catalogue API/MCP; fixture SQL creates an explicit failed provider result only. |
+| [scripts/testing/ci_gate.py](../scripts/testing/ci_gate.py) | Fail-closed required CI result and same-source coverage transfer between runners. |
 | [scripts/testing/ci_scope.py](../scripts/testing/ci_scope.py) | Choose prototype CI by the complete Git diff; unknown or sensitive changes retain full verification. |
 | [scripts/testing/collection_work.py](../scripts/testing/collection_work.py) | Exercise one reviewed collection task through native categories, pages and durable translation drafts. |
 | [scripts/testing/connected_contracts/__init__.py](../scripts/testing/connected_contracts/__init__.py) | OAuth, private retrieval and Slack-flow regression modules using local provider fixtures. |
@@ -1837,6 +1838,7 @@ This lists every checked-in source module in these roots, including files with n
 | [scripts/testing/site_release.py](../scripts/testing/site_release.py) | Actual selective publication resolves page dependencies atomically; no provider calls. |
 | [scripts/testing/sitecustomize.py](../scripts/testing/sitecustomize.py) | Opt-in subprocess instrumentation for synthetic verification; never loaded by production. |
 | [scripts/testing/source_inventory.py](../scripts/testing/source_inventory.py) | Generate/check exact production and verification module inventory; listings are not coverage. |
+| [scripts/testing/test_ci_gate.py](../scripts/testing/test_ci_gate.py) | Negative controls for required-job admission and transferred coverage evidence. |
 | [scripts/testing/test_ci_scope.py](../scripts/testing/test_ci_scope.py) | CI routing regressions exercise real Git renames, missing history and sensitive mixed changes. |
 | [scripts/testing/tooling_tests.py](../scripts/testing/tooling_tests.py) | Ordered Studio layout. |
 | [scripts/testing/workspace_boundaries.py](../scripts/testing/workspace_boundaries.py) | Enforce reviewed Cargo owners and dependency capabilities, including aliases and unnamed helper crates. |

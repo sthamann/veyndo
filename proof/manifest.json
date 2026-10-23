@@ -4170,8 +4170,8 @@
   },
   "inputs": {
     ".github/workflows/verify.yml": {
-      "sha256": "059d920d86a2bae0c9866c0b768577b2fc7018c5f5a16b3680b250660f3b9426",
-      "review": "Reviewed CI-only change: add exact source inventory and existing reviewed source/build-input registry checks before compilation, while preserving all scope classification, full Lean/conformance/mutation, integration and coverage steps unchanged. The registry gate is fail-fast only; no production policy, adapter, threshold or runtime artifact is changed."
+      "sha256": "348696e1f2aad96e5d4a2c264dc70c554934012519374d12048f50c383198517",
+      "review": "Reviewed parallel frontend CI: retain conservative scope, complete native/formal commands on one instrumented runner, existing dependency-cache namespace, required verify job with explicit outcomes and immutable same-source coverage reports; no proof or coverage floor changes."
     },
     "Cargo.lock": {
       "sha256": "de01e9cdb5d3e16ec81ce7ce92898ab67d72f00f582fb0e658daf00f62f460c3",

@@ -1,5 +1,12 @@
 # Changelog
 
+## Parallel frontend verification — 23 October 2026
+
+- Run complete frontend checks independently of Rust, Lean and real database/provider integration after cheap source admission. Preserve the existing conservative docs/frontend/full scopes and required `verify` check.
+- Reject failed, cancelled, missing or unexpectedly skipped required jobs. Download each job's exact immutable coverage artifact and validate its source, workflow run and report contents before enforcing the unchanged combined policy.
+- Keep native unit/integration profiles and disposable databases together; build local frontend assets for their HTTP fixtures. Retain full coverage HTML, integration logs, formal evidence and all restricted-role/pooler regressions.
+- Add registered negative controls for final job outcomes and coverage transfers, including safe reuse of a successful job when retrying a failed job in the same run.
+
 ## Bounded marketplace order localization — 23 October 2026
 
 - Resolve imported order names in one tenant-scoped query and index the already locked products by ID. Orders with 1, 20 and 24 lines now require one translation read each, compared with 1, 20 and 24 before the change.
