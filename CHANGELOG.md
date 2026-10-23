@@ -1,5 +1,11 @@
 # Changelog
 
+## New connected product films — 23 October 2026
+
+- Add three silent English product films explaining the AI-first concept, connected merchant/customer workflows and extensible app platform, using actual dated UI captures and architecture illustrations.
+- Include 1080p MP4s, readable burned-in subtitles, VTT/SRT files, posters, exact encoded metadata/hashes and editable pinned composition projects. Verify complete media decode, actual frame inspection and runtime/layout/contrast checks.
+- Place the new players and downloads first in the documentation video guide and refresh README/media provenance links; preserve the earlier 13 October recordings as dated material. No runtime, provider acceptance or latency claim changes.
+
 ## Catalogue-based fictional customer drafts — 22 October 2026
 
 - Preview three editable customer profiles from a bounded native channel catalogue: exact-budget refusal, product-information review and a second available destination/language.

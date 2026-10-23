@@ -1,4 +1,60 @@
-# VEYNDO video tours
+# Veyndo product films and video tours
+
+**New product films, 23 October 2026.** Start with the concept, follow the connected merchant journey, then explore the app platform. All three films are Full HD, in English, with burned-in subtitles and no sound.
+
+![Three new Veyndo product films](assets/showcase/product-films-20261023/series-preview.jpg)
+
+## The concept — commerce that thinks and acts
+
+**1:12 · English · 1080p · Silent**
+
+How the merchant agent, native Rust commerce core, apps and Storyfront shopping experiences fit together. Follow the embedded demo checkout through the receipt and back to an empty original bag.
+
+<video controls playsinline preload="metadata" poster="assets/showcase/product-films-20261023/veyndo-concept.jpg" aria-label="The concept — commerce that thinks and acts" style="width:100%;height:auto;aspect-ratio:16/9;border-radius:16px">
+<source src="assets/showcase/product-films-20261023/veyndo-concept.mp4" type="video/mp4">
+<track kind="captions" src="https://www.veyndo.ai/docs/assets/showcase/product-films-20261023/veyndo-concept.en.vtt" srclang="en" label="English">
+<a href="assets/showcase/product-films-20261023/veyndo-concept.mp4">Watch or download the film</a>
+</video>
+
+[Download MP4](assets/showcase/product-films-20261023/veyndo-concept.mp4) · [English VTT](https://www.veyndo.ai/docs/assets/showcase/product-films-20261023/veyndo-concept.en.vtt) · [English SRT](https://www.veyndo.ai/docs/assets/showcase/product-films-20261023/veyndo-concept.en.srt)
+
+## The connected merchant journey
+
+**1:36 · English · 1080p · Silent**
+
+Catalogue intake from CSV, descriptions or URLs; connected agent work; visual shop design; product selection; configured company approval and reorder; fictional customer scenarios.
+
+<video controls playsinline preload="metadata" poster="assets/showcase/product-films-20261023/veyndo-workspace.jpg" aria-label="The connected merchant journey" style="width:100%;height:auto;aspect-ratio:16/9;border-radius:16px">
+<source src="assets/showcase/product-films-20261023/veyndo-workspace.mp4" type="video/mp4">
+<track kind="captions" src="https://www.veyndo.ai/docs/assets/showcase/product-films-20261023/veyndo-workspace.en.vtt" srclang="en" label="English">
+<a href="assets/showcase/product-films-20261023/veyndo-workspace.mp4">Watch or download the film</a>
+</video>
+
+[Download MP4](assets/showcase/product-films-20261023/veyndo-workspace.mp4) · [English VTT](https://www.veyndo.ai/docs/assets/showcase/product-films-20261023/veyndo-workspace.en.vtt) · [English SRT](https://www.veyndo.ai/docs/assets/showcase/product-films-20261023/veyndo-workspace.en.srt)
+
+## The app platform — build connected capabilities
+
+**1:24 · English · 1080p · Silent**
+
+Visual editing and agent-assisted development, app-owned records and settings, shared native events, Veyndo AI/Codex/Claude Code entry points, private testing and versioned publication.
+
+<video controls playsinline preload="metadata" poster="assets/showcase/product-films-20261023/veyndo-app-platform.jpg" aria-label="The app platform — build connected capabilities" style="width:100%;height:auto;aspect-ratio:16/9;border-radius:16px">
+<source src="assets/showcase/product-films-20261023/veyndo-app-platform.mp4" type="video/mp4">
+<track kind="captions" src="https://www.veyndo.ai/docs/assets/showcase/product-films-20261023/veyndo-app-platform.en.vtt" srclang="en" label="English">
+<a href="assets/showcase/product-films-20261023/veyndo-app-platform.mp4">Watch or download the film</a>
+</video>
+
+[Download MP4](assets/showcase/product-films-20261023/veyndo-app-platform.mp4) · [English VTT](https://www.veyndo.ai/docs/assets/showcase/product-films-20261023/veyndo-app-platform.en.vtt) · [English SRT](https://www.veyndo.ai/docs/assets/showcase/product-films-20261023/veyndo-app-platform.en.srt)
+
+## Files and editable projects
+
+[Download all three editable film projects](https://www.veyndo.ai/docs/assets/showcase/product-films-20261023/editable-projects.zip) · [Encoded-file metadata and hashes](https://www.veyndo.ai/docs/assets/showcase/product-films-20261023/manifest.json).
+
+The films combine actual product captures from **15–22 October** with architecture illustrations and editorial focus moves. The captured interface is mostly German; the explanation is English. Demo data and simulated payments are shown. Film timing is not a latency measurement. These new films explain the implemented product; they do not replace the dated [software acceptance](status.md).
+
+## Earlier workflow recordings — 13 October 2026
+
+The following shorter tours keep their original capture dates and scope.
 
 Fresh VEYNDO captures, 13 October 2026. The approved Living V identity and
 "Commerce that thinks and acts." claim are used throughout. All data is synthetic.

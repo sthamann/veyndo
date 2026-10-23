@@ -13,7 +13,7 @@
 [![Working prototype](https://img.shields.io/badge/status-working_prototype-189EFF)](#current-boundaries)
 [![Sustainable Use License](https://img.shields.io/badge/license-Sustainable_Use-189EFF)](LICENSE)
 
-[Try one complete round](docs/first-tour.md) · [Watch the tours](docs/video-tours.md) · [First contributions](docs/early-contributors.md) · [Feature guide](docs/features.md) · [Architecture](docs/production-architecture.md) · [Integrations](docs/service-integrations.md) · [Documentation](https://veyndo.ai/docs/)
+[Try one complete round](docs/first-tour.md) · [Watch the new product films](docs/video-tours.md) · [First contributions](docs/early-contributors.md) · [Feature guide](docs/features.md) · [Architecture](docs/production-architecture.md) · [Integrations](docs/service-integrations.md) · [Documentation](https://veyndo.ai/docs/)
 
 </div>
 
@@ -41,11 +41,12 @@ public acceptance are recorded separately.
 | **Test before release** | Preview editable fictional customers from the selected catalogue, adjust their goals and budgets, then let them try native search, baskets and simulated purchases in a private shop. Compare saved runs and inspect actual failures. [Customer simulator](docs/customer-scenarios.md). |
 | **Stay in control** | Current roles, private sandboxes, immutable versions and selected publication govern changes. [Security](docs/security.md). |
 
-[![Actual public Veyndo Studio: a budget refusal and two completed private purchases in a French-only channel, 22 October 2026](docs/assets/customer-scenarios-20261022/public-profile-suggestions-results.png)](docs/customer-scenarios.md)
+[![Veyndo: three new product films](docs/assets/showcase/product-films-20261023/series-preview.jpg)](https://www.veyndo.ai/docs/video-tours.html)
 
-Screenshots use synthetic shops; payments are simulated. Recordings retain their
-capture dates and are edited for readability, not performance measurements.
-[Current screenshots and public purchase acceptance](docs/customer-scenarios.md#verification) · [Watch the dated tours](docs/video-tours.md) · [Tour provenance](docs/assets/launch-20261014/README.md).
+**Films:** [Concept · 1:12](docs/assets/showcase/product-films-20261023/veyndo-concept.mp4) · [Merchant journey · 1:36](docs/assets/showcase/product-films-20261023/veyndo-workspace.mp4) · [App platform · 1:24](docs/assets/showcase/product-films-20261023/veyndo-app-platform.mp4). English subtitles, no sound.
+
+Films use actual dated UI captures, demo data and simulated payments. Timing is editorial.
+[Current screenshots and acceptance](docs/customer-scenarios.md#verification) · [Watch the new product films](docs/video-tours.md) · [Film sources and verification](docs/assets/showcase/product-films-20261023/README.md).
 
 ## Try one complete round
 

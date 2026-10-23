@@ -1,0 +1,59 @@
+1
+00:00:00,200 --> 00:00:04,700
+When your business needs a new capability, build it as a connected app.
+
+2
+00:00:05,000 --> 00:00:09,700
+Its interface, data and behaviour become part of the same commerce environment.
+
+3
+00:00:10,200 --> 00:00:15,500
+The visual designer and coding agent work on the same versioned app definition.
+
+4
+00:00:15,800 --> 00:00:21,700
+Connect views and editable fields instead of maintaining a separate custom administration.
+
+5
+00:00:22,200 --> 00:00:27,500
+Define app-owned records, relationships and the settings an installation needs.
+
+6
+00:00:27,800 --> 00:00:33,700
+Shared storage keeps app data scoped without creating a database table for every installation.
+
+7
+00:00:34,200 --> 00:00:39,500
+Connect app actions to native events and the existing Flow Builder.
+
+8
+00:00:39,800 --> 00:00:45,700
+Follow execution history and reuse reviewed work in a repeatable flow.
+
+9
+00:00:46,200 --> 00:00:51,500
+Use Veyndo AI, or bring Codex or Claude Code into the same app workflow.
+
+10
+00:00:51,800 --> 00:00:57,700
+Agent and app operations remain subject to current shop permissions and review controls.
+
+11
+00:00:58,200 --> 00:01:04,200
+Save immutable app versions and test installed behaviour in a private environment.
+
+12
+00:01:04,500 --> 00:01:08,000
+Review what the package changes and what it is allowed to access.
+
+13
+00:01:08,300 --> 00:01:11,700
+Publish deliberately, with version history available for subsequent changes.
+
+14
+00:01:12,200 --> 00:01:17,500
+Apps extend the shop through shared commerce, permissions, events and releases.
+
+15
+00:01:17,800 --> 00:01:23,700
+Explore App Studio and build your next connected capability.
