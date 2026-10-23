@@ -6,16 +6,28 @@ journey are tracked separately. All purchases below use **simulated payments**.
 
 The 23 October release expands selected Lean guarantees to **63 policies / 149
 properties**, splits their Rust/Lean owners and tightens Cargo dependency checks.
-The subsequent shared discount repair also passes complete required CI: **322 Rust
-tests**, **816 frontend tests**, native database integration and coverage gates.
+The subsequent shared discount repair and batched marketplace order localization
+also pass complete required CI: **322 Rust tests**, **816 frontend tests**, native
+database integration and coverage gates.
 [Verification, modularity and release evidence](evidence/formal-modularity-2026-10-23.md).
 
 ## What is online now
 
-Core image `dynamic-garden-8477`, source **`363181dd` (PR #209)**, was deployed on
+The latest accepted functional change is **`7bd37916` (PR #211)**, delivered as
+Core image `befitting-river-8632` on **23 October at 18:05:26 CEST**. Its serialized
+release completed at **18:07:11 CEST**, after a fresh snapshot, successful migration
+job and health-checked rollout. Marketplace order import now resolves all admitted
+line names in one query while retaining localization, tenant isolation, frozen
+amounts, stock locks and replay behavior. Public simulated order **`RAC-7cf70dc0`**
+completed afterward for **EUR 59.00**, including **EUR 9.42 VAT**, with the German
+lamp name. Return, full reload and the reopened cart confirmed zero items and
+retained the disabled personalization choice.
+[Exact CI, query-plan and public release evidence](evidence/external-order-batching-2026-10-23.md).
+
+The preceding Core image `dynamic-garden-8477`, source **`363181dd` (PR #209)**, was deployed on
 **23 October at 15:14:51 CEST** and completed its health-checked rollout at
 **15:16 CEST**, after a fresh snapshot and successful migration job.
-One instance is running, 1/1 health checks pass and it has zero restarts.
+Its acceptance observed one running instance, passing health checks and zero restarts.
 The shared allocator preserves exact cent rounding for large baskets, and app
 price increases reject overflowing totals before changing a quote.
 Public simulated order **`RAC-b8059d75`** completed afterward for **EUR 349.00**,
@@ -97,6 +109,7 @@ are included in the combined public artifact; [implementation and browser eviden
 
 | Journey | What was observed | Evidence |
 | --- | --- | --- |
+| Native checkout after import batching | Public simulated order `RAC-7cf70dc0` completed on the new Core for EUR 59.00 with EUR 9.42 VAT and the German lamp name. Return, full reload and reopened cart confirmed zero items. The separate marketplace callback fixtures measured one translation query for 1, 20 and 24 lines, including strict signed tenant scope. | [23 October import release](evidence/external-order-batching-2026-10-23.md#public-purchase-after-rollout) |
 | Native checkout after the discount repair | Public simulated order `RAC-b8059d75` completed on the new Core for EUR 349.00 with EUR 55.72 VAT and the German desk name. Return, full reload and the reopened cart confirmed zero items. Exact three-line discount allocations and frozen order values passed both native CI database modes separately. | [23 October discount release](evidence/formal-modularity-2026-10-23.md#discount-repair-complete-ci-and-public-rollout) |
 | Catalogue-based test customers | German Studio prepared three French profiles from the channel's only notebook. The EUR 28.89 profile stopped; Germany and Austria orders completed for EUR 28.90 and EUR 29.14 with the stored French product name. Private orders increased from four to exactly six. Reload, profile reuse and 390 px mobile layout passed. | [Public profile preparation and purchases](evidence/customer-scenarios-2026-10-22.md#public-catalogue-profile-acceptance) |
 | Visual shopping, catalogue preparation and app diagnostics | Final public cards showed the actual notebook and holder, EUR 63.40 together. Removal survived detail/back; restore retained cart zero. Native purchase `RAC-eb78b7d7` completed for EUR 28.90 including EUR 4.61 VAT; return/reload retained an empty cart and privacy rejection. Five-language readiness opened the correct media editor; app diagnostics retained draft protection. | [Final combined release acceptance](evidence/customer-scenarios-2026-10-22.md#public-acceptance-after-the-final-rollout) |
@@ -132,8 +145,11 @@ are included in the combined public artifact; [implementation and browser eviden
 
 The 22 October merchant catalogue and privacy continuation changes are online and
 accepted as described above. The connected image/translation progress view, app-reference diagnostics and
-editable visual shopper selection are included in the current public release. Measured import/query improvements remain
-separate next work.
+editable visual shopper selection are included in the current public release.
+The first measured import improvement now resolves names for a 24-line order in
+one query instead of 24. The same query uses existing indexes in a test shop with
+200,059 products. Further throughput measurements and shared order-persistence
+work remain separate. [Import verification](evidence/external-order-batching-2026-10-23.md).
 [Concrete architecture improvements discussed with Claude](architecture-followups-2026-10-22.md)
 are proposals, separate from this implementation.
 
