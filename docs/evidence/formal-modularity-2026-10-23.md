@@ -102,8 +102,33 @@ The subsequent stylesheet extraction addresses the largest file above:
 the modules reproduces the original 1,037-line source byte for byte. The build
 publishes one flattened stylesheet at both existing URLs; CSS imports add no
 browser requests. Marketing and handbook bundles are checked for exact equality.
-The existing full website build and local-link/asset validation pass. The larger
-integration-test files remain separate future cleanup candidates.
+The existing full website build and local-link/asset validation pass.
+
+## Provider test follow-up
+
+The two integration files identified above are now small suite entry points:
+`connected_apps.py` runs the access, private source, event delivery and disconnect
+scenarios; `email_tests.py` composes the original nine test cases. Protocol fixtures,
+server lifetime and individual scenarios have documented owners under
+`scripts/testing/connected_contracts/` and `scripts/testing/mail_contracts/`.
+`rust_connectors.py` now imports the shared mail fixture directly instead of
+depending on the mail test class.
+
+The same three registered suites passed before and after extraction. Structural
+comparison confirms unchanged bodies for all nine mail tests and all 37 assertions
+and nine reported scenarios in the connected app suite. Native mail delivery and
+the separate Rust connector regression still run against local provider fixtures
+and disposable PostgreSQL databases. [Ownership and reproduction command](../testing.md#mail-and-connected-app-test-ownership).
+
+The complete CI also exposed an existing role-race fixture problem under signed
+transaction pooling. Its `FOR UPDATE` barrier could block worker foreign-key
+checks before the HTTP mutation reached its intended lifecycle lock. A direct
+`FOR KEY SHARE` negative control reproduces that excessive exclusion. The fixture
+now uses `FOR NO KEY UPDATE`, verifies compatible key reads, and requires the
+mutation to wait behind that exact backend before demoting the owner. Promotion,
+invitation and invitation acceptance must still return 403; denied invitations
+remain absent or unredeemed. Production authorization and lock acquisition are
+unchanged. Failure cleanup releases the database barrier before joining HTTP.
 
 ## Reproduce
 

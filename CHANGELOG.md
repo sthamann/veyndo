@@ -1,5 +1,12 @@
 # Changelog
 
+## Modular provider regression tests — 23 October 2026
+
+- Split the large connected app and mail suites into documented protocol fixtures, process lifetime and scenario modules. Preserve suite registration, scenario order and every existing test assertion.
+- Let the Rust connector regression reuse the mail server fixture directly. Keep the archived comparison connector explicit and separate from production services.
+- Verify the affected native mail, connector and connected app paths before and after extraction; update test ownership, the source inventory and the existing module audit.
+- Narrow the forced role-demotion test barrier so background foreign-key checks can use a one-connection pooler. Match the exact blocking backend, retain all three HTTP denials and verify that denied invitations remain absent or unredeemed. Release a failed test's lock before joining its request.
+
 ## Modular public-site styles — 23 October 2026
 
 - Split the 1,037-line shared stylesheet into nine documented modules, each below 320 lines. Keep the original rules and cascade unchanged.

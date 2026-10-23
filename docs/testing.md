@@ -1,5 +1,41 @@
 # Testing, coverage and maintenance contracts
 
+## Mail and connected app test ownership
+
+The registered `email_tests`, `rust_connectors` and `connected_apps` suites keep
+their existing names and execution order. Their shared fixtures and scenarios now
+have separate owners:
+
+| Owner | Responsibility |
+| --- | --- |
+| [email_tests.py](../scripts/email_tests.py) | Compose the same nine unittest cases from the mail fixture, protocol contracts and native journey. |
+| [mail_contracts/wire.py](../scripts/testing/mail_contracts/wire.py) and [fixtures.py](../scripts/testing/mail_contracts/fixtures.py) | Disposable SMTP/HTTP servers, synthetic TLS certificates and isolated test settings. `rust_connectors.py` imports these fixtures directly. |
+| [mail_contracts/contracts.py](../scripts/testing/mail_contracts/contracts.py) | Eight archived comparison cases for mail configuration, protocols, secrecy, retries and localized messages. |
+| [mail_contracts/journey.py](../scripts/testing/mail_contracts/journey.py) | Actual Rust checkout, outbox, Flow Builder, app gateway and mail worker delivery to local SMTP, including HTTP/MCP permissions and sandbox denial. |
+| [connected_apps.py](../scripts/connected_apps.py) | Run access, source import, event delivery and disconnect checks in their original order. |
+| [connected_contracts/runtime.py](../scripts/testing/connected_contracts/runtime.py), [wire.py](../scripts/testing/connected_contracts/wire.py) and [client.py](../scripts/testing/connected_contracts/client.py) | Own process/server lifetime, local provider responses and scoped HTTP actions. Restore fixture environment variables after shutdown. |
+| [connected_contracts/access.py](../scripts/testing/connected_contracts/access.py) | OAuth/PKCE, encrypted tenant binding, configuration revisions, channel tracking and access denial. |
+| [connected_contracts/sources.py](../scripts/testing/connected_contracts/sources.py) | Private source import, retrieval/model evidence, token refresh and disconnect cleanup. |
+| [connected_contracts/flows.py](../scripts/testing/connected_contracts/flows.py) | Native order/app events, durable Slack flows, idempotency, retries and uncertain delivery after restart. |
+| [reference_connector.py](../scripts/testing/reference_connector.py) | Explicit test import boundary for the archived connector comparison implementation. |
+
+The extraction preserves every mail test body, all 37 connected app assertions
+and all nine reported scenarios. Before and after the change, the three registered
+suites pass against disposable local PostgreSQL databases and provider fixtures.
+The native connector suite retains its two process, encrypted configuration,
+queue recovery and restricted database role checks. All provider calls stay local.
+
+Run the affected suites through the existing registry:
+
+```sh
+python3 scripts/verify_integration.py --only email_tests rust_connectors connected_apps
+```
+
+`connected_apps` retains the archived connector as a differential fixture beside
+the real Rust commerce process. The separate `rust_connectors` suite and native
+mail journey exercise the shipping Rust service. Production ownership remains
+documented in [Rust services](rust-services.md); no runtime moved into Python.
+
 ## Formal and module-boundary regression — 23 October 2026
 
 The [current formal/module audit](evidence/formal-modularity-2026-10-23.md) records
@@ -404,8 +440,8 @@ already-disposable database. Failures remain failures, and child processes stop
 before database cleanup. SIGINT flushes optional Rust coverage profiles.
 
 [scripts/testing/suites.json](../scripts/testing/suites.json) is the single
-registry for **55 HTTP suites, 23 local provider/connector/integration suites, four browser
-contracts and three verification-tool commands** (85 registered suites).
+registry for HTTP suites, local provider and connector suites, browser contracts
+and verification tools. It records the current suite names and execution order.
 The local server uses an offline model URL; live model checks are separate, opt-in
 checks. Credentials, payments, mail and Slack are exercised against loopback
 protocol fixtures. Passing these does not demonstrate a real provider account.
@@ -433,8 +469,9 @@ python3 scripts/money_boundary_differential.py
 
 The automation suite also executes `scripts/playground.py` as documented: a new
 owner-owned shop, repeat setup after an edited rule, both checkout branches and
-actual invoice records. `tooling_tests.py` has 12 tests, including refusal of
-remote credential destinations and unsafe state-file symlinks. See
+actual invoice records. `tooling_tests.py` checks refusal of remote credential
+destinations and unsafe state file symlinks, alongside runtime ownership and
+coverage reporting contracts. See
 [the manual tour](playground.md) for the corresponding browser steps.
 
 ## Production boundary regressions
