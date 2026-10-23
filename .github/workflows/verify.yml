@@ -12,13 +12,10 @@ concurrency:
   group: verify-${{ github.workflow }}-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 jobs:
-  verify:
+  admission:
     runs-on: ubuntu-24.04
-    env:
-      DATABASE_URL: postgres://commerce:ci-only-password@127.0.0.1:15487/commerce
-      QDRANT_URL: http://127.0.0.1:16333
-      MERCHANT_TOKEN: ci-only-merchant-credential-not-for-deployment
-      PYTHONUNBUFFERED: '1'
+    outputs:
+      lane: ${{ steps.scope.outputs.lane }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -26,8 +23,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Verify conservative change classification and coverage helpers
-        run: python3 scripts/testing/test_ci_scope.py && python3 scripts/testing/tooling_tests.py
+      - name: Verify conservative scope, final admission and coverage helpers
+        run: python3 scripts/testing/test_ci_scope.py && python3 scripts/testing/test_ci_gate.py && python3 scripts/testing/tooling_tests.py
       - run: python3 scripts/testing/documentation_hygiene.py
       - name: Check exact source inventory before compiling or integration tests
         run: python3 scripts/testing/source_inventory.py
@@ -42,43 +39,98 @@ jobs:
       - name: Choose required verification scope
         id: scope
         run: python3 scripts/testing/ci_scope.py
+
+  documentation:
+    needs: admission
+    if: needs.admission.outputs.lane == 'docs'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
       - name: Build and validate every documentation page
-        if: steps.scope.outputs.lane == 'docs'
         run: |
           python3 -m pip install -r site/requirements.txt
           python3 scripts/build_site.py
           python3 scripts/check_site.py
+
+  frontend:
+    needs: admission
+    if: needs.admission.outputs.lane == 'frontend' || needs.admission.outputs.lane == 'full'
+    runs-on: ubuntu-24.04
+    outputs:
+      artifact-id: ${{ steps.coverage.outputs.artifact-id }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Complete frontend verification
+        run: npm ci && npm run format:check && npm run build && npm run architecture && npm run localization && npm run test:coverage
+        working-directory: frontend
+      - name: Enforce unchanged frontend coverage floors
+        run: |
+          python3 scripts/testing/coverage_report.py --frontend-only
+          python3 scripts/testing/ci_gate.py stamp frontend
+      - name: Preserve frontend coverage
+        id: coverage
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-coverage-${{ github.sha }}-${{ github.run_attempt }}
+          path: |
+            frontend/coverage
+            artifacts/coverage/frontend-summary.json
+            artifacts/coverage/frontend-provenance.json
+          if-no-files-found: warn
+
+  native:
+    needs: admission
+    if: needs.admission.outputs.lane == 'full'
+    runs-on: ubuntu-24.04
+    outputs:
+      artifact-id: ${{ steps.coverage.outputs.artifact-id }}
+    env:
+      DATABASE_URL: postgres://commerce:ci-only-password@127.0.0.1:15487/commerce
+      QDRANT_URL: http://127.0.0.1:16333
+      MERCHANT_TOKEN: ci-only-merchant-credential-not-for-deployment
+      PYTHONUNBUFFERED: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
       - name: Start standard PostgreSQL and Qdrant
-        if: steps.scope.outputs.lane == 'full'
         run: DB_PASSWORD=ci-only-password docker compose -p veyndo up -d --wait postgres qdrant
       - uses: dtolnay/rust-toolchain@stable
-        if: steps.scope.outputs.lane == 'full'
       - uses: Swatinem/rust-cache@v2
-        if: steps.scope.outputs.lane == 'full'
+        with:
+          # Preserve the preceding job's dependency-cache namespace after the split.
+          shared-key: verify
       - uses: actions/setup-node@v4
-        if: steps.scope.outputs.lane != 'docs'
         with:
           node-version: 22
           cache: npm
           cache-dependency-path: frontend/package-lock.json
       - uses: shivammathur/setup-php@v2
-        if: steps.scope.outputs.lane == 'full'
         with:
           php-version: '8.4'
           extensions: curl, dom, fileinfo, gd, intl, mbstring, pdo_mysql, pdo_sqlite, sodium, zip
           tools: composer:v2
       - name: Install verification and offline-migration dependencies
-        if: steps.scope.outputs.lane == 'full'
         run: |
           python3 -m pip install -r scripts/testing/requirements.txt
           sudo apt-get update && sudo apt-get install -y pgbouncer
       - name: Verify production Rust image compile-time inputs and negative control
-        if: steps.scope.outputs.lane == 'full'
         run: python3 scripts/testing/image_context.py
       - run: cargo fmt --all --check && cargo clippy --locked --workspace --all-targets -- -D warnings
-        if: steps.scope.outputs.lane == 'full'
       - name: Instrument the real Rust unit and HTTP paths
-        if: steps.scope.outputs.lane == 'full'
         run: |
           rustup component add llvm-tools-preview
           cargo install cargo-llvm-cov --version 0.9.1 --locked
@@ -86,9 +138,7 @@ jobs:
           CARGO_LLVM_COV_TARGET_DIR="$PWD/target" cargo llvm-cov clean --workspace
           CARGO_LLVM_COV_TARGET_DIR="$PWD/target" cargo llvm-cov show-env | python3 scripts/testing/coverage_env.py >> "$GITHUB_ENV"
       - run: cargo test --locked --workspace && cargo build --locked --workspace --bins
-        if: steps.scope.outputs.lane == 'full'
       - name: Install pinned Lean toolchain
-        if: steps.scope.outputs.lane == 'full'
         uses: leanprover/lean-action@f061402b660e0c34644504b324e830f2991d4865 # v1
         with:
           lake-package-directory: proof
@@ -98,37 +148,32 @@ jobs:
           lint: 'false'
           use-mathlib-cache: 'false'
       - name: Lean production contracts, source review locks and compiled conformance
-        if: steps.scope.outputs.lane == 'full'
         run: python3 scripts/formal.py
       - name: Reject broken policies, proof shortcuts and disconnected bindings
-        if: steps.scope.outputs.lane == 'full'
         env:
           # Intentionally broken source variants must not inflate real-core coverage.
           LLVM_PROFILE_FILE: /tmp/commerce-mutation-%p-%m.profraw
         run: python3 scripts/formal/mutations.py
       - name: Preserve formal verification evidence
-        if: always() && steps.scope.outputs.lane == 'full'
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: formal-verification-${{ github.sha }}
+          name: formal-verification-${{ github.sha }}-${{ github.run_attempt }}
           path: artifacts/formal-*.json
           if-no-files-found: ignore
-      - run: npm ci && npm run format:check && npm run build && npm run architecture && npm run localization && npm run test:coverage
-        if: steps.scope.outputs.lane != 'docs'
+      # Integration serves the actual frontend and locale contracts use TypeScript.
+      # Rebuild locally instead of making the native lane wait for UI verification.
+      - name: Build frontend assets for native integration
+        run: npm ci && npm run build
         working-directory: frontend
       - name: Generated contracts and source boundaries
-        if: steps.scope.outputs.lane == 'full'
         run: python3 scripts/testing/operation_contracts.py --check && python3 scripts/testing/workspace_boundaries.py
       - run: composer install --working-dir=reference --no-interaction --prefer-dist
-        if: steps.scope.outputs.lane == 'full'
       - run: python3 scripts/differential.py && python3 scripts/context_differential.py && python3 scripts/delivery_differential.py && python3 scripts/rule_differential.py && python3 scripts/automation_registry.py && python3 scripts/automation_differential.py
-        if: steps.scope.outputs.lane == 'full'
       - name: Real database and local provider integration (single suite registry)
-        if: steps.scope.outputs.lane == 'full'
         run: |
           COVERAGE_PROCESS_START="$PWD/scripts/testing/.coveragerc" PYTHONPATH="$PWD/scripts/testing" python3 scripts/verify_integration.py --container veyndo-postgres-1
-      - name: Coverage reports and regression gates
-        if: steps.scope.outputs.lane == 'full'
+      - name: Report native coverage from the same instrumented binaries
         run: |
           mkdir -p artifacts/coverage
           cargo llvm-cov report --workspace --json --output-path artifacts/coverage/rust.json
@@ -136,27 +181,64 @@ jobs:
           python3 -m coverage combine --rcfile=scripts/testing/.coveragerc
           python3 -m coverage json --rcfile=scripts/testing/.coveragerc
           python3 -m coverage html --rcfile=scripts/testing/.coveragerc
-          python3 scripts/testing/coverage_report.py
-      - name: Preserve complete coverage reports, gaps and integration logs
-        if: always() && steps.scope.outputs.lane == 'full'
+          python3 scripts/testing/ci_gate.py stamp native
+      - name: Preserve native coverage and integration logs
+        id: coverage
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: coverage-${{ github.sha }}
+          name: native-coverage-${{ github.sha }}-${{ github.run_attempt }}
+          path: |
+            artifacts/coverage
+            artifacts/integration-server.log
+          if-no-files-found: warn
+
+  # Keep this exact required check for branch protection, including failed/skipped dependencies.
+  verify:
+    needs: [admission, documentation, frontend, native]
+    if: always()
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Reject failed, cancelled, missing or unexpectedly skipped work
+        run: python3 scripts/testing/ci_gate.py jobs
+        env:
+          VERIFY_NEEDS: ${{ toJSON(needs) }}
+      - name: Download this frontend job's immutable coverage artifact
+        if: needs.admission.outputs.lane != 'docs'
+        uses: actions/download-artifact@v4
+        with:
+          artifact-ids: ${{ needs.frontend.outputs.artifact-id }}
+          merge-multiple: true
+      - name: Download this native job's immutable coverage artifact
+        if: needs.admission.outputs.lane == 'full'
+        uses: actions/download-artifact@v4
+        with:
+          artifact-ids: ${{ needs.native.outputs.artifact-id }}
+          path: artifacts
+          merge-multiple: true
+      - name: Check source/run provenance and unchanged coverage policy
+        if: needs.admission.outputs.lane != 'docs'
+        env:
+          VERIFY_LANE: ${{ needs.admission.outputs.lane }}
+        run: |
+          python3 scripts/testing/ci_gate.py reports "$VERIFY_LANE"
+          if [ "$VERIFY_LANE" = full ]; then
+            python3 scripts/testing/coverage_report.py
+          else
+            python3 scripts/testing/coverage_report.py --frontend-only
+          fi
+      - name: Preserve combined coverage reports, gaps and integration logs
+        if: always() && needs.admission.outputs.lane == 'full'
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-${{ github.sha }}-${{ github.run_attempt }}
           path: |
             frontend/coverage
             artifacts/coverage
             artifacts/integration-server.log
           if-no-files-found: warn
       # External model/payment/OAuth checks remain opt-in; these reports do not certify live credentials.
-      - name: Enforce unchanged frontend coverage floors
-        if: steps.scope.outputs.lane == 'frontend'
-        run: python3 scripts/testing/coverage_report.py --frontend-only
-      - name: Preserve frontend-only coverage
-        if: always() && steps.scope.outputs.lane == 'frontend'
-        uses: actions/upload-artifact@v4
-        with:
-          name: frontend-coverage-${{ github.sha }}
-          path: |
-            frontend/coverage
-            artifacts/coverage/frontend-summary.json
-          if-no-files-found: warn

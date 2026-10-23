@@ -108,7 +108,7 @@ effect; replays stay idempotent and failures cannot oversell or invent payment c
 **Developer task:** find a broken UI test quickly while the complete Rust and
 database checks continue, then promote the already built immutable runtime image.
 
-The current workflow runs compilation, formal mutations, frontend verification and
+The preceding workflow ran compilation, formal mutations, frontend verification and
 native integration sequentially. In PR #193, formal mutation checks took 5m08 and
 frontend verification 4m01 before native integration started. These are observed
 step durations, not a projected speedup.
@@ -125,6 +125,13 @@ Keep database fixtures and coverage profiles fresh. Retain authorization, privac
 revocation, payment replay and stock checks as required work. Publish per-lane coverage
 artifacts and combine their actual reports before enforcing the existing floors.
 Do not cache business state or weaken branch protection to obtain a faster green run.
+
+**Implemented split:** cheap admission now starts independent frontend and native
+jobs. The required `verify` result checks explicit job outcomes and same-source,
+same-run coverage artifacts before applying the existing combined policy. Native
+unit/integration profiles stay on one runner. Its local frontend asset build avoids
+waiting for the UI job; the complete UI suite runs once. No database suites or
+coverage floors are removed. [Exact workflow and regression contract](testing.md#independent-frontend-feedback).
 
 **Acceptance:** the same changed source and deliberately broken UI/privacy cases
 produce the same final verdict; the UI failure appears independently of Rust's

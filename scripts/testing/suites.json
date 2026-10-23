@@ -106,6 +106,7 @@
   ],
   "tooling": [
     "testing/test_ci_scope",
+    "testing/test_ci_gate",
     "testing/tooling_tests",
     "branding",
     "money_boundary_differential"
