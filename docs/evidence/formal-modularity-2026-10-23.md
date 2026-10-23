@@ -70,6 +70,17 @@ the site stylesheet by handbook/marketing components and provider tests by their
 existing fixtures would be useful follow-ups; vendor/generated files should retain
 their provenance rather than being split for a line-count target.
 
+## Website stylesheet follow-up
+
+The subsequent stylesheet extraction addresses the largest file above:
+`site/style.css` is now a ten-line ordered entry to nine documented modules of
+49–204 lines. Removing only each added responsibility comment and concatenating
+the modules reproduces the original 1,037-line source byte for byte. The build
+publishes one flattened stylesheet at both existing URLs; CSS imports add no
+browser requests. Marketing and handbook bundles are checked for exact equality.
+The existing full website build and local-link/asset validation pass. The larger
+integration-test files remain separate future cleanup candidates.
+
 ## Reproduce
 
 ```sh

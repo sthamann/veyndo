@@ -49,6 +49,12 @@ inputs and state effects. A module's presence does not count as a test.
 
 The maintained full inventory, including all newly added Rust files, frontend feature folders, independent services and SDKs, is [module-inventory.md](module-inventory.md). Coverage percentages and explicit remaining gaps are in [testing.md](testing.md). The tables below describe selected behavioral suites and must not be read as 100% coverage.
 
+The public website's shared styles live in nine documented modules under
+[`site/styles/`](../site/styles/README.md), each at most 320 lines. The ordered
+`site/style.css` entry is bundled once by `scripts/build_site.py`; marketing and
+handbook keep their existing asset URLs and identical CSS. `scripts/check_site.py`
+compares both published assets to that bundle. [Extraction evidence](evidence/formal-modularity-2026-10-23.md#website-stylesheet-follow-up).
+
 ## Marketplace app and generic intake
 
 `extensions/apps/marketplaces/` owns provider protocols, mapping, inbox/review, worker,

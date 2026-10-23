@@ -1,5 +1,10 @@
 # Changelog
 
+## Modular public-site styles — 23 October 2026
+
+- Split the 1,037-line shared stylesheet into nine documented modules, each below 320 lines. Keep the original rules and cascade unchanged.
+- Publish one flattened asset at the existing marketing and handbook URLs, preserving cache paths and avoiding additional browser stylesheet requests. Validate ownership, module registration and exact published bundle contents in the existing website checks.
+
 ## Sequential formal guarantees and domain boundaries — 23 October 2026
 
 - Extend Lean coverage from 61 policies / 131 properties to 63 / 149. Bind private agent continuation and planning-only request admission to the existing native guards; prove sequential stock, refund and budget bounds plus discount stability.

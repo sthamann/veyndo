@@ -19,6 +19,28 @@ BASE = 'https://sthamann.github.io/veyndo/'
 REPO = 'https://github.com/sthamann/veyndo'
 
 
+def stylesheet():
+    """Flatten the explicit CSS module order into one asset without changing its cascade."""
+    entry = (ROOT / 'site/style.css').read_text()
+    body = re.sub(r'/\*.*?\*/', '', entry, flags=re.S)
+    names = re.findall(r'@import url\("styles/([a-z-]+\.css)"\);', body)
+    remainder = re.sub(r'@import url\("styles/[a-z-]+\.css"\);', '', body)
+    assert names and not remainder.strip(), 'Stylesheet entry only declares ordered local modules'
+    folder = ROOT / 'site/styles'
+    assert len(names) == len(set(names)), 'Duplicate stylesheet module'
+    assert set(names) == {p.name for p in folder.glob('*.css')}, 'Unregistered stylesheet module'
+    parts = []
+    for name in names:
+        path = folder / name
+        assert path.resolve().is_relative_to(folder.resolve()), 'Stylesheet module escapes its owner'
+        text = path.read_text()
+        assert re.match(r'/\* [^\n]+ \*/\n', text) and len(text.splitlines()) <= 320, (name, 'Document and split stylesheet responsibility')
+        assert not re.search(r'@(?:import|charset)\b', text, re.I), 'Nested stylesheet imports/charsets are not supported'
+        assert not re.search(r'url\(', text, re.I), 'Asset URLs require explicit bundle-relative resolution'
+        parts.append(text)
+    return ''.join(parts)
+
+
 def copy_page_media(page, document):
     """Marketing media must not depend on incidental links in the README."""
     class Media(HTMLParser):
@@ -111,7 +133,6 @@ def build():
     if DEST.exists():
         shutil.rmtree(DEST)
     (DEST / 'assets').mkdir(parents=True)
-    shutil.copyfile(ROOT / 'site/style.css', DEST / 'style.css')
     shutil.copyfile(ROOT / 'site/favicon.svg', DEST / 'favicon.svg')
     for asset in ['showcase.css', 'showcase.js']:
         shutil.copyfile(ROOT / 'site' / asset, DEST / asset)
@@ -173,6 +194,11 @@ def build():
         content = re.sub(r'\{\{(\w+)\}\}', lambda match: evidence[match[1]], content)
         write_page(Path(page['file']), page['title'], page['description'], content)
     documents = build_documents(DEST, write_page)
+    # Finish shared styles after page-specific assets have been copied. Marketing
+    # and handbook use identical bytes at their existing URLs, with no import waterfall.
+    styles = stylesheet()
+    for path in [DEST / 'style.css', DEST / 'docs/assets/ui/site.css']:
+        path.write_text(styles)
     # Pin the original browser distribution: no CDN, package install or network at build/read time.
     vendor = ROOT / 'site/vendor'
     mermaid = json.loads((vendor / 'mermaid.json').read_text())

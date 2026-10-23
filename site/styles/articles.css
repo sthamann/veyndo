@@ -1,0 +1,85 @@
+/* Readable articles, notices, tables and disclosure controls. */
+.article {
+  max-width: 960px;
+  padding: 70px 0;
+}
+.article h1 {
+  font-size: clamp(36px, 4.5vw, 60px);
+  letter-spacing: -2.5px;
+  line-height: 1.1;
+  margin-top: 22px;
+}
+.article h2 {
+  font-size: 30px;
+  letter-spacing: -1px;
+  margin: 44px 0 20px;
+}
+.article h3 {
+  margin: 25px 0 10px;
+}
+.article p,
+.article li {
+  color: var(--muted);
+}
+.article strong {
+  color: var(--ink);
+}
+.article .lead {
+  max-width: 800px;
+}
+.article pre {
+  border: 1px solid var(--line);
+  font-size: 13px;
+  margin: 24px 0;
+}
+.article p code,
+.article li code,
+.article td code {
+  background: var(--soft);
+  color: var(--ink);
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 0.88em;
+}
+.notice {
+  padding: 20px 24px;
+  border-left: 3px solid var(--accent);
+  background: var(--panel);
+  margin: 24px 0;
+}
+.table-wrap {
+  overflow: auto;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+th,
+td {
+  text-align: left;
+  vertical-align: top;
+  padding: 15px 12px;
+  border-bottom: 1px solid var(--line);
+}
+th {
+  background: var(--soft);
+  color: var(--ink);
+}
+td {
+  color: var(--muted);
+}
+details {
+  padding: 20px 0;
+  border-bottom: 1px solid var(--line);
+}
+summary {
+  font-weight: 700;
+  cursor: pointer;
+  min-height: 44px;
+}
+details p {
+  color: var(--muted);
+  max-width: 850px;
+}
