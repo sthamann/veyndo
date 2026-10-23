@@ -47,6 +47,12 @@ The website build validates 322 pages and all local links. Lean remains at 63 po
 149 properties, with 156,741 compiled comparisons and zero mismatches. This SQL
 batching change adds no whole-function proof.
 
+The same marketplace fixture also passes through `signed_runtime` with actual
+separate restricted system and tenant logins, signed tenant scope and forced RLS.
+It again reports `[1, 1, 1]`. The local targeted run selects the `commerce` HTTP
+suite and retains the mandatory checkout, tenant-isolation, worker, replica and
+authority regressions; full CI uses the complete configured HTTP registry.
+
 The local operating-system Node installation has a missing dynamic library;
 the complete selected-suite run passes using the existing bundled Node runtime.
 Full Linux CI and public delivery are recorded here after they complete. The

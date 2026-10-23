@@ -166,6 +166,8 @@ produced 1, 20 and 24 translation reads; the batched path produces 1, 1 and 1.
 The same cases cover Italian and short-locale fallback, variant/parent precedence,
 NULL, blank and whitespace names, identical product IDs in another shop, unchanged
 stock on a rejected final line and two orders competing for the last unit.
+The strict `signed_runtime` suite repeats the provider regression using separate
+restricted system and tenant database logins, signed scope and forced RLS.
 This measures database round trips and transactional correctness, not production
 orders per minute. [Dated evidence](evidence/external-order-batching-2026-10-23.md).
 

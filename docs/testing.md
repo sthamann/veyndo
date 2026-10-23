@@ -14,6 +14,9 @@ and zero on replay. A 25-line request remains rejected before persistence.
 The regression was run against the preceding binary first: all behavioral checks
 passed, and the new query-count assertion correctly rejected `[1, 20, 24]`.
 The changed binary passes with `[1, 1, 1]`.
+The strict `signed_runtime` suite repeats the real marketplace callback with
+separate restricted system and tenant logins, signed request scope and forced
+RLS. It asserts the same names, stock effects and constant query count.
 [Measurement and delivery scope](evidence/external-order-batching-2026-10-23.md).
 
 ## Mail and connected app test ownership
