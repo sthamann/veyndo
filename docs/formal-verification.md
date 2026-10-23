@@ -7,15 +7,15 @@ eight extracted policy modules (including the facade), 63 reviewed binding modul
 one comparison driver and 639 unproved modules. Binding review is not proof of the surrounding modules.
 The [manifest](../proof/manifest.json) and per-revision CI artifact are authoritative.
 The 23 October local and Linux CI verification compare **156,741 compiled Rust/Lean cases
-without mismatches** and rejects 183 deliberately broken policy variants.
+without mismatches** and reject 183 deliberately broken policy variants.
 [Exact local results and module audit](evidence/formal-modularity-2026-10-23.md).
 Local verification and the clean-checkout CI evidence are recorded separately.
 The complete required CI must pass before landing.
 
 The [published verification report](evidence/formal-verification-2026-10-23.json) is copied unchanged
-from the completed formal steps of [Linux CI run 39931009867](https://github.com/sthamann/veyndo/actions/runs/39931009867),
-recording clean source `396572a722d4fb6fea641cda48f68b9a4c5d1c1b`. Its complete source
-tree matches PR #206 commit `4e0d85d4`. The [mutation results](evidence/formal-mutations-2026-10-23.json)
+from the completed formal steps of [Linux CI run 39934011164](https://github.com/sthamann/veyndo/actions/runs/39934011164),
+recording clean source `bd1fc0e4f7b499bb72aaebd8ae7c0d46c09b679b`. Its complete source
+tree matches PR #206 commit `d68b2940`. The [mutation results](evidence/formal-mutations-2026-10-23.json)
 come from the same CI artifact. The reports include compiled conformance, axiom
 audit and exact inventory; later documentation or stylesheet edits do not extend
 their proof scope. [Current product and public acceptance](status.md).

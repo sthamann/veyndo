@@ -1,7 +1,7 @@
 {
   "status": "passed",
   "scope": "Extracted production policies; NOT full Rust/server correctness",
-  "sourceCommit": "396572a722d4fb6fea641cda48f68b9a4c5d1c1b",
+  "sourceCommit": "bd1fc0e4f7b499bb72aaebd8ae7c0d46c09b679b",
   "workingTreeChanged": false,
   "leanToolchain": "leanprover/lean4:v4.29.1",
   "policies": 63,

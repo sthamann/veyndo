@@ -8,9 +8,9 @@ the [current status](../status.md) records public runtime acceptance separately.
 
 The subsequent [Linux CI formal result](formal-verification-2026-10-23.json) and
 [mutation result](formal-mutations-2026-10-23.json) are copied unchanged from
-[run 39931009867](https://github.com/sthamann/veyndo/actions/runs/39931009867).
-That clean checkout has source `396572a722d4fb6fea641cda48f68b9a4c5d1c1b` and tree
-`b8a127c318e09d7f2408cbe07f3b6037f0bf1a51`, identical to PR #206's `4e0d85d4`.
+[run 39934011164](https://github.com/sthamann/veyndo/actions/runs/39934011164).
+That clean checkout has source `bd1fc0e4f7b499bb72aaebd8ae7c0d46c09b679b` and tree
+`c48dbf804423c5de33916dc65342553caaf7f230`, identical to PR #206's `d68b2940`.
 It independently reproduces the 63-policy / 149-property / 156,741-case result
 and all formal mutation controls. Public rollout is a separate status.
 
