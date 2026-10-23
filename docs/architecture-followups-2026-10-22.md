@@ -133,9 +133,13 @@ unit/integration profiles stay on one runner. Its local frontend asset build avo
 waiting for the UI job; the complete UI suite runs once. No database suites or
 coverage floors are removed. [Exact workflow and regression contract](testing.md#independent-frontend-feedback).
 
-**Acceptance:** the same changed source and deliberately broken UI/privacy cases
-produce the same final verdict; the UI failure appears independently of Rust's
-duration. Measure total wall time and runner consumption before claiming improvement.
+**Accepted 23 October:** complete required CI passed on the final source. The
+actual UI test rejects deliberately broken ranking and consent implementations.
+Frontend feedback arrived after 3m55s, versus 10m36s previously; the complete run
+took 48m15s, versus 52m14s. A targeted frontend retry passed in 3m41s with the
+original successful native artifact. Summed runner time was 51m49s, versus 52m14s;
+native test duration also varied, so not all wall-time savings are attributable to
+parallel scheduling. [Exact results and delivery](evidence/parallel-verification-2026-10-23.md).
 
 ## Suggested order
 

@@ -11,6 +11,16 @@ also pass complete required CI: **322 Rust tests**, **816 frontend tests**, nati
 database integration and coverage gates.
 [Verification, modularity and release evidence](evidence/formal-modularity-2026-10-23.md).
 
+The release checks now run complete frontend verification independently of the
+Rust/formal/native lane. The accepted full run returned frontend feedback after
+**3m55s** and completed required verification in **48m15s**, versus **10m36s** and
+**52m14s** in the preceding sequential run. A targeted frontend retry passed in
+**3m41s**, reusing the same successful native reports. All 322 Rust tests, 816
+frontend tests and 104 registered suites passed; coverage and security gates remain
+unchanged. This CI change is merged as **`1beea11f` (PR #213)**; the deployed
+runtime and dated public journeys below retain their existing versions.
+[Measured timing, coverage and retry evidence](evidence/parallel-verification-2026-10-23.md).
+
 ## What is online now
 
 The latest accepted functional change is **`7bd37916` (PR #211)**, delivered as
