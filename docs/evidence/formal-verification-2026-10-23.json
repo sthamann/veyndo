@@ -1,0 +1,47 @@
+{
+  "status": "passed",
+  "scope": "Extracted production policies; NOT full Rust/server correctness",
+  "sourceCommit": "bd1fc0e4f7b499bb72aaebd8ae7c0d46c09b679b",
+  "workingTreeChanged": false,
+  "leanToolchain": "leanprover/lean4:v4.29.1",
+  "policies": 63,
+  "axiomAudit": {
+    "theorems": 149,
+    "sorry": 0,
+    "customAxioms": 0,
+    "nativeDecisionAxioms": 0,
+    "allowedFoundations": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ]
+  },
+  "compiledEnvironmentRechecked": true,
+  "conformance": {
+    "cases": 156741,
+    "mismatches": 0,
+    "allBooleanAssignments": true,
+    "numericBoundaryIncludesU64Max": true,
+    "seed": 20261002
+  },
+  "inventory": {
+    "rustModules": 711,
+    "extractedPolicyModules": 8,
+    "reviewedBindingModules": 63,
+    "unprovedModules": 639,
+    "reviewedSchemaBuildProofInputs": 190,
+    "entireCoreProved": false
+  },
+  "proofLayout": {
+    "domainModules": 7,
+    "maximumClaimModuleLines": 240,
+    "allDeclarationsRegistered": true
+  },
+  "trustedBoundary": [
+    "Rust-to-Lean subset translator",
+    "Rust/Lean compilation and u64-to-Nat correspondence",
+    "Reviewed Rust adapters and input facts",
+    "PostgreSQL transactions/constraints",
+    "Operating system and provider protocols"
+  ]
+}

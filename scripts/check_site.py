@@ -37,6 +37,10 @@ class Page(HTMLParser):
 
 
 def check():
+    from build_site import stylesheet
+    styles = stylesheet()
+    assert (SITE / 'style.css').read_text() == styles, 'Marketing stylesheet bundle drift'
+    assert (SITE / 'docs/assets/ui/site.css').read_text() == styles, 'Handbook stylesheet bundle drift'
     for asset in SITE.rglob('*'):
         assert not {'.git', '.github'}.intersection(asset.relative_to(SITE).parts), (
             asset, 'GitHub Pages artifact upload excludes this directory')

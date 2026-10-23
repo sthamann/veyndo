@@ -1,0 +1,61 @@
+/* Benchmark document summary, comparison tables and conditions. */
+
+.benchmark-doc {
+  max-width: 1100px;
+}
+.benchmark-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin: 30px 0 50px;
+}
+.benchmark-summary span {
+  border: 1px solid var(--line);
+  padding: 12px 16px;
+  border-radius: 8px;
+  color: var(--muted);
+  font-size: 14px;
+}
+.table-scroll {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  margin: 26px 0;
+}
+.benchmark-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 780px;
+}
+.benchmark-table th,
+.benchmark-table td {
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+  padding: 17px 16px;
+  font-size: 14px;
+}
+.benchmark-table thead th {
+  color: var(--muted);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+}
+.benchmark-table tbody th {
+  font-weight: 500;
+}
+.benchmark-table strong {
+  color: var(--accent);
+}
+.conditions {
+  display: grid;
+  grid-template-columns: 190px 1fr;
+  gap: 16px 26px;
+  margin: 28px 0;
+}
+.conditions dt {
+  font-weight: 700;
+}
+.conditions dd {
+  margin: 0;
+  color: var(--muted);
+}

@@ -9,6 +9,14 @@ Rust/Lean comparison covers 156,741 cases. Four additional Rust tests exercise
 actual `u64` implementations against independent `u128` arithmetic and private
 context truth tables, including `u64::MAX` and lowered limits.
 
+The complete [Linux CI run 39934011164](https://github.com/sthamann/veyndo/actions/runs/39934011164)
+passed with 317 Rust tests, 816 frontend tests in 140 files, native PostgreSQL/HTTP
+integration, separate restricted runtime connections and transaction pooling.
+Measured line coverage is 86.62% Rust, 69.92% frontend and 80.72% Python tooling;
+all reviewed coverage gates passed. The delayed-flow revocation regression now
+waits for the committed delay cursor before changing access and the timer, so it
+checks actual continuation denial instead of racing initial queue admission.
+
 The existing mandatory proof and Cargo checks now also enforce seven handwritten
 proof domains and reviewed dependency ownership, with negative controls for hidden
 dependencies, aliases, wrong-owner targets and missing/extra claims. They supplement

@@ -6,17 +6,20 @@ core is correct or bug-free**. The reviewed inventory contains **711 Rust module
 eight extracted policy modules (including the facade), 63 reviewed binding modules,
 one comparison driver and 639 unproved modules. Binding review is not proof of the surrounding modules.
 The [manifest](../proof/manifest.json) and per-revision CI artifact are authoritative.
-The 23 October local verification compares **156,741 compiled Rust/Lean cases
-without mismatches** and rejects 183 deliberately broken policy variants.
+The 23 October local and Linux CI verification compare **156,741 compiled Rust/Lean cases
+without mismatches** and reject 183 deliberately broken policy variants.
 [Exact local results and module audit](evidence/formal-modularity-2026-10-23.md).
-Local verification remains distinct from the historical published report below;
-required CI and mutation tests must pass before landing.
+Local verification and the clean-checkout CI evidence are recorded separately.
+The complete required Linux CI passed before PR #206 merged and the Core rollout
+on 23 October. [Release and public smoke checks](evidence/formal-modularity-2026-10-23.md#public-core-rollout).
 
-The [published verification report](formal-verification.json) is copied from the
-completed [merged-Core CI run 37868239729](https://github.com/sthamann/veyndo/actions/runs/37868239729),
-recording source `598bbec112165fcac1847797786e2ba5c606e06f`. It includes the compiled
-conformance result and exact source inventory. Later documentation edits do not
-extend its proof scope. [Release acceptance and measured gaps](release-acceptance-2026-10-09.md).
+The [published verification report](evidence/formal-verification-2026-10-23.json) is copied unchanged
+from the successful complete [Linux CI run 39934011164](https://github.com/sthamann/veyndo/actions/runs/39934011164),
+recording clean source `bd1fc0e4f7b499bb72aaebd8ae7c0d46c09b679b`. Its complete source
+tree matches PR #206 commit `d68b2940` and merged main `a7089747`. The [mutation results](evidence/formal-mutations-2026-10-23.json)
+come from the same CI artifact. The reports include compiled conformance, axiom
+audit and exact inventory; later documentation or stylesheet edits do not extend
+their proof scope. [Current product and public acceptance](status.md).
 
 ## Connection to the real application
 
@@ -107,9 +110,7 @@ verified separately by native integration tests rather than proved by Lean.
 | `app_core_reference_admissible` | Product references may be public; customer/order references require private data | `src/apps/editor_contract.rs` |
 | `planning_request_admissible` | Admission is exactly a read classification or an explicitly allowed planning operation | `src/agent_runs/controls.rs` |
 | `agent_preview_admissible` | Private continuation requires an active shop, personal session, matching owner and current preview | `src/agent_runs/authority.rs` |
-
 | `shop_request_admissible` | Active shops admit requests; paused shops require an admitted read; archived shops deny ordinary operations while settlement callbacks remain available | `src/platform/lifecycle.rs` |
-
 | `external_amount_admissible` | Gross and tax are bounded, tax cannot exceed gross, rates are bounded and zero rate cannot carry nonzero tax | `src/commerce/external_order_input.rs` |
 | `external_paid_total_admissible` | A source order is paid with a positive, exactly reconciled total | `src/commerce/external_order_input.rs` |
 
@@ -290,8 +291,8 @@ Three further extracted decisions add seven properties: `currency_scale_admissib
 limits decimal precision, `resource_quota_admissible` admits positive bounded operator
 limits, and `payment_transition_admissible` defines the monotonic ledger graph,
 including late capture. `crates/commerce/src/money.rs`, `src/platform/quotas.rs` and
-`src/payments/state.rs` are their real consumers. The reviewed manifest now has
-34 policies and 72 named theorems; compiled Rust/Lean comparisons and negative
+`src/payments/state.rs` are their real consumers. This increment brought the then-reviewed
+manifest to 34 policies and 72 named theorems; compiled Rust/Lean comparisons and negative
 mutations remain required. These proofs do not cover signed integer parsing,
 floating-point conversion, SQL hooks/transactions, provider evidence, or the whole
 server. [Architecture and executable checks](production-architecture.md).
@@ -334,7 +335,7 @@ Lean proofs and are covered by separate unit/real integration checks.
 
 `channel_access_admissible` is consumed by `src/marketing/channel_access.rs`.
 Four named properties cover exact admission, private-channel identity, paused-channel
-preview requirements and preview mutation denial. The current manifest contains
+preview requirements and preview mutation denial. The manifest at this increment contained
 **36 extracted policies and 78 properties**. Core HTTP/MCP/UCP and hosted request
 paths share this admission adapter. One-use preview grants, cookies, membership
 queries, hostname resolution, proxy transport and native rendering remain unproved
@@ -346,7 +347,7 @@ adapters exercised by isolated integration regressions.
 `native_asset_bypass(native_asset, hosted)` is called by the actual authentication
 middleware. Two added theorems prove exact acceptance and unconditional denial
 when hosted; negative mutations remove each required fact or reject all inputs.
-The resulting manifest has 37 policies and 80 properties. This proves the Boolean
+That increment brought the manifest to 37 policies and 80 properties. This proves the Boolean
 rule, not native-path classification, layer ordering, domain resolution, SQL MVCC,
 proxying, compression or browser behavior. Real hosted/private-asset and two-replica
 regressions cover those adapters, including gzip/Brotli negotiation, ranges and

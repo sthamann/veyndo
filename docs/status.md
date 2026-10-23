@@ -4,12 +4,20 @@ Updated 23 October 2026. Start here for the public product, observed journeys an
 remaining delivery work. Source code, passing tests and a successful public
 journey are tracked separately. All purchases below use **simulated payments**.
 
-The latest source work expands selected Lean guarantees to **63 policies / 149
+The 23 October release expands selected Lean guarantees to **63 policies / 149
 properties**, splits their Rust/Lean owners and tightens Cargo dependency checks.
-[Local verification and modularity audit](evidence/formal-modularity-2026-10-23.md).
-This source verification does not change the hosted runtime acceptance recorded below.
+Its complete required CI passed: 317 Rust tests, 816 frontend tests, native database
+integration and coverage gates. [Verification and modularity audit](evidence/formal-modularity-2026-10-23.md).
 
 ## What is online now
+
+Core image `marked-act-7677` is online since **23 October, 12:26 CEST** with source
+`d68b2940`, whose complete tree matches merged main `a7089747` (PR #206).
+One instance is running, health checks pass and it has zero restarts. Public
+health and German catalogue reads pass after rollout. This change preserves
+existing business decisions and adds formal/regression enforcement; it does not
+re-date the purchase and authentication acceptance below.
+[Exact release evidence](evidence/formal-modularity-2026-10-23.md#public-core-rollout).
 
 Core and Studio now include editable catalogue-based test customers from
 [PR #203](https://github.com/sthamann/veyndo/pull/203), alongside the connected
@@ -31,10 +39,11 @@ Core instance with zero restarts. The saved cohort remained available after relo
 The preceding catalogue/privacy release was accepted on the same date; its
 [earlier exact evidence](evidence/merchant-journey-2026-10-22.md#public-delivery-and-acceptance)
 remains available.
-The separate Experience service now runs `e53ae44a`, image `adorable-mist-5131`,
-including the four-language public homepage's new simulator, catalogue-preparation
-and visual-shopping entry. Its original Storyfront pin and checkout code are
-unchanged. The prior combined release, [PR #191](https://github.com/sthamann/veyndo/pull/191),
+The separate Experience service was observed running `b7c29ea6` on 23 October,
+including the new film project/subtitle downloads and the earlier four-language
+homepage's simulator, catalogue-preparation and visual-shopping entry. The
+23 October formal release does not change its original Storyfront pin or checkout
+code. The prior combined release, [PR #191](https://github.com/sthamann/veyndo/pull/191),
 passed the public two-account company purchase and original embedded Storyfront
 purchase/return/empty-cart checks. The approver inbox and reopened orders show their
 accepted app configuration. The original embedded journey was repeated against
