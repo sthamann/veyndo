@@ -143,6 +143,13 @@ external marketplace inventory can lag until the next listing synchronization.
 
 ## Verification boundary
 
+Native order names are resolved in one bounded query for the entire admitted
+order, up to 24 distinct product lines. The requested locale and its short form
+precede the shop main locale and its short form. Within each locale, a variant's
+own name precedes its parent's name. Missing or blank names retain the existing
+fallback to the stored product name. Replayed orders keep their frozen names and
+amounts after later catalogue edits; they do not reread translations.
+
 The registered `marketplaces` provider suite starts the real Rust Core/service,
 PostgreSQL, two isolated shops and synthetic local seller APIs. It exercises signed
 requests, current API paths, native leased jobs, translated offer overrides, unique
@@ -152,6 +159,17 @@ job idempotency, reader restrictions, PII errors and zero-scale currencies with 
 non-English main/fifth content language. No live seller account or hosted provider
 success is asserted by those checks. Native extracted Lean guards remain scoped;
 this async/provider integration is explicitly unproved.
+
+Its [native order localization cases](../extensions/apps/marketplaces/tests/order_localization.py)
+measure actual SQLx statement traces for 1, 20 and 24 lines. The former path
+produced 1, 20 and 24 translation reads; the batched path produces 1, 1 and 1.
+The same cases cover Italian and short-locale fallback, variant/parent precedence,
+NULL, blank and whitespace names, identical product IDs in another shop, unchanged
+stock on a rejected final line and two orders competing for the last unit.
+The strict `signed_runtime` suite repeats the provider regression using separate
+restricted system and tenant database logins, signed scope and forced RLS.
+This measures database round trips and transactional correctness, not production
+orders per minute. [Dated evidence](evidence/external-order-batching-2026-10-23.md).
 
 ## Extracted policy boundary
 

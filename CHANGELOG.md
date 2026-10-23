@@ -1,5 +1,11 @@
 # Changelog
 
+## Bounded marketplace order localization — 23 October 2026
+
+- Resolve imported order names in one tenant-scoped query and index the already locked products by ID. Orders with 1, 20 and 24 lines now require one translation read each, compared with 1, 20 and 24 before the change.
+- Preserve requested/short/main-language precedence, variant inheritance, blank-name fallback and frozen order snapshots. Keep the existing 24-line limit, current app permissions, stock locks and exact external payment amounts.
+- Extend the registered marketplace integration suite with fifth-language and foreign-shop fixtures, replay after catalogue edits, atomic failure on the last line and concurrent orders competing for the final unit. Provider code and tests remain inside the marketplace app.
+
 ## Overflow-safe shared discount allocation — 23 October 2026
 
 - Fix signed basket-sum overflow in the shared integer discount allocator. Carry the rounding remainder between lines using bounded wide integers, preserving the existing cumulative half-up result and line-order tie breaks without multiplying an entire basket by its discount.

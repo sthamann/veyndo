@@ -271,6 +271,9 @@ try:
         subprocess.run(['python3','scripts/durable_agents.py'],cwd=ROOT,env=env,check=True)
         if tenant_role and not tenant_pooler:
             subprocess.run(['python3','scripts/agentic_scenarios.py'],cwd=ROOT,env=env,check=True)
+            # Repeat the real installed-app order callback under the production
+            # split logins and signed tenant scope, including batched name reads.
+            subprocess.run(['python3','scripts/marketplaces.py'],cwd=ROOT,env={**env,'PROCESS_ROLE':'all'},check=True)
 finally:
     for process, log in processes:
         stop(process); log.close()

@@ -65,7 +65,8 @@ compares both published assets to that bundle. [Extraction evidence](evidence/fo
 `extensions/apps/marketplaces/` owns provider protocols, mapping, inbox/review, worker,
 Studio vocabulary/UI, container packaging and local provider tests. Core only adds the
 provider-neutral `apps/core_exchange.rs`, `commerce/external_order_input.rs` and
-`commerce/external_orders.rs` host contracts. Existing product/channel configuration,
+`commerce/external_orders.rs` host contracts, with its bounded
+`commerce/external_order_labels.sql` name lookup. Existing product/channel configuration,
 app consent/jobs/records, currency, stock, customer projection, documents and event
 owners remain authoritative. [Detailed flow and actual limits](marketplaces.md).
 The registered `marketplaces` suite exercises native paid order/replay/restart,

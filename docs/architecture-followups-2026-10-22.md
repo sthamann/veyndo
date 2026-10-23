@@ -72,16 +72,19 @@ customers continue shopping.
 
 The source already contains `localization::hydrate_products`, so Claude's suggestion
 to introduce the first common hydrator is not needed. One concrete opportunity is
-`commerce/external_orders::import_external`: its line loop currently performs a
-translation query per product and scans the locked product rows repeatedly. Load the
-bounded translation set once, index rows by ID and reuse the native fallback contract.
-Then measure query count, latency and contention with realistic batches and concurrent
-purchases before adding caching or more database replicas.
+`commerce/external_orders::import_external`: its line loop performed a translation
+query per product and scanned locked product rows repeatedly. The 23 October change
+loads all names in one query and indexes the locked rows by ID. It preserves this
+import's locale-first parent/variant precedence and existing blank-name behavior.
 
-**Acceptance:** compare orders with 1, 20 and 100 lines in a fifth content language,
-including inherited variant names and explicit empty fields. Amounts, frozen names,
-stock, authorization and outbox effects must match while query growth is reduced.
-This is a confirmed source opportunity, not a measured throughput improvement yet.
+**Measured acceptance:** orders with 1, 20 and 24 lines in a fifth content language
+now issue 1, 1 and 1 translation queries, compared with 1, 20 and 24 before.
+The existing maximum is 24 lines, so the original proposed 100-line case would
+exceed the contract; a 25-line request is explicitly rejected. Inherited variant
+names, NULL/empty names, frozen amounts, foreign-shop names, concurrent final stock
+and single native outbox effects pass through the real callback. Further latency
+and production throughput measurements remain separate from this round-trip
+reduction. [Exact evidence](evidence/external-order-batching-2026-10-23.md).
 
 ## 5. Share order persistence rules while preserving each channel's contract
 
