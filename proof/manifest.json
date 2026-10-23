@@ -10,7 +10,9 @@
         "discount_bounded",
         "discount_requested",
         "discount_conservation",
-        "discount_exact"
+        "discount_exact",
+        "discount_monotone_requested",
+        "discount_idempotent"
       ]
     },
     "stock_admissible": {
@@ -21,7 +23,9 @@
       "theorems": [
         "stock_positive_bounded",
         "stock_conservation",
-        "stock_exact"
+        "stock_exact",
+        "stock_sequence_bounded",
+        "stock_sequence_conservation"
       ]
     },
     "refund_admissible": {
@@ -31,7 +35,9 @@
       "theorems": [
         "refund_bounded",
         "refund_zero_denied",
-        "refund_exact"
+        "refund_exact",
+        "refund_sequence_bounded",
+        "refund_lowered_capture_denied"
       ]
     },
     "revision_admissible": {
@@ -440,7 +446,11 @@
       ],
       "theorems": [
         "b2b_budget_exact",
-        "b2b_budget_conserves"
+        "b2b_budget_conserves",
+        "budget_sequence_bounded",
+        "budget_sequence_conservation",
+        "budget_lowered_limit_denied",
+        "budget_zero_at_exhaustion"
       ]
     },
     "b2b_approval_admissible": {
@@ -572,6 +582,28 @@
         "job_completion_exact",
         "job_cancelled_success_denied"
       ]
+    },
+    "planning_request_admissible": {
+      "bindings": [
+        "src/agent_runs/controls.rs"
+      ],
+      "theorems": [
+        "planning_request_exact",
+        "planning_mutation_denied"
+      ]
+    },
+    "agent_preview_admissible": {
+      "bindings": [
+        "src/agent_runs/authority.rs"
+      ],
+      "theorems": [
+        "agent_preview_exact",
+        "agent_inactive_denied",
+        "agent_private_requires_personal",
+        "agent_private_requires_owner",
+        "agent_expired_preview_denied",
+        "agent_live_independent_of_preview"
+      ]
     }
   },
   "sources": {
@@ -695,25 +727,55 @@
       "sha256": "421ebdf7a78c2b46da9c1ee567d2df7052077db7f7c7919cccb516b1e020baac",
       "review": "Initial extraction of 13 production policies; surrounding Rust explicitly unproved; existing HTTP regression suites retained"
     },
+    "crates/kernel/src/contract_tests.rs": {
+      "status": "unproved",
+      "sha256": "78815ea23f2086c73dae8eba6e3f0c26eb7f23d71edb3aeba8cb04921b76ed79",
+      "review": "Split unchanged extracted policies and theorem bodies by domain; bind exact existing planning/private-preview admission; prove sequential integer allocations and denial after limit reduction; add u128 edge regressions and closed module inventory."
+    },
     "crates/kernel/src/lib.rs": {
       "status": "unproved",
-      "sha256": "05e3ea20f6ac11228b96b7c8b29242baa375225b5d3d4dd07f8e9170952d163c",
-      "review": "Review compiler-enforced foundation crates with unchanged native owners; native provider read-tool aliases and current authorization, private checkpoint continuation and versioned prompt evidence; fixed subscriber acknowledgements preserve commit gaps, independent quarantine and explicit replay; traced requests/tasks/outbox without payloads; exact decimal-to-minor-unit rounding retains legacy price boundary; real SQL poison-isolation regression passes and workspace unit/clippy checks pass"
+      "sha256": "784b8e9a13aae748af73871464f3921a9ae64bce2f7e6ce0c32f385e17f3ffbd",
+      "review": "Split unchanged extracted policies and theorem bodies by domain; bind exact existing planning/private-preview admission; prove sequential integer allocations and denial after limit reduction; add u128 edge regressions and closed module inventory."
     },
-    "crates/kernel/src/verified_kernel/app_intake.rs": {
+    "crates/kernel/src/verified_kernel/access.rs": {
       "status": "extracted-policy",
-      "sha256": "994a9268c784ec99fe91fb2685ee564de51723b1e32be7ddcaf98cdaef83d3e4",
-      "review": "2026-10-19 reviewed native read-only import projection against shared product/category/address owners; paired CRM/history PII and private target/package/digest checks; generic completion evidence atomically uses existing job creator/lease/package and record CAS, platform AEAD, native actual-field verification, no new app table or queue. Actual eight-domain migration/archival/restart/tamper and native app callback/jobs/admin creation tests pass; pure cancelled-success policy has exact Lean claim, all boolean cases and a true-return negative mutation. SQL, cryptography, async service correctness and public hosting remain outside formal proof."
+      "sha256": "497b6213f231a9082d57d847a689ef85b8160c65e65e8ce2fdae9f0806d8af1b",
+      "review": "Split unchanged extracted policies and theorem bodies by domain; bind exact existing planning/private-preview admission; prove sequential integer allocations and denial after limit reduction; add u128 edge regressions and closed module inventory."
+    },
+    "crates/kernel/src/verified_kernel/agents.rs": {
+      "status": "extracted-policy",
+      "sha256": "eae270bf08ced442cac9d9e2bf8dadef61e4ebf81179a43312a1e5c1d6021c96",
+      "review": "Split unchanged extracted policies and theorem bodies by domain; bind exact existing planning/private-preview admission; prove sequential integer allocations and denial after limit reduction; add u128 edge regressions and closed module inventory."
+    },
+    "crates/kernel/src/verified_kernel/apps.rs": {
+      "status": "extracted-policy",
+      "sha256": "0b0184d3d692aaa05b338d6edcc8dcfeb01b80703d104c9b01143eb814338e88",
+      "review": "Split unchanged extracted policies and theorem bodies by domain; bind exact existing planning/private-preview admission; prove sequential integer allocations and denial after limit reduction; add u128 edge regressions and closed module inventory."
+    },
+    "crates/kernel/src/verified_kernel/automation.rs": {
+      "status": "extracted-policy",
+      "sha256": "ea673bd373e96743c966abe781ce802a1530030e79839a8d0c810789133a743d",
+      "review": "Split unchanged extracted policies and theorem bodies by domain; bind exact existing planning/private-preview admission; prove sequential integer allocations and denial after limit reduction; add u128 edge regressions and closed module inventory."
+    },
+    "crates/kernel/src/verified_kernel/commerce.rs": {
+      "status": "extracted-policy",
+      "sha256": "8759cc35c70330cec167de58e38e925810cc576a2262eee3a9506e628903d001",
+      "review": "Split unchanged extracted policies and theorem bodies by domain; bind exact existing planning/private-preview admission; prove sequential integer allocations and denial after limit reduction; add u128 edge regressions and closed module inventory."
     },
     "crates/kernel/src/verified_kernel/fulfillment.rs": {
       "status": "extracted-policy",
-      "sha256": "9231ccb47eb2fdf5da67eba64c917aa57e2748f21cfe645c1c394b83e8814180",
-      "review": "Review 2026-10-14: modular fulfillment predicates and native carrier intent admission; same-reference CAS, occupied package denial, allocation/dispatch fence until confirmed no-effect release or original PDF acknowledgement. Local SQL/provider/restart/privacy and cross-provider denial fixtures checked; external effects and surrounding runtime remain unproved."
+      "sha256": "6ebf293e6a2617e517f65cafe1b5d48d99758d2d826833409c5806e5340f96e0",
+      "review": "Split unchanged extracted policies and theorem bodies by domain; bind exact existing planning/private-preview admission; prove sequential integer allocations and denial after limit reduction; add u128 edge regressions and closed module inventory."
+    },
+    "crates/kernel/src/verified_kernel/intelligence.rs": {
+      "status": "extracted-policy",
+      "sha256": "03e54752ca619bfd66822bf203e2d11f2dfa6dd3e078256f8dc70195b0be89f6",
+      "review": "Split unchanged extracted policies and theorem bodies by domain; bind exact existing planning/private-preview admission; prove sequential integer allocations and denial after limit reduction; add u128 edge regressions and closed module inventory."
     },
     "crates/kernel/src/verified_kernel.rs": {
       "status": "extracted-policy",
-      "sha256": "ce9da19a9e896df7599c9e8bd0d6a67a1e043924331a0ac9bae907f5a46fd507",
-      "review": "2026-10-19 reviewed native read-only import projection against shared product/category/address owners; paired CRM/history PII and private target/package/digest checks; generic completion evidence atomically uses existing job creator/lease/package and record CAS, platform AEAD, native actual-field verification, no new app table or queue. Actual eight-domain migration/archival/restart/tamper and native app callback/jobs/admin creation tests pass; pure cancelled-success policy has exact Lean claim, all boolean cases and a true-return negative mutation. SQL, cryptography, async service correctness and public hosting remain outside formal proof."
+      "sha256": "6f94cca36fad32de679b62c0f451e96a1743b4134a8a0e8991cf7bff20021e08",
+      "review": "Split unchanged extracted policies and theorem bodies by domain; bind exact existing planning/private-preview admission; prove sequential integer allocations and denial after limit reduction; add u128 edge regressions and closed module inventory."
     },
     "crates/runtime/src/database_scope/provision.rs": {
       "status": "unproved",
@@ -1401,9 +1463,9 @@
       "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
     },
     "src/agent_runs/authority.rs": {
-      "status": "unproved",
-      "sha256": "e9064bf507809fbd0f97748024e16969e6edcb4b849d35b68a778e4839331d3e",
-      "review": "Customer scenarios: independent scenario_security_review completed; native signed-role, cohort, replay, injection, cancellation and post-lock lease-expiry regressions pass. Shared checkout preflight avoids nested-pool deadlock; authority is rechecked at the fenced transaction commit."
+      "status": "reviewed-binding",
+      "sha256": "64c4213ecfdcc1f2d24daffcc4ddf302fc6afa3dd8878cb0600abc2d85bbd53c",
+      "review": "Split unchanged extracted policies and theorem bodies by domain; bind exact existing planning/private-preview admission; prove sequential integer allocations and denial after limit reduction; add u128 edge regressions and closed module inventory."
     },
     "src/agent_runs/checkpoint.rs": {
       "status": "unproved",
@@ -1421,9 +1483,9 @@
       "review": "Customer scenarios: independent scenario_security_review completed; native signed-role, cohort, replay, injection, cancellation and post-lock lease-expiry regressions pass. Shared checkout preflight avoids nested-pool deadlock; authority is rechecked at the fenced transaction commit."
     },
     "src/agent_runs/controls.rs": {
-      "status": "unproved",
-      "sha256": "3b7e657659d3998077f35d9996be504f2b37ed8856aff485c18243aa11abc149",
-      "review": "Reviewed agent scope construction and locking: synchronously box the child before constructing the task-local future; retain authority only while polling and verify no context leak. Live-root NO KEY UPDATE serializes allocation/enqueue/stop while admitting FK KEY SHARE, avoiding tenant/task inversion. Real held-reference HTTP stop fails before and passes after; actual worker stop and signed-role allocation cases pass. Existing kernel proof unchanged; async/SQL/provider code remains unproved and the Linux instrumented POS repeat is still required."
+      "status": "reviewed-binding",
+      "sha256": "bf1e3d719ed9efcf31c575c85757857e7980985ae5379f5a20d851994ed7b77f",
+      "review": "Split unchanged extracted policies and theorem bodies by domain; bind exact existing planning/private-preview admission; prove sequential integer allocations and denial after limit reduction; add u128 edge regressions and closed module inventory."
     },
     "src/agent_runs/flow_proposals.rs": {
       "status": "unproved",
@@ -2277,8 +2339,8 @@
     },
     "src/bin/verified_kernel/dispatch.rs": {
       "status": "unproved",
-      "sha256": "442bb6445562c43b6984c13cd77274b8ccafae9aeb61a57326ce259fad81f0e1",
-      "review": "2026-10-19 reviewed native read-only import projection against shared product/category/address owners; paired CRM/history PII and private target/package/digest checks; generic completion evidence atomically uses existing job creator/lease/package and record CAS, platform AEAD, native actual-field verification, no new app table or queue. Actual eight-domain migration/archival/restart/tamper and native app callback/jobs/admin creation tests pass; pure cancelled-success policy has exact Lean claim, all boolean cases and a true-return negative mutation. SQL, cryptography, async service correctness and public hosting remain outside formal proof."
+      "sha256": "dbcebddc772172cc3944bdb5f25079e7cd7556222a5cccd7e841328bf703375d",
+      "review": "Split unchanged extracted policies and theorem bodies by domain; bind exact existing planning/private-preview admission; prove sequential integer allocations and denial after limit reduction; add u128 edge regressions and closed module inventory."
     },
     "src/bin/verified_kernel.rs": {
       "status": "conformance-driver",
@@ -4678,9 +4740,37 @@
       "sha256": "a3608c7d8ebb51e24dd18f2948f3681c7b1d869c98d9f06c978a78d19b9f8e86",
       "review": "Reviewed capability-authenticated consent aliases and tenant/channel composite FK. Readers, processing and checkout resolve one canonical receipt; withdrawal erases related preferences in batch. PostgreSQL legal_privacy exercises original expiry, no copied checkout acceptance, second purchase and seven concurrent continuation/withdrawal requests; behavior_intelligence and tenant_isolation passed. SQL adapter remains unproved. Staging diff only adds authorized main-language metadata for product labels."
     },
+    "proof/Commerce/Claims/Access.lean": {
+      "sha256": "f884142fe393e6ea189473d8e02add783f80cef3e45f08d4d0d8e01a57f0a205",
+      "review": "Split unchanged extracted policies and theorem bodies by domain; bind exact existing planning/private-preview admission; prove sequential integer allocations and denial after limit reduction; add u128 edge regressions and closed module inventory."
+    },
+    "proof/Commerce/Claims/Agents.lean": {
+      "sha256": "c743b6d974b3535c2990f92adb926036f7e5a5993c291191afd6988157bb3ebb",
+      "review": "Split unchanged extracted policies and theorem bodies by domain; bind exact existing planning/private-preview admission; prove sequential integer allocations and denial after limit reduction; add u128 edge regressions and closed module inventory."
+    },
+    "proof/Commerce/Claims/Apps.lean": {
+      "sha256": "f8f0b117c6434a540f8ebe992fc81dc5c5033ac357235c8b48f53a7d97433368",
+      "review": "Split unchanged extracted policies and theorem bodies by domain; bind exact existing planning/private-preview admission; prove sequential integer allocations and denial after limit reduction; add u128 edge regressions and closed module inventory."
+    },
+    "proof/Commerce/Claims/Automation.lean": {
+      "sha256": "cfce83a5e1a9be0036d7a2ddc118ec22a9f8c3677b76d23d36dfe488493db202",
+      "review": "Split unchanged extracted policies and theorem bodies by domain; bind exact existing planning/private-preview admission; prove sequential integer allocations and denial after limit reduction; add u128 edge regressions and closed module inventory."
+    },
+    "proof/Commerce/Claims/Commerce.lean": {
+      "sha256": "25adc733ee224724a0829436c71fc537b6cebbb1fac3d9f521a49717a6a0836a",
+      "review": "Split unchanged extracted policies and theorem bodies by domain; bind exact existing planning/private-preview admission; prove sequential integer allocations and denial after limit reduction; add u128 edge regressions and closed module inventory."
+    },
+    "proof/Commerce/Claims/Fulfillment.lean": {
+      "sha256": "c038c0f7657aa9100a1e58be5259f36794315eca893452cf29acadb1dda0bc24",
+      "review": "Split unchanged extracted policies and theorem bodies by domain; bind exact existing planning/private-preview admission; prove sequential integer allocations and denial after limit reduction; add u128 edge regressions and closed module inventory."
+    },
+    "proof/Commerce/Claims/Intelligence.lean": {
+      "sha256": "a91c33176e385e8b34c8ae3bdd791f8bdc96fde328d52ca3bb0d79b477d4ed6c",
+      "review": "Split unchanged extracted policies and theorem bodies by domain; bind exact existing planning/private-preview admission; prove sequential integer allocations and denial after limit reduction; add u128 edge regressions and closed module inventory."
+    },
     "proof/Commerce/Claims.lean": {
-      "sha256": "65bd43ec36f301365e4f327061e68fa2492a3cf51cec7da4e9f19f1b425f579c",
-      "review": "2026-10-19 reviewed native read-only import projection against shared product/category/address owners; paired CRM/history PII and private target/package/digest checks; generic completion evidence atomically uses existing job creator/lease/package and record CAS, platform AEAD, native actual-field verification, no new app table or queue. Actual eight-domain migration/archival/restart/tamper and native app callback/jobs/admin creation tests pass; pure cancelled-success policy has exact Lean claim, all boolean cases and a true-return negative mutation. SQL, cryptography, async service correctness and public hosting remain outside formal proof."
+      "sha256": "03786b1afcfc2ebffa88983cff7ddc838450fcc808130686245d016c5954815f",
+      "review": "Split unchanged extracted policies and theorem bodies by domain; bind exact existing planning/private-preview admission; prove sequential integer allocations and denial after limit reduction; add u128 edge regressions and closed module inventory."
     },
     "proof/lakefile.toml": {
       "sha256": "1cda05bac02223024b93388cf858edad4719c46f8d37a826a73a6a6e15d79432",
@@ -4711,24 +4801,36 @@
       "review": "Reviewed marketplace money guard consumers and exact properties, cap-neighbour comparison cases, native stock binding and local regressions; external protocols and tax law remain tested unproved boundaries"
     },
     "scripts/formal/extract.py": {
-      "sha256": "6d44a10b609b6b5ee1a811e5a630f46c3fc6a50bc4668d74754c26266cc0b9a0",
-      "review": "2026-10-19 reviewed native read-only import projection against shared product/category/address owners; paired CRM/history PII and private target/package/digest checks; generic completion evidence atomically uses existing job creator/lease/package and record CAS, platform AEAD, native actual-field verification, no new app table or queue. Actual eight-domain migration/archival/restart/tamper and native app callback/jobs/admin creation tests pass; pure cancelled-success policy has exact Lean claim, all boolean cases and a true-return negative mutation. SQL, cryptography, async service correctness and public hosting remain outside formal proof."
+      "sha256": "18ca3e4ba2989fbef9e1413cf0cc0a726ec21ea8a6bee4a7eed5f06818b14583",
+      "review": "Split unchanged extracted policies and theorem bodies by domain; bind exact existing planning/private-preview admission; prove sequential integer allocations and denial after limit reduction; add u128 edge regressions and closed module inventory."
+    },
+    "scripts/formal/layout.py": {
+      "sha256": "c16dbed2d415f4c8f8bfb75bf0740ecb58d2faf912e61cebc87604696154f85c",
+      "review": "Review domain proof import and size closure, explicit Rust registrations, all 149 theorem bindings, existing adapter truth conditions and unchanged 61 prior policy ASTs; negative controls reject extra imports, missing claims and hidden Cargo authority."
+    },
+    "scripts/formal/layout_tests.py": {
+      "sha256": "2ed265d29aa9ec55e9bb4c11d0cf9037a4a322850a821a2aabbf6103d16149d6",
+      "review": "Review domain proof import and size closure, explicit Rust registrations, all 149 theorem bindings, existing adapter truth conditions and unchanged 61 prior policy ASTs; negative controls reject extra imports, missing claims and hidden Cargo authority."
+    },
+    "scripts/formal/modules.py": {
+      "sha256": "a9897c1fcc0baaa5cac61b32e8840a7d26fac3ab2fa40c01a864dd33578ca20c",
+      "review": "Split unchanged extracted policies and theorem bodies by domain; bind exact existing planning/private-preview admission; prove sequential integer allocations and denial after limit reduction; add u128 edge regressions and closed module inventory."
     },
     "scripts/formal/mutations.py": {
-      "sha256": "d2457aa103a267466c433440623921ff65e37094a426eb08cdb66eacc663135f",
-      "review": "2026-10-19 reviewed native read-only import projection against shared product/category/address owners; paired CRM/history PII and private target/package/digest checks; generic completion evidence atomically uses existing job creator/lease/package and record CAS, platform AEAD, native actual-field verification, no new app table or queue. Actual eight-domain migration/archival/restart/tamper and native app callback/jobs/admin creation tests pass; pure cancelled-success policy has exact Lean claim, all boolean cases and a true-return negative mutation. SQL, cryptography, async service correctness and public hosting remain outside formal proof."
+      "sha256": "f8ecff98c572836a16bea88c0f71087fca2685ceed7e67ee1273986f091628a4",
+      "review": "Review domain proof import and size closure, explicit Rust registrations, all 149 theorem bindings, existing adapter truth conditions and unchanged 61 prior policy ASTs; negative controls reject extra imports, missing claims and hidden Cargo authority."
     },
     "scripts/formal/registry.py": {
-      "sha256": "ed29f96108760ecc2cfd61cd953905a1c092a1fb41519167fc426915b5932004",
-      "review": "Review compiler-enforced foundation crates with unchanged native owners; native provider read-tool aliases and current authorization, private checkpoint continuation and versioned prompt evidence; fixed subscriber acknowledgements preserve commit gaps, independent quarantine and explicit replay; traced requests/tasks/outbox without payloads; exact decimal-to-minor-unit rounding retains legacy price boundary; real SQL poison-isolation regression passes and workspace unit/clippy checks pass"
+      "sha256": "360929ad96b6dd5de79076a16d52b650b69f1552f9042e2e875a6f5661762644",
+      "review": "Review domain proof import and size closure, explicit Rust registrations, all 149 theorem bindings, existing adapter truth conditions and unchanged 61 prior policy ASTs; negative controls reject extra imports, missing claims and hidden Cargo authority."
     },
     "scripts/formal/runners.py": {
       "sha256": "c73bda913fb0c1949c25ad7589e5d156c05f7e0a89f39ca7be8b8e40ebd5f565",
       "review": "Identity-only Veyndo namespace and canonical-domain rename; reviewed migration checksum compatibility for six historical SQL versions, unchanged checkout predicates, 42 library and 169 binary tests pass; native component legacy boundary remains configured and guarded."
     },
     "scripts/formal.py": {
-      "sha256": "07b07a348c37b9cbda4b67987c5f229df5fb8071bacf51ce899f58d47195b2c1",
-      "review": "Review 2026-10-14: bounded modular fulfillment predicates; native carrier intent freezes allocation/dispatch across unknown effects and cross-provider calls, confirmed rejection releases its own intent, exact PDFs acknowledge the original intent. Reviewed split/machine binding, tenant/package/CAS/quota checks and local paid-effect negative fixtures; SQL, crypto and carrier protocols remain unproved."
+      "sha256": "70144be646a76061df78ec1df0f689e659da2c7073901c70c2e717d9a2881390",
+      "review": "Review domain proof import and size closure, explicit Rust registrations, all 149 theorem bindings, existing adapter truth conditions and unchanged 61 prior policy ASTs; negative controls reject extra imports, missing claims and hidden Cargo authority."
     },
     "scripts/testing/prompt_governance.py": {
       "sha256": "9bf329f9ca7cc4cf04bc8b5db16129b796c8e4203f70d8cf371b7e12559e5897",

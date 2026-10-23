@@ -1,14 +1,16 @@
 # Lean-checked commerce contracts
 
-The current source declares **57 extracted policies used in production Rust paths**
-and **123 named properties**. This is **not a certificate that the entire commerce
-core is correct or bug-free**. The reviewed inventory contains **608 Rust modules**:
-three extracted policy modules, 59 reviewed binding modules, one comparison driver
-and 545 unproved modules. Binding review is not proof of the surrounding modules.
+The current source declares **63 extracted policies used in production Rust paths**
+and **149 named properties**. This is **not a certificate that the entire commerce
+core is correct or bug-free**. The reviewed inventory contains **711 Rust modules**:
+eight extracted policy modules (including the facade), 63 reviewed binding modules,
+one comparison driver and 639 unproved modules. Binding review is not proof of the surrounding modules.
 The [manifest](../proof/manifest.json) and per-revision CI artifact are authoritative.
-The local 16 October configuration-summary revision compares **156,677 compiled Rust/Lean cases
-without mismatches**. Local verification remains distinct from the historical
-published report below; required CI and mutation tests must pass before landing.
+The 23 October local verification compares **156,741 compiled Rust/Lean cases
+without mismatches** and rejects 183 deliberately broken policy variants.
+[Exact local results and module audit](evidence/formal-modularity-2026-10-23.md).
+Local verification remains distinct from the historical published report below;
+required CI and mutation tests must pass before landing.
 
 The [published verification report](formal-verification.json) is copied from the
 completed [merged-Core CI run 37868239729](https://github.com/sthamann/veyndo/actions/runs/37868239729),
@@ -21,11 +23,11 @@ extend its proof scope. [Release acceptance and measured gaps](release-acceptanc
 ```text
 HTTP / MCP / storefront
         ↓
-Production Rust operations → crates/kernel/src/verified_kernel.rs and verified_kernel/fulfillment.rs
+Production Rust operations → crates/kernel/src/verified_kernel.rs → seven policy domains
                                       ↓ closed typed extraction
                               Commerce/Generated.lean
                                       ↓
-                               Claims.lean → Lean kernel
+                       Claims/<Domain>.lean → Claims.lean → Lean kernel
                                       ↓
                             compiled-environment recheck
                                       ↓
@@ -45,6 +47,33 @@ including all representable `u64` values.
 Correct production input conversion and surrounding state handling remain part
 of the reviewed boundary. Finite conformance checks strengthen that connection;
 they do not prove the translator correct for every program.
+
+## Domain modules and sequential guarantees
+
+The Rust facade explicitly reexports seven small policy modules: **access, agents,
+apps, automation, commerce, fulfillment and intelligence**. The corresponding
+seven Lean modules independently import the extracted model. Each theorem must
+appear in the manifest and the stable `Claims.lean` entry must import every domain.
+The extractor rejects extra code, conditional registrations, path overrides and
+wildcard reexports in the facade. Each handwritten proof module is limited to 320
+lines; the current largest is 240. The 61 policies that preceded this split retain
+identical typed expressions, argument types and results.
+
+The 18 added properties cover two kinds of real guarantees:
+
+- **Repeated commerce decisions:** two admitted reservations conserve stock;
+  successive refunds remain within the captured amount; successive allocations
+  remain within the budget, including after lowering its limit. The shared budget
+  predicate is used by B2B spending and central agent token/cost allocation.
+  Discounts remain monotone and applying the same cap twice changes nothing.
+- **Saved agent work:** planning credentials admit only requests classified as
+  reads or explicit planning operations. A private continuation requires an active
+  shop, personal session, matching owner and current preview. These are the actual
+  predicates called by `agent_runs/controls.rs` and `agent_runs/authority.rs`.
+
+Sequential arithmetic assumes each operation observes the latest serialized state.
+SQL locks, route classification, authentication and the clock remain adapter facts,
+verified separately by native integration tests rather than proved by Lean.
 
 ## Exactly what is proved
 
@@ -76,6 +105,8 @@ they do not prove the translator correct for every program.
 | `customer_group_net` | Net basis requires a configured business group; unknown groups cannot claim it | `src/commerce/customer_groups.rs` |
 | `app_tool_admissible` | Tool admission requires explicit enablement and current authorization | `src/apps/gateway.rs` |
 | `app_core_reference_admissible` | Product references may be public; customer/order references require private data | `src/apps/editor_contract.rs` |
+| `planning_request_admissible` | Admission is exactly a read classification or an explicitly allowed planning operation | `src/agent_runs/controls.rs` |
+| `agent_preview_admissible` | Private continuation requires an active shop, personal session, matching owner and current preview | `src/agent_runs/authority.rs` |
 
 | `shop_request_admissible` | Active shops admit requests; paused shops require an admitted read; archived shops deny ordinary operations while settlement callbacks remain available | `src/platform/lifecycle.rs` |
 
@@ -130,7 +161,10 @@ The existing **Verify prototype / verify** job now also:
    `u64::MAX`. Their output types and values must match.
 6. Requires Lean to reject the registered deliberately broken policy variants. Also
    rejects 14 unsupported grammar examples, three stale/unclassified/disconnected
-   inventory cases and nine proof-shortcut/axiom/missing-audit examples.
+   inventory cases, nine proof-shortcut/axiom/missing-audit examples and ten
+   proof/module-layout bypasses. The Cargo boundary check additionally rejects
+   17 dependency/owner bypasses, including aliases, optional dependencies, build
+   scripts and targets placed in another domain's directory.
 7. Runs existing Rust, PHP-reference and real PostgreSQL HTTP regressions.
 
 CI never regenerates the policy model or refreshes review hashes automatically.
@@ -161,8 +195,9 @@ extraction approach; do not mark async/SQL/provider code as proved.
 python3 scripts/formal.py --generate --record-review 'Explain the reviewed behavior, affected contracts and regression evidence'
 python3 scripts/formal/mutations.py
 cargo fmt --check
-cargo clippy --locked --all-targets -- -D warnings
-cargo test --locked
+cargo clippy --locked --workspace --all-targets -- -D warnings
+cargo test --locked --workspace
+python3 scripts/testing/workspace_boundaries.py
 ```
 
 `--record-review` records changed file hashes; **it cannot turn unproved code

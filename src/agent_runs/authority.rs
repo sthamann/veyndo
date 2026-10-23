@@ -107,15 +107,14 @@ pub(super) async fn headers_on(
             );
         }
         let admitted=sqlx::query("SELECT t.status,e.preview_owner,e.preview_until>statement_timestamp() AS valid FROM tenants t LEFT JOIN shop_environments e ON e.tenant=$1 WHERE t.id=coalesce(e.live_tenant,$1)").bind(&t).fetch_optional(&mut *connection).await?.ok_or(bad("Shop no longer exists"))?;
-        if admitted.get::<String, _>("status") != "active"
-            || admitted
-                .get::<Option<String>, _>("preview_owner")
-                .is_some_and(|owner| {
-                    owner != actor
-                        || !h.principal.personal_session
-                        || admitted.get::<Option<bool>, _>("valid") != Some(true)
-                })
-        {
+        let owner: Option<String> = admitted.get("preview_owner");
+        if !verified_kernel::agent_preview_admissible(
+            admitted.get::<String, _>("status") == "active",
+            owner.is_some(),
+            h.principal.personal_session,
+            owner.as_deref() == Some(actor.as_str()),
+            admitted.get::<Option<bool>, _>("valid") == Some(true),
+        ) {
             return Err(Error(
                 StatusCode::FORBIDDEN,
                 "Agent shop or personal preview is unavailable".into(),

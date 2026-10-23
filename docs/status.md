@@ -1,8 +1,13 @@
 # Veyndo: current status
 
-Updated 22 October 2026. Start here for the public product, observed journeys and
+Updated 23 October 2026. Start here for the public product, observed journeys and
 remaining delivery work. Source code, passing tests and a successful public
 journey are tracked separately. All purchases below use **simulated payments**.
+
+The latest source work expands selected Lean guarantees to **63 policies / 149
+properties**, splits their Rust/Lean owners and tightens Cargo dependency checks.
+[Local verification and modularity audit](evidence/formal-modularity-2026-10-23.md).
+This source verification does not change the hosted runtime acceptance recorded below.
 
 ## What is online now
 

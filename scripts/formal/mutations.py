@@ -3,8 +3,16 @@ import copy,json,os,pathlib,re,subprocess,tempfile
 from extract import Parser,generated,kernel_source
 from registry import check
 from axioms import source_check,dependency_check
+from layout_tests import controls
 
 MUTANTS=[
+ ("planning_request_admissible", "read_only || planning_post", "true"),
+ ("planning_request_admissible", "read_only || planning_post", "read_only"),
+ ("agent_preview_admissible", "active &&", "true &&"),
+ ("agent_preview_admissible", "personal &&", "true &&"),
+ ("agent_preview_admissible", "same_owner &&", "true &&"),
+ ("agent_preview_admissible", "&& current", "&& true"),
+ ("agent_preview_admissible", "!private_preview ||", "true ||"),
  ("job_completion_admissible", "!cancel_requested || !succeeded", "true"),
  ("source_activation_admissible", "!imported || !active || reviewed", "true"),
  ("native_lifecycle_admissible", "native &&", "true &&"),
@@ -130,21 +138,31 @@ def mutated(source,name,old,new):
     return source[:match.start(2)]+body.replace(old,new,1)+source[match.end(2):]
 
 def proof_failures(root):
-    source=kernel_source(root);claims=root/'proof/Commerce/Claims.lean'
+    source=kernel_source(root)
+    manifest=json.loads((root/'proof/manifest.json').read_text())
+    claims=list((root/'proof/Commerce/Claims').glob('*.lean'))
+    owners={name: [file for file in claims if any(re.search(r'\btheorem '+re.escape(theorem)+r'\b',file.read_text()) for theorem in row['theorems'])] for name,row in manifest['policies'].items()}
+    if any(not files for files in owners.values()):raise ValueError('Policy has no domain proof module')
     toolchain=(root/'proof/lean-toolchain').read_text().strip()
     with tempfile.TemporaryDirectory(prefix='commerce-proof-mutations-')as temp:
-        path=pathlib.Path(temp);(path/'Commerce').mkdir();env={**os.environ,'LEAN_PATH':str(path)}
-        local_claims=path/'Commerce/Claims.lean';local_claims.write_text(claims.read_text())
-        def compile_model(text):
+        path=pathlib.Path(temp);(path/'Commerce/Claims').mkdir(parents=True);env={**os.environ,'LEAN_PATH':str(path)}
+        for claim in claims:
+            (path/'Commerce/Claims'/claim.name).write_text(claim.read_text())
+        def compile_model(text,selected):
             model=path/'Commerce/Generated.lean';model.write_text(generated(Parser(text).parse()))
             run=subprocess.run(['elan','run',toolchain,'lean','Commerce/Generated.lean','-o','Commerce/Generated.olean'],cwd=path,env=env,capture_output=True,text=True)
             if run.returncode:raise ValueError('Mutation model could not compile: '+run.stdout+run.stderr)
-            return subprocess.run(['elan','run',toolchain,'lean','Commerce/Claims.lean'],cwd=path,env=env,capture_output=True,text=True)
-        baseline=compile_model(source)
+            for claim in selected:
+                result=subprocess.run(['elan','run',toolchain,'lean','Commerce/Claims/'+claim.name],cwd=path,env=env,capture_output=True,text=True)
+                if result.returncode:return result
+            return result
+        baseline=compile_model(source,claims)
         if baseline.returncode:raise ValueError('Negative-control baseline failed: '+baseline.stdout+baseline.stderr)
         rejecting=[(f.name, re.sub(r'\s+',' ',re.search(r'pub fn '+f.name+r'\([^{}]*\) -> (?:bool|u64) \{([^{}]*)\}',source).group(1)).strip(), 'false' if f.result=='bool' else '0') for f in Parser(source).parse()]
         for name,old,new in [*MUTANTS,*rejecting]:
-            result=compile_model(mutated(source,name,old,new))
+            # Each independent domain imports Generated directly. Run every
+            # module owning this policy's registered claims against the mutant.
+            result=compile_model(mutated(source,name,old,new),owners[name])
             if result.returncode==0:raise ValueError('Lean accepted broken policy '+name+': '+new)
             if not any(s in result.stdout for s in ['unsolved goals','Type mismatch','type mismatch','omega could not prove','Tactic `rfl` failed']):
                 raise ValueError('Mutation failed for infrastructure rather than a property: '+result.stdout+result.stderr)
@@ -187,7 +205,7 @@ def axiom_failures():
 def run(root):
     result={'brokenPoliciesRejectedByLean':proof_failures(root),'unsupportedSyntaxRejected':closed_grammar(),
             'staleUnclassifiedDisconnectedBindingsRejected':registry_failures(root),
-            'proofShortcutsUnexpectedAxiomsMissingAuditsRejected':axiom_failures(),'baselineAccepted':True}
+            'proofShortcutsUnexpectedAxiomsMissingAuditsRejected':axiom_failures(),'baselineAccepted':True,'proofAndModuleLayoutBypassesRejected':controls(root)}
     report=root/'artifacts/formal-mutations.json';report.parent.mkdir(parents=True,exist_ok=True);report.write_text(json.dumps(result,indent=2)+'\n')
     print(json.dumps(result,indent=2));return result
 if __name__=='__main__':run(pathlib.Path(__file__).resolve().parents[2])

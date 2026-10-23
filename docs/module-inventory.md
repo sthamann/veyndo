@@ -590,10 +590,16 @@ This lists every checked-in source module in these roots, including files with n
 | [crates/commerce/src/lib.rs](../crates/commerce/src/lib.rs) | Commerce amounts and deterministic calculation contracts; no transport or inference dependencies. |
 | [crates/commerce/src/money.rs](../crates/commerce/src/money.rs) | Exact signed minor-unit amounts with explicit currency scale; legacy Shopware float pricing stays isolated. |
 | [crates/commerce/src/pricing.rs](../crates/commerce/src/pricing.rs) | Behavioral port of Shopware 6.7.14.2 quantity calculators. |
+| [crates/kernel/src/contract_tests.rs](../crates/kernel/src/contract_tests.rs) | Executable u64 edge/sequence regressions against independent u128 arithmetic, complementing universal Lean proofs. |
 | [crates/kernel/src/lib.rs](../crates/kernel/src/lib.rs) | Pure extracted admission policies, without transport or database dependencies. |
-| [crates/kernel/src/verified_kernel/app_intake.rs](../crates/kernel/src/verified_kernel/app_intake.rs) | Pure public-intake admission; extracted independently of the surrounding SQL and HTTP. |
-| [crates/kernel/src/verified_kernel/fulfillment.rs](../crates/kernel/src/verified_kernel/fulfillment.rs) | Pure package allocation and carrier-intent admission; external facts and effects remain unproved. |
-| [crates/kernel/src/verified_kernel.rs](../crates/kernel/src/verified_kernel.rs) | Closed, side-effect-free commerce policies extracted to Lean; keep within the checked bool/u64 grammar. |
+| [crates/kernel/src/verified_kernel/access.rs](../crates/kernel/src/verified_kernel/access.rs) | Extracted access policies; pure bool/u64 decisions used by native consumers. |
+| [crates/kernel/src/verified_kernel/agents.rs](../crates/kernel/src/verified_kernel/agents.rs) | Planning-only ingress and private continuation admission; identity and time are verified by native adapters. |
+| [crates/kernel/src/verified_kernel/apps.rs](../crates/kernel/src/verified_kernel/apps.rs) | Extracted apps policies; pure bool/u64 decisions used by native consumers. |
+| [crates/kernel/src/verified_kernel/automation.rs](../crates/kernel/src/verified_kernel/automation.rs) | Extracted automation policies; pure bool/u64 decisions used by native consumers. |
+| [crates/kernel/src/verified_kernel/commerce.rs](../crates/kernel/src/verified_kernel/commerce.rs) | Extracted commerce policies; pure bool/u64 decisions used by native consumers. |
+| [crates/kernel/src/verified_kernel/fulfillment.rs](../crates/kernel/src/verified_kernel/fulfillment.rs) | Extracted fulfillment policies; pure bool/u64 decisions used by native consumers. |
+| [crates/kernel/src/verified_kernel/intelligence.rs](../crates/kernel/src/verified_kernel/intelligence.rs) | Extracted intelligence policies; pure bool/u64 decisions used by native consumers. |
+| [crates/kernel/src/verified_kernel.rs](../crates/kernel/src/verified_kernel.rs) | Public facade for the closed, domain-owned Rust policies extracted to Lean. |
 | [crates/runtime/src/database_scope/provision.rs](../crates/runtime/src/database_scope/provision.rs) | Migration-only authority rollout commands; role passwords never pass through command arguments or output. |
 | [crates/runtime/src/database_scope.rs](../crates/runtime/src/database_scope.rs) | Role-bound database scope tickets; private signing material never enters requests or app contexts. |
 | [crates/runtime/src/http_json.rs](../crates/runtime/src/http_json.rs) | Bound untrusted provider JSON before allocation/deserialization; connection pooling remains with each existing service owner. |
@@ -1706,6 +1712,9 @@ This lists every checked-in source module in these roots, including files with n
 | [scripts/formal/axioms.py](../scripts/formal/axioms.py) | Audit owned proof sources and transitive Lean dependencies; no extra axioms are allowed. |
 | [scripts/formal/conformance.py](../scripts/formal/conformance.py) | Compare compiled Rust production policies with Lean's extracted executable, |
 | [scripts/formal/extract.py](../scripts/formal/extract.py) | Fail-closed typed Rust-to-Lean extraction. Trusted boundary: this translator, |
+| [scripts/formal/layout.py](../scripts/formal/layout.py) | Keep domain proof imports, theorem inventory and module sizes closed and reviewable. |
+| [scripts/formal/layout_tests.py](../scripts/formal/layout_tests.py) | Negative controls for missing claims and Rust facade escapes without editing the real source tree. |
+| [scripts/formal/modules.py](../scripts/formal/modules.py) | Explicit production policy modules; no dynamic Rust module resolution is trusted. |
 | [scripts/formal/mutations.py](../scripts/formal/mutations.py) | Prove the verification gate rejects representative broken policies and stale/disconnected source bindings. |
 | [scripts/formal/registry.py](../scripts/formal/registry.py) | Explicit full-source inventory and reviewed adapter locks, not proof coverage claims. |
 | [scripts/formal/runners.py](../scripts/formal/runners.py) | Generate conformance drivers from parsed policy signatures, never a second policy implementation. |
@@ -1815,7 +1824,8 @@ This lists every checked-in source module in these roots, including files with n
 | [scripts/testing/source_inventory.py](../scripts/testing/source_inventory.py) | Generate/check exact production and verification module inventory; listings are not coverage. |
 | [scripts/testing/test_ci_scope.py](../scripts/testing/test_ci_scope.py) | CI routing regressions exercise real Git renames, missing history and sensitive mixed changes. |
 | [scripts/testing/tooling_tests.py](../scripts/testing/tooling_tests.py) | Ordered Studio layout. |
-| [scripts/testing/workspace_boundaries.py](../scripts/testing/workspace_boundaries.py) | Check the real Cargo graph and reject domain dependency broadening, not just file sizes. |
+| [scripts/testing/workspace_boundaries.py](../scripts/testing/workspace_boundaries.py) | Enforce reviewed Cargo owners and dependency capabilities, including aliases and unnamed helper crates. |
+| [scripts/testing/workspace_boundary_tests.py](../scripts/testing/workspace_boundary_tests.py) | Mutation controls against real Cargo metadata: aliases, hidden helpers, build scripts and source-owner escapes. |
 | [scripts/transaction_pooler.py](../scripts/transaction_pooler.py) | Repeat the real strict-runtime and multi-replica regressions through a one-backend transaction pooler. |
 | [scripts/translations.py](../scripts/translations.py) | Durable translation jobs against a local provider fixture, real SQL, native MCP and a cold restart; no paid calls. |
 | [scripts/users.py](../scripts/users.py) | Real multi-user, workspace isolation and role/revocation regression tests. |

@@ -1,6 +1,7 @@
 """Explicit full-source inventory and reviewed adapter locks, not proof coverage claims."""
 import hashlib,json,re
 from extract import kernel_source,KERNEL_FILES
+from layout import check_layout
 STATUSES={'unproved','extracted-policy','reviewed-binding','conformance-driver'}
 
 def digest(path):return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -8,11 +9,12 @@ def current_sources(root):return {str(p.relative_to(root)):p for p in sorted([*(
 def inputs(root):
     files=[*(root/'reference').glob('automation-*.json'),root/'Cargo.toml',*(root/'crates').glob('*/Cargo.toml'),root/'Cargo.lock',*(root/'src').rglob('*.sql'),*(root/'src/ucp').glob('*.json'),*(root/'migrations').glob('*.sql'),*(root/'fixtures').glob('*.json'),
            root/'frontend/package.json',root/'frontend/package-lock.json',root/'frontend/scripts/precompress.mjs',root/'deploy/Dockerfile',
-           root/'proof/Commerce/Claims.lean',root/'proof/lakefile.toml',root/'proof/lean-toolchain',
+           root/'proof/Commerce/Claims.lean',*(root/'proof/Commerce/Claims').glob('*.lean'),root/'proof/lakefile.toml',root/'proof/lean-toolchain',
            root/'scripts/formal.py',*(root/'scripts/formal').glob('*.py'),root/'.github/workflows/verify.yml',
            *(root/'crates/cognition/prompts').glob('*'),*(root/'crates/cognition/evals').glob('*.json'),root/'scripts/testing/prompt_governance.py']
     return {str(p.relative_to(root)):p for p in sorted(files)}
 def check(root,manifest):
+    check_layout(root,manifest)
     actual=current_sources(root);recorded=manifest['sources']
     if set(actual)!=set(recorded):raise ValueError('Unclassified/removed Rust source: '+str(set(actual)^set(recorded)))
     for name,path in actual.items():

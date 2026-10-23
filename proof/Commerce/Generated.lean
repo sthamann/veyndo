@@ -3,6 +3,105 @@ import Std
 
 namespace CommerceKernel
 
+def scope_admissible (authenticated : Bool) (known_scope : Bool) (owner : Bool) (explicit : Bool) (explicit_grant : Bool) (default_grant : Bool) : Bool :=
+  ((authenticated && known_scope) && ((owner || (explicit && explicit_grant)) || ((!explicit) && default_grant)))
+
+def platform_admissible (personal : Bool) (granted : Bool) (active : Bool) : Bool :=
+  ((personal && granted) && active)
+
+def shop_request_admissible (active : Bool) (paused : Bool) (read_only : Bool) (settlement : Bool) : Bool :=
+  ((settlement || active) || (paused && read_only))
+
+def consent_admissible (enabled : Bool) (current : Bool) (fresh : Bool) (chosen : Bool) : Bool :=
+  (((enabled && current) && fresh) && chosen)
+
+def legal_checkout_admissible (strict : Bool) (current : Bool) (accepted : Bool) (digital : Bool) (immediate : Bool) : Bool :=
+  ((!strict) || ((current && accepted) && ((!digital) || immediate)))
+
+def channel_access_admissible (active : Bool) (is_private : Bool) (merchant : Bool) (preview : Bool) (mutating : Bool) : Bool :=
+  ((active && ((!is_private) || merchant)) || (preview && (!mutating)))
+
+def native_asset_bypass (native_asset : Bool) (hosted : Bool) : Bool :=
+  (native_asset && (!hosted))
+
+def auth_factor_admissible (required : Bool) (verified : Bool) : Bool :=
+  ((!required) || verified)
+
+def persistent_key_admissible (personal : Bool) (administrator : Bool) : Bool :=
+  (personal && administrator)
+
+def planning_request_admissible (read_only : Bool) (planning_post : Bool) : Bool :=
+  (read_only || planning_post)
+
+def agent_preview_admissible (active : Bool) (private_preview : Bool) (personal : Bool) (same_owner : Bool) (current : Bool) : Bool :=
+  (active && ((!private_preview) || ((personal && same_owner) && current)))
+
+def app_flow_admissible (allowed : Bool) (read_only : Bool) (is_public : Bool) : Bool :=
+  ((allowed && (!read_only)) && (!is_public))
+
+def app_read_admissible (read_only : Bool) (mutating : Bool) : Bool :=
+  (read_only && (!mutating))
+
+def app_tool_admissible (enabled : Bool) (authorized : Bool) : Bool :=
+  (enabled && authorized)
+
+def app_core_reference_admissible (product : Bool) (private_data : Bool) : Bool :=
+  (product || private_data)
+
+def app_service_transport_admissible (clean_url : Bool) (https : Bool) (http : Bool) (loopback : Bool) (private_origin : Bool) : Bool :=
+  (clean_url && (https || (http && (loopback || private_origin))))
+
+def app_package_authorized (pinned : Bool) (bundled : Bool) : Bool :=
+  (pinned || bundled)
+
+def wasm_resources_admissible (tables : Nat) (memories : Nat) (elements : Nat) (pages : Nat) : Bool :=
+  ((((decide (tables ≤ 1)) && (decide (memories ≤ 1))) && (decide (elements ≤ 10000))) && (decide (pages ≤ 16)))
+
+def app_surface_admissible (current_package : Bool) (allowed_action : Bool) : Bool :=
+  (current_package && allowed_action)
+
+def app_callback_admissible (capability : Bool) (current_role : Bool) : Bool :=
+  (capability && current_role)
+
+def app_submission_admissible (private_inbox : Bool) (live_scope : Bool) (current_cart : Bool) : Bool :=
+  ((private_inbox && live_scope) && current_cart)
+
+def app_configuration_release_admissible (extension : Bool) (product : Bool) (company : Bool) : Bool :=
+  (((!extension) || product) || company)
+
+def native_lifecycle_admissible (native : Bool) (rights : Bool) (guards : Bool) : Bool :=
+  ((native && rights) && guards)
+
+def source_activation_admissible (imported : Bool) (reviewed : Bool) (active : Bool) : Bool :=
+  (((!imported) || (!active)) || reviewed)
+
+def job_completion_admissible (cancel_requested : Bool) (succeeded : Bool) : Bool :=
+  ((!cancel_requested) || (!succeeded))
+
+def rule_authenticated (customer_present : Bool) (required : Bool) : Bool :=
+  (decide (customer_present = required))
+
+def rule_boolean_comparison (equal : Bool) (empty : Bool) (eq : Bool) (neq : Bool) (is_empty : Bool) : Bool :=
+  (((eq && equal) || (neq && (!equal))) || (is_empty && empty))
+
+def rule_xor_count (hits : Nat) : Bool :=
+  (decide (hits = 1))
+
+def flow_delay_admissible (seconds : Nat) : Bool :=
+  (decide (seconds ≤ 2592000))
+
+def destination_tax_admissible (condition : Bool) (country : Bool) (state : Bool) (postal : Bool) (date : Bool) : Bool :=
+  ((((condition && country) && state) && postal) && date)
+
+def customer_group_net (configured : Bool) (business : Bool) : Bool :=
+  (configured && business)
+
+def resource_quota_admissible (limit : Nat) : Bool :=
+  ((decide (limit > 0)) && (decide (limit ≤ 1000000)))
+
+def notification_retry_admissible (rate_limited : Bool) (attempts : Nat) : Bool :=
+  (rate_limited && (decide (attempts < 8)))
+
 def discount_cap (total : Nat) (requested : Nat) : Nat :=
   (min total requested)
 
@@ -18,125 +117,17 @@ def revision_admissible (current : Nat) (expected : Nat) : Bool :=
 def replay_admissible (same_cart : Bool) (cart_open : Bool) (same_fingerprint : Bool) : Bool :=
   (same_cart && ((!cart_open) || same_fingerprint))
 
-def scope_admissible (authenticated : Bool) (known_scope : Bool) (owner : Bool) (explicit : Bool) (explicit_grant : Bool) (default_grant : Bool) : Bool :=
-  ((authenticated && known_scope) && ((owner || (explicit && explicit_grant)) || ((!explicit) && default_grant)))
-
-def order_edit_admissible (terminal : Bool) : Bool :=
-  (!terminal)
-
-def completion_admissible (terminal : Bool) (payment_ready : Bool) (deliveries_ready : Bool) : Bool :=
-  (((!terminal) && payment_ready) && deliveries_ready)
-
-def cancellation_admissible (terminal : Bool) (external_payment : Bool) (refund_required : Bool) (deliveries_open : Bool) : Bool :=
-  ((((!terminal) && (!external_payment)) && (!refund_required)) && deliveries_open)
-
-def manual_payment_admissible (terminal : Bool) (external_payment : Bool) (current_pending : Bool) (target_paid : Bool) : Bool :=
-  ((((!terminal) && (!external_payment)) && current_pending) && target_paid)
-
-def download_admissible (order_blocked : Bool) (paid : Bool) (simulated_authorized : Bool) : Bool :=
-  ((!order_blocked) && (paid || simulated_authorized))
-
 def checkout_contact_admissible (simulated : Bool) (email_present : Bool) (billing_present : Bool) : Bool :=
   (simulated || (email_present && billing_present))
 
-def receipt_admissible (expected : Nat) (received : Nat) (same_currency : Bool) (confirmed : Bool) : Bool :=
-  (((decide (expected = received)) && same_currency) && confirmed)
-
-def rule_authenticated (customer_present : Bool) (required : Bool) : Bool :=
-  (decide (customer_present = required))
-
-def rule_boolean_comparison (equal : Bool) (empty : Bool) (eq : Bool) (neq : Bool) (is_empty : Bool) : Bool :=
-  (((eq && equal) || (neq && (!equal))) || (is_empty && empty))
-
-def app_flow_admissible (allowed : Bool) (read_only : Bool) (is_public : Bool) : Bool :=
-  ((allowed && (!read_only)) && (!is_public))
-
-def platform_admissible (personal : Bool) (granted : Bool) (active : Bool) : Bool :=
-  ((personal && granted) && active)
-
-def app_read_admissible (read_only : Bool) (mutating : Bool) : Bool :=
-  (read_only && (!mutating))
-
-def rule_xor_count (hits : Nat) : Bool :=
-  (decide (hits = 1))
-
-def flow_delay_admissible (seconds : Nat) : Bool :=
-  (decide (seconds ≤ 2592000))
-
-def destination_tax_admissible (condition : Bool) (country : Bool) (state : Bool) (postal : Bool) (date : Bool) : Bool :=
-  ((((condition && country) && state) && postal) && date)
-
-def customer_group_net (configured : Bool) (business : Bool) : Bool :=
-  (configured && business)
-
-def app_tool_admissible (enabled : Bool) (authorized : Bool) : Bool :=
-  (enabled && authorized)
-
-def app_core_reference_admissible (product : Bool) (private_data : Bool) : Bool :=
-  (product || private_data)
-
 def checkout_review_admissible (revision_matches : Bool) (expected_total : Nat) (actual_total : Nat) (methods_confirmed : Bool) : Bool :=
   ((revision_matches && (decide (expected_total = actual_total))) && methods_confirmed)
-
-def shop_request_admissible (active : Bool) (paused : Bool) (read_only : Bool) (settlement : Bool) : Bool :=
-  ((settlement || active) || (paused && read_only))
-
-def reservation_release_admissible (uncaptured : Bool) (authorized : Bool) (void_confirmed : Bool) : Bool :=
-  (uncaptured || (authorized && void_confirmed))
 
 def currency_context_admissible (enabled : Bool) (configured : Bool) (fresh : Bool) : Bool :=
   ((enabled && configured) && fresh)
 
 def currency_scale_admissible (scale : Nat) : Bool :=
   (decide (scale ≤ 6))
-
-def payment_transition_admissible (current : Nat) (next : Nat) : Bool :=
-  (((decide (current ≤ 9)) && (decide (next ≤ 9))) && (((((decide (current = next)) || (((decide (current ≤ 3)) && (decide (next > current))) && (decide (next ≤ 4)))) || ((decide (current ≤ 3)) && ((decide (next = 7)) || (decide (next = 8))))) || ((((decide (current = 4)) || (decide (current = 5))) || (decide (current = 9))) && ((decide (next = 5)) || (decide (next = 6))))) || (((decide (current = 7)) || (decide (current = 8))) && (decide (next = 9)))))
-
-def resource_quota_admissible (limit : Nat) : Bool :=
-  ((decide (limit > 0)) && (decide (limit ≤ 1000000)))
-
-def consent_admissible (enabled : Bool) (current : Bool) (fresh : Bool) (chosen : Bool) : Bool :=
-  (((enabled && current) && fresh) && chosen)
-
-def legal_checkout_admissible (strict : Bool) (current : Bool) (accepted : Bool) (digital : Bool) (immediate : Bool) : Bool :=
-  ((!strict) || ((current && accepted) && ((!digital) || immediate)))
-
-def notification_retry_admissible (rate_limited : Bool) (attempts : Nat) : Bool :=
-  (rate_limited && (decide (attempts < 8)))
-
-def app_service_transport_admissible (clean_url : Bool) (https : Bool) (http : Bool) (loopback : Bool) (private_origin : Bool) : Bool :=
-  (clean_url && (https || (http && (loopback || private_origin))))
-
-def channel_access_admissible (active : Bool) (is_private : Bool) (merchant : Bool) (preview : Bool) (mutating : Bool) : Bool :=
-  ((active && ((!is_private) || merchant)) || (preview && (!mutating)))
-
-def native_asset_bypass (native_asset : Bool) (hosted : Bool) : Bool :=
-  (native_asset && (!hosted))
-
-def app_package_authorized (pinned : Bool) (bundled : Bool) : Bool :=
-  (pinned || bundled)
-
-def wasm_resources_admissible (tables : Nat) (memories : Nat) (elements : Nat) (pages : Nat) : Bool :=
-  ((((decide (tables ≤ 1)) && (decide (memories ≤ 1))) && (decide (elements ≤ 10000))) && (decide (pages ≤ 16)))
-
-def app_surface_admissible (current_package : Bool) (allowed_action : Bool) : Bool :=
-  (current_package && allowed_action)
-
-def app_callback_admissible (capability : Bool) (current_role : Bool) : Bool :=
-  (capability && current_role)
-
-def ai_price_admissible (price : Nat) (minimum : Nat) (maximum : Nat) (margin : Bool) (discount : Bool) (brand : Bool) (available : Bool) : Bool :=
-  ((((((decide (minimum ≤ price)) && (decide (price ≤ maximum))) && margin) && discount) && brand) && available)
-
-def ai_autonomy_admissible (enabled : Bool) (authorized : Bool) (price_only : Bool) (daily_budget : Bool) (within_delta : Bool) : Bool :=
-  ((((enabled && authorized) && price_only) && daily_budget) && within_delta)
-
-def claim_render_admissible (confirmed : Bool) (public_source : Bool) (current_source : Bool) (valid_time : Bool) (exact_text : Bool) : Bool :=
-  ((((confirmed && public_source) && current_source) && valid_time) && exact_text)
-
-def experiment_result_admissible (final_look : Bool) (enough_units : Bool) (positive_bound : Bool) : Bool :=
-  ((final_look && enough_units) && positive_bound)
 
 def pos_cash_admissible (authorized : Bool) (tender : Nat) (total : Nat) (reviewed : Bool) : Bool :=
   (((authorized && reviewed) && (decide (total ≤ tender))) && (decide (tender ≤ 1000000000000)))
@@ -156,11 +147,32 @@ def external_amount_admissible (gross : Nat) (tax : Nat) (rate : Nat) : Bool :=
 def external_paid_total_admissible (paid : Bool) (calculated : Nat) (declared : Nat) : Bool :=
   ((paid && (decide (calculated > 0))) && (decide (calculated = declared)))
 
-def auth_factor_admissible (required : Bool) (verified : Bool) : Bool :=
-  ((!required) || verified)
-
 def admin_payment_admissible (is_admin : Bool) (manual : Bool) (simulated : Bool) : Bool :=
   (((!is_admin) || manual) || simulated)
+
+def order_edit_admissible (terminal : Bool) : Bool :=
+  (!terminal)
+
+def completion_admissible (terminal : Bool) (payment_ready : Bool) (deliveries_ready : Bool) : Bool :=
+  (((!terminal) && payment_ready) && deliveries_ready)
+
+def cancellation_admissible (terminal : Bool) (external_payment : Bool) (refund_required : Bool) (deliveries_open : Bool) : Bool :=
+  ((((!terminal) && (!external_payment)) && (!refund_required)) && deliveries_open)
+
+def manual_payment_admissible (terminal : Bool) (external_payment : Bool) (current_pending : Bool) (target_paid : Bool) : Bool :=
+  ((((!terminal) && (!external_payment)) && current_pending) && target_paid)
+
+def download_admissible (order_blocked : Bool) (paid : Bool) (simulated_authorized : Bool) : Bool :=
+  ((!order_blocked) && (paid || simulated_authorized))
+
+def receipt_admissible (expected : Nat) (received : Nat) (same_currency : Bool) (confirmed : Bool) : Bool :=
+  (((decide (expected = received)) && same_currency) && confirmed)
+
+def reservation_release_admissible (uncaptured : Bool) (authorized : Bool) (void_confirmed : Bool) : Bool :=
+  (uncaptured || (authorized && void_confirmed))
+
+def payment_transition_admissible (current : Nat) (next : Nat) : Bool :=
+  (((decide (current ≤ 9)) && (decide (next ≤ 9))) && (((((decide (current = next)) || (((decide (current ≤ 3)) && (decide (next > current))) && (decide (next ≤ 4)))) || ((decide (current ≤ 3)) && ((decide (next = 7)) || (decide (next = 8))))) || ((((decide (current = 4)) || (decide (current = 5))) || (decide (current = 9))) && ((decide (next = 5)) || (decide (next = 6))))) || (((decide (current = 7)) || (decide (current = 8))) && (decide (next = 9)))))
 
 def delivery_split_admissible (is_open : Bool) (terminal : Bool) (available : Nat) (moving : Nat) : Bool :=
   (((is_open && (!terminal)) && (decide (moving > 0))) && (decide (moving < available)))
@@ -168,22 +180,16 @@ def delivery_split_admissible (is_open : Bool) (terminal : Bool) (available : Na
 def carrier_booking_admissible (is_open : Bool) (closed : Bool) (labelled : Bool) (occupied : Bool) (same : Bool) : Bool :=
   (((is_open && (!closed)) && (!labelled)) && ((!occupied) || same))
 
-def app_submission_admissible (private_inbox : Bool) (live_scope : Bool) (current_cart : Bool) : Bool :=
-  ((private_inbox && live_scope) && current_cart)
+def ai_price_admissible (price : Nat) (minimum : Nat) (maximum : Nat) (margin : Bool) (discount : Bool) (brand : Bool) (available : Bool) : Bool :=
+  ((((((decide (minimum ≤ price)) && (decide (price ≤ maximum))) && margin) && discount) && brand) && available)
 
-def persistent_key_admissible (personal : Bool) (administrator : Bool) : Bool :=
-  (personal && administrator)
+def ai_autonomy_admissible (enabled : Bool) (authorized : Bool) (price_only : Bool) (daily_budget : Bool) (within_delta : Bool) : Bool :=
+  ((((enabled && authorized) && price_only) && daily_budget) && within_delta)
 
-def app_configuration_release_admissible (extension : Bool) (product : Bool) (company : Bool) : Bool :=
-  (((!extension) || product) || company)
+def claim_render_admissible (confirmed : Bool) (public_source : Bool) (current_source : Bool) (valid_time : Bool) (exact_text : Bool) : Bool :=
+  ((((confirmed && public_source) && current_source) && valid_time) && exact_text)
 
-def native_lifecycle_admissible (native : Bool) (rights : Bool) (guards : Bool) : Bool :=
-  ((native && rights) && guards)
-
-def source_activation_admissible (imported : Bool) (reviewed : Bool) (active : Bool) : Bool :=
-  (((!imported) || (!active)) || reviewed)
-
-def job_completion_admissible (cancel_requested : Bool) (succeeded : Bool) : Bool :=
-  ((!cancel_requested) || (!succeeded))
+def experiment_result_admissible (final_look : Bool) (enough_units : Bool) (positive_bound : Bool) : Bool :=
+  ((final_look && enough_units) && positive_bound)
 
 end CommerceKernel

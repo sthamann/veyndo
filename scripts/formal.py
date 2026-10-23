@@ -11,6 +11,7 @@ from runners import lean_runner,rust_runner,rust_dispatch
 from registry import check,record
 from conformance import compare
 from axioms import source_check,dependency_check
+from layout import check_layout
 ROOT=pathlib.Path(__file__).resolve().parents[1]
 
 def run(args,cwd=ROOT):
@@ -61,6 +62,7 @@ def main():
         'sourceCommit':run(['git','rev-parse','HEAD']).strip(),'workingTreeChanged':bool(run(['git','status','--porcelain']).strip()),
         'leanToolchain':(ROOT/'proof/lean-toolchain').read_text().strip(),'policies':len(functions),
         'axiomAudit':axioms,'compiledEnvironmentRechecked':True,'conformance':conformance,'inventory':inventory,
+        'proofLayout':check_layout(ROOT,manifest),
         'trustedBoundary':['Rust-to-Lean subset translator','Rust/Lean compilation and u64-to-Nat correspondence','Reviewed Rust adapters and input facts','PostgreSQL transactions/constraints','Operating system and provider protocols']}
     path=ROOT/args.report;path.parent.mkdir(parents=True,exist_ok=True);path.write_text(json.dumps(report,indent=2)+'\n')
     print(json.dumps(report,indent=2))

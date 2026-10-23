@@ -1,26 +1,63 @@
-"""Check the real Cargo graph and reject domain dependency broadening, not just file sizes."""
-import json,subprocess
+"""Enforce reviewed Cargo owners and dependency capabilities, including aliases and unnamed helper crates."""
+import json
+import subprocess
 from pathlib import Path
-ROOT=Path(__file__).resolve().parents[2]
-ALLOWED={'veyndo-kernel':set(),'veyndo-runtime':set(),'veyndo-commerce':{'veyndo-kernel'},'veyndo-apps':{'veyndo-kernel'},'veyndo-cognition':{'veyndo-runtime','veyndo-kernel'}}
-FORBIDDEN={'veyndo-kernel':{'sqlx','reqwest','tokio','wasmtime'},'veyndo-commerce':{'sqlx','reqwest','tokio','wasmtime'},'veyndo-apps':{'sqlx','reqwest','axum'}}
+
+ROOT = Path(__file__).resolve().parents[2]
+OWNERS = {name: ROOT / 'crates' / name.removeprefix('veyndo-') for name in (
+    'veyndo-kernel', 'veyndo-runtime', 'veyndo-commerce', 'veyndo-apps', 'veyndo-cognition')}
+OWNERS.update({'veyndo': ROOT, 'veyndo-migration': ROOT / 'extensions/apps/migration'})
+ALLOWED = {
+    'veyndo-kernel': set(),
+    'veyndo-runtime': set(),
+    'veyndo-commerce': {'veyndo-kernel'},
+    'veyndo-apps': {'veyndo-kernel'},
+    'veyndo-cognition': {'veyndo-runtime', 'veyndo-kernel'},
+}
+# Reviewed direct external capabilities. Cargo reports actual package names even
+# when a manifest renames sqlx as something innocuous. New dependencies need an
+# explicit architecture decision, including build/dev/optional/target variants.
+EXTERNAL = {
+    'veyndo-kernel': set(),
+    'veyndo-commerce': {'serde', 'serde_json'},
+    'veyndo-apps': {'wasmtime', 'wat', 'sha2'},
+    'veyndo-runtime': {'hmac', 'sha2', 'zeroize', 'sqlx', 'tokio', 'futures-util',
+                       'serde_json', 'reqwest', 'async-stream', 'uuid'},
+    'veyndo-cognition': {'serde', 'serde_json', 'tokio', 'reqwest', 'aes-gcm',
+                         'base64', 'sha2', 'sqlx', 'tracing'},
+}
+
+
 def check(packages):
-    for p in packages:
-        if p['name'] not in ALLOWED:continue
-        dependencies={d['name'] for d in p['dependencies']}
-        assert not dependencies&FORBIDDEN.get(p['name'],set()),(p['name'],'Forbidden authority dependency')
-        assert {d for d in dependencies if d.startswith('veyndo')}<=ALLOWED[p['name']],(p['name'],'Invalid domain dependency')
-        assert Path(p['manifest_path']).parent.is_relative_to(ROOT/'crates')
-        assert all(not t['src_path'].endswith('/src/lib.rs') or str(ROOT/'crates') in t['src_path'] for t in p['targets'])
+    names = {p['name'] for p in packages}
+    assert names == set(OWNERS), ('Unclassified or missing workspace owner', names ^ set(OWNERS))
+    for package in packages:
+        name = package['name']
+        owner = OWNERS[name].resolve()
+        assert Path(package['manifest_path']).resolve() == owner / 'Cargo.toml', (name, 'Wrong owner directory')
+        for target in package['targets']:
+            assert Path(target['src_path']).resolve().is_relative_to(owner), (name, 'Target escapes its owner')
+        if name not in ALLOWED:
+            continue
+        allowed = ALLOWED[name] | EXTERNAL[name]
+        for dependency in package['dependencies']:
+            dep = dependency['name']
+            assert dep in allowed, (name, 'Unreviewed dependency capability', dep)
+            if dependency.get('path'):
+                assert dep in ALLOWED[name] and Path(dependency['path']).resolve() == OWNERS[dep].resolve(), (name, 'Path dependency escapes its owner', dep)
+            elif dep in ALLOWED[name]:
+                raise AssertionError((name, 'Domain dependency must use its reviewed local owner', dep))
+        assert not any('custom-build' in t['kind'] for t in package['targets']), (name, 'Unreviewed domain build script')
+
 
 def main():
-    data=json.loads(subprocess.check_output(['cargo','metadata','--no-deps','--format-version','1'],cwd=ROOT));packages=data['packages'];check(packages)
-    assert set(ALLOWED)<={p['name'] for p in packages}
-    for name,dependency in [('veyndo-apps','sqlx'),('veyndo-commerce','veyndo-cognition'),('veyndo-cognition','veyndo')]:
-        import copy
-        broken=copy.deepcopy(packages);next(p for p in broken if p['name']==name)['dependencies'].append({'name':dependency})
-        try:check(broken)
-        except AssertionError:pass
-        else:raise AssertionError('Workspace boundary silently accepted '+name+' -> '+dependency)
-    print('PASS real Cargo domain DAG; app SQL, commerce cognition and root-backedge negative controls')
-if __name__=='__main__':main()
+    data = json.loads(subprocess.check_output(
+        ['cargo', 'metadata', '--locked', '--no-deps', '--format-version', '1'], cwd=ROOT))
+    check(data['packages'])
+    from workspace_boundary_tests import negative_controls
+    count = negative_controls(data['packages'])
+    print(f'PASS Cargo owner/dependency boundaries; {count} bypass negative controls')
+
+
+if __name__ == '__main__':
+    main()
