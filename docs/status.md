@@ -6,18 +6,24 @@ journey are tracked separately. All purchases below use **simulated payments**.
 
 The 23 October release expands selected Lean guarantees to **63 policies / 149
 properties**, splits their Rust/Lean owners and tightens Cargo dependency checks.
-Its complete required CI passed: 317 Rust tests, 816 frontend tests, native database
-integration and coverage gates. [Verification and modularity audit](evidence/formal-modularity-2026-10-23.md).
+The subsequent shared discount repair also passes complete required CI: **322 Rust
+tests**, **816 frontend tests**, native database integration and coverage gates.
+[Verification, modularity and release evidence](evidence/formal-modularity-2026-10-23.md).
 
 ## What is online now
 
-Core image `marked-act-7677` is online since **23 October, 12:26 CEST** with source
-`d68b2940`, whose complete tree matches merged main `a7089747` (PR #206).
-One instance is running, health checks pass and it has zero restarts. Public
-health and German catalogue reads pass after rollout. This change preserves
-existing business decisions and adds formal/regression enforcement; it does not
-re-date the purchase and authentication acceptance below.
-[Exact release evidence](evidence/formal-modularity-2026-10-23.md#public-core-rollout).
+Core image `dynamic-garden-8477`, source **`363181dd` (PR #209)**, was deployed on
+**23 October at 15:14:51 CEST** and completed its health-checked rollout at
+**15:16 CEST**, after a fresh snapshot and successful migration job.
+One instance is running, 1/1 health checks pass and it has zero restarts.
+The shared allocator preserves exact cent rounding for large baskets, and app
+price increases reject overflowing totals before changing a quote.
+Public simulated order **`RAC-b8059d75`** completed afterward for **EUR 349.00**,
+including **EUR 55.72 VAT**, with its German product name. Return and full reload
+retained an empty cart and the existing privacy choice. This is a fresh native
+checkout acceptance; the dated Storyfront and authentication observations below
+retain their original dates.
+[Exact CI and public release evidence](evidence/formal-modularity-2026-10-23.md#discount-repair-complete-ci-and-public-rollout).
 
 Core and Studio now include editable catalogue-based test customers from
 [PR #203](https://github.com/sthamann/veyndo/pull/203), alongside the connected
@@ -91,6 +97,7 @@ are included in the combined public artifact; [implementation and browser eviden
 
 | Journey | What was observed | Evidence |
 | --- | --- | --- |
+| Native checkout after the discount repair | Public simulated order `RAC-b8059d75` completed on the new Core for EUR 349.00 with EUR 55.72 VAT and the German desk name. Return, full reload and the reopened cart confirmed zero items. Exact three-line discount allocations and frozen order values passed both native CI database modes separately. | [23 October discount release](evidence/formal-modularity-2026-10-23.md#discount-repair-complete-ci-and-public-rollout) |
 | Catalogue-based test customers | German Studio prepared three French profiles from the channel's only notebook. The EUR 28.89 profile stopped; Germany and Austria orders completed for EUR 28.90 and EUR 29.14 with the stored French product name. Private orders increased from four to exactly six. Reload, profile reuse and 390 px mobile layout passed. | [Public profile preparation and purchases](evidence/customer-scenarios-2026-10-22.md#public-catalogue-profile-acceptance) |
 | Visual shopping, catalogue preparation and app diagnostics | Final public cards showed the actual notebook and holder, EUR 63.40 together. Removal survived detail/back; restore retained cart zero. Native purchase `RAC-eb78b7d7` completed for EUR 28.90 including EUR 4.61 VAT; return/reload retained an empty cart and privacy rejection. Five-language readiness opened the correct media editor; app diagnostics retained draft protection. | [Final combined release acceptance](evidence/customer-scenarios-2026-10-22.md#public-acceptance-after-the-final-rollout) |
 | Private customer scenarios | Three agents stopped at stock zero; after restoring private stock, two native EUR 28.90 orders completed while the EUR 1.00 buyer still stopped. Exact profiles and saved comparison survived reload. | [22 October simulator acceptance](evidence/customer-scenarios-2026-10-22.md#public-rollout-and-customer-scenario-acceptance) |

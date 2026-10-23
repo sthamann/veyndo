@@ -13,13 +13,13 @@ Local verification and the clean-checkout CI evidence are recorded separately.
 The later [discount arithmetic repair](evidence/formal-modularity-2026-10-23.md#discount-arithmetic-follow-up)
 adds one Rust regression module. It retains the same extracted policies and
 properties; it does not turn the allocation loop into a Lean proof.
-The complete required Linux CI passed before PR #206 merged and the Core rollout
-on 23 October. [Release and public smoke checks](evidence/formal-modularity-2026-10-23.md#public-core-rollout).
+The complete required Linux CI passed before both PR #206 and the later arithmetic
+repair in PR #209 merged. [Latest CI and public rollout](evidence/formal-modularity-2026-10-23.md#discount-repair-complete-ci-and-public-rollout).
 
-The [published verification report](evidence/formal-verification-2026-10-23.json) is copied unchanged
-from the successful complete [Linux CI run 39934011164](https://github.com/sthamann/veyndo/actions/runs/39934011164),
-recording clean source `bd1fc0e4f7b499bb72aaebd8ae7c0d46c09b679b`. Its complete source
-tree matches PR #206 commit `d68b2940` and merged main `a7089747`. The [mutation results](evidence/formal-mutations-2026-10-23.json)
+The [published verification report](evidence/discount-formal-verification-2026-10-23.json) is copied unchanged
+from the successful complete [Linux CI run 39953688161](https://github.com/sthamann/veyndo/actions/runs/39953688161),
+recording clean source `429cdf040e3a26eaf0613cbfc0325b0a746ce08d`. Its complete source
+tree matches PR #209 commit `467fc5fd` and merged main `363181dd`. The [mutation results](evidence/discount-formal-mutations-2026-10-23.json)
 come from the same CI artifact. The reports include compiled conformance, axiom
 audit and exact inventory; later documentation or stylesheet edits do not extend
 their proof scope. [Current product and public acceptance](status.md).

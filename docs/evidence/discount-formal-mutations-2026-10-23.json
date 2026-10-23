@@ -1,0 +1,8 @@
+{
+  "brokenPoliciesRejectedByLean": 183,
+  "unsupportedSyntaxRejected": 14,
+  "staleUnclassifiedDisconnectedBindingsRejected": 3,
+  "proofShortcutsUnexpectedAxiomsMissingAuditsRejected": 9,
+  "baselineAccepted": true,
+  "proofAndModuleLayoutBypassesRejected": 10
+}
