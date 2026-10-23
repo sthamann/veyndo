@@ -120,6 +120,16 @@ and nine reported scenarios in the connected app suite. Native mail delivery and
 the separate Rust connector regression still run against local provider fixtures
 and disposable PostgreSQL databases. [Ownership and reproduction command](../testing.md#mail-and-connected-app-test-ownership).
 
+The complete CI also exposed an existing role-race fixture problem under signed
+transaction pooling. Its `FOR UPDATE` barrier could block worker foreign-key
+checks before the HTTP mutation reached its intended lifecycle lock. A direct
+`FOR KEY SHARE` negative control reproduces that excessive exclusion. The fixture
+now uses `FOR NO KEY UPDATE`, verifies compatible key reads, and requires the
+mutation to wait behind that exact backend before demoting the owner. Promotion,
+invitation and invitation acceptance must still return 403; denied invitations
+remain absent or unredeemed. Production authorization and lock acquisition are
+unchanged. Failure cleanup releases the database barrier before joining HTTP.
+
 ## Reproduce
 
 ```sh
