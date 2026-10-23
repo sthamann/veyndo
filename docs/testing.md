@@ -1,5 +1,41 @@
 # Testing, coverage and maintenance contracts
 
+## Mail and connected app test ownership
+
+The registered `email_tests`, `rust_connectors` and `connected_apps` suites keep
+their existing names and execution order. Their shared fixtures and scenarios now
+have separate owners:
+
+| Owner | Responsibility |
+| --- | --- |
+| `scripts/email_tests.py` | Compose the same nine unittest cases from the mail fixture, protocol contracts and native journey. |
+| `scripts/testing/mail_contracts/wire.py` and `fixtures.py` | Disposable SMTP/HTTP servers, synthetic TLS certificates and isolated test settings. `rust_connectors.py` imports these fixtures directly. |
+| `scripts/testing/mail_contracts/contracts.py` | Eight archived comparison cases for mail configuration, protocols, secrecy, retries and localized messages. |
+| `scripts/testing/mail_contracts/journey.py` | Actual Rust checkout, outbox, Flow Builder, app gateway and mail worker delivery to local SMTP, including HTTP/MCP permissions and sandbox denial. |
+| `scripts/connected_apps.py` | Run access, source import, event delivery and disconnect checks in their original order. |
+| `scripts/testing/connected_contracts/runtime.py`, `wire.py` and `client.py` | Own process/server lifetime, local provider responses and scoped HTTP actions. Restore fixture environment variables after shutdown. |
+| `scripts/testing/connected_contracts/access.py` | OAuth/PKCE, encrypted tenant binding, configuration revisions, channel tracking and access denial. |
+| `scripts/testing/connected_contracts/sources.py` | Private source import, retrieval/model evidence, token refresh and disconnect cleanup. |
+| `scripts/testing/connected_contracts/flows.py` | Native order/app events, durable Slack flows, idempotency, retries and uncertain delivery after restart. |
+| `scripts/testing/reference_connector.py` | Explicit test import boundary for the archived connector comparison implementation. |
+
+The extraction preserves every mail test body, all 37 connected app assertions
+and all nine reported scenarios. Before and after the change, the three registered
+suites pass against disposable local PostgreSQL databases and provider fixtures.
+The native connector suite retains its two process, encrypted configuration,
+queue recovery and restricted database role checks. All provider calls stay local.
+
+Run the affected suites through the existing registry:
+
+```sh
+python3 scripts/verify_integration.py --only email_tests rust_connectors connected_apps
+```
+
+`connected_apps` retains the archived connector as a differential fixture beside
+the real Rust commerce process. The separate `rust_connectors` suite and native
+mail journey exercise the shipping Rust service. Production ownership remains
+documented in [Rust services](rust-services.md); no runtime moved into Python.
+
 ## Formal and module-boundary regression — 23 October 2026
 
 The [current formal/module audit](evidence/formal-modularity-2026-10-23.md) records

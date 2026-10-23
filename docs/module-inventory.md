@@ -1691,7 +1691,7 @@ This lists every checked-in source module in these roots, including files with n
 | [scripts/cognitive_experiments.py](../scripts/cognitive_experiments.py) | Real native consent/layout/payment paths with synthetic live-receipt fixtures, not a measured commerce experiment. |
 | [scripts/commerce.py](../scripts/commerce.py) | Real HTTP/PG tests for SKUs, moderated reviews, tax/shipping/payment and deliveries. |
 | [scripts/company_settings.py](../scripts/company_settings.py) | Real HTTP company basis/channel inheritance, immutable issuer snapshots, bounded logos and private staging. No external services. |
-| [scripts/connected_apps.py](../scripts/connected_apps.py) | Real local OAuth/provider HTTP protocols, private-source PostgreSQL/AGE consumers and durable Slack flows. |
+| [scripts/connected_apps.py](../scripts/connected_apps.py) | Registered connected-app suite: archived OAuth oracle to real Rust knowledge, MCP and Flow consumers. |
 | [scripts/connector_store_tests.py](../scripts/connector_store_tests.py) | Concurrent private state, settings/import fences and encrypted mailbox persistence. |
 | [scripts/connectors.py](../scripts/connectors.py) | Start the local connector apps with private generated keys; preserve all existing app services. |
 | [scripts/contention.py](../scripts/contention.py) | Sell the remaining workshop desks under contention; separate synthetic tenant. |
@@ -1705,7 +1705,7 @@ This lists every checked-in source module in these roots, including files with n
 | [scripts/differential.py](../scripts/differential.py) | Independent PHP/Rust differential; fails on any money delta, not averaged error. |
 | [scripts/durable_agents.py](../scripts/durable_agents.py) | Actual HTTP/PostgreSQL task continuation, killed Rust workers, current rights and no unapproved mutations; synthetic model only. |
 | [scripts/edi.py](../scripts/edi.py) | Registered EDI entry delegates app behavior and fixtures to the plugin owner. |
-| [scripts/email_tests.py](../scripts/email_tests.py) | Archived differential SMTP/TLS fixtures plus actual Rust/PostgreSQL/MCP/flow consumers. No external mail. |
+| [scripts/email_tests.py](../scripts/email_tests.py) | Registered mail suite: archived differential contracts and the real Rust order/mail journey. |
 | [scripts/erp_handoff.py](../scripts/erp_handoff.py) | Registered integration entry delegates reference-app behavior to its package-owned verification. |
 | [scripts/extensions.py](../scripts/extensions.py) | Activate actual Wasm policies and prove their effect on B2B checkout. |
 | [scripts/fashion_demo.py](../scripts/fashion_demo.py) | Actual default signup, fashion variants/media/localization, isolated checkout and restart; synthetic data only. |
@@ -1794,6 +1794,13 @@ This lists every checked-in source module in these roots, including files with n
 | [scripts/testing/catalog_preparation_checks.py](../scripts/testing/catalog_preparation_checks.py) | Durable preparation projection through the native catalogue API/MCP; fixture SQL creates an explicit failed provider result only. |
 | [scripts/testing/ci_scope.py](../scripts/testing/ci_scope.py) | Choose prototype CI by the complete Git diff; unknown or sensitive changes retain full verification. |
 | [scripts/testing/collection_work.py](../scripts/testing/collection_work.py) | Exercise one reviewed collection task through native categories, pages and durable translation drafts. |
+| [scripts/testing/connected_contracts/__init__.py](../scripts/testing/connected_contracts/__init__.py) | OAuth, private retrieval and Slack-flow regression modules using local provider fixtures. |
+| [scripts/testing/connected_contracts/access.py](../scripts/testing/connected_contracts/access.py) | OAuth/PKCE, encrypted tenant binding, revision fences, channel tracking and read-only access. |
+| [scripts/testing/connected_contracts/client.py](../scripts/testing/connected_contracts/client.py) | Consent-aware native test API and scoped app actions; shared polling and result reporting. |
+| [scripts/testing/connected_contracts/flows.py](../scripts/testing/connected_contracts/flows.py) | Native order/app events through guarded durable Slack flows, retries and restart uncertainty. |
+| [scripts/testing/connected_contracts/runtime.py](../scripts/testing/connected_contracts/runtime.py) | Lifetime of the archived connector oracle, local providers and real Rust commerce process. |
+| [scripts/testing/connected_contracts/sources.py](../scripts/testing/connected_contracts/sources.py) | Private Gmail/GA4 import, native graph/MCP/model consumption, refresh and disconnect cleanup. |
+| [scripts/testing/connected_contracts/wire.py](../scripts/testing/connected_contracts/wire.py) | Synthetic Google, Gmail, Slack and model HTTP responses, including retry and history failures. |
 | [scripts/testing/consistency_boundaries.py](../scripts/testing/consistency_boundaries.py) | Real transport/permission regressions for knowledge publication and automation discovery. |
 | [scripts/testing/coverage_env.py](../scripts/testing/coverage_env.py) | Convert trusted cargo-llvm-cov environment output to GitHub's environment-file syntax. |
 | [scripts/testing/coverage_report.py](../scripts/testing/coverage_report.py) | Publish separate all-source coverage totals, untested files and enforce reviewed minimums. |
@@ -1806,6 +1813,11 @@ This lists every checked-in source module in these roots, including files with n
 | [scripts/testing/intent_navigation.py](../scripts/testing/intent_navigation.py) | Exercise saved fact categories through native catalog/MCP, source review and selective staging; no models. |
 | [scripts/testing/inventory_batch.py](../scripts/testing/inventory_batch.py) | Concurrent two-product allocation/release on the actual HTTP path, reused by strict runtime verification. |
 | [scripts/testing/legacy_customer_ownership.py](../scripts/testing/legacy_customer_ownership.py) | Historical guest snapshots never grant account ownership from an unverified email. |
+| [scripts/testing/mail_contracts/__init__.py](../scripts/testing/mail_contracts/__init__.py) | Mail protocol fixtures and archived/native contract scenarios; local test data only. |
+| [scripts/testing/mail_contracts/contracts.py](../scripts/testing/mail_contracts/contracts.py) | Archived email oracle contracts: protocols, revisions, secrecy, retries and multilingual envelopes. |
+| [scripts/testing/mail_contracts/fixtures.py](../scripts/testing/mail_contracts/fixtures.py) | Shared disposable mail servers, synthetic CA and isolated archived connector settings. |
+| [scripts/testing/mail_contracts/journey.py](../scripts/testing/mail_contracts/journey.py) | Native Rust checkout/outbox/Flow/MCP to Rust mail worker and loopback SMTP acceptance. |
+| [scripts/testing/mail_contracts/wire.py](../scripts/testing/mail_contracts/wire.py) | Loopback SMTP/TLS and HTTP mail-provider fixtures plus consent-aware test requests. |
 | [scripts/testing/merchant_guidance.py](../scripts/testing/merchant_guidance.py) | Explicit versioned merchant guidance reaches actual model input and is withdrawn by the native archive path. |
 | [scripts/testing/native_lifecycle_race.py](../scripts/testing/native_lifecycle_race.py) | Force native workflow editing against app installation at the real database boundary. |
 | [scripts/testing/native_tools.py](../scripts/testing/native_tools.py) | Synthetic provider-native wire responses shared by real HTTP integration fixtures; not a model implementation. |
@@ -1816,6 +1828,7 @@ This lists every checked-in source module in these roots, including files with n
 | [scripts/testing/pooler.py](../scripts/testing/pooler.py) | Owned real PgBouncer fixture: one backend, transaction pooling, never a forced privileged user. |
 | [scripts/testing/prompt_governance.py](../scripts/testing/prompt_governance.py) | Bind prompt versions and admission fixtures without claiming semantic model accuracy. |
 | [scripts/testing/provider_fleet.py](../scripts/testing/provider_fleet.py) | Configure one encrypted synthetic provider for all test workers, then restore the isolated control-plane row. |
+| [scripts/testing/reference_connector.py](../scripts/testing/reference_connector.py) | Archived connector oracle imports for differential tests only; never a serving runtime. |
 | [scripts/testing/role_races.py](../scripts/testing/role_races.py) | Force real HTTP delegation to wait behind the same PostgreSQL lifecycle lock as role edits. |
 | [scripts/testing/rule_history.py](../scripts/testing/rule_history.py) | Frozen comparison against real checkout/Flow snapshots; no current-data fallback or effects. |
 | [scripts/testing/runtime.py](../scripts/testing/runtime.py) | Owned synthetic server lifetime, child checks and loopback readiness for verification. |

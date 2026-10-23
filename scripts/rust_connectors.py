@@ -4,7 +4,8 @@ from testing.database import psql
 import base64,concurrent.futures,hashlib,json,os,pathlib,signal,socket,sqlite3,subprocess,sys,tempfile,threading,time,urllib.parse,uuid
 from cryptography.fernet import Fernet
 from http.server import BaseHTTPRequestHandler,ThreadingHTTPServer
-from email_tests import http,SMTP,Contracts
+from testing.mail_contracts.wire import http,SMTP
+from testing.mail_contracts.fixtures import MailFixtures
 from testing.runtime import ROOT,serve,stop
 import importlib.util
 spec=importlib.util.spec_from_file_location("integration_contracts",ROOT/"extensions/services/connectors/tests/integrations.py");integration_contracts=importlib.util.module_from_spec(spec);spec.loader.exec_module(integration_contracts)
@@ -55,7 +56,7 @@ class Wire(BaseHTTPRequestHandler):
   raw=json.dumps(value).encode();self.send_response(code);self.send_header('Content-Length',str(len(raw)));self.send_header('Retry-After','1');self.end_headers();self.wfile.write(raw)
 
 with tempfile.TemporaryDirectory(prefix='veyndo-rust-connectors-') as directory:
- Contracts.setUpClass()
+ MailFixtures.setUpClass()
  services=[];logs=[];core=None;runtime_role=None;provider=ThreadingHTTPServer(('127.0.0.1',0),Wire);provider.calls=[]
  threading.Thread(target=provider.serve_forever,daemon=True).start()
  try:
@@ -63,7 +64,7 @@ with tempfile.TemporaryDirectory(prefix='veyndo-rust-connectors-') as directory:
   mappings={a:{'url':f'http://127.0.0.1:{p1}/{a}','token':gateway} for a in ('email','gmail','google_analytics','slack')+integration_contracts.APPS}
   env={**os.environ,'BIND_ADDR':base.removeprefix('http://'),'APP_SERVICES':json.dumps(mappings),'PROCESS_ROLE':'all'}
   log=open(directory+'/core.log','w');logs.append(log);core=serve(env,base,log)
-  ce={**env,'CONNECTOR_GATEWAY_TOKEN':gateway,'CONNECTOR_SECRET_KEY':key,'CONNECTOR_DATABASE_URL':env['DATABASE_URL'],'CONNECTOR_PUBLIC_URL':f'http://127.0.0.1:{p1}','GOOGLE_CLIENT_ID':'synthetic-google','GOOGLE_CLIENT_SECRET':'synthetic-secret','SLACK_CLIENT_ID':'synthetic-slack','SLACK_CLIENT_SECRET':'synthetic-secret','CONNECTOR_TEST_ENDPOINTS':json.dumps({n:origin+('/token' if n=='google_token' else '/oauth.v2.access' if n=='slack_token' else '/global' if n=='sendgrid' else '/eu' if n=='sendgrid_eu' else '') for n in ('resend','sendgrid','sendgrid_eu','google_token','gmail','analytics','slack','slack_token','vercel','hubspot','klaviyo','contentful','algolia')}),'CONNECTOR_TENANT_DAILY':'20','EMAIL_TEST_SMTP':'1','EMAIL_TLS_CA_FILE':Contracts.folder.name+'/ca.pem'}
+  ce={**env,'CONNECTOR_GATEWAY_TOKEN':gateway,'CONNECTOR_SECRET_KEY':key,'CONNECTOR_DATABASE_URL':env['DATABASE_URL'],'CONNECTOR_PUBLIC_URL':f'http://127.0.0.1:{p1}','GOOGLE_CLIENT_ID':'synthetic-google','GOOGLE_CLIENT_SECRET':'synthetic-secret','SLACK_CLIENT_ID':'synthetic-slack','SLACK_CLIENT_SECRET':'synthetic-secret','CONNECTOR_TEST_ENDPOINTS':json.dumps({n:origin+('/token' if n=='google_token' else '/oauth.v2.access' if n=='slack_token' else '/global' if n=='sendgrid' else '/eu' if n=='sendgrid_eu' else '') for n in ('resend','sendgrid','sendgrid_eu','google_token','gmail','analytics','slack','slack_token','vercel','hubspot','klaviyo','contentful','algolia')}),'CONNECTOR_TENANT_DAILY':'20','EMAIL_TEST_SMTP':'1','EMAIL_TLS_CA_FILE':MailFixtures.folder.name+'/ca.pem'}
   unsafe=subprocess.run([str(ROOT/'target/debug/connectors'),'--import-legacy'],input=json.dumps({'format':1,'configs':[],'jobs':[],'sources':[],'changes':[]}),text=True,env={**ce,'DB_RLS_REQUIRED':'true'},capture_output=True)
   assert unsafe.returncode!=0
   runtime_role='connector_runtime_'+uuid.uuid4().hex[:10];password=uuid.uuid4().hex
@@ -149,17 +150,17 @@ with tempfile.TemporaryDirectory(prefix='veyndo-rust-connectors-') as directory:
   integration_contracts.verify(call,http,base,shops,provider,wait,sql,services,p1,p2,direct)
   # Actual Rust STARTTLS, implicit TLS and lost DATA-acceptance outcomes.
   for implicit,security in [(False,'starttls'),(True,'tls')]:
-   Contracts.smtp.implicit=implicit
-   settings.update(provider='smtp',smtpHost='localhost',smtpPort=Contracts.smtp.server_address[1],smtpSecurity=security)
+   MailFixtures.smtp.implicit=implicit
+   settings.update(provider='smtp',smtpHost='localhost',smtpPort=MailFixtures.smtp.server_address[1],smtpSecurity=security)
    current=call('email','status');call('email','configure',{'revision':current['revision'],'settings':settings})
    key='smtp-'+('5' if implicit else '4');send(key)
    wait(lambda:any(j['id']==key and j['state']=='completed' for j in call('email','status')['jobs']))
-  assert len(Contracts.smtp.messages)==2
-  assert all(b'Bcc:' not in raw for _,raw in Contracts.smtp.messages)
-  Contracts.smtp.drop_after_data=True
+  assert len(MailFixtures.smtp.messages)==2
+  assert all(b'Bcc:' not in raw for _,raw in MailFixtures.smtp.messages)
+  MailFixtures.smtp.drop_after_data=True
   send('smtp-lost-6');wait(lambda:any(j['id']=='smtp-lost-6' and j['state']=='uncertain' for j in call('email','status')['jobs']))
-  count=len(Contracts.smtp.messages);time.sleep(.4);assert len(Contracts.smtp.messages)==count
-  Contracts.smtp.drop_after_data=False
+  count=len(MailFixtures.smtp.messages);time.sleep(.4);assert len(MailFixtures.smtp.messages)==count
+  MailFixtures.smtp.drop_after_data=False
   # Seventeen capacity-exhausted tenants must not hide another tenant behind the claim page.
   for i in range(17):
    noisy='aaa-noise-'+uuid.uuid4().hex[:10]
@@ -211,5 +212,5 @@ with tempfile.TemporaryDirectory(prefix='veyndo-rust-connectors-') as directory:
   if core is not None:stop(core)
   if runtime_role:sql(f'DROP OWNED BY {runtime_role}; DROP ROLE {runtime_role};')
   provider.shutdown();provider.server_close()
-  Contracts.tearDownClass()
+  MailFixtures.tearDownClass()
   for log in logs:log.close()

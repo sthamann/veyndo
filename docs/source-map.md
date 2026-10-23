@@ -1,5 +1,10 @@
 # Source responsibilities and verification map
 
+**Provider test modules:** [Mail fixture reuse, connected app scenarios and the
+native Rust regression command](testing.md#mail-and-connected-app-test-ownership).
+The suite registry keeps its existing entries. Shared test servers live separately
+from test cases; the archived comparison implementation remains confined to tests.
+
 **Merchant catalogue setup:** [CSV upload, URL extraction, described demo products, private image jobs and native staged review](merchant-catalogue-setup.md).
 
 **Saved merchant planning:** [Native tasks, private checkpoints, worker restart,
