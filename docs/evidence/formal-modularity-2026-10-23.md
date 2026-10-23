@@ -61,6 +61,16 @@ allocation, restart after exhaustion, stop during an actual worker request,
 revocation, foreign/sibling-identity denial and existing B2B/payment state effects.
 Finite regression results and selected universal proofs are different evidence.
 
+The subsequent CI review also identified a race in the existing delayed-flow
+revocation test: `queued` is both the initial admission state and the state after
+the delay has been saved. The test now waits for the persisted `effect` cursor
+and `delayCompleted=pause`, then revokes membership and advances the timer in
+one transaction. It requires the exact `Flow owner lost access` failure and an
+unchanged order; failed checks include the persisted cursor, lease and attempts.
+The selected signed-runtime regression passes with separate non-owner tenant
+and system connections, including the following restart and isolation checks.
+No production authorization or worker timing was relaxed.
+
 ## What the file review does and does not establish
 
 The runtime already has five domain crates, plus the root application and separate
