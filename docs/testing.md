@@ -156,9 +156,12 @@ remain available beside the final combined summary; coverage floors are unchange
 
 Run `python3 scripts/testing/test_ci_gate.py` for failed/skipped job and report
 transfer controls. It is also registered in the native tooling suite. Workflow
-syntax is checked with `actionlint .github/workflows/verify.yml`. Current full-run
-measurements are recorded separately from the older sequential baselines below;
-parallel scheduling alone is not a measured total-runtime improvement.
+syntax is checked with `actionlint .github/workflows/verify.yml`.
+The [23 October complete run and actual targeted retry](evidence/parallel-verification-2026-10-23.md)
+passed: frontend feedback after 3m55s, full required verification after 48m15s,
+and frontend-only repetition with reused native reports after 3m41s. The evidence
+also records summed runner time and native-test variation; these observations are
+separate from the older sequential baselines below.
 
 Frontend-only coverage reuses the same policy and source completeness check; it
 does not fabricate fresh Rust/Python measurements or change their full-run floors.
