@@ -1,0 +1,179 @@
+[
+  {
+    "name": "veyndo-concept",
+    "title": "Veyndo \u2014 Commerce that thinks and acts",
+    "durationSeconds": 72,
+    "frames": 2160,
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "codec": "h264",
+    "pixelFormat": "yuv420p",
+    "audioStreams": 0,
+    "sizeBytes": 5788148,
+    "sha256": "96a100f936f8aeffa95f6bcd19b90596dbcca15db539891095d8ac3ec23a0c61",
+    "fullDecode": "passed",
+    "compositionCheck": "passed",
+    "sourceMain": "852d5b0b91bd755e0beab2a784dec11f65bc1ac9",
+    "captureWindow": "15\u201322 October 2026",
+    "productionDate": "2026-10-23",
+    "renderer": "HyperFrames 0.8.186 \u00b7 GSAP 3.14.2 \u00b7 local delivery profile",
+    "captions": "English burned-in plus VTT/SRT",
+    "format": "Editorial motion film using actual captured UI and labeled architecture illustrations",
+    "chapters": [
+      {
+        "id": "c-outcome",
+        "duration": 10,
+        "kind": "ui"
+      },
+      {
+        "id": "c-goal",
+        "duration": 12,
+        "kind": "ui"
+      },
+      {
+        "id": "c-core",
+        "duration": 14,
+        "kind": "diagram"
+      },
+      {
+        "id": "c-experience",
+        "duration": 14,
+        "kind": "ui"
+      },
+      {
+        "id": "c-control",
+        "duration": 12,
+        "kind": "ui"
+      },
+      {
+        "id": "c-close",
+        "duration": 10,
+        "kind": "ui"
+      }
+    ]
+  },
+  {
+    "name": "veyndo-workspace",
+    "title": "Veyndo \u2014 From merchant goal to customer order",
+    "durationSeconds": 96,
+    "frames": 2880,
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "codec": "h264",
+    "pixelFormat": "yuv420p",
+    "audioStreams": 0,
+    "sizeBytes": 9266330,
+    "sha256": "1f00e437cc65a9c239877a18fc4a9b5a68788fae224c8570a4013f4427a43cc7",
+    "fullDecode": "passed",
+    "compositionCheck": "passed",
+    "sourceMain": "852d5b0b91bd755e0beab2a784dec11f65bc1ac9",
+    "captureWindow": "15\u201322 October 2026",
+    "productionDate": "2026-10-23",
+    "renderer": "HyperFrames 0.8.186 \u00b7 GSAP 3.14.2 \u00b7 local delivery profile",
+    "captions": "English burned-in plus VTT/SRT",
+    "format": "Editorial motion film using actual captured UI and labeled architecture illustrations",
+    "chapters": [
+      {
+        "id": "w-start",
+        "duration": 10,
+        "kind": "ui"
+      },
+      {
+        "id": "w-catalogue",
+        "duration": 12,
+        "kind": "ui"
+      },
+      {
+        "id": "w-agent",
+        "duration": 12,
+        "kind": "ui"
+      },
+      {
+        "id": "w-design",
+        "duration": 12,
+        "kind": "ui"
+      },
+      {
+        "id": "w-discovery",
+        "duration": 12,
+        "kind": "ui"
+      },
+      {
+        "id": "w-b2b",
+        "duration": 14,
+        "kind": "ui"
+      },
+      {
+        "id": "w-simulate",
+        "duration": 14,
+        "kind": "ui"
+      },
+      {
+        "id": "w-close",
+        "duration": 10,
+        "kind": "ui"
+      }
+    ]
+  },
+  {
+    "name": "veyndo-app-platform",
+    "title": "Veyndo \u2014 Build connected capabilities with apps",
+    "durationSeconds": 84,
+    "frames": 2520,
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "codec": "h264",
+    "pixelFormat": "yuv420p",
+    "audioStreams": 0,
+    "sizeBytes": 6550235,
+    "sha256": "9785d1c1da9f9393cbdcbcb80685056885414ce410070d62e513a29f4247a468",
+    "fullDecode": "passed",
+    "compositionCheck": "passed",
+    "sourceMain": "852d5b0b91bd755e0beab2a784dec11f65bc1ac9",
+    "captureWindow": "15\u201322 October 2026",
+    "productionDate": "2026-10-23",
+    "renderer": "HyperFrames 0.8.186 \u00b7 GSAP 3.14.2 \u00b7 local delivery profile",
+    "captions": "English burned-in plus VTT/SRT",
+    "format": "Editorial motion film using actual captured UI and labeled architecture illustrations",
+    "chapters": [
+      {
+        "id": "a-need",
+        "duration": 10,
+        "kind": "ui"
+      },
+      {
+        "id": "a-design",
+        "duration": 12,
+        "kind": "ui"
+      },
+      {
+        "id": "a-data",
+        "duration": 12,
+        "kind": "diagram"
+      },
+      {
+        "id": "a-flow",
+        "duration": 12,
+        "kind": "ui"
+      },
+      {
+        "id": "a-context",
+        "duration": 12,
+        "kind": "ui"
+      },
+      {
+        "id": "a-version",
+        "duration": 14,
+        "kind": "diagram"
+      },
+      {
+        "id": "a-close",
+        "duration": 12,
+        "kind": "ui"
+      }
+    ]
+  }
+]

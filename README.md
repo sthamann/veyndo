@@ -13,7 +13,7 @@
 [![Working prototype](https://img.shields.io/badge/status-working_prototype-189EFF)](#current-boundaries)
 [![Sustainable Use License](https://img.shields.io/badge/license-Sustainable_Use-189EFF)](LICENSE)
 
-[Try one complete round](docs/first-tour.md) · [Watch the tours](docs/video-tours.md) · [First contributions](docs/early-contributors.md) · [Feature guide](docs/features.md) · [Architecture](docs/production-architecture.md) · [Integrations](docs/service-integrations.md) · [Documentation](https://veyndo.ai/docs/)
+[Try one complete round](docs/first-tour.md) · [Watch the new product films](docs/video-tours.md) · [First contributions](docs/early-contributors.md) · [Feature guide](docs/features.md) · [Architecture](docs/production-architecture.md) · [Integrations](docs/service-integrations.md) · [Documentation](https://veyndo.ai/docs/)
 
 </div>
 
@@ -45,7 +45,7 @@ public acceptance are recorded separately.
 
 Screenshots use synthetic shops; payments are simulated. Recordings retain their
 capture dates and are edited for readability, not performance measurements.
-[Current screenshots and public purchase acceptance](docs/customer-scenarios.md#verification) · [Watch the dated tours](docs/video-tours.md) · [Tour provenance](docs/assets/launch-20261014/README.md).
+[Current screenshots and public purchase acceptance](docs/customer-scenarios.md#verification) · [Watch the new product films](docs/video-tours.md) · [Film sources and verification](docs/assets/showcase/product-films-20261023/README.md).
 
 ## Try one complete round
 
