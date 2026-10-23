@@ -1,6 +1,12 @@
 import Commerce.Claims
 #print axioms CommerceKernel.admin_external_payment_denied
 #print axioms CommerceKernel.admin_payment_exact
+#print axioms CommerceKernel.agent_expired_preview_denied
+#print axioms CommerceKernel.agent_inactive_denied
+#print axioms CommerceKernel.agent_live_independent_of_preview
+#print axioms CommerceKernel.agent_preview_exact
+#print axioms CommerceKernel.agent_private_requires_owner
+#print axioms CommerceKernel.agent_private_requires_personal
 #print axioms CommerceKernel.ai_autonomy_disabled_denied
 #print axioms CommerceKernel.ai_autonomy_exact
 #print axioms CommerceKernel.ai_price_exact
@@ -32,6 +38,10 @@ import Commerce.Claims
 #print axioms CommerceKernel.b2b_budget_conserves
 #print axioms CommerceKernel.b2b_budget_exact
 #print axioms CommerceKernel.b2b_self_approval_denied
+#print axioms CommerceKernel.budget_lowered_limit_denied
+#print axioms CommerceKernel.budget_sequence_bounded
+#print axioms CommerceKernel.budget_sequence_conservation
+#print axioms CommerceKernel.budget_zero_at_exhaustion
 #print axioms CommerceKernel.cancellation_exact
 #print axioms CommerceKernel.cancellation_safe
 #print axioms CommerceKernel.carrier_booking_exact
@@ -60,6 +70,8 @@ import Commerce.Claims
 #print axioms CommerceKernel.discount_bounded
 #print axioms CommerceKernel.discount_conservation
 #print axioms CommerceKernel.discount_exact
+#print axioms CommerceKernel.discount_idempotent
+#print axioms CommerceKernel.discount_monotone_requested
 #print axioms CommerceKernel.discount_requested
 #print axioms CommerceKernel.download_blocked_denied
 #print axioms CommerceKernel.download_exact
@@ -90,6 +102,8 @@ import Commerce.Claims
 #print axioms CommerceKernel.payment_transition_exact
 #print axioms CommerceKernel.persistent_key_exact
 #print axioms CommerceKernel.persistent_key_nonpersonal_denied
+#print axioms CommerceKernel.planning_mutation_denied
+#print axioms CommerceKernel.planning_request_exact
 #print axioms CommerceKernel.platform_exact
 #print axioms CommerceKernel.platform_personal_required
 #print axioms CommerceKernel.pos_cash_conserves
@@ -101,6 +115,8 @@ import Commerce.Claims
 #print axioms CommerceKernel.receipt_exact_behavior
 #print axioms CommerceKernel.refund_bounded
 #print axioms CommerceKernel.refund_exact
+#print axioms CommerceKernel.refund_lowered_capture_denied
+#print axioms CommerceKernel.refund_sequence_bounded
 #print axioms CommerceKernel.refund_zero_denied
 #print axioms CommerceKernel.replay_exact
 #print axioms CommerceKernel.replay_open_fingerprint
@@ -127,6 +143,8 @@ import Commerce.Claims
 #print axioms CommerceKernel.stock_conservation
 #print axioms CommerceKernel.stock_exact
 #print axioms CommerceKernel.stock_positive_bounded
+#print axioms CommerceKernel.stock_sequence_bounded
+#print axioms CommerceKernel.stock_sequence_conservation
 #print axioms CommerceKernel.terminal_edit_denied
 #print axioms CommerceKernel.wasm_resources_exact
 #print axioms CommerceKernel.wasm_tables_bounded

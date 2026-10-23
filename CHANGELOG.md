@@ -1,5 +1,13 @@
 # Changelog
 
+## Sequential formal guarantees and domain boundaries — 23 October 2026
+
+- Extend Lean coverage from 61 policies / 131 properties to 63 / 149. Bind private agent continuation and planning-only request admission to the existing native guards; prove sequential stock, refund and budget bounds plus discount stability.
+- Split the 320-line policy facade and 515-line proof file into seven corresponding domain owners. Preserve all 61 previous typed policy bodies and public Rust names. Enforce complete registered proofs, closed imports/reexports and a 320-line handwritten proof limit.
+- Add independent wide-integer Rust boundary/sequence tests, ten extraction/proof-layout negative controls and 17 Cargo dependency/ownership controls. Keep existing native PostgreSQL/HTTP regression paths and full required CI.
+- Synchronize the delayed-flow revocation regression with its committed continuation cursor before advancing the timer. Require the exact access-denial result and unchanged order; report persisted job diagnostics on failure instead of racing initial queue admission.
+- Refresh formal coverage, source responsibilities, test guidance and the current-status entry with [dated evidence](docs/evidence/formal-modularity-2026-10-23.md), separating local source checks from hosted acceptance.
+
 ## New connected product films — 23 October 2026
 
 - Add three silent English product films explaining the AI-first concept, connected merchant/customer workflows and extensible app platform, using actual dated UI captures and architecture illustrations.

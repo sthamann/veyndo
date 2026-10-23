@@ -76,7 +76,10 @@ pub(crate) async fn admit_key(a: &App, h: &RequestContext, path: &str, method: &
                     "/api/merchant/grid/plan",
                 ]
                 .contains(&path));
-        if !["GET", "HEAD"].contains(&method) && !planning_post {
+        if !verified_kernel::planning_request_admissible(
+            ["GET", "HEAD"].contains(&method),
+            planning_post,
+        ) {
             return Err(Error(
                 StatusCode::FORBIDDEN,
                 "Budgeted planning agents cannot mutate commerce or delegate credentials".into(),

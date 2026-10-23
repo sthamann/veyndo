@@ -4,24 +4,23 @@ no overflowing arithmetic, calls, casts, branches, macros or effects accepted.
 """
 from dataclasses import dataclass
 import re
-KERNEL_FILES=('crates/kernel/src/verified_kernel.rs','crates/kernel/src/verified_kernel/fulfillment.rs','crates/kernel/src/verified_kernel/app_intake.rs')
+from modules import KERNEL_FILES, KERNEL_MODULES, KERNEL_ROOT
+
 def kernel_source(root):
-    # Closed module registration; no arbitrary source/import resolution is trusted.
-    source=(root/'crates/kernel/src/verified_kernel.rs').read_text()
-    registrations=(
-        'mod app_intake;\n',
-        'pub use app_intake::job_completion_admissible;\n',
-        'pub use app_intake::source_activation_admissible;\n',
-        'mod fulfillment;\n',
-        'pub use app_intake::native_lifecycle_admissible;\n',
-        'pub use app_intake::app_configuration_release_admissible;\n',
-        'pub use app_intake::{app_submission_admissible, persistent_key_admissible};\n',
-        'pub use fulfillment::{carrier_booking_admissible, delivery_split_admissible};\n',
-    )
-    for registration in registrations:
-        if source.count(registration)!=1:raise ValueError('Unreviewed pure-kernel module registration')
-        source=source.replace(registration,'',1)
-    return source+'\n'+(root/'crates/kernel/src/verified_kernel/fulfillment.rs').read_text()+'\n'+(root/'crates/kernel/src/verified_kernel/app_intake.rs').read_text()
+    # The facade is only exact registrations/reexports; cfg, path attributes,
+    # glob imports and extra Rust code must never evade the closed parser.
+    source=re.sub(r'//[^\n]*', '', (root/KERNEL_ROOT).read_text())
+    expected=''.join(f'mod {module};' for module in KERNEL_MODULES)
+    expected+=''.join(f'pub use {module}::{name};' for module,names in KERNEL_MODULES.items() for name in names)
+    if re.sub(r'\s+', '', source)!=re.sub(r'\s+', '', expected):
+        raise ValueError('Unreviewed pure-kernel module registration')
+    sources=[]
+    for module,names in KERNEL_MODULES.items():
+        text=(root/f'crates/kernel/src/verified_kernel/{module}.rs').read_text()
+        if {f.name for f in Parser(text).parse()}!=set(names):
+            raise ValueError('Policy module ownership drift: '+module)
+        sources.append(text)
+    return '\n'.join(sources)
 
 MAX_U64 = 2**64 - 1
 TOKEN = re.compile(r'\s*(->|&&|\|\||==|!=|<=|>=|[A-Za-z_][A-Za-z_0-9]*|[0-9]+|[():{},.!<>])')

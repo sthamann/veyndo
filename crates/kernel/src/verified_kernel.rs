@@ -1,320 +1,71 @@
-//! Closed, side-effect-free commerce policies extracted to Lean; keep within the checked bool/u64 grammar.
-mod app_intake;
-pub use app_intake::job_completion_admissible;
-pub use app_intake::source_activation_admissible;
+//! Public facade for the closed, domain-owned Rust policies extracted to Lean.
+mod access;
+mod agents;
+mod apps;
+mod automation;
+mod commerce;
 mod fulfillment;
-pub use app_intake::app_configuration_release_admissible;
-pub use app_intake::native_lifecycle_admissible;
-pub use app_intake::{app_submission_admissible, persistent_key_admissible};
-pub use fulfillment::{carrier_booking_admissible, delivery_split_admissible};
-pub fn discount_cap(total: u64, requested: u64) -> u64 {
-    total.min(requested)
-}
-pub fn stock_admissible(stock: u64, quantity: u64) -> bool {
-    quantity > 0 && quantity <= stock
-}
-pub fn refund_admissible(captured: u64, refunded: u64, requested: u64) -> bool {
-    refunded <= captured && requested > 0 && requested <= captured.saturating_sub(refunded)
-}
-pub fn revision_admissible(current: u64, expected: u64) -> bool {
-    current > 0 && current == expected
-}
-pub fn replay_admissible(same_cart: bool, cart_open: bool, same_fingerprint: bool) -> bool {
-    same_cart && (!cart_open || same_fingerprint)
-}
-pub fn scope_admissible(
-    authenticated: bool,
-    known_scope: bool,
-    owner: bool,
-    explicit: bool,
-    explicit_grant: bool,
-    default_grant: bool,
-) -> bool {
-    authenticated
-        && known_scope
-        && (owner || explicit && explicit_grant || !explicit && default_grant)
-}
-pub fn order_edit_admissible(terminal: bool) -> bool {
-    !terminal
-}
-pub fn completion_admissible(terminal: bool, payment_ready: bool, deliveries_ready: bool) -> bool {
-    !terminal && payment_ready && deliveries_ready
-}
-pub fn cancellation_admissible(
-    terminal: bool,
-    external_payment: bool,
-    refund_required: bool,
-    deliveries_open: bool,
-) -> bool {
-    !terminal && !external_payment && !refund_required && deliveries_open
-}
-pub fn manual_payment_admissible(
-    terminal: bool,
-    external_payment: bool,
-    current_pending: bool,
-    target_paid: bool,
-) -> bool {
-    !terminal && !external_payment && current_pending && target_paid
-}
-pub fn download_admissible(order_blocked: bool, paid: bool, simulated_authorized: bool) -> bool {
-    !order_blocked && (paid || simulated_authorized)
-}
-pub fn checkout_contact_admissible(
-    simulated: bool,
-    email_present: bool,
-    billing_present: bool,
-) -> bool {
-    simulated || email_present && billing_present
-}
-pub fn receipt_admissible(
-    expected: u64,
-    received: u64,
-    same_currency: bool,
-    confirmed: bool,
-) -> bool {
-    expected == received && same_currency && confirmed
-}
-/// A guest address never grants the authenticated-customer rule.
-pub fn rule_authenticated(customer_present: bool, required: bool) -> bool {
-    customer_present == required
-}
-/// Explicit supported comparison operators select equality, inequality or emptiness.
-pub fn rule_boolean_comparison(
-    equal: bool,
-    empty: bool,
-    eq: bool,
-    neq: bool,
-    is_empty: bool,
-) -> bool {
-    eq && equal || neq && !equal || is_empty && empty
-}
-/// Only an explicitly eligible private mutation action may be bound to a durable flow.
-pub fn app_flow_admissible(allowed: bool, read_only: bool, is_public: bool) -> bool {
-    allowed && !read_only && !is_public
-}
-/// Global administration requires a personal session and a current independent operator grant.
-pub fn platform_admissible(personal: bool, granted: bool, active: bool) -> bool {
-    personal && granted && active
-}
-/// GET app routes require declared read-only behavior and exclude managed mutations.
-pub fn app_read_admissible(read_only: bool, mutating: bool) -> bool {
-    read_only && !mutating
-}
-/// Exclusive OR admits precisely one matching child.
-pub fn rule_xor_count(hits: u64) -> bool {
-    hits == 1
-}
-/// A durable flow delay is bounded to thirty days.
-pub fn flow_delay_admissible(seconds: u64) -> bool {
-    seconds <= 2592000
-}
-/// Destination tax rules require every configured jurisdiction and validity condition.
-pub fn destination_tax_admissible(
-    condition: bool,
-    country: bool,
-    state: bool,
-    postal: bool,
-    date: bool,
-) -> bool {
-    condition && country && state && postal && date
-}
-/// Net presentation requires a currently configured group with an explicit business basis.
-pub fn customer_group_net(configured: bool, business: bool) -> bool {
-    configured && business
-}
-/// An explicitly disabled agent action cannot be exposed or invoked, even to an authorized actor.
-pub fn app_tool_admissible(enabled: bool, authorized: bool) -> bool {
-    enabled && authorized
-}
-/// Personal core references are private; only product references may be declared public.
-pub fn app_core_reference_admissible(product: bool, private_data: bool) -> bool {
-    product || private_data
-}
-pub fn checkout_review_admissible(
-    revision_matches: bool,
-    expected_total: u64,
-    actual_total: u64,
-    methods_confirmed: bool,
-) -> bool {
-    revision_matches && expected_total == actual_total && methods_confirmed
-}
-/// Availability fence: paused merchant reads and existing payment settlement may continue.
-pub fn shop_request_admissible(
-    active: bool,
-    paused: bool,
-    read_only: bool,
-    settlement: bool,
-) -> bool {
-    settlement || active || paused && read_only
-}
-/// Uncaptured stock can be restored; an authorization requires provider-confirmed void evidence.
-pub fn reservation_release_admissible(
-    uncaptured: bool,
-    authorized: bool,
-    void_confirmed: bool,
-) -> bool {
-    uncaptured || authorized && void_confirmed
-}
-/// A quoted currency must be enabled, configured and have an admissible rate.
-pub fn currency_context_admissible(enabled: bool, configured: bool, fresh: bool) -> bool {
-    enabled && configured && fresh
-}
-// Supported explicit currency precision; larger scales must not overflow the decimal factor.
-pub fn currency_scale_admissible(scale: u64) -> bool {
-    scale <= 6
-}
-// Explicit ledger state codes are mapped by payments/state.rs; no backward monetary transitions.
-pub fn payment_transition_admissible(current: u64, next: u64) -> bool {
-    current <= 9
-        && next <= 9
-        && (current == next
-            || current <= 3 && next > current && next <= 4
-            || current <= 3 && (next == 7 || next == 8)
-            || (current == 4 || current == 5 || current == 9) && (next == 5 || next == 6)
-            || (current == 7 || current == 8) && next == 9)
-}
-pub fn resource_quota_admissible(limit: u64) -> bool {
-    limit > 0 && limit <= 1000000
-}
-/// Optional processing requires an enabled purpose and a fresh affirmative receipt for this policy.
-pub fn consent_admissible(enabled: bool, current: bool, fresh: bool, chosen: bool) -> bool {
-    enabled && current && fresh && chosen
-}
-/// Strict checkout binds the current document version and separately requested digital delivery.
-pub fn legal_checkout_admissible(
-    strict: bool,
-    current: bool,
-    accepted: bool,
-    digital: bool,
-    immediate: bool,
-) -> bool {
-    !strict || current && accepted && (!digital || immediate)
-}
-/// A notification may be retried only after an explicit rate-limit rejection and before attempt eight.
-pub fn notification_retry_admissible(rate_limited: bool, attempts: u64) -> bool {
-    rate_limited && attempts < 8
-}
-/// Private HTTP requires an exact operator-approved origin; unsafe URL parts are always denied.
-pub fn app_service_transport_admissible(
-    clean_url: bool,
-    https: bool,
-    http: bool,
-    loopback: bool,
-    private_origin: bool,
-) -> bool {
-    clean_url && (https || http && (loopback || private_origin))
-}
-/// Preview grants admit only simulations; public requests require an active channel and private requests a current merchant.
-pub fn channel_access_admissible(
-    active: bool,
-    is_private: bool,
-    merchant: bool,
-    preview: bool,
-    mutating: bool,
-) -> bool {
-    active && (!is_private || merchant) || preview && !mutating
-}
-/// Only native public assets may skip identity; every hosted alias retains tenant/channel admission.
-pub fn native_asset_bypass(native_asset: bool, hosted: bool) -> bool {
-    native_asset && !hosted
-}
-/// A package may use operator credentials only if its exact content is pinned or bundled.
-pub fn app_package_authorized(pinned: bool, bundled: bool) -> bool {
-    pinned || bundled
-}
-/// Guest instances have bounded private and exported resources alike.
-pub fn wasm_resources_admissible(tables: u64, memories: u64, elements: u64, pages: u64) -> bool {
-    tables <= 1 && memories <= 1 && elements <= 10000 && pages <= 16
-}
-/// UI grants cannot outlive their immutable package or expand their server-selected action set.
-pub fn app_surface_admissible(current_package: bool, allowed_action: bool) -> bool {
-    current_package && allowed_action
-}
-/// Original app consent and the creator's current core role must both permit a callback.
-pub fn app_callback_admissible(capability: bool, current_role: bool) -> bool {
-    capability && current_role
-}
-/// Price admission proves only the explicit corridor and supplied domain guards; no model truth claim.
-pub fn ai_price_admissible(
-    price: u64,
-    minimum: u64,
-    maximum: u64,
-    margin: bool,
-    discount: bool,
-    brand: bool,
-    available: bool,
-) -> bool {
-    minimum <= price && price <= maximum && margin && discount && brand && available
-}
-/// Budgeted autonomy requires explicit policy, current authority, price-only scope and all budgets.
-pub fn ai_autonomy_admissible(
-    enabled: bool,
-    authorized: bool,
-    price_only: bool,
-    daily_budget: bool,
-    within_delta: bool,
-) -> bool {
-    enabled && authorized && price_only && daily_budget && within_delta
-}
-/// Only current, public, confirmed, unexpired source-bound claims may be rendered.
-pub fn claim_render_admissible(
-    confirmed: bool,
-    public_source: bool,
-    current_source: bool,
-    valid_time: bool,
-    exact_text: bool,
-) -> bool {
-    confirmed && public_source && current_source && valid_time && exact_text
-}
-/// An experiment may claim uplift only at the admissible final look, with enough units and a positive lower bound.
-pub fn experiment_result_admissible(
-    final_look: bool,
-    enough_units: bool,
-    positive_bound: bool,
-) -> bool {
-    final_look && enough_units && positive_bound
-}
-/// Cash change is bounded and nonnegative only under cashier authorization and a reviewed total.
-pub fn pos_cash_admissible(authorized: bool, tender: u64, total: u64, reviewed: bool) -> bool {
-    authorized && reviewed && total <= tender && tender <= 1000000000000
-}
-/// Spending cannot exceed a currency-bound unit budget, including existing allocations.
-pub fn b2b_budget_admissible(limit: u64, spent: u64, requested: u64) -> bool {
-    spent <= limit && requested <= limit.saturating_sub(spent)
-}
-/// An approval requires a different employee, current authority, pending state and exact revision.
-pub fn b2b_approval_admissible(
-    different: bool,
-    authorized: bool,
-    pending: bool,
-    current: bool,
-) -> bool {
-    different && authorized && pending && current
-}
-pub fn pos_discount_admissible(
-    actor: bool,
-    currency: bool,
-    reason: bool,
-    minor: u64,
-    goods: u64,
-) -> bool {
-    actor && currency && reason && minor <= goods
-}
-
-/// Source amounts are bounded; a zero rate cannot carry nonzero tax. No tax-law inference.
-pub fn external_amount_admissible(gross: u64, tax: u64, rate: u64) -> bool {
-    gross <= 1000000000000 && tax <= gross && rate <= 100000 && (rate != 0 || tax == 0)
-}
-/// Paid imports require a positive, exactly reconciled source total.
-pub fn external_paid_total_admissible(paid: bool, calculated: u64, declared: u64) -> bool {
-    paid && calculated > 0 && calculated == declared
-}
-
-/// Factor evidence is supplied only by the native verified-code or live personal-session handoff owners.
-pub fn auth_factor_admissible(required: bool, verified: bool) -> bool {
-    !required || verified
-}
-
-pub fn admin_payment_admissible(is_admin: bool, manual: bool, simulated: bool) -> bool {
-    !is_admin || manual || simulated
-}
+mod intelligence;
+pub use access::auth_factor_admissible;
+pub use access::channel_access_admissible;
+pub use access::consent_admissible;
+pub use access::legal_checkout_admissible;
+pub use access::native_asset_bypass;
+pub use access::persistent_key_admissible;
+pub use access::platform_admissible;
+pub use access::scope_admissible;
+pub use access::shop_request_admissible;
+pub use agents::agent_preview_admissible;
+pub use agents::planning_request_admissible;
+pub use apps::app_callback_admissible;
+pub use apps::app_configuration_release_admissible;
+pub use apps::app_core_reference_admissible;
+pub use apps::app_flow_admissible;
+pub use apps::app_package_authorized;
+pub use apps::app_read_admissible;
+pub use apps::app_service_transport_admissible;
+pub use apps::app_submission_admissible;
+pub use apps::app_surface_admissible;
+pub use apps::app_tool_admissible;
+pub use apps::job_completion_admissible;
+pub use apps::native_lifecycle_admissible;
+pub use apps::source_activation_admissible;
+pub use apps::wasm_resources_admissible;
+pub use automation::customer_group_net;
+pub use automation::destination_tax_admissible;
+pub use automation::flow_delay_admissible;
+pub use automation::notification_retry_admissible;
+pub use automation::resource_quota_admissible;
+pub use automation::rule_authenticated;
+pub use automation::rule_boolean_comparison;
+pub use automation::rule_xor_count;
+pub use commerce::admin_payment_admissible;
+pub use commerce::b2b_approval_admissible;
+pub use commerce::b2b_budget_admissible;
+pub use commerce::checkout_contact_admissible;
+pub use commerce::checkout_review_admissible;
+pub use commerce::currency_context_admissible;
+pub use commerce::currency_scale_admissible;
+pub use commerce::discount_cap;
+pub use commerce::external_amount_admissible;
+pub use commerce::external_paid_total_admissible;
+pub use commerce::pos_cash_admissible;
+pub use commerce::pos_discount_admissible;
+pub use commerce::refund_admissible;
+pub use commerce::replay_admissible;
+pub use commerce::revision_admissible;
+pub use commerce::stock_admissible;
+pub use fulfillment::cancellation_admissible;
+pub use fulfillment::carrier_booking_admissible;
+pub use fulfillment::completion_admissible;
+pub use fulfillment::delivery_split_admissible;
+pub use fulfillment::download_admissible;
+pub use fulfillment::manual_payment_admissible;
+pub use fulfillment::order_edit_admissible;
+pub use fulfillment::payment_transition_admissible;
+pub use fulfillment::receipt_admissible;
+pub use fulfillment::reservation_release_admissible;
+pub use intelligence::ai_autonomy_admissible;
+pub use intelligence::ai_price_admissible;
+pub use intelligence::claim_render_admissible;
+pub use intelligence::experiment_result_admissible;

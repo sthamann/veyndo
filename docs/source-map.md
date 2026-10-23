@@ -36,6 +36,12 @@ internal. `commerce/` and `auth/` group their types, validation and operations.
 `structure.py` prevents Rust modules from exceeding 320 lines and keeps `main.rs`
 under 120. Every Rust source starts with a responsibility comment.
 
+The five domain crates (`kernel`, `commerce`, `apps`, `cognition`, `runtime`) have
+explicit dependency boundaries checked against real Cargo metadata. New helper
+packages, external dependencies and build scripts require review; renaming a
+dependency does not evade its capability check. Kernel policies and handwritten
+Lean claims now share seven domain owners. [Module audit and formal guarantees](evidence/formal-modularity-2026-10-23.md).
+
 The table lists **executable behavioral coverage**, not percentage line coverage.
 Pure rules use Rust tests; API/domain/storage modules are exercised against real
 PostgreSQL, Qdrant and (where enabled) the real local model. Tests include rejected
@@ -309,12 +315,13 @@ this does not claim every source line or every original Shopware operation is co
 
 | File | Responsibility | Verification |
 |---|---|---|
-| [`crates/kernel/src/verified_kernel.rs`](../crates/kernel/src/verified_kernel.rs) | 57 pure production admission/cap policies | 123 Lean theorems; compiled Rust/Lean conformance; broken-policy mutations |
-| [`src/bin/verified_kernel.rs`](../src/bin/verified_kernel.rs) | Generated JSON comparison driver calling the real policy module | 155,347 comparison cases; generated drift guard |
+| [`crates/kernel/src/verified_kernel.rs`](../crates/kernel/src/verified_kernel.rs) | Closed facade over seven domains and 63 pure production policies | 149 Lean theorems; compiled Rust/Lean conformance; broken-policy mutations |
+| [`proof/Commerce/Claims.lean`](../proof/Commerce/Claims.lean) | Stable entry to seven independently checked proof domains | Exact registered theorem/import inventory; handwritten domains limited to 320 lines |
+| [`src/bin/verified_kernel.rs`](../src/bin/verified_kernel.rs) | Generated JSON comparison driver calling the real policy module | 156,741 comparison cases; generated drift guard |
 | [`src/payments/receipt_guard.rs`](../src/payments/receipt_guard.rs) | Checked amount conversion and provider receipt policy binding | `payments.py`; reviewed binding, not a proof of the parser |
 
 The current Rust module status and review inventory are maintained in
-[`proof/manifest.json`](../proof/manifest.json). The 50 consumer modules are
+[`proof/manifest.json`](../proof/manifest.json). The 63 consumer modules are
 reviewed bindings, not whole-module proofs. See the
 [exact formal coverage and remaining gaps](formal-verification.md).
 

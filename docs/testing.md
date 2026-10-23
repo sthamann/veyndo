@@ -1,5 +1,20 @@
 # Testing, coverage and maintenance contracts
 
+## Formal and module-boundary regression — 23 October 2026
+
+The [current formal/module audit](evidence/formal-modularity-2026-10-23.md) records
+63 extracted production policies and 149 Lean properties, including successive
+stock, refund and budget decisions and saved private agent admission. Compiled
+Rust/Lean comparison covers 156,741 cases. Four additional Rust tests exercise
+actual `u64` implementations against independent `u128` arithmetic and private
+context truth tables, including `u64::MAX` and lowered limits.
+
+The existing mandatory proof and Cargo checks now also enforce seven handwritten
+proof domains and reviewed dependency ownership, with negative controls for hidden
+dependencies, aliases, wrong-owner targets and missing/extra claims. They supplement
+the existing Rust/frontend size and responsibility checks. Recorded measurements
+below retain their original dates; consult the linked audit for this revision.
+
 The [17 October buyer/POS follow-up](evidence/buyer-pos-hosted-2026-10-17.md)
 records the complete required 100-suite check and 115 frontend files / 648 tests,
 plus public preserved-cart, simulated checkout and native POS invoice acceptance.

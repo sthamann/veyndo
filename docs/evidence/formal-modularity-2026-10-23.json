@@ -1,0 +1,214 @@
+{
+  "date": "2026-10-23",
+  "kind": "local source verification, not hosted deployment",
+  "baseCommit": "fc47503745bd9820c8a526f1b9e8b7dfefb7a602",
+  "formal": {
+    "status": "passed",
+    "scope": "Extracted production policies; NOT full Rust/server correctness",
+    "sourceCommit": "fc47503745bd9820c8a526f1b9e8b7dfefb7a602",
+    "workingTreeChanged": true,
+    "leanToolchain": "leanprover/lean4:v4.29.1",
+    "policies": 63,
+    "axiomAudit": {
+      "theorems": 149,
+      "sorry": 0,
+      "customAxioms": 0,
+      "nativeDecisionAxioms": 0,
+      "allowedFoundations": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    "compiledEnvironmentRechecked": true,
+    "conformance": {
+      "cases": 156741,
+      "mismatches": 0,
+      "allBooleanAssignments": true,
+      "numericBoundaryIncludesU64Max": true,
+      "seed": 20261002
+    },
+    "inventory": {
+      "rustModules": 711,
+      "extractedPolicyModules": 8,
+      "reviewedBindingModules": 63,
+      "unprovedModules": 639,
+      "reviewedSchemaBuildProofInputs": 190,
+      "entireCoreProved": false
+    },
+    "proofLayout": {
+      "domainModules": 7,
+      "maximumClaimModuleLines": 240,
+      "allDeclarationsRegistered": true
+    },
+    "trustedBoundary": [
+      "Rust-to-Lean subset translator",
+      "Rust/Lean compilation and u64-to-Nat correspondence",
+      "Reviewed Rust adapters and input facts",
+      "PostgreSQL transactions/constraints",
+      "Operating system and provider protocols"
+    ]
+  },
+  "negativeControls": {
+    "brokenPoliciesRejectedByLean": 183,
+    "unsupportedSyntaxRejected": 14,
+    "staleUnclassifiedDisconnectedBindingsRejected": 3,
+    "proofShortcutsUnexpectedAxiomsMissingAuditsRejected": 9,
+    "baselineAccepted": true,
+    "proofAndModuleLayoutBypassesRejected": 10
+  },
+  "architectureNegativeControls": 17,
+  "priorPoliciesUnchanged": {
+    "previousPolicies": 61,
+    "unchangedTypedPolicyBodies": true,
+    "newPolicies": [
+      "agent_preview_admissible",
+      "planning_request_admissible"
+    ]
+  },
+  "rustTestsPassed": 317,
+  "nativeChecks": {
+    "payments": [
+      "Real pending order/reservation and payment handoff are scoped; manual paid override is rejected",
+      "Concurrent capture and lost provider reply reconcile to one capture and one local result",
+      "Distinct scoped return/cancel URLs and verified approval automatically capture once; forged return cannot mark paid",
+      "Provider verification precedes durable webhook inbox; duplicate delivery is harmless",
+      "Idempotent refund records exact cents and rejects over-refunding",
+      "Pending refund resumes by provider refund ID with no second refund; every wire request carries only configured synthetic attribution",
+      "Process restart preserves provider order, capture, refund and customer access",
+      "Cancelled payment releases reserved stock exactly once",
+      "Mismatched provider amount cannot mark an order paid; uncertainty retains reservation",
+      "Shopware Payments remains explicitly unconnected and provider secrets never reach UI"
+    ],
+    "b2b": [
+      "forced customer-share/unit-update interleaving admits one budgeted order and rejects the other without deadlock",
+      "native B2B organization/unit/membership, self/foreign denial, immutable approvals, stale quote, exact concurrent budgets, private catalog, revocation, hierarchy and MCP",
+      "B2B HTTP/MCP history, revision-checked configuration restoration, foreign denial, read-only financial history and unchanged current employee grants",
+      "B2B private configuration clone, native atomic release, preserved live employees/spending, live allocation guard, parent-first publication, hidden unauthorized diffs and live/stage conflicts",
+      "shared method-deletion preflight includes current B2B purchasing policies"
+    ],
+    "durable_agents": [
+      "A native product event yields a visible actor-owned Flow proposal; personal approval executes its private native work once and live data stays unchanged",
+      "A completed private task becomes a reference-only Flow; event mapping prepares a new zero-inference review and personal approval writes once without changing live data",
+      "Template validation rejects copied inputs, missing/foreign sources and wrong field types; the daily review limit blocks the next event",
+      "Two real Flow workers cannot exceed the remaining daily slot; the extra event creates no proposal or native write",
+      "Source-right withdrawal, emergency stop and missing event values deny reuse before any task or mutation is produced",
+      "The graphical pipeline action uses the same ready proposal and cannot execute its native steps automatically",
+      "Shop emergency stop prevents Flow inference, private work approval and a late provider result; re-enabling does not replay the failed job",
+      "Withdrawing Flow owner rights during inference rejects the late result without saving an executable task",
+      "A second Flow worker marks an expired inference uncertain; its late result cannot create a ready task",
+      "Direct Flow proposals also reject an expired lease before a recovery worker claims uncertainty",
+      "Concurrent transport retries reuse one native task, conversation and user turn; a changed request cannot reuse its ID",
+      "Native chat is durably queued and its first completed model step is stored before final inference",
+      "A killed worker becomes explicitly uncertain; another worker does not repeat an ambiguous paid call or expose checkpoints",
+      "After HTTP and worker restart, explicit continuation reuses the completed call and only original native approval changes price",
+      "Run progress, private evidence and conversations reject both foreign tenants and another actor in the same shop",
+      "Revocation during inference fences the late result and produces no executable proposal",
+      "A renewed personal session can explicitly cancel its saved run; cancellation cannot be resumed or published",
+      "An unchanged minimal integration key reaches inference with inherited read aliases; key revocation remains authoritative",
+      "Withdrawing permissions blocks both conversation reads and new turns before history disclosure or another queued run",
+      "A separately discovered source is reauthorized on continuation; archiving it stops before any further model call",
+      "An archived prompt source fences proposal persistence and leaves its uncheckpointed provider call explicitly uncertain without replay",
+      "The same native run contract is discoverable through MCP with conservative read/write metadata",
+      "Synchronous HTTP planning and MCP retain failure responses while the stopped native run remains saved",
+      "Global personal stop fences an actual in-flight Rust worker; its late provider result cannot persist a proposal or restart after enable",
+      "Native private work preserves reviewed category IDs and runs once through a one-backend transaction pool without nested connection waits",
+      "Cancellation during an admitted native write keeps its completed receipt visible without reviving the task or starting step two",
+      "A native write finishing after lease expiry retains its receipt without renewing the expired lease; recovery does not duplicate the completed category",
+      "A failed correction resumes the original saved run, reuses both completed model steps and produces only a reviewed proposal with no app writes",
+      "Killed approved-work worker rolls back its unreceipted save; explicit restart preserves step one and completes step two without duplication",
+      "At the final daily quota, accepted chat/API retries return the original run without another attempt; new work is rejected",
+      "The retained SSE adapter shares replay-before-quota admission and never double-counts the queued run"
+    ],
+    "agent_authorities": [
+      "Planning-only scope rejects commerce writes and credential delegation consistently through HTTP and MCP discovery/invocation",
+      "Named agent identity reuses key ownership; explicit provider/model/budgets and durable audit precede actual model egress",
+      "Two Rust HTTP replicas share one locked allowance; at most one actual provider request consumes the final envelope",
+      "Restart preserves an exhausted allocation and refuses further provider calls",
+      "Independent money allocation and exact-model mismatch fail before provider egress",
+      "Two agent identities sharing a human creator cannot read each other\u2019s tasks or conversations; request IDs deduplicate only their own work",
+      "Native stop commits while a commerce foreign-key reference is held; no tenant/task lock inversion",
+      "Personal CAS/approval stop spans live and private tasks; agent keys cannot lift it and cancelled work never restarts on enable",
+      "Foreign-shop control is denied; revocation stops credentials while retaining bounded-agent accounting identity"
+    ],
+    "structure": [
+      "plugin ownership, private returns runtime, leak and symlink negative controls",
+      "245 API methods: explicit route rights, no wildcard route fallback",
+      "836 frontend modules: ownership, resolved imports, runtime DAG, responsibility comments, folder contracts and size limits",
+      "no untranslated rendered UI literals; 250 countries and bundled methods/classes localized EN/DE/FR/ES. catalogue placeholders verified.",
+      "exact source inventory and responsibility map",
+      "711 Rust modules: responsibility documented; <=320 lines; main <=120; every WAT example documented",
+      "selected HTTP suites plus provider, browser-contract and tooling checks"
+    ]
+  },
+  "largerReviewedFiles": [
+    {
+      "file": "site/style.css",
+      "lines": 1037
+    },
+    {
+      "file": "scripts/connected_apps.py",
+      "lines": 768
+    },
+    {
+      "file": "frontend/src/shared/i18n/knowledge-i18n.ts",
+      "lines": 691
+    },
+    {
+      "file": "frontend/src/shared/i18n/operations-i18n.ts",
+      "lines": 686
+    },
+    {
+      "file": "frontend/src/shared/i18n/automation-labels.ts",
+      "lines": 672
+    },
+    {
+      "file": "frontend/src/shared/i18n/workbench-i18n.ts",
+      "lines": 638
+    },
+    {
+      "file": "scripts/email_tests.py",
+      "lines": 638
+    },
+    {
+      "file": "frontend/src/shared/i18n/app-studio-i18n.ts",
+      "lines": 555
+    },
+    {
+      "file": "frontend/tests/unit/studio-controller.test.tsx",
+      "lines": 537
+    },
+    {
+      "file": "frontend/src/shared/i18n/legal-i18n.ts",
+      "lines": 523
+    },
+    {
+      "file": "frontend/tests/unit/scenario-studio.test.tsx",
+      "lines": 500
+    },
+    {
+      "file": "frontend/src/shared/i18n/connected-i18n.ts",
+      "lines": 495
+    },
+    {
+      "file": "frontend/src/shared/i18n/automation-fields.ts",
+      "lines": 492
+    },
+    {
+      "file": "frontend/src/shared/i18n/international-i18n.ts",
+      "lines": 488
+    },
+    {
+      "file": "frontend/tests/unit/crm-history.test.tsx",
+      "lines": 441
+    },
+    {
+      "file": "frontend/tests/unit/knowledge-workspace.test.tsx",
+      "lines": 426
+    },
+    {
+      "file": "frontend/tests/unit/storyfront-management.test.tsx",
+      "lines": 411
+    }
+  ]
+}

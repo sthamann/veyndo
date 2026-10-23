@@ -21,9 +21,9 @@ def source(name,**config):return {'type':'shopwareCondition','name':name,'config
 def flow(nodes,event='order.placed'):
     return {'name':names,'active':True,'event':event,'condition':{'type':'alwaysValid'},'action':'pipeline','instruction':names,'locale':'de-DE','pipeline':{'entry':nodes[0]['id'],'nodes':nodes}}
 def action(id,name,config,next=None):return {'kind':'action','id':id,'action':name,'config':config,'next':next}
-def wait(flowid,state='completed'):
+def wait(flowid,state='completed',cursor=None):
     for _ in range(120):
-        jobs=call('/api/automation',h=mh)['jobs'];found=[j for j in jobs if j['flow']==flowid and j['state']==state]
+        jobs=call('/api/automation',h=mh)['jobs'];found=[j for j in jobs if j['flow']==flowid and j['state']==state and (cursor is None or j.get('cursor')==cursor)]
         if found:return found[0]
         time.sleep(.1)
     raise AssertionError((flowid,state,jobs))
@@ -150,12 +150,17 @@ for product,quantity,tag in [('mug',1,'playground-standard'),('lamp',2,'playgrou
 check('Documented playground CLI creates an isolated owner shop, retains edited rules and executes both order branches with real invoices')
 revoked=flow([{'kind':'delay','id':'pause','seconds':60,'next':'effect'},action('effect','action.add.order.tag',{'tags':['must-not-run']})]);save('revoked',revoked)
 c=call('/store-api/checkout/cart',{},public);h={**public,'sw-context-token':c['token']};c=call('/store-api/checkout/cart',{'revision':c['revision'],'items':[{'id':'notebook','quantity':1}]},h,'PUT');second=call('/store-api/checkout/order',{}, {**h,'Idempotency-Key':'revoke-'+suffix})
-queued=wait('revoked','queued')
-sql("UPDATE memberships SET active=false WHERE tenant='"+t+"'; UPDATE flow_jobs SET available_at=now() WHERE id='"+queued['id']+"';")
+queued=wait('revoked','queued',cursor='effect')
+# A newly enqueued job is also 'queued', before its delay has run. Wait for the
+# committed delayed cursor, otherwise the worker can overwrite available_at
+# after this test advances it and the revocation assertion races a 60s timer.
+assert sql("SELECT execution->>'delayCompleted' FROM flow_jobs WHERE id='"+queued['id']+"'")=='pause'
+sql("BEGIN; UPDATE memberships SET active=false WHERE tenant='"+t+"'; UPDATE flow_jobs SET available_at=now() WHERE id='"+queued['id']+"' AND state='queued' AND cursor='effect'; COMMIT;")
 for _ in range(100):
-    if sql("SELECT state FROM flow_jobs WHERE id='"+queued['id']+"'")=='failed':break
+    delayed=json.loads(sql("SELECT jsonb_build_object('state',state,'cursor',cursor,'error',error,'attempts',attempts,'availableAt',available_at,'leaseUntil',lease_until) FROM flow_jobs WHERE id='"+queued['id']+"'"))
+    if delayed['state']=='failed':break
     time.sleep(.1)
-assert sql("SELECT state FROM flow_jobs WHERE id='"+queued['id']+"'")=='failed'
+assert delayed['state']=='failed' and delayed['error']=='Flow owner lost access',delayed
 assert sql("SELECT data->'automation'->'tags' FROM orders WHERE id='"+second['id']+"'") in ['','null']
 sql("UPDATE memberships SET active=true WHERE tenant='"+t+"';")
 check('Revoking a delayed flow actor prevents the future mutation')
