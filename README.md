@@ -41,13 +41,12 @@ public acceptance are recorded separately.
 | **Test before release** | Preview editable fictional customers from the selected catalogue, adjust their goals and budgets, then let them try native search, baskets and simulated purchases in a private shop. Compare saved runs and inspect actual failures. [Customer simulator](docs/customer-scenarios.md). |
 | **Stay in control** | Current roles, private sandboxes, immutable versions and selected publication govern changes. [Security](docs/security.md). |
 
-[![Watch the three new Veyndo product films: concept, connected merchant journey and app platform](docs/assets/showcase/product-films-20261023/series-preview.jpg)](https://www.veyndo.ai/docs/video-tours.html)
+[![Veyndo: three new product films](docs/assets/showcase/product-films-20261023/series-preview.jpg)](https://www.veyndo.ai/docs/video-tours.html)
 
-**Watch:** [The concept · 1:12](https://www.veyndo.ai/docs/assets/showcase/product-films-20261023/veyndo-concept.mp4) · [Merchant journey · 1:36](https://www.veyndo.ai/docs/assets/showcase/product-films-20261023/veyndo-workspace.mp4) · [App platform · 1:24](https://www.veyndo.ai/docs/assets/showcase/product-films-20261023/veyndo-app-platform.mp4). English, captioned and silent.
+**Films:** [Concept · 1:12](docs/assets/showcase/product-films-20261023/veyndo-concept.mp4) · [Merchant journey · 1:36](docs/assets/showcase/product-films-20261023/veyndo-workspace.mp4) · [App platform · 1:24](docs/assets/showcase/product-films-20261023/veyndo-app-platform.mp4). English subtitles, no sound.
 
-Screenshots use synthetic shops; payments are simulated. Recordings retain their
-capture dates and are edited for readability, not performance measurements.
-[Current screenshots and public purchase acceptance](docs/customer-scenarios.md#verification) · [Watch the new product films](docs/video-tours.md) · [Film sources and verification](docs/assets/showcase/product-films-20261023/README.md).
+Films use actual dated UI captures, demo data and simulated payments. Timing is editorial.
+[Current screenshots and acceptance](docs/customer-scenarios.md#verification) · [Watch the new product films](docs/video-tours.md) · [Film sources and verification](docs/assets/showcase/product-films-20261023/README.md).
 
 ## Try one complete round
 
