@@ -6,6 +6,14 @@ retain the source base, dirty-worktree flag, exact checks and selected larger fi
 The [formal guide](../formal-verification.md) explains the trust boundary;
 the [current status](../status.md) records public runtime acceptance separately.
 
+The subsequent [Linux CI formal result](formal-verification-2026-10-23.json) and
+[mutation result](formal-mutations-2026-10-23.json) are copied unchanged from
+[run 39931009867](https://github.com/sthamann/veyndo/actions/runs/39931009867).
+That clean checkout has source `396572a722d4fb6fea641cda48f68b9a4c5d1c1b` and tree
+`b8a127c318e09d7f2408cbe07f3b6037f0bf1a51`, identical to PR #206's `4e0d85d4`.
+It independently reproduces the 63-policy / 149-property / 156,741-case result
+and all formal mutation controls. Public rollout is a separate status.
+
 ## What changed
 
 | Area | Before | After |
