@@ -39,8 +39,16 @@ ch['x-customer-token']=pw['customerToken'];call('/store-api/account/logout',{},c
 passed('Customer sessions reject wrong passwords/cross-shop reads, prevent group escalation, isolate history and revoke on password/logout')
 rule={'type':'andContainer','children':[{'type':'cartCartAmount','operator':'>=','amount':10},{'type':'customerGroup','values':['consumer']}]}
 config('rules','eligible',{'name':name,'active':True,'condition':rule})
-config('promotions','once',{'name':name,'active':True,'code':'ONCE','kind':'absolute','amount':1.01,'rule':rule,'exclusive':False,'priority':0,'maxUses':1,'start':None,'end':None})
-x,xh=cart();x=items(x,xh,[('mug',1),('notebook',1)]);before=x['price']['positionPrice'];x=coupon(x,xh,'ONCE');assert round(before-x['price']['positionPrice'],2)==1.01 and x['discountTotal']==1.01
+fixed_coupon={'name':name,'active':True,'code':'ONCE','kind':'absolute','amount':1.01,'rule':rule,'exclusive':False,'priority':0,'maxUses':1,'start':None,'end':None}
+config('promotions','once',fixed_coupon)
+x,xh=cart();x=items(x,xh,[('mug',1),('notebook',1),('chair',1)]);before=x['price']['positionPrice']
+original_lines=[(line['id'],round(line['price']['totalPrice']*100)) for line in x['lineItems']]
+x=coupon(x,xh,'ONCE');assert round(before-x['price']['positionPrice'],2)==1.01 and x['discountTotal']==1.01
+goods=sum(amount for _,amount in original_lines);prefix=previous=0;expected_lines={}
+for product,amount in original_lines:
+ prefix+=amount;rounded=(prefix*101+goods//2)//goods
+ expected_lines[product]=amount-(rounded-previous);previous=rounded
+assert {line['id']:round(line['price']['totalPrice']*100) for line in x['lineItems']}==expected_lines
 assert round(x['price']['netPrice']+x['price']['tax'],2)==x['price']['totalPrice']
 # Two different product rows avoid incidental stock serialization masking coupon races.
 y,yh=cart();y=items(y,yh,[('lamp',1)]);y=coupon(y,yh,'ONCE')
@@ -49,6 +57,12 @@ with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
 assert sum(bool(z['cart']['discounts']) for z in orders)==1,orders
 assert not call('/store-api/checkout/cart',h=xh)['discounts'] if not orders[0]['cart']['discounts'] else True
 passed('Exact-cent fixed coupon recalculates tax and its single use survives concurrent checkouts on different products')
+config('promotions','cents',{**fixed_coupon,'code':'CENTS','maxUses':None})
+z,zh=cart();z=items(z,zh,[('mug',1),('notebook',1),('chair',1)]);z=coupon(z,zh,'CENTS')
+saved=order(z,zh)
+assert saved['cart']['discountTotal']==1.01
+assert {line['id']:round(line['price']['totalPrice']*100) for line in saved['cart']['lineItems']}==expected_lines
+passed('Three-line exact-cent allocation survives native checkout and the frozen order snapshot')
 config('promotions','freeship',{'name':name,'active':True,'code':None,'kind':'free_shipping','amount':0,'rule':{'type':'alwaysValid'},'exclusive':False,'priority':0,'maxUses':None,'start':None,'end':None})
 x,xh=cart();x=items(x,xh,[('notebook',1)]);x=call('/store-api/checkout/context',{'revision':x['revision'],'checkout':{**x['checkout'],'shippingMethodId':'standard','address':{'name':'Test','street':'Test 1','postalCode':'12345','city':'Test'}}},xh,method='PUT');assert x['shippingCosts']['totalPrice']==0
 passed('Automatic free-shipping campaign changes the real shipping quote')

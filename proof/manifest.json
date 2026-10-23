@@ -709,8 +709,13 @@
     },
     "crates/commerce/src/discount.rs": {
       "status": "reviewed-binding",
-      "sha256": "82f4e3a3e0255a333eccbe9eff470513cf06bd2fd0c88b12a0f092ea69a83a26",
-      "review": "Initial extraction of 13 production policies; surrounding Rust explicitly unproved; existing HTTP regression suites retained"
+      "sha256": "908c8d2c7d2c4200a1ad704abad971c124a205caa5b22807cbe79c1fa8eddcba",
+      "review": "Reviewed shared discount allocator: u128 positive sum and bounded per-line remainder carry preserve cumulative rounding; app price targets reject overflow before quote mutation; independent boundary and native promotion regressions."
+    },
+    "crates/commerce/src/discount_boundaries.rs": {
+      "status": "unproved",
+      "sha256": "716482f6adf361b9e445d7b8242c82432df11f98938a013f325e16fcd0bd55e9",
+      "review": "Reviewed shared discount allocator: u128 positive sum and bounded per-line remainder carry preserve cumulative rounding; app price targets reject overflow before quote mutation; independent boundary and native promotion regressions."
     },
     "crates/commerce/src/lib.rs": {
       "status": "unproved",
@@ -2624,8 +2629,8 @@
     },
     "src/commerce/app_adjustments.rs": {
       "status": "unproved",
-      "sha256": "d763e63158601f96418c62bc3ef36793f76f99f4241bc3506e162a8e083ef3a4",
-      "review": "Identity-only Veyndo namespace and canonical-domain rename; reviewed migration checksum compatibility for six historical SQL versions, unchanged checkout predicates, 42 library and 169 binary tests pass; native component legacy boundary remains configured and guarded."
+      "sha256": "4bc033f53ba9994bf0e58915b303ad6276a76cc7eb535ed4b76b905bfe1c5a42",
+      "review": "Reviewed shared discount allocator: u128 positive sum and bounded per-line remainder carry preserve cumulative rounding; app price targets reject overflow before quote mutation; independent boundary and native promotion regressions."
     },
     "src/commerce/catalog.rs": {
       "status": "unproved",

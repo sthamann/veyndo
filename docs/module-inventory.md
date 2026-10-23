@@ -587,6 +587,7 @@ This lists every checked-in source module in these roots, including files with n
 | [crates/cognition/src/lib.rs](../crates/cognition/src/lib.rs) | Provider protocol adapters and prompt evidence; no commerce write capability. |
 | [crates/cognition/src/prompts.rs](../crates/cognition/src/prompts.rs) | Versioned system-prompt provenance; no prompt text or private context is exposed in evidence. |
 | [crates/commerce/src/discount.rs](../crates/commerce/src/discount.rs) | Integer-cent proportional discount allocation; cumulative rounding conserves the exact basket discount. |
+| [crates/commerce/src/discount_boundaries.rs](../crates/commerce/src/discount_boundaries.rs) | Discount conservation at signed limits and against an independent prefix-rounding oracle. |
 | [crates/commerce/src/lib.rs](../crates/commerce/src/lib.rs) | Commerce amounts and deterministic calculation contracts; no transport or inference dependencies. |
 | [crates/commerce/src/money.rs](../crates/commerce/src/money.rs) | Exact signed minor-unit amounts with explicit currency scale; legacy Shopware float pricing stays isolated. |
 | [crates/commerce/src/pricing.rs](../crates/commerce/src/pricing.rs) | Behavioral port of Shopware 6.7.14.2 quantity calculators. |

@@ -1,21 +1,32 @@
 //! Integer-cent proportional discount allocation; cumulative rounding conserves the exact basket discount.
+#[cfg(test)]
+#[path = "discount_boundaries.rs"]
+mod boundaries;
 /// Return discounted line totals in cents. Target is clamped to available positive goods value.
 pub fn allocate(totals: &[i64], discount: i64) -> Vec<i64> {
-    let total: i64 = totals.iter().map(|n| (*n).max(0)).sum();
+    let total: u128 = totals.iter().map(|n| (*n).max(0) as u128).sum();
     if total == 0 {
         return totals.to_vec();
     }
-    let target = crate::verified_kernel::discount_cap(total as u64, discount.max(0) as u64) as i128;
-    let mut cumulative = 0i128;
-    let mut allocated = 0i128;
+    // The requested discount is at most i64::MAX, so narrowing only the cap's
+    // total to u64::MAX preserves min(total, requested) even for larger baskets.
+    let target = crate::verified_kernel::discount_cap(
+        total.min(u64::MAX as u128) as u64,
+        discount.max(0) as u64,
+    ) as u128;
+    // Carry the remainder instead of multiplying the cumulative basket by the
+    // target. On supported <=64-bit targets total < 2^127, each line product
+    // < 2^126, and product + carry < 2^128. The initial half implements the
+    // same half-up cumulative rounding, including stable line-order tie breaks.
+    let mut carry = total / 2;
     totals
         .iter()
         .map(|n| {
-            cumulative += (*n).max(0) as i128;
-            let next = (cumulative * target + total as i128 / 2) / total as i128;
-            let result = *n - (next - allocated) as i64;
-            allocated = next;
-            result
+            let numerator = (*n).max(0) as u128 * target + carry;
+            let allocated = numerator / total;
+            carry = numerator % total;
+            // target <= total and carry < total imply allocated <= max(n, 0).
+            *n - allocated as i64
         })
         .collect()
 }

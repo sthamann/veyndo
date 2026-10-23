@@ -2,14 +2,17 @@
 
 The current source declares **63 extracted policies used in production Rust paths**
 and **149 named properties**. This is **not a certificate that the entire commerce
-core is correct or bug-free**. The reviewed inventory contains **711 Rust modules**:
+core is correct or bug-free**. The reviewed inventory contains **712 Rust modules**:
 eight extracted policy modules (including the facade), 63 reviewed binding modules,
-one comparison driver and 639 unproved modules. Binding review is not proof of the surrounding modules.
+one comparison driver and 640 unproved modules. Binding review is not proof of the surrounding modules.
 The [manifest](../proof/manifest.json) and per-revision CI artifact are authoritative.
 The 23 October local and Linux CI verification compare **156,741 compiled Rust/Lean cases
 without mismatches** and reject 183 deliberately broken policy variants.
 [Exact local results and module audit](evidence/formal-modularity-2026-10-23.md).
 Local verification and the clean-checkout CI evidence are recorded separately.
+The later [discount arithmetic repair](evidence/formal-modularity-2026-10-23.md#discount-arithmetic-follow-up)
+adds one Rust regression module. It retains the same extracted policies and
+properties; it does not turn the allocation loop into a Lean proof.
 The complete required Linux CI passed before PR #206 merged and the Core rollout
 on 23 October. [Release and public smoke checks](evidence/formal-modularity-2026-10-23.md#public-core-rollout).
 
