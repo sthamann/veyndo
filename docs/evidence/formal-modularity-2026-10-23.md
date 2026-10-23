@@ -161,8 +161,52 @@ Local verification passes all 322 Rust workspace tests, the release-mode discoun
 tests, Clippy, module and dependency checks, and the native `marketing_accounts`,
 `currencies` and `business_capability` database/HTTP suites. Lean rechecking still
 proves 149 properties and compares 156,741 compiled cases with zero mismatches.
-The website build validates all 321 generated pages. These are source checks;
-the public Core rollout recorded below predates this arithmetic repair.
+The website build validates all 321 generated pages. The complete CI and public
+delivery of this repair are recorded separately below.
+
+## Discount repair: complete CI and public rollout
+
+[PR #209](https://github.com/sthamann/veyndo/pull/209) merged normally on
+23 October at 13:02:07 UTC as `363181ddb7d2dc3759171c8b330f51b15247b38c`.
+Its tree `56e398d026ad4928dc64caa3dcdaef21259b0ee5` is identical to the tested
+branch `467fc5fd` and GitHub's clean CI checkout `429cdf040e3a26eaf0613cbfc0325b0a746ce08d`.
+
+The [complete required CI run](https://github.com/sthamann/veyndo/actions/runs/39953688161)
+passed all 322 Rust workspace tests, 816 frontend tests in 140 files, native
+database integration, strict signed connections, transaction pooling and
+coverage gates. The exact three-line discount and frozen order assertions passed
+in both database modes. Measured line coverage is **86.64% Rust**, **69.92%
+frontend** and **80.76% Python test/development tooling**.
+
+The [formal result](discount-formal-verification-2026-10-23.json) and
+[mutation result](discount-formal-mutations-2026-10-23.json) are copied unchanged
+from that CI run. They retain the clean source commit and reproduce all 149 Lean
+properties, 156,741 compiled comparison cases and zero mismatches. All 183 broken
+policy mutations are rejected. The source inventory now records 712 Rust modules,
+including the independently owned discount boundary regression. These existing
+Lean properties cover the extracted policies; the wider allocation repair has
+the behavioral and native checkout evidence described above.
+
+The normal main release built image `dynamic-garden-8477` from merged commit
+`363181dd`, created snapshot `26-10-23-131334-backup`, and completed migration job
+`0e4971fe-01e5-45cf-b379-a1a8d1a3010d` successfully. The Core deployment
+`vendune-core-6dc786ccf` started at **15:14:51 CEST**. By **15:16 CEST**, the release
+had finished with one running instance, 1/1 health checks passing and zero
+restarts. No database role, service resource or provider configuration changed.
+The separate migration-service image publication initially received `unknown blob`
+from GHCR after its successful tests; rerunning that failed publication job
+completed successfully without source changes.
+
+After the rollout, the public fictional workshop shop completed a native guest
+purchase with **Demo payment**, a fictional address and an `example.test` email.
+Receipt **`RAC-b8059d75`** contains the German desk name, quantity one, **EUR 349.00**
+total, **EUR 55.72 VAT** and free collection. The receipt explicitly reports a
+simulated authorization. **Back to shop**, a full browser reload and reopening
+the cart all confirm zero items. The previous optional privacy rejection remains
+in effect. Anonymous Core health returns HTTP 200 and `status=ok` with PostgreSQL.
+This public single-item purchase verifies the released native checkout and cart
+continuation; the exact three-line discount is separately covered by the local
+and full CI database/HTTP tests. It does not re-date embedded Storyfront acceptance.
 
 ## Reproduce
 
