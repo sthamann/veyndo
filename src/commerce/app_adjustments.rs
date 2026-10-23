@@ -50,6 +50,23 @@ pub(crate) fn apply(q: &mut Value, kind: &str, minor: i64) -> Result<()> {
         }
         // The existing allocator distributes exact minor units without creating a second rounding implementation.
         let after = veyndo::discount::allocate(&totals, minor);
+        if kind == "price" {
+            sum.checked_add(minor)
+                .ok_or(bad("App adjusted total overflow"))?;
+        }
+        let targets = totals
+            .iter()
+            .zip(after)
+            .map(|(before, after)| {
+                if kind == "price" {
+                    before
+                        .checked_add(before - after)
+                        .ok_or(bad("App adjusted line overflow"))
+                } else {
+                    Ok(after)
+                }
+            })
+            .collect::<Result<Vec<_>>>()?;
         let b2b = q["price"]["taxStatus"] == "net";
         for (i, line) in q["lineItems"]
             .as_array_mut()
@@ -57,11 +74,7 @@ pub(crate) fn apply(q: &mut Value, kind: &str, minor: i64) -> Result<()> {
             .iter_mut()
             .enumerate()
         {
-            let target = if kind == "price" {
-                totals[i] + (totals[i] - after[i])
-            } else {
-                after[i]
-            };
+            let target = targets[i];
             let rules = line["price"]["calculatedTaxes"]
                 .as_array()
                 .ok_or(bad("Quote taxes missing"))?;
@@ -165,5 +178,15 @@ mod tests {
         assert!(apply(&mut q, "discount", -1).is_err());
         assert!(apply(&mut q, "shipping", -491).is_err());
         assert!(apply(&mut q, "validation", 1).is_err());
+    }
+    #[test]
+    fn overflowing_app_price_is_rejected_before_mutating_quote() {
+        let mut q = quote();
+        q["lineItems"][0]["price"]["totalPrice"] = json!(80_000_000_000_000_000.0);
+        let original = q.clone();
+        let error = apply(&mut q, "price", 2_000_000_000_000_000_000).unwrap_err();
+        assert_eq!(error.0, StatusCode::BAD_REQUEST);
+        assert_eq!(error.1, "App adjusted total overflow");
+        assert_eq!(q, original);
     }
 }

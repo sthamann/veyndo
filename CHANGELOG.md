@@ -1,5 +1,11 @@
 # Changelog
 
+## Overflow-safe shared discount allocation — 23 October 2026
+
+- Fix signed basket-sum overflow in the shared integer discount allocator. Carry the rounding remainder between lines using bounded wide integers, preserving the existing cumulative half-up result and line-order tie breaks without multiplying an entire basket by its discount.
+- Keep promotions and app adjustments on the same calculation. Reject overflowing app price increases before modifying the quote.
+- Add extreme-value and 4,096-line conservation tests, an independent small-basket rounding oracle and persisted checkout allocation assertions. Preserve the existing extracted discount-cap proof; the allocation loop itself remains tested Rust.
+
 ## Modular provider regression tests — 23 October 2026
 
 - Split the large connected app and mail suites into documented protocol fixtures, process lifetime and scenario modules. Preserve suite registration, scenario order and every existing test assertion.

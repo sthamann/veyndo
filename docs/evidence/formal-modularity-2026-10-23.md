@@ -130,6 +130,40 @@ invitation and invitation acceptance must still return 403; denied invitations
 remain absent or unredeemed. Production authorization and lock acquisition are
 unchanged. Failure cleanup releases the database barrier before joining HTTP.
 
+## Discount arithmetic follow-up
+
+The next review found a concrete overflow in the shared discount allocation:
+summing two `i64::MAX` line amounts panicked in a debug build. A larger cumulative
+basket multiplied by its discount could also exceed the intermediate type. The
+regression reproduces the original sum failure before the repair.
+
+`crates/commerce/src/discount.rs` now totals positive goods in `u128` and carries
+the division remainder between lines. This preserves cumulative half-up rounding
+and its stable line-order tie breaks. Each step multiplies only one line by the
+bounded discount. On supported targets with at most 64-bit pointers, the total is
+below 2^127, the line product below 2^126 and their intermediate sum below 2^128.
+Negative credit lines retain their value and receive no allocated discount.
+
+Promotions and app adjustments keep the same shared owner. App price increases
+also reject an overflowing adjusted total before changing the quote. The new
+separate regression module checks exact extreme outputs, a 4,096-line basket,
+empty/credit-only inputs and every three-line combination from zero to nine
+minor units against an independent complete-prefix rounding oracle. The native
+promotion regression checks individual discounted lines and their persisted
+order values in addition to its existing concurrent single-use coupon test.
+
+The extracted `discount_cap` policy and its Lean properties are unchanged. The
+allocator and floating-point tax adapters remain reviewed and behaviorally tested
+Rust, not extracted mathematical proofs. The current inventory grows to 712 Rust
+modules because the new regression has its own owner.
+
+Local verification passes all 322 Rust workspace tests, the release-mode discount
+tests, Clippy, module and dependency checks, and the native `marketing_accounts`,
+`currencies` and `business_capability` database/HTTP suites. Lean rechecking still
+proves 149 properties and compares 156,741 compiled cases with zero mismatches.
+The website build validates all 321 generated pages. These are source checks;
+the public Core rollout recorded below predates this arithmetic repair.
+
 ## Reproduce
 
 ```sh
