@@ -2704,8 +2704,8 @@
     },
     "src/commerce/external_orders.rs": {
       "status": "reviewed-binding",
-      "sha256": "e4797f454d39bfbd11593f1a8118685496acc5e1fd9cfbf0689bf2905d67d774",
-      "review": "Review bounded native order/RFQ lifecycle declarations, backwards-compatible app-only snapshots, native financial and compound permission admission, display-only customer projection, migration 105 and source-bound traces; no proof claim for SQL/UI/provider adapters."
+      "sha256": "d29f443e74102d27c9bc0bca0fa67ff553465b722a740b63392802d0252f58ea",
+      "review": "Batch external-order labels within the existing locked transaction; preserve locale-first variant precedence, tenant predicates, stock guard, package fence and idempotency; native baseline and optimized fixture compare the same frozen results."
     },
     "src/commerce/fulfillment.rs": {
       "status": "reviewed-binding",
@@ -4876,6 +4876,10 @@
     "src/cognition/index_claim.sql": {
       "sha256": "ce13faa6c8537437ec20aaf3fd11bfd77583ca7071367023d5ab791adce86be5",
       "review": "Reviewed bounded tenant-scoped embedding intake/model-generation cursors, revision/lease fencing and fair vector retry drain; pooled geometry-checked Qdrant hydration and admitted reranking; current-right read tools, structured protocols and SSE transport; exact source quotation/review/public compilation/signatures; transactional price corridors and non-compounding daily autonomy; consent-bound assignments/preferences and delayed cached native-payment readout including stop/withdrawal invalidation. New migration RLS/composite links and extracted predicate consumers reviewed. Native HTTP/PG/Qdrant/provider/UI regressions cover contracts; semantic quality, statistical assumptions, SQL, network and surrounding Rust remain unproved."
+    },
+    "src/commerce/external_order_labels.sql": {
+      "sha256": "3f131887429e16594a5d0354e0194d49191ee4bf857d732780da5324c53e6d7a",
+      "review": "Batch external-order labels within the existing locked transaction; preserve locale-first variant precedence, tenant predicates, stock guard, package fence and idempotency; native baseline and optimized fixture compare the same frozen results."
     },
     "src/commerce/inventory_release.sql": {
       "sha256": "c78d5349b9e81865d677f7cb6504f09fd6546f9eb1a2022463cd640ddb8a7029",

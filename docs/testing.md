@@ -1,5 +1,21 @@
 # Testing, coverage and maintenance contracts
 
+## External order batching regression
+
+The registered `marketplaces` suite calls the installed app's real native order
+callback with 1, 20 and 24 lines. Its app-owned
+[`order_localization.py`](../extensions/apps/marketplaces/tests/order_localization.py)
+fixture checks frozen names, exact paid amounts, one native outbox event,
+tenant separation, replay, failed-order rollback and concurrent final-stock
+admission. Italian, short locale, parent/variant and blank-name cases preserve the
+previous result. SQLx statement traces assert one translation query at each size
+and zero on replay. A 25-line request remains rejected before persistence.
+
+The regression was run against the preceding binary first: all behavioral checks
+passed, and the new query-count assertion correctly rejected `[1, 20, 24]`.
+The changed binary passes with `[1, 1, 1]`.
+[Measurement and delivery scope](evidence/external-order-batching-2026-10-23.md).
+
 ## Mail and connected app test ownership
 
 The registered `email_tests`, `rust_connectors` and `connected_apps` suites keep

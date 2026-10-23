@@ -105,12 +105,39 @@ pub(crate) async fn import_external(
     let selected = channel["productIds"]
         .as_array()
         .ok_or(bad("Invalid channel selection"))?;
+    let chain = vec![
+        input.locale.clone(),
+        input
+            .locale
+            .split('-')
+            .next()
+            .unwrap_or(&input.locale)
+            .to_owned(),
+        settings.main_locale.clone(),
+        settings
+            .main_locale
+            .split('-')
+            .next()
+            .unwrap_or(&settings.main_locale)
+            .to_owned(),
+    ];
+    // Products and parents are already locked. Resolve all admitted lines in one
+    // read, retaining the external snapshot's locale-before-variant precedence.
+    let mut names: HashMap<String, String> =
+        sqlx::query_as::<_, (String, String)>(include_str!("external_order_labels.sql"))
+            .bind(&t)
+            .bind(&ids)
+            .bind(&chain)
+            .fetch_all(&mut *tx)
+            .await?
+            .into_iter()
+            .collect();
+    let products: HashMap<String, _> = rows.iter().map(|r| (r.get("id"), r)).collect();
     let factor = 10_i64.pow(currency.scale.into()) as f64;
     let mut lines = Vec::new();
     for l in &input.lines {
-        let r = rows
-            .iter()
-            .find(|r| r.get::<String, _>("id") == l.product_id)
+        let r = products
+            .get(&l.product_id)
             .ok_or(bad("Imported product does not belong to this shop"))?;
         let parent = r.get::<Option<String>, _>("parent_id");
         if !selected.is_empty()
@@ -127,24 +154,8 @@ pub(crate) async fn import_external(
                 "Insufficient stock for imported order; review required",
             ));
         }
-        let chain = vec![
-            input.locale.clone(),
-            input
-                .locale
-                .split('-')
-                .next()
-                .unwrap_or(&input.locale)
-                .to_owned(),
-            settings.main_locale.clone(),
-            settings
-                .main_locale
-                .split('-')
-                .next()
-                .unwrap_or(&settings.main_locale)
-                .to_owned(),
-        ];
-        let name:Option<String>=sqlx::query_scalar("SELECT p.name FROM product_translations p JOIN languages lang ON lang.id=p.language_id WHERE p.tenant=$1 AND p.product_id=ANY($2) AND lang.locale=ANY($3) AND p.name IS NOT NULL AND btrim(p.name)<>'' ORDER BY array_position($3,lang.locale), CASE WHEN p.product_id=$4 THEN 0 ELSE 1 END LIMIT 1").bind(&t).bind(vec![l.product_id.clone(),parent.clone().unwrap_or_else(||l.product_id.clone())]).bind(&chain).bind(&l.product_id).fetch_optional(&mut *tx).await?;
-        let label = name
+        let label = names
+            .remove(&l.product_id)
             .filter(|s| !s.trim().is_empty())
             .unwrap_or_else(|| r.get("name"));
         lines.push(json!({"id":l.product_id,"referencedId":l.product_id,"label":label,"quantity":l.quantity,"productNumber":r.get::<Option<String>,_>("product_number"),"price":l.amount.price(currency.scale,l.quantity)}));
