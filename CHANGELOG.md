@@ -1,5 +1,12 @@
 # Changelog
 
+## AI commerce film and Safari media compatibility — 24 October 2026
+
+- Add a 1:56 English, silent film explaining contextual AI, catalogue and design assistance, visual/coding-agent apps, flows, fictional customer scenarios and native commerce. Publish captions, source provenance and an editable project with the video guide and README.
+- Re-encode current product films and the earlier knowledge recording to H.264 High Level 4.1 with fast-start MP4. Retain the original capture dates and update file manifests.
+- Coordinate with the Experience player repair: native Safari controls receive a source immediately, and failed starts retain a retry control.
+
+
 ## Concurrent isolated pooler verification — 24 October 2026
 
 - Run the unchanged authenticated two-pooler suite beside the main native integration registry, with its own database, restricted logins, Qdrant service and logs. Join its required result at its original registry position.

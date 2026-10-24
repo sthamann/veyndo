@@ -42,8 +42,8 @@
       "durationSeconds": 50.4,
       "width": 1920,
       "height": 1080,
-      "bytes": 1481543,
-      "sha256": "6c3cdbbb6c34c701964c88a33ec8f8ea0a3059dfb353620d2c6d8243df79e904",
+      "bytes": 2667838,
+      "sha256": "fa2853de92d64d24139b20fa448b94b884142f5663e7633701e2032f696e596f",
       "source": "Actual VEYNDO rebrand branch, isolated synthetic shop; waits/holds edited for readability, not latency evidence.",
       "sourceCommit": "5b2ebb5067be27b143f3dfadf28c2f42141ae2a0",
       "capturedAt": "2026-10-13",
@@ -54,7 +54,10 @@
       "fps": 30,
       "boundary": "Actual UI screencast of a reviewed synthetic source. Price autonomy remains disabled; no model training is demonstrated.",
       "caption": "Connected knowledge. Reviewed sources. Explicit limits.",
-      "project": "connected-intelligence"
+      "project": "connected-intelligence",
+      "compatibilityEncodeDate": "2026-10-24",
+      "profile": "High",
+      "level": 41
     },
     "flows": {
       "durationSeconds": 24.3,

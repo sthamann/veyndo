@@ -1,0 +1,83 @@
+[
+  {
+    "name": "veyndo-ai-commerce",
+    "title": "Veyndo: Your intent. Your commerce. Connected.",
+    "durationSeconds": 116,
+    "frames": 3480,
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "codec": "h264",
+    "profile": "High",
+    "level": 41,
+    "pixelFormat": "yuv420p",
+    "audioStreams": 0,
+    "sizeBytes": 9519850,
+    "sha256": "99b522dc3a367c58d9674756f89150a42f01b70597b8a90855dc9a57ec60cb81",
+    "fullDecode": "passed",
+    "compositionCheck": "passed",
+    "captureWindow": "15\u201322 October 2026",
+    "productionDate": "2026-10-24",
+    "sourceMain": "2e20426d17932f4f329991a50e3045b594bbda12",
+    "renderer": "HyperFrames 0.8.186 / GSAP 3.14.2",
+    "captions": "English burned-in plus VTT/SRT",
+    "format": "Editorial film using actual captures and architecture illustrations",
+    "chapters": [
+      {
+        "id": "ai-opening",
+        "duration": 8,
+        "kind": "ui"
+      },
+      {
+        "id": "ai-context",
+        "duration": 12,
+        "kind": "ui"
+      },
+      {
+        "id": "ai-catalogue",
+        "duration": 12,
+        "kind": "ui"
+      },
+      {
+        "id": "ai-design",
+        "duration": 12,
+        "kind": "ui"
+      },
+      {
+        "id": "ai-apps",
+        "duration": 12,
+        "kind": "ui"
+      },
+      {
+        "id": "ai-automation",
+        "duration": 10,
+        "kind": "ui"
+      },
+      {
+        "id": "ai-scenarios",
+        "duration": 12,
+        "kind": "ui"
+      },
+      {
+        "id": "ai-shopping",
+        "duration": 10,
+        "kind": "ui"
+      },
+      {
+        "id": "ai-foundation",
+        "duration": 10,
+        "kind": "diagram"
+      },
+      {
+        "id": "ai-control",
+        "duration": 10,
+        "kind": "ui"
+      },
+      {
+        "id": "ai-close",
+        "duration": 8,
+        "kind": "ui"
+      }
+    ]
+  }
+]
