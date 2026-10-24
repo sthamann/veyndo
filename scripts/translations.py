@@ -3,7 +3,7 @@
 import copy,json,os,socket,threading,time,urllib.request,urllib.error,uuid
 from testing.native_tools import response as native_response
 from http.server import BaseHTTPRequestHandler,ThreadingHTTPServer
-from testing.runtime import ROOT,serve,stop
+from testing.runtime import ROOT,artifact_path,serve,stop
 from testing.database import psql
 import subprocess
 behavior={'reject':False,'invalid':False};captured=[]
@@ -54,7 +54,7 @@ BASE=f'http://127.0.0.1:{port}';env={**os.environ,'BIND_ADDR':f'127.0.0.1:{port}
 # claim-only provider pin is per job model; using the replica's providers requires routing all translation
 # processing through this fixture process. Pause the normal worker through server's HTTP role in runner.
 (ROOT/'.run').mkdir(exist_ok=True)
-env['PROCESS_ROLE']='all';public={};merchant={};checks=[];log=(ROOT/'.run/translation-contract.log').open('w');process=serve(env,BASE,log)
+env['PROCESS_ROLE']='all';public={};merchant={};checks=[];log=artifact_path('translation-contract.log').open('w');process=serve(env,BASE,log)
 def req(path,body=None,h=None,method=None,expected=200):
  r=urllib.request.Request(BASE+path,data=None if body is None else json.dumps(body).encode(),headers={'Content-Type':'application/json',**public,**(h or {})},method=method or ('POST' if body is not None else 'GET'))
  try:

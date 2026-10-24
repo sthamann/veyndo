@@ -1,5 +1,6 @@
 """Owned synthetic server lifetime, child checks and loopback readiness for verification."""
 from pathlib import Path
+import os
 import signal
 import socket
 import subprocess
@@ -8,6 +9,13 @@ import urllib.request
 from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[2]
+
+
+def artifact_path(name):
+    """Keep concurrently repeated fixtures' logs and reports in their owned directory."""
+    path = Path(os.environ.get('TEST_ARTIFACT_DIR', str(ROOT / 'artifacts'))) / name
+    path.parent.mkdir(parents=True, exist_ok=True)
+    return path
 
 
 def run(args, env):

@@ -175,6 +175,24 @@ does not wait for the UI test job or repeat its unit suite. This adds one small
 frontend build while removing UI verification from the native job's critical path.
 No Rust binaries, databases or live state move between runners.
 
+The native integration command starts `signed_pooler` alongside the ordinary
+registry when `--parallel-pooler http://127.0.0.1:16334` is supplied. CI starts a
+second disposable Qdrant service for it. Its nested runner creates a separate
+PostgreSQL database and random restricted logins; its server logs and tenant
+isolation report live under `artifacts/signed-pooler/`. The remaining suites keep
+their existing order and database. The original `signed_pooler` registry position
+joins its result exactly once. A failed child or missing join fails verification;
+early foreground failure stops the owned background process group. All children
+use the same instrumented Rust binaries and uniquely named coverage profiles.
+Full native and final artifacts retain the parallel log directory.
+
+The default local command remains sequential. Parallel mode rejects partial suite
+selection, an existing database and a shared or remote Qdrant endpoint. Run
+`python3 scripts/testing/test_parallel_check.py` for real subprocess overlap,
+failed/missing results, descendant cleanup, isolated reports and CLI rejection
+checks. Repeated signed-runtime fixtures also report their individual durations,
+so runtime cost can be separated from queueing and overlapping work.
+
 Each job uploads an immutable coverage artifact. The final job downloads the exact
 IDs returned by those jobs, checks the checkout SHA, workflow run and SHA-256 of
 each actual report, then runs the existing combined coverage policy and complete

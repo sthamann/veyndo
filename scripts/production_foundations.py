@@ -11,7 +11,7 @@ import urllib.error
 import urllib.parse
 import urllib.request
 import uuid
-from testing.runtime import ROOT, serve, stop
+from testing.runtime import ROOT, artifact_path, run, serve, stop
 from testing.database import psql
 from testing.pooler import Pooler
 from security import core_hardening
@@ -77,11 +77,11 @@ try:
             env['DATABASE_TENANT_URL']=tenant_pooler.url
     # Strict startup must reject a role that has a whole-table RLS bypass operation.
     sql(f'GRANT TRUNCATE ON products TO {role};')
-    with (ROOT/'artifacts/production-unsafe-role.log').open('w') as bad_log:
+    with artifact_path('production-unsafe-role.log').open('w') as bad_log:
         rejected = subprocess.Popen([str(ROOT/'target/debug/veyndo')], cwd=ROOT,
             env={**env,'BIND_ADDR':f'127.0.0.1:{port()}'}, stdout=bad_log, stderr=bad_log)
         assert rejected.wait(timeout=20) != 0, 'Unsafe runtime role was admitted'
-    assert 'Runtime role must not own core tables' in (ROOT/'artifacts/production-unsafe-role.log').read_text(), 'Startup failed before role audit'
+    assert 'Runtime role must not own core tables' in artifact_path('production-unsafe-role.log').read_text(), 'Startup failed before role audit'
     sql(f'REVOKE TRUNCATE ON products FROM {role};')
     print('PASS strict startup rejects a runtime with core TRUNCATE privilege')
     if not tenant_role:core_hardening.before_workers(sql)
@@ -89,7 +89,7 @@ try:
     for index in range(2):
         base = f'http://127.0.0.1:{port()}'
         child = {**env, 'PROCESS_ROLE':'all' if index == 0 else 'http', 'BASE_URL':base, 'BIND_ADDR':base.removeprefix('http://')}
-        log = (ROOT / 'artifacts' / f'production-replica-{index}.log').open('w')
+        log = artifact_path(f'production-replica-{index}.log').open('w')
         processes.append((serve(child, base, log), log))
         bases.append(base)
     one, two = bases
@@ -110,7 +110,7 @@ try:
         for suite in [s for s in suites if s not in ['checkout_review','merchant_operations','tenant_isolation','translations']]:
             command=['python3',f'scripts/{suite}.py']
             if suite=='scalability':command+=['--container',env['TEST_DB_CONTAINER']]
-            subprocess.run(command,cwd=ROOT,env={**env,'PROCESS_ROLE':'all','BASE_URL':one,'TEST_SERVER_LOG':str(ROOT/'artifacts/production-replica-0.log')},check=True)
+            run(command,{**env,'PROCESS_ROLE':'all','BASE_URL':one,'TEST_SERVER_LOG':str(artifact_path('production-replica-0.log'))})
         # Keep the independent protocol suite free of this deliberately unsettled event.
         # The currency checkpoint restart below also verifies first-tick retirement of these rows.
         core_hardening.before_workers(sql)
@@ -214,7 +214,7 @@ try:
     inventory_batch.verify_content(call, bases, owner_h, sessions[0]['workspace'])
     # Existing real SQL suites are repeated with the strict runtime, not only privileged DB fixtures.
     for suite in ['checkout_review', 'merchant_operations', 'tenant_isolation']:
-        subprocess.run(['python3', f'scripts/{suite}.py'], cwd=ROOT, env={**env,'BASE_URL':one}, check=True)
+        run(['python3', f'scripts/{suite}.py'], {**env,'BASE_URL':one})
     # Isolate the cache experiment from earlier shops' still-running outbox jobs.
     cache_id='cache-'+uuid.uuid4().hex[:10]
     cache_session=call(one,'/api/auth/register',{'name':'Cache proof','email':cache_id+'@example.test','password':'Synthetic-cache-password!','workspaceId':cache_id})
@@ -265,15 +265,15 @@ try:
         # replicas intentionally use an unavailable provider and must not claim
         # its queued jobs. Keep the real restricted logins/poolers for this test.
         if 'translations' in suites:
-            subprocess.run(['python3','scripts/translations.py'],cwd=ROOT,env=env,check=True)
+            run(['python3','scripts/translations.py'],env)
         if not tenant_pooler:
-            subprocess.run(['python3','scripts/agent_authorities.py'],cwd=ROOT,env=env,check=True)
-        subprocess.run(['python3','scripts/durable_agents.py'],cwd=ROOT,env=env,check=True)
+            run(['python3','scripts/agent_authorities.py'],env)
+        run(['python3','scripts/durable_agents.py'],env)
         if tenant_role and not tenant_pooler:
-            subprocess.run(['python3','scripts/agentic_scenarios.py'],cwd=ROOT,env=env,check=True)
+            run(['python3','scripts/agentic_scenarios.py'],env)
             # Repeat the real installed-app order callback under the production
             # split logins and signed tenant scope, including batched name reads.
-            subprocess.run(['python3','scripts/marketplaces.py'],cwd=ROOT,env={**env,'PROCESS_ROLE':'all'},check=True)
+            run(['python3','scripts/marketplaces.py'],{**env,'PROCESS_ROLE':'all'})
 finally:
     for process, log in processes:
         stop(process); log.close()
