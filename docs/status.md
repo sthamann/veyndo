@@ -1,6 +1,6 @@
 # Veyndo: current status
 
-Updated 23 October 2026. Start here for the public product, observed journeys and
+Updated 24 October 2026. Start here for the public product, observed journeys and
 remaining delivery work. Source code, passing tests and a successful public
 journey are tracked separately. All purchases below use **simulated payments**.
 
@@ -20,6 +20,17 @@ frontend tests and 104 registered suites passed; coverage and security gates rem
 unchanged. This CI change is merged as **`1beea11f` (PR #213)**; the deployed
 runtime and dated public journeys below retain their existing versions.
 [Measured timing, coverage and retry evidence](evidence/parallel-verification-2026-10-23.md).
+
+Image publication now skips public documentation and website changes that are
+outside the packaged runtime. Changes to code, dependencies, packaged documents
+or unknown inputs still build and test the actual containers. Manual runs can
+rebuild deliberately. Preview publication follows the tested source even when
+only documentation advances during its build; newer runtime changes prevent an
+older build from replacing the preview.
+This CI change is merged as **`36649d0a` (PR #215)** after
+[complete required verification](https://github.com/sthamann/veyndo/actions/runs/40067529387)
+and successful packaged Core and Rust migration image tests.
+[Image scope, regression checks and publication](testing.md#image-publication-scope).
 
 ## What is online now
 

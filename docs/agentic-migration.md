@@ -543,12 +543,17 @@ whole-shop completeness or large-scale performance.
 
 The `migration-image.yml` workflow builds the independent Rust Dockerfile, runs
 its actual non-root health endpoint and checks there is no Python interpreter.
-After a main push it publishes an immutable
+After a main push affecting packaged or unknown inputs it publishes an immutable
 `ghcr.io/sthamann/veyndo-migration:sha-SOURCE_SHA` tag. Core/Studio publication does
 not start this separate service automatically. Configure its private gateway and
 per-shop revocable callback identities, then approve the same package digest in
 Core's existing `APP_SERVICES` entry. Keep source credentials in the installed
 app's encrypted settings. No service receives a database connection.
+
+Public documentation-only changes do not rebuild or publish the service. Choose
+the source SHA from a successful image publication, or use **Run workflow** on main
+for an intentional rebuild. PR image checks run without publication.
+[Image admission and regression contract](testing.md#image-publication-scope).
 
 Hosted acceptance must verify actual source inspection, an explicit reviewed
 private import, current-field comparison, reload/resume and selected publication
