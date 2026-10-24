@@ -2,11 +2,16 @@
 import subprocess
 import json
 import os
+import shlex
 import sys
 import tempfile
 import unittest
-from pathlib import Path
-from ci_scope import classify, changed_paths, plan
+from pathlib import Path, PurePosixPath
+from ci_scope import classify, classify_images, changed_paths, plan
+
+IMAGE_DOCS = ['README.md', 'AGENTS.md', 'CHANGELOG.md', 'docs/testing.md',
+              'docs/evidence/release.json', 'site/style.css', 'site/requirements.txt',
+              'scripts/build_site.py', 'scripts/check_site.py', 'scripts/site/pages.py']
 
 
 class ScopeTests(unittest.TestCase):
@@ -46,6 +51,42 @@ class ScopeTests(unittest.TestCase):
         self.assertEqual(plan('.', 'pull_request', {}, None)[0], 'full')
         self.assertEqual(plan('.', 'push', {'before':'f'*40}, 'e'*40)[0], 'full')
 
+    def test_only_unpackaged_docs_skip_images(self):
+        self.assertEqual(classify_images(IMAGE_DOCS), 'docs')
+        for path in ['LICENSE', 'THIRD_PARTY.md', 'frontend/README.md',
+                     'src/AGENTS.md', 'extensions/apps/migration/README.md',
+                     'frontend/src/admin/intelligence/KnowledgeView.tsx',
+                     'frontend/package-lock.json', 'Cargo.lock', 'fixtures/licenses/image.txt',
+                     'crates/cognition/prompts/planner.md', 'reference/app-manifests/app.json',
+                     'scripts/try.sh', 'compose.try.yaml', 'deploy/Dockerfile',
+                     'extensions/apps/migration/Dockerfile', '.dockerignore',
+                     '.github/workflows/preview-image.yml', 'new-owner/README.md']:
+            with self.subTest(path=path):
+                self.assertEqual(classify_images([*IMAGE_DOCS, path]), 'full')
+        self.assertEqual(classify_images([]), 'full')
+
+    def test_actual_image_copy_contract_keeps_skipped_paths_outside_images(self):
+        root = Path(__file__).resolve().parents[2]
+        for image in ['deploy/Dockerfile', 'extensions/apps/migration/Dockerfile']:
+            for line in (root / image).read_text().splitlines():
+                if not line.startswith('COPY ') or line.startswith('COPY --from='):
+                    continue
+                # These images deliberately use explicit, plain COPY sources.
+                # New broad COPY inputs require reviewing the skip contract too.
+                sources = shlex.split(line)[1:-1]
+                self.assertTrue(sources)
+                for source in sources:
+                    self.assertFalse(source.startswith(('[', '--')))
+                    for doc in IMAGE_DOCS:
+                        with self.subTest(image=image, source=source, doc=doc):
+                            self.assertFalse(PurePosixPath(doc).is_relative_to(source))
+                            self.assertFalse(PurePosixPath(doc).match(source))
+
+    def test_image_manual_or_missing_history_always_builds(self):
+        for event in ['workflow_dispatch', 'schedule', 'unknown', 'pull_request', 'push']:
+            self.assertEqual(plan('.', event, {}, None, images=True)[0], 'full')
+        self.assertEqual(plan('.', 'push', {'before':'f'*40}, 'e'*40, images=True)[0], 'full')
+
     def test_actual_git_deletion_and_rename_cannot_hide_backend(self):
         with tempfile.TemporaryDirectory() as directory:
             repo = Path(directory)
@@ -61,10 +102,13 @@ class ScopeTests(unittest.TestCase):
             paths = changed_paths(repo, base, head)
             self.assertIn('src/core.rs', paths)
             self.assertEqual(plan(repo, 'push', {'before':base}, head)[0], 'full')
+            self.assertEqual(plan(repo, 'push', {'before':base}, head, images=True)[0], 'full')
             (repo/'docs/README.md').write_text('docs only\n')
             git('add', '.'); git('commit', '-m', 'docs'); tip = git('rev-parse', 'HEAD')
             self.assertEqual(plan(repo, 'pull_request', {'pull_request':{'base':{'sha':head}}}, tip)[0], 'docs')
             self.assertEqual(plan(repo, 'push', {'before':base}, tip)[0], 'full')
+            self.assertEqual(plan(repo, 'push', {'before':head}, tip, images=True)[0], 'docs')
+            self.assertEqual(plan(repo, 'push', {'before':base}, tip, images=True)[0], 'full')
             event = repo/'event.json'
             event.write_text(json.dumps({'pull_request':{'base':{'sha':head}}}))
             output, summary = repo/'output', repo/'summary'
@@ -75,6 +119,21 @@ class ScopeTests(unittest.TestCase):
                 'GITHUB_STEP_SUMMARY':str(summary)})
             self.assertEqual(output.read_text(), 'lane=docs\n')
             self.assertIn('Verification scope: docs', summary.read_text())
+            subprocess.run([sys.executable, str(Path(__file__).with_name('ci_scope.py').resolve()), '--images'],
+                cwd=repo, check=True, capture_output=True, env={**os.environ,
+                'GITHUB_EVENT_NAME':'push', 'GITHUB_SHA':tip,
+                'GITHUB_EVENT_PATH':str(event), 'GITHUB_OUTPUT':str(output),
+                'GITHUB_STEP_SUMMARY':str(summary)})
+            # A PR event payload supplied to a push has no valid base: never skip.
+            self.assertTrue(output.read_text().endswith('lane=full\n'))
+            event.write_text(json.dumps({'before':head}))
+            subprocess.run([sys.executable, str(Path(__file__).with_name('ci_scope.py').resolve()), '--images'],
+                cwd=repo, check=True, capture_output=True, env={**os.environ,
+                'GITHUB_EVENT_NAME':'push', 'GITHUB_SHA':tip,
+                'GITHUB_EVENT_PATH':str(event), 'GITHUB_OUTPUT':str(output),
+                'GITHUB_STEP_SUMMARY':str(summary)})
+            self.assertTrue(output.read_text().endswith('lane=docs\n'))
+            self.assertIn('No image build or publication', summary.read_text())
 
 
 if __name__ == '__main__':

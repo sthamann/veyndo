@@ -2,13 +2,33 @@ name: Publish tested local preview image
 on:
   push:
     branches: [main]
+  pull_request:
+    paths:
+      - '.github/workflows/preview-image.yml'
+      - 'scripts/testing/ci_scope.py'
+      - 'scripts/testing/test_ci_scope.py'
+  workflow_dispatch:
 permissions:
   contents: read
 jobs:
+  admission:
+    runs-on: ubuntu-24.04
+    outputs:
+      lane: ${{ steps.scope.outputs.lane }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Check complete change scope before starting image work
+        id: scope
+        run: python3 scripts/testing/test_ci_scope.py && python3 scripts/testing/ci_scope.py --images
   image:
+    needs: admission
+    if: needs.admission.outputs.lane != 'docs'
     runs-on: ubuntu-24.04
     concurrency:
-      group: public-preview-image
+      group: public-preview-image-${{ github.event.pull_request.number || github.ref }}
       cancel-in-progress: false
     permissions:
       contents: read
@@ -75,16 +95,18 @@ jobs:
         if: failure()
         run: docker compose --env-file .run/try.env -p veyndo-try -f compose.try.yaml logs --no-color
       - uses: docker/login-action@v3
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Publish the smoke-tested image with an immutable source tag
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         env:
           SOURCE_SHA: ${{ github.sha }}
         run: |
-          docker tag veyndo-preview:test ghcr.io/sthamann/veyndo:sha-$SOURCE_SHA
-          docker push ghcr.io/sthamann/veyndo:sha-$SOURCE_SHA
+          docker tag veyndo-preview:test "ghcr.io/sthamann/veyndo:sha-$SOURCE_SHA"
+          docker push "ghcr.io/sthamann/veyndo:sha-$SOURCE_SHA"
           main_sha=$(git ls-remote https://github.com/sthamann/veyndo.git refs/heads/main | cut -f1)
           if [ "$main_sha" = "$SOURCE_SHA" ]; then
             docker tag veyndo-preview:test ghcr.io/sthamann/veyndo:preview

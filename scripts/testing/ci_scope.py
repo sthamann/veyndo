@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Choose prototype CI by the complete Git diff; unknown or sensitive changes retain full verification."""
 import json
+import argparse
 import os
 from pathlib import PurePosixPath, Path
 import re
@@ -60,6 +61,17 @@ def classify(paths):
     return 'full'
 
 
+def classify_images(paths):
+    # Deliberately narrower than verification: LICENSE and package-local Markdown
+    # are copied into images even when they need no Rust integration verification.
+    def outside_images(path):
+        return path in {'README.md', 'AGENTS.md', 'CHANGELOG.md',
+                        'scripts/build_site.py', 'scripts/check_site.py'} or (
+            path.startswith(('docs/', 'site/', 'scripts/site/')) and documentation(path)
+        )
+    return 'docs' if paths and all(outside_images(p) for p in paths) else 'full'
+
+
 def changed_paths(repo, base, head):
     # Renames retain both the deleted and added names, so moving Rust into docs
     # cannot conceal the original backend change. NUL handles unusual filenames.
@@ -72,7 +84,7 @@ def changed_paths(repo, base, head):
     return [p for p in output.decode('utf-8', errors='strict').split('\0') if p]
 
 
-def plan(repo, event_name, event, head):
+def plan(repo, event_name, event, head, images=False):
     if event_name not in {'pull_request', 'push'}:
         return 'full', 'Scheduled, manual or unknown event: full verification'
     base = (event.get('pull_request', {}).get('base', {}).get('sha')
@@ -81,19 +93,27 @@ def plan(repo, event_name, event, head):
         paths = changed_paths(repo, base, head)
     except (ValueError, UnicodeError, subprocess.CalledProcessError, OSError):
         return 'full', 'Diff unavailable: full verification'
-    return classify(paths), f'{len(paths)} changed paths; backend/unknown paths always select full'
+    classifier = classify_images if images else classify
+    return classifier(paths), f'{len(paths)} changed paths; backend/unknown paths always select full'
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--images', action='store_true',
+                        help='Skip image builds only for documentation outside packaged inputs')
+    args = parser.parse_args()
     event = json.loads(Path(os.environ['GITHUB_EVENT_PATH']).read_text())
     lane, reason = plan(Path.cwd(), os.environ.get('GITHUB_EVENT_NAME'), event,
-                        os.environ.get('GITHUB_SHA'))
-    print(f'Verification lane: {lane}. {reason}')
+                        os.environ.get('GITHUB_SHA'), images=args.images)
+    subject = 'Image build' if args.images else 'Verification'
+    detail = ('No image build or publication: only unpackaged documentation changed.'
+              if lane == 'docs' else 'Build and smoke-test the actual packaged runtime.') if args.images else (
+                  'Fast docs/UI checks are not a new full-system coverage measurement.')
+    print(f'{subject} lane: {lane}. {reason}')
     with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
         output.write(f'lane={lane}\n')
     with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as summary:
-        summary.write(f'## Verification scope: {lane}\n\n{reason}.\n\n'
-                      'Fast docs/UI checks are not a new full-system coverage measurement.\n')
+        summary.write(f'## {subject} scope: {lane}\n\n{reason}.\n\n{detail}\n')
 
 
 if __name__ == '__main__':

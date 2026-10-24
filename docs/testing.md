@@ -129,6 +129,24 @@ Changes to CI itself also require the full path.
 The registered scope regression uses real Git commits/renames and mixed sensitive
 changes, rather than trusting a filename count or an untrusted PR label.
 
+### Image publication scope
+
+The preview and migration image workflows use the same complete Git comparison
+with `ci_scope.py --images` before allocating a Docker runner. Only root
+README/AGENTS/CHANGELOG, handbook/site assets and their rendering tools can skip
+image work. Package-local Markdown, LICENSE/THIRD_PARTY, frontend, Cargo, fixtures,
+runtime scripts, Compose, Dockerfiles, workflow changes and unknown paths still
+build and smoke-test. The registered scope tests check the real Docker COPY inputs
+against the skipped paths, including rename and multi-commit counterexamples.
+
+Documentation publication and required verification remain independent. A docs-only
+commit publishes the handbook without creating a new runtime image or moving its
+tag. Missing history, empty changes and manual `workflow_dispatch` requests build.
+Use **Run workflow** to rebuild intentionally; only the main branch can publish.
+PRs touching image admission exercise the actual images without registry login or
+publication. Existing packaged signup, private sandbox, session restart and non-root
+Rust migration health checks still run whenever an image is built.
+
 ### Independent frontend feedback
 
 Cheap admission checks run first. Frontend formatting, build, architecture,
