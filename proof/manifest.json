@@ -4170,8 +4170,8 @@
   },
   "inputs": {
     ".github/workflows/verify.yml": {
-      "sha256": "348696e1f2aad96e5d4a2c264dc70c554934012519374d12048f50c383198517",
-      "review": "Reviewed parallel frontend CI: retain conservative scope, complete native/formal commands on one instrumented runner, existing dependency-cache namespace, required verify job with explicit outcomes and immutable same-source coverage reports; no proof or coverage floor changes."
+      "sha256": "3be7490c53da98c553ba6da2d3b1dada6484d2904cd2d7ebf133468a52f28a6a",
+      "review": "Reviewed workflow-only scheduling: each main push admits independent docs/frontend work, native concurrency remains per event/ref without cancelling running main jobs, PR workflow cancellation and schedule/manual serialization remain. No test commands, scope decisions, artifacts, coverage floors or final admission changed. Actionlint, 9 scope tests, 9 gate tests, 19 tooling tests, source inventory and complete handbook build passed; full CI remains required."
     },
     "Cargo.lock": {
       "sha256": "de01e9cdb5d3e16ec81ce7ce92898ab67d72f00f582fb0e658daf00f62f460c3",
