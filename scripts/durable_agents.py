@@ -13,7 +13,7 @@ import urllib.request
 import uuid
 from testing.native_tools import response as native_response
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
-from testing.runtime import ROOT, serve, stop
+from testing.runtime import ROOT, artifact_path, serve, stop
 from testing.database import psql
 from testing.pooler import Pooler
 
@@ -55,7 +55,7 @@ threading.Thread(target=provider.serve_forever,daemon=True).start()
 env.update(OPENAI_API_KEY='synthetic-durable-model',OPENAI_BASE_URL=f'http://127.0.0.1:{provider.server_address[1]}/v1',DB_POOL_MAX='4',BOOTSTRAP_MODE='serve')
 def start(role):
     base=f'http://127.0.0.1:{port()}'
-    log=(ROOT/'artifacts'/f'durable-agent-{len(logs)}.log').open('w');logs.append(log)
+    log=artifact_path(f'durable-agent-{len(logs)}.log').open('w');logs.append(log)
     child={**env,'PROCESS_ROLE':role,'BIND_ADDR':base.removeprefix('http://')}
     if role.endswith('-worker'):
         process=subprocess.Popen([str(ROOT/'target/debug/veyndo')],cwd=ROOT,env=child,stdout=log,stderr=log)

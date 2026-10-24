@@ -1,5 +1,11 @@
 # Changelog
 
+## Concurrent isolated pooler verification — 24 October 2026
+
+- Run the unchanged authenticated two-pooler suite beside the main native integration registry, with its own database, restricted logins, Qdrant service and logs. Join its required result at its original registry position.
+- Keep all existing suites, assertions, coverage profiles and required final checks. Reject failed or unjoined background work and stop its process group on foreground failure; retain separate reports in native and combined artifacts.
+- Add real subprocess controls for overlap, failure, cleanup and isolation. Record durations inside the repeated signed-runtime suites to expose the remaining expensive paths.
+
 ## Independent main verification queues — 24 October 2026
 
 - Start admission, documentation and frontend checks for each main push independently of an earlier native test run. Serialize only the long native job, preserving its running database tests.

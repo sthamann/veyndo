@@ -108,6 +108,7 @@
     "testing/test_ci_scope",
     "testing/test_ci_gate",
     "testing/tooling_tests",
+    "testing/test_parallel_check",
     "branding",
     "money_boundary_differential"
   ]

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Adversarial two-shop API/MCP/UCP/object and schema isolation with real personal/customer sessions."""
 from testing.app_approval import consent
+from testing.runtime import artifact_path
 import datetime
 import hashlib
 import json
@@ -159,5 +160,5 @@ report['measuredAt'] = datetime.datetime.now(datetime.timezone.utc).isoformat()
 report['sourceCommit'] = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
 report['workingTreeChanged'] = bool(subprocess.check_output(['git', 'status', '--porcelain'], cwd=ROOT, text=True).strip())
 report['sourceHashes'] = {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest() for name in ('src/migrations.rs', 'migrations/038-tenant-references.sql', 'scripts/tenant_isolation.py', 'scripts/security/tenant_schema.py')}
-(ROOT / 'artifacts/tenant-isolation.json').write_text(json.dumps(report, indent=2) + '\n')
+artifact_path('tenant-isolation.json').write_text(json.dumps(report, indent=2) + '\n')
 print(json.dumps(report))

@@ -4170,8 +4170,8 @@
   },
   "inputs": {
     ".github/workflows/verify.yml": {
-      "sha256": "3be7490c53da98c553ba6da2d3b1dada6484d2904cd2d7ebf133468a52f28a6a",
-      "review": "Reviewed workflow-only scheduling: each main push admits independent docs/frontend work, native concurrency remains per event/ref without cancelling running main jobs, PR workflow cancellation and schedule/manual serialization remain. No test commands, scope decisions, artifacts, coverage floors or final admission changed. Actionlint, 9 scope tests, 9 gate tests, 19 tooling tests, source inventory and complete handbook build passed; full CI remains required."
+      "sha256": "6cbb6b9dbd52796d386136277f0e14ef67c55f880c664a77ed5287ad7c2c7c04",
+      "review": "Reviewed isolated concurrent signed-pooler verification: unchanged registry and assertions, separate disposable database/Qdrant/logs, required fatal join, owned child cleanup, same instrumented binaries and coverage aggregation; real subprocess negative controls added."
     },
     "Cargo.lock": {
       "sha256": "de01e9cdb5d3e16ec81ce7ce92898ab67d72f00f582fb0e658daf00f62f460c3",

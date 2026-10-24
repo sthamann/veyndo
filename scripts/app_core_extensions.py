@@ -2,7 +2,7 @@
 """Native app field API/MCP/UI contracts, current rights, fixed storage and selective sandbox release. Synthetic local data only."""
 import copy, json, os, urllib.request, urllib.error, urllib.parse, uuid
 from testing.app_approval import consent
-from testing.runtime import ROOT
+from testing.runtime import ROOT, artifact_path
 base=os.environ['BASE_URL']; tag=uuid.uuid4().hex[:10]; password='Synthetic-extension-fixture-2026!'
 def call(path,body=None,h=None,status=200,method=None):
     if path=='/api/apps' and body is not None: body=consent(body)
@@ -110,6 +110,6 @@ print('PASS oversized native previews are reported without empty-write affordanc
 
 if os.getenv('CORE_EXTENSION_REVIEW_HOLD'):
     import time
-    (ROOT/'artifacts/core-extension-review.json').write_text(json.dumps({'url':base+'/?shop='+h['x-tenant']+'&studio=productData#merchant','email':'extensions'+tag+'@example.test','password':password,'tenant':h['x-tenant']}))
+    artifact_path('core-extension-review.json').write_text(json.dumps({'url':base+'/?shop='+h['x-tenant']+'&studio=productData#merchant','email':'extensions'+tag+'@example.test','password':password,'tenant':h['x-tenant']}))
     print('READY isolated synthetic extension workspace for browser review',flush=True)
     while True:time.sleep(1)

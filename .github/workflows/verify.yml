@@ -25,7 +25,7 @@ jobs:
         with:
           python-version: '3.13'
       - name: Verify conservative scope, final admission and coverage helpers
-        run: python3 scripts/testing/test_ci_scope.py && python3 scripts/testing/test_ci_gate.py && python3 scripts/testing/tooling_tests.py
+        run: python3 scripts/testing/test_ci_scope.py && python3 scripts/testing/test_ci_gate.py && python3 scripts/testing/tooling_tests.py && python3 scripts/testing/test_parallel_check.py
       - run: python3 scripts/testing/documentation_hygiene.py
       - name: Check exact source inventory before compiling or integration tests
         run: python3 scripts/testing/source_inventory.py
@@ -111,7 +111,9 @@ jobs:
         with:
           python-version: '3.13'
       - name: Start standard PostgreSQL and Qdrant
-        run: DB_PASSWORD=ci-only-password docker compose -p veyndo up -d --wait postgres qdrant
+        run: |
+          DB_PASSWORD=ci-only-password docker compose -p veyndo up -d --wait postgres qdrant
+          DB_PASSWORD=ci-only-password QDRANT_PORT=16334 docker compose -p veyndo-pooler up -d --wait qdrant
       - uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2
         with:
@@ -176,7 +178,7 @@ jobs:
       - run: python3 scripts/differential.py && python3 scripts/context_differential.py && python3 scripts/delivery_differential.py && python3 scripts/rule_differential.py && python3 scripts/automation_registry.py && python3 scripts/automation_differential.py
       - name: Real database and local provider integration (single suite registry)
         run: |
-          COVERAGE_PROCESS_START="$PWD/scripts/testing/.coveragerc" PYTHONPATH="$PWD/scripts/testing" python3 scripts/verify_integration.py --container veyndo-postgres-1
+          COVERAGE_PROCESS_START="$PWD/scripts/testing/.coveragerc" PYTHONPATH="$PWD/scripts/testing" python3 scripts/verify_integration.py --container veyndo-postgres-1 --parallel-pooler http://127.0.0.1:16334
       - name: Report native coverage from the same instrumented binaries
         run: |
           mkdir -p artifacts/coverage
@@ -195,6 +197,7 @@ jobs:
           path: |
             artifacts/coverage
             artifacts/integration-server.log
+            artifacts/signed-pooler
           if-no-files-found: warn
 
   # Keep this exact required check for branch protection, including failed/skipped dependencies.
@@ -244,5 +247,6 @@ jobs:
             frontend/coverage
             artifacts/coverage
             artifacts/integration-server.log
+            artifacts/signed-pooler
           if-no-files-found: warn
       # External model/payment/OAuth checks remain opt-in; these reports do not certify live credentials.
