@@ -1,5 +1,10 @@
 # Changelog
 
+## Independent main verification queues — 24 October 2026
+
+- Start admission, documentation and frontend checks for each main push independently of an earlier native test run. Serialize only the long native job, preserving its running database tests.
+- Keep PR cancellation, scheduled/manual workflow serialization, conservative scope selection, full test coverage and the final required verification unchanged. Documentation-only commits do not enter or replace the pending native queue.
+
 ## Skip unrelated documentation image builds — 24 October 2026
 
 - Classify complete Git changes before preview and migration container builds. Public documentation changes keep handbook publication and required checks while leaving runtime images and tags unchanged.

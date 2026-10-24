@@ -159,6 +159,15 @@ Rust/formal/native job. Both depend only on admission. The existing required
 unexpectedly skipped jobs, unknown scopes and missing coverage artifact IDs.
 Documentation-only changes still build and check the whole handbook.
 
+Main pushes start admission and the selected documentation/frontend checks without
+waiting for a previous push's native tests. Only the native job queues behind
+another native job for the same event and branch. Running native tests are preserved;
+documentation-only runs skip that job and never enter its queue. Newer PR heads still
+cancel the preceding PR run. Scheduled and manually dispatched workflows retain
+their existing serialization. GitHub keeps one pending native job per group, so a
+newer full push replaces an older pending job; a cancelled run cannot pass `verify`.
+This separates feedback queues without shortening or omitting the native suite.
+
 Rust unit tests and HTTP/provider integration retain the same instrumented binaries,
 profile directory and fresh disposable database. The native job installs and builds
 the frontend locally for its real HTTP tests and TypeScript locale contracts; it
