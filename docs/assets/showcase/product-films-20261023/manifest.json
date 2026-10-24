@@ -10,8 +10,8 @@
     "codec": "h264",
     "pixelFormat": "yuv420p",
     "audioStreams": 0,
-    "sizeBytes": 5788148,
-    "sha256": "96a100f936f8aeffa95f6bcd19b90596dbcca15db539891095d8ac3ec23a0c61",
+    "sizeBytes": 4891052,
+    "sha256": "11447384f1659391a8e944186a7e96fc4fd0bd36735dec0d4a026b79e9fae520",
     "fullDecode": "passed",
     "compositionCheck": "passed",
     "sourceMain": "852d5b0b91bd755e0beab2a784dec11f65bc1ac9",
@@ -51,7 +51,10 @@
         "duration": 10,
         "kind": "ui"
       }
-    ]
+    ],
+    "profile": "High",
+    "level": 41,
+    "compatibilityEncodeDate": "2026-10-24"
   },
   {
     "name": "veyndo-workspace",
@@ -64,8 +67,8 @@
     "codec": "h264",
     "pixelFormat": "yuv420p",
     "audioStreams": 0,
-    "sizeBytes": 9266330,
-    "sha256": "1f00e437cc65a9c239877a18fc4a9b5a68788fae224c8570a4013f4427a43cc7",
+    "sizeBytes": 7910829,
+    "sha256": "e956e15ea99529cebb09b99fe5d32d38dfad5ce90b3a9cc8d2fb9b0940da4da1",
     "fullDecode": "passed",
     "compositionCheck": "passed",
     "sourceMain": "852d5b0b91bd755e0beab2a784dec11f65bc1ac9",
@@ -115,7 +118,10 @@
         "duration": 10,
         "kind": "ui"
       }
-    ]
+    ],
+    "profile": "High",
+    "level": 41,
+    "compatibilityEncodeDate": "2026-10-24"
   },
   {
     "name": "veyndo-app-platform",
@@ -128,8 +134,8 @@
     "codec": "h264",
     "pixelFormat": "yuv420p",
     "audioStreams": 0,
-    "sizeBytes": 6550235,
-    "sha256": "9785d1c1da9f9393cbdcbcb80685056885414ce410070d62e513a29f4247a468",
+    "sizeBytes": 5674752,
+    "sha256": "12d541e5b86b4d304138ef5952795703ad95f6396f3f980f7854d4848880efd9",
     "fullDecode": "passed",
     "compositionCheck": "passed",
     "sourceMain": "852d5b0b91bd755e0beab2a784dec11f65bc1ac9",
@@ -174,6 +180,9 @@
         "duration": 12,
         "kind": "ui"
       }
-    ]
+    ],
+    "profile": "High",
+    "level": 41,
+    "compatibilityEncodeDate": "2026-10-24"
   }
 ]

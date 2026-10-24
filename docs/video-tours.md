@@ -1,8 +1,22 @@
 # Veyndo product films and video tours
 
-**New product films, 23 October 2026.** Start with the concept, follow the connected merchant journey, then explore the app platform. All three films are Full HD, in English, with burned-in subtitles and no sound.
+**Product films, 24 October 2026.** Start with the AI overview, follow the connected merchant journey, then explore the app platform. All four films are Full HD, in English, with burned-in subtitles and no sound.
 
-![Three new Veyndo product films](assets/showcase/product-films-20261023/series-preview.jpg)
+![Veyndo AI commerce film](assets/showcase/ai-commerce-20261024/veyndo-ai-commerce.jpg)
+
+## AI commerce: your intent, your commerce, connected
+
+**1:56 · English · 1080p · Silent · 24 October 2026**
+
+A connected tour of shop context and knowledge, catalogue preparation from CSV/URLs/descriptions, design references, visual and agent-assisted app creation, reusable flows, fictional customer scenarios and shopping by intent. The final scenes explain the shared Rust core, private drafts and merchant control.
+
+<video controls playsinline muted preload="none" poster="assets/showcase/ai-commerce-20261024/veyndo-ai-commerce.jpg" aria-label="Veyndo AI commerce" style="width:100%;height:auto;aspect-ratio:16/9;border-radius:16px">
+<source src="assets/showcase/ai-commerce-20261024/veyndo-ai-commerce.mp4" type="video/mp4">
+<track kind="captions" src="https://www.veyndo.ai/docs/assets/showcase/ai-commerce-20261024/veyndo-ai-commerce.en.vtt" srclang="en" label="English">
+<a href="assets/showcase/ai-commerce-20261024/veyndo-ai-commerce.mp4">Watch or download the film</a>
+</video>
+
+[Download MP4](assets/showcase/ai-commerce-20261024/veyndo-ai-commerce.mp4) · [English captions](https://www.veyndo.ai/docs/assets/showcase/ai-commerce-20261024/veyndo-ai-commerce.en.vtt) · [Editable project](https://www.veyndo.ai/docs/assets/showcase/ai-commerce-20261024/editable-project.zip) · [Sources and encoding](assets/showcase/ai-commerce-20261024/README.md)
 
 ## The concept — commerce that thinks and acts
 
@@ -10,8 +24,8 @@
 
 How the merchant agent, native Rust commerce core, apps and Storyfront shopping experiences fit together. Follow the embedded demo checkout through the receipt and back to an empty original bag.
 
-<video controls playsinline preload="metadata" poster="assets/showcase/product-films-20261023/veyndo-concept.jpg" aria-label="The concept — commerce that thinks and acts" style="width:100%;height:auto;aspect-ratio:16/9;border-radius:16px">
-<source src="assets/showcase/product-films-20261023/veyndo-concept.mp4" type="video/mp4">
+<video controls playsinline preload="none" poster="assets/showcase/product-films-20261023/veyndo-concept.jpg" aria-label="The concept — commerce that thinks and acts" style="width:100%;height:auto;aspect-ratio:16/9;border-radius:16px">
+<source src="assets/showcase/product-films-20261023/veyndo-concept.mp4?v=safari-20261024" type="video/mp4">
 <track kind="captions" src="https://www.veyndo.ai/docs/assets/showcase/product-films-20261023/veyndo-concept.en.vtt" srclang="en" label="English">
 <a href="assets/showcase/product-films-20261023/veyndo-concept.mp4">Watch or download the film</a>
 </video>
@@ -24,8 +38,8 @@ How the merchant agent, native Rust commerce core, apps and Storyfront shopping 
 
 Catalogue intake from CSV, descriptions or URLs; connected agent work; visual shop design; product selection; configured company approval and reorder; fictional customer scenarios.
 
-<video controls playsinline preload="metadata" poster="assets/showcase/product-films-20261023/veyndo-workspace.jpg" aria-label="The connected merchant journey" style="width:100%;height:auto;aspect-ratio:16/9;border-radius:16px">
-<source src="assets/showcase/product-films-20261023/veyndo-workspace.mp4" type="video/mp4">
+<video controls playsinline preload="none" poster="assets/showcase/product-films-20261023/veyndo-workspace.jpg" aria-label="The connected merchant journey" style="width:100%;height:auto;aspect-ratio:16/9;border-radius:16px">
+<source src="assets/showcase/product-films-20261023/veyndo-workspace.mp4?v=safari-20261024" type="video/mp4">
 <track kind="captions" src="https://www.veyndo.ai/docs/assets/showcase/product-films-20261023/veyndo-workspace.en.vtt" srclang="en" label="English">
 <a href="assets/showcase/product-films-20261023/veyndo-workspace.mp4">Watch or download the film</a>
 </video>
@@ -38,8 +52,8 @@ Catalogue intake from CSV, descriptions or URLs; connected agent work; visual sh
 
 Visual editing and agent-assisted development, app-owned records and settings, shared native events, Veyndo AI/Codex/Claude Code entry points, private testing and versioned publication.
 
-<video controls playsinline preload="metadata" poster="assets/showcase/product-films-20261023/veyndo-app-platform.jpg" aria-label="The app platform — build connected capabilities" style="width:100%;height:auto;aspect-ratio:16/9;border-radius:16px">
-<source src="assets/showcase/product-films-20261023/veyndo-app-platform.mp4" type="video/mp4">
+<video controls playsinline preload="none" poster="assets/showcase/product-films-20261023/veyndo-app-platform.jpg" aria-label="The app platform — build connected capabilities" style="width:100%;height:auto;aspect-ratio:16/9;border-radius:16px">
+<source src="assets/showcase/product-films-20261023/veyndo-app-platform.mp4?v=safari-20261024" type="video/mp4">
 <track kind="captions" src="https://www.veyndo.ai/docs/assets/showcase/product-films-20261023/veyndo-app-platform.en.vtt" srclang="en" label="English">
 <a href="assets/showcase/product-films-20261023/veyndo-app-platform.mp4">Watch or download the film</a>
 </video>
