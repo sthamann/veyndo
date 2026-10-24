@@ -6,6 +6,7 @@ import os
 from pathlib import PurePosixPath, Path
 import re
 import subprocess
+import sys
 
 SENSITIVE_UI = (
     'frontend/src/shared/api/', 'frontend/src/shared/apps/',
@@ -97,11 +98,29 @@ def plan(repo, event_name, event, head, images=False):
     return classifier(paths), f'{len(paths)} changed paths; backend/unknown paths always select full'
 
 
+def can_promote_preview(repo, source, tip):
+    # A docs push can finish while an earlier image is building. It must not
+    # strand the preview tag, but newer runtime work or rewritten history wins.
+    try:
+        paths = changed_paths(repo, source, tip)
+        subprocess.run(['git', '-C', str(repo), 'merge-base', '--is-ancestor', source, tip],
+                       check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+    except (ValueError, UnicodeError, subprocess.CalledProcessError, OSError):
+        return False
+    return source == tip or classify_images(paths) == 'docs'
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--images', action='store_true',
                         help='Skip image builds only for documentation outside packaged inputs')
+    parser.add_argument('--promote-preview', nargs=2, metavar=('SOURCE', 'MAIN'),
+                        help='Permit the tested source or a main descendant with only unpackaged documentation changes')
     args = parser.parse_args()
+    if args.promote_preview:
+        allowed = can_promote_preview(Path.cwd(), *args.promote_preview)
+        print('Preview promotion allowed' if allowed else 'Preview promotion withheld: newer runtime or unverified history')
+        sys.exit(0 if allowed else 1)
     event = json.loads(Path(os.environ['GITHUB_EVENT_PATH']).read_text())
     lane, reason = plan(Path.cwd(), os.environ.get('GITHUB_EVENT_NAME'), event,
                         os.environ.get('GITHUB_SHA'), images=args.images)

@@ -142,6 +142,9 @@ against the skipped paths, including rename and multi-commit counterexamples.
 Documentation publication and required verification remain independent. A docs-only
 commit publishes the handbook without creating a new runtime image or moving its
 tag. Missing history, empty changes and manual `workflow_dispatch` requests build.
+If documentation lands while an earlier image is building, that tested image can
+still advance the preview tag. Newer runtime changes, divergent history and an
+unavailable comparison prevent promotion. The tag retains the actual built SHA.
 Use **Run workflow** to rebuild intentionally; only the main branch can publish.
 PRs touching image admission exercise the actual images without registry login or
 publication. Existing packaged signup, private sandbox, session restart and non-root

@@ -7,7 +7,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path, PurePosixPath
-from ci_scope import classify, classify_images, changed_paths, plan
+from ci_scope import classify, classify_images, changed_paths, plan, can_promote_preview
 
 IMAGE_DOCS = ['README.md', 'AGENTS.md', 'CHANGELOG.md', 'docs/testing.md',
               'docs/evidence/release.json', 'site/style.css', 'site/requirements.txt',
@@ -86,6 +86,36 @@ class ScopeTests(unittest.TestCase):
         for event in ['workflow_dispatch', 'schedule', 'unknown', 'pull_request', 'push']:
             self.assertEqual(plan('.', event, {}, None, images=True)[0], 'full')
         self.assertEqual(plan('.', 'push', {'before':'f'*40}, 'e'*40, images=True)[0], 'full')
+
+    def test_preview_promotion_allows_only_same_source_or_docs_descendants(self):
+        with tempfile.TemporaryDirectory() as directory:
+            repo = Path(directory)
+            def git(*args):
+                return subprocess.check_output(['git', '-C', directory, *args],
+                                               stderr=subprocess.DEVNULL, text=True).strip()
+            def commit(message):
+                git('add', '-A'); git('commit', '-m', message)
+                return git('rev-parse', 'HEAD')
+            git('init'); git('config', 'user.name', 'Synthetic CI test')
+            git('config', 'user.email', 'ci@example.test')
+            (repo/'runtime.rs').write_text('runtime version 1\n')
+            source = commit('tested image')
+            self.assertTrue(can_promote_preview(repo, source, source))
+            (repo/'README.md').write_text('new public documentation\n')
+            docs = commit('docs finish during image build')
+            self.assertTrue(can_promote_preview(repo, source, docs))
+            command = [sys.executable, str(Path(__file__).with_name('ci_scope.py').resolve()), '--promote-preview', source]
+            self.assertEqual(subprocess.run([*command, docs], cwd=repo, capture_output=True).returncode, 0)
+            (repo/'runtime.rs').write_text('runtime version 2\n')
+            newer = commit('new runtime must win')
+            self.assertFalse(can_promote_preview(repo, source, newer))
+            self.assertEqual(subprocess.run([*command, newer], cwd=repo, capture_output=True).returncode, 1)
+            self.assertFalse(can_promote_preview(repo, newer, source))
+            git('checkout', '--orphan', 'rewritten-main')
+            rewritten = commit('same tree on unrelated history')
+            self.assertFalse(can_promote_preview(repo, newer, rewritten))
+            self.assertFalse(can_promote_preview(repo, 'f'*40, 'f'*40))
+            self.assertFalse(can_promote_preview(repo, source, '--help'))
 
     def test_actual_git_deletion_and_rename_cannot_hide_backend(self):
         with tempfile.TemporaryDirectory() as directory:

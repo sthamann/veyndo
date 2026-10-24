@@ -4,6 +4,7 @@
 
 - Classify complete Git changes before preview and migration container builds. Public documentation changes keep handbook publication and required checks while leaving runtime images and tags unchanged.
 - Keep packaged Markdown, licenses, frontend, dependencies, runtime/configuration changes and unknown inputs on the existing build and smoke-test path. Missing history and explicit manual runs also build.
+- Allow a tested preview image to advance past newer documentation-only commits; keep newer runtime changes, rewritten history and missing comparisons fenced out.
 - Test image admission changes in PRs without publication, add manual rebuilds, and retain actual packaged signup/sandbox/restart and non-root migration checks. Cover real Git renames, mixed multi-commit changes and the Docker COPY boundary in the registered scope regression.
 
 ## Parallel frontend verification — 23 October 2026
