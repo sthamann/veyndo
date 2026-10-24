@@ -127,3 +127,64 @@ Runtime delivery and simulated purchase evidence remain in the
 [current status](../status.md) and retain their actual dates. This change improves
 the development/release feedback path; it does not claim a new live payment,
 authentication or Storyfront acceptance.
+
+## Main queue isolation, 24 October 2026
+
+Main pushes now enter admission independently. Their selected documentation and
+frontend jobs do not wait behind another push's native suite. Native work still
+serializes per event and branch, and a running native job is preserved. PR updates
+retain cancellation of their previous run. Scheduled and manually dispatched
+workflows retain their existing serialization.
+
+The change moves the concurrency boundary; all test commands, scope decisions,
+artifact provenance checks and coverage floors remain unchanged. A docs-only
+push skips native verification before entering its concurrency queue. An earlier
+pending full run is therefore not replaced by an unrelated documentation push.
+GitHub's default native queue still holds one running and one pending job; a newer
+full run replaces the pending run, whose cancelled status cannot pass `verify`.
+
+Implementation: [PR #217](https://github.com/sthamann/veyndo/pull/217).
+The first submission was correctly rejected because its reviewed workflow hash
+had not been recorded. Both source admission and the final required gate failed;
+none of the skipped test jobs produced a successful verification. The corrected
+source records only the reviewed workflow change and retains all existing proofs.
+
+Local checks passed: actionlint, 9 scope tests, 9 final-gate/report-transfer tests,
+19 tooling tests, source inventory and complete documentation validation. The
+formal run retained 63 policies, 149 checked Lean properties and 156,741 compiled
+comparison cases without mismatch or proof shortcuts. Required full CI and the
+actual main scheduling observation below are recorded separately.
+
+### Observed queue before the change
+
+[Main documentation run 40069752719](https://github.com/sthamann/veyndo/actions/runs/40069752719)
+was created at **06:19:33 UTC**, but its admission job started only at
+**06:49:37 UTC**. It waited **30m04s** behind
+[full main run 40069597785](https://github.com/sthamann/veyndo/actions/runs/40069597785),
+which completed successfully at **06:49:34 UTC**. The documentation run then
+passed its own required gate at **06:50:19 UTC**, only **42 seconds** after its
+first job started. This is observed queue delay, separate from test execution.
+
+### Complete acceptance of the scheduling change
+
+Final branch source: `b3fe1169b3d9b899b4b5f96ee39361df98765289`.
+Tested merge: `9538f21bfca93ca77393bd301a4eb2d3a7b6e2af`.
+[Required full run 40070337296](https://github.com/sthamann/veyndo/actions/runs/40070337296)
+completed successfully at **07:07:26 UTC**. All **322 Rust tests**, **816 frontend
+tests**, registered database/provider/browser-contract suites, native separate-login
+and transaction-pooler checks, formal counterexamples and final coverage gates passed.
+The frontend job completed in **3m25s**. The native job took **38m32s**; queue
+isolation does not shorten that suite, and this timing is not a speedup claim.
+
+The formal artifact for the exact tested merge retained **63 policies, 149 Lean
+properties and 156,741 comparison cases**, with zero mismatches, `sorry` or custom
+axioms. Mutation controls rejected **183 broken policies**, 14 unsupported syntax
+cases, 3 stale/unclassified/disconnected bindings, 9 proof shortcuts/axiom/audit
+bypasses and 10 proof/module layout bypasses. The original baseline was accepted.
+Structure checks passed for **712 Rust modules** and **836 frontend modules**.
+
+PR #217 merged as **`76518a76fbf37c88cc6107c457d87d393ad1ff53`** at
+**07:07:29 UTC**. Its tree matches the accepted source. The subsequent documentation
+update exercises independent main admission while that commit's automatic native
+recheck runs. The implementation PR records the actual post-merge run links and
+timestamps; this observation concerns scheduling, not a new commerce rollout.
