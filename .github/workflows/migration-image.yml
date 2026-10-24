@@ -3,16 +3,33 @@ on:
   pull_request:
     paths:
       - '.github/workflows/migration-image.yml'
+      - 'scripts/testing/ci_scope.py'
+      - 'scripts/testing/test_ci_scope.py'
       - 'Cargo.toml'
       - 'Cargo.lock'
       - 'crates/**'
       - 'extensions/**'
   push:
     branches: [main]
+  workflow_dispatch:
 permissions:
   contents: read
 jobs:
+  admission:
+    runs-on: ubuntu-24.04
+    outputs:
+      lane: ${{ steps.scope.outputs.lane }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Check complete change scope before starting image work
+        id: scope
+        run: python3 scripts/testing/test_ci_scope.py && python3 scripts/testing/ci_scope.py --images
   migration-image:
+    needs: admission
+    if: needs.admission.outputs.lane != 'docs'
     runs-on: ubuntu-24.04
     permissions:
       contents: read
@@ -46,16 +63,16 @@ jobs:
         if: failure()
         run: docker logs migration-image || true
       - uses: docker/login-action@v3
-        if: github.event_name == 'push'
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Publish the smoke-tested source-pinned service image
-        if: github.event_name == 'push'
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         env:
           SOURCE_SHA: ${{ github.sha }}
         run: |
-          docker tag veyndo-migration:test ghcr.io/sthamann/veyndo-migration:sha-$SOURCE_SHA
-          docker push ghcr.io/sthamann/veyndo-migration:sha-$SOURCE_SHA
+          docker tag veyndo-migration:test "ghcr.io/sthamann/veyndo-migration:sha-$SOURCE_SHA"
+          docker push "ghcr.io/sthamann/veyndo-migration:sha-$SOURCE_SHA"
           echo "Rust migration service: ghcr.io/sthamann/veyndo-migration:sha-$SOURCE_SHA" >> "$GITHUB_STEP_SUMMARY"
