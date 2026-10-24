@@ -81,6 +81,10 @@ Reuse the same `TRY_PORT` and `TRY_PROJECT` values if you changed them. Stopping
 does not delete orders or accounts. Do not remove the data volume if you need them.
 The preview tag moves; use `VEYNDO_IMAGE=ghcr.io/sthamann/veyndo:sha-COMMIT_SHA`
 with an actual published full commit SHA when you need an exact source version.
+Choose that SHA from a successful **Publish tested local preview image** run.
+Documentation-only commits do not create another image. A manual **Run workflow**
+on main can rebuild intentionally; a documentation commit landing during a build
+does not prevent the tested runtime from advancing the preview tag.
 
 [Tell us where you got stuck or what you built](https://github.com/sthamann/veyndo/discussions)
 or [report a reproducible bug](https://github.com/sthamann/veyndo/issues/new/choose).
