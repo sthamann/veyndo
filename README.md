@@ -46,7 +46,7 @@ public acceptance are recorded separately.
 **Films:** [AI commerce · 1:56](docs/assets/showcase/ai-commerce-20261024/veyndo-ai-commerce.mp4) · [Concept · 1:12](docs/assets/showcase/product-films-20261023/veyndo-concept.mp4) · [Merchant journey · 1:36](docs/assets/showcase/product-films-20261023/veyndo-workspace.mp4) · [App platform · 1:24](docs/assets/showcase/product-films-20261023/veyndo-app-platform.mp4). English subtitles, no sound.
 
 Films use actual dated UI captures, demo data and simulated payments. Timing is editorial.
-[Current screenshots and acceptance](docs/customer-scenarios.md#verification) · [Watch the new product films](docs/video-tours.md) · [AI film sources and verification](docs/assets/showcase/ai-commerce-20261024/README.md).
+[Screenshots and acceptance](docs/customer-scenarios.md#verification) · [Film sources](docs/assets/showcase/ai-commerce-20261024/README.md).
 
 ## Try one complete round
 
