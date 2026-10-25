@@ -22,6 +22,7 @@ reqwest = { version = "0.12", default-features = false, features = ["json", "rus
 ring = "0.17.14"
 bumpalo = "3"
 mago-syntax = "=1.30.0"
+mago-syntax-core = "=1.30.0"
 mago-database = "=1.30.0"
 mago-span = "=1.30.0"
 # Mago's pre-2.0 crates use caret dependencies across incompatible minor APIs.
@@ -45,3 +46,7 @@ path = "native/src/lib.rs"
 [[test]]
 name = "translation"
 path = "native/tests/translation.rs"
+
+[[test]]
+name = "parser_admission"
+path = "native/tests/parser_admission.rs"

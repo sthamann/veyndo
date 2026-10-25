@@ -5,6 +5,7 @@ mod expressions;
 mod intake;
 mod php;
 mod symbols;
+mod syntax_budget;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use std::collections::BTreeMap;

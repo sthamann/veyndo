@@ -17,24 +17,12 @@ pub(crate) enum ClassResult {
     },
 }
 pub(crate) fn analyse(path: &str, source: &str, bootstrap: &str) -> Result<Vec<ClassResult>> {
-    // Conservative lexical bound applies before the recursive third-party parser.
-    // Counting inside comments/strings intentionally errs toward refusing complex input.
-    let syntax = source
-        .bytes()
-        .filter(|b| b"({[!~?:=|&+-.".contains(b))
-        .count();
-    if syntax > 128 {
-        return Err(crate::Diagnostic::new(
-            path,
-            1,
-            "PHP syntax budget exceeds this translation profile",
-        ));
-    }
     let arena = Bump::new();
     let file = File::ephemeral(
         Cow::Owned(path.as_bytes().to_vec()),
         Cow::Owned(source.as_bytes().to_vec()),
     );
+    crate::syntax_budget::check(path, &file)?;
     let program = parse_file(&arena, &file);
     if !program.errors.is_empty() {
         return Err(crate::Diagnostic::new(

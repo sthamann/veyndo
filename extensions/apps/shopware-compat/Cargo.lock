@@ -2438,6 +2438,7 @@ dependencies = [
  "mago-php-version",
  "mago-span",
  "mago-syntax",
+ "mago-syntax-core",
  "mago-text-edit",
  "reqwest",
  "ring",

@@ -79,7 +79,7 @@ normal app registry, versions and commerce hook owner.
 | Discount | One non-removable, non-stackable, non-goods line; negative percentage with up to two decimal places, at most 100% |
 | Arithmetic | Integer minor units and half-up percentage rounding; positive subtotals up to 100,000,000 minor units |
 | Resource bounds | 64 files, 32 KiB per file, 256 KiB combined source for the local compiler; Studio/HTTP/MCP retain the shared 64 KiB encoded-request limit |
-| Source analysis | Bounded PHP syntax and expression traversal; reading cart prices after mutating its lines is refused |
+| Source analysis | Iterative PHP tokens before AST parsing: 192 structural tokens/file, 32 per run, 16 delimiter levels; bounded expression traversal; reading cart prices after mutating its lines is refused |
 | Runtime | Existing typed WIT host with fuel, memory and response validation; no WASI, database or network capability |
 
 The profile translates the **aggregate discount decision**. Veyndo allocates the

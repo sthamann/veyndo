@@ -20,7 +20,7 @@ through the existing exact-digest selected publication.
 | New active cart | Empty | Empty |
 | Payment | Unpaid invoice | Bank transfer, no provider charge |
 
-Original order: `01a17326bfb573e2894a82edf705a242`. Native order: `3829d7df779c409a8f541f3c6856b41f`.
+Original order: `01a1735e913373bfa74c52e6ab79e99f`. Native order: `7564ab4e2849455dac674dff2b9cfa9c`.
 The native order retains component digest `aeec9c89dd20ae63915ea17d78c5a911476712686636da3168afdcc09a9e5c60`, app
 `imported_discount`, version `1.0.0`, currency EUR, scale 2 and reason
 `shopware_discount`. The source fingerprint is `018a42953c4fa53b21ba82d71980a6972d039476c0131a1dd97bf29729e6011a`.
@@ -86,12 +86,24 @@ correction; negative dependency checks reject reintegrating the parser workspace
 into the core build. Three independent CLI processes emitted identical reports.
 
 The final local controller image is
-`sha256:000217f9dacc201d002cfe2560c58f40a03477d9ca74429239b843386c339ff7`.
+`sha256:9c6177028c6a3160bc61c80528bd6f72360d3548eb087272a640d022d50615f6`.
 It translated the same fixture with a read-only filesystem, an unprivileged user,
 all capabilities dropped, no-new-privileges, 256 MiB memory and one CPU. Its image
 contains no PHP, Python or Cargo executable. Health and authenticated translation
 passed; unauthenticated translation returned HTTP 401. This is local image
 acceptance, not a registry publication or production deployment.
+
+## Parser availability regression
+
+A hostile source containing 3,500 unparenthesized `clone` operators originally
+aborted the standalone parser with stack overflow. Admission now iterates actual
+PHP tokens before AST parsing, bounds structural token runs and nesting, and counts
+recursive keyword operators and casts. Comments and literal strings are terminal
+data. Eight hostile programs are rejected through real compiler subprocesses;
+the HTTP gateway and final 256 MiB image reject recursive inputs and successfully
+translate a valid plugin afterward. The complete original/native purchase
+comparison passed again. This narrows accepted syntax; it does not add PHP
+capabilities or turn the compiler into a proved component.
 
 ## Reproduce
 
@@ -111,8 +123,8 @@ Outputs are `artifacts/shopware-native-original-result.json`,
 `artifacts/shopware-native-result.json` and `artifacts/shopware-native.log`.
 These contain synthetic test identifiers, never provider credentials.
 
-The crate tests passed seven compiler tests and four controller tests. Cargo
-boundary checks passed 21 negative controls; the structure gate passed with 729
+The crate tests passed nine compiler tests and four controller tests. Cargo
+boundary checks passed 21 negative controls; the structure gate passed with 731
 Rust modules and 836 frontend modules. Clippy passed with warnings denied.
 The complete source inventory is recorded with the translator and gateway modules
 classified as unproved. Existing Lean contracts, axiom checks and 156,749 compiled

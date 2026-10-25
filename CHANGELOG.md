@@ -2,6 +2,7 @@
 
 ## Native Shopware source translation — 25 October 2026
 
+- Reject recursive PHP keyword/cast/operator chains before AST parsing. Keep the compiler and HTTP service available after hostile source submissions; repeat the actual original/native purchase comparison.
 - Localize the shared order-confirmation discount label in all four interface languages; verify a browser demo purchase, return and empty cart after reload.
 - Add an app-owned Cargo compiler using a real PHP syntax tree, explicit Composer/DI registration and a typed cart-discount decision. Emit ordinary versioned Veyndo Manifest/WIT components with source fingerprints and executable examples.
 - Support the bounded Shopware 6.7 global percentage processor profile. Reject unknown source, resources, dependencies, lifecycle methods, dynamic host effects, invalid signatures and source-budget violations without emitting a partial app.

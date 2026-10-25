@@ -43,6 +43,13 @@ with artifact_path('shopware-native.log').open('w') as log:
     route='/api/apps/shopware_compat/actions/translate'
     report=call(core_url,route,request,h)
     assert report['manifest'] and not report['diagnostics'],report
+    # Recursive keywords used to abort the HTTP worker before an AST existed.
+    for operator in ['clone ', 'throw ', '@']:
+        hostile=json.loads(json.dumps(request));hostile['files']['src/Deep.php']='<?php '+operator*500+'$x;'
+        rejected=call(core_url,route,hostile,h)
+        assert rejected['manifest'] is None and 'budget' in rejected['diagnostics'][0]['message']
+        assert adapter.poll() is None
+    assert call(core_url,route,request,h)['sourceDigest']==report['sourceDigest']
     manifest=report['manifest']
     assert manifest['permissions']==['commerce.hooks'] and not manifest['entities']
     assert manifest['name']=={'en-GB':'Native discount reference','de-DE':'Nativer Rabattvergleich'}
