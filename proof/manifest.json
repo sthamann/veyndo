@@ -1245,8 +1245,8 @@
     },
     "extensions/apps/shopware-compat/service/config.rs": {
       "status": "unproved",
-      "sha256": "f6244c4c0f6b3cd5d476edce4f610ee3c10eb841af20a1719cc41bfdb06e971a",
-      "review": "Reviewed original Shopware app controller, bounded fixed-origin lifecycle jobs and durable uncertain fences; opaque pinned app UI response CSP; operational records excluded by extracted release policy and native clone/publication path. Real container, native permissions/MCP, migration retention and app surface regressions passed; PHP and controller adapters remain unproved."
+      "sha256": "178ec9f28e5f30e6b727f2b8e5969692686da4eefaf9fd65fea0cb2e68d9c1cc",
+      "review": "Reviewed fixed operator origins, separate cell/core cookie hosts including cross-tenant and cross-port collisions; loopback localhost requires the explicit local-test flag. Destination and host regression, original container integration, original browser login persistence and final non-root Rust image passed. This configuration adapter remains unproved."
     },
     "extensions/apps/shopware-compat/service/core.rs": {
       "status": "unproved",
