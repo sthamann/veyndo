@@ -1243,10 +1243,55 @@
       "sha256": "ffa5bb4e821f1de6f27ca9e9fb511e6be430727458d3db22f8286c9e833c8c1a",
       "review": "Relocated app implementation into owner packages; generic connector binary and payment ledger preserve existing contracts; reviewed receipt and inventory bindings unchanged"
     },
+    "extensions/apps/shopware-compat/native/src/component.rs": {
+      "status": "unproved",
+      "sha256": "5d1aeae457673115716dda2cd19b08a42357acd6ab556a2e2158a05aa8aec486",
+      "review": "App-owned bounded Shopware AST translator and compiler-only service action; strict all-source refusal, preserved source hashes and locales, typed fuel-limited Wasm discounts. Seven compiler and four gateway tests, hostile source cases, original Shopware/native checkout comparison and real private import/release/tenant isolation passed locally. These compiler/HTTP/build adapters remain unproved; extracted policies and theorem bodies unchanged."
+    },
+    "extensions/apps/shopware-compat/native/src/contracts.rs": {
+      "status": "unproved",
+      "sha256": "61884c16e03052122df2d4402af2fac6ef00ad6d8540ffe7d109e13faa74d904",
+      "review": "App-owned bounded Shopware AST translator and compiler-only service action; strict all-source refusal, preserved source hashes and locales, typed fuel-limited Wasm discounts. Seven compiler and four gateway tests, hostile source cases, original Shopware/native checkout comparison and real private import/release/tenant isolation passed locally. These compiler/HTTP/build adapters remain unproved; extracted policies and theorem bodies unchanged."
+    },
+    "extensions/apps/shopware-compat/native/src/expressions.rs": {
+      "status": "unproved",
+      "sha256": "bbd9982bd136a30bb52f91e8cffa443f665008d6f0600dc4675ac9ed4eb66880",
+      "review": "App-owned bounded Shopware AST translator and compiler-only service action; strict all-source refusal, preserved source hashes and locales, typed fuel-limited Wasm discounts. Seven compiler and four gateway tests, hostile source cases, original Shopware/native checkout comparison and real private import/release/tenant isolation passed locally. These compiler/HTTP/build adapters remain unproved; extracted policies and theorem bodies unchanged."
+    },
+    "extensions/apps/shopware-compat/native/src/intake.rs": {
+      "status": "unproved",
+      "sha256": "a888f64adbcbb0e63a44f367a82d748f5785a1aed1a5cc4973eb4bc280732a89",
+      "review": "App-owned bounded Shopware AST translator and compiler-only service action; strict all-source refusal, preserved source hashes and locales, typed fuel-limited Wasm discounts. Seven compiler and four gateway tests, hostile source cases, original Shopware/native checkout comparison and real private import/release/tenant isolation passed locally. These compiler/HTTP/build adapters remain unproved; extracted policies and theorem bodies unchanged."
+    },
+    "extensions/apps/shopware-compat/native/src/lib.rs": {
+      "status": "unproved",
+      "sha256": "d716c39e693d2727a639bd9aaba4a5874a1671ff4aeb38c8e70d565f32d0721c",
+      "review": "App-owned bounded Shopware AST translator and compiler-only service action; strict all-source refusal, preserved source hashes and locales, typed fuel-limited Wasm discounts. Seven compiler and four gateway tests, hostile source cases, original Shopware/native checkout comparison and real private import/release/tenant isolation passed locally. These compiler/HTTP/build adapters remain unproved; extracted policies and theorem bodies unchanged."
+    },
+    "extensions/apps/shopware-compat/native/src/main.rs": {
+      "status": "unproved",
+      "sha256": "4107ad181ffc7bf1b7928d46a8deee115accf7c0028c6fae1e99b0601b16d0eb",
+      "review": "App-owned bounded Shopware AST translator and compiler-only service action; strict all-source refusal, preserved source hashes and locales, typed fuel-limited Wasm discounts. Seven compiler and four gateway tests, hostile source cases, original Shopware/native checkout comparison and real private import/release/tenant isolation passed locally. These compiler/HTTP/build adapters remain unproved; extracted policies and theorem bodies unchanged."
+    },
+    "extensions/apps/shopware-compat/native/src/php.rs": {
+      "status": "unproved",
+      "sha256": "8a476d7e09fb98be89259cc9f9175994543fd5aa80c215f0cf7e0596e5f2bcbc",
+      "review": "App-owned bounded Shopware AST translator and compiler-only service action; strict all-source refusal, preserved source hashes and locales, typed fuel-limited Wasm discounts. Seven compiler and four gateway tests, hostile source cases, original Shopware/native checkout comparison and real private import/release/tenant isolation passed locally. These compiler/HTTP/build adapters remain unproved; extracted policies and theorem bodies unchanged."
+    },
+    "extensions/apps/shopware-compat/native/src/symbols.rs": {
+      "status": "unproved",
+      "sha256": "7b24ce08c0e30e9b36d6c5ea4acf7c0d01f09b4ed0935e7e8fa1eea03e267966",
+      "review": "App-owned bounded Shopware AST translator and compiler-only service action; strict all-source refusal, preserved source hashes and locales, typed fuel-limited Wasm discounts. Seven compiler and four gateway tests, hostile source cases, original Shopware/native checkout comparison and real private import/release/tenant isolation passed locally. These compiler/HTTP/build adapters remain unproved; extracted policies and theorem bodies unchanged."
+    },
+    "extensions/apps/shopware-compat/native/tests/translation.rs": {
+      "status": "unproved",
+      "sha256": "c75aad23d97ea24f7072c3a5b9a5f87ef5ef5e483fc37471dbd1ae797c2a934f",
+      "review": "App-owned bounded Shopware AST translator and compiler-only service action; strict all-source refusal, preserved source hashes and locales, typed fuel-limited Wasm discounts. Seven compiler and four gateway tests, hostile source cases, original Shopware/native checkout comparison and real private import/release/tenant isolation passed locally. These compiler/HTTP/build adapters remain unproved; extracted policies and theorem bodies unchanged."
+    },
     "extensions/apps/shopware-compat/service/config.rs": {
       "status": "unproved",
-      "sha256": "178ec9f28e5f30e6b727f2b8e5969692686da4eefaf9fd65fea0cb2e68d9c1cc",
-      "review": "Reviewed fixed operator origins, separate cell/core cookie hosts including cross-tenant and cross-port collisions; loopback localhost requires the explicit local-test flag. Destination and host regression, original container integration, original browser login persistence and final non-root Rust image passed. This configuration adapter remains unproved."
+      "sha256": "03aa13e45ee8a4c70af439d66837463d1990355762c8d0e2b4bc0fe5645d7dfb",
+      "review": "App-owned bounded Shopware AST translator and compiler-only service action; strict all-source refusal, preserved source hashes and locales, typed fuel-limited Wasm discounts. Seven compiler and four gateway tests, hostile source cases, original Shopware/native checkout comparison and real private import/release/tenant isolation passed locally. These compiler/HTTP/build adapters remain unproved; extracted policies and theorem bodies unchanged."
     },
     "extensions/apps/shopware-compat/service/core.rs": {
       "status": "unproved",
@@ -1265,8 +1310,8 @@
     },
     "extensions/apps/shopware-compat/service/main.rs": {
       "status": "unproved",
-      "sha256": "11c24b125a204f92a3b5d265076879906acad4c9587dbb050fa0e0425b7c29dd",
-      "review": "Review controller SIGINT/SIGTERM admission closure and bounded leased-job drain; interrupted writes retain existing durable fence. Original runtime integration verifies both normal signal exits."
+      "sha256": "3b056a7fd4ca0ae1c66dd0d14510ea24cd5c0e68f6b6e205ecab85fbabe3f65b",
+      "review": "App-owned bounded Shopware AST translator and compiler-only service action; strict all-source refusal, preserved source hashes and locales, typed fuel-limited Wasm discounts. Seven compiler and four gateway tests, hostile source cases, original Shopware/native checkout comparison and real private import/release/tenant isolation passed locally. These compiler/HTTP/build adapters remain unproved; extracted policies and theorem bodies unchanged."
     },
     "extensions/apps/shopware-compat/service/plan.rs": {
       "status": "unproved",
@@ -4215,12 +4260,12 @@
       "review": "Reviewed isolated concurrent signed-pooler verification: unchanged registry and assertions, separate disposable database/Qdrant/logs, required fatal join, owned child cleanup, same instrumented binaries and coverage aggregation; real subprocess negative controls added."
     },
     "Cargo.lock": {
-      "sha256": "de01e9cdb5d3e16ec81ce7ce92898ab67d72f00f582fb0e658daf00f62f460c3",
-      "review": "Migration intake reviewed: native private catalogue/category/page owners, exact historical provenance without purchase effects, current package/creator/lease/hash fences and native replay lock order; independent Rust package uses shared money/network policy only; new HTML rich blocks preserve text and list structure. Real source/Core HTTP, signed roles, cancellation, replay, concurrent callbacks and simulated purchase regressions passed. External source completeness and SQL are not claimed proved."
+      "sha256": "5f0765e8cac573093931f6508797871aed7ca57fbedb823d26cdaeb2aaa13b16",
+      "review": "App-owned bounded Shopware AST translator and compiler-only service action; strict all-source refusal, preserved source hashes and locales, typed fuel-limited Wasm discounts. Seven compiler and four gateway tests, hostile source cases, original Shopware/native checkout comparison and real private import/release/tenant isolation passed locally. These compiler/HTTP/build adapters remain unproved; extracted policies and theorem bodies unchanged."
     },
     "Cargo.toml": {
-      "sha256": "dd5d8783094f5668cb0e0c773377c9b33400f9371d704d8147ecae446a9d54db",
-      "review": "Reviewed original Shopware app controller, bounded fixed-origin lifecycle jobs and durable uncertain fences; opaque pinned app UI response CSP; operational records excluded by extracted release policy and native clone/publication path. Real container, native permissions/MCP, migration retention and app surface regressions passed; PHP and controller adapters remain unproved."
+      "sha256": "ac55e4f2880c9b7901fd685d8258e489c72ae437df7e31931aaed9fb8dddfb57",
+      "review": "App-owned bounded Shopware AST translator and compiler-only service action; strict all-source refusal, preserved source hashes and locales, typed fuel-limited Wasm discounts. Seven compiler and four gateway tests, hostile source cases, original Shopware/native checkout comparison and real private import/release/tenant isolation passed locally. These compiler/HTTP/build adapters remain unproved; extracted policies and theorem bodies unchanged."
     },
     "crates/apps/Cargo.toml": {
       "sha256": "496067ed6a47c2778baed402bd51378c139687fbb3b36f8f965bf880129de013",

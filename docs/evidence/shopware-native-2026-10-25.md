@@ -79,5 +79,8 @@ These contain synthetic test identifiers, never provider credentials.
 The crate tests passed seven compiler tests and four controller tests. Cargo
 boundary checks passed 21 negative controls; the structure gate passed with 729
 Rust modules and 836 frontend modules. Clippy passed with warnings denied.
+The complete source inventory is recorded with the translator and gateway modules
+classified as unproved. Existing Lean contracts, axiom checks and 156,749 compiled
+Rust/Lean comparisons pass; no PHP compatibility theorem is claimed.
 
 [Native translation contract](../shopware-native-translation.md) · [Current status](../status.md)
