@@ -9,7 +9,10 @@ journey are tracked separately. All purchases below use **simulated payments**.
 The [Shopware environments app](shopware-compatibility.md) manages a separate
 original Shopware 6.7.14.2 through an app-owned Rust controller, native jobs and
 private operation records. Its local original-runtime tests exercise plugin
-migration/event execution and a Twig App Script. The isolated runtime recipe
+migration/event execution and a Twig App Script. Additional local acceptance
+installed FroshTools 3.15.3 through Veyndo and used its original cache interface
+and theme compilation. Distinct cell/core hostnames prevent login cookie collisions.
+The isolated runtime recipe
 includes its own database and workers. This is not a public deployment or universal
 extension certification, and it does not synchronize native Veyndo orders/stock
 with Shopware. The existing public acceptance below remains unchanged.

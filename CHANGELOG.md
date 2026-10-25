@@ -6,6 +6,7 @@
 - Package an isolated original Shopware 6.7.14.2 runtime with its Composer lock, separate MariaDB/files, workers and an unprivileged ingress. Plugin PHP and its migrations remain outside the Veyndo core.
 - Persist per-environment mutation locks and receipts through shared app storage. Keep unfinished operations fenced after a controller restart, and exclude operational entities from sandbox cloning and selected publication.
 - Add real original-runtime plugin/App Script fixtures, guest checkout, stock/cart checks and a disposable-container suite to native CI. The operational-record release exclusion extends the existing extracted Lean policy.
+- Reject shared cell/core hostnames even on different ports to prevent original Shopware login cookie collisions. Verify unchanged FroshTools 3.15.3 installation/activation through Veyndo and its original cache interface and theme compilation in Chrome.
 - Repair embedded external app UI by serving pinned code in a response-enforced opaque sandbox, retaining the Studio script policy and per-action grants.
 - Add the setup guide and actual Studio screenshot. Automatic commerce synchronization, arbitrary extension certification and public service deployment are not claimed.
 

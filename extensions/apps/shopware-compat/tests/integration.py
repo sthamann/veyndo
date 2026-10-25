@@ -25,7 +25,7 @@ def call(base,path,data=None,headers=None,status=200,method=None):
     assert r.status in (status if isinstance(status,tuple) else (status,)),(path,r.status,body)
     return body
 
-sw=os.environ['SHOPWARE_TEST_URL'];assert urlsplit(sw).hostname=='127.0.0.1', 'Use an isolated loopback Shopware'
+sw=os.environ['SHOPWARE_TEST_URL'];assert urlsplit(sw).hostname=='localhost', 'Use localhost for isolated Shopware; Veyndo uses 127.0.0.1'
 client=os.environ['SHOPWARE_TEST_CLIENT'];secret=os.environ['SHOPWARE_TEST_SECRET']
 def sw_headers():
     token=call(sw,'/api/oauth/token',{'grant_type':'client_credentials','client_id':client,'client_secret':secret})['access_token']

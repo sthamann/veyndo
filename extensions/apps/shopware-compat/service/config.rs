@@ -26,7 +26,9 @@ fn origin(raw: &str, local: bool) -> bool {
         return false;
     };
     (u.scheme() == "https"
-        || (local && u.scheme() == "http" && matches!(u.host_str(), Some("127.0.0.1" | "[::1]"))))
+        || (local
+            && u.scheme() == "http"
+            && matches!(u.host_str(), Some("127.0.0.1" | "[::1]" | "localhost"))))
         && u.host_str().is_some()
         && u.path() == "/"
         && u.username().is_empty()
@@ -54,7 +56,19 @@ impl Config {
         if self.gateway.len() < 24 || self.tenants.is_empty() || self.tenants.len() > 1000 {
             return Err("Invalid gateway configuration".into());
         }
-        let mut origins = HashSet::new();
+        // Cookies ignore ports. Sharing a hostname can overwrite another cell's
+        // original Shopware login, even when their origins/databases differ.
+        let core_hosts = self
+            .tenants
+            .values()
+            .filter_map(|t| {
+                reqwest::Url::parse(&t.core_url)
+                    .ok()?
+                    .host_str()
+                    .map(str::to_owned)
+            })
+            .collect::<HashSet<_>>();
+        let mut hosts = HashSet::new();
         for (id, t) in &self.tenants {
             if id.is_empty()
                 || id.len() > 100
@@ -84,8 +98,9 @@ impl Config {
                     return Err("Invalid fixed Shopware cell configuration".into());
                 }
                 let u = reqwest::Url::parse(&c.url)?;
-                if !origins.insert(u.origin().ascii_serialization()) {
-                    return Err("A Shopware origin cannot be shared between cells or shops".into());
+                let host = u.host_str().ok_or("Missing Shopware hostname")?.to_owned();
+                if core_hosts.contains(&host) || !hosts.insert(host) {
+                    return Err("Shopware cells require distinct hostnames, separate from Veyndo; ports do not isolate cookies".into());
                 }
             }
         }
@@ -111,5 +126,56 @@ mod tests {
         }
         assert!(!origin("http://127.0.0.1:8813", false));
         assert!(origin("http://127.0.0.1:8813", true));
+        assert!(origin("http://localhost:8813", true));
+        assert!(!origin("http://localhost:8813", false));
+    }
+    #[test]
+    fn cell_cookies_cannot_share_a_host_even_on_different_ports() {
+        let cell = |url: &str| Cell {
+            url: url.into(),
+            client_id: "test-client-id-1234".into(),
+            client_secret: "s".repeat(32),
+            version: "6.7.14.2".into(),
+            image_digest: format!("sha256:{}", "a".repeat(64)),
+            environment: "sandbox".into(),
+        };
+        let mut config = Config {
+            gateway: "g".repeat(32),
+            tenants: HashMap::from([(
+                "shop".into(),
+                Tenant {
+                    core_url: "https://core.example".into(),
+                    callback_token: "c".repeat(32),
+                    cells: HashMap::from([
+                        ("one".into(), cell("https://cell.example")),
+                        ("two".into(), cell("https://cell.example:8443")),
+                    ]),
+                },
+            )]),
+        };
+        assert!(config.validate(false).is_err());
+        config
+            .tenants
+            .get_mut("shop")
+            .unwrap()
+            .cells
+            .insert("two".into(), cell("https://core.example:8443"));
+        assert!(config.validate(false).is_err());
+        config
+            .tenants
+            .get_mut("shop")
+            .unwrap()
+            .cells
+            .insert("two".into(), cell("https://other.example"));
+        assert!(config.validate(false).is_ok());
+        config.tenants.insert(
+            "other-shop".into(),
+            Tenant {
+                core_url: "https://other-core.example".into(),
+                callback_token: "c".repeat(32),
+                cells: HashMap::from([("one".into(), cell("https://cell.example:9443"))]),
+            },
+        );
+        assert!(config.validate(false).is_err());
     }
 }

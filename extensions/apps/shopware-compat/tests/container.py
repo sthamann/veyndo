@@ -28,7 +28,7 @@ with tempfile.TemporaryDirectory(prefix=name) as temp:
     if not args.cell_image:
         run(docker + ['build', '-f', str(PACKAGE / 'deploy/Cell.Dockerfile'), '-t', image, '.'])
     image = run(docker + ['image', 'inspect', image, '--format', '{{.Id}}'], quiet=True).stdout.strip()
-    env_file.write_text(f'CELL_IMAGE={image}\nCELL_URL=http://127.0.0.1:{cell_port}\nCELL_PORT={cell_port}\nCELL_SECRET={app_secret}\nCELL_DB_PASSWORD={db_password}\nCELL_INGRESS_IMAGE={name}-ingress\n')
+    env_file.write_text(f'CELL_IMAGE={image}\nCELL_URL=http://localhost:{cell_port}\nCELL_PORT={cell_port}\nCELL_SECRET={app_secret}\nCELL_DB_PASSWORD={db_password}\nCELL_INGRESS_IMAGE={name}-ingress\n')
     env_file.chmod(0o600)
     compose = docker + ['compose', '--env-file', str(env_file), '-p', name, '-f', str(PACKAGE / 'deploy/compose.yaml')]
     pg_name = name + '-pg'
@@ -54,7 +54,7 @@ with tempfile.TemporaryDirectory(prefix=name) as temp:
         run(cli + ['theme:compile', '--no-interaction'])
         client, secret = 'SWIA' + secrets.token_hex(14).upper(), secrets.token_hex(32)
         run(cli + ['integration:create', 'Synthetic compatibility acceptance', '--admin', '--access-key', client, '--secret-access-key', secret, '--no-interaction'], quiet=True)
-        url = f'http://127.0.0.1:{cell_port}'
+        url = f'http://localhost:{cell_port}'
         for _ in range(60):
             try:
                 with urllib.request.urlopen(url + '/admin', timeout=3) as response:

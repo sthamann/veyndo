@@ -98,9 +98,13 @@ build `deploy/Controller.Dockerfile` from the repository root.
 ```
 
 The service checks the original version on each inspection. `imageDigest` is
-operator-supplied deployment metadata, not remote image attestation. Shared origins
-across shops/cells are rejected; deployment must also avoid aliasing one database
-through different hostnames. Loopback HTTP requires `SHOPWARE_COMPAT_LOCAL_TEST=1`.
+operator-supplied deployment metadata, not remote image attestation. Each cell
+requires its own hostname, also distinct from every configured Veyndo core host.
+Different ports do not isolate cookies. The service rejects a reused hostname
+across shops/cells, including reuse on another port. Deployment must also avoid
+aliasing one database through different hostnames. For local browser tests use
+`localhost` for one cell and `127.0.0.1` for Veyndo; never open multiple Shopware
+installations on that cell hostname. Loopback HTTP requires `SHOPWARE_COMPAT_LOCAL_TEST=1`.
 Use HTTPS otherwise. `SHOPWARE_COMPAT_BIND` defaults to `127.0.0.1:8812`.
 
 5. Configure the existing Veyndo `APP_SERVICES.shopware_compat` with the service

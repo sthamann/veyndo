@@ -11,7 +11,7 @@ original administration and storefront in that environment.
 
 ![Original Shopware extension inventory inside Veyndo Studio](assets/shopware-compatibility.jpg)
 
-Actual local Studio session with the plugin and App Script fixtures. The screen
+Actual local Studio session with FroshTools 3.15.3 and the plugin/App Script fixtures. The screen
 uses the isolated original Shopware environment; the displayed runtime data comes
 from its Admin API.
 
@@ -29,7 +29,9 @@ flowchart LR
     R --> H[Private Veyndo app records]
 ```
 
-Each shop and environment gets a separate database, files and credentials.
+Each shop and environment gets a separate hostname, database, files and credentials.
+The controller rejects shared hostnames even with different ports, because browser
+cookies do not isolate ports. Veyndo and original Shopware use separate hosts.
 The controller never runs plugin PHP inside Veyndo's Rust process. It has no core
 database credential or Docker socket. Extension code stays inside the original
 Shopware environment; the Veyndo app package owns its controller, UI, deployment
@@ -92,6 +94,15 @@ foreign-tenant rejection and bounded service concurrency.
 The order uses original Shopware’s manual invoice method and remains unpaid;
 it makes no external payment or email call.
 The source fixture and commands live [with the app](../extensions/apps/shopware-compat/tests/integration.py).
+
+An additional local acceptance installed and activated the unchanged public
+[FroshTools 3.15.3 release](https://github.com/FriendsOfShopware/FroshTools/releases/tag/3.15.3)
+through Veyndo jobs. The original administration rendered its system and cache
+views, the cache API returned 22 pools, and its **Compile theme** action completed
+through the original Shopware theme API. The isolated test network blocks external
+update/advisory services; those checks visibly report that they cannot connect.
+
+![FroshTools cache interface inside the original Shopware administration](assets/shopware-froshtools-original.jpg)
 
 This implementation manages original Shopware environments. Automatic catalogue,
 inventory and order synchronization with native Veyndo is not included. A plugin
