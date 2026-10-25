@@ -164,6 +164,7 @@ export const de = {
   saveSelection: "Auswahl übernehmen",
   unsaved: "Bitte übernimm deine Auswahl, um den Gesamtpreis zu aktualisieren.",
   tax: "Mehrwertsteuer",
+  discount: "Rabatt",
   total: "Gesamtbetrag",
   subtotal: "Warenwert",
   empty: "Dein Warenkorb wartet auf etwas Gutes.",

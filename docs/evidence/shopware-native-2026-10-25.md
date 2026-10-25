@@ -59,10 +59,20 @@ the customer proceeds with a new empty active cart.
   translation surface was also opened and used in Chrome. This used manual package
   transfer, not a one-click handoff. The source plugin's original German/English
   names are preserved; missing translations are not invented.
+- A separate Chrome purchase completed with the translated native discount:
+  order `RAC-8ff9d92c`, EUR 22.41 total, EUR 3.58 VAT and EUR 2.49 discount.
+  The demo provider reported a simulated authorization with no real money.
+  Return to the shop, full reload and reopening the cart showed it empty.
+  The previously missing receipt discount label is now localized EN/DE/FR/ES;
+  Chrome displayed the German label. The existing receipt regression asserts
+  the accepted discount amount and label.
 
 Pull requests changing the compatibility package now run the original/native
 purchase comparison automatically and retain the two synthetic result files.
 This does not replace or weaken the shared repository checks.
+The comparison passed in hosted run
+[`40197036099`](https://github.com/sthamann/veyndo/actions/runs/40197036099)
+on source `9acc45af`; full repository verification is tracked separately.
 
 ## Dependency isolation and release-image checks
 

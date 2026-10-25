@@ -165,6 +165,7 @@ export const en: Record<Key, string> = {
   saveSelection: "Apply selection",
   unsaved: "Apply your selection to update the total.",
   tax: "VAT",
+  discount: "Discount",
   total: "Total",
   subtotal: "Items",
   empty: "Your bag is waiting for something good.",

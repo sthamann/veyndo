@@ -238,6 +238,7 @@ it("renders an accepted order's exact snapshot, addresses and honest simulated s
     state: "open",
     cart: {
       ...cart,
+      discountTotal: 2.49,
       checkout: { ...cart.checkout, address, billingAddress: address },
       lineItems: [
         {
@@ -259,6 +260,8 @@ it("renders an accepted order's exact snapshot, addresses and honest simulated s
     </LocaleProvider>,
   );
   expect(screen.getByText("V-123")).toBeInTheDocument();
+  expect(screen.getByText("Discount")).toBeInTheDocument();
+  expect(screen.getByText("−€2.49")).toBeInTheDocument();
   expect(screen.getAllByText("Test Street 1")).toHaveLength(2);
   expect(screen.getByText("Fixture shirt M")).toBeInTheDocument();
   expect(screen.getByText("Test payment · no real money")).toBeInTheDocument();
