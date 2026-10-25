@@ -1630,8 +1630,8 @@
     },
     "src/apps/approval.rs": {
       "status": "reviewed-binding",
-      "sha256": "4079491d5d9eac92398582158743aada1eddff3b88aa930c06502aabd2bcee91",
-      "review": "Reviewed original Shopware app controller, bounded fixed-origin lifecycle jobs and durable uncertain fences; opaque pinned app UI response CSP; operational records excluded by extracted release policy and native clone/publication path. Real container, native permissions/MCP, migration retention and app surface regressions passed; PHP and controller adapters remain unproved."
+      "sha256": "3d41f19c89cad261e8ce344a75a4d4d8bfd674efac9fe04706de7b4e1e6bfa8a",
+      "review": "Native Shopware compiler owns an isolated Cargo workspace and lockfile to prevent Mago preserve_order features from altering Commerce schemas or signatures. Recursive app canonical sorting retains all 26 existing package digests; current permission-separated developer surface, root workspace tests and compiler/controller tests passed. This is source review, not proof of PHP compatibility."
     },
     "src/apps/asset_surfaces.rs": {
       "status": "unproved",
@@ -4260,12 +4260,12 @@
       "review": "Reviewed isolated concurrent signed-pooler verification: unchanged registry and assertions, separate disposable database/Qdrant/logs, required fatal join, owned child cleanup, same instrumented binaries and coverage aggregation; real subprocess negative controls added."
     },
     "Cargo.lock": {
-      "sha256": "5f0765e8cac573093931f6508797871aed7ca57fbedb823d26cdaeb2aaa13b16",
-      "review": "App-owned bounded Shopware AST translator and compiler-only service action; strict all-source refusal, preserved source hashes and locales, typed fuel-limited Wasm discounts. Seven compiler and four gateway tests, hostile source cases, original Shopware/native checkout comparison and real private import/release/tenant isolation passed locally. These compiler/HTTP/build adapters remain unproved; extracted policies and theorem bodies unchanged."
+      "sha256": "de01e9cdb5d3e16ec81ce7ce92898ab67d72f00f582fb0e658daf00f62f460c3",
+      "review": "Native Shopware compiler owns an isolated Cargo workspace and lockfile to prevent Mago preserve_order features from altering Commerce schemas or signatures. Recursive app canonical sorting retains all 26 existing package digests; current permission-separated developer surface, root workspace tests and compiler/controller tests passed. This is source review, not proof of PHP compatibility."
     },
     "Cargo.toml": {
-      "sha256": "ac55e4f2880c9b7901fd685d8258e489c72ae437df7e31931aaed9fb8dddfb57",
-      "review": "App-owned bounded Shopware AST translator and compiler-only service action; strict all-source refusal, preserved source hashes and locales, typed fuel-limited Wasm discounts. Seven compiler and four gateway tests, hostile source cases, original Shopware/native checkout comparison and real private import/release/tenant isolation passed locally. These compiler/HTTP/build adapters remain unproved; extracted policies and theorem bodies unchanged."
+      "sha256": "f97fc87066fb02853834a5e599829836c1b54d22e1bf8ffd199266b9c1d626c1",
+      "review": "Native Shopware compiler owns an isolated Cargo workspace and lockfile to prevent Mago preserve_order features from altering Commerce schemas or signatures. Recursive app canonical sorting retains all 26 existing package digests; current permission-separated developer surface, root workspace tests and compiler/controller tests passed. This is source review, not proof of PHP compatibility."
     },
     "crates/apps/Cargo.toml": {
       "sha256": "496067ed6a47c2778baed402bd51378c139687fbb3b36f8f965bf880129de013",
@@ -4366,6 +4366,18 @@
     "deploy/Dockerfile": {
       "sha256": "32cff221980fddc3973e774760e28c3bc7dff414234d8b400fea9683b465a99e",
       "review": "Review compiler-enforced foundation crates with unchanged native owners; native provider read-tool aliases and current authorization, private checkpoint continuation and versioned prompt evidence; fixed subscriber acknowledgements preserve commit gaps, independent quarantine and explicit replay; traced requests/tasks/outbox without payloads; exact decimal-to-minor-unit rounding retains legacy price boundary; real SQL poison-isolation regression passes and workspace unit/clippy checks pass"
+    },
+    "extensions/apps/migration/Cargo.toml": {
+      "sha256": "5be03ed9c15d4b6c8949c8453d84a6b0764eb285581726bd01023782e7113454",
+      "review": "Native Shopware compiler owns an isolated Cargo workspace and lockfile to prevent Mago preserve_order features from altering Commerce schemas or signatures. Recursive app canonical sorting retains all 26 existing package digests; current permission-separated developer surface, root workspace tests and compiler/controller tests passed. This is source review, not proof of PHP compatibility."
+    },
+    "extensions/apps/shopware-compat/Cargo.lock": {
+      "sha256": "eb9873b1c503df0361a9502a681761ec42efc51d4712c03e71a871382c85f58c",
+      "review": "Native Shopware compiler owns an isolated Cargo workspace and lockfile to prevent Mago preserve_order features from altering Commerce schemas or signatures. Recursive app canonical sorting retains all 26 existing package digests; current permission-separated developer surface, root workspace tests and compiler/controller tests passed. This is source review, not proof of PHP compatibility."
+    },
+    "extensions/apps/shopware-compat/Cargo.toml": {
+      "sha256": "f576becdcae75059b6def65a26aaa91849bf6bef688bbadeb9f65ce8574b55f8",
+      "review": "Native Shopware compiler owns an isolated Cargo workspace and lockfile to prevent Mago preserve_order features from altering Commerce schemas or signatures. Recursive app canonical sorting retains all 26 existing package digests; current permission-separated developer surface, root workspace tests and compiler/controller tests passed. This is source review, not proof of PHP compatibility."
     },
     "fixtures/app-studio-schema.json": {
       "sha256": "f9a84dcb9492ef9ef7fc1863dca313f9298d8641781431a92b9b44d58109f459",
@@ -4912,8 +4924,8 @@
       "review": "Reviewed original Shopware app controller, bounded fixed-origin lifecycle jobs and durable uncertain fences; opaque pinned app UI response CSP; operational records excluded by extracted release policy and native clone/publication path. Real container, native permissions/MCP, migration retention and app surface regressions passed; PHP and controller adapters remain unproved."
     },
     "scripts/formal/registry.py": {
-      "sha256": "360929ad96b6dd5de79076a16d52b650b69f1552f9042e2e875a6f5661762644",
-      "review": "Review domain proof import and size closure, explicit Rust registrations, all 149 theorem bindings, existing adapter truth conditions and unchanged 61 prior policy ASTs; negative controls reject extra imports, missing claims and hidden Cargo authority."
+      "sha256": "3bb2f605a8aae70ad0c3335f6f80f5ed276db3cd1b4c0c64b37660fd13af86d5",
+      "review": "Native Shopware compiler owns an isolated Cargo workspace and lockfile to prevent Mago preserve_order features from altering Commerce schemas or signatures. Recursive app canonical sorting retains all 26 existing package digests; current permission-separated developer surface, root workspace tests and compiler/controller tests passed. This is source review, not proof of PHP compatibility."
     },
     "scripts/formal/runners.py": {
       "sha256": "c73bda913fb0c1949c25ad7589e5d156c05f7e0a89f39ca7be8b8e40ebd5f565",

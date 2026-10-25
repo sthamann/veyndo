@@ -2,6 +2,8 @@
 import {connectCommerce} from '/sdk.js';
 const sdk=await connectCommerce();
 const words={
+referenceHeading:['Shopware reference environments','Shopware-Vergleichsumgebungen','Environnements de référence Shopware','Entornos de referencia Shopware'],
+referenceIntro:['Inspect and manage extensions in an isolated original Shopware. Native source translation has its own workspace.','Prüfe und verwalte Erweiterungen in einem isolierten originalen Shopware. Die native Übersetzung hat einen eigenen Arbeitsbereich.','Examinez et gérez les extensions dans un Shopware original isolé. La traduction native dispose de son propre espace.','Examina y gestiona extensiones en un Shopware original aislado. La traducción nativa tiene su propio espacio.'],
 nativeHeading:['Translate a plugin','Plugin übersetzen','Traduire un plugin','Traducir plugin'],
 nativeHint:['Select the complete plugin folder. The cart-percentage profile translates a single percentage processor; other contracts are reported with source locations. No source code is executed.','Wähle den vollständigen Plugin-Ordner. Das Profil übersetzt einen einzelnen prozentualen Warenkorbprozessor. Andere Verträge werden mit Datei und Zeile angezeigt. Der Quellcode wird nicht ausgeführt.','Sélectionnez le dossier complet. Le profil traduit un processeur de remise ; les autres contrats sont signalés avec leur emplacement. Aucun code source n’est exécuté.','Selecciona la carpeta completa. El perfil traduce un procesador de descuento; los demás contratos se muestran con su ubicación. No se ejecuta el código fuente.'],
 sourceFolder:['Plugin folder','Plugin-Ordner','Dossier du plugin','Carpeta del plugin'],appId:['Veyndo app ID','Veyndo-App-ID','Identifiant Veyndo','ID de app Veyndo'],analyse:['Check and translate','Prüfen und übersetzen','Vérifier et traduire','Comprobar y traducir'],
@@ -29,6 +31,9 @@ const t=k=>sdk.uiText(Object.fromEntries(['en','de','fr','es'].map((l,i)=>[l,wor
 const $=s=>document.querySelector(s);
 document.documentElement.lang=sdk.locale;
 document.querySelectorAll('[data-t]').forEach(e=>e.textContent=t(e.dataset.t));
+const translating=sdk.context.surface==='translation';
+$('#native-panel').hidden=!translating;
+if(!translating){document.querySelector('[data-t=heading]').textContent=t('referenceHeading');document.querySelector('[data-t=intro]').textContent=t('referenceIntro');}
 $('#search').placeholder=t('search');$('#search').setAttribute('aria-label',t('search'));
 let cells=[],inventory,review;
 function status(text,bad=false){$('#status').textContent=text;$('#status').classList.toggle('error',bad);sdk.resize(document.body.scrollHeight+40);}
@@ -56,7 +61,7 @@ async function refresh(){
 }
 $('#refresh').onclick=()=>perform(refresh);$('#cell').onchange=()=>perform(refresh);$('#search').oninput=render;$('#cancel').onclick=()=>$('#review').close();
 $('#approve').onclick=()=>perform(async()=>{const b=$('#approve');b.disabled=true;try{const job=await sdk.action('change',{change:review.change,approvalDigest:review.approvalDigest,approve:true});$('#review').close();status(t('queued')+job.jobId);}finally{b.disabled=false;}});
-await perform(async()=>{cells=(await sdk.action('cells')).elements;$('#cell-controls').hidden=!cells.length;document.querySelectorAll('[data-cell-only]').forEach(e=>e.hidden=!cells.length);for(const cell of cells){const option=document.createElement('option');option.value=cell.id;option.textContent=cell.id+' · '+cell.environment;$('#cell').append(option);}await refresh();});
+if(!translating)await perform(async()=>{cells=(await sdk.action('cells')).elements;$('#cell-controls').hidden=!cells.length;document.querySelectorAll('[data-cell-only]').forEach(e=>e.hidden=!cells.length);for(const cell of cells){const option=document.createElement('option');option.value=cell.id;option.textContent=cell.id+' · '+cell.environment;$('#cell').append(option);}await refresh();});
 
 let nativeFiles={};
 const nativeRequest=()=>({appId:$('#native-id').value,version:$('#native-version').value,files:nativeFiles});

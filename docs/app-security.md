@@ -50,6 +50,11 @@ private/reserved addresses and mixed DNS answers, pins DNS and rejects redirects
 Ambient proxy variables are ignored. A trusted private origin intentionally grants
 private-network access; it must never be merchant-controlled.
 
+Canonical package digests recursively sort object keys before hashing, including
+localized maps and nested schemas. JSON source order and dependency features cannot
+change an approval. The historical sorted representation and its existing digests
+are preserved; changing package content still requires a new approval.
+
 Register Ed25519 public keys in `APP_PUBLISHERS` as
 `{"publisher":{"key_id":"BASE64_PUBLIC_KEY"}}`. Only signatures using registered
 keys can occupy `publisher_app`. `veyndo --sign-app MANIFEST.json` consumes a base64

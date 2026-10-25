@@ -11,7 +11,8 @@ def inputs(root):
            root/'frontend/package.json',root/'frontend/package-lock.json',root/'frontend/scripts/precompress.mjs',root/'deploy/Dockerfile',
            root/'proof/Commerce/Claims.lean',*(root/'proof/Commerce/Claims').glob('*.lean'),root/'proof/lakefile.toml',root/'proof/lean-toolchain',
            root/'scripts/formal.py',*(root/'scripts/formal').glob('*.py'),root/'.github/workflows/verify.yml',
-           *(root/'crates/cognition/prompts').glob('*'),*(root/'crates/cognition/evals').glob('*.json'),root/'scripts/testing/prompt_governance.py']
+           *(root/'crates/cognition/prompts').glob('*'),*(root/'crates/cognition/evals').glob('*.json'),root/'scripts/testing/prompt_governance.py',
+           *(root/'extensions/apps').glob('*/Cargo.toml'),*(root/'extensions/apps').glob('*/Cargo.lock')]
     return {str(p.relative_to(root)):p for p in sorted(files)}
 def check(root,manifest):
     check_layout(root,manifest)

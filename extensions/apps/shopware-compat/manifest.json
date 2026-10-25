@@ -507,17 +507,31 @@
   "slots": [],
   "surfaces": [
     {
-      "id": "workspace",
+      "id": "translation",
       "location": "admin.navigation",
       "label": {
-        "en": "Shopware extensions",
-        "de": "Shopware-Erweiterungen",
-        "fr": "Extensions Shopware",
-        "es": "Extensiones Shopware"
+        "en": "Translate Shopware plugins",
+        "de": "Shopware-Plugins übersetzen",
+        "fr": "Traduire les plugins Shopware",
+        "es": "Traducir plugins Shopware"
       },
       "uiPath": "index.html",
       "actions": [
-        "translate",
+        "translate"
+      ],
+      "permission": "developer.manage"
+    },
+    {
+      "id": "workspace",
+      "location": "admin.navigation",
+      "label": {
+        "en": "Shopware reference",
+        "de": "Shopware-Vergleich",
+        "fr": "Référence Shopware",
+        "es": "Referencia Shopware"
+      },
+      "uiPath": "index.html",
+      "actions": [
         "cells",
         "inspect",
         "prepare",

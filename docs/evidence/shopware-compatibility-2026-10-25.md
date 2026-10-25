@@ -57,7 +57,8 @@ internal-only test network. Other FroshTools operations were not certified.
 ## Reproduce
 
 ```sh
-cargo build --locked --no-default-features -p veyndo -p veyndo-shopware-native --bin veyndo --bin shopware-compat
+cargo build --locked --no-default-features -p veyndo --bin veyndo
+cargo build --locked --manifest-path extensions/apps/shopware-compat/Cargo.toml --target-dir target --bins
 python3 extensions/apps/shopware-compat/tests/container.py
 ```
 

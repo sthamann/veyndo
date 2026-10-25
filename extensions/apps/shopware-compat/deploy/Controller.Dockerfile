@@ -8,7 +8,7 @@ COPY extensions/ extensions/
 COPY fixtures/ fixtures/
 COPY migrations/ migrations/
 COPY reference/ reference/
-RUN cargo build --release --locked -p veyndo-shopware-native --bin shopware-compat
+RUN cargo build --release --locked --manifest-path extensions/apps/shopware-compat/Cargo.toml --target-dir target --bin shopware-compat
 FROM debian:bookworm-slim
 RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates && rm -rf /var/lib/apt/lists/* && useradd -u 10001 -m app
 COPY --from=build /build/target/release/shopware-compat /app/shopware-compat

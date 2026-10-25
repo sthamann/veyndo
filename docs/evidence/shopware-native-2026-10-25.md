@@ -20,8 +20,8 @@ through the existing exact-digest selected publication.
 | New active cart | Empty | Empty |
 | Payment | Unpaid invoice | Bank transfer, no provider charge |
 
-Original order: `01a172ecaa88719d8bad8a24cb9b547b`. Native order: `88ad3e354bc04c4586123583ba98c7a9`.
-The native order retains component digest `592681527458beb66eb41acb869662f32f16a624b6e1bfdb0151011db71a7d7b`, app
+Original order: `01a17326bfb573e2894a82edf705a242`. Native order: `3829d7df779c409a8f541f3c6856b41f`.
+The native order retains component digest `aeec9c89dd20ae63915ea17d78c5a911476712686636da3168afdcc09a9e5c60`, app
 `imported_discount`, version `1.0.0`, currency EUR, scale 2 and reason
 `shopware_discount`. The source fingerprint is `018a42953c4fa53b21ba82d71980a6972d039476c0131a1dd97bf29729e6011a`.
 
@@ -36,6 +36,9 @@ the customer proceeds with a new empty active cart.
 
 - Real authenticated HTTP and MCP translation through the app gateway, with an
   explicitly allowlisted compiler-only tenant and no original runtime credentials.
+- A developer-only integration key can open the translation surface and translate,
+  while reference inspection and its surface are rejected. A key with app
+  management alone cannot open the translation surface.
 - Current developer permission rejection, rejected direct service access and
   no installation during analysis.
 - Malicious/unknown PHP and unconverted resources produce diagnostics and no
@@ -52,7 +55,8 @@ the customer proceeds with a new empty active cart.
   container root/user/network isolation.
 - Chrome acceptance used the actual sandboxed app surface: complete folder
   selection, source translation, native App Studio import, proposal review and a
-  saved private version with eight declared examples. This used manual package
+  saved private version with eight declared examples. The separate developer
+  translation surface was also opened and used in Chrome. This used manual package
   transfer, not a one-click handoff. The source plugin's original German/English
   names are preserved; missing translations are not invented.
 
@@ -60,11 +64,31 @@ Pull requests changing the compatibility package now run the original/native
 purchase comparison automatically and retain the two synthetic result files.
 This does not replace or weaken the shared repository checks.
 
+## Dependency isolation and release-image checks
+
+The first hosted build exposed a shared-dependency error: the PHP parser's schema
+dependencies enabled JSON insertion-order serialization in the Commerce build.
+Localized maps then produced unstable package approval digests. The compiler now
+has its own Cargo workspace and lockfile, and native package hashing explicitly
+sorts all object keys. All 26 existing package identities retained their previous
+digests. The full root workspace tests and both Clippy builds passed after this
+correction; negative dependency checks reject reintegrating the parser workspace
+into the core build. Three independent CLI processes emitted identical reports.
+
+The final local controller image is
+`sha256:000217f9dacc201d002cfe2560c58f40a03477d9ca74429239b843386c339ff7`.
+It translated the same fixture with a read-only filesystem, an unprivileged user,
+all capabilities dropped, no-new-privileges, 256 MiB memory and one CPU. Its image
+contains no PHP, Python or Cargo executable. Health and authenticated translation
+passed; unauthenticated translation returned HTTP 401. This is local image
+acceptance, not a registry publication or production deployment.
+
 ## Reproduce
 
 ```sh
-cargo test --locked -p veyndo-shopware-native
-cargo build --locked --no-default-features -p veyndo -p veyndo-shopware-native --bin veyndo --bin shopware-compat --bin shopware-native
+cargo test --locked --manifest-path extensions/apps/shopware-compat/Cargo.toml --target-dir target
+cargo build --locked --no-default-features -p veyndo --bin veyndo
+cargo build --locked --manifest-path extensions/apps/shopware-compat/Cargo.toml --target-dir target --bins
 python3 extensions/apps/shopware-compat/tests/container.py --docker-context colima-veyndo-check --cell-image IMAGE
 python3 scripts/testing/workspace_boundaries.py
 python3 scripts/structure.py

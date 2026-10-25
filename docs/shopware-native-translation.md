@@ -44,7 +44,7 @@ identity. Retain the original source folder and returned report with that versio
 
 1. Install **Shopware extensions** through the usual app review. Its service must
    be configured for this shop as described in the [operator guide](../extensions/apps/shopware-compat/README.md).
-2. Open the app, select the complete plugin folder and choose the target app ID
+2. Open **Translate Shopware plugins**, select the complete plugin folder and choose the target app ID
    and version. Select **Check and translate**.
 3. Inspect the translated percentage and label. A refused package shows the file,
    line and missing contract. No plugin is installed by analysis.
@@ -58,7 +58,10 @@ Agents use the same registered action, `app.shopware_compat.translate`, with
 `appId`, `version` and a `files` map of relative paths to UTF-8 source. HTTP uses
 `POST /api/apps/shopware_compat/actions/translate`. Both require current
 `developer.manage`, app consent and the existing gateway admission. A successful
-analysis grants no installation or publication rights.
+analysis grants no installation or publication rights. The translation workspace
+requires only `developer.manage`; the separate original-reference workspace retains
+`team.manage`, with `apps.manage` also checked for its service actions. Translation
+grants contain only `translate` and cannot inspect or mutate reference cells.
 
 The existing `developer.import` and `developer.stage` operations retain their
 private-environment, package-digest, review and current-rights checks. Installation
@@ -90,14 +93,19 @@ acceptance and must be compared before extending the supported profile.
 ## Source ownership and checks
 
 `extensions/apps/shopware-compat/` is its own Cargo package,
-`veyndo-shopware-native`. The core does not depend on this compiler. The package
+`veyndo-shopware-native`, with an independent Cargo workspace and lockfile. The core
+does not depend on this compiler. Separate dependency resolution prevents parser
+schema features, including JSON insertion-order serialization, from changing
+Commerce package signatures, approval snapshots or provider schemas. Both builds
+have mandatory format, Clippy and execution checks. The package
 owns PHP intake, name resolution, partial evaluation, typed decisions, Wasm
 emission and hostile-input tests. The adjacent Rust service provides the existing
 app HTTP/MCP entry. No plugin implementation is moved into core directories.
 
 ```sh
-cargo test --locked -p veyndo-shopware-native
-cargo build --locked --no-default-features -p veyndo -p veyndo-shopware-native --bin veyndo --bin shopware-compat --bin shopware-native
+cargo test --locked --manifest-path extensions/apps/shopware-compat/Cargo.toml --target-dir target
+cargo build --locked --no-default-features -p veyndo --bin veyndo
+cargo build --locked --manifest-path extensions/apps/shopware-compat/Cargo.toml --target-dir target --bins
 python3 extensions/apps/shopware-compat/tests/container.py
 ```
 

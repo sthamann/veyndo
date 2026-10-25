@@ -51,6 +51,16 @@ with artifact_path('shopware-native.log').open('w') as log:
     call(adapter_url,'/actions/translate',request,{'x-tenant':tenant},401)
     key=call(core_url,'/api/workspace/integrations',{'name':'No developer access','expiresInDays':1,'permissions':['apps.manage']},h)['key']
     call(core_url,route,request,{**h,'Authorization':'Bearer '+key},403)
+    developer=call(core_url,'/api/workspace/integrations',{'name':'Translator only','expiresInDays':1,'permissions':['developer.manage']},h)['key']
+    dh={**h,'Authorization':'Bearer '+developer}
+    grant=call(core_url,'/api/apps/shopware_compat/surfaces/translation/grant',{'context':{}},dh)
+    assert grant['actions']==['translate']
+    bundle=call(core_url,'/api/apps/shopware_compat/surfaces/translation/bundle',{'grant':grant['token']},dh)
+    assert bundle['documentUrl'].startswith('/app-ui/shopware_compat/')
+    call(core_url,'/api/apps/shopware_compat/surfaces/workspace/grant',{'context':{}},dh,403)
+    call(core_url,'/api/apps/shopware_compat/actions/cells',{},dh,403)
+    assert call(core_url,route,request,dh)['sourceDigest']==report['sourceDigest']
+    call(core_url,'/api/apps/shopware_compat/surfaces/translation/grant',{'context':{}},{**h,'Authorization':'Bearer '+key},403)
     rpc=call(core_url,'/mcp',{'jsonrpc':'2.0','id':1,'method':'tools/call','params':{'name':'app.shopware_compat.translate','arguments':request}},h)
     assert 'error' not in rpc and not rpc['result'].get('isError'),rpc
     assert rpc['result']['structuredContent']['sourceDigest']==report['sourceDigest']

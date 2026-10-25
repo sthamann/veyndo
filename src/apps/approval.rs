@@ -63,7 +63,11 @@ pub(super) fn legacy_built_in(id: &str) -> Option<&'static str> {
     }
 }
 pub(super) fn canonical_digest(m: &Manifest) -> String {
-    hash(&json!(m).to_string())
+    let mut value = json!(m);
+    // Preserve the original sorted-map identity even when another workspace
+    // dependency enables serde_json/preserve_order. Localized fields use HashMap.
+    value.sort_all_objects();
+    hash(&value.to_string())
 }
 pub(super) fn approved(m: &Manifest, service: &Value) -> bool {
     let digest = canonical_digest(m);
@@ -99,6 +103,24 @@ pub(crate) fn print_digest() {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn package_identity_is_stable_across_json_order_and_build_features() {
+        let source = built_in("shopware_payments").unwrap();
+        let expected = "fa59ffdbe67940a2cd88aaf70b3ffd1627772a3e4a8a468f921bb67a1d567808";
+        for _ in 0..32 {
+            let m: Manifest = serde_json::from_str(source).unwrap();
+            assert_eq!(canonical_digest(&m), expected);
+        }
+        let original: Manifest =
+            serde_json::from_str(built_in("shopware_compat").unwrap()).unwrap();
+        let mut value = json!(&original);
+        value.sort_all_objects();
+        let reordered: Manifest = serde_json::from_value(value).unwrap();
+        assert_eq!(canonical_digest(&original), canonical_digest(&reordered));
+        let mut changed = reordered;
+        changed.name.insert("en".into(), "Different content".into());
+        assert_ne!(canonical_digest(&original), canonical_digest(&changed));
+    }
     #[test]
     fn modified_reserved_payment_package_does_not_inherit_operator_authority() {
         let mut m: Manifest = serde_json::from_str(built_in("shopware_payments").unwrap()).unwrap();

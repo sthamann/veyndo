@@ -6,7 +6,7 @@
 </style></head><body>
 <header><div><span class="eyebrow">VEYNDO · SHOPWARE</span><h1 data-t="heading"></h1><p data-t="intro"></p></div><div class="controls" id="cell-controls" hidden><label><span data-t="environment"></span><select id="cell"></select></label><button id="refresh" data-t="refresh"></button></div></header>
 <div id="status" role="status" aria-live="polite"></div>
-<section class="panel" aria-labelledby="native-heading"><div class="meta"><h2 id="native-heading" data-t="nativeHeading"></h2><span class="tag">PHP → Wasm → Veyndo</span></div><p data-t="nativeHint"></p>
+<section id="native-panel" class="panel" aria-labelledby="native-heading"><div class="meta"><h2 id="native-heading" data-t="nativeHeading"></h2><span class="tag">PHP → Wasm → Veyndo</span></div><p data-t="nativeHint"></p>
 <div class="controls"><label><span data-t="sourceFolder"></span><input type="file" id="source-folder" webkitdirectory multiple></label><label><span data-t="appId"></span><input id="native-id" value="imported_shopware" pattern="[a-z0-9_]+" maxlength="48"></label><label><span data-t="version"></span><input id="native-version" value="1.0.0" maxlength="100"></label><button class="primary" id="translate" disabled data-t="analyse"></button></div><p id="native-files" role="status"></p><div id="native-result" aria-live="polite"></div><label id="native-package-label" hidden><span data-t="packageHint"></span><textarea id="native-package" readonly rows="8" style="width:100%;font:12px/1.5 ui-monospace,monospace;padding:14px;border:1px solid #c9d9e8;border-radius:9px"></textarea></label></section>
 <section class="panel" data-cell-only hidden><div class="controls"><h2 data-t="extensions"></h2><input id="search" type="search"><span class="tag" id="version"></span><span class="tag" id="environment"></span></div><div class="table-wrap"><table><thead><tr><th data-t="name"></th><th data-t="type"></th><th data-t="version"></th><th data-t="state"></th><th data-t="actions"></th></tr></thead><tbody id="rows"></tbody></table></div><p id="empty" class="empty" hidden data-t="empty"></p></section>
 <section class="panel" data-cell-only hidden><h2 data-t="original"></h2><p data-t="originalHint"></p><div id="addresses"></div></section>
@@ -65,6 +65,8 @@ function connectCommerce() {
 
 const sdk=await connectCommerce();
 const words={
+referenceHeading:['Shopware reference environments','Shopware-Vergleichsumgebungen','Environnements de référence Shopware','Entornos de referencia Shopware'],
+referenceIntro:['Inspect and manage extensions in an isolated original Shopware. Native source translation has its own workspace.','Prüfe und verwalte Erweiterungen in einem isolierten originalen Shopware. Die native Übersetzung hat einen eigenen Arbeitsbereich.','Examinez et gérez les extensions dans un Shopware original isolé. La traduction native dispose de son propre espace.','Examina y gestiona extensiones en un Shopware original aislado. La traducción nativa tiene su propio espacio.'],
 nativeHeading:['Translate a plugin','Plugin übersetzen','Traduire un plugin','Traducir plugin'],
 nativeHint:['Select the complete plugin folder. The cart-percentage profile translates a single percentage processor; other contracts are reported with source locations. No source code is executed.','Wähle den vollständigen Plugin-Ordner. Das Profil übersetzt einen einzelnen prozentualen Warenkorbprozessor. Andere Verträge werden mit Datei und Zeile angezeigt. Der Quellcode wird nicht ausgeführt.','Sélectionnez le dossier complet. Le profil traduit un processeur de remise ; les autres contrats sont signalés avec leur emplacement. Aucun code source n’est exécuté.','Selecciona la carpeta completa. El perfil traduce un procesador de descuento; los demás contratos se muestran con su ubicación. No se ejecuta el código fuente.'],
 sourceFolder:['Plugin folder','Plugin-Ordner','Dossier du plugin','Carpeta del plugin'],appId:['Veyndo app ID','Veyndo-App-ID','Identifiant Veyndo','ID de app Veyndo'],analyse:['Check and translate','Prüfen und übersetzen','Vérifier et traduire','Comprobar y traducir'],
@@ -92,6 +94,9 @@ const t=k=>sdk.uiText(Object.fromEntries(['en','de','fr','es'].map((l,i)=>[l,wor
 const $=s=>document.querySelector(s);
 document.documentElement.lang=sdk.locale;
 document.querySelectorAll('[data-t]').forEach(e=>e.textContent=t(e.dataset.t));
+const translating=sdk.context.surface==='translation';
+$('#native-panel').hidden=!translating;
+if(!translating){document.querySelector('[data-t=heading]').textContent=t('referenceHeading');document.querySelector('[data-t=intro]').textContent=t('referenceIntro');}
 $('#search').placeholder=t('search');$('#search').setAttribute('aria-label',t('search'));
 let cells=[],inventory,review;
 function status(text,bad=false){$('#status').textContent=text;$('#status').classList.toggle('error',bad);sdk.resize(document.body.scrollHeight+40);}
@@ -119,7 +124,7 @@ async function refresh(){
 }
 $('#refresh').onclick=()=>perform(refresh);$('#cell').onchange=()=>perform(refresh);$('#search').oninput=render;$('#cancel').onclick=()=>$('#review').close();
 $('#approve').onclick=()=>perform(async()=>{const b=$('#approve');b.disabled=true;try{const job=await sdk.action('change',{change:review.change,approvalDigest:review.approvalDigest,approve:true});$('#review').close();status(t('queued')+job.jobId);}finally{b.disabled=false;}});
-await perform(async()=>{cells=(await sdk.action('cells')).elements;$('#cell-controls').hidden=!cells.length;document.querySelectorAll('[data-cell-only]').forEach(e=>e.hidden=!cells.length);for(const cell of cells){const option=document.createElement('option');option.value=cell.id;option.textContent=cell.id+' · '+cell.environment;$('#cell').append(option);}await refresh();});
+if(!translating)await perform(async()=>{cells=(await sdk.action('cells')).elements;$('#cell-controls').hidden=!cells.length;document.querySelectorAll('[data-cell-only]').forEach(e=>e.hidden=!cells.length);for(const cell of cells){const option=document.createElement('option');option.value=cell.id;option.textContent=cell.id+' · '+cell.environment;$('#cell').append(option);}await refresh();});
 
 let nativeFiles={};
 const nativeRequest=()=>({appId:$('#native-id').value,version:$('#native-version').value,files:nativeFiles});

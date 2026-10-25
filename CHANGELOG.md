@@ -5,6 +5,7 @@
 - Add an app-owned Cargo compiler using a real PHP syntax tree, explicit Composer/DI registration and a typed cart-discount decision. Emit ordinary versioned Veyndo Manifest/WIT components with source fingerprints and executable examples.
 - Support the bounded Shopware 6.7 global percentage processor profile. Reject unknown source, resources, dependencies, lifecycle methods, dynamic host effects, invalid signatures and source-budget violations without emitting a partial app.
 - Expose source analysis through the existing authenticated app action and MCP, with current developer rights. Add localized folder intake and proposal inspection; compiler-only shops need no original Shopware runtime or database login.
+- Separate the developer translation surface from privileged reference-cell management. Resolve compiler dependencies in their own locked Cargo workspace, and sort native package identities explicitly to preserve existing approvals across JSON feature combinations.
 - Verify private import, review, exact selected release, native checkout, stored component outcome, stock, idempotency and empty active cart. Extend the existing original-container test to compare the identical PHP source fixture in Shopware and Veyndo.
 - Document the admitted profile and remaining translators. This source change is not a universal compatibility certification or a public deployment.
 

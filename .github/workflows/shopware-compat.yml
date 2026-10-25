@@ -24,9 +24,14 @@ jobs:
         with:
           shared-key: shopware-compat
       - name: Build native owners
-        run: cargo build --locked --no-default-features -p veyndo -p veyndo-shopware-native --bin veyndo --bin shopware-compat --bin shopware-native
+        run: |
+          cargo build --locked --no-default-features -p veyndo --bin veyndo
+          cargo build --locked --manifest-path extensions/apps/shopware-compat/Cargo.toml --target-dir target --bins
       - name: Native translation and bounded guest execution
-        run: cargo test --locked -p veyndo-shopware-native
+        run: |
+          cargo fmt --manifest-path extensions/apps/shopware-compat/Cargo.toml --all --check
+          cargo clippy --locked --manifest-path extensions/apps/shopware-compat/Cargo.toml --target-dir target --all-targets -- -D warnings
+          cargo test --locked --manifest-path extensions/apps/shopware-compat/Cargo.toml --target-dir target
       - name: Exercise original PHP plugins and App Scripts in an isolated cell
         run: python3 extensions/apps/shopware-compat/tests/container.py
       - uses: actions/upload-artifact@v4

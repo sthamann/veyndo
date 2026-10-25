@@ -60,9 +60,14 @@ def check(packages):
 def main():
     data = json.loads(subprocess.check_output(
         ['cargo', 'metadata', '--locked', '--no-deps', '--format-version', '1'], cwd=ROOT))
-    check(data['packages'])
+    assert 'veyndo-shopware-native' not in {p['name'] for p in data['packages']}, 'Parser features must not unify into the Commerce workspace'
+    native = json.loads(subprocess.check_output(
+        ['cargo', 'metadata', '--locked', '--no-deps', '--format-version', '1', '--manifest-path',
+         str(OWNERS['veyndo-shopware-native'] / 'Cargo.toml')], cwd=ROOT))
+    packages = data['packages'] + native['packages']
+    check(packages)
     from workspace_boundary_tests import negative_controls
-    count = negative_controls(data['packages'])
+    count = negative_controls(packages)
     print(f'PASS Cargo owner/dependency boundaries; {count} bypass negative controls')
 
 

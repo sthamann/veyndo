@@ -71,11 +71,12 @@ original extension license and required vendor credentials.
 
 ## Connect the Rust controller
 
-Build with `cargo build --locked -p veyndo-shopware-native --bin shopware-compat`, or
+Build with `cargo build --locked --manifest-path extensions/apps/shopware-compat/Cargo.toml --target-dir target --bin shopware-compat`, or
 build `deploy/Controller.Dockerfile` from the repository root.
 
 1. Install `shopware_compat` in Veyndo Apps with its current canonical manifest
-   digest and consent. Its service actions require `apps.manage` and `team.manage`.
+   digest and consent. Reference service actions require `apps.manage` and `team.manage`; native
+   translation and its separate workspace require `developer.manage`.
 2. Create its scoped callback key with `data.read`, `data.write`, `jobs.write`.
    Use a current merchant identity and expiry. Revocation retains the usual native
    job and callback fences.
@@ -157,7 +158,8 @@ Veyndo's PostgreSQL snapshot does not include them.
 For a complete fresh run, build the two native binaries and run:
 
 ```sh
-cargo build --locked --no-default-features -p veyndo -p veyndo-shopware-native --bin veyndo --bin shopware-compat --bin shopware-native
+cargo build --locked --no-default-features -p veyndo --bin veyndo
+cargo build --locked --manifest-path extensions/apps/shopware-compat/Cargo.toml --target-dir target --bins
 python3 extensions/apps/shopware-compat/tests/container.py
 ```
 
@@ -172,7 +174,7 @@ runtime test and collects its Rust/Python coverage. The dedicated GitHub workflo
 supports a focused manual run. Local registry runs can set `SHOPWARE_TEST_CELL_IMAGE`
 to reuse an immutable cell image; CI builds the checked-in recipe.
 
-`cargo test --locked -p veyndo-shopware-native` checks destination and
+`cargo test --locked --manifest-path extensions/apps/shopware-compat/Cargo.toml --target-dir target` checks destination and
 event/command admission. `tests/integration.py` runs against an original Shopware
 installation, not an API fixture. Stage the two packages in `tests/fixtures`, run
 `plugin:refresh`, install the fixture app inactive, and provide an isolated native
