@@ -1,0 +1,99 @@
+# One Compose project per shop/environment. Never share its database or volumes.
+# CELL_IMAGE must be the immutable ID/digest produced by Cell.Dockerfile.
+x-runtime: &runtime
+  image: ${CELL_IMAGE:?immutable Shopware cell image required}
+  read_only: true
+  cap_drop: [ALL]
+  security_opt: [no-new-privileges:true]
+  pids_limit: 256
+  mem_limit: 1g
+  cpus: 2
+  tmpfs:
+    - /tmp:rw,nosuid,nodev,size=128m,mode=1777
+  environment:
+    APP_ENV: prod
+    APP_DEBUG: "0"
+    COMPOSER_HOME: /var/www/html/var/composer
+    APP_URL: ${CELL_URL:?public HTTPS origin required}
+    APP_SECRET: ${CELL_SECRET:?independent random secret required}
+    DATABASE_URL: mysql://shopware:${CELL_DB_PASSWORD:?URL-safe random secret required}@database/shopware
+    MAILER_DSN: "null://null"
+  volumes:
+    - runtime:/var/www/html/var
+    - private_files:/var/www/html/files
+    - extensions:/var/www/html/custom
+    - media:/var/www/html/public/media
+    - thumbnails:/var/www/html/public/thumbnail
+    - themes:/var/www/html/public/theme
+    - bundles:/var/www/html/public/bundles
+    - sitemap:/var/www/html/public/sitemap
+    - exports:/var/www/html/public/export
+  networks: [cell]
+  depends_on:
+    database:
+      condition: service_healthy
+services:
+  database:
+    image: mariadb:11.4@sha256:250e1609e93c0e6aecf64bfbab2d84d5e89d2481540fe77447ff6c855c3b1873
+    environment:
+      MARIADB_DATABASE: shopware
+      MARIADB_USER: shopware
+      MARIADB_PASSWORD: ${CELL_DB_PASSWORD:?required}
+      MARIADB_RANDOM_ROOT_PASSWORD: "1"
+    volumes: [database:/var/lib/mysql]
+    networks: [cell]
+    mem_limit: 1g
+    cpus: 1
+    pids_limit: 128
+    healthcheck:
+      test: [CMD, healthcheck.sh, --connect, --innodb_initialized]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+  setup:
+    <<: *runtime
+    profiles: [setup]
+    command: [php, bin/console, system:install, --basic-setup, --no-interaction]
+  web:
+    <<: *runtime
+    restart: unless-stopped
+  ingress:
+    image: ${CELL_INGRESS_IMAGE:-veyndo-shopware-ingress:1.28}
+    build:
+      context: ../../../..
+      dockerfile: extensions/apps/shopware-compat/deploy/Ingress.Dockerfile
+    entrypoint: [nginx, -g, "daemon off;"]
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    pids_limit: 64
+    mem_limit: 128m
+    cpus: 0.5
+    tmpfs: ["/tmp:rw,nosuid,nodev,size=32m,mode=1777"]
+    networks: [cell, ingress]
+    ports: ["127.0.0.1:${CELL_PORT:-8814}:8080"]
+    depends_on: [web]
+    restart: unless-stopped
+  worker:
+    <<: *runtime
+    command: [php, bin/console, messenger:consume, async, low_priority, --time-limit=3600, --memory-limit=256M, --no-interaction]
+    restart: unless-stopped
+  scheduler:
+    <<: *runtime
+    command: [php, bin/console, scheduled-task:run, --time-limit=3600, --no-interaction]
+    restart: unless-stopped
+networks:
+  cell:
+    internal: true
+  ingress: {}
+volumes:
+  database: {}
+  runtime: {}
+  private_files: {}
+  extensions: {}
+  media: {}
+  thumbnails: {}
+  themes: {}
+  bundles: {}
+  sitemap: {}
+  exports: {}

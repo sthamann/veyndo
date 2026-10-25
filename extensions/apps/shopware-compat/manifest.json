@@ -1,0 +1,543 @@
+{
+  "id": "shopware_compat",
+  "version": "0.1.0",
+  "coreApi": "1",
+  "runtime": "service",
+  "category": "operations",
+  "name": {
+    "en": "Shopware environments",
+    "de": "Shopware-Umgebungen",
+    "es": "Entornos Shopware",
+    "fr": "Environnements Shopware"
+  },
+  "permissions": [
+    "admin.slot",
+    "service.call",
+    "data.read",
+    "data.write",
+    "jobs.write",
+    "events:self"
+  ],
+  "entities": [
+    {
+      "name": "effects",
+      "label": {
+        "en": "Extension changes",
+        "de": "Erweiterungsänderungen",
+        "es": "Cambios de extensiones",
+        "fr": "Changements des extensions"
+      },
+      "publicRead": false,
+      "fields": [
+        {
+          "name": "cell",
+          "kind": "string",
+          "required": true,
+          "label": {
+            "en": "Environment",
+            "de": "Umgebung",
+            "es": "Entorno",
+            "fr": "Environnement"
+          },
+          "indexed": true
+        },
+        {
+          "name": "change",
+          "kind": "json",
+          "required": false,
+          "label": {
+            "en": "Reviewed change",
+            "de": "Geprüfte Änderung",
+            "es": "Cambio revisado",
+            "fr": "Changement vérifié"
+          },
+          "indexed": false
+        },
+        {
+          "name": "job",
+          "kind": "string",
+          "required": false,
+          "label": {
+            "en": "Job",
+            "de": "Auftrag",
+            "es": "Tarea",
+            "fr": "Tâche"
+          },
+          "indexed": false
+        },
+        {
+          "name": "state",
+          "kind": "string",
+          "required": true,
+          "label": {
+            "en": "Execution status",
+            "de": "Ausführungsstatus",
+            "es": "Estado",
+            "fr": "État de l’exécution"
+          },
+          "indexed": false
+        },
+        {
+          "name": "approval",
+          "kind": "string",
+          "required": false,
+          "label": {
+            "en": "Review digest",
+            "de": "Prüfstand",
+            "es": "Resumen de revisión",
+            "fr": "Empreinte de validation"
+          },
+          "indexed": false
+        }
+      ],
+      "operational": true
+    },
+    {
+      "name": "locks",
+      "label": {
+        "en": "Environment locks",
+        "de": "Umgebungssperren",
+        "fr": "Verrous des environnements",
+        "es": "Bloqueos de entornos"
+      },
+      "publicRead": false,
+      "fields": [
+        {
+          "name": "cell",
+          "kind": "string",
+          "required": true,
+          "label": {
+            "en": "Environment",
+            "de": "Umgebung",
+            "es": "Entorno",
+            "fr": "Environnement"
+          },
+          "indexed": true
+        },
+        {
+          "name": "change",
+          "kind": "json",
+          "required": false,
+          "label": {
+            "en": "Reviewed change",
+            "de": "Geprüfte Änderung",
+            "es": "Cambio revisado",
+            "fr": "Changement vérifié"
+          },
+          "indexed": false
+        },
+        {
+          "name": "job",
+          "kind": "string",
+          "required": false,
+          "label": {
+            "en": "Job",
+            "de": "Auftrag",
+            "es": "Tarea",
+            "fr": "Tâche"
+          },
+          "indexed": false
+        },
+        {
+          "name": "state",
+          "kind": "string",
+          "required": true,
+          "label": {
+            "en": "Execution status",
+            "de": "Ausführungsstatus",
+            "es": "Estado",
+            "fr": "État de l’exécution"
+          },
+          "indexed": false
+        },
+        {
+          "name": "approval",
+          "kind": "string",
+          "required": false,
+          "label": {
+            "en": "Review digest",
+            "de": "Prüfstand",
+            "es": "Resumen de revisión",
+            "fr": "Empreinte de validation"
+          },
+          "indexed": false
+        }
+      ],
+      "operational": true
+    }
+  ],
+  "actions": [
+    {
+      "name": "cells",
+      "description": "List this shop’s isolated Shopware environments",
+      "handler": "service",
+      "permission": "apps.manage",
+      "requiredPermissions": [
+        "team.manage"
+      ],
+      "readOnly": true,
+      "mcp": true,
+      "flowAllowed": false,
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "inspect",
+      "description": "Read original Shopware extension state",
+      "handler": "service",
+      "permission": "apps.manage",
+      "requiredPermissions": [
+        "team.manage"
+      ],
+      "readOnly": true,
+      "mcp": true,
+      "flowAllowed": false,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "cellId": {
+            "type": "string",
+            "maxLength": 40
+          }
+        },
+        "required": [
+          "cellId"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "prepare",
+      "description": "Review an extension change against the current original runtime",
+      "handler": "service",
+      "permission": "apps.manage",
+      "requiredPermissions": [
+        "team.manage"
+      ],
+      "readOnly": true,
+      "mcp": true,
+      "flowAllowed": false,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "cellId": {
+            "type": "string",
+            "maxLength": 40
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "plugin",
+              "app"
+            ]
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 120
+          },
+          "operation": {
+            "type": "string",
+            "enum": [
+              "install",
+              "activate",
+              "deactivate",
+              "update",
+              "uninstall"
+            ]
+          },
+          "revision": {
+            "type": "string",
+            "minLength": 64,
+            "maxLength": 64
+          }
+        },
+        "required": [
+          "cellId",
+          "kind",
+          "name",
+          "operation",
+          "revision"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "change",
+      "description": "Apply one reviewed extension change in the isolated Shopware runtime",
+      "handler": "job",
+      "permission": "apps.manage",
+      "requiredPermissions": [
+        "team.manage"
+      ],
+      "readOnly": false,
+      "mcp": true,
+      "flowAllowed": false,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "change": {
+            "type": "object",
+            "properties": {
+              "cellId": {
+                "type": "string",
+                "maxLength": 40
+              },
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "plugin",
+                  "app"
+                ]
+              },
+              "name": {
+                "type": "string",
+                "maxLength": 120
+              },
+              "operation": {
+                "type": "string",
+                "enum": [
+                  "install",
+                  "activate",
+                  "deactivate",
+                  "update",
+                  "uninstall"
+                ]
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 64,
+                "maxLength": 64
+              }
+            },
+            "required": [
+              "cellId",
+              "kind",
+              "name",
+              "operation",
+              "revision"
+            ],
+            "additionalProperties": false
+          },
+          "approvalDigest": {
+            "type": "string",
+            "minLength": 64,
+            "maxLength": 64
+          },
+          "approve": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "change",
+          "approvalDigest",
+          "approve"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "list_effects",
+      "description": "list effects",
+      "handler": "list",
+      "entity": "effects",
+      "permission": "apps.manage",
+      "readOnly": true,
+      "mcp": false,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "after": {
+            "type": "string",
+            "maxLength": 120
+          },
+          "filter": {
+            "type": "object"
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "save_effects",
+      "description": "save effects",
+      "handler": "save",
+      "entity": "effects",
+      "permission": "apps.manage",
+      "readOnly": false,
+      "mcp": false,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "fields": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "id",
+          "revision",
+          "fields"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "list_locks",
+      "description": "list locks",
+      "handler": "list",
+      "entity": "locks",
+      "permission": "apps.manage",
+      "readOnly": true,
+      "mcp": false,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "after": {
+            "type": "string",
+            "maxLength": 120
+          },
+          "filter": {
+            "type": "object"
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "save_locks",
+      "description": "save locks",
+      "handler": "save",
+      "entity": "locks",
+      "permission": "apps.manage",
+      "readOnly": false,
+      "mcp": false,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "fields": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "id",
+          "revision",
+          "fields"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ],
+  "events": [
+    "app.shopware_compat.job_change"
+  ],
+  "slots": [],
+  "surfaces": [
+    {
+      "id": "workspace",
+      "location": "admin.navigation",
+      "label": {
+        "en": "Shopware environments",
+        "de": "Shopware-Umgebungen",
+        "es": "Entornos Shopware",
+        "fr": "Environnements Shopware"
+      },
+      "uiPath": "index.html",
+      "actions": [
+        "cells",
+        "inspect",
+        "prepare",
+        "change",
+        "list_effects"
+      ],
+      "permission": "team.manage"
+    }
+  ],
+  "apiRoutes": [
+    {
+      "path": "cells",
+      "method": "POST",
+      "scope": "admin",
+      "action": "cells"
+    },
+    {
+      "path": "inspect",
+      "method": "POST",
+      "scope": "admin",
+      "action": "inspect"
+    },
+    {
+      "path": "prepare",
+      "method": "POST",
+      "scope": "admin",
+      "action": "prepare"
+    },
+    {
+      "path": "change",
+      "method": "POST",
+      "scope": "admin",
+      "action": "change"
+    }
+  ],
+  "intelligence": {
+    "description": {
+      "en": "Inspect isolated original Shopware environments and prepare extension changes. Apply only the reviewed change.",
+      "de": "Originale Shopware-Umgebungen prüfen und Änderungen an Erweiterungen vorbereiten. Nur den geprüften Stand übernehmen.",
+      "es": "Inspecciona entornos originales de Shopware y prepara cambios de extensiones.",
+      "fr": "Inspecter les environnements Shopware originaux et préparer les changements des extensions. Appliquer uniquement le changement vérifié."
+    },
+    "tools": [
+      "cells",
+      "inspect",
+      "prepare",
+      "change"
+    ],
+    "entities": []
+  },
+  "presentation": {
+    "description": {
+      "en": "Manage plugins and apps in a separate original Shopware runtime. Keep version, review and execution history together.",
+      "de": "Plugins und Apps in einer getrennten originalen Shopware-Laufzeit verwalten. Version, Prüfung und Verlauf bleiben zusammen.",
+      "es": "Administra plugins y apps en un entorno original separado de Shopware.",
+      "fr": "Gérer les plugins et apps dans un environnement Shopware original isolé, avec version, validation et historique."
+    }
+  }
+}

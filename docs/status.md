@@ -1,8 +1,19 @@
 # Veyndo: current status
 
-Updated 24 October 2026. Start here for the public product, observed journeys and
+Updated 25 October 2026. Start here for the public product, observed journeys and
 remaining delivery work. Source code, passing tests and a successful public
 journey are tracked separately. All purchases below use **simulated payments**.
+
+## New optional integration in source
+
+The [Shopware environments app](shopware-compatibility.md) manages a separate
+original Shopware 6.7.14.2 through an app-owned Rust controller, native jobs and
+private operation records. Its local original-runtime tests exercise plugin
+migration/event execution and a Twig App Script. The isolated runtime recipe
+includes its own database and workers. This is not a public deployment or universal
+extension certification, and it does not synchronize native Veyndo orders/stock
+with Shopware. The existing public acceptance below remains unchanged.
+[Local extension, checkout and isolation evidence](evidence/shopware-compatibility-2026-10-25.md).
 
 The 23 October release expands selected Lean guarantees to **63 policies / 149
 properties**, splits their Rust/Lean owners and tightens Cargo dependency checks.

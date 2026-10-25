@@ -66,8 +66,8 @@ def app_callback_admissible (capability : Bool) (current_role : Bool) : Bool :=
 def app_submission_admissible (private_inbox : Bool) (live_scope : Bool) (current_cart : Bool) : Bool :=
   ((private_inbox && live_scope) && current_cart)
 
-def app_configuration_release_admissible (extension : Bool) (product : Bool) (company : Bool) : Bool :=
-  (((!extension) || product) || company)
+def app_configuration_release_admissible (extension : Bool) (product : Bool) (company : Bool) (operational : Bool) : Bool :=
+  ((!operational) && (((!extension) || product) || company))
 
 def native_lifecycle_admissible (native : Bool) (rights : Bool) (guards : Bool) : Bool :=
   ((native && rights) && guards)

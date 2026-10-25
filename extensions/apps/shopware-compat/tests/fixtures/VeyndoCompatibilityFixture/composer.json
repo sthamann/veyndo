@@ -1,0 +1,10 @@
+{
+  "name": "veyndo/compatibility-fixture",
+  "description": "Synthetic original Shopware lifecycle and event probe",
+  "version": "1.0.0",
+  "type": "shopware-platform-plugin",
+  "license": "MIT",
+  "require": {"shopware/core": "~6.7.0"},
+  "autoload": {"psr-4": {"VeyndoCompatibilityFixture\\": "src/"}},
+  "extra": {"shopware-plugin-class": "VeyndoCompatibilityFixture\\VeyndoCompatibilityFixture", "label": {"en-GB": "Compatibility fixture", "de-DE": "Kompatibilitätstest"}}
+}

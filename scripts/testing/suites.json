@@ -92,6 +92,7 @@
     "app_storage_migration",
     "app_generation",
     "erp_handoff",
+    "shopware_compat",
     "edi",
     "marketplaces",
     "shipping_contract",

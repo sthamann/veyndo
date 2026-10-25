@@ -193,8 +193,13 @@ def run():
             call(grant_path+"/bundle", {"grant":grant["token"]}, oh, expected=401)
             call(grant_path+"/bundle", {"grant":"0"*64}, h, expected=401)
             original = module.UI
+            document = urllib.request.urlopen(base + ui['documentUrl'])
+            assert document.read() == original
+            policy = document.headers.get_all('content-security-policy')
+            assert len(policy) == 1 and policy[0].startswith('sandbox allow-scripts;')
             module.UI = original + b"<!-- changed after approval -->"
             call(grant_path+"/bundle", {"grant":grant["token"]}, h, expected=403)
+            call(ui['documentUrl'], expected=403)
             module.UI = original
             call("/api/apps/surfaces", headers=public, expected=401)
             passed("Private and public surfaces use actor-bound pinned self-contained UI; changed bytes and foreign actors are rejected")

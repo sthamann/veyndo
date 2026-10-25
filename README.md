@@ -33,7 +33,7 @@ public acceptance are recorded separately.
 | --- | --- |
 | **Ask, review, act** | Start from the selected product, describe the work, review private steps and follow saved progress. App discovery, editable grid filters and explicit merchant preferences stay connected. [AI workspace](docs/agentic-workspace.md). |
 | **Prepare the catalogue** | Inspect each product's enabled-language coverage and saved image-job progress, then open its native editor to repair missing content. [Catalogue preparation](docs/product-management.md#preparing-a-catalogue-together). |
-| **Bring your shop** | The [Migration Assistant](docs/agentic-migration.md) connects versioned source profiles, saved background inspection, readable variant review and native imports into private previews. Current implementation and open domains are documented separately. |
+| **Bring your shop** | The [Migration Assistant](docs/agentic-migration.md) connects versioned source profiles, saved background inspection, readable variant review and native imports into private previews. |
 | **Build the business** | Connect an app's data, settings and interface to native commerce: for example, materials and custom dimensions flow through company approval, checkout and saved-list reorder. Visual editing and coding agents share its versioned definition. [App Studio](docs/app-studio.md), [connected configurator](docs/furniture-configurator.md), [native object extensions](docs/app-core-extensions.md). |
 | **Shape the shop** | Design standard storefront pages on the actual preview; use original Storyfront for connected Experiences. [Visual design](docs/personal-workspace-and-shop-design.md). |
 | **Automate the work** | Repeat reviewed work as a Flow and compare rule drafts with recorded order inputs before saving. [Automation](docs/automation.md), [reusable work](docs/personal-workspace-and-shop-design.md#repeat-completed-work-as-a-flow), [rule comparison](docs/rule-history-comparison.md). |
@@ -81,6 +81,7 @@ for verification tooling. Run `./scripts/dev.sh` and open
 | Countries, languages, currency and taxes | [International commerce](docs/international-commerce.md) · [Currencies](docs/currencies.md) |
 | POS, B2B, EDI and marketplaces | [POS](docs/pos.md) · [B2B](docs/b2b-commerce.md) · [EDI](docs/edi.md) · [Marketplaces](docs/marketplaces.md) |
 | Apps, settings, storage and private releases | [App platform](docs/app-platform.md) · [Build five apps](docs/app-tutorials/README.md) · [Shared storage](docs/app-data-storage.md) |
+| Original Shopware extensions | [Isolated compatibility environments](docs/shopware-compatibility.md) |
 | Agents and shared operations | [Connections](docs/connectors.md) · [Agent identities & limits](docs/agent-authority-controls.md) · [MCP workshop](docs/agent-workshop.md) · [UCP B2B](docs/b2b-ucp-negotiation.md) |
 | Operation and verification | [Architecture](docs/production-architecture.md) · [Integrations](docs/service-integrations.md) · [Testing](docs/testing.md) · [Proof boundaries](docs/formal-verification.md) |
 

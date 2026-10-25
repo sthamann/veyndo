@@ -111,9 +111,14 @@ pub(super) fn eval(j: &Value) -> Result<Value, String> {
             b("live_scope")?,
             b("current_cart")?
         ))),
-        Some("app_configuration_release_admissible") => Ok(json!(
-            app_configuration_release_admissible(b("extension")?, b("product")?, b("company")?)
-        )),
+        Some("app_configuration_release_admissible") => {
+            Ok(json!(app_configuration_release_admissible(
+                b("extension")?,
+                b("product")?,
+                b("company")?,
+                b("operational")?
+            )))
+        }
         Some("native_lifecycle_admissible") => Ok(json!(native_lifecycle_admissible(
             b("native")?,
             b("rights")?,
