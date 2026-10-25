@@ -95,6 +95,7 @@ MUTANTS=[
  ("app_tool_admissible","enabled &&","true &&"),
  ("app_tool_admissible","&& authorized","&& true"),
  ("app_configuration_release_admissible","!extension || product || company","true"),
+ ("app_configuration_release_admissible","!operational &&","true &&"),
  ("app_core_reference_admissible","product || private_data","true"),
  ("customer_group_net","configured &&","true &&"),
  ("customer_group_net","&& business","&& true"),

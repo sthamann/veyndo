@@ -13,7 +13,7 @@ async function mount() {
   const finish: ((v: unknown) => void)[] = [];
   const request = vi.fn((path: string) =>
     path === "__bundle"
-      ? Promise.resolve({ html: "<p>Fixture</p>" })
+      ? Promise.resolve({ documentUrl: "/app-ui/example/" + "a".repeat(64) })
       : new Promise((resolve) => finish.push(resolve)),
   );
   const props = {

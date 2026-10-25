@@ -32,7 +32,15 @@ export default function AppFrame({
     setError("");
     request("__bundle", {})
       .then((v) => {
-        if (active) setBundle(v.html);
+        if (active) {
+          if (
+            !/^\/app-ui\/[a-z][a-z0-9_]{0,63}\/[a-f0-9]{64}$/.test(
+              v.documentUrl ?? "",
+            )
+          )
+            throw new Error("Invalid app document");
+          setBundle(v.documentUrl);
+        }
       })
       .catch(() => {
         if (active) setError(a("bundleUnavailable"));
@@ -137,13 +145,11 @@ export default function AppFrame({
       </div>
     );
   if (!bundle) return <p role="status">{a("bundleLoading")}</p>;
-  const policy =
-    "default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data: blob:; font-src data:; connect-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'; frame-src 'none'";
   return (
     <iframe
       key={nonce}
       ref={ref}
-      srcDoc={`<!doctype html><meta http-equiv="Content-Security-Policy" content="${policy}">${bundle}`}
+      src={bundle}
       sandbox="allow-scripts"
       referrerPolicy="no-referrer"
       title={app}

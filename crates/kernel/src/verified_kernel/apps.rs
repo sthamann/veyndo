@@ -50,9 +50,14 @@ pub fn app_submission_admissible(
 ) -> bool {
     private_inbox && live_scope && current_cart
 }
-/// Operational customer/order extensions cannot become configuration release units.
-pub fn app_configuration_release_admissible(extension: bool, product: bool, company: bool) -> bool {
-    !extension || product || company
+/// Operational receipts and customer/order extensions cannot become configuration release units.
+pub fn app_configuration_release_admissible(
+    extension: bool,
+    product: bool,
+    company: bool,
+    operational: bool,
+) -> bool {
+    !operational && (!extension || product || company)
 }
 /// Declarative app lifecycles can only narrow the current native transition authority.
 pub fn native_lifecycle_admissible(native: bool, rights: bool, guards: bool) -> bool {

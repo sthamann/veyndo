@@ -1,11 +1,16 @@
 # Lean-checked commerce contracts
 
 The current source declares **63 extracted policies used in production Rust paths**
-and **149 named properties**. This is **not a certificate that the entire commerce
-core is correct or bug-free**. The reviewed inventory contains **712 Rust modules**:
+and **150 named properties**. This is **not a certificate that the entire commerce
+core is correct or bug-free**. The reviewed inventory contains **720 Rust modules**:
 eight extracted policy modules (including the facade), 63 reviewed binding modules,
-one comparison driver and 640 unproved modules. Binding review is not proof of the surrounding modules.
+one comparison driver and 648 unproved modules. Binding review is not proof of the surrounding modules.
 The [manifest](../proof/manifest.json) and per-revision CI artifact are authoritative.
+The 25 October local compatibility work adds the operational-record exclusion
+to the existing app release policy. Its 150 properties and 156,749 compiled
+comparison cases pass locally; the original PHP runtime remains outside this
+proof scope. [Local evidence](evidence/shopware-compatibility-2026-10-25.md).
+The earlier published CI evidence below retains its own date and counts.
 The 23 October local and Linux CI verification compare **156,741 compiled Rust/Lean cases
 without mismatches** and reject 183 deliberately broken policy variants.
 [Exact local results and module audit](evidence/formal-modularity-2026-10-23.md).

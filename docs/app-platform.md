@@ -31,6 +31,12 @@ flowchart LR
   Component --> Quote[Native cart and checkout calculation]
 ```
 
+Original Shopware PHP plugins and App Scripts can also run in the optional
+[Shopware environments app](shopware-compatibility.md). Its separate original
+kernel owns extension behavior and data; native Veyndo admits and tracks lifecycle
+jobs through the same gateway. Original extensions are not automatically converted
+into native Manifest models or checkout hooks.
+
 ## Install and update
 
 `POST /api/apps/review` with `builtIn` or `manifest` returns the Rust-canonical

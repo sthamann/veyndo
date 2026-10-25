@@ -1235,6 +1235,11 @@
     "source": "src/routes.rs"
   },
   {
+    "path": "/app-ui/{id}/{digest}",
+    "method": "GET",
+    "source": "src/apps/ui_documents.rs"
+  },
+  {
     "path": "/channel-preview/end",
     "method": "POST",
     "source": "src/marketing/channel_preview.rs"

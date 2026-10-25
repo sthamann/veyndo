@@ -70,8 +70,9 @@ it("keeps the unload warning and visible error after an optimistic draft conflic
   expect(result.current.pending).toBe(true);
   expect(result.current.error).toBe("Revision changed");
 });
-it("pins UI loading to the scoped host request and removes forms, popups and direct URL navigation", async () => {
-  const request = vi.fn(async () => ({ html: "<h1>Fixture</h1>" }));
+it("loads a pinned document after the scoped host request and preserves the opaque sandbox", async () => {
+  const documentUrl = "/app-ui/example/" + "a".repeat(64);
+  const request = vi.fn(async () => ({ documentUrl }));
   render(
     <AppFrame
       app="example"
@@ -83,16 +84,16 @@ it("pins UI loading to the scoped host request and removes forms, popups and dir
   );
   const frame = await screen.findByTitle("example");
   expect(request).toHaveBeenCalledWith("__bundle", {});
-  expect(frame).not.toHaveAttribute("src");
+  expect(frame).toHaveAttribute("src", documentUrl);
   expect(frame).toHaveAttribute("sandbox", "allow-scripts");
-  expect(frame.getAttribute("srcdoc")).toContain("connect-src 'none'");
-  expect(frame.getAttribute("srcdoc")).toContain("form-action 'none'");
+  expect(frame).not.toHaveAttribute("srcdoc");
+  expect(frame).toHaveAttribute("referrerpolicy", "no-referrer");
 });
 it("a rejected bundle stays outside the iframe and offers a retry", async () => {
   const request = vi
     .fn()
     .mockRejectedValueOnce(Error("Changed digest"))
-    .mockResolvedValue({ html: "<p>Approved</p>" });
+    .mockResolvedValue({ documentUrl: "/app-ui/example/" + "a".repeat(64) });
   render(
     <AppFrame
       app="example"
@@ -107,6 +108,19 @@ it("a rejected bundle stays outside the iframe and offers a retry", async () => 
   fireEvent.click(screen.getByRole("button", { name: "Refresh status" }));
   await screen.findByTitle("example");
   expect(request).toHaveBeenCalledTimes(2);
+});
+it("rejects arbitrary document destinations before mounting a guest", async () => {
+  render(
+    <AppFrame
+      app="example"
+      url="https://external.invalid/ui"
+      request={async () => ({ documentUrl: "https://unreviewed.invalid" })}
+      allowedActions={[]}
+    />,
+    { wrapper: LocaleProvider },
+  );
+  await screen.findByRole("alert");
+  expect(screen.queryByTitle("example")).toBeNull();
 });
 it("snap clamps pathological and non-finite values and keeps the implicit block row", () => {
   expect(snap({ x: 200, y: 500, w: 4, h: 0 })).toEqual({

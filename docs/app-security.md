@@ -73,6 +73,15 @@ project personal data only with separate `customers.pii` consent. Surface grants
 short-lived browser capabilities with an even narrower action/context boundary.
 
 Pinned iframe HTML is limited to 1 MiB, UTF-8 and expected content type. The host
+first authorizes the surface and returns an `/app-ui/{app}/{digest}` document path.
+This path serves only operator-pinned, secret-free static UI code, with no actor
+context or credentials passed upstream. The document enforces `sandbox allow-scripts`
+in its HTTP CSP as well as the iframe attribute, including when opened directly.
+Its isolated response allows inline bundle code; the credential-bearing Studio
+keeps its stricter external-build-script policy. `srcdoc` is not used because it
+inherits Studio's CSP and prevents the approved guest code from starting.
+Unpinned or changed bytes fail closed. Document reads have an eight-request process
+bulkhead, bounded transport and no-store/no-referrer responses. The host
 sets an opaque script-only sandbox with restrictive CSP and communicates through
 source/nonce-checked SDK messages. Direct fetch and form submission are blocked.
 This is not a proof of zero exfiltration from hostile browser code: self-navigation

@@ -104,10 +104,9 @@ async fn create_inner(
         if m.runtime == "declarative" {
             apps::install_tx(&mut tx, &id, m.clone()).await?;
             for entity in m.entities.iter().filter(|e| {
-                e.public_read
-                    || (e.extends.is_some()
-                        && apps::core_extensions::configuration(e)
-                        && apps::record_access(&m, e, &h, "list").is_ok())
+                apps::core_extensions::configuration(e)
+                    && (e.public_read
+                        || (e.extends.is_some() && apps::record_access(&m, e, &h, "list").is_ok()))
             }) {
                 sqlx::query("SELECT set_config('rac.tenant',$1,true)")
                     .bind(&t)

@@ -48,6 +48,14 @@ app-supplied DDL. A changed F5 model clears only that preview/app's rows.
 
 ## Capacity and explicit limits
 
+Entities can declare `operational: true` for execution receipts, locks and other
+runtime records. These rows remain in shared storage but are excluded from sandbox
+cloning and configuration snapshots used by selected publication. An installed
+operational entity cannot become publishable by removing or disabling that flag.
+Omitting it retains the previous manifest serialization and package digest.
+This is used by [original Shopware environments](shopware-compatibility.md);
+their separate original databases are not part of native app storage.
+
 Existing limits remain: 128 registered packages/shop, 12 models/package,
 16 fields/model, 64 declared indexed/unique fields/package, 100,000 accounted rows
 and 64 MiB of logical storage per shop/app. Accounting includes ordered relation

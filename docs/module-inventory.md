@@ -120,6 +120,7 @@ This lists every checked-in source module in these roots, including files with n
 | [src/apps/surfaces.rs](../src/apps/surfaces.rs) | App-owned UI surfaces and namespaced HTTP routes reuse the authorized action gateway. |
 | [src/apps/tool_contract.rs](../src/apps/tool_contract.rs) | Installed app tools share native wire metadata and validate declared results without disclosing provider payloads. |
 | [src/apps/ui_bundles.rs](../src/apps/ui_bundles.rs) | Operator-pinned, bounded self-contained UI bundles use the same actor/context grant as app actions. |
+| [src/apps/ui_documents.rs](../src/apps/ui_documents.rs) | Secret-free, operator-pinned guest code in a response-enforced opaque sandbox, never srcdoc. |
 | [src/apps/ui_logic.rs](../src/apps/ui_logic.rs) | Declarative UI code-behind validates a bounded AST; calls retain surface grants and server domain authorization. |
 | [src/apps/ui_logic_tests.rs](../src/apps/ui_logic_tests.rs) | UI programs must keep static types, same-model saves, surface allowlists and acyclic ownership before install or preview. |
 | [src/apps/ui_logic_types.rs](../src/apps/ui_logic_types.rs) | Static UI expression types prevent control coercion and invoking save with a different model; runtime still validates actual values. |
@@ -1528,6 +1529,19 @@ This lists every checked-in source module in these roots, including files with n
 | [extensions/apps/product-lab/server.py](../extensions/apps/product-lab/server.py) | App-owned code, SQLite structures and versioned browser UI; no commerce credentials reach the guest. |
 | [extensions/apps/service-example/index.html](../extensions/apps/service-example/index.html) | Independent app entry; see extensions/README.md for its public contract. |
 | [extensions/apps/service-example/server.py](../extensions/apps/service-example/server.py) | Standalone app service with its own UI and durable event inbox. Run separately from the core. |
+| [extensions/apps/shopware-compat/app.js](../extensions/apps/shopware-compat/app.js) | Independent app entry; see extensions/README.md for its public contract. |
+| [extensions/apps/shopware-compat/index.html](../extensions/apps/shopware-compat/index.html) | Isolated app interface: Shopware environments |
+| [extensions/apps/shopware-compat/service/config.rs](../extensions/apps/shopware-compat/service/config.rs) | Operator-owned cell identities: one isolated original runtime per shop/environment, no caller destinations. |
+| [extensions/apps/shopware-compat/service/core.rs](../extensions/apps/shopware-compat/service/core.rs) | Scoped canonical callbacks retain installed digest, consent, actor rights and native app storage ownership. |
+| [extensions/apps/shopware-compat/service/inventory.rs](../extensions/apps/shopware-compat/service/inventory.rs) | Observe original plugin/app state; fingerprints bind reviews to runtime version and deployment plus installed state. |
+| [extensions/apps/shopware-compat/service/jobs.rs](../extensions/apps/shopware-compat/service/jobs.rs) | Core-leased jobs: authenticate and validate whole event batches, claim before acknowledgement, and keep unknown writes fenced. |
+| [extensions/apps/shopware-compat/service/main.rs](../extensions/apps/shopware-compat/service/main.rs) | App-owned controller for isolated original Shopware cells; never executes PHP inside Commerce. |
+| [extensions/apps/shopware-compat/service/plan.rs](../extensions/apps/shopware-compat/service/plan.rs) | Review and mutation contract: no shell/SQL emulation; original Shopware owns extension lifecycle effects. |
+| [extensions/apps/shopware-compat/service/transport.rs](../extensions/apps/shopware-compat/service/transport.rs) | Fixed-origin original Shopware Admin API transport; no redirects, ambient proxies, arbitrary paths or error bodies. |
+| [extensions/apps/shopware-compat/tests/container.py](../extensions/apps/shopware-compat/tests/container.py) | Reproduce original extension acceptance in disposable Docker cells; never reuse a merchant database. |
+| [extensions/apps/shopware-compat/tests/integration.py](../extensions/apps/shopware-compat/tests/integration.py) | Veyndo native jobs -> Rust controller -> ORIGINAL Shopware. No provider emulator. |
+| [extensions/apps/shopware-compat/tests/original_checkout.py](../extensions/apps/shopware-compat/tests/original_checkout.py) | Original Shopware purchase with synthetic data and its unpaid invoice method, never a payment provider. |
+| [extensions/apps/shopware-compat/ui.html](../extensions/apps/shopware-compat/ui.html) | Guest SDK: no merchant tokens or raw host API access; the host rechecks every action. |
 | [extensions/apps/site-builder/AppElement.tsx](../extensions/apps/site-builder/AppElement.tsx) | Placed native app surfaces use the existing public registry, renderer and server-bound read-only preview grants. |
 | [extensions/apps/site-builder/Renderer.tsx](../extensions/apps/site-builder/Renderer.tsx) | Shared page renderer: Studio previews and published shops use exactly these registered components. |
 | [extensions/apps/site-builder/agent_handoff.rs](../extensions/apps/site-builder/agent_handoff.rs) | Coding agents edit the same page schema through credential-free tasks and explicit native review. |
@@ -1773,6 +1787,7 @@ This lists every checked-in source module in these roots, including files with n
 | [scripts/settings_scopes.py](../scripts/settings_scopes.py) | Real tenant/channel settings, immutable order dependencies, localized gallery and selective staging regressions. |
 | [scripts/shipment_workflows.py](../scripts/shipment_workflows.py) | Real isolated PostgreSQL/HTTP package conservation, replay, current rights, customer projection and flow effects. |
 | [scripts/shipping_contract.py](../scripts/shipping_contract.py) | Test-only carrier-neutral service: native jobs, package intent, documents and Flow; no external bookings. |
+| [scripts/shopware_compat.py](../scripts/shopware_compat.py) | Registered original-runtime check delegates implementation and disposable containers to the app owner. |
 | [scripts/signed_pooler.py](../scripts/signed_pooler.py) | Two authenticated roles, each through a real one-backend transaction pooler. |
 | [scripts/signed_runtime.py](../scripts/signed_runtime.py) | Repeat the real two-replica runtime path with separately authenticated tenant/system SQL roles. |
 | [scripts/site_markdown.py](../scripts/site_markdown.py) | Render every tracked Markdown document with repository-aware links and search. |

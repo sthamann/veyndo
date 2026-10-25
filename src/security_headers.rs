@@ -3,6 +3,10 @@ use axum::{extract::Request, middleware::Next, response::Response};
 pub(crate) async fn apply(request: Request, next: Next) -> Response {
     let studio = crate::auth::browser::origin(&request);
     let mut response = next.run(request).await;
+    let opaque_app = response
+        .extensions()
+        .get::<crate::apps::SandboxedAppDocument>()
+        .is_some();
     let headers = response.headers_mut();
     headers.insert("x-content-type-options", "nosniff".parse().unwrap());
     // Preview/access handoffs intentionally suppress all referrers; retain their stricter policy.
@@ -23,7 +27,7 @@ pub(crate) async fn apply(request: Request, next: Next) -> Response {
                 .unwrap(),
         );
     }
-    if let Some((origin, _)) = studio {
+    if let Some((origin, _)) = studio.filter(|_| !opaque_app) {
         // Cover every response on the credential origin, including checkout and errors.
         // An extra policy intersects the renderer's policy; it cannot widen framing.
         headers.append(
