@@ -14,8 +14,10 @@ rollout or a compatibility certificate for arbitrary third-party packages.
 | Original purchase | Product page loaded with the plugin active. A synthetic guest bought one EUR 19.90 product through the Store API. The accepted order retained that line, available stock changed from ten to nine and the reopened cart was empty. Its original manual invoice transaction stayed open; no provider payment was made and mail was disabled. |
 | Veyndo app admission | Pinned UI bytes, native callback authority, foreign-cell rejection, insufficient-role rejection and MCP filtering passed. |
 | Restart | A retained started operation continued to fence the cell after controller restart. No second extension effect ran. |
+| Shutdown | SIGINT and SIGTERM both returned a normal exit in the original-runtime integration test. The controller stops HTTP admission and drains background job permits; unfinished operations keep their durable fence. |
 | Sandbox | Operational records were neither cloned nor offered for selective publication. Ordinary configuration still cloned. |
 | Container boundary | The actual web container ran as www-data with a read-only root, all capabilities dropped and only the internal cell network. |
+| Controller image | The release Docker image built and served its Rust health response as non-root `app`, with a read-only root and dropped capabilities. It contained neither a PHP nor a Python interpreter and exited normally on SIGTERM. |
 | Browser | Personal sign-in, extension inventory, search, review dialog and cancellation worked in Chrome. The guide includes the actual Studio capture. |
 
 The image used for the local acceptance was

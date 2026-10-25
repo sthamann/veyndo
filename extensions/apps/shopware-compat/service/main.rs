@@ -98,6 +98,7 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
             .build()?,
         capacity: Arc::new(tokio::sync::Semaphore::new(8)),
     };
+    let capacity = a.capacity.clone();
     let router = Router::new()
         .route(
             "/health",
@@ -112,6 +113,33 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
         .layer(DefaultBodyLimit::max(65536))
         .with_state(a);
     let bind = std::env::var("SHOPWARE_COMPAT_BIND").unwrap_or("127.0.0.1:8812".into());
-    axum::serve(tokio::net::TcpListener::bind(bind).await?, router).await?;
+    axum::serve(tokio::net::TcpListener::bind(bind).await?, router)
+        .with_graceful_shutdown(shutdown())
+        .await?;
+    // HTTP admission is closed. Existing job tasks hold a capacity permit until
+    // their final callback, so give them time to finish before dropping the runtime.
+    // A forced stop or timeout retains each started operation's durable fence.
+    if tokio::time::timeout(
+        std::time::Duration::from_secs(60),
+        capacity.acquire_many_owned(8),
+    )
+    .await
+    .is_err()
+    {
+        eprintln!("Shutdown deadline reached; unfinished changes remain fenced for reconciliation");
+    }
     Ok(())
+}
+async fn shutdown() {
+    #[cfg(unix)]
+    {
+        let mut terminate =
+            tokio::signal::unix::signal(tokio::signal::unix::SignalKind::terminate())
+                .expect("termination signal");
+        tokio::select! { _ = tokio::signal::ctrl_c() => {}, _ = terminate.recv() => {} }
+    }
+    #[cfg(not(unix))]
+    {
+        let _ = tokio::signal::ctrl_c().await;
+    }
 }

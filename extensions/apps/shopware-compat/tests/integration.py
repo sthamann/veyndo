@@ -3,7 +3,7 @@
 Requires an isolated, already installed Shopware 6.7.14.2 with fixtures staged,
 an inactive fixture app, and SHOPWARE_TEST_* credentials. Never target production.
 """
-import json, os, socket, subprocess, sys, time, uuid, urllib.request, urllib.error, hashlib
+import json, os, signal, socket, subprocess, sys, time, uuid, urllib.request, urllib.error, hashlib
 from pathlib import Path
 from urllib.parse import urlsplit
 ROOT=Path(__file__).resolve().parents[4]
@@ -122,10 +122,15 @@ try:
     lock=action('list_locks',{'id':'sandbox'})['elements'][0]
     fields={k:lock[k] for k in ['cell','change','job','state','approval']};fields['state']='started'
     action('save_locks',{'id':'sandbox','revision':lock['revision'],'fields':fields})
-    stop(adapter);adapter=start()
+    stop(adapter);assert adapter.returncode == 0, 'SIGINT must drain and exit normally'
+    adapter=start()
     change('app','VeyndoCompatibilityApp','activate',False)
     assert not next(x for x in action('inspect',{'cellId':'sandbox'})['snapshot']['extensions'] if x['kind']=='app')['active']
     print('PASS durable cell fence survives restart and blocks an unreviewed second effect',flush=True)
+    if os.environ.get('SHOPWARE_TEST_KEEP_RUNNING') != '1':
+        adapter.send_signal(signal.SIGTERM)
+        assert adapter.wait(timeout=10) == 0, 'SIGTERM must drain and exit normally'
+        print('PASS controller handles SIGINT and SIGTERM with a normal exit', flush=True)
     # Operational data must never travel from a private preview into live configuration.
     title={'en':'Storage boundary','de':'Speichergrenze','fr':'Limite de stockage','es':'Límite de almacenamiento'}
     entity={'name':'events','label':title,'publicRead':True,'operational':True,'fields':[{'name':'title','label':title,'kind':'string','required':True,'indexed':False}]}

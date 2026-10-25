@@ -130,6 +130,12 @@ through its current native record revision before restarting. Clearing an uncert
 lock while Shopware still runs can duplicate extension effects. Normal preflight
 failures release the lock before any mutation has been sent.
 
+On SIGINT or SIGTERM the controller closes HTTP admission and waits up to 60
+seconds for its leased background jobs after current requests finish. Give the
+deployment enough termination time for these requests and the drain period.
+A forced termination or drain timeout leaves started operations fenced; restarting
+the process does not repeat an uncertain extension change.
+
 Operational records have `operational: true`: they cannot be cloned or selectively
 published as sandbox configuration, nor changed back into publishable data.
 The original database and files require their own coordinated backup/restore;

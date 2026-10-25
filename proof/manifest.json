@@ -1265,8 +1265,8 @@
     },
     "extensions/apps/shopware-compat/service/main.rs": {
       "status": "unproved",
-      "sha256": "4e6367d96518d9483be7e3f4628df6d4d6d28c3398ff3e34131648e6aad1f2cb",
-      "review": "Reviewed original Shopware app controller, bounded fixed-origin lifecycle jobs and durable uncertain fences; opaque pinned app UI response CSP; operational records excluded by extracted release policy and native clone/publication path. Real container, native permissions/MCP, migration retention and app surface regressions passed; PHP and controller adapters remain unproved."
+      "sha256": "11c24b125a204f92a3b5d265076879906acad4c9587dbb050fa0e0425b7c29dd",
+      "review": "Review controller SIGINT/SIGTERM admission closure and bounded leased-job drain; interrupted writes retain existing durable fence. Original runtime integration verifies both normal signal exits."
     },
     "extensions/apps/shopware-compat/service/plan.rs": {
       "status": "unproved",
