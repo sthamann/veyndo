@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<container xmlns="http://symfony.com/schema/dic/services">
+    <services>
+        <service id="NativeDiscountReference\DiscountProcessor">
+            <argument type="service" id="Shopware\Core\Checkout\Cart\Price\PercentagePriceCalculator" />
+            <tag name="shopware.cart.processor" priority="4500" />
+        </service>
+    </services>
+</container>

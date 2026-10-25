@@ -13,8 +13,11 @@ pub struct Cell {
 #[derive(serde::Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct Tenant {
+    #[serde(default)]
     pub core_url: String,
+    #[serde(default)]
     pub callback_token: String,
+    #[serde(default)]
     pub cells: HashMap<String, Cell>,
 }
 pub struct Config {
@@ -72,9 +75,8 @@ impl Config {
         for (id, t) in &self.tenants {
             if id.is_empty()
                 || id.len() > 100
-                || t.callback_token.len() < 24
-                || !origin(&t.core_url, local)
-                || t.cells.is_empty()
+                || (!t.cells.is_empty()
+                    && (t.callback_token.len() < 24 || !origin(&t.core_url, local)))
                 || t.cells.len() > 8
             {
                 return Err("Invalid shop configuration".into());

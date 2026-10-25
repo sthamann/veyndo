@@ -13,6 +13,11 @@ def negative_controls(packages):
     for name, dependency in [('veyndo-apps', 'sqlx'), ('veyndo-commerce', 'veyndo-cognition'),
                               ('veyndo-cognition', 'veyndo'), ('veyndo-kernel', 'tokio')]:
         variant(name)['dependencies'].append({'name': dependency})
+    variant('veyndo')['dependencies'].append({'name':'veyndo-shopware-native'})
+    variant('veyndo-shopware-native')['dependencies'].append({'name':'sqlx'})
+    native_runtime=next(d for d in variant('veyndo-shopware-native')['dependencies'] if d['name']=='veyndo-apps')
+    native_runtime['kind']=None
+    variant('veyndo-shopware-native')['targets'][0]['src_path']=str(ROOT/'src/lib.rs')
     for kind in [None, 'dev', 'build']:
         variant('veyndo-apps')['dependencies'].append(
             {'name': 'sqlx', 'rename': 'harmless_helpers', 'kind': kind, 'optional': True,

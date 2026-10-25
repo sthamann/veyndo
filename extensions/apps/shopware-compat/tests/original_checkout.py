@@ -5,7 +5,7 @@ import urllib.error
 import urllib.request
 
 
-def verify(base, admin_headers):
+def verify(base, admin_headers, price=19.9, discount_minor=0, expect_fixture=True):
     def request(path, data=None, headers=None, method=None):
         req = urllib.request.Request(base + path, data=None if data is None else json.dumps(data).encode(),
                                      headers={'Content-Type': 'application/json', 'Accept': 'application/json', **(headers or {})}, method=method)
@@ -29,12 +29,12 @@ def verify(base, admin_headers):
     request('/api/product', {
         'id': product_id, 'productNumber': 'compat-' + suffix, 'name': title,
         'active': True, 'stock': 10, 'taxId': tax['id'],
-        'price': [{'currencyId': channel['currencyId'], 'gross': 19.9, 'net': 16.722689, 'linked': True}],
+        'price': [{'currencyId': channel['currencyId'], 'gross': price, 'net': round(price / 1.19, 6), 'linked': True}],
         'visibilities': [{'salesChannelId': channel['id'], 'visibility': 30}],
     }, admin_headers)
     with urllib.request.urlopen(base + '/detail/' + product_id, timeout=30) as page:
         assert title in page.read().decode()
-        assert page.headers['X-Veyndo-Compatibility-Fixture'] == 'original-plugin-active'
+        if expect_fixture: assert page.headers['X-Veyndo-Compatibility-Fixture'] == 'original-plugin-active'
 
     headers = {'sw-access-key': channel['accessKey']}
     cart, response = request('/store-api/checkout/cart', {}, headers)
@@ -50,17 +50,23 @@ def verify(base, admin_headers):
     cart, _ = request('/store-api/checkout/cart/line-item', {
         'items': [{'id': product_id, 'referencedId': product_id, 'type': 'product', 'quantity': 1}],
     }, headers)
-    assert cart['lineItems'][0]['price']['totalPrice'] == 19.9
+    assert next(l for l in cart['lineItems'] if l['referencedId']==product_id)['price']['totalPrice'] == price
+    expected_position=round(price-discount_minor/100,2)
+    assert cart['price']['positionPrice']==expected_position,cart['price']
     order, response = request('/store-api/checkout/order', {'tos': True}, headers)
-    assert response['X-Veyndo-Compatibility-Fixture'] == 'original-plugin-active'
+    if expect_fixture: assert response['X-Veyndo-Compatibility-Fixture'] == 'original-plugin-active'
     accepted = search('order', {'filter': [{'type': 'equals', 'field': 'id', 'value': order['id']}],
                                'associations': {'lineItems': {}, 'transactions': {'associations': {'stateMachineState': {}}}}})[0]
     line = next(line for line in accepted['lineItems'] if line['referencedId'] == product_id)
-    assert line['quantity'] == 1 and line['totalPrice'] == 19.9
+    assert line['quantity'] == 1 and line['totalPrice'] == price
+    assert accepted['positionPrice']==expected_position,accepted
     assert accepted['transactions'][0]['paymentMethodId'] == invoice['id']
     assert accepted['transactions'][0]['stateMachineState']['technicalName'] == 'open'
     empty, _ = request('/store-api/checkout/cart', {}, headers)
     assert empty['lineItems'] == []
     remaining = search('product', {'filter': [{'type': 'equals', 'field': 'id', 'value': product_id}]})[0]
     assert remaining['availableStock'] == 9, remaining['availableStock']
+    result={'orderId':order['id'],'positionPrice':expected_position,'stock':remaining['availableStock'],'emptyCart':not empty['lineItems'],'payment':'unpaid_invoice'}
     print('PASS original storefront product, guest cart/order, retained extension execution, unpaid invoice, stock and empty cart', flush=True)
+
+    return result

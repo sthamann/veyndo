@@ -1,14 +1,14 @@
 {
   "id": "shopware_compat",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "coreApi": "1",
   "runtime": "service",
   "category": "operations",
   "name": {
-    "en": "Shopware environments",
-    "de": "Shopware-Umgebungen",
-    "es": "Entornos Shopware",
-    "fr": "Environnements Shopware"
+    "en": "Shopware extensions",
+    "de": "Shopware-Erweiterungen",
+    "fr": "Extensions Shopware",
+    "es": "Extensiones Shopware"
   },
   "permissions": [
     "admin.slot",
@@ -167,6 +167,41 @@
     }
   ],
   "actions": [
+    {
+      "name": "translate",
+      "description": "Parse original Shopware PHP and prepare a native app proposal; never execute source or install it",
+      "handler": "service",
+      "permission": "developer.manage",
+      "readOnly": true,
+      "mcp": true,
+      "flowAllowed": false,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "appId": {
+            "type": "string",
+            "maxLength": 48
+          },
+          "version": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "files": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "maxLength": 32768
+            }
+          }
+        },
+        "required": [
+          "appId",
+          "version",
+          "files"
+        ],
+        "additionalProperties": false
+      }
+    },
     {
       "name": "cells",
       "description": "List this shop’s isolated Shopware environments",
@@ -475,13 +510,14 @@
       "id": "workspace",
       "location": "admin.navigation",
       "label": {
-        "en": "Shopware environments",
-        "de": "Shopware-Umgebungen",
-        "es": "Entornos Shopware",
-        "fr": "Environnements Shopware"
+        "en": "Shopware extensions",
+        "de": "Shopware-Erweiterungen",
+        "fr": "Extensions Shopware",
+        "es": "Extensiones Shopware"
       },
       "uiPath": "index.html",
       "actions": [
+        "translate",
         "cells",
         "inspect",
         "prepare",
@@ -515,16 +551,23 @@
       "method": "POST",
       "scope": "admin",
       "action": "change"
+    },
+    {
+      "path": "translate",
+      "method": "POST",
+      "scope": "admin",
+      "action": "translate"
     }
   ],
   "intelligence": {
     "description": {
-      "en": "Inspect isolated original Shopware environments and prepare extension changes. Apply only the reviewed change.",
-      "de": "Originale Shopware-Umgebungen prüfen und Änderungen an Erweiterungen vorbereiten. Nur den geprüften Stand übernehmen.",
-      "es": "Inspecciona entornos originales de Shopware y prepara cambios de extensiones.",
-      "fr": "Inspecter les environnements Shopware originaux et préparer les changements des extensions. Appliquer uniquement le changement vérifié."
+      "en": "Translate supported Shopware cart processors into native Veyndo apps. Review source diagnostics and manage optional original reference environments.",
+      "de": "Unterstützte Shopware-Warenkorbprozessoren in native Veyndo-Apps übersetzen. Quellcode-Hinweise prüfen und optionale originale Vergleichsumgebungen verwalten.",
+      "fr": "Traduire les processeurs de panier pris en charge en apps Veyndo natives et gérer les environnements de référence.",
+      "es": "Traducir los procesadores compatibles en apps Veyndo nativas y gestionar entornos de referencia."
     },
     "tools": [
+      "translate",
       "cells",
       "inspect",
       "prepare",
@@ -534,10 +577,10 @@
   },
   "presentation": {
     "description": {
-      "en": "Manage plugins and apps in a separate original Shopware runtime. Keep version, review and execution history together.",
-      "de": "Plugins und Apps in einer getrennten originalen Shopware-Laufzeit verwalten. Version, Prüfung und Verlauf bleiben zusammen.",
-      "es": "Administra plugins y apps en un entorno original separado de Shopware.",
-      "fr": "Gérer les plugins et apps dans un environnement Shopware original isolé, avec version, validation et historique."
+      "en": "Translate supported Shopware cart processors into native Veyndo apps. Review source diagnostics and manage optional original reference environments.",
+      "de": "Unterstützte Shopware-Warenkorbprozessoren in native Veyndo-Apps übersetzen. Quellcode-Hinweise prüfen und optionale originale Vergleichsumgebungen verwalten.",
+      "fr": "Traduire les processeurs de panier pris en charge en apps Veyndo natives et gérer les environnements de référence.",
+      "es": "Traducir los procesadores compatibles en apps Veyndo nativas y gestionar entornos de referencia."
     }
   }
 }

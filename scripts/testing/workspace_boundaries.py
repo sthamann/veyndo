@@ -6,8 +6,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 OWNERS = {name: ROOT / 'crates' / name.removeprefix('veyndo-') for name in (
     'veyndo-kernel', 'veyndo-runtime', 'veyndo-commerce', 'veyndo-apps', 'veyndo-cognition')}
-OWNERS.update({'veyndo': ROOT, 'veyndo-migration': ROOT / 'extensions/apps/migration'})
+OWNERS.update({'veyndo': ROOT, 'veyndo-migration': ROOT / 'extensions/apps/migration',
+               'veyndo-shopware-native': ROOT / 'extensions/apps/shopware-compat'})
 ALLOWED = {
+    'veyndo-shopware-native': {'veyndo-apps'},
     'veyndo-kernel': set(),
     'veyndo-runtime': set(),
     'veyndo-commerce': {'veyndo-kernel'},
@@ -18,6 +20,7 @@ ALLOWED = {
 # when a manifest renames sqlx as something innocuous. New dependencies need an
 # explicit architecture decision, including build/dev/optional/target variants.
 EXTERNAL = {
+    'veyndo-shopware-native': {'serde', 'serde_json', 'sha2', 'roxmltree', 'semver', 'axum', 'tokio', 'reqwest', 'ring', 'bumpalo', 'mago-syntax', 'mago-database', 'mago-span', 'mago-text-edit', 'mago-php-version'},
     'veyndo-kernel': set(),
     'veyndo-commerce': {'serde', 'serde_json'},
     'veyndo-apps': {'wasmtime', 'wat', 'sha2'},
@@ -37,11 +40,15 @@ def check(packages):
         assert Path(package['manifest_path']).resolve() == owner / 'Cargo.toml', (name, 'Wrong owner directory')
         for target in package['targets']:
             assert Path(target['src_path']).resolve().is_relative_to(owner), (name, 'Target escapes its owner')
+        if name == 'veyndo':
+            assert not any(d['name']=='veyndo-shopware-native' for d in package['dependencies']), 'Plugin compiler must stay outside commerce core'
         if name not in ALLOWED:
             continue
         allowed = ALLOWED[name] | EXTERNAL[name]
         for dependency in package['dependencies']:
             dep = dependency['name']
+            if name == 'veyndo-shopware-native' and dep == 'veyndo-apps':
+                assert dependency['kind']=='dev', 'Native runtime only belongs in compiler verification, not service execution'
             assert dep in allowed, (name, 'Unreviewed dependency capability', dep)
             if dependency.get('path'):
                 assert dep in ALLOWED[name] and Path(dependency['path']).resolve() == OWNERS[dep].resolve(), (name, 'Path dependency escapes its owner', dep)

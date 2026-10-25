@@ -1,6 +1,13 @@
-# Original Shopware environments
+# Shopware extensions: native translation and original reference environments
 
-This optional app manages original Shopware extensions from Veyndo. The controller
+The Rust compiler translates the admitted cart-percentage profile into a regular
+Veyndo commerce app. Start with the [native translation guide](../../../docs/shopware-native-translation.md).
+For native analysis alone, set `APP_TOKEN` and `SHOPWARE_COMPAT_TENANTS` to
+`{"merchant-id":{}}`. No original runtime, callback key or database connection is
+needed. The translation action requires `developer.manage`; its results remain
+proposals until the existing private import and release steps succeed.
+
+This optional app also manages original Shopware extensions from Veyndo. The controller
 is Rust; the separate cell runs original Shopware PHP, MariaDB and its workers.
 All app code, UI, deployment and fixtures live in this directory.
 
@@ -21,7 +28,7 @@ deployment identity. Save that image and its recipe lock with the release.
 - Each cell gets a separate MariaDB database, volumes, process limits and network.
   Original plugin tables stay there. Veyndo uses its existing shared app tables.
 
-This does not make Shopware PHP plugins run inside the native Rust checkout.
+The original-cell mode does not itself convert plugin behavior into native checkout hooks. The separate source compiler implements the bounded native profile documented above.
 Shopware storefront/admin extensions run on their original surfaces. Use the
 [migration assistant](../../../docs/agentic-migration.md) for reviewed transfers
 into native Veyndo. This app does not synchronize two order or inventory ledgers.
@@ -64,7 +71,7 @@ original extension license and required vendor credentials.
 
 ## Connect the Rust controller
 
-Build with `cargo build --locked --no-default-features --bin shopware-compat`, or
+Build with `cargo build --locked -p veyndo-shopware-native --bin shopware-compat`, or
 build `deploy/Controller.Dockerfile` from the repository root.
 
 1. Install `shopware_compat` in Veyndo Apps with its current canonical manifest
@@ -150,13 +157,13 @@ Veyndo's PostgreSQL snapshot does not include them.
 For a complete fresh run, build the two native binaries and run:
 
 ```sh
-cargo build --locked --no-default-features --bin veyndo --bin shopware-compat
+cargo build --locked --no-default-features -p veyndo -p veyndo-shopware-native --bin veyndo --bin shopware-compat --bin shopware-native
 python3 extensions/apps/shopware-compat/tests/container.py
 ```
 
 The driver builds original Shopware, creates isolated PostgreSQL and MariaDB,
 installs the two fixture extensions, compiles the original theme and exercises the
-native gateway. It checks data retention after uninstall and actual container
+native gateway. It then installs the native discount source fixture in original Shopware, translates the identical source, performs a native private import and selected release, and compares the two purchases. It checks data retention after uninstall and actual container
 restrictions, then removes only its own generated containers and test volumes.
 Use `--docker-context NAME` without switching your Docker default, or
 `--cell-image IMAGE` to reuse an already built cell. The native integration
@@ -165,7 +172,7 @@ runtime test and collects its Rust/Python coverage. The dedicated GitHub workflo
 supports a focused manual run. Local registry runs can set `SHOPWARE_TEST_CELL_IMAGE`
 to reuse an immutable cell image; CI builds the checked-in recipe.
 
-`cargo test --no-default-features --bin shopware-compat` checks destination and
+`cargo test --locked -p veyndo-shopware-native` checks destination and
 event/command admission. `tests/integration.py` runs against an original Shopware
 installation, not an API fixture. Stage the two packages in `tests/fixtures`, run
 `plugin:refresh`, install the fixture app inactive, and provide an isolated native

@@ -1,6 +1,10 @@
-name: Original Shopware compatibility
+name: Shopware native translation and reference
 on:
   workflow_dispatch:
+  pull_request:
+    paths:
+      - 'extensions/apps/shopware-compat/**'
+      - '.github/workflows/shopware-compat.yml'
 permissions:
   contents: read
 concurrency:
@@ -20,6 +24,16 @@ jobs:
         with:
           shared-key: shopware-compat
       - name: Build native owners
-        run: cargo build --locked --no-default-features --bin veyndo --bin shopware-compat
+        run: cargo build --locked --no-default-features -p veyndo -p veyndo-shopware-native --bin veyndo --bin shopware-compat --bin shopware-native
+      - name: Native translation and bounded guest execution
+        run: cargo test --locked -p veyndo-shopware-native
       - name: Exercise original PHP plugins and App Scripts in an isolated cell
         run: python3 extensions/apps/shopware-compat/tests/container.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: shopware-native-comparison
+          path: |
+            artifacts/shopware-native-result.json
+            artifacts/shopware-native-original-result.json
+          if-no-files-found: ignore

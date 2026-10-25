@@ -60,6 +60,17 @@ The public website's shared styles live in nine documented modules under
 handbook keep their existing asset URLs and identical CSS. `scripts/check_site.py`
 compares both published assets to that bundle. [Extraction evidence](evidence/formal-modularity-2026-10-23.md#website-stylesheet-follow-up).
 
+## Native Shopware translation
+
+`extensions/apps/shopware-compat/native/` owns the separate Cargo compiler package:
+`intake.rs` validates Composer/XML and source bounds; `php.rs` and `symbols.rs`
+resolve PHP contracts; `expressions.rs` derives the typed cart decision;
+`component.rs` emits the existing WIT/Manifest package. Its neighboring service
+provides the permissioned app gateway. `tests/native.py` verifies real private
+import, selected release, HTTP/MCP and PostgreSQL checkout; `tests/container.py`
+compares the same source with original Shopware. No compiler or plugin-specific
+logic is linked into the core. [Contract and limits](shopware-native-translation.md).
+
 ## Original Shopware environments
 
 `extensions/apps/shopware-compat/` owns the Rust controller, Studio surface,

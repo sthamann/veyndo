@@ -1,4 +1,4 @@
-//! App-owned controller for isolated original Shopware cells; never executes PHP inside Commerce.
+//! App-owned native source translation and optional original reference cells; no PHP execution in Commerce.
 mod config;
 mod core;
 mod inventory;
@@ -48,7 +48,7 @@ impl App {
             .ok_or_else(|| {
                 error(
                     StatusCode::FORBIDDEN,
-                    "No Shopware cell configured for this shop",
+                    "Shop not admitted by the compatibility service",
                 )
             })
     }
@@ -74,6 +74,22 @@ async fn action(
         )
     })?;
     let result = match name.as_str() {
+        "translate" => {
+            let request = serde_json::from_value::<veyndo_shopware_native::Request>(v)
+                .map_err(|_| error(StatusCode::BAD_REQUEST, "Invalid source package"))?;
+            let report =
+                tokio::task::spawn_blocking(move || veyndo_shopware_native::translate(&request))
+                    .await
+                    .map_err(|_| {
+                        error(StatusCode::INTERNAL_SERVER_ERROR, "Source analysis failed")
+                    })?;
+            serde_json::to_value(report).map_err(|_| {
+                error(
+                    StatusCode::INTERNAL_SERVER_ERROR,
+                    "Report serialization failed",
+                )
+            })?
+        }
         "cells" => {
             json!({"elements":a.config.tenants[tenant].cells.iter().map(|(id,c)|json!({"id":id,"environment":c.environment,"version":c.version,"imageDigest":c.image_digest,"adminUrl":format!("{}/admin",c.url),"storefrontUrl":c.url})).collect::<Vec<_>>() })
         }

@@ -81,13 +81,12 @@ for verification tooling. Run `./scripts/dev.sh` and open
 | Countries, languages, currency and taxes | [International commerce](docs/international-commerce.md) · [Currencies](docs/currencies.md) |
 | POS, B2B, EDI and marketplaces | [POS](docs/pos.md) · [B2B](docs/b2b-commerce.md) · [EDI](docs/edi.md) · [Marketplaces](docs/marketplaces.md) |
 | Apps, settings, storage and private releases | [App platform](docs/app-platform.md) · [Build five apps](docs/app-tutorials/README.md) · [Shared storage](docs/app-data-storage.md) |
-| Original Shopware extensions | [Isolated compatibility environments](docs/shopware-compatibility.md) |
+| Shopware extensions | [Native compiler](docs/shopware-native-translation.md) · [Reference runtime](docs/shopware-compatibility.md) |
 | Agents and shared operations | [Connections](docs/connectors.md) · [Agent identities & limits](docs/agent-authority-controls.md) · [MCP workshop](docs/agent-workshop.md) · [UCP B2B](docs/b2b-ucp-negotiation.md) |
 | Operation and verification | [Architecture](docs/production-architecture.md) · [Integrations](docs/service-integrations.md) · [Testing](docs/testing.md) · [Proof boundaries](docs/formal-verification.md) |
 
-The [handbook on veyndo.ai](https://veyndo.ai/docs/) follows seven ordered chapters,
-with full-text search and article navigation. Technical articles retain their
-source language; the reading interface supports English, German, French and Spanish.
+The [handbook](https://veyndo.ai/docs/) has seven chapters, full-text search and
+navigation in English, German, French and Spanish. Articles retain their source language.
 
 ## Current boundaries
 

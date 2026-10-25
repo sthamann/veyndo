@@ -34,8 +34,10 @@ flowchart LR
 Original Shopware PHP plugins and App Scripts can also run in the optional
 [Shopware environments app](shopware-compatibility.md). Its separate original
 kernel owns extension behavior and data; native Veyndo admits and tracks lifecycle
-jobs through the same gateway. Original extensions are not automatically converted
-into native Manifest models or checkout hooks.
+jobs through the same gateway. Its original runtime does not convert extensions. The separate
+[native source compiler](shopware-native-translation.md) translates a bounded
+cart-percentage profile into normal reviewed Manifest/WIT hooks. It rejects
+unconverted source instead of silently discarding it.
 
 ## Install and update
 

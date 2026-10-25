@@ -66,6 +66,15 @@ provides CPU limits and Linux address-space limits for its child process.
 Dependencies remain external registry packages and retain their bundled license files.
 No OCR, parser microVM, or arbitrary customer-code execution is implied.
 
+## Shopware source parser
+
+The optional `veyndo-shopware-native` package uses Mago 1.30.0 PHP syntax,
+database, span, text-edit and PHP-version crates (MIT OR Apache-2.0), obtained
+from the Rust package registry. Their license files remain with the dependency
+sources. Mago parses the PHP source; Veyndo owns the bounded contract analysis
+and native component emitter. These dependencies are not linked into the commerce
+core. `php-rust` is not bundled or used as an execution engine.
+
 ## Bundled geography
 
 `fixtures/geography.json` derives country codes/continents and localized names

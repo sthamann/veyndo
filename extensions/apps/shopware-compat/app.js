@@ -2,8 +2,17 @@
 import {connectCommerce} from '/sdk.js';
 const sdk=await connectCommerce();
 const words={
-heading:['Shopware environments','Shopware-Umgebungen','Environnements Shopware','Entornos Shopware'],
-intro:['Manage extensions in your own original Shopware runtime. Each environment has its own database and files.','Verwalte Erweiterungen in deiner originalen Shopware-Laufzeit. Jede Umgebung hat eigene Daten und Dateien.','Gérez les extensions dans votre environnement Shopware original, avec ses propres données et fichiers.','Gestiona extensiones en tu entorno Shopware original, con sus propios datos y archivos.'],
+nativeHeading:['Translate a plugin','Plugin übersetzen','Traduire un plugin','Traducir plugin'],
+nativeHint:['Select the complete plugin folder. The cart-percentage profile translates a single percentage processor; other contracts are reported with source locations. No source code is executed.','Wähle den vollständigen Plugin-Ordner. Das Profil übersetzt einen einzelnen prozentualen Warenkorbprozessor. Andere Verträge werden mit Datei und Zeile angezeigt. Der Quellcode wird nicht ausgeführt.','Sélectionnez le dossier complet. Le profil traduit un processeur de remise ; les autres contrats sont signalés avec leur emplacement. Aucun code source n’est exécuté.','Selecciona la carpeta completa. El perfil traduce un procesador de descuento; los demás contratos se muestran con su ubicación. No se ejecuta el código fuente.'],
+sourceFolder:['Plugin folder','Plugin-Ordner','Dossier du plugin','Carpeta del plugin'],appId:['Veyndo app ID','Veyndo-App-ID','Identifiant Veyndo','ID de app Veyndo'],analyse:['Check and translate','Prüfen und übersetzen','Vérifier et traduire','Comprobar y traducir'],
+packageHint:['Native package proposal. Select and copy for App Studio import, or ask your coding agent to import it into a private sandbox. Nothing has been installed.','Nativer Paketvorschlag. Zum Import in App Studio markieren und kopieren oder den Coding-Agenten mit dem Import in eine private Sandbox beauftragen. Es wurde nichts installiert.','Proposition native à copier pour importer dans App Studio ou via votre agent dans un bac à sable privé. Rien n’a été installé.','Propuesta nativa para copiar e importar en App Studio o con tu agente en un entorno privado. No se ha instalado nada.'],
+translated:['Native proposal ready for review','Nativer Vorschlag bereit zur Prüfung','Proposition native à vérifier','Propuesta nativa lista'],blocked:['Translation needs these additional contracts','Für die Übersetzung fehlen diese Verträge','Contrats supplémentaires requis','Faltan estos contratos'],
+fileLimit:['Select up to 64 files, 32 KiB each. The complete encoded request must fit 64 KiB. Use the local compiler for larger packages.','Wähle bis zu 64 Dateien mit je 32 KiB. Die gesamte kodierte Anfrage darf 64 KiB nicht überschreiten. Nutze für größere Pakete den lokalen Compiler.','Maximum : 64 fichiers, 32 Kio chacun. La requête encodée doit rester sous 64 Kio. Utilisez le compilateur local pour les paquets plus grands.','Máximo: 64 archivos, 32 KiB cada uno. La solicitud codificada debe caber en 64 KiB. Usa el compilador local para paquetes mayores.'],
+encoding:['Source files must use valid UTF-8. No source bytes were replaced.','Quelldateien müssen gültiges UTF-8 enthalten. Es wurden keine Quellbytes ersetzt.','Les fichiers doivent être en UTF-8 valide. Aucun octet source n’a été remplacé.','Los archivos deben usar UTF-8 válido. No se sustituyeron bytes de origen.'],
+
+heading:['Shopware extensions','Shopware-Erweiterungen','Extensions Shopware','Extensiones Shopware'],
+intro:['Bring supported Shopware logic into your native Veyndo shop. Inspect the source, review the proposal and test it privately before publishing.','Übernimm unterstützte Shopware-Logik in deinen Veyndo-Shop. Quellcode prüfen, Vorschlag ansehen und vor der Veröffentlichung privat testen.','Importez la logique Shopware prise en charge, examinez la proposition et testez-la en privé.','Importa la lógica compatible, revisa la propuesta y pruébala en privado.'],
+
 environment:['Environment','Umgebung','Environnement','Entorno'],refresh:['Refresh','Aktualisieren','Actualiser','Actualizar'],extensions:['Your extensions','Deine Erweiterungen','Vos extensions','Tus extensiones'],name:['Name','Name','Nom','Nombre'],type:['Type','Typ','Type','Tipo'],version:['Version','Version','Version','Versión'],state:['Status','Status','État','Estado'],actions:['Actions','Aktionen','Actions','Acciones'],
 empty:['No extensions found. Stage an approved package in this environment first.','Noch keine Erweiterungen vorhanden. Stelle zuerst ein geprüftes Paket in dieser Umgebung bereit.','Aucune extension. Déployez d’abord un paquet validé dans cet environnement.','No hay extensiones. Despliega primero un paquete aprobado en este entorno.'],
 original:['Open the original Shopware','Originales Shopware öffnen','Ouvrir Shopware original','Abrir Shopware original'],originalHint:['Copy an address into a new browser tab. Templates, administration extensions and checkout plugins run in this Shopware environment.','Kopiere eine Adresse in einen neuen Browser-Tab. Templates, Verwaltungserweiterungen und Checkout-Plugins laufen in dieser Shopware-Umgebung.','Copiez une adresse dans un nouvel onglet. Les templates, extensions et le paiement fonctionnent dans cet environnement Shopware.','Copia una dirección en otra pestaña. Las plantillas, extensiones y el checkout funcionan en este entorno Shopware.'],admin:['Administration','Verwaltung','Administration','Administración'],storefront:['Shop','Shop','Boutique','Tienda'],
@@ -37,7 +46,7 @@ function render(){
  }$('#empty').hidden=rows.length>0;sdk.resize(document.body.scrollHeight+40);
 }
 async function refresh(){
- const cell=cells.find(c=>c.id===$('#cell').value);if(!cell){status(t('none'));return;}
+ const cell=cells.find(c=>c.id===$('#cell').value);if(!cell){status('');return;}
  status(t('loading'));$('#refresh').disabled=true;
  try{
   inventory=await sdk.action('inspect',{cellId:cell.id});$('#version').textContent='Shopware '+inventory.snapshot.version;$('#environment').textContent=cell.environment;render();
@@ -47,4 +56,27 @@ async function refresh(){
 }
 $('#refresh').onclick=()=>perform(refresh);$('#cell').onchange=()=>perform(refresh);$('#search').oninput=render;$('#cancel').onclick=()=>$('#review').close();
 $('#approve').onclick=()=>perform(async()=>{const b=$('#approve');b.disabled=true;try{const job=await sdk.action('change',{change:review.change,approvalDigest:review.approvalDigest,approve:true});$('#review').close();status(t('queued')+job.jobId);}finally{b.disabled=false;}});
-await perform(async()=>{cells=(await sdk.action('cells')).elements;for(const cell of cells){const option=document.createElement('option');option.value=cell.id;option.textContent=cell.id+' · '+cell.environment;$('#cell').append(option);}await refresh();});
+await perform(async()=>{cells=(await sdk.action('cells')).elements;$('#cell-controls').hidden=!cells.length;document.querySelectorAll('[data-cell-only]').forEach(e=>e.hidden=!cells.length);for(const cell of cells){const option=document.createElement('option');option.value=cell.id;option.textContent=cell.id+' · '+cell.environment;$('#cell').append(option);}await refresh();});
+
+let nativeFiles={};
+const nativeRequest=()=>({appId:$('#native-id').value,version:$('#native-version').value,files:nativeFiles});
+function checkTransport(input){if(new TextEncoder().encode(JSON.stringify(input)).length>65536)throw new Error(t('fileLimit'));}
+$('#source-folder').onchange=()=>perform(async()=>{
+ $('#translate').disabled=true;$('#native-result').replaceChildren();$('#native-package-label').hidden=true;nativeFiles={};
+ const files=Array.from($('#source-folder').files??[]);
+ if(!files.length||files.length>64||files.some(f=>f.size>32768)||files.reduce((n,f)=>n+f.size,0)>262144)throw new Error(t('fileLimit'));
+ for(const file of files){const path=file.webkitRelativePath.split('/').slice(1).join('/');if(!path||Object.hasOwn(nativeFiles,path))throw new Error(t('fileLimit'));try{nativeFiles[path]=new TextDecoder('utf-8',{fatal:true,ignoreBOM:true}).decode(await file.arrayBuffer());}catch{throw new Error(t('encoding'));}}
+ checkTransport(nativeRequest());
+ $('#native-files').textContent=files.length+' · '+t('sourceFolder')+': '+files[0].webkitRelativePath.split('/')[0];$('#translate').disabled=false;sdk.resize(document.body.scrollHeight+40);
+});
+$('#translate').onclick=()=>perform(async()=>{
+ const b=$('#translate');b.disabled=true;$('#native-package-label').hidden=true;
+ try{const input=nativeRequest();checkTransport(input);status('');const result=await sdk.action('translate',input);$('#native-result').replaceChildren();
+ const title=document.createElement('h3');title.textContent=t(result.manifest?'translated':'blocked');$('#native-result').append(title);
+ for(const d of result.diagnostics??[]){const p=document.createElement('p');p.textContent=d.file+':'+d.line+' · '+d.message;$('#native-result').append(p);}
+ const fingerprint=document.createElement('code');fingerprint.textContent=result.profile+' · SHA-256 '+result.sourceDigest;$('#native-result').append(fingerprint);
+ if(result.decision){const p=document.createElement('p');p.textContent=result.decision.label+' · '+(result.decision.basisPoints/100)+'%';$('#native-result').prepend(p);}
+ if(result.manifest){$('#native-package').value=JSON.stringify(result.manifest,null,2);$('#native-package-label').hidden=false;}
+ sdk.resize(document.body.scrollHeight+40);
+ }finally{b.disabled=false;}
+});

@@ -4,6 +4,18 @@ Updated 25 October 2026. Start here for the public product, observed journeys an
 remaining delivery work. Source code, passing tests and a successful public
 journey are tracked separately. All purchases below use **simulated payments**.
 
+## Native extension translation in source
+
+The [Shopware source compiler](shopware-native-translation.md) now emits a regular
+native Veyndo discount app from one admitted PHP cart-processor profile. Local
+HTTP/MCP tests exercise current rights, private import, exact selected release,
+checkout, stored component outcomes, stock and an empty active cart. The same
+source fixture completes an original Shopware purchase with the same discounted
+goods total. Parser/registration rejection and bounded WIT execution are tested.
+This is a local implementation, not a public rollout or general Shopware plugin
+virtualization. DAL, decorators, events, migrations, Twig and admin translation
+remain open. [Exact acceptance](evidence/shopware-native-2026-10-25.md).
+
 ## New optional integration in source
 
 The [Shopware environments app](shopware-compatibility.md) manages a separate

@@ -45,6 +45,14 @@ flowchart LR
 | `legacy.rs` | Explicit atomic offline migration; no automatic import during normal serving |
 | Migration 049 | Six private tenant-scoped tables and forced RLS |
 
+## Native Shopware source translation
+
+The app-owned Cargo package `veyndo-shopware-native` builds the `shopware-native`
+compiler CLI and `shopware-compat` controller. Native analysis needs only a gateway
+token and an explicit tenant allowlist. Its Mago syntax dependencies are absent
+from the core's dependency graph. Generated WIT components use the existing native
+commerce runtime. [Profile, source contracts and verification](shopware-native-translation.md).
+
 ## Optional original Shopware runtime
 
 The [Shopware environments app](shopware-compatibility.md) adds the independent

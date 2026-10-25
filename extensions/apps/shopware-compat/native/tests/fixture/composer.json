@@ -1,0 +1,10 @@
+{
+  "name": "veyndo/native-discount-reference",
+  "description": "Source comparison fixture for the native Shopware translator",
+  "version": "1.0.0",
+  "type": "shopware-platform-plugin",
+  "license": "MIT",
+  "require": {"php": ">=8.2", "shopware/core": "~6.7.0"},
+  "autoload": {"psr-4": {"NativeDiscountReference\\": "src/"}},
+  "extra": {"shopware-plugin-class": "NativeDiscountReference\\NativeDiscountReference", "label": {"en-GB": "Native discount reference", "de-DE": "Nativer Rabattvergleich"}}
+}

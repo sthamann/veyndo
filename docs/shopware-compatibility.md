@@ -1,5 +1,9 @@
 # Use original Shopware extensions
 
+For PHP logic translated into the native Veyndo checkout, use the
+[native source compiler](shopware-native-translation.md). This page documents the
+separate original environment, which remains useful as a comparison reference.
+
 Veyndo can manage a separate original Shopware environment through the optional
 **Shopware environments** app. A Rust service connects the native Veyndo app
 gateway and durable jobs to Shopware's original extension lifecycle API.

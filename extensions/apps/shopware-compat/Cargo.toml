@@ -1,0 +1,42 @@
+[package]
+name = "veyndo-shopware-native"
+version = "0.1.0"
+edition.workspace = true
+license-file = "../../../LICENSE"
+description = "Shopware extension analysis and translation into bounded native Veyndo apps"
+
+[dependencies]
+serde.workspace = true
+serde_json.workspace = true
+sha2.workspace = true
+roxmltree.workspace = true
+semver.workspace = true
+axum.workspace = true
+tokio.workspace = true
+reqwest.workspace = true
+ring.workspace = true
+bumpalo = "3"
+mago-syntax = "=1.30.0"
+mago-database = "=1.30.0"
+mago-span = "=1.30.0"
+# Mago's pre-2.0 crates use caret dependencies across incompatible minor APIs.
+mago-text-edit = "=1.30.0"
+mago-php-version = "=1.30.0"
+
+[dev-dependencies]
+veyndo-apps = { path = "../../../crates/apps" }
+
+[[bin]]
+name = "shopware-native"
+path = "native/src/main.rs"
+
+[[bin]]
+name = "shopware-compat"
+path = "service/main.rs"
+
+[lib]
+path = "native/src/lib.rs"
+
+[[test]]
+name = "translation"
+path = "native/tests/translation.rs"

@@ -69,6 +69,21 @@ with tempfile.TemporaryDirectory(prefix=name) as temp:
             'SHOPWARE_TEST_URL': url, 'SHOPWARE_TEST_CLIENT': client, 'SHOPWARE_TEST_SECRET': secret,
             'SHOPWARE_TEST_KEEP_RUNNING': '0',
         })
+        # The same source package executes unchanged in original Shopware and native Veyndo.
+        run(compose + ['cp', str(PACKAGE / 'native/tests/fixture'), 'web:/var/www/html/custom/plugins/NativeDiscountReference'])
+        run(cli + ['plugin:refresh', '--no-interaction'])
+        run(cli + ['plugin:install', '--activate', 'NativeDiscountReference', '--no-interaction'])
+        auth_request=urllib.request.Request(url+'/api/oauth/token',data=json.dumps({'grant_type':'client_credentials','client_id':client,'client_secret':secret}).encode(),headers={'Content-Type':'application/json'})
+        with urllib.request.urlopen(auth_request,timeout=30) as response:
+            token=json.load(response)['access_token']
+        from original_checkout import verify
+        original=verify(url,{'Authorization':'Bearer '+token},price=24.9,discount_minor=249,expect_fixture=False)
+        (ROOT/'artifacts/shopware-native-original-result.json').write_text(json.dumps(original,indent=2)+'\n')
+        run([sys.executable,str(PACKAGE/'tests/native.py')],env={**os.environ,'DATABASE_URL':f'postgres://commerce:{pg_password}@127.0.0.1:{db_port}/commerce','DB_RLS_REQUIRED':'false','DB_STRICT_ROLE_SEPARATION':'false'})
+        native=json.loads((ROOT/'artifacts/shopware-native-result.json').read_text())
+        for field in ['positionPrice','emptyCart','stock']:
+            assert original[field]==native[field],(field,original[field],native[field])
+        print('PASS identical plugin source: original/native discounted goods total, stock and empty active cart',flush=True)
         # Uninstall must preserve migration data, not merely acknowledge the API call.
         preserved = run(compose + ['exec', '-T', 'database', 'sh', '-c',
                         'mariadb -ushopware -p"$MARIADB_PASSWORD" shopware -Nse "SELECT value FROM veyndo_compat_fixture WHERE id=1"'], quiet=True).stdout.strip()
