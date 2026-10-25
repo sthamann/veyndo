@@ -106,6 +106,7 @@ app HTTP/MCP entry. No plugin implementation is moved into core directories.
 cargo test --locked --manifest-path extensions/apps/shopware-compat/Cargo.toml --target-dir target
 cargo build --locked --no-default-features -p veyndo --bin veyndo
 cargo build --locked --manifest-path extensions/apps/shopware-compat/Cargo.toml --target-dir target --bins
+npm ci --prefix frontend && npm run build --prefix frontend
 python3 extensions/apps/shopware-compat/tests/container.py
 ```
 

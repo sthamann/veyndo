@@ -89,6 +89,7 @@ acceptance, not a registry publication or production deployment.
 cargo test --locked --manifest-path extensions/apps/shopware-compat/Cargo.toml --target-dir target
 cargo build --locked --no-default-features -p veyndo --bin veyndo
 cargo build --locked --manifest-path extensions/apps/shopware-compat/Cargo.toml --target-dir target --bins
+npm ci --prefix frontend && npm run build --prefix frontend
 python3 extensions/apps/shopware-compat/tests/container.py --docker-context colima-veyndo-check --cell-image IMAGE
 python3 scripts/testing/workspace_boundaries.py
 python3 scripts/structure.py

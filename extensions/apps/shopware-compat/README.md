@@ -160,6 +160,7 @@ For a complete fresh run, build the two native binaries and run:
 ```sh
 cargo build --locked --no-default-features -p veyndo --bin veyndo
 cargo build --locked --manifest-path extensions/apps/shopware-compat/Cargo.toml --target-dir target --bins
+npm ci --prefix frontend && npm run build --prefix frontend
 python3 extensions/apps/shopware-compat/tests/container.py
 ```
 

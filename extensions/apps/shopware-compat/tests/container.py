@@ -8,6 +8,12 @@ parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--docker-context', help='Use an explicit context without changing the global default')
 parser.add_argument('--cell-image', help='Reuse an already built image; resolved to its immutable ID')
 args = parser.parse_args()
+# The response-policy assertion exercises the real Studio document, not an API stub.
+# Fail before building/starting any cell if a clean checkout has not built its UI.
+required = ['frontend/dist/index.html', 'target/debug/veyndo', 'target/debug/shopware-compat']
+missing = [p for p in required if not (ROOT / p).is_file()]
+if missing:
+    parser.error('Build the Rust binaries and Studio first (see app README); missing: ' + ', '.join(missing))
 docker = ['docker'] + (['--context', args.docker_context] if args.docker_context else [])
 name = 'veyndo-compat-test-' + secrets.token_hex(5)
 
