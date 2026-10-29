@@ -4176,8 +4176,8 @@
   },
   "inputs": {
     ".github/workflows/verify.yml": {
-      "sha256": "6cbb6b9dbd52796d386136277f0e14ef67c55f880c664a77ed5287ad7c2c7c04",
-      "review": "Reviewed isolated concurrent signed-pooler verification: unchanged registry and assertions, separate disposable database/Qdrant/logs, required fatal join, owned child cleanup, same instrumented binaries and coverage aggregation; real subprocess negative controls added."
+      "sha256": "bb70d894894b9458496b4daf47290244678d29e219b47848507227278d937736",
+      "review": "Reviewed independent core/signed/pooler registry partitions, preserved nested restricted-role suites, official raw-profile aggregation and unchanged fail-closed final coverage admission"
     },
     "Cargo.lock": {
       "sha256": "de01e9cdb5d3e16ec81ce7ce92898ab67d72f00f582fb0e658daf00f62f460c3",

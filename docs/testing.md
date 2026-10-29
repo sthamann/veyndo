@@ -168,30 +168,35 @@ their existing serialization. GitHub keeps one pending native job per group, so 
 newer full push replaces an older pending job; a cancelled run cannot pass `verify`.
 This separates feedback queues without shortening or omitting the native suite.
 
-Rust unit tests and HTTP/provider integration retain the same instrumented binaries,
-profile directory and fresh disposable database. The native job installs and builds
-the frontend locally for its real HTTP tests and TypeScript locale contracts; it
-does not wait for the UI test job or repeat its unit suite. This adds one small
-frontend build while removing UI verification from the native job's critical path.
-No Rust binaries, databases or live state move between runners.
+Native integration uses three independent CI partitions with separate PostgreSQL,
+Qdrant, files and ports on separate runners. `core` runs the ordinary registry;
+`signed` runs `signed_runtime`, including its complete restricted-login HTTP
+repetitions; `pooler` runs `signed_pooler` and `transaction_pooler`, including their
+real one-backend PgBouncer checks. The single suite registry remains authoritative.
+Partition validation rejects duplicates and missing special suites. A newly
+registered suite automatically enters `core`; it cannot disappear between jobs.
 
-The native integration command starts `signed_pooler` alongside the ordinary
-registry when `--parallel-pooler http://127.0.0.1:16334` is supplied. CI starts a
-second disposable Qdrant service for it. Its nested runner creates a separate
-PostgreSQL database and random restricted logins; its server logs and tenant
-isolation report live under `artifacts/signed-pooler/`. The remaining suites keep
-their existing order and database. The original `signed_pooler` registry position
-joins its result exactly once. A failed child or missing join fails verification;
-early foreground failure stops the owned background process group. All children
-use the same instrumented Rust binaries and uniquely named coverage profiles.
-Full native and final artifacts retain the parallel log directory.
+The native collector waits for every partition. It checks source commit, workflow
+run, producer attempt, Rust toolchain, absolute workspace paths, registry digest
+and every raw profile checksum before copying any measurement. It rebuilds the
+matching instrumented objects without rerunning tests. LLVM combines raw Rust
+profiles and coverage.py combines Python measurements; no percentages are averaged
+or manually added. The existing final policy and floors remain unchanged. Corrupt,
+missing or substituted profiles fail the run. A failed matrix job prevents native
+admission even if the other partitions succeeded.
 
-The default local command remains sequential. Parallel mode rejects partial suite
-selection, an existing database and a shared or remote Qdrant endpoint. Run
-`python3 scripts/testing/test_parallel_check.py` for real subprocess overlap,
-failed/missing results, descendant cleanup, isolated reports and CLI rejection
-checks. Repeated signed-runtime fixtures also report their individual durations,
-so runtime cost can be separated from queueing and overlapping work.
+Local verification remains sequential by default. `--partition core`, `signed` or
+`pooler` selects a complete partition and rejects `--only`, `--existing-database`
+and `--parallel-pooler`. The existing optional `--parallel-pooler` subprocess mode
+is still available locally with its own disposable Qdrant endpoint. Its owned
+process group, mandatory join and failure behavior are unchanged.
+
+Run the registered `test_integration_partitions`, `test_partition_coverage` and
+`test_parallel_check` tooling tests for complete partition admission, rejected
+coverage substitutions and actual child-process cleanup. Each integration suite
+continues to print its duration. The successful pre-split native job on 29 October
+2026 took 37m13s, of which integration consumed 1781.33s. New wall-clock results
+must come from a complete successful run, not a projection from isolated suites.
 
 Each job uploads an immutable coverage artifact. The final job downloads the exact
 IDs returned by those jobs, checks the checkout SHA, workflow run and SHA-256 of
@@ -536,8 +541,8 @@ QDRANT_URL=http://127.0.0.1:16333 python3 scripts/verify_integration.py
 Local integration creates and removes its own uniquely named synthetic database;
 existing shops remain outside that run. The default database container is
 `veyndo-postgres-1`; override it with `--container`. It uses `DATABASE_URL`
-from the process or the local `.env`. CI alone passes `--existing-database` for its
-already-disposable database. Failures remain failures, and child processes stop
+from the process or the local `.env`. CI uses the same owned disposable database
+path. `--existing-database` remains an explicit local disposable-fixture override. Failures remain failures, and child processes stop
 before database cleanup. SIGINT flushes optional Rust coverage profiles.
 
 [scripts/testing/suites.json](../scripts/testing/suites.json) is the single

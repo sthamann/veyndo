@@ -25,7 +25,7 @@ jobs:
         with:
           python-version: '3.13'
       - name: Verify conservative scope, final admission and coverage helpers
-        run: python3 scripts/testing/test_ci_scope.py && python3 scripts/testing/test_ci_gate.py && python3 scripts/testing/tooling_tests.py && python3 scripts/testing/test_parallel_check.py
+        run: python3 scripts/testing/test_ci_scope.py && python3 scripts/testing/test_ci_gate.py && python3 scripts/testing/tooling_tests.py && python3 scripts/testing/test_parallel_check.py && python3 scripts/testing/test_integration_partitions.py && python3 scripts/testing/test_partition_coverage.py
       - run: python3 scripts/testing/documentation_hygiene.py
       - name: Check exact source inventory before compiling or integration tests
         run: python3 scripts/testing/source_inventory.py
@@ -91,15 +91,17 @@ jobs:
             artifacts/coverage/frontend-provenance.json
           if-no-files-found: warn
 
-  native:
+  native_checks:
     needs: admission
+    strategy:
+      fail-fast: false
+      matrix:
+        partition: [core, signed, pooler]
     if: needs.admission.outputs.lane == 'full'
     runs-on: ubuntu-24.04
     concurrency:
-      group: verify-native-${{ github.workflow }}-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref }}
+      group: verify-native-${{ matrix.partition }}-${{ github.workflow }}-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref }}
       cancel-in-progress: ${{ github.event_name == 'pull_request' }}
-    outputs:
-      artifact-id: ${{ steps.coverage.outputs.artifact-id }}
     env:
       DATABASE_URL: postgres://commerce:ci-only-password@127.0.0.1:15487/commerce
       QDRANT_URL: http://127.0.0.1:16333
@@ -113,7 +115,6 @@ jobs:
       - name: Start standard PostgreSQL and Qdrant
         run: |
           DB_PASSWORD=ci-only-password docker compose -p veyndo up -d --wait postgres qdrant
-          DB_PASSWORD=ci-only-password QDRANT_PORT=16334 docker compose -p veyndo-pooler up -d --wait qdrant
       - uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2
         with:
@@ -143,8 +144,12 @@ jobs:
           echo "CARGO_LLVM_COV_TARGET_DIR=$PWD/target" >> "$GITHUB_ENV"
           CARGO_LLVM_COV_TARGET_DIR="$PWD/target" cargo llvm-cov clean --workspace
           CARGO_LLVM_COV_TARGET_DIR="$PWD/target" cargo llvm-cov show-env | python3 scripts/testing/coverage_env.py >> "$GITHUB_ENV"
-      - run: cargo test --locked --workspace && cargo build --locked --workspace --bins
+      - name: Instrument native binaries and core unit tests
+        run: |
+          if [ "${{ matrix.partition }}" = core ]; then cargo test --locked --workspace; fi
+          cargo build --locked --workspace --bins
       - name: Install pinned Lean toolchain
+        if: matrix.partition == 'core'
         uses: leanprover/lean-action@f061402b660e0c34644504b324e830f2991d4865 # v1
         with:
           lake-package-directory: proof
@@ -154,8 +159,10 @@ jobs:
           lint: 'false'
           use-mathlib-cache: 'false'
       - name: Lean production contracts, source review locks and compiled conformance
+        if: matrix.partition == 'core'
         run: python3 scripts/formal.py
       - name: Reject broken policies, proof shortcuts and disconnected bindings
+        if: matrix.partition == 'core'
         env:
           # Intentionally broken source variants must not inflate real-core coverage.
           LLVM_PROFILE_FILE: /tmp/commerce-mutation-%p-%m.profraw
@@ -178,17 +185,68 @@ jobs:
       - run: python3 scripts/differential.py && python3 scripts/context_differential.py && python3 scripts/delivery_differential.py && python3 scripts/rule_differential.py && python3 scripts/automation_registry.py && python3 scripts/automation_differential.py
       - name: Real database and local provider integration (single suite registry)
         run: |
-          COVERAGE_PROCESS_START="$PWD/scripts/testing/.coveragerc" PYTHONPATH="$PWD/scripts/testing" python3 scripts/verify_integration.py --container veyndo-postgres-1 --parallel-pooler http://127.0.0.1:16334
-      - name: Report native coverage from the same instrumented binaries
+          COVERAGE_PROCESS_START="$PWD/scripts/testing/.coveragerc" PYTHONPATH="$PWD/scripts/testing" python3 scripts/verify_integration.py --container veyndo-postgres-1 --partition ${{ matrix.partition }}
+      - name: Seal raw coverage profiles for this source and partition
+        run: python3 scripts/testing/partition_coverage.py pack ${{ matrix.partition }} artifacts/profiles/${{ matrix.partition }}
+      - name: Preserve partition profiles
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-profiles-${{ github.sha }}-${{ matrix.partition }}
+          path: artifacts/profiles
+          include-hidden-files: true
+          if-no-files-found: error
+          overwrite: true
+      - name: Preserve independent integration logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-logs-${{ github.sha }}-${{ github.run_attempt }}-${{ matrix.partition }}
+          path: |
+            artifacts/*.log
+            artifacts/**/*.json
+          if-no-files-found: warn
+
+  native:
+    needs: [admission, native_checks]
+    if: needs.admission.outputs.lane == 'full'
+    runs-on: ubuntu-24.04
+    outputs:
+      artifact-id: ${{ steps.coverage.outputs.artifact-id }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: verify
+      - name: Install unchanged coverage collectors
         run: |
+          python3 -m pip install -r scripts/testing/requirements.txt
+          rustup component add llvm-tools-preview
+          cargo install cargo-llvm-cov --version 0.9.1 --locked
+          echo "CARGO_LLVM_COV_TARGET_DIR=$PWD/target" >> "$GITHUB_ENV"
+          CARGO_LLVM_COV_TARGET_DIR="$PWD/target" cargo llvm-cov clean --workspace
+          CARGO_LLVM_COV_TARGET_DIR="$PWD/target" cargo llvm-cov show-env | python3 scripts/testing/coverage_env.py >> "$GITHUB_ENV"
+      - name: Rebuild matching coverage objects without running fixtures twice
+        run: cargo test --locked --workspace --no-run && cargo build --locked --workspace --bins
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: native-profiles-${{ github.sha }}-*
+          path: artifacts/partition-profiles
+          merge-multiple: true
+      - name: Validate and combine every partition using the official collectors
+        run: |
+          python3 scripts/testing/partition_coverage.py collect artifacts/partition-profiles
           mkdir -p artifacts/coverage
-          cargo llvm-cov report --workspace --json --output-path artifacts/coverage/rust.json
-          cargo llvm-cov report --workspace --html --output-dir artifacts/coverage/rust
+          cargo llvm-cov report --workspace --failure-mode any --json --output-path artifacts/coverage/rust.json
+          cargo llvm-cov report --workspace --failure-mode any --html --output-dir artifacts/coverage/rust
           python3 -m coverage combine --rcfile=scripts/testing/.coveragerc
           python3 -m coverage json --rcfile=scripts/testing/.coveragerc
           python3 -m coverage html --rcfile=scripts/testing/.coveragerc
           python3 scripts/testing/ci_gate.py stamp native
-      - name: Preserve native coverage and integration logs
+      - name: Preserve combined native coverage
         id: coverage
         if: always()
         uses: actions/upload-artifact@v4
@@ -196,9 +254,8 @@ jobs:
           name: native-coverage-${{ github.sha }}-${{ github.run_attempt }}
           path: |
             artifacts/coverage
-            artifacts/integration-server.log
-            artifacts/signed-pooler
-          if-no-files-found: warn
+            artifacts/partition-summary.json
+          if-no-files-found: error
 
   # Keep this exact required check for branch protection, including failed/skipped dependencies.
   verify:

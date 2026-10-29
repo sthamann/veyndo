@@ -110,6 +110,8 @@
     "testing/tooling_tests",
     "testing/test_parallel_check",
     "branding",
-    "money_boundary_differential"
+    "money_boundary_differential",
+    "testing/test_integration_partitions",
+    "testing/test_partition_coverage"
   ]
 }

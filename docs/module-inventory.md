@@ -1814,6 +1814,7 @@ This lists every checked-in source module in these roots, including files with n
 | [scripts/testing/hosted_migration.py](../scripts/testing/hosted_migration.py) | Real pre-055 SQL database upgrades through the native migrator; never rewind one ledger entry on a newer store. |
 | [scripts/testing/hotpath.py](../scripts/testing/hotpath.py) | Real HTTP wire bytes and SQL tracing checks for the existing read-performance suite. |
 | [scripts/testing/image_context.py](../scripts/testing/image_context.py) | /Dockerfile')] |
+| [scripts/testing/integration_partitions.py](../scripts/testing/integration_partitions.py) | Disjoint outer integration partitions; nested production-rights repetitions stay intact. |
 | [scripts/testing/intent_navigation.py](../scripts/testing/intent_navigation.py) | Exercise saved fact categories through native catalog/MCP, source review and selective staging; no models. |
 | [scripts/testing/inventory_batch.py](../scripts/testing/inventory_batch.py) | Concurrent two-product allocation/release on the actual HTTP path, reused by strict runtime verification. |
 | [scripts/testing/legacy_customer_ownership.py](../scripts/testing/legacy_customer_ownership.py) | Historical guest snapshots never grant account ownership from an unverified email. |
@@ -1828,6 +1829,7 @@ This lists every checked-in source module in these roots, including files with n
 | [scripts/testing/operation_contracts.py](../scripts/testing/operation_contracts.py) | Generated native operation input contracts; do not edit. |
 | [scripts/testing/outbox_cases.py](../scripts/testing/outbox_cases.py) | Disposable real-transaction counterexamples for subscriber migration and commit-order gaps. |
 | [scripts/testing/parallel_check.py](../scripts/testing/parallel_check.py) | Owned background verification process group; failures stay fatal and logs survive cleanup. |
+| [scripts/testing/partition_coverage.py](../scripts/testing/partition_coverage.py) | Transfer same-source raw LLVM/Python profiles; official collectors calculate coverage. |
 | [scripts/testing/payment_snapshot.py](../scripts/testing/payment_snapshot.py) | Force a committed provider receipt between POS cart admission and its status read. |
 | [scripts/testing/plugin_ownership.py](../scripts/testing/plugin_ownership.py) | Keep app implementation in its package; preserve shared runtimes and exact safety boundaries. |
 | [scripts/testing/pooler.py](../scripts/testing/pooler.py) | Owned real PgBouncer fixture: one backend, transaction pooling, never a forced privileged user. |
@@ -1842,7 +1844,9 @@ This lists every checked-in source module in these roots, including files with n
 | [scripts/testing/source_inventory.py](../scripts/testing/source_inventory.py) | Generate/check exact production and verification module inventory; listings are not coverage. |
 | [scripts/testing/test_ci_gate.py](../scripts/testing/test_ci_gate.py) | Negative controls for required-job admission and transferred coverage evidence. |
 | [scripts/testing/test_ci_scope.py](../scripts/testing/test_ci_scope.py) | CI routing regressions exercise real Git renames, missing history and sensitive mixed changes. |
+| [scripts/testing/test_integration_partitions.py](../scripts/testing/test_integration_partitions.py) | Prove complete, disjoint outer-suite admission before parallel CI can pass. |
 | [scripts/testing/test_parallel_check.py](../scripts/testing/test_parallel_check.py) | Exercise actual parallel child overlap, failure propagation, owned cleanup and fixture isolation. |
+| [scripts/testing/test_partition_coverage.py](../scripts/testing/test_partition_coverage.py) | Reject incomplete, stale or modified partition profiles before combining coverage. |
 | [scripts/testing/tooling_tests.py](../scripts/testing/tooling_tests.py) | Ordered Studio layout. |
 | [scripts/testing/workspace_boundaries.py](../scripts/testing/workspace_boundaries.py) | Enforce reviewed Cargo owners and dependency capabilities, including aliases and unnamed helper crates. |
 | [scripts/testing/workspace_boundary_tests.py](../scripts/testing/workspace_boundary_tests.py) | Mutation controls against real Cargo metadata: aliases, hidden helpers, build scripts and source-owner escapes. |

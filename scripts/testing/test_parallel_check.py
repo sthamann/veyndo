@@ -112,6 +112,16 @@ finally: print('wrapper cleanup', flush=True)
                 self.assertEqual(result.returncode, 2, result.stderr)
                 self.assertIn('--parallel-pooler requires', result.stderr)
 
+    def test_partition_cannot_reuse_a_database_or_silently_select_partial_work(self):
+        for extra in (['--existing-database'], ['--only', 'studio'],
+                      ['--parallel-pooler', 'http://127.0.0.1:16334']):
+            with self.subTest(extra=extra):
+                result = subprocess.run([sys.executable, str(ROOT / 'scripts/verify_integration.py'),
+                                        '--partition', 'core', *extra],
+                                        env=self.env, capture_output=True, text=True)
+                self.assertEqual(result.returncode, 2, result.stderr)
+                self.assertIn('--partition requires', result.stderr)
+
 
 if __name__ == '__main__':
     # Keep assertion output focused; child logs are still checked and retained.
