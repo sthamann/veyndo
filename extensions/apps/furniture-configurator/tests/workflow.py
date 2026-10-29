@@ -144,9 +144,12 @@ assert updated['presentation']['fields'][0]['value']['de-DE']=='Walnuss Select'
 # A changed package uses the ordinary developer/staging/release contract.
 stage=call('/api/environments',{'name':'Furniture rule review'},h)['id']
 candidate=copy.deepcopy(m);candidate['version']='1.1.0';candidate['configuration']['wasmSource']=candidate['configuration']['wasmSource'].replace('i64.const 4800','i64.const 5800')
+failed_review=call('/api/apps/review',{'manifest':candidate},h)
+assert not failed_review['upgrade']['ready']
 call('/api/developer/import',{'environment':stage,'prompt':'A changed rule must fail unchanged examples','manifest':candidate,'summary':candidate['name']},h,400)
 for case in candidate['configuration']['inputs']['examples']:
     if isinstance(case['fields'].get('width_cm'),int) and 240<case['fields']['width_cm']<=400 and case['expectedFeeMinor'] is not None:case['expectedFeeMinor']+=1000
+assert call('/api/apps/review',{'manifest':candidate},h)['upgrade']['ready']
 build=call('/api/developer/import',{'environment':stage,'prompt':'Change the oversized-dimension surcharge by EUR 10','manifest':candidate,'summary':candidate['name']},h)
 result=call('/mcp',{'jsonrpc':'2.0','id':2,'method':'tools/call','params':{'name':'developer.stage','arguments':{'buildId':build['id'],'approve':True,'digest':build['digest']}}},h)
 assert not result['result'].get('isError'),result

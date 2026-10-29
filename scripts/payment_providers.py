@@ -54,7 +54,9 @@ try:
   if p.poll()!=None:raise RuntimeError('See artifacts/generic-payments.log')
   try:call('/health');break
   except OSError:time.sleep(.2)
- m=json.loads((ROOT/'extensions/apps/payment-provider/manifest.json').read_text());m['paymentProvider']['methods'][0]['currencies']=['EUR','USD','JPY','KWD'];call('/api/apps',{'manifest':m},ah)
+ m=json.loads((ROOT/'extensions/apps/payment-provider/manifest.json').read_text());m['paymentProvider']['methods'][0]['currencies']=['EUR','USD','JPY','KWD']
+ spare=copy.deepcopy(m['paymentProvider']['methods'][0]);spare['id']='spare';m['paymentProvider']['methods'].append(spare)
+ call('/api/apps',{'manifest':m},ah)
  providers=call('/api/payment-providers',h=ah);assert any(x['id']==m['id'] for x in providers['providers'])
  onboard={'operation':'start','channel':'default','country':'DE','requestKey':uuid.uuid4().hex,'approve':True}
  call('/api/payment-providers/'+m['id']+'/onboarding',onboard,ah)
@@ -65,6 +67,39 @@ try:
  print('PASS Installed contracts and scoped onboarding reject foreign identities and malicious URLs without mutating accounts')
  config=call('/api/merchant/commerce',h=ah);fx=config['data']['currencies'];fx['definitions'] += [{'code':c,'scale':n,'rate':r,'strategy':'automatic'} for c,n,r in [('USD',2,'1.25'),('JPY',0,'160'),('KWD',3,'0.33333333')]];fx['enabled'] += ['USD','JPY','KWD'];method=next(x for x in config['data']['payments'] if x['id']=='example-payments-wallet');assert not method['active'];method['active']=True;call('/api/merchant/commerce',{'data':config['data'],'revision':config['revision']},ah,'PUT')
  assert any(x['id']=='example-payments-wallet' for x in call('/store-api/checkout/options',h={'x-tenant':'workshop'})['payments'])
+ # An enabled payment method is a live consumer, including its configured coverage.
+ original=call('/api/merchant/commerce',h=ah)
+ unchanged_calls=len(calls)
+ candidates=[]
+ removed=copy.deepcopy(m);removed.pop('paymentProvider');removed['actions']=[];candidates.append(removed)
+ removed_method=copy.deepcopy(m);removed_method['paymentProvider']['methods']=removed_method['paymentProvider']['methods'][1:];candidates.append(removed_method)
+ for field,values in [('currencies',['EUR']),('countries',['AT'])]:
+  narrowed=copy.deepcopy(m);narrowed['paymentProvider']['methods'][0][field]=values;candidates.append(narrowed)
+ for candidate in candidates:
+  candidate['version']='1.1.0'
+  review=call('/api/apps/review',{'manifest':candidate},ah)['upgrade']
+  assert not review['ready'],review
+  call('/api/apps',{'manifest':candidate},ah,expected=409)
+  assert call('/api/merchant/commerce',h=ah)==original
+  assert next(p for p in call('/api/apps',h=ah)['packages'] if p['id']==m['id'])['version']=='1.0.0'
+ assert len(calls)==unchanged_calls
+ compatible=copy.deepcopy(m);compatible['version']='1.1.0';compatible['paymentProvider']['methods'][0]['countries'].append('FR')
+ assert call('/api/apps/review',{'manifest':compatible},ah)['upgrade']['ready']
+ assert call('/api/merchant/commerce',h=ah)==original and len(calls)==unchanged_calls
+ channel={'name':{'en-GB':'Upgrade coverage'},'kind':'storefront','active':True,'locales':['en-GB','de-DE','fr-FR','es-ES'],'productIds':[]}
+ call('/api/automation/channels/upgrade_coverage',{'revision':0,'data':channel},ah,'PUT')
+ disabled=copy.deepcopy(original);next(x for x in disabled['data']['payments'] if x['id']=='example-payments-wallet')['active']=False
+ call('/api/merchant/commerce',disabled,ah,'PUT')
+ scope_path='/api/merchant/commerce/channels/upgrade_coverage'
+ scoped=call(scope_path,h=ah);next(x for x in scoped['data']['payments'] if x['id']=='example-payments-wallet')['active']=True
+ call(scope_path,scoped,ah,'PUT')
+ assert not call('/api/apps/review',{'manifest':removed_method},ah)['upgrade']['ready']
+ call('/api/apps',{'manifest':removed_method},ah,expected=409)
+ scoped=call(scope_path,h=ah);scoped['data']=scoped['inherited'];call(scope_path,scoped,ah,'PUT')
+ assert call('/api/apps/review',{'manifest':removed_method},ah)['upgrade']['ready']
+ current=call('/api/merchant/commerce',h=ah);current['data']=original['data'];call('/api/merchant/commerce',current,ah,'PUT')
+ assert len(calls)==unchanged_calls
+ print('PASS active provider removal and currency/country narrowing reject atomically without provider calls; widening remains compatible')
  for code,scale in [('USD',2),('JPY',0),('KWD',3)]:
   fo,fh=purchase(code);fid=fo['payment']['attemptId'];fv=wait(fid,fh,'ready');assert fv['currency']==code and fv['currencyScale']==scale and fo['money']['minor']==fv['amountMinor']
   reference[fid]='approved';call('/store-api/payments/'+fid+'/reconcile',{}, {**fh,'Idempotency-Key':uuid.uuid4().hex});wait(fid,fh,'captured')

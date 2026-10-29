@@ -13,15 +13,74 @@ pub(crate) async fn install_methods(
     t: &str,
     m: &apps::Manifest,
 ) -> Result<()> {
-    let Some(p) = &m.payment_provider else {
+    let previous: Option<Value> =
+        sqlx::query_scalar("SELECT manifest FROM app_packages WHERE tenant=$1 AND id=$2")
+            .bind(t)
+            .bind(&m.id)
+            .fetch_optional(&mut **tx)
+            .await?;
+    let old = previous
+        .map(serde_json::from_value::<apps::Manifest>)
+        .transpose()
+        .map_err(|_| bad("Invalid installed provider"))?;
+    if m.payment_provider.is_none() && old.as_ref().is_none_or(|p| p.payment_provider.is_none()) {
         return Ok(());
-    };
+    }
     let row = sqlx::query("SELECT data FROM commerce_settings WHERE tenant=$1 FOR UPDATE")
         .bind(t)
         .fetch_one(&mut **tx)
         .await?;
     let mut s: commerce::Settings =
         serde_json::from_value(row.get("data")).map_err(|_| bad("Invalid settings"))?;
+    // Basis locking serializes channel overrides. Check the actual resolved settings,
+    // including an enabled channel method whose shared-basis counterpart is disabled.
+    let patches: Vec<Value> =
+        sqlx::query_scalar("SELECT data FROM commerce_overrides WHERE tenant=$1")
+            .bind(t)
+            .fetch_all(&mut **tx)
+            .await?;
+    let mut scopes = vec![s.clone()];
+    for patch in patches {
+        scopes.push(commerce::restore_checkout_data(&s, patch)?);
+    }
+    for scope in scopes {
+        for configured in scope
+            .payments
+            .iter()
+            .filter(|p| p.active && p.provider.as_deref() == Some(&m.id))
+        {
+            let method = m.payment_provider.as_ref().and_then(|p| p.methods.iter()
+                .find(|method| Some(&method.id) == configured.provider_method.as_ref()))
+                .ok_or(conflict("Upgrade would invalidate an active payment method; update its configuration first"))?;
+            let previous = old
+                .as_ref()
+                .and_then(|p| p.payment_provider.as_ref())
+                .and_then(|p| {
+                    p.methods
+                        .iter()
+                        .find(|method| Some(&method.id) == configured.provider_method.as_ref())
+                });
+            let lost_currency = scope.currencies.enabled.iter().any(|code| {
+                previous.is_some_and(|p| p.currencies.contains(code))
+                    && !method.currencies.contains(code)
+            });
+            let lost_country = scope.countries.iter().any(|code| {
+                (!configured.restricted_countries || configured.countries.contains(code))
+                    && previous
+                        .is_some_and(|p| p.countries.is_empty() || p.countries.contains(code))
+                    && !method.countries.is_empty()
+                    && !method.countries.contains(code)
+            });
+            if lost_currency || lost_country {
+                return Err(conflict(
+                    "Upgrade would narrow an active payment method; update its configuration first",
+                ));
+            }
+        }
+    }
+    let Some(p) = &m.payment_provider else {
+        return Ok(());
+    };
     for method in &p.methods {
         let id = format!("{}-{}", m.id.replace('_', "-"), method.id.replace('_', "-"));
         if id.len() > 50 {

@@ -5,6 +5,7 @@ pub(crate) mod channel_access;
 mod channel_config;
 pub(crate) mod channel_preview;
 mod channels;
+pub(crate) use app_flows::validate_replacement as validate_app_replacement;
 use app_flows::*;
 pub(crate) use channel_config::{normalize_channel, validate_channel_config};
 mod catalog;

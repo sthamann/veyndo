@@ -27,6 +27,7 @@ pub(crate) mod core_extensions;
 pub(crate) mod extension_filter;
 mod extension_projection;
 mod package_fence;
+mod upgrade_review;
 pub(crate) use package_fence::lock_package_write;
 mod core_documents;
 mod core_exchange;
@@ -118,7 +119,9 @@ pub(crate) use cart_contributions::*;
 pub(crate) use commerce_hooks::verify_package;
 pub(crate) use compatibility::upgrade_cart;
 pub(crate) use events::*;
-pub(crate) use gateway::{invoke_app, invoke_mcp, validate_input, validate_native_input};
+pub(crate) use gateway::{
+    additional_permissions, invoke_app, invoke_mcp, validate_input, validate_native_input,
+};
 pub(crate) use manifest::*;
 pub(crate) use registry::*;
 pub(crate) use routes::*;

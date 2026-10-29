@@ -203,6 +203,7 @@ export function useAppStudio(
     setReviewed(false);
   };
   return {
+    request,
     manifest,
     draftStorage,
     history,

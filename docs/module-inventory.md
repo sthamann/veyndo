@@ -125,6 +125,7 @@ This lists every checked-in source module in these roots, including files with n
 | [src/apps/ui_logic_tests.rs](../src/apps/ui_logic_tests.rs) | UI programs must keep static types, same-model saves, surface allowlists and acyclic ownership before install or preview. |
 | [src/apps/ui_logic_types.rs](../src/apps/ui_logic_types.rs) | Static UI expression types prevent control coercion and invoking save with a different model; runtime still validates actual values. |
 | [src/apps/ui_object_key_tests.rs](../src/apps/ui_object_key_tests.rs) | Object-expression keys accept API casing without prototype or path injection. |
+| [src/apps/upgrade_review.rs](../src/apps/upgrade_review.rs) | Probe the actual transactional installer and roll it back; return admission metadata, never app record contents. |
 | [src/apps/webhook_scope.rs](../src/apps/webhook_scope.rs) | Scope signed app ingress from its route before identity, tenant lifecycle and forced-RLS admission. |
 | [src/apps/webhooks.rs](../src/apps/webhooks.rs) | Operator-signed incoming events: tenant-bound HMAC, five-minute freshness and atomic replay receipts. |
 | [src/assets/app_files.rs](../src/assets/app_files.rs) | Scoped app access to the existing asset store. Binary callbacks are explicit and private; publishing still uses the native asset lifecycle. |
@@ -631,6 +632,7 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/admin/apps/AppLibrary.tsx](../frontend/src/admin/apps/AppLibrary.tsx) | Searchable installed/discovery app cards with category/status filters and real lifecycle actions. |
 | [frontend/src/admin/apps/AppSecrets.tsx](../frontend/src/admin/apps/AppSecrets.tsx) | Metadata-only credentials screen; rotation sends plaintext once to the encrypted server store. |
 | [frontend/src/admin/apps/AppSettings.tsx](../frontend/src/admin/apps/AppSettings.tsx) | Installed settings use the existing encrypted secret owner; secret inputs are write-only and cleared after save. |
+| [frontend/src/admin/apps/AppUpgradeReport.tsx](../frontend/src/admin/apps/AppUpgradeReport.tsx) | Display only native admission metadata; a report is never an installation permission. |
 | [frontend/src/admin/apps/AppsManager.tsx](../frontend/src/admin/apps/AppsManager.tsx) | Installed package workspace: lifecycle, generated entities and shared agent actions. |
 | [frontend/src/admin/apps/ConnectorPanel.tsx](../frontend/src/admin/apps/ConnectorPanel.tsx) | Native app workspace: OAuth, provider settings, durable jobs and private sources. |
 | [frontend/src/admin/apps/IntegrationDirectory.tsx](../frontend/src/admin/apps/IntegrationDirectory.tsx) | Ten explicit service routes reuse native app consent or the documented HTTP setup; no fake connected state. |
@@ -644,6 +646,7 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/admin/apps/library-model.ts](../frontend/src/admin/apps/library-model.ts) | Shared app discovery metadata, safe artwork sources and localized search independent of rendering. |
 | [frontend/src/admin/apps/service-integration-text.ts](../frontend/src/admin/apps/service-integration-text.ts) | Shared connector controls; provider-specific descriptions and field choices stay in app packages. |
 | [frontend/src/admin/apps/service-integrations.ts](../frontend/src/admin/apps/service-integrations.ts) | Installed provider UI capabilities come from their app packages, not an alternate commerce registry. |
+| [frontend/src/admin/apps/upgrade-i18n.ts](../frontend/src/admin/apps/upgrade-i18n.ts) | Upgrade admission vocabulary shared by installed package consent and App Studio. |
 | [frontend/src/admin/assistant/MessageText.tsx](../frontend/src/admin/assistant/MessageText.tsx) | MessageText keeps merchant interaction separate from workspace orchestration. |
 | [frontend/src/admin/assistant/ProposalCard.tsx](../frontend/src/admin/assistant/ProposalCard.tsx) | ProposalCard keeps merchant interaction separate from workspace orchestration. |
 | [frontend/src/admin/assistant/SettingsDialog.tsx](../frontend/src/admin/assistant/SettingsDialog.tsx) | SettingsDialog keeps merchant interaction separate from workspace orchestration. |
@@ -793,6 +796,7 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/admin/developer/AppSettingsEditor.tsx](../frontend/src/admin/developer/AppSettingsEditor.tsx) | Versioned setting declarations share the native Manifest; no credential value enters a draft. |
 | [frontend/src/admin/developer/AppStudioIntro.tsx](../frontend/src/admin/developer/AppStudioIntro.tsx) | App Studio heading and new-app entry share the localized workbench language. |
 | [frontend/src/admin/developer/AppStudioStatus.tsx](../frontend/src/admin/developer/AppStudioStatus.tsx) | Shared status footer keeps validation, persistence and execution feedback beside the designer. |
+| [frontend/src/admin/developer/AppUpgradeCheck.tsx](../frontend/src/admin/developer/AppUpgradeCheck.tsx) | Explicitly inspect an immutable build in its owned stage, with response fencing on account/environment changes. |
 | [frontend/src/admin/developer/AppVersions.tsx](../frontend/src/admin/developer/AppVersions.tsx) | Saved version inspection, digest-approved stage install and conflict-aware package-only live release. |
 | [frontend/src/admin/developer/AppViewTabs.tsx](../frontend/src/admin/developer/AppViewTabs.tsx) | Native view navigation and creation are separate from workspace orchestration. |
 | [frontend/src/admin/developer/AppWorkflowEditor.tsx](../frontend/src/admin/developer/AppWorkflowEditor.tsx) | Visual status edges use the exact app manifest contract enforced by native record storage. |
@@ -1165,6 +1169,7 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/shared/i18n/app-preview-i18n.ts](../frontend/src/shared/i18n/app-preview-i18n.ts) | Non-executing design preview vocabulary, separate from merchant content. |
 | [frontend/src/shared/i18n/app-settings-i18n.ts](../frontend/src/shared/i18n/app-settings-i18n.ts) | App setting declarations contain labels and types only; values belong to the encrypted server store. |
 | [frontend/src/shared/i18n/app-studio-i18n.ts](../frontend/src/shared/i18n/app-studio-i18n.ts) | App Studio and native runtime vocabulary; every key ships EN/DE/FR/ES. |
+| [frontend/src/shared/i18n/app-upgrade-errors-i18n.ts](../frontend/src/shared/i18n/app-upgrade-errors-i18n.ts) | Native upgrade failures retain specific guidance across consent, Studio and API transports. |
 | [frontend/src/shared/i18n/app-workflow-i18n.ts](../frontend/src/shared/i18n/app-workflow-i18n.ts) | Workflow labels shared by the visual editor; status values and labels belong to each app. |
 | [frontend/src/shared/i18n/app-workspace-i18n.ts](../frontend/src/shared/i18n/app-workspace-i18n.ts) | Shared EN/DE/FR/ES guidance for app design, settings and bounded automation. |
 | [frontend/src/shared/i18n/automation-fields.ts](../frontend/src/shared/i18n/automation-fields.ts) | Localized labels for original rule and native flow parameter fields. |

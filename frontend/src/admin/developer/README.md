@@ -39,3 +39,5 @@ Run frontend build, tests, coverage, localization and architecture checks. See [
 [Illustrated workbench and exact runtime/security boundaries](../../../../docs/app-studio-workspace.md).
 
 `AppBrief`, `AppDraftEntry` and `start-described-app` keep description-led creation, replacement confirmation and first-stage preparation in the normal draft/agent lifecycle. Empty private app briefs compile through the Rust owner `generation_brief`; advanced existing-app edits retain their original route. The exact immutable asset SDK JSON is shared with the native compiler; other SDK implementation imports remain outside the frontend ownership boundary.
+
+- [AppUpgradeCheck.tsx](AppUpgradeCheck.tsx): Immutable build admission in its owned stage with account/environment response fencing.

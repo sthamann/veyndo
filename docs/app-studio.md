@@ -61,7 +61,7 @@ compatible current records. [Observed complete local journey](evidence/guided-ap
 7. Use the debugger to pause before instructions or at a numbered step, continue,
    stop and inspect bounded operation metadata. It does not log customer records or
    credentials. This debugger controls UI instructions, not a remote process.
-8. Save an immutable semantic version, review and install it in staging, then release
+8. Save an immutable semantic version, use **Check before installing** to inspect its migration against the selected stage, review and install it in staging, then release
    the selected app package. App records require their own explicit release selection.
 
 Server drafts autosave after 500 ms with optimistic revisions. They are private to

@@ -44,31 +44,7 @@ pub(crate) async fn validate_flow_config(
     )?;
     commerce::validate_names(&value["name"], &settings, 100)?;
     super::flow_text::validate(&f, &settings)?;
-    let mut steps = vec![];
-    if f.action == "app_action" {
-        steps.push(f.clone());
-    }
-    if let Some(p) = &f.pipeline {
-        for node in &p.nodes {
-            if let pipeline::Node::Action { action, config, .. } = node
-                && (action == "app_action" || action == "action.mail.send")
-            {
-                let mut step = f.clone();
-                step.action = "app_action".into();
-                step.app_action = Some(flows::AppFlowAction {
-                    app: config["app"].as_str().unwrap_or("email").into(),
-                    action: config["action"].as_str().unwrap_or("send_order").into(),
-                    arguments: if action == "action.mail.send" {
-                        json!({"locale":&f.locale[..2],"dryRun":false})
-                    } else {
-                        config["arguments"].clone()
-                    },
-                });
-                steps.push(step);
-            }
-        }
-    }
-    for step in steps {
+    for step in app_flows::steps(&f) {
         let target = step
             .app_action
             .as_ref()

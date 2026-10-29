@@ -5,6 +5,7 @@ import {
 } from "./catalog-intake-errors";
 import { getLocale } from "./i18n";
 import { configurationErrors } from "./configuration-errors-i18n";
+import { appUpgradeErrors } from "./app-upgrade-errors-i18n";
 import { appCapabilityWords } from "./app-capability-i18n";
 import { lifecycleValidationErrors } from "./native-lifecycle-i18n";
 import {
@@ -21,6 +22,7 @@ const messages: Record<string, readonly string[]> = {
     ],
   ...agentAdmissionErrors,
   ...configurationErrors,
+  ...appUpgradeErrors,
   ...catalogIntakeErrors,
   ...lifecycleValidationErrors,
   "Configure seller details before creating receipts": [

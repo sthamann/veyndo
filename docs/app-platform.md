@@ -69,6 +69,43 @@ records/model, 4 MB/migration and retained recovery storage of 16 MB/app. Relati
 changes and larger migrations require an offline plan. Recovery snapshots are not
 an automatic one-click rollback of external service effects.
 
+### Check an upgrade before installation
+
+The package consent dialog now runs the native installer against the current
+shop in a rollback-only transaction. App Studio also offers **Check before
+installing** for each immutable build in its owned stage. The report shows stored
+record counts, whether a migration is needed, its declared step count and the
+first blocking diagnostic. It returns no record contents or credentials.
+
+This is the actual migration/admission path, including stored-value conversion,
+fixed-storage constraints, publisher/dependency checks and saved configuration or
+commerce examples. Deferred constraints are checked before the entire transaction
+is rolled back. No package, record, recovery snapshot, schedule, payment method or
+outbox event is committed by the check. Compilation caches may retain bounded pure
+Wasm code; no external provider action is executed.
+
+Every installation transport and selected release also checks active Flow actions
+against the proposed package under the existing automation fence. The same Flow
+argument construction and native field validation apply to configuration save and
+replacement. The stored Flow actor's current membership, primary and additional
+action rights and core-extension access must still permit that action. A missing
+or incompatible action blocks activation. Queued work
+continues to use its ordinary current-rights and package admission; checking an
+upgrade does not grant future authority or replay a previous external effect.
+
+Changing a field's validation rules also requires an explicit schema migration.
+The bounded migration checks stored values through the ordinary field/language
+validator and retains its recovery snapshot. Invalid old values must be repaired
+before activation. An update cannot remove an enabled payment provider/method or
+narrow its configured currency/country coverage, including channel overrides.
+Disable or reconfigure the affected method first. Disabled methods and immutable
+historical payment attempts retain their existing contracts.
+
+The report is a snapshot, not approval. Installation rechecks current state and
+still needs exact candidate digest/permissions. Restore a previous interface as a
+new immutable version. Restoring data needs an explicit compatible migration;
+never downgrade or rewind orders, payment effects or installed setting values.
+
 An app can request a separate callback key under **Apps → Access**. Keys are
 app/tenant/package bound, expire within 90 days, show plaintext once and intersect
 scopes with the creator's **current** membership rights. Upgrade, revocation or
