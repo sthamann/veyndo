@@ -4196,8 +4196,8 @@
   },
   "inputs": {
     ".github/workflows/verify.yml": {
-      "sha256": "bb70d894894b9458496b4daf47290244678d29e219b47848507227278d937736",
-      "review": "Reviewed independent core/signed/pooler registry partitions, preserved nested restricted-role suites, official raw-profile aggregation and unchanged fail-closed final coverage admission"
+      "sha256": "2617e792947a71503a3a110693870fb51452812c4e2790fd3c42342e86b03743",
+      "review": "Reviewed daily/manual full verification with unchanged native/formal/coverage scope; quick source checks install pinned cached frontend tools without lifecycle scripts, compilation or tests. Quick coverage transfer remains disabled."
     },
     "Cargo.lock": {
       "sha256": "de01e9cdb5d3e16ec81ce7ce92898ab67d72f00f582fb0e658daf00f62f460c3",

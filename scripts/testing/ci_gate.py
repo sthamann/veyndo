@@ -12,6 +12,7 @@ REPORTS = {
     'native': ('artifacts/coverage/rust.json', 'artifacts/coverage/python.json'),
 }
 EXPECTED = {
+    'quick': set(),
     'docs': {'documentation'},
     'frontend': {'frontend'},
     'full': {'frontend', 'native'},
@@ -24,11 +25,13 @@ def require(condition, message):
         raise ValueError(message)
 
 
-def check_jobs(needs):
+def check_jobs(needs, event_name=None):
     require(set(needs) == JOBS, 'Missing or unknown verification jobs')
     require(needs['admission']['result'] == 'success', 'Source admission did not succeed')
     lane = needs['admission'].get('outputs', {}).get('lane')
     require(lane in EXPECTED, 'Missing or unknown verification scope')
+    if event_name not in (None, 'push', 'pull_request'):
+        require(lane == 'full', 'Scheduled, manual and unknown events require full verification')
     for job in sorted(JOBS - {'admission'}):
         expected = 'success' if job in EXPECTED[lane] else 'skipped'
         require(needs[job]['result'] == expected, f'{job}: expected {expected}')
@@ -79,7 +82,8 @@ def check_reports(root, env, scope):
 def main():
     command, *args = sys.argv[1:]
     if command == 'jobs' and not args:
-        print('PASS required jobs:', check_jobs(json.loads(os.environ['VERIFY_NEEDS'])))
+        print('PASS required jobs:', check_jobs(json.loads(os.environ['VERIFY_NEEDS']),
+                                               os.environ.get('GITHUB_EVENT_NAME')))
     elif command == 'stamp' and len(args) == 1 and args[0] in REPORTS:
         stamp(ROOT, os.environ, args[0])
     elif command == 'reports' and len(args) == 1:

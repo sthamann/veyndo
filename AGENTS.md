@@ -145,3 +145,13 @@ For changes spanning API, models and UI, trace the shared production consumer fi
 | `src/auth/` | [src/auth/AGENTS.md](src/auth/AGENTS.md) |
 | `frontend/` | [frontend/AGENTS.md](frontend/AGENTS.md) |
 | `src/capabilities/` | [src/capabilities/AGENTS.md](src/capabilities/AGENTS.md) |
+
+## Verification cadence
+
+Complete CI tests and coverage run daily at 02:17 UTC or on explicit manual
+workflow dispatch. Do not repeat the whole suite for every local commit or wait
+for nightly results before continuing ordinary prototype work. Use targeted
+checks for changed behavior; run full verification for explicit acceptance,
+broad regressions or concrete failures requiring it. Required `verify` on PRs
+and main pushes means short structure/governance checks, not complete test
+acceptance. Preserve daily coverage floors and report the actual scope.

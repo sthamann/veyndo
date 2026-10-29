@@ -1,5 +1,16 @@
 # Changelog
 
+## Daily full verification (29 October 2026)
+
+- Run complete frontend, Rust, formal, differential, native database and coverage
+  checks daily at 02:17 UTC or on manual dispatch, instead of repeating them for
+  every PR update and main push. Preserve every full-run coverage floor.
+- Keep the required `verify` check as short source/ownership/localization and
+  governance checks on ordinary changes. Explicitly label quick results and
+  reject partial scheduled/manual runs; never reuse stale coverage as current.
+- Publish and validate documentation from main or manual dispatch without a
+  duplicate PR build. Retain artifact-specific image smoke checks when publishing.
+
 ## Product editing workspace (29 October 2026)
 
 - Reorganized product editing around a compact identity and save bar, one shared
