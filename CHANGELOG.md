@@ -1,5 +1,11 @@
 # Changelog
 
+## Isolated native CI partitions — 29 October 2026
+
+- Split the registered native integration checks across independent core, signed-scope and transaction-pooler runners. Preserve every nested restricted-role repetition and each existing coverage floor.
+- Validate same-source raw measurement bundles before the official LLVM and Python coverage collectors combine them. Missing, modified, foreign-run and incompatible-toolchain inputs reject the final check.
+- Retain sequential local runs and existing subprocess cleanup checks. Record the 37m13s successful baseline; report the new duration only after its full successful CI acceptance.
+
 ## 29 October 2026
 
 - Move original Shopware execution and native plugin translation to `experiment/shopware-compatibility`; remove the compatibility app, binary, runtime recipes and original-runtime checks from the main platform. Preserve generic pinned app documents, operational-record isolation, inward migration and native PHP comparison fixtures. Add the connected architecture/app/AI overview and update the main product scope.

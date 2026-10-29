@@ -19,15 +19,19 @@ import uuid
 from testing.runtime import ROOT, artifact_path, run, serve, stop
 from testing.database import psql
 from testing.parallel_check import ParallelCheck
+from testing.integration_partitions import PARTITIONS, partition
 
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("--container", default="veyndo-postgres-1")
 parser.add_argument("--existing-database", action="store_true")
 parser.add_argument("--only", nargs="+", help="Run selected registered HTTP/provider/browser/tooling suites in an isolated database")
+parser.add_argument("--partition", choices=PARTITIONS, help="Complete disjoint CI partition, each with its own services and database")
 parser.add_argument("--parallel-pooler", metavar="QDRANT_URL", help="Run signed_pooler concurrently with its own database, logs and a separate disposable Qdrant instance")
 args = parser.parse_args()
 started = time.monotonic()
 env = dict(os.environ)
+if args.partition and (args.only or args.existing_database or args.parallel_pooler):
+    parser.error('--partition requires its own complete disposable fixture')
 if args.parallel_pooler:
     if args.only or args.existing_database:
         parser.error('--parallel-pooler requires the complete suite with owned disposable databases')
@@ -55,6 +59,8 @@ def sql(statement):
 
 
 suites = json.loads((ROOT / "scripts/testing/suites.json").read_text())
+if args.partition:
+    suites = partition(suites, args.partition)
 if args.parallel_pooler and suites['providers'].count('signed_pooler') != 1:
     parser.error('The parallel check must appear exactly once in the provider registry')
 if args.only:
