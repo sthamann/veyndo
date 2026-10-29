@@ -27,6 +27,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Install cached tools for source-only frontend checks
+        run: npm ci --ignore-scripts --no-audit --no-fund
+        working-directory: frontend
       - name: Verify conservative scope, final admission and coverage helpers
         if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         run: python3 scripts/testing/test_ci_scope.py && python3 scripts/testing/test_ci_gate.py && python3 scripts/testing/tooling_tests.py && python3 scripts/testing/test_parallel_check.py && python3 scripts/testing/test_integration_partitions.py && python3 scripts/testing/test_partition_coverage.py

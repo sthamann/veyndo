@@ -4196,8 +4196,8 @@
   },
   "inputs": {
     ".github/workflows/verify.yml": {
-      "sha256": "0e14df445f51c2c41a18a1991b1552624dd44711e44c301d60e55b54a2ab2971",
-      "review": "Reviewed CI cadence change: full frontend/native/formal/coverage scope preserved for daily/manual events; explicit quick per-change admission, no stale coverage transfer. Native policies and production bindings unchanged."
+      "sha256": "2617e792947a71503a3a110693870fb51452812c4e2790fd3c42342e86b03743",
+      "review": "Reviewed daily/manual full verification with unchanged native/formal/coverage scope; quick source checks install pinned cached frontend tools without lifecycle scripts, compilation or tests. Quick coverage transfer remains disabled."
     },
     "Cargo.lock": {
       "sha256": "de01e9cdb5d3e16ec81ce7ce92898ab67d72f00f582fb0e658daf00f62f460c3",
