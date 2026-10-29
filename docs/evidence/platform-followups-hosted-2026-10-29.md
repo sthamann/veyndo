@@ -263,6 +263,33 @@ Both public entry routes now redirect to Apple's authorization page without
 the ordinary Apple account sign-in form. An authenticated Apple account return
 was not part of this observation.
 
+## Actual public homepage owner
+
+The public handbook and static Core homepage were published from the documentation
+release `20f12567`. The live apex homepage is owned separately by the existing
+Experience application. Editing only `site/pages/index.html` does not update that
+React application. The owning four-language marketing copy now describes native
+working views, contextual design, generated consultation apps, private uploads and
+stored-data upgrade review; it reuses the current public app/customer captures and
+links to this handbook's current status and exact journeys.
+
+The existing Experience service deployed source
+`5c1afc2c2ffeab82bc4b81c13ebacd144edb6e2e`, image `wild-party-5333`, at
+**17:08:29 CET**, 29 October. One instance was observed 1/1 passing with zero
+restarts. A request during the automatic rollover returned `no healthy upstream`;
+after the health check, reload rendered the new homepage normally. Actual public
+English/German switching, current copy, proof links and the loaded 2060 × 881 app
+image were observed. The original Storyfront pin, provider, session, creation and
+checkout code were not changed by this website update.
+
+The separate website source passed its complete local project check: typecheck,
+module boundaries, four-language parity, 252 application tests and production
+packaging. Its hosted CI job did not start and is not recorded as passing. The
+public Core's complete required CI and documentation publication results above
+remain separate.
+
+![Actual updated public homepage with the generated consultation app](../assets/platform-followups-20261029/homepage-app.png)
+
 ## Related complete local journeys
 
 - [Description-led consultation app, upload, settings, publication and restoration](guided-app-2026-10-29.md).
