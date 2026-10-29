@@ -73,3 +73,11 @@ pool, unavailable stock followed by repair, cold restart after a lost purchase
 acknowledgement with no duplicate order/model call, cancellation during inference
 and blocked checkout, expired leases, revoked rights, foreign sandbox and emergency
 stop. Those checks validate task controls; they are not rendered-browser evidence.
+
+## Delivery
+
+The final source passed [complete required Linux CI](https://github.com/sthamann/veyndo/actions/runs/40870949354)
+and reached public Core through PR #229. A separate public cohort subsequently
+retained its German budget refusal and English native test order across reload;
+the public browser then completed a localized simulated purchase after a design
+revision and returned to an empty basket. [Public observations and screenshots](platform-followups-hosted-2026-10-29.md).

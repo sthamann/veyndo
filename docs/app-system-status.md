@@ -5,6 +5,15 @@ journeys. The [connected AI workspace](agentic-workspace.md) explains contextual
 planning, reviewed private execution, app composition, real preview, editable list
 handoff and remembered merchant guidance.
 
+**Updated 29 October 2026:** the connected follow-ups add agent-composed native
+working views, description-led consultation app generation, upgrade checks against
+saved data and current consumers, actual browser designer/customer acceptance,
+an actual WooCommerce source migration and an isolated 150-table restore with the
+native operational chain. [Current implementation and delivery](status.md#29-october-connected-platform-work)
+and [public steps](evidence/platform-followups-hosted-2026-10-29.md) distinguish
+their exact environments. Apple's new callbacks are saved and admitted; an
+authenticated Apple return remains separate.
+
 **Updated 22 October 2026:** the public release includes app-reference diagnostics,
 shared private customer-agent testing, catalogue language/image readiness and
 editable native shopper selections. The [current illustrated acceptance](evidence/customer-scenarios-2026-10-22.md#public-acceptance-after-the-final-rollout)
@@ -51,12 +60,12 @@ accept a hosted signed-buyer RFQ or original embedded Storyfront purchase.
 | Multiple placements | A single app can contribute product, header, checkout, account and private Studio areas with distinct context/action allowlists. | A placement neither grants rights nor makes an unpublished app public. |
 | Installed settings | Declared localized text/secret/boolean/integer settings, encrypted live values, digest/revision consent and write-only secret inputs. | Only approved private service actions receive resolved secrets; no browser, preview, release or task export receives them. |
 | Fixed data storage | Four physical tables: logical models, records, lookup values and relationships; full tenant/app/model identity, signed forced RLS and composite references. | Logical row/byte/model budgets remain. Fixed table count is not evidence of unlimited throughput. Independent services retain their own explicit storage contracts. |
-| Versions and private releases | Immutable package versions, current consent/digest, actor-private preview, staging and selected publication through native owners. | Package and record publication are separate selections. Code/data recovery cannot undo sent mail or payments. |
+| Versions and private releases | Immutable package versions, current consent/digest, actor-private preview, staging and selected publication through native owners. Upgrade review checks stored records, migrations, saved examples, current Flow rights and active payment consumers through a rollback-only ordinary installation. | Package and record publication are separate selections. Code/data recovery cannot undo sent mail or payments. |
 | Pure decisions | Existing WIT components receive bounded read-only snapshots and return accepted/adjustment/reason results; native money, tax, inventory and checkout validate and apply effects. | Four hooks do not constitute a generated before/after/replace contract for every commerce operation. No arbitrary WASI network/filesystem access. |
 | Executable app goals | Optional `capability` v1: localized intent/assumptions and up to twelve frozen synthetic decision examples; mismatch/trap blocks save or installation. | Expected examples are not server-proven human confirmations, historical business replay or proof over every input. |
 | Saved merchant planning | Existing PostgreSQL tasks/conversations and fenced Rust workers execute reviewed native plans, retain completed steps, yield to translation work and resume explicitly. Collection preparation can join selected products, a category, translations and a landing page; completed native work can become an inactive Flow draft. | Current rights, scope, revision and personal review still apply. Supported native operations do not establish general durable execution of arbitrary app code or external effects. |
 | Connected app diagnostics and customer testing | App Studio identifies unresolved view/model/action/API/Intelligence references and opens their native editors. Installed sandbox apps open the shared [customer simulator](customer-scenarios.md), whose durable fictional buyers use native products, baskets, budgets and simulated checkout. | Declaration checks are not runtime certification; shopper agents exercise commerce APIs rather than visual browser usability. Publication remains a separate selected review. |
-| Database/browser authority | Separate restricted tenant/system pools, role-bound signed scopes, forced policies; existing HttpOnly session ledgers, exact origins and build-owned Studio scripts. Dedicated bounded planning credentials now have separate authority from ordinary integration keys. | Broader operational/security work and the Apple callback repair remain. Selected negative tests are not exhaustive security certification. |
+| Database/browser authority | Separate restricted tenant/system pools, role-bound signed scopes, forced policies; existing HttpOnly session ledgers, exact origins and build-owned Studio scripts. Dedicated bounded planning credentials now have separate authority from ordinary integration keys. | Broader operational/security work and authenticated Apple account return remain. Selected negative tests are not exhaustive security certification. |
 
 ### What “build”, “replay” and “workflow” mean today
 

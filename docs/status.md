@@ -18,64 +18,33 @@ comparison fixtures remain part of migration and native verification.
 
 [Complete architecture, app system and AI overview](platform-overview.md).
 
-The 29 October native CI partitioning is merged in
-[PR #225](https://github.com/sthamann/veyndo/pull/225). All partitions, measurement
-collection and unchanged final coverage floors passed in
-[run 40840531599](https://github.com/sthamann/veyndo/actions/runs/40840531599).
-Its native critical chain took 31m18s against the preceding 37m13s baseline.
-The documentation is published; runtime functional acceptance below keeps its
-original deployed version.
+## 29 October connected platform work
 
-Agent-composed native views are merged in [PR #226](https://github.com/sthamann/veyndo/pull/226).
-The complete required [Linux run 40848076210](https://github.com/sthamann/veyndo/actions/runs/40848076210)
-passed all partitions, collection and frontend checks. Real local model output,
-browser pin/reload and private CSV creation are recorded separately from hosted
-Core delivery. [Exact workspace evidence](evidence/composed-workspace-2026-10-29.md).
+The eight approved follow-ups use the existing native owners, authorization,
+versioned definitions and private publication path. Their source changes are
+merged with complete required CI:
+[PR #225](https://github.com/sthamann/veyndo/pull/225),
+[#226](https://github.com/sthamann/veyndo/pull/226),
+[#227](https://github.com/sthamann/veyndo/pull/227),
+[#228](https://github.com/sthamann/veyndo/pull/228),
+[#229](https://github.com/sthamann/veyndo/pull/229) and
+[#230](https://github.com/sthamann/veyndo/pull/230).
 
-Description-led app creation merged through [PR #227](https://github.com/sthamann/veyndo/pull/227) after complete required Linux verification. A real local model
-produced a consultation app with product relation, private design upload, status,
-setting and two native views. The browser journey includes actual saved preview
-data, package-only release, central settings, a published request and restoration
-of the previous interface as a new version. Hosted Core delivery is still separate.
-[Exact local app evidence](evidence/guided-app-2026-10-29.md).
+| Outcome | What was actually exercised |
+| --- | --- |
+| Faster verification | Independent native partitions, exactly-once suite admission and same-source coverage collection retain all final floors. The observed native critical chain fell from 37m13s to 31m18s. [CI evidence](evidence/parallel-verification-2026-10-23.md). |
+| Agent-composed Studio views | A real model selects registered native grid, detail and intake components. Pin/reload, current rights, actual editor navigation and private CSV creation pass locally and publicly. [Public journey](evidence/platform-followups-hosted-2026-10-29.md), [contracts](evidence/composed-workspace-2026-10-29.md). |
+| Description-led app creation | Actual consultation app generation, product relation, file upload, status, team setting, private records, selected package publication and restoration as a new version pass locally. The original merchant brief also generates and saves the native package with the actual public model; public preflight, sandbox installation, private upload, status update and full reload retain the actual record. [Full app journey](evidence/guided-app-2026-10-29.md), [public app acceptance](evidence/platform-followups-hosted-2026-10-29.md#public-description-led-app-generation). |
+| App upgrade admission | Saved data, explicit migrations, examples, current Flow actor rights and active payment consumers participate in the ordinary native installation check. The browser refuses an incompatible update and retains records through a compatible one. [Upgrade evidence](evidence/app-upgrade-2026-10-29.md). |
+| Customer profiles and browser comparison | The same saved English/German profiles run before and after a stock repair; the actual browser completes the German simulated purchase and returns to an empty basket. Durable stop/resume and private/live separation are checked separately. [Browser evidence](evidence/customer-browser-2026-10-29.md). |
+| Connected shop/app designers | Actual palette insertion, drag repositioning, arrows, deletion and undo pass in the browser. The agent follows the selected section; real screenshot analysis produces three reviewable page-style proposals and saves one private revision. [Designer evidence](evidence/designer-2026-10-29.md). |
+| Inward WooCommerce migration | An actual disposable WooCommerce source supplies eight supported areas. Interrupted Rust service recovery, exact replay and content comparison pass, followed by a native browser purchase and empty basket. [Source evidence](evidence/woocommerce-source-2026-10-29.md). |
+| Restore and operational chain | An isolated local restore matches all 150 public tables. Existing Rust services complete simulated capture/refund, actual local SMTP, invoice and separate cancellation, followed by strict system/tenant scope checks. Apple callback configuration is saved and publicly admitted. [Restore evidence](evidence/restore-drill-2026-10-29.md), [public observations](evidence/platform-followups-hosted-2026-10-29.md). |
 
-App upgrade checks merged through [PR #228](https://github.com/sthamann/veyndo/pull/228)
-after the complete required [Linux run 40862585413](https://github.com/sthamann/veyndo/actions/runs/40862585413).
-The actual browser refused a missing migration, installed the compatible private
-version and preserved private/live records. Native admission also checks current
-Flow actor rights, validation changes and active payment consumers. Hosted Core
-delivery remains separate. [Upgrade contract](app-platform.md#check-an-upgrade-before-installation),
-[exact acceptance](evidence/app-upgrade-2026-10-29.md).
-
-The next local acceptance reuses two saved customer profiles with the actual local
-model, inspects the rendered stock obstacle, repairs it in Studio and completes a
-German simulated browser purchase with return to an empty basket. Sandbox GA4
-configuration discovery was removed after that browser finding. [Exact browser
-and native-task evidence](evidence/customer-browser-2026-10-29.md).
-
-The current designer branch records actual shop/app drag gestures, arrows,
-deletion/undo, selected agent targets and three real screenshot-derived style
-alternatives. Applying one alternative saved a private revision with exact content
-preservation and no live changes. [Designer evidence](evidence/designer-2026-10-29.md).
-
-The actual local WooCommerce source acceptance now covers eight supported areas,
-interrupted Rust service recovery, exact replay/current-field comparison and a
-native browser purchase/return/empty basket. A discovered product HTML display
-error is fixed through the app-owned parser and existing native rich-content owner.
-[Exact source and browser evidence](evidence/woocommerce-source-2026-10-29.md).
-
-An isolated local database restore matched all 150 public tables, retained app
-packages/records and passed a new simulated order, actual local SMTP delivery,
-native invoice, idempotent refund and separate cancellation. The restored Core
-then ran with separate restricted system/tenant logins and mandatory signed
-scope; its Rust connector has no Commerce data grants. This is an actual local
-restore drill, separate from restoring a hosted disk snapshot.
-[Recorded restore and operational chain](evidence/restore-drill-2026-10-29.md).
-
-Apple's existing Service ID now includes both new Veyndo domains and exact
-callbacks, saved after explicit approval on 29 October. Both public entry routes
-reach Apple's authorization page without the previous invalid redirect error.
-An authenticated Apple sign-in and return remain a separate acceptance.
+A local database restore remains distinct from a hosted disk-snapshot restore.
+Apple's ordinary account form now loads for both Veyndo entry domains; an
+actual authenticated Apple sign-in and return remain separately unobserved.
+The current public artifact and latest merchant journey are recorded below.
 
 The 23 October release expands selected Lean guarantees to **63 policies / 149
 properties**, splits their Rust/Lean owners and tightens Cargo dependency checks.
@@ -96,7 +65,28 @@ journeys below retain their accepted versions.
 
 ## What is online now
 
-The latest accepted functional change is **`7bd37916` (PR #211)**, delivered as
+The latest observed Core is **`69fd4568` (PR #234)**, image
+`united-toys-4065`, started on **29 October at 16:53:22 CET**. Its ordinary
+snapshot-backed release completed at **16:54:31 CET**, with a successful migration
+and one passing instance with zero restarts. The final correction makes the
+column controls readable inside narrow installed-app tables.
+
+The preceding functional release **`d65bc050` (PR #232)** also passed complete
+main CI. The original public model request creates and saves the native
+consultation package; installation review under the restricted database
+connections passes. The installed private product view retains an actual
+consultation request, private file and updated status after a full browser
+reload, including the subsequent UI rollout.
+
+The preceding same-day releases passed public native working-view/CSV intake,
+saved customer scenarios, designer drag/drop, URL-based design proposals, private
+revision adoption and a subsequent German simulated purchase with an empty basket
+after return and reload.
+[Current public screenshots, exact orders and source versions](evidence/platform-followups-hosted-2026-10-29.md).
+
+### Previous dated releases
+
+The 23 October functional change **`7bd37916` (PR #211)** was delivered as
 Core image `befitting-river-8632` on **23 October at 18:05:26 CEST**. Its serialized
 release completed at **18:07:11 CEST**, after a fresh snapshot, successful migration
 job and health-checked rollout. Marketplace order import now resolves all admitted

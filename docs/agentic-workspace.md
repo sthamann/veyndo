@@ -3,9 +3,10 @@
 The merchant agent now carries the current editor into a conversation, discovers
 installed apps by relevance and prepares bounded work that the merchant can
 review. App Studio, graphical editors, native operations and private previews
-continue to own the actual data. This guide follows the original 20 October
-workspace and the publicly accepted collection/catalogue extensions through
-22 October; [current status](status.md) records each deployed journey.
+continue to own the actual data. This guide connects the original 20 October
+workspace with collection/catalogue work and the 29 October native working views,
+pinned layouts and private catalogue intake. [Current status](status.md) records
+each deployed journey, with [the latest public screenshots](evidence/platform-followups-hosted-2026-10-29.md).
 
 Prepare missing translations and images in the
 [catalogue-preparation grid](product-management.md#preparing-a-catalogue-together),

@@ -335,3 +335,8 @@ native page document and asks the model only for style alternatives. Review the
 interpretation, desktop/mobile preview and proposed differences, then approve in
 the sandbox. Save and selected publication retain their existing revision checks.
 [Actual browser and reference-model acceptance](evidence/designer-2026-10-29.md).
+
+The [29 October public follow-through](evidence/platform-followups-hosted-2026-10-29.md)
+also observes actual palette and section drags, arrow/delete/undo, selected agent
+scope and three real URL-derived proposals. Desktop/mobile review and explicit
+adoption save a new private revision without publishing the live shop.

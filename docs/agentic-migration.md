@@ -567,9 +567,13 @@ for an intentional rebuild. PR image checks run without publication.
 
 Hosted acceptance must verify actual source inspection, an explicit reviewed
 private import, current-field comparison, reload/resume and selected publication
-with simulated checkout on that deployed source tag. The current 19 October local
-evidence does not establish that hosted deployment; see the single
-[current status](status.md).
+with simulated checkout on that deployed source tag. The [29 October actual
+WooCommerce source journey](evidence/woocommerce-source-2026-10-29.md) verifies
+local inspection, interrupted service recovery, replay, selected publication and
+browser checkout. The separate [main image publication](https://github.com/sthamann/veyndo/actions/runs/40879060443)
+smoke-tested and published source `fc4489c900038d76f0509baec44f75024c03d557` as
+non-root Rust without Python. These results do not establish a hosted migration
+service journey; see the single [current status](status.md).
 
 A small public, credential-free source is available under
 [`extensions/apps/migration/examples/`](https://github.com/sthamann/veyndo/tree/main/extensions/apps/migration/examples).

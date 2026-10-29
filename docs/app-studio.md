@@ -1,10 +1,12 @@
 # Visual App Studio
 
-First-app AI preparation uses typed native field constraints for lengths, numeric
-bounds and item counts. Required flags and status choices remain their own field
-properties. The versioned `app-brief@2` contract constrains provider output before
-the ordinary native Manifest checks; it does not bypass validation or change the
-existing-app editing and advanced package-import contracts.
+Describe the app you need, review its connected forms and administration views,
+then try real records privately. Product relations, uploads, review states and
+installation settings belong to the same versioned app definition. The visual
+editor and coding agent continue editing that definition.
+
+[Complete illustrated consultation-app journey](evidence/guided-app-2026-10-29.md)
+and [latest public model and installation observations](evidence/platform-followups-hosted-2026-10-29.md#public-description-led-app-generation).
 
 See the [connected AI workspace](agentic-workspace.md) for the 20 October context,
 reviewed private execution, complete app composition, real preview, editable list
@@ -43,6 +45,11 @@ private. Package-only release leaves test records in their private environment.
 Restoring an earlier interface creates a new immutable version and preserves
 compatible current records. [Observed complete local journey](evidence/guided-app-2026-10-29.md).
 
+New-app preparation uses the versioned `app-brief@2` contract for typed field
+constraints. Required flags and status choices remain their own properties. The
+ordinary native validator checks the generated package. Existing-app editing and
+advanced package import retain their existing contracts.
+
 ## The development loop
 
 1. Choose a frontend/admin/combined/payment/shipping/integration/event/cron app
@@ -69,6 +76,13 @@ compatible current records. [Observed complete local journey](evidence/guided-ap
    credentials. This debugger controls UI instructions, not a remote process.
 8. Save an immutable semantic version, use **Check before installing** to inspect its migration against the selected stage, review and install it in staging, then release
    the selected app package. App records require their own explicit release selection.
+
+**Choose the right test environment:** F5 creates an actor-private preview from
+the parent live catalogue. A product created only in a separate ordinary sandbox
+is not automatically copied into that preview. To test an app against that
+sandbox's products, save the app version, check and install it in the selected
+sandbox, then open its installed native view there. Package publication never
+implicitly publishes its test records or files.
 
 Server drafts autosave after 500 ms with optimistic revisions. They are private to
 the actor and shop, restored before edits and bounded to twenty drafts/user and

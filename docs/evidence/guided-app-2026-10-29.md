@@ -61,7 +61,7 @@ or public write bindings. It never executes model-authored JavaScript or creates
 SQL objects. The common asset-action declarations live in the shared SDK; no
 consultation-specific business model is implemented in the Rust core.
 
-## Validation and remaining delivery
+## Validation and delivery
 
 - Complete local suites passed 839 frontend tests and 339 native Rust tests. Strict
   Clippy, source boundaries, prompt hashes, Lean/conformance and the complete
@@ -85,5 +85,13 @@ a bounded interface translation, independent of the merchant's app translations.
 The registered provider fixture exercises the bounded proposal schema and actual
 private upload/save/reload; an imported list/save-only form refuses uploads.
 
-Local complete checks and independent review are finished. Required remote CI and
-hosted rollout remain separate; these local results are not a public acceptance.
+Local complete checks, independent review and complete required Linux CI passed.
+The final first-app schema correction also passed its own
+[required CI](https://github.com/sthamann/veyndo/actions/runs/40879150077)
+and reached public Core as `db0ab308`, image `decorous-sail-719`, on 29 October.
+The same original merchant brief then generated a valid native package using
+the configured public `gpt-6.1-sol` provider. The subsequent selected-sandbox
+review finding, repair and final public record journey are recorded in the
+[connected public acceptance](platform-followups-hosted-2026-10-29.md#public-description-led-app-generation).
+This section's local package publication, operational setting and restoration
+observations retain their original environment.
