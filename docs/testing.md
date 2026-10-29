@@ -163,6 +163,8 @@ PRs touching image admission exercise the actual images without registry login o
 publication. Existing packaged signup, private sandbox, session restart and non-root
 Rust migration health checks still run whenever an image is built.
 
+<a id="independent-frontend-feedback"></a>
+
 ### Complete daily run
 
 After admission, complete frontend verification runs in parallel with the
