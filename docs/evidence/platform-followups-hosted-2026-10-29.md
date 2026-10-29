@@ -180,7 +180,7 @@ bypass. Its regression checks distinguish private stage data from live data and
 reject missing, foreign and actor-private environments and insufficient rights.
 Local registered native suites, 340 Rust tests, strict Clippy, formal checks and
 184 broken-policy mutation controls passed. Independent review found no issue.
-Its final hosted installation and record acceptance is recorded separately below.
+Its completed hosted installation and record acceptance is recorded below.
 
 The first complete CI attempt also caught test-fixture interference: retained
 durable work from earlier suites reached the app-generation model before its own
@@ -189,6 +189,41 @@ retains all real workers and wire assertions and cleans up its owned database.
 The mixed native sequence of customer scenarios, durable agents, authority checks,
 app assistance and generation passes. The incremental independent review found no
 issue. The complete final CI result is recorded with the final rollout below.
+
+The corrected source passed [complete required Linux CI](https://github.com/sthamann/veyndo/actions/runs/40894398664),
+including all three native partitions, the official combined coverage collectors,
+source provenance and unchanged final admission. PR #232 merged normally as
+`d65bc050913610f8065a20df2f549b158622be8d` at **15:16:45 UTC**. The ordinary
+Northflank workflow then started at **16:16:48 CET** for that exact commit.
+The merged Git tree is identical to the completely tested `e97f419a` tree.
+Image `best-day-1904` started Core at **16:27:11 CET**. The ordinary release
+completed at **16:28:21 CET**, after snapshot `26-10-29-152549-backup`, a
+successful 12-second migration and the release health checks.
+
+### Installation, private upload and retained record
+
+On that actual public release, the same saved package passed **Vor Installation
+prüfen** with **Bereit zur Installation**, then installed version `0.1.0` in the
+selected ordinary sandbox. Its native **Beratungsübersicht** navigation entry
+appeared. The product editor opened **Beratungsanfragen** for the actual private
+cup created earlier. This ordinary installed view correctly sees that sandbox's
+cup; the separate F5 preview clones the parent live catalogue instead.
+
+The tester created **Public cup consultation**, described a custom blue glaze,
+uploaded synthetic `public-consultation-design.txt` through the ordinary file
+chooser and saved the record. The native upload retained its **Privat** marker.
+Changing the status from **Neu** to **Geprüft** and saving updated the same
+record. A full browser reload and reopening the product tab retained exactly one
+request, its title, description, private file and reviewed status. The editor
+reopened the same saved request. No private record or file was published to the
+parent live shop.
+
+![Saved public consultation request and retained private upload after reload](../assets/platform-followups-20261029/guided-app-record.png)
+
+This public check covers generated package admission, installation and actual
+record use. Required installation settings, selected package publication and
+restoration are covered by the separately linked complete local app journey;
+this public sandbox check does not claim that live settings were configured.
 
 ## Apple callback configuration
 

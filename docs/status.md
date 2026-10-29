@@ -34,7 +34,7 @@ merged with complete required CI:
 | --- | --- |
 | Faster verification | Independent native partitions, exactly-once suite admission and same-source coverage collection retain all final floors. The observed native critical chain fell from 37m13s to 31m18s. [CI evidence](evidence/parallel-verification-2026-10-23.md). |
 | Agent-composed Studio views | A real model selects registered native grid, detail and intake components. Pin/reload, current rights, actual editor navigation and private CSV creation pass locally and publicly. [Public journey](evidence/platform-followups-hosted-2026-10-29.md), [contracts](evidence/composed-workspace-2026-10-29.md). |
-| Description-led app creation | Actual consultation app generation, product relation, file upload, status, team setting, private records, selected package publication and restoration as a new version pass locally. After the schema repair, the original merchant brief also generates and saves the native package with the actual public model. [Full app journey](evidence/guided-app-2026-10-29.md), [public generation](evidence/platform-followups-hosted-2026-10-29.md#public-description-led-app-generation). |
+| Description-led app creation | Actual consultation app generation, product relation, file upload, status, team setting, private records, selected package publication and restoration as a new version pass locally. The original merchant brief also generates and saves the native package with the actual public model; public preflight, sandbox installation, private upload, status update and full reload retain the actual record. [Full app journey](evidence/guided-app-2026-10-29.md), [public app acceptance](evidence/platform-followups-hosted-2026-10-29.md#public-description-led-app-generation). |
 | App upgrade admission | Saved data, explicit migrations, examples, current Flow actor rights and active payment consumers participate in the ordinary native installation check. The browser refuses an incompatible update and retains records through a compatible one. [Upgrade evidence](evidence/app-upgrade-2026-10-29.md). |
 | Customer profiles and browser comparison | The same saved English/German profiles run before and after a stock repair; the actual browser completes the German simulated purchase and returns to an empty basket. Durable stop/resume and private/live separation are checked separately. [Browser evidence](evidence/customer-browser-2026-10-29.md). |
 | Connected shop/app designers | Actual palette insertion, drag repositioning, arrows, deletion and undo pass in the browser. The agent follows the selected section; real screenshot analysis produces three reviewable page-style proposals and saves one private revision. [Designer evidence](evidence/designer-2026-10-29.md). |
@@ -65,20 +65,20 @@ journeys below retain their accepted versions.
 
 ## What is online now
 
-The latest observed Core is **`db0ab308` (PR #231)**, image
-`decorous-sail-719`, started on **29 October at 14:49:26 CET**. Its release
-completed at **14:50:33 CET** after a fresh snapshot, successful migration and
-health checks. The original public model request now creates and saves the
-native consultation package. The preceding same-day releases also passed public
-native working-view/CSV intake, saved customer scenarios, designer drag/drop,
-URL-based design proposals, private revision adoption and a subsequent German
-simulated purchase with an empty basket after return and reload.
-[Current public screenshots, exact orders and source versions](evidence/platform-followups-hosted-2026-10-29.md).
+The latest observed functional Core is **`d65bc050` (PR #232)**, image
+`best-day-1904`, started on **29 October at 16:27:11 CET**. Its ordinary release
+completed at **16:28:21 CET** after a fresh snapshot, successful migration and
+health checks. The original public model request creates and saves the native
+consultation package. The package now also passes installation review under the
+restricted database connections, installs in the selected private sandbox and
+retains an actual consultation request, private file and updated status after a
+full browser reload.
 
-The follow-through uncovered a separate selected-sandbox installation-review
-failure. Its repair is locally verified under restricted database roles and
-tracked in [PR #232](https://github.com/sthamann/veyndo/pull/232). Source checks
-do not substitute for its final public rollout and record acceptance.
+The preceding same-day releases passed public native working-view/CSV intake,
+saved customer scenarios, designer drag/drop, URL-based design proposals, private
+revision adoption and a subsequent German simulated purchase with an empty basket
+after return and reload.
+[Current public screenshots, exact orders and source versions](evidence/platform-followups-hosted-2026-10-29.md).
 
 ### Previous dated releases
 
