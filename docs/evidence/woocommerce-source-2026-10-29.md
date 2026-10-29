@@ -85,3 +85,10 @@ mapping/reconciliation, existing five-provider fixtures, current/withdrawn right
 foreign denial, cancellation, saved evidence, complete variants, original media and
 simulated purchase/replay. Full workspace Rust tests and strict Clippy passed.
 Fixture protocol checks remain separate from the actual WooCommerce run above.
+
+The independent final review reproduced adjacent block-wrapper text joining and
+entity-only HTML bypass. The existing parser now preserves ordinary block
+boundaries, separates code/rule blocks in plain summaries and decodes named/numeric
+entities once, including encoded literal angle brackets. The expanded CLI and
+actual native-import cases assert both the independent expected summary and the
+stored native document. Executable-content rejection remains in force.

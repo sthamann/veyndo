@@ -30,7 +30,7 @@ pub(super) fn product_content(data: &mut Value) -> Result<()> {
     let bodies = data["description"].as_object().cloned().unwrap_or_default();
     let mut rich = serde_json::Map::new();
     for (locale, value) in bodies {
-        let Some(html) = value.as_str().filter(|s| s.contains('<')) else {
+        let Some(html) = value.as_str().filter(|s| s.contains(['<', '&'])) else {
             continue;
         };
         let doc = document(html)?;
@@ -65,9 +65,16 @@ fn plain(node: &Value) -> String {
         .flatten()
         .map(plain)
         .collect::<String>();
-    if ["paragraph", "heading", "listItem", "hardBreak"]
-        .iter()
-        .any(|t| node["type"] == *t)
+    if [
+        "paragraph",
+        "heading",
+        "listItem",
+        "hardBreak",
+        "codeBlock",
+        "horizontalRule",
+    ]
+    .iter()
+    .any(|t| node["type"] == *t)
     {
         out.push('\n');
     }
@@ -120,38 +127,56 @@ fn children(element: ElementRef<'_>, marks: &[Value], depth: usize) -> Result<Ve
             current.push(json!({"type":"link","attrs":{"href":href}}));
         }
         let nested = children(e, &current, depth + 1)?;
-        let kind = match tag {
-            "p" => Some("paragraph"),
-            "h1" | "h2" | "h3" | "h4" | "h5" | "h6" => Some("heading"),
-            "ul" => Some("bulletList"),
-            "ol" => Some("orderedList"),
-            "li" => Some("listItem"),
-            "blockquote" => Some("blockquote"),
-            "pre" => Some("codeBlock"),
-            "br" => Some("hardBreak"),
-            "hr" => Some("horizontalRule"),
-            _ => None,
-        };
-        if let Some(kind) = kind {
-            let mut node = json!({"type":kind,"content":if matches!(kind,"listItem"|"blockquote"){blockify(nested)}else{nested}});
-            if kind == "orderedList" {
-                let start = e
-                    .value()
-                    .attr("start")
-                    .unwrap_or("1")
-                    .parse::<u32>()
-                    .map_err(|_| "Invalid source list start")?;
-                if start > 1_000_000 {
-                    return Err("Source list start exceeds limit".into());
-                }
-                node["attrs"] = json!({"start":start});
-            }
-            if kind == "heading" {
-                node["attrs"] = json!({"level":if tag=="h1"||tag=="h2"{2}else{3}});
-            }
-            out.push(node);
+        if [
+            "div",
+            "section",
+            "article",
+            "main",
+            "header",
+            "footer",
+            "address",
+            "aside",
+            "nav",
+            "figure",
+            "figcaption",
+        ]
+        .contains(&tag)
+        {
+            out.extend(blockify(nested));
         } else {
-            out.extend(nested);
+            let kind = match tag {
+                "p" => Some("paragraph"),
+                "h1" | "h2" | "h3" | "h4" | "h5" | "h6" => Some("heading"),
+                "ul" => Some("bulletList"),
+                "ol" => Some("orderedList"),
+                "li" => Some("listItem"),
+                "blockquote" => Some("blockquote"),
+                "pre" => Some("codeBlock"),
+                "br" => Some("hardBreak"),
+                "hr" => Some("horizontalRule"),
+                _ => None,
+            };
+            if let Some(kind) = kind {
+                let mut node = json!({"type":kind,"content":if matches!(kind,"listItem"|"blockquote"){blockify(nested)}else{nested}});
+                if kind == "orderedList" {
+                    let start = e
+                        .value()
+                        .attr("start")
+                        .unwrap_or("1")
+                        .parse::<u32>()
+                        .map_err(|_| "Invalid source list start")?;
+                    if start > 1_000_000 {
+                        return Err("Source list start exceeds limit".into());
+                    }
+                    node["attrs"] = json!({"start":start});
+                }
+                if kind == "heading" {
+                    node["attrs"] = json!({"level":if tag=="h1"||tag=="h2"{2}else{3}});
+                }
+                out.push(node);
+            } else {
+                out.extend(nested);
+            }
         }
         if out.len() > 2000 {
             return Err("Source page exceeds node limit".into());

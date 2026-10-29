@@ -66,3 +66,16 @@ for value in ([], {'en-GB':[{'type':'document','doc':{'type':'doc','content':[{'
     rejected=json.loads(json.dumps(pbody));rejected['record']['sourceId']='invalid-rich-'+uuid.uuid4().hex;rejected['record']['data']['richDescription']=value
     call('/api/merchant/imports',rejected,sh,status=400)
 print('PASS malformed rich mapping and executable links reject through native product validation')
+
+# Real CLI output must retain readable summaries and native document structure on intake.
+import subprocess
+for raw,expected,kinds in [('<div>One</div><div>Two</div>','One Two',['paragraph','paragraph']),('<p>Before</p><pre>A\nB</pre><p>After</p>','Before A B After',['paragraph','codeBlock','paragraph']),('Tea &amp; coffee','Tea & coffee',['paragraph'])]:
+    normalized=json.loads(subprocess.check_output([str(Path(__file__).resolve().parents[4]/'target/debug/migration-assistant'),'normalize','woocommerce','products','EUR','en-GB','content-fidelity'],input=json.dumps({'id':uuid.uuid4().hex,'name':'Readable cup','price':'19.90','description':raw})+'\n',text=True))
+    assert normalized['data']['description']['en-GB']==expected
+    doc=normalized['data']['richDescription']['en-GB'][0]['doc']
+    assert [n['type'] for n in doc['content']]==kinds
+    accepted=call('/api/merchant/imports',{'approve':True,'record':normalized,'options':pbody['options']},sh)
+    actual=call('/api/merchant/products/'+accepted['id'],h=sh)
+    assert actual['translations']['en']['description']==expected
+    assert actual['extra']['richDescription']['en'][0]['doc']==doc
+print('PASS actual normalized HTML blocks, code boundaries and entities retain native summary/document content')

@@ -46,6 +46,29 @@ class Normalization(unittest.TestCase):
     def test_woocommerce_decimal_and_variation_identity(self):
         r=self.read('woocommerce','products',{'id':9,'name':'Tasse','type':'simple','sku':'CUP','regular_price':'21.95','stock_quantity':3})[0]
         self.assertEqual(r['data']['price']['minor'],2195);self.assertEqual(r['sourceId'],'9')
+    def test_product_block_wrappers_keep_separate_native_paragraphs(self):
+        for tag in ('div','section','article','main','header','footer','address','aside','nav','figure','figcaption'):
+            with self.subTest(tag=tag):
+                data=self.read('woocommerce','products',{'id':9,'name':'Cup','price':'19.90','description':f'<{tag}>One</{tag}><{tag}>Two</{tag}>'})[0]['data']
+                self.assertEqual(data['description']['de-DE'],'One Two')
+                nodes=data['richDescription']['de-DE'][0]['doc']['content']
+                self.assertEqual([n['type'] for n in nodes],['paragraph','paragraph'])
+                self.assertEqual([n['content'][0]['text'] for n in nodes],['One','Two'])
+        data=self.read('woocommerce','products',{'id':9,'name':'Cup','price':'19.90','description':'<div><p>One</p><div>Two</div></div><p>Three</p>'})[0]['data']
+        self.assertEqual(data['description']['de-DE'],'One Two Three')
+        self.assertEqual([n['type'] for n in data['richDescription']['de-DE'][0]['doc']['content']],['paragraph']*3)
+    def test_product_plain_summary_separates_code_and_rules(self):
+        data=self.read('woocommerce','products',{'id':9,'name':'Cup','price':'19.90','description':'<p>Before</p><pre>A\nB</pre><p>After</p>First<hr>Second'})[0]['data']
+        self.assertEqual(data['description']['de-DE'],'Before A B After First Second')
+        nodes=data['richDescription']['de-DE'][0]['doc']['content']
+        self.assertEqual([n['type'] for n in nodes],['paragraph','codeBlock','paragraph','paragraph','horizontalRule','paragraph'])
+        self.assertEqual(nodes[1]['content'][0]['text'],'A\nB')
+    def test_product_entity_only_html_decodes_once(self):
+        for raw,expected in [('Tea &amp; coffee','Tea & coffee'),('Tea &#38; coffee &#x2615;','Tea & coffee ☕'),('&lt;script&gt;literal&lt;/script&gt;','<script>literal</script>'),('A &amp;amp; B','A &amp; B'),('A & B','A & B')]:
+            with self.subTest(raw=raw):
+                data=self.read('woocommerce','products',{'id':9,'name':'Cup','price':'19.90','description':raw})[0]['data']
+                self.assertEqual(data['description']['de-DE'],expected)
+                self.assertEqual(data['richDescription']['de-DE'][0]['doc']['content'][0]['content'][0]['text'],expected)
     def test_woo_variable_export_keeps_original_parent_and_variation_evidence(self):
         source={'id':80,'name':'Variable cup','type':'variable','attributes':[{'name':'Colour','variation':True,'options':['Blue','Red']}],'variations':[81,82], '_migrationVariations':[{'id':81,'price':'19.90','sku':'BLUE','stock_quantity':3,'attributes':[{'name':'Colour','option':'Blue'}],'image':{'src':'https://source.example/blue.png'}},{'id':82,'price':'21.50','sku':'RED','stock_quantity':4,'attributes':[{'name':'Colour','option':'Red'}]}]}
         rows=self.read('woocommerce','products',source)

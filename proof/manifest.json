@@ -1070,8 +1070,8 @@
     },
     "extensions/apps/migration/adapters/pages.rs": {
       "status": "unproved",
-      "sha256": "4b979773bd942f364047df8795b6fd41f9793437f07b1869d129c1e2494d57a4",
-      "review": "App-owned bounded HTML normalizer and generic native rich-description mapping/comparison; actual WooCommerce browser exposed raw HTML. SQL/native write adapters remain unproved."
+      "sha256": "5c57bedd33be720fc5146fed6667dc04a119a8e25c125a4ad0020d0ed8dc0814",
+      "review": "Independent Task7 review repairs preserve HTML block boundaries and decode entity-only descriptions once in the existing app parser; CLI and native import regressions cover fidelity and unsafe-content denial, without expanding any proved-policy claim"
     },
     "extensions/apps/migration/adapters/products.rs": {
       "status": "unproved",
