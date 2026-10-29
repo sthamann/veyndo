@@ -1,6 +1,8 @@
 /** Product-scoped review publication; authoritative authorization stays in the API. */
 import { useEffect, useState } from "react";
 import type { RequestFn } from "../../shared/api/types";
+import Icon from "../../shared/ui/Icon";
+import { useProductEditorText } from "./product-editor-i18n";
 import { useShopText } from "../../shared/i18n/shop-i18n";
 type Review = {
   id: string;
@@ -24,11 +26,14 @@ export default function ReviewModeration({
   productId: string;
 }) {
   const { s } = useShopText();
+  const e = useProductEditorText();
+  const [loading, setLoading] = useState(true);
   const [reviews, setReviews] = useState<Review[]>([]);
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   useEffect(() => {
     let active = true;
+    setLoading(true);
     setReviews([]);
     setError("");
     request("/api/merchant/commerce")
@@ -40,6 +45,9 @@ export default function ReviewModeration({
       })
       .catch((e) => {
         if (active) setError(e.message);
+      })
+      .finally(() => {
+        if (active) setLoading(false);
       });
     return () => {
       active = false;
@@ -50,6 +58,13 @@ export default function ReviewModeration({
       <h2>{s("moderation")}</h2>
       <p>{s("reviewHint")}</p>
       {error && <p role="alert">{error}</p>}
+      {!loading && !error && reviews.length === 0 && (
+        <div className="product-review-empty">
+          <Icon name="chat" />
+          <strong>{e("noReviews")}</strong>
+          <p>{e("reviewEmpty")}</p>
+        </div>
+      )}
       {reviews.map((r) => (
         <article className="commerce-review" key={r.id}>
           <div>

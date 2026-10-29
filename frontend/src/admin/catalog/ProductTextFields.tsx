@@ -17,6 +17,42 @@ export default function ProductTextFields({
     mainKey = d.translations[mainLocale]
       ? mainLocale
       : mainLocale.split("-")[0];
+  const localized = (field: "name" | "description") => (
+    <LocalizedField
+      label={c(field)}
+      multiline={field === "description"}
+      required={field === "name"}
+      maxLength={field === "name" ? 200 : 4000}
+      value={Object.fromEntries(
+        Object.entries(d.translations).map(([key, record]) => [
+          key,
+          record[field],
+        ]),
+      )}
+      onChange={(next) =>
+        onChange({
+          ...d,
+          translations: Object.fromEntries(
+            [
+              ...new Set([
+                ...Object.keys(d.translations),
+                ...Object.keys(next),
+              ]),
+            ].map((key) => [
+              key,
+              {
+                ...(d.translations[key] ?? {
+                  name: null,
+                  description: null,
+                }),
+                [field]: next[key] ?? null,
+              },
+            ]),
+          ),
+        })
+      }
+    />
+  );
   return (
     <ContentLanguage
       locales={[...new Set([...Object.keys(d.translations), lang, mainKey])]}
@@ -24,47 +60,7 @@ export default function ProductTextFields({
       language={lang}
     >
       <div className="catalog-form-grid">
-        {(["name", "description"] as const).map((field) => (
-          <div
-            key={field}
-            className={field === "description" ? "catalog-span" : ""}
-          >
-            <LocalizedField
-              label={c(field)}
-              multiline={field === "description"}
-              required={field === "name"}
-              maxLength={field === "name" ? 200 : 4000}
-              value={Object.fromEntries(
-                Object.entries(d.translations).map(([key, record]) => [
-                  key,
-                  record[field],
-                ]),
-              )}
-              onChange={(next) =>
-                onChange({
-                  ...d,
-                  translations: Object.fromEntries(
-                    [
-                      ...new Set([
-                        ...Object.keys(d.translations),
-                        ...Object.keys(next),
-                      ]),
-                    ].map((key) => [
-                      key,
-                      {
-                        ...(d.translations[key] ?? {
-                          name: null,
-                          description: null,
-                        }),
-                        [field]: next[key] ?? null,
-                      },
-                    ]),
-                  ),
-                })
-              }
-            />
-          </div>
-        ))}
+        <div>{localized("name")}</div>
         <label>
           {c("number")}
           <input
@@ -79,6 +75,7 @@ export default function ProductTextFields({
             }
           />
         </label>
+        <div className="catalog-span">{localized("description")}</div>
       </div>
     </ContentLanguage>
   );

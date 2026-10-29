@@ -16,7 +16,9 @@ Files and their individual responsibilities are listed in [the generated source 
 - [`ProductAssets.tsx`](ProductAssets.tsx): Bounded upload and explicit digest-bound publication of attachments and paid files.
 - [`ProductDataView.tsx`](ProductDataView.tsx): Central catalog workspace: server-filtered cursor list, product details and hierarchical categories.
 - [`ProductEditor.tsx`](ProductEditor.tsx): Revision-aware product aggregate editor: one save, translation tabs and product-scoped linked capabilities.
-- [`ProductEditorNav.tsx`](ProductEditorNav.tsx): Core product tabs and installed app submenus share one accessible navigation.
+- [`ProductEditorHeader.tsx`](ProductEditorHeader.tsx): Compact product identity, current save state and shared language context above every section.
+- [`ProductEditorNav.tsx`](ProductEditorNav.tsx): Grouped native/app sections, manual keyboard activation and compact mobile selection.
+- [`product-editor-i18n.ts`](product-editor-i18n.ts): Four-language section guidance and empty review states.
 - [`ProductLocalizedContent.tsx`](ProductLocalizedContent.tsx): Consistent main-language inheritance for product rich documents, specification groups and individual SEO fields.
 - [`ProductMediaWorkspace.tsx`](ProductMediaWorkspace.tsx): One product-media workspace: cover, ordered gallery, multilingual image metadata, drag/drop and optional reviewed AI drafts.
 - [`ProductPanels.tsx`](ProductPanels.tsx): Native commerce, media, translated SEO/specifications and category panels for one editable product.

@@ -1,18 +1,18 @@
 /** Revision-aware product aggregate editor: one save, translation tabs and product-scoped linked capabilities. */
 import { useCoreExtensions } from "../../shared/apps/CoreExtensions";
-import ProductEditorActions from "./ProductEditorActions";
+import ProductEditorHeader from "./ProductEditorHeader";
+import { useProductEditorText } from "./product-editor-i18n";
+import "../styles/product-workspace.css";
 import ProductCompliance from "../legal/ProductCompliance";
 import { useLegalText } from "../../shared/i18n/legal-i18n";
-import { useCrmText } from "../../shared/i18n/crm-i18n";
 import EntityHistory from "../../shared/history/EntityHistory";
 import { ContentLanguage } from "../../shared/i18n/ContentLanguage";
 import ProductEditorNav, { productTabs as tabs } from "./ProductEditorNav";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { AppSurfaceView, useAppSurfaces } from "../../shared/apps/AppSurfaces";
 import type { RequestFn } from "../shell/studio-types";
 import { useCatalogText } from "../../shared/i18n/catalog-i18n";
 import {
-  productName,
   hydrateDraft,
   productSavePayload,
   newDraft,
@@ -51,7 +51,8 @@ export default function ProductEditor({
   const appTabs = useAppSurfaces().filter(
     (s) => s.surface.location === "admin.product.tab",
   );
-  const { r } = useCrmText();
+  const e = useProductEditorText();
+  const panelId = useId();
   const { l } = useLegalText();
   const [draft, setDraft] = useState<ProductDraft>(newDraft);
   const [extensions, setExtensions] = useCoreExtensions();
@@ -80,7 +81,7 @@ export default function ProductEditor({
         .current("/api/merchant/commerce")
         .then((v) => {
           if (active && v.data?.locales) {
-            setDraft((old) => ({
+            const configure = (old: ProductDraft): ProductDraft => ({
               ...old,
               extra: {
                 ...old.extra,
@@ -103,7 +104,9 @@ export default function ProductEditor({
                   ];
                 }),
               ),
-            }));
+            });
+            setDraft(configure);
+            setBaseline(JSON.stringify(configure(d)));
           }
         })
         .catch(() => {});
@@ -206,15 +209,22 @@ export default function ProductEditor({
       <EditorBuffer.Provider
         value={{ pending: editorPending, setPending: setEditorPending }}
       >
-        <div className="studio-page catalog-workspace">
-          <button
-            className="catalog-back"
-            onClick={() =>
+        <div className="studio-page catalog-workspace product-editor">
+          <ProductEditorHeader
+            draft={draft}
+            id={id}
+            lang={safeLang}
+            saved={saved}
+            canWrite={canWrite}
+            busy={busy}
+            editorPending={editorPending}
+            dirty={dirty}
+            change={change}
+            save={save}
+            onBack={() =>
               dirty || editorPending ? setLeaving(true) : onBack()
             }
-          >
-            ← {r("back")}
-          </button>
+          />
           {leaving && (
             <div className="catalog-unsaved" role="alert">
               <strong>{c("unsaved")}</strong>
@@ -235,33 +245,6 @@ export default function ProductEditor({
               </button>
             </div>
           )}
-          <div className="catalog-heading">
-            <div>
-              <p className="catalog-eyebrow">
-                {id ? draft.catalog.productNumber : c("newProduct")}
-              </p>
-              <h1>{productName(draft, lang) || c("newProduct")}</h1>
-              <span role="status">
-                {saved
-                  ? c("saved")
-                  : dirty
-                    ? c("unsaved")
-                    : id
-                      ? `# ${draft.revision}`
-                      : ""}
-              </span>
-            </div>
-            <ProductEditorActions
-              draft={draft}
-              id={id}
-              canWrite={canWrite}
-              busy={busy}
-              editorPending={editorPending}
-              dirty={dirty}
-              change={change}
-              save={save}
-            />
-          </div>
           {error && (
             <p role="alert" className="catalog-error">
               {error}
@@ -270,6 +253,7 @@ export default function ProductEditor({
           <div className="catalog-detail-layout">
             <ProductEditorNav
               tabs={tabs}
+              panelId={panelId}
               tab={tab}
               id={id}
               onSelect={(next) =>
@@ -279,13 +263,19 @@ export default function ProductEditor({
             <section
               className="studio-card catalog-detail-panel"
               role="tabpanel"
+              id={panelId}
+              aria-labelledby={`${panelId}-tab-${tab}`}
+              tabIndex={0}
             >
               {!selectedApp && (
-                <h2>
-                  {tab === "compliance"
-                    ? l("compliance")
-                    : c(tab as Parameters<typeof c>[0])}
-                </h2>
+                <div className="product-editor-section-heading">
+                  <h2>
+                    {tab === "compliance"
+                      ? l("compliance")
+                      : c(tab as Parameters<typeof c>[0])}
+                  </h2>
+                  <p>{e(tab as Parameters<typeof e>[0])}</p>
+                </div>
               )}
               <fieldset
                 className="catalog-permission-fields"
@@ -371,18 +361,18 @@ export default function ProductEditor({
                 change={change}
                 selectedApp={!!selectedApp}
               />
+              {id && (
+                <EntityHistory
+                  request={request}
+                  entity="product"
+                  id={id}
+                  revision={draft.revision}
+                  dirty={dirty || busy}
+                  onRestored={async () => setReloadIndex((v) => v + 1)}
+                />
+              )}
             </section>
           </div>
-          {id && (
-            <EntityHistory
-              request={request}
-              entity="product"
-              id={id}
-              revision={draft.revision}
-              dirty={dirty || busy}
-              onRestored={async () => setReloadIndex((v) => v + 1)}
-            />
-          )}
         </div>
       </EditorBuffer.Provider>
     </ContentLanguage>

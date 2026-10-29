@@ -90,7 +90,9 @@ it.each(["resend", "sendgrid", "smtp"])(
     expect(saved.settings.provider).toBe(provider);
     if (provider !== "smtp") {
       expect(saved.credentials.apiKey).toBe("synthetic-key");
-      expect(screen.getByLabelText("API key")).toHaveValue("");
+      await waitFor(() =>
+        expect(screen.getByLabelText("API key")).toHaveValue(""),
+      );
     }
   },
 );
