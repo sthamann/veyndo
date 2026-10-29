@@ -1620,8 +1620,8 @@
     },
     "src/apps/consent.rs": {
       "status": "unproved",
-      "sha256": "490db214797052272bdf91b365531235bfc49f69c6077517d5e26025860360f4",
-      "review": "Native lifecycle review: bounded namespaced app graphs preserve native terminal/payment/stock/buyer admission, per-object immutable accepted definitions, current compound scopes, same HTTP MCP Flow owners and operational history; SQL snapshots and migration 105 are regression-tested adapters, not proved."
+      "sha256": "814205ed7e1368f23ce18f027a8686b161f0de009e52c3f2b96b689538a4856d",
+      "review": "Reviewed rollback-only installer probe, explicit deferred constraint check, metadata-only response, current permissions/owned-stage admission and shared Flow replacement validation under existing automation lock. Actual schema/consent/examples/Flow HTTP checks and frontend tests passed. SQL and async behavior remain unproved."
     },
     "src/apps/core_callbacks.rs": {
       "status": "unproved",
@@ -1775,8 +1775,8 @@
     },
     "src/apps/mod.rs": {
       "status": "unproved",
-      "sha256": "157948b1dc5c2d6b6286a67c62813a564796a79ff0ab018791cad7d901343b8f",
-      "review": "Reviewed original Shopware app controller, bounded fixed-origin lifecycle jobs and durable uncertain fences; opaque pinned app UI response CSP; operational records excluded by extracted release policy and native clone/publication path. Real container, native permissions/MCP, migration retention and app surface regressions passed; PHP and controller adapters remain unproved."
+      "sha256": "c0f070fb35c357a5587a2cea6116ccb3eebec809fee437266779de78aad4453e",
+      "review": "Reviewed rollback-only installer probe, explicit deferred constraint check, metadata-only response, current permissions/owned-stage admission and shared Flow replacement validation under existing automation lock. Actual schema/consent/examples/Flow HTTP checks and frontend tests passed. SQL and async behavior remain unproved."
     },
     "src/apps/native_data.rs": {
       "status": "unproved",
@@ -1870,8 +1870,8 @@
     },
     "src/apps/registry.rs": {
       "status": "unproved",
-      "sha256": "9cd5600c71072cfd1aed919d5d994a67413ce167a36a148562dc65d13e0d31a2",
-      "review": "Reviewed scoped-pool repairs: staging ownership and app package reads reuse their existing transaction; package lookup retains exact tenant/id/active checks; activation uses the same tenant:app fence as install and native records. Real one-backend PgBouncer staging/import/reactivation/diffs/selected release, foreign-build denial, linked translations and durable cancellation/restart all pass. No policy, scope, permission, digest or CAS bypass."
+      "sha256": "135670271804837a396a28a70793abb486c5f48c82237c7005ca070208eedc8c",
+      "review": "Reviewed rollback-only installer probe, explicit deferred constraint check, metadata-only response, current permissions/owned-stage admission and shared Flow replacement validation under existing automation lock. Actual schema/consent/examples/Flow HTTP checks and frontend tests passed. SQL and async behavior remain unproved."
     },
     "src/apps/relations.rs": {
       "status": "unproved",
@@ -1987,6 +1987,11 @@
       "status": "unproved",
       "sha256": "e51ad31938b67fc546f08896ef8de49ef48f7cc4cfb07420cb301e9840c74eeb",
       "review": "Reviewed generic transactional app workflow and current-package fence; shared app egress admissions; immutable order callback projection; independent app-only ERP Rust receipts/HMAC/reconciliation and fixture regressions. New async SQL/provider/UI code remains unproved."
+    },
+    "src/apps/upgrade_review.rs": {
+      "status": "unproved",
+      "sha256": "e519f72f1a7d5dd421d0bdb9d5f79c1e615a2562b3c33560ba42165479f0e156",
+      "review": "Reviewed rollback-only installer probe, explicit deferred constraint check, metadata-only response, current permissions/owned-stage admission and shared Flow replacement validation under existing automation lock. Actual schema/consent/examples/Flow HTTP checks and frontend tests passed. SQL and async behavior remain unproved."
     },
     "src/apps/webhook_scope.rs": {
       "status": "unproved",
@@ -3225,8 +3230,8 @@
     },
     "src/marketing/app_flows.rs": {
       "status": "reviewed-binding",
-      "sha256": "69604bddc4ded3c08db24a292b840e06e7752745a8e1931cd967a24d2e0f7c16",
-      "review": "Review provider-neutral split quantities, original app-bound PDF acknowledgement, native booking intent, aggregate storage and current Flow/job disclosure; provider effects remain unproved"
+      "sha256": "30df137a6b2d74b364d9e9aae3a2b09e1897cb8427c31a4073918eac64df19a8",
+      "review": "Reviewed rollback-only installer probe, explicit deferred constraint check, metadata-only response, current permissions/owned-stage admission and shared Flow replacement validation under existing automation lock. Actual schema/consent/examples/Flow HTTP checks and frontend tests passed. SQL and async behavior remain unproved."
     },
     "src/marketing/catalog.rs": {
       "status": "unproved",
@@ -3295,8 +3300,8 @@
     },
     "src/marketing/flow_policy.rs": {
       "status": "unproved",
-      "sha256": "acf30cf093d7b7f78d744fc31be37a1371571ef66df77f660d22a3eb0cba034e",
-      "review": "Reviewed task-reference-only Flow templates, same actor and original scope checks at native save and runtime, scalar event mapping, no copied credentials or source inputs, shared stop/lease and transactional daily limits; actual private event-to-approval write, denial and zero-inference regressions plus UI scope cleanup pass. Async SQL remains outside formal proof."
+      "sha256": "00f34f1ba62b69f49fe9e6d612e45174a0c95437f3ca15ebaaa34840a45c6671",
+      "review": "Reviewed rollback-only installer probe, explicit deferred constraint check, metadata-only response, current permissions/owned-stage admission and shared Flow replacement validation under existing automation lock. Actual schema/consent/examples/Flow HTTP checks and frontend tests passed. SQL and async behavior remain unproved."
     },
     "src/marketing/flow_text.rs": {
       "status": "unproved",
@@ -3335,8 +3340,8 @@
     },
     "src/marketing/mod.rs": {
       "status": "unproved",
-      "sha256": "cdfc955bea13bfeffb07044a9e627516d5e00462cbd0af46b42a8e4d969b96b0",
-      "review": "Reviewed frozen rule comparison: tenant-filtered bounded existing Flow inputs, current compound PII read grants, native checked_matches without current-data reads or action dispatch, reference fanout cap, shared registry and HTTP/MCP parity; real automation and isolation suites pass."
+      "sha256": "bdc69fdc1a360cc64582e5ea5526353415f640adb13eaaa100bc3e493c893343",
+      "review": "Reviewed rollback-only installer probe, explicit deferred constraint check, metadata-only response, current permissions/owned-stage admission and shared Flow replacement validation under existing automation lock. Actual schema/consent/examples/Flow HTTP checks and frontend tests passed. SQL and async behavior remain unproved."
     },
     "src/marketing/pipeline.rs": {
       "status": "reviewed-binding",

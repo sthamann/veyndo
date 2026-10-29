@@ -2,6 +2,7 @@
 import ScenarioLaunch from "../scenarios/ScenarioLaunch";
 import { useScenarioText } from "../scenarios/scenario-i18n";
 import AppDiagnostics from "./AppDiagnostics";
+import AppUpgradeCheck from "./AppUpgradeCheck";
 import type { AppStudioKey } from "../../shared/i18n/app-studio-i18n";
 import { contentText } from "../../shared/i18n/content-language";
 import { useAppStudioText } from "../../shared/i18n/app-studio-i18n";
@@ -73,7 +74,7 @@ export default function AppVersions({
                 >
                   {a("inspectVersion")}
                 </button>
-                {b.state === "draft" && (
+                {b.state === "draft" && !rights?.includes("apps.manage") && (
                   <button
                     className="studio-primary"
                     disabled={studio.busy}
@@ -87,6 +88,21 @@ export default function AppVersions({
                 <summary>{w("contract")}</summary>
                 <pre>{JSON.stringify(b.manifest, null, 2)}</pre>
               </details>
+              {rights?.includes("apps.manage") && (
+                <AppUpgradeCheck
+                  build={b}
+                  request={studio.request}
+                  disabled={studio.busy}
+                  install={
+                    b.state === "draft"
+                      ? {
+                          label: w("installStage"),
+                          run: () => void studio.run(() => studio.stage(b)),
+                        }
+                      : undefined
+                  }
+                />
+              )}
             </article>
           ))}
       </section>

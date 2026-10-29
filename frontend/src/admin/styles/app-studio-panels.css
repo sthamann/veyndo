@@ -153,6 +153,29 @@
   margin-bottom: 12px;
   font-size: 12px;
 }
+.app-upgrade-report {
+  flex: 1 0 100%;
+  margin-block: 12px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface-alt);
+  overflow-wrap: anywhere;
+}
+.app-upgrade-report h3 {
+  margin: 0 0 8px;
+}
+.app-upgrade-report p {
+  line-height: 1.5;
+}
+.app-upgrade-report dl > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+.app-upgrade-report code {
+  display: block;
+}
 .app-model-card pre {
   max-height: 400px;
   overflow: auto;

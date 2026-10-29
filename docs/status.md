@@ -32,12 +32,17 @@ passed all partitions, collection and frontend checks. Real local model output,
 browser pin/reload and private CSV creation are recorded separately from hosted
 Core delivery. [Exact workspace evidence](evidence/composed-workspace-2026-10-29.md).
 
-Description-led app creation is the next working branch. A real local model
+Description-led app creation is under [PR #227](https://github.com/sthamann/veyndo/pull/227). A real local model
 produced a consultation app with product relation, private design upload, status,
 setting and two native views. The browser journey includes actual saved preview
 data, package-only release, central settings, a published request and restoration
 of the previous interface as a new version. It has not yet completed required CI
 or hosted delivery. [Exact local app evidence](evidence/guided-app-2026-10-29.md).
+
+A subsequent local branch adds real rollback-only upgrade checks to installed app
+consent and App Studio, plus active Flow consumer admission. The actual browser refused a missing migration, installed the compatible private
+version and preserved private/live records. Local validation is recorded separately
+from independent review and required CI; it is not a hosted deployment. [Upgrade contract](app-platform.md#check-an-upgrade-before-installation), [local acceptance](evidence/app-upgrade-2026-10-29.md).
 
 The 23 October release expands selected Lean guarantees to **63 policies / 149
 properties**, splits their Rust/Lean owners and tightens Cargo dependency checks.

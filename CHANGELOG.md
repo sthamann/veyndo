@@ -1,5 +1,11 @@
 # Changelog
 
+## App upgrade preflight — 29 October 2026
+
+- Add rollback-only native installation checks to package consent and App Studio, showing record counts, explicit migration requirements and blocking diagnostics without returning record contents.
+- Check stored data, deferred constraints, saved examples and existing package dependencies through the actual installer. Preserve complete digest consent and repeat admission when installing.
+- Protect active Flow actions and saved argument fields on all installation transports and selected releases. Restore previous presentation only as a new immutable version; retain operational data and settings.
+
 ## Description-led native apps — 29 October 2026
 
 - Add a merchant description entry with an editable consultation example and shared contextual agent. Prepare a first private sandbox when needed; fence account and environment changes.

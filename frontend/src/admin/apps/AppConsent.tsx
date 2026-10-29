@@ -5,6 +5,7 @@ import ConfirmDialog from "../../shared/ui/ConfirmDialog";
 import { useAppAccessText } from "../../shared/i18n/app-access-i18n";
 import { contentText } from "../../shared/i18n/content-language";
 import { useAppText } from "../../shared/i18n/app-i18n";
+import AppUpgradeReport, { type UpgradeReport } from "./AppUpgradeReport";
 type Review = {
   app: string;
   name: Record<string, string>;
@@ -13,6 +14,7 @@ type Review = {
   permissions: string[];
   added: string[];
   previousVersion: string | null;
+  upgrade?: UpgradeReport;
 };
 export default function AppConsent({
   app,
@@ -29,14 +31,20 @@ export default function AppConsent({
 }) {
   const t = useAppAccessText(),
     { a, locale } = useAppText();
-  const [review, setReview] = useState<Review | null>(null),
+  const [result, setResult] = useState<{
+      app: string;
+      request: RequestFn;
+      review: Review;
+    } | null>(null),
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false);
+  const review =
+    result?.app === app && result.request === request ? result.review : null;
   useEffect(() => {
     let active = true;
     request("/api/apps/review", { builtIn: app })
       .then((v) => {
-        if (active) setReview(v);
+        if (active) setResult({ app, request, review: v });
       })
       .catch((e) => {
         if (active) setError(e.message);
@@ -49,10 +57,10 @@ export default function AppConsent({
     <ConfirmDialog
       title={t("installConsent")}
       confirmLabel={a(review?.previousVersion ? "upgrade" : "install")}
-      disabled={!review || busy}
+      disabled={!review || busy || review.upgrade?.ready === false}
       onCancel={onCancel}
       onConfirm={async () => {
-        if (!review) return;
+        if (!review || review.upgrade?.ready === false) return;
         setBusy(true);
         setError("");
         try {
@@ -71,6 +79,7 @@ export default function AppConsent({
             {contentText(review.name, locale, "en-GB")} · {review.version}
           </strong>
           <code className="app-key-secret">{review.digest}</code>
+          {review.upgrade && <AppUpgradeReport report={review.upgrade} />}
           <ul>
             {review.permissions.map((p) => (
               <li key={p}>
