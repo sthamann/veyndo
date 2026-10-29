@@ -165,3 +165,86 @@ it.each([false, true])(
       expect(screen.queryByText("Unsaved changes")).not.toBeInTheDocument();
   },
 );
+
+it.each([true, false])(
+  "keeps tax-class and fractional comparison edits on the stock-safe save path (write=%s)",
+  async (canWrite) => {
+    const user = userEvent.setup();
+    const draft = { ...newDraft(), id: "p1", revision: 7, contentRevision: 5 };
+    draft.translations.en.name = "Price review";
+    draft.catalog.productNumber = "PRICE-01";
+    const request = vi.fn(
+      async (path: string, _body?: unknown, method?: string) => {
+        if (path === "/api/merchant/commerce")
+          return {
+            data: {
+              taxes: [
+                {
+                  id: "reduced",
+                  translations: { "en-GB": { name: "Reduced" } },
+                },
+              ],
+            },
+          };
+        if (path === "/store-api/currencies")
+          return {
+            configuredCurrencies: [{ code: "EUR", strategy: "exchange" }],
+            defaultCurrency: "EUR",
+          };
+        return method === "PUT"
+          ? { id: "p1", revision: 8, contentRevision: 6, stock: 3 }
+          : draft;
+      },
+    );
+    render(
+      <LocaleProvider>
+        <ProductEditor
+          id="p1"
+          request={request}
+          categories={[]}
+          onBack={vi.fn()}
+          onCreated={vi.fn()}
+          initialTab="prices"
+          canWrite={canWrite}
+        />
+      </LocaleProvider>,
+    );
+    const tax = await screen.findByLabelText("Tax class");
+    await screen.findByRole("option", { name: "Reduced" });
+    if (!canWrite) {
+      expect(tax).toBeDisabled();
+      expect(screen.getByLabelText("Price")).toBeDisabled();
+      expect(screen.getByLabelText("Stock")).toBeDisabled();
+      expect(
+        screen.getByRole("button", { name: "Save product" }),
+      ).toBeDisabled();
+      return;
+    }
+    await user.selectOptions(tax, "reduced");
+    await user.click(
+      screen.getByText("Comparison prices", { selector: "summary" }),
+    );
+    const prior = screen.getByLabelText("Lowest price (last 30 days)");
+    expect(prior).toHaveAttribute("step", "0.01");
+    await user.type(prior, "19.95");
+    await user.click(screen.getByRole("button", { name: "Save product" }));
+    await waitFor(() =>
+      expect(request).toHaveBeenCalledWith(
+        "/api/merchant/products/p1",
+        expect.objectContaining({
+          contentRevision: 5,
+          extra: expect.objectContaining({ taxClassId: "reduced" }),
+          commerce: expect.objectContaining({
+            regulationPrice: 19.95,
+            maxPurchase: null,
+          }),
+        }),
+        "PUT",
+      ),
+    );
+    const payload = request.mock.calls.find(
+      (call) => call[2] === "PUT",
+    )?.[1] as typeof draft;
+    expect(payload.commerce).not.toHaveProperty("stock");
+  },
+);

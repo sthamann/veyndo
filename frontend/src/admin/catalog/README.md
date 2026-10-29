@@ -21,6 +21,9 @@ Files and their individual responsibilities are listed in [the generated source 
 - [`product-editor-i18n.ts`](product-editor-i18n.ts): Four-language section guidance and empty review states.
 - [`ProductLocalizedContent.tsx`](ProductLocalizedContent.tsx): Consistent main-language inheritance for product rich documents, specification groups and individual SEO fields.
 - [`ProductMediaWorkspace.tsx`](ProductMediaWorkspace.tsx): One product-media workspace: cover, ordered gallery, multilingual image metadata, drag/drop and optional reviewed AI drafts.
+- [`ProductPricing.tsx`](ProductPricing.tsx): Grouped native price, tax-class and availability inputs with expandable optional pricing conditions.
+- [`ProductPriceTiers.tsx`](ProductPriceTiers.tsx): Existing rule and quantity-bound discount edits in the revisioned aggregate.
+- [`product-pricing-i18n.ts`](product-pricing-i18n.ts): Four-language guidance for product price and availability tasks.
 - [`ProductPanels.tsx`](ProductPanels.tsx): Native commerce, media, translated SEO/specifications and category panels for one editable product.
 - [`ProductTextFields.tsx`](ProductTextFields.tsx): Product text uses the shared single-language editor and field inheritance; product number stays language independent.
 - [`ProductVariants.tsx`](ProductVariants.tsx): Native variant family browser with cursor pagination, explicit editing and a bounded creation wizard.

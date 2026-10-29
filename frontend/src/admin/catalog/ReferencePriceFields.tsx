@@ -4,7 +4,9 @@ import { useCatalogText } from "../../shared/i18n/catalog-i18n";
 export default function ReferencePriceFields({
   draft: d,
   onChange,
+  showHeading = true,
 }: {
+  showHeading?: boolean;
   draft: ProductDraft;
   onChange: (d: ProductDraft) => void;
 }) {
@@ -12,7 +14,7 @@ export default function ReferencePriceFields({
   const value = d.commerce.referencePrice;
   return (
     <>
-      <h2>{c("referencePrice")}</h2>
+      {showHeading && <h2>{c("referencePrice")}</h2>}
       <label className="checkbox-label">
         <input
           type="checkbox"
