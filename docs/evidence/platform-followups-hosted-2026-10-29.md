@@ -198,7 +198,10 @@ Northflank workflow then started at **16:16:48 CET** for that exact commit.
 The merged Git tree is identical to the completely tested `e97f419a` tree.
 Image `best-day-1904` started Core at **16:27:11 CET**. The ordinary release
 completed at **16:28:21 CET**, after snapshot `26-10-29-152549-backup`, a
-successful 12-second migration and the release health checks.
+successful 12-second migration and the release health checks. The resulting
+Core instance was observed 1/1 passing with zero restarts. The subsequent
+[complete main verification](https://github.com/sthamann/veyndo/actions/runs/40899935138)
+also passed all native partitions, combined coverage and final admission.
 
 ### Installation, private upload and retained record
 
@@ -224,6 +227,28 @@ This public check covers generated package admission, installation and actual
 record use. Required installation settings, selected package publication and
 restoration are covered by the separately linked complete local app journey;
 this public sandbox check does not claim that live settings were configured.
+
+### Shared embedded-table controls
+
+This actual app acceptance exposed a layout defect in narrow native app tables:
+without a search control, the column menu began at the left edge and its
+right-aligned panel was clipped. [PR #234](https://github.com/sthamann/veyndo/pull/234)
+aligns the shared tools at the inline end of their existing flex toolbar. It
+changes one shared CSS property, with no API, permission or storage changes.
+The complete frontend build and [required scoped CI](https://github.com/sthamann/veyndo/actions/runs/40903477771)
+passed; incremental independent review found no issue. The normal merge is
+`69fd45683af1e04a0c608aaedbe4924477e3cad6`.
+
+The ordinary release ran for that exact source with image `united-toys-4065`:
+snapshot `26-10-29-155202-backup`, successful 11-second migration, Core start
+**16:53:22 CET** and successful release **16:54:31 CET**. The new instance was
+observed 1/1 passing with zero restarts. Reloading the public Studio retained the
+same product, installed app, request, private file and reviewed status. The
+column panel's labels are now visible inside the narrow card. Hiding description
+and file columns through that actual panel left the request title and reviewed
+status in the compact native grid; this changes the view, not the stored record.
+
+![Readable column controls within the actual installed app table](../assets/platform-followups-20261029/guided-app-columns.png)
 
 ## Apple callback configuration
 

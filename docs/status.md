@@ -65,14 +65,18 @@ journeys below retain their accepted versions.
 
 ## What is online now
 
-The latest observed functional Core is **`d65bc050` (PR #232)**, image
-`best-day-1904`, started on **29 October at 16:27:11 CET**. Its ordinary release
-completed at **16:28:21 CET** after a fresh snapshot, successful migration and
-health checks. The original public model request creates and saves the native
-consultation package. The package now also passes installation review under the
-restricted database connections, installs in the selected private sandbox and
-retains an actual consultation request, private file and updated status after a
-full browser reload.
+The latest observed Core is **`69fd4568` (PR #234)**, image
+`united-toys-4065`, started on **29 October at 16:53:22 CET**. Its ordinary
+snapshot-backed release completed at **16:54:31 CET**, with a successful migration
+and one passing instance with zero restarts. The final correction makes the
+column controls readable inside narrow installed-app tables.
+
+The preceding functional release **`d65bc050` (PR #232)** also passed complete
+main CI. The original public model request creates and saves the native
+consultation package; installation review under the restricted database
+connections passes. The installed private product view retains an actual
+consultation request, private file and updated status after a full browser
+reload, including the subsequent UI rollout.
 
 The preceding same-day releases passed public native working-view/CSV intake,
 saved customer scenarios, designer drag/drop, URL-based design proposals, private
