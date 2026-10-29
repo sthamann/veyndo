@@ -126,6 +126,68 @@ it("saves the native baseline before exporting a coding-agent task without apply
   expect(request.mock.calls).toHaveLength(1);
 });
 
+it("targets the selected section by default and keeps an explicit whole-page choice until selection changes", async () => {
+  const request = vi.fn(async () => ({ resultTemplate: {} }));
+  const page = {
+    ...home,
+    content: {
+      blocks: [
+        home.content.blocks[0],
+        { ...home.content.blocks[0], id: "other" },
+      ],
+    },
+  };
+  const props = {
+    request,
+    page,
+    selected: page.content.blocks[0].id,
+    disabled: false,
+    onPreview: vi.fn(),
+    onApplied: vi.fn(),
+    onPrepare: vi.fn(async () => page),
+  };
+  const ui = render(<DesignAgent {...props} />);
+  expect(screen.getByRole("combobox", { name: "Work on" })).toHaveValue(
+    "selected",
+  );
+  expect(screen.getByRole("checkbox", { name: "Content" })).toBeChecked();
+  expect(screen.getByRole("checkbox", { name: "Style" })).toBeDisabled();
+  expect(
+    screen.getByText(/Colors, typography and spacing apply to the whole page/),
+  ).toBeVisible();
+  fireEvent.change(screen.getByRole("combobox", { name: "Work on" }), {
+    target: { value: "page" },
+  });
+  ui.rerender(
+    <LocaleScope locale="en-GB">
+      <DesignAgent {...props} page={{ ...page, revision: 4 }} />
+    </LocaleScope>,
+  );
+  expect(screen.getByRole("combobox", { name: "Work on" })).toHaveValue("page");
+  ui.rerender(
+    <LocaleScope locale="en-GB">
+      <DesignAgent {...props} selected="other" />
+    </LocaleScope>,
+  );
+  await waitFor(() =>
+    expect(screen.getByRole("combobox", { name: "Work on" })).toHaveValue(
+      "selected",
+    ),
+  );
+  fireEvent.click(screen.getByRole("button", { name: "Codex" }));
+  fireEvent.change(
+    screen.getByRole("textbox", { name: "What would you like to change?" }),
+    { target: { value: "Make this section clearer" } },
+  );
+  fireEvent.click(screen.getByRole("button", { name: "Prepare agent task" }));
+  await waitFor(() =>
+    expect(request).toHaveBeenCalledWith(
+      "/api/merchant/site/task",
+      expect.objectContaining({ selected: "other", agent: "codex" }),
+    ),
+  );
+});
+
 it("moves and deletes blocks on the actual canvas with native undo and without saving", async () => {
   const page = {
     ...home,

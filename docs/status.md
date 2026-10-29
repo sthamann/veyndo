@@ -39,10 +39,24 @@ data, package-only release, central settings, a published request and restoratio
 of the previous interface as a new version. Hosted Core delivery is still separate.
 [Exact local app evidence](evidence/guided-app-2026-10-29.md).
 
-A subsequent local branch adds real rollback-only upgrade checks to installed app
-consent and App Studio, plus active Flow consumer admission. The actual browser refused a missing migration, installed the compatible private
-version and preserved private/live records. Local validation is recorded separately
-from independent review and required CI; it is not a hosted deployment. [Upgrade contract](app-platform.md#check-an-upgrade-before-installation), [local acceptance](evidence/app-upgrade-2026-10-29.md).
+App upgrade checks merged through [PR #228](https://github.com/sthamann/veyndo/pull/228)
+after the complete required [Linux run 40862585413](https://github.com/sthamann/veyndo/actions/runs/40862585413).
+The actual browser refused a missing migration, installed the compatible private
+version and preserved private/live records. Native admission also checks current
+Flow actor rights, validation changes and active payment consumers. Hosted Core
+delivery remains separate. [Upgrade contract](app-platform.md#check-an-upgrade-before-installation),
+[exact acceptance](evidence/app-upgrade-2026-10-29.md).
+
+The next local acceptance reuses two saved customer profiles with the actual local
+model, inspects the rendered stock obstacle, repairs it in Studio and completes a
+German simulated browser purchase with return to an empty basket. Sandbox GA4
+configuration discovery was removed after that browser finding. [Exact browser
+and native-task evidence](evidence/customer-browser-2026-10-29.md).
+
+The current designer branch records actual shop/app drag gestures, arrows,
+deletion/undo, selected agent targets and three real screenshot-derived style
+alternatives. Applying one alternative saved a private revision with exact content
+preservation and no live changes. [Designer evidence](evidence/designer-2026-10-29.md).
 
 The 23 October release expands selected Lean guarantees to **63 policies / 149
 properties**, splits their Rust/Lean owners and tightens Cargo dependency checks.

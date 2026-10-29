@@ -30,3 +30,12 @@ Shared agent controls stay in the generic host; page business behavior stays her
 Ordinary pages and design assistance require only the site-builder package. The
 optional form receiver is reviewed separately when the selected page contains a
 form. Existing package consent, sandbox and channel-editing rights still apply.
+
+The app-owned immutable `prompts/site-design.v1.txt` and manifest register
+`site-design@1` through the existing inference evidence. Style-only proposals
+preserve native content directly; the provider returns `{}` for the unused document.
+Section selection defaults to content editing; page-wide theme controls explain
+the Whole page scope. Unsupported direct section-only theme requests reject before
+inference. Section selection defaults the contextual agent target while an explicit whole-page
+choice remains stable until selection changes. Real browser/reference acceptance:
+`docs/evidence/designer-2026-10-29.md`.

@@ -1,5 +1,16 @@
 # Changelog
 
+## Contextual design and real reference acceptance — 29 October 2026
+
+- Default the shop agent to the selected section while preserving an explicit whole-page choice until selection changes. Verify the same target in prepared coding-agent tasks.
+- Preserve exact native content for style-only reference proposals instead of requiring model duplication. Register the app-owned immutable `site-design@1` prompt and its ordinary inference evidence; extend prompt governance to app-owned manifests.
+- Record actual shop/app drag operations, movement, deletion, undo and a real image-derived three-variant proposal through desktop/mobile review and private revision save. Keep public release separate.
+
+## Private browser customer acceptance — 29 October 2026
+
+- Accept the same saved English/German customer profiles before and after a native private stock repair using the actual local model. Record separate rendered product, German simulated checkout, localized confirmation, return and empty-basket screenshots.
+- Keep sandbox and channel-preview journeys out of Google Analytics configuration discovery in the existing app-owned bridge. Retain native server admission and ordinary live consent. Verify cancellation, restart/recovery, foreign scopes and emergency stop in the registered native scenario suite.
+
 ## App upgrade preflight — 29 October 2026
 
 - Add rollback-only native installation checks to package consent and App Studio, showing record counts, explicit migration requirements and blocking diagnostics without returning record contents.

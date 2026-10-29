@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parents[2]
 BASE = ROOT / 'crates/cognition'
 
 
-def check(manifest):
+def check(manifest, base=BASE):
     seen = set()
     paths = set()
     for entry in manifest['templates']:
@@ -20,18 +20,24 @@ def check(manifest):
         seen.add(entry['id'])
         relative = f'prompts/{name}.v{version}.txt'
         assert entry['path'] == relative
-        path = BASE / relative
+        path = base / relative
         paths.add(path)
         text = path.read_text()
         assert text.startswith(f'[prompt:{entry["id"]}]\n')
         assert hashlib.sha256(path.read_bytes()).hexdigest() == entry['sha256']
-    assert paths == set((BASE / 'prompts').glob('*.txt'))
-    assert len(seen) >= 4
+    assert paths == set((base / 'prompts').glob('*.txt'))
+    assert seen
+    return seen
 
 
 def main():
     manifest = json.loads((BASE / 'prompts/manifest.json').read_text())
-    check(manifest)
+    registered = check(manifest)
+    assert len(registered) >= 4
+    for owner in (ROOT / 'extensions/apps').glob('*/prompts/manifest.json'):
+        ids = check(json.loads(owner.read_text()), owner.parent.parent)
+        assert registered.isdisjoint(ids), 'Duplicate host/app prompt ID'
+        registered |= ids
     import copy
     for corrupt in ('digest', 'duplicate'):
         bad = copy.deepcopy(manifest)
@@ -47,10 +53,9 @@ def main():
             raise AssertionError('Prompt governance accepted ' + corrupt)
     base = os.environ.get('PROMPT_BASE')
     if base:
-        prefix = 'crates/cognition/'
-        before = subprocess.check_output(['git', 'ls-tree', '-r', '--name-only', base, '--', prefix + 'prompts'], cwd=ROOT).decode().splitlines()
+        before = subprocess.check_output(['git', 'ls-tree', '-r', '--name-only', base, '--', 'crates/cognition/prompts', 'extensions/apps'], cwd=ROOT).decode().splitlines()
         for name in before:
-            if not name.endswith('.txt'):
+            if not name.endswith('.txt') or '/prompts/' not in name:
                 continue
             old = subprocess.check_output(['git', 'show', f'{base}:{name}'], cwd=ROOT)
             assert (ROOT / name).exists() and (ROOT / name).read_bytes() == old, 'Keep published prompt revisions immutable; add a new version: ' + name

@@ -33,6 +33,9 @@ export default function ShopAnalytics({
   bag: boolean;
   order?: Order;
 }) {
+  const scope = new URLSearchParams(location.search);
+  const privateJourney =
+    scope.get("sandbox") === "1" || scope.get("preview") === "1";
   const allowed = usePurpose("analytics");
   const [choice, setChoice] = useState<string | null>(null);
   const [configured, setConfigured] = useState(false);
@@ -41,6 +44,9 @@ export default function ShopAnalytics({
   const checkout = useRef(false);
   useEffect(() => {
     let active = true;
+    setConfigured(false);
+    client.current = undefined;
+    if (privateJourney) return;
     shopApi<{ measurementId?: string }>(
       "/store-api/apps/google_analytics/actions/tracking",
       { salesChannel: channel },
@@ -63,7 +69,7 @@ export default function ShopAnalytics({
       client.current?.dispose();
       if (current === client.current) current = undefined;
     };
-  }, [shop, channel]);
+  }, [shop, channel, privateJourney]);
   useEffect(() => {
     if (configured && choice === "granted")
       window.dispatchEvent(new Event("commerce:analytics-ready"));
