@@ -75,17 +75,6 @@ Activation caches are process-local and refresh from the persisted policy inside
 checkout; the two-instance extension regression verifies this boundary. Compilation also
 needs stronger process-level time/memory limits for untrusted SaaS authors.
 
-### Original Shopware extension environments
-
-The optional [Shopware environments app](shopware-compatibility.md) manages a
-separate original Shopware installation for each configured shop/environment.
-Original plugins retain their kernel, DAL, migrations, events and templates;
-App Scripts retain their original interpreter. The app-owned Rust controller uses
-the existing Veyndo action gateway, permissions, MCP and durable jobs. Its records
-stay in shared app storage; original plugin tables stay in the separate MariaDB.
-This is an additional execution environment, not automatic translation into native
-Veyndo checkout hooks or synchronization of two inventory/order ledgers.
-
 ## Standards are adapters
 
 The capability registry describes operations and typed MCP inputs. UCP checkout

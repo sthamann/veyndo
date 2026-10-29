@@ -17,6 +17,7 @@
       },
       "sources": [
         "docs/status.md",
+        "docs/platform-overview.md",
         "docs/first-tour.md",
         "docs/features.md",
         "docs/quickstart.md",
@@ -114,7 +115,6 @@
         "docs/payment-provider-api.md",
         "docs/studio-api-and-channels.md",
         "docs/service-integrations.md",
-        "docs/shopware-compatibility.md",
         "docs/plugin-ownership.md"
       ]
     },

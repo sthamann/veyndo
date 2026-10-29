@@ -1,22 +1,22 @@
 # Veyndo: current status
 
-Updated 25 October 2026. Start here for the public product, observed journeys and
+Updated 29 October 2026. Start here for the public product, observed journeys and
 remaining delivery work. Source code, passing tests and a successful public
 journey are tracked separately. All purchases below use **simulated payments**.
 
-## New optional integration in source
+## Platform scope
 
-The [Shopware environments app](shopware-compatibility.md) manages a separate
-original Shopware 6.7.14.2 through an app-owned Rust controller, native jobs and
-private operation records. Its local original-runtime tests exercise plugin
-migration/event execution and a Twig App Script. Additional local acceptance
-installed FroshTools 3.15.3 through Veyndo and used its original cache interface
-and theme compilation. Distinct cell/core hostnames prevent login cookie collisions.
-The isolated runtime recipe
-includes its own database and workers. This is not a public deployment or universal
-extension certification, and it does not synchronize native Veyndo orders/stock
-with Shopware. The existing public acceptance below remains unchanged.
-[Local extension, checkout and isolation evidence](evidence/shopware-compatibility-2026-10-25.md).
+The main platform contains native Veyndo commerce, apps, agents, storefronts and
+inward shop migration. Original Shopware runtime compatibility and the bounded
+native PHP-plugin translator are retained only on the separate
+[`experiment/shopware-compatibility` branch](https://github.com/sthamann/veyndo/tree/experiment/shopware-compatibility).
+Their app, controller, images and dedicated checks are removed from the main
+platform. Shared sandboxed app documents and operational-record release controls
+remain in the generic app system. No production data or running service is changed
+by the source extraction. Existing Shopware source-import adapters and PHP price
+comparison fixtures remain part of migration and native verification.
+
+[Complete architecture, app system and AI overview](platform-overview.md).
 
 The 23 October release expands selected Lean guarantees to **63 policies / 149
 properties**, splits their Rust/Lean owners and tightens Cargo dependency checks.

@@ -1,5 +1,9 @@
 # Changelog
 
+## 29 October 2026
+
+- Move original Shopware execution and native plugin translation to `experiment/shopware-compatibility`; remove the compatibility app, binary, runtime recipes and original-runtime checks from the main platform. Preserve generic pinned app documents, operational-record isolation, inward migration and native PHP comparison fixtures. Add the connected architecture/app/AI overview and update the main product scope.
+
 ## Original Shopware environments — 25 October 2026
 
 - Add an optional app-owned Rust controller and localized workspace for original Shopware extension inventory, reviewed lifecycle changes and durable native jobs. API and MCP retain current roles, package consent and approved UI digests.

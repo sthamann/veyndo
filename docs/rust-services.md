@@ -45,20 +45,6 @@ flowchart LR
 | `legacy.rs` | Explicit atomic offline migration; no automatic import during normal serving |
 | Migration 049 | Six private tenant-scoped tables and forced RLS |
 
-## Optional original Shopware runtime
-
-The [Shopware environments app](shopware-compatibility.md) adds the independent
-Rust `shopware-compat` binary. Its implementation, UI and container recipes stay
-in `extensions/apps/shopware-compat/`. It uses native Veyndo app jobs and scoped
-callbacks, with no separate controller database, core database login or Docker
-socket. Lifecycle changes require current app and team management rights.
-
-Each configured environment runs original Shopware PHP with its own MariaDB,
-files, storefront, administration, worker and scheduler. That optional PHP runtime
-preserves original extension behavior; it is not a PHP fallback for the Rust core
-or standard connectors. Original checkout plugins act in that environment.
-There is no automatic synchronization of its commerce ledger with native Veyndo.
-
 ## Distributed queue semantics
 
 A new tenant/request key and payload fingerprint are committed atomically. Reusing the

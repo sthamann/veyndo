@@ -1243,41 +1243,6 @@
       "sha256": "ffa5bb4e821f1de6f27ca9e9fb511e6be430727458d3db22f8286c9e833c8c1a",
       "review": "Relocated app implementation into owner packages; generic connector binary and payment ledger preserve existing contracts; reviewed receipt and inventory bindings unchanged"
     },
-    "extensions/apps/shopware-compat/service/config.rs": {
-      "status": "unproved",
-      "sha256": "178ec9f28e5f30e6b727f2b8e5969692686da4eefaf9fd65fea0cb2e68d9c1cc",
-      "review": "Reviewed fixed operator origins, separate cell/core cookie hosts including cross-tenant and cross-port collisions; loopback localhost requires the explicit local-test flag. Destination and host regression, original container integration, original browser login persistence and final non-root Rust image passed. This configuration adapter remains unproved."
-    },
-    "extensions/apps/shopware-compat/service/core.rs": {
-      "status": "unproved",
-      "sha256": "3d82c6b09bc8d5dbdf3aa52beb8badad4c5931bf20b0ac79186d5bf2e7ea7ffd",
-      "review": "Reviewed original Shopware app controller, bounded fixed-origin lifecycle jobs and durable uncertain fences; opaque pinned app UI response CSP; operational records excluded by extracted release policy and native clone/publication path. Real container, native permissions/MCP, migration retention and app surface regressions passed; PHP and controller adapters remain unproved."
-    },
-    "extensions/apps/shopware-compat/service/inventory.rs": {
-      "status": "unproved",
-      "sha256": "4ccd89badbd8727f1897f6352b34fee5b5df323998f414b6c08176271c3d719e",
-      "review": "Reviewed original Shopware app controller, bounded fixed-origin lifecycle jobs and durable uncertain fences; opaque pinned app UI response CSP; operational records excluded by extracted release policy and native clone/publication path. Real container, native permissions/MCP, migration retention and app surface regressions passed; PHP and controller adapters remain unproved."
-    },
-    "extensions/apps/shopware-compat/service/jobs.rs": {
-      "status": "unproved",
-      "sha256": "ef5fb1cf38784048af74df90c27e75cdb9510f2d0754f48fca003d7a7d38482c",
-      "review": "Reviewed original Shopware app controller, bounded fixed-origin lifecycle jobs and durable uncertain fences; opaque pinned app UI response CSP; operational records excluded by extracted release policy and native clone/publication path. Real container, native permissions/MCP, migration retention and app surface regressions passed; PHP and controller adapters remain unproved."
-    },
-    "extensions/apps/shopware-compat/service/main.rs": {
-      "status": "unproved",
-      "sha256": "11c24b125a204f92a3b5d265076879906acad4c9587dbb050fa0e0425b7c29dd",
-      "review": "Review controller SIGINT/SIGTERM admission closure and bounded leased-job drain; interrupted writes retain existing durable fence. Original runtime integration verifies both normal signal exits."
-    },
-    "extensions/apps/shopware-compat/service/plan.rs": {
-      "status": "unproved",
-      "sha256": "1d825a2cb25a0cb74acc4e2bdef49a81d6bda378f4b954b98f4803f966b2df75",
-      "review": "Reviewed original Shopware app controller, bounded fixed-origin lifecycle jobs and durable uncertain fences; opaque pinned app UI response CSP; operational records excluded by extracted release policy and native clone/publication path. Real container, native permissions/MCP, migration retention and app surface regressions passed; PHP and controller adapters remain unproved."
-    },
-    "extensions/apps/shopware-compat/service/transport.rs": {
-      "status": "unproved",
-      "sha256": "e91325b7bfb3b15310b5d4b30be78e08bbc4694f55bff5b33593c6d09cbb280b",
-      "review": "Reviewed original Shopware app controller, bounded fixed-origin lifecycle jobs and durable uncertain fences; opaque pinned app UI response CSP; operational records excluded by extracted release policy and native clone/publication path. Real container, native permissions/MCP, migration retention and app surface regressions passed; PHP and controller adapters remain unproved."
-    },
     "extensions/apps/site-builder/agent_handoff.rs": {
       "status": "unproved",
       "sha256": "03e25eee856bdc596b02097b3aae5bcf5661a821e6dd63b18b5d4b1c798db303",
@@ -1585,8 +1550,8 @@
     },
     "src/apps/approval.rs": {
       "status": "reviewed-binding",
-      "sha256": "4079491d5d9eac92398582158743aada1eddff3b88aa930c06502aabd2bcee91",
-      "review": "Reviewed original Shopware app controller, bounded fixed-origin lifecycle jobs and durable uncertain fences; opaque pinned app UI response CSP; operational records excluded by extracted release policy and native clone/publication path. Real container, native permissions/MCP, migration retention and app surface regressions passed; PHP and controller adapters remain unproved."
+      "sha256": "b782335c67483092391b295f3555ad8289348e835e84d75478806162fa3d8bd2",
+      "review": "Extracted Shopware app registrations and binary into preserved experiment branch; retained generic operational release policy and sandboxed UI, no commerce semantics changed"
     },
     "src/apps/asset_surfaces.rs": {
       "status": "unproved",
@@ -1800,8 +1765,8 @@
     },
     "src/apps/manifest.rs": {
       "status": "unproved",
-      "sha256": "aab7162222def6a076d9948301e508ba48d188962350f29fdbec636f4210c0b2",
-      "review": "Reviewed original Shopware app controller, bounded fixed-origin lifecycle jobs and durable uncertain fences; opaque pinned app UI response CSP; operational records excluded by extracted release policy and native clone/publication path. Real container, native permissions/MCP, migration retention and app surface regressions passed; PHP and controller adapters remain unproved."
+      "sha256": "b84c2234269c3f516373c967194c3febb321f61881516cd3e44e31e0eeecbf5f",
+      "review": "Extracted Shopware app registrations and binary into preserved experiment branch; retained generic operational release policy and sandboxed UI, no commerce semantics changed"
     },
     "src/apps/manifest_validation.rs": {
       "status": "unproved",
@@ -1915,8 +1880,8 @@
     },
     "src/apps/routes.rs": {
       "status": "unproved",
-      "sha256": "16af41da7c87607a77e6c4be0156f390c41e2dd5e1efd720968be82bf841314b",
-      "review": "Reviewed original Shopware app controller, bounded fixed-origin lifecycle jobs and durable uncertain fences; opaque pinned app UI response CSP; operational records excluded by extracted release policy and native clone/publication path. Real container, native permissions/MCP, migration retention and app surface regressions passed; PHP and controller adapters remain unproved."
+      "sha256": "467e8ca29f8745d490a5152cb24c2a1e1b0a21e79b0224580d89eda11c0cb3e5",
+      "review": "Extracted Shopware app registrations and binary into preserved experiment branch; retained generic operational release policy and sandboxed UI, no commerce semantics changed"
     },
     "src/apps/runtime.rs": {
       "status": "unproved",
@@ -4219,8 +4184,8 @@
       "review": "Migration intake reviewed: native private catalogue/category/page owners, exact historical provenance without purchase effects, current package/creator/lease/hash fences and native replay lock order; independent Rust package uses shared money/network policy only; new HTML rich blocks preserve text and list structure. Real source/Core HTTP, signed roles, cancellation, replay, concurrent callbacks and simulated purchase regressions passed. External source completeness and SQL are not claimed proved."
     },
     "Cargo.toml": {
-      "sha256": "dd5d8783094f5668cb0e0c773377c9b33400f9371d704d8147ecae446a9d54db",
-      "review": "Reviewed original Shopware app controller, bounded fixed-origin lifecycle jobs and durable uncertain fences; opaque pinned app UI response CSP; operational records excluded by extracted release policy and native clone/publication path. Real container, native permissions/MCP, migration retention and app surface regressions passed; PHP and controller adapters remain unproved."
+      "sha256": "c8d3a7dd743e6e24f8b1af7c96034a46f3e273c3493d44ec872734fd7df3c6a9",
+      "review": "Removed only Shopware app registration, manifest fixture, binary and suite; kept generic app UI and operational data controls; reviewed final Cargo formatting and source removal"
     },
     "crates/apps/Cargo.toml": {
       "sha256": "496067ed6a47c2778baed402bd51378c139687fbb3b36f8f965bf880129de013",

@@ -60,16 +60,6 @@ The public website's shared styles live in nine documented modules under
 handbook keep their existing asset URLs and identical CSS. `scripts/check_site.py`
 compares both published assets to that bundle. [Extraction evidence](evidence/formal-modularity-2026-10-23.md#website-stylesheet-follow-up).
 
-## Original Shopware environments
-
-`extensions/apps/shopware-compat/` owns the Rust controller, Studio surface,
-original runtime image, private MariaDB deployment and extension fixtures.
-It uses existing app gateway actions, native job leases and shared operational
-records. `scripts/shopware_compat.py` registers its original-container integration
-test. Original PHP runs only inside that optional environment. The controller
-has no core database login or container socket.
-[Workflow, ownership and tested compatibility](shopware-compatibility.md).
-
 ## Marketplace app and generic intake
 
 `extensions/apps/marketplaces/` owns provider protocols, mapping, inbox/review, worker,
