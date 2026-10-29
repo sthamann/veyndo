@@ -92,3 +92,9 @@ boundaries, separates code/rule blocks in plain summaries and decodes named/nume
 entities once, including encoded literal angle brackets. The expanded CLI and
 actual native-import cases assert both the independent expected summary and the
 stored native document. Executable-content rejection remains in force.
+
+The repaired source passed [complete required Linux CI](https://github.com/sthamann/veyndo/actions/runs/40875606396)
+and merged through PR #230. Its source-pinned Rust migration image also passed
+[publication verification](https://github.com/sthamann/veyndo/actions/runs/40879060443).
+The actual WooCommerce source, interrupted service and native purchase described
+here ran locally; image publication does not claim a hosted import of this shop.

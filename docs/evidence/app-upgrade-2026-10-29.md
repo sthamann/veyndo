@@ -68,4 +68,8 @@ vocabulary is EN/DE/FR/ES; native diagnostics use shared translated guidance wit
 an expandable technical explanation. Complete local checks cover 842 frontend
 tests, 339 Rust tests, strict Clippy, source boundaries and the generated handbook.
 The independent findings were fixed in one consolidated pass. Required CI and
-hosted runtime delivery are recorded separately when completed.
+hosted runtime delivery remain separate. The implementation merged with complete
+required CI through [PR #228](https://github.com/sthamann/veyndo/pull/228).
+The subsequent public first-installation review exposed the restricted-database
+metadata issue addressed by PR #232; its final execution is recorded in the
+[public journey](platform-followups-hosted-2026-10-29.md#public-description-led-app-generation).
