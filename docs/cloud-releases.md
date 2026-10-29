@@ -3,8 +3,11 @@
 The product and source namespace are VEYNDO. Existing Northflank resource IDs and private DNS names below are retained deployment identifiers; they must not be recreated merely to change the brand. The Git push trigger now points to `sthamann/veyndo` on `main`.
 
 The `vendune-main-release` Northflank workflow listens to pushes to `main` only.
-GitHub branch protection requires the complete `verify` check, an up-to-date
-branch and pull requests; enforcement applies to administrators as well.
+GitHub branch protection requires `verify`, an up-to-date branch and pull
+requests; enforcement applies to administrators as well. Since 29 October,
+ordinary PR/main `verify` runs short structure/governance checks. Complete tests
+and coverage run daily at 02:17 UTC or on manual dispatch; a quick green check
+is not a new full-suite acceptance. See [verification cadence](testing.md#daily-full-verification-and-short-per-change-checks).
 The workflow queues releases, builds the exact triggering SHA, waits for a
 PostgreSQL disk snapshot, deploys that exact image to `vendune-migrate`, waits
 for its successful migration-only run, then deploys the same image to Core and
