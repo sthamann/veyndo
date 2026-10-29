@@ -1,5 +1,10 @@
 # Changelog
 
+## Typed first-app field constraints — 29 October 2026
+
+- Replace the open-ended field-validation object in guided new-app generation with typed native length, number and item constraints. Keep required flags and status choices in their existing fields; retain native rejection of malformed model output.
+- Register immutable `app-brief@2`, preserving the previous prompt. Verify actual OpenAI/Ollama protocol requests, native draft validation and private upload/save through the existing registered app generation suite.
+
 ## Isolated recovery and Apple redirect correction — 29 October 2026
 
 - Record actual PostgreSQL dump/restore, exact content comparison of 150 tables and a preserved original database. Recheck restored shops, apps, orders, tenant denial and strict signed-scope runtime connections.

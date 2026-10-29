@@ -36,6 +36,8 @@ pub(super) fn schema(locales: &[String]) -> Value {
     entities["items"]["properties"]["publicRead"] = json!({"type":"boolean","enum":[false]});
     entities["items"]["properties"]["extends"] = json!({"type":"null"});
     entities["items"]["properties"]["fields"]["maxItems"] = json!(16);
+    entities["items"]["properties"]["fields"]["items"] =
+        generation_fields::schema(&entities["items"]["properties"]["fields"]["items"]);
     let mut definition = json!({"type":"object","additionalProperties":false,
         "required":["name","entities","settings","placements"],"properties":{
         "name":props["name"],"summary":base["properties"]["summary"],"entities":entities,"settings":props["settings"],
@@ -257,5 +259,13 @@ mod tests {
         );
         assert!(s["properties"].get("actions").is_none());
         assert!(s["properties"].get("views").is_none());
+        let validation = &s["properties"]["entities"]["items"]["properties"]["fields"]["items"]["anyOf"]
+            [0]["properties"]["validation"];
+        assert_eq!(validation["additionalProperties"], false);
+        assert!(validation["properties"].get("required").is_none());
+        assert!(validation["properties"].get("type").is_none());
+        assert!(validation["properties"].get("enum").is_none());
+        assert_eq!(validation["properties"]["minLength"]["type"], "integer");
+        assert_eq!(validation["properties"]["minimum"]["type"], "number");
     }
 }

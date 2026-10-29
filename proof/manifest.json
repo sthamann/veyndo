@@ -2980,8 +2980,8 @@
     },
     "src/developer/generation.rs": {
       "status": "unproved",
-      "sha256": "1abf3e7a19dd811c6c85569f812d46407411dad5c8b0646d0f23399a04162822",
-      "review": "Reviewed description-led native app compilation, typed handler generation, preserved surface restrictions, SDK asset contract and scoped draft UI; new compiler remains unproved Rust."
+      "sha256": "dce6d38bd04f8fa2524673faaf13d94e307c64ecbf76b26ac68c0766882e8c58",
+      "review": "Guided first-app generation exposes only typed native field constraint properties, preserving required/choices ownership, immutable app-brief@1 and current native admission; register app-brief@2 with OpenAI/Ollama wire and native upload regressions"
     },
     "src/developer/generation_bindings.rs": {
       "status": "unproved",
@@ -2990,8 +2990,8 @@
     },
     "src/developer/generation_brief.rs": {
       "status": "unproved",
-      "sha256": "755fb2dbf7f01d7c775535eeeb3f78ecdf79ee769ae6bee14ed9c99231f35328",
-      "review": "Reviewed guided creation asset grants restricted to new empty app construction; ordinary import keeps explicit surface and package authority. Added real upload denial and bounded translated sandbox regressions. No additional proof claims."
+      "sha256": "75c0bd6744a3650d69d82a70a680b134ca3db4e9d820f58166898e0ecbc5d232",
+      "review": "Guided native field families encode translated/indexed/core-reference and typed validation constraints before inference; new helper preserves existing Manifest admission and authority; native malformed-constraint and OpenAI/Ollama protocol regressions retained"
     },
     "src/developer/generation_contract.rs": {
       "status": "unproved",
@@ -3003,10 +3003,15 @@
       "sha256": "34b8564d797682b58ebfa7a48db96f6133a3ae4d1e3c8d908bf5acca12ab44e3",
       "review": "Reviewed model-refusal repair against native validator and connected app-generation/native-lifecycle fixtures: graph, guards, replacement limits and scope metadata share the existing owners; admission predicates, financial boundaries and quote acceptance are unchanged. app-edit@3 preserves immutable prior revisions and binds prompt provenance. Eight hostile provider outputs remain atomic refusals, modal errors preserve the draft, workspace tests and strict Clippy pass. No new pure policy or whole-adapter proof claim."
     },
+    "src/developer/generation_fields.rs": {
+      "status": "unproved",
+      "sha256": "48755650a2a7062d250665d29c249782775cb22e99849060167dd62f9ad55bf5",
+      "review": "Guided native field families encode translated/indexed/core-reference and typed validation constraints before inference; new helper preserves existing Manifest admission and authority; native malformed-constraint and OpenAI/Ollama protocol regressions retained"
+    },
     "src/developer/mod.rs": {
       "status": "unproved",
-      "sha256": "4ef9832d550731f8a3f143ffc2140a0de342e80e70a8d61cea49839591fda9d0",
-      "review": "Reviewed description-led native app compilation, typed handler generation, preserved surface restrictions, SDK asset contract and scoped draft UI; new compiler remains unproved Rust."
+      "sha256": "13122b00577af7d58d24a6ce282fd26af25c07e969ae436f87d1a5af6a20148b",
+      "review": "Guided native field families encode translated/indexed/core-reference and typed validation constraints before inference; new helper preserves existing Manifest admission and authority; native malformed-constraint and OpenAI/Ollama protocol regressions retained"
     },
     "src/developer/preview.rs": {
       "status": "unproved",
@@ -4230,6 +4235,10 @@
       "sha256": "f914e49960a073fdef0e669fe46dea413fe8e4dcd9cc200d4f10629579218362",
       "review": "Reviewed description-led native app compilation, typed handler generation, preserved surface restrictions, SDK asset contract and scoped draft UI; new compiler remains unproved Rust."
     },
+    "crates/cognition/prompts/app-brief.v2.txt": {
+      "sha256": "c0a5dd1195985f9c150e49105a18fc533dfe516b690e84a81b9ea0b12ccba8fd",
+      "review": "Guided native field families encode translated/indexed/core-reference and typed validation constraints before inference; new helper preserves existing Manifest admission and authority; native malformed-constraint and OpenAI/Ollama protocol regressions retained"
+    },
     "crates/cognition/prompts/app-coding-task.v1.txt": {
       "sha256": "7516c7400c12aabb3ab171fe4092a5025a9feacab85358bf05afac9b154c8f3c",
       "review": "Review compiler-enforced foundation crates with unchanged native owners; native provider read-tool aliases and current authorization, private checkpoint continuation and versioned prompt evidence; fixed subscriber acknowledgements preserve commit gaps, independent quarantine and explicit replay; traced requests/tasks/outbox without payloads; exact decimal-to-minor-unit rounding retains legacy price boundary; real SQL poison-isolation regression passes and workspace unit/clippy checks pass"
@@ -4275,8 +4284,8 @@
       "review": "Reviewed native extension identity/private/unique anchors and current read/write/PII scopes; native projections use bounded fixed-store queries, exact indexed filters bind all input and fence the admitted package digest. Real four-object HTTP/MCP, role revocation, foreign reference, immutable upgrade, product/company clone and selected release tests passed. Added extracted configuration-only release predicate and operational false property; SQL and UI remain explicitly unproved. Reviewed canonical schema, preserved AI bindings and versioned grid prompt provenance without changing existing prompt revisions."
     },
     "crates/cognition/prompts/manifest.json": {
-      "sha256": "80701f7f1cb09328a42b0ba7b4733c287a8a2915e55e2a06cce33c98761923b4",
-      "review": "Reviewed description-led native app compilation, typed handler generation, preserved surface restrictions, SDK asset contract and scoped draft UI; new compiler remains unproved Rust."
+      "sha256": "4f4347522debb4f379e35643ec3fb376517f25be4fd30b9d98eff080df527091",
+      "review": "Guided native field families encode translated/indexed/core-reference and typed validation constraints before inference; new helper preserves existing Manifest admission and authority; native malformed-constraint and OpenAI/Ollama protocol regressions retained"
     },
     "crates/cognition/prompts/merchant-planner.v1.txt": {
       "sha256": "6fc1d69faed9342d8b95af531c3c3e0c597f1c4d18a311d3f62e5849236fdfaf",

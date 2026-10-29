@@ -89,13 +89,27 @@ try:
  guided_entity=copy.deepcopy(json.loads((ROOT/'extensions/apps/product-advisor/manifest.json').read_text())['entities'][0])
  guided_entity['publicRead']=False
  guided_entity['fields'].append({'name':'design','kind':'file','label':m['name']})
+ guided_entity['fields'][1]['validation']={'minLength':1}
  empty={'id':'guided_'+u,'version':'0.1.0','coreApi':'1','runtime':'declarative','name':m['name'],'permissions':['data.read','data.write','admin.slot'],'entities':[],'views':[],'surfaces':[],'actions':[],'slots':[],'settings':[]}
  state['brief']={'summary':m['name'],'manifest':{'name':m['name'],'entities':[guided_entity],'settings':[{'key':'team','kind':'string','label':m['name'],'required':True}],'placements':[{'location':'admin.product.tab','entity':'entries','label':m['name'],'saveLabel':m['name']}]}}
+ valid_brief=copy.deepcopy(state['brief']);before_guided=len(call('/api/developer')['builds'])
+ state['brief']['manifest']['entities'][0]['fields'][1]['validation']={'required':True}
+ invalid_guided=call('/api/developer/generate',{**payload,'manifest':empty,'mode':'compose','prompt':'Malformed field constraints must not create a build'},400)
+ assert invalid_guided['errors'][0]['detail']=='Malformed action schema constraint'
+ assert len(call('/api/developer')['builds'])==before_guided
+ state['brief']=valid_brief
  guided=call('/api/developer/generate',{**payload,'manifest':empty,'mode':'compose','prompt':'Private product consultation with design upload and responsible team setting'})
- assert seen[-1]['messages'][0]['content'].startswith('[prompt:app-brief@1]')
+ assert seen[-1]['messages'][0]['content'].startswith('[prompt:app-brief@2]')
  assert 'actions' not in seen[-1]['format']['properties']['manifest']['properties']
  assert guided['manifest']['id']==empty['id'] and len(guided['manifest']['settings'])==1
  assert {'assets','preview_asset','upload_asset'}.issubset(guided['manifest']['surfaces'][0]['actions'])
+ guided_openai=call('/api/developer/generate',{**payload,'manifest':empty,'mode':'compose','prompt':'Private product consultation with design upload and responsible team setting','inference':{'provider':'openai','model':'synthetic-model'}})
+ field_families=seen[-1]['text']['format']['schema']['properties']['manifest']['properties']['entities']['items']['properties']['fields']['items']['anyOf']
+ constraint=field_families[0]['properties']['validation']['anyOf'][0]
+ assert constraint['additionalProperties'] is False and 'required' not in constraint['properties'] and 'enum' not in constraint['properties']
+ assert field_families[2]['properties']['indexed']['enum']==[False] and field_families[2]['properties']['unique']['anyOf'][0]['enum']==[False]
+ assert guided_openai['manifest']['entities'][0]['fields'][1]['validation']=={'minLength':1}
+ assert guided_openai['manifest']['version']!=guided['manifest']['version']
  gp=call('/api/developer/preview',{'manifest':guided['manifest']});gh={**headers,'x-tenant':gp['environment']}
  surface='/api/apps/'+empty['id']+'/surfaces/view_0'
  grant=call(surface+'/grant',{'context':{'productId':'mug'}},scope=gh)['token']

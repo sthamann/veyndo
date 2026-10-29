@@ -9,6 +9,7 @@ mod generation_bindings;
 mod generation_brief;
 mod generation_contract;
 mod generation_edits;
+mod generation_fields;
 mod preview;
 mod routes;
 pub(crate) use routes::router;
