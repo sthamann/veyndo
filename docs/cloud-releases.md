@@ -35,6 +35,14 @@ catalog size grows.
 
 On 17 October the persisted daily schedule was verified as **Snapshot at 00:00 UTC, seven-day retention**. The old failing daily dump schedule was removed after explicit approval; backup history and databases were retained. The main-release workflow also uses Snapshot and waits for completion. A successful snapshot does not replace an isolated restore test.
 
+The [29 October local recovery exercise](evidence/restore-drill-2026-10-29.md)
+restored an actual custom PostgreSQL dump into a separate database, matched all
+150 public tables and retained app data and orders. Simulated capture/refund,
+actual local SMTP, invoice and separate cancellation completed through existing
+Rust services. Separate restricted system/tenant logins and mandatory signed
+scope were verified in the restored copy. This local dump drill does not replace
+a future restore from the hosted disk snapshot.
+
 The manual `vendune-benchmark` job builds `deploy/Dockerfile.benchmark`. It has
 no public port or schedule. Runtime-only database linkage must never be granted
 to a build. Set `BENCHMARK_ENVIRONMENT=veyndo-northflank-test` and
