@@ -27,6 +27,7 @@ import ReviewModeration from "./ReviewModeration";
 import { EditorBuffer } from "../../shared/content/editor/EditorBuffer";
 import ProductVariants from "./ProductVariants";
 import RelatedProducts from "./RelatedProducts";
+import { useUnsavedWorkspace } from "../../shared/ui/useUnsavedWorkspace";
 export default function ProductEditor({
   id,
   request,
@@ -35,7 +36,9 @@ export default function ProductEditor({
   onCreated,
   canWrite = true,
   initialTab = "general",
+  onDirtyChange,
 }: {
+  onDirtyChange?: (dirty: boolean) => void;
   canWrite?: boolean;
   initialTab?: string;
   id: string;
@@ -132,15 +135,7 @@ export default function ProductEditor({
     // overwrite a draft. Merchant's boundary remounts on shop/environment changes.
   }, [id, reloadIndex]);
   const dirty = JSON.stringify(draft) !== baseline || editorPending;
-  useEffect(() => {
-    if (!dirty) return;
-    const handler = (e: BeforeUnloadEvent) => {
-      e.preventDefault();
-      e.returnValue = "";
-    };
-    window.addEventListener("beforeunload", handler);
-    return () => window.removeEventListener("beforeunload", handler);
-  }, [dirty]);
+  useUnsavedWorkspace(dirty, onDirtyChange);
   const change = (d: ProductDraft) => {
     if (!canWrite) return;
     setDraft(d);
@@ -229,7 +224,13 @@ export default function ProductEditor({
               >
                 {c("continue")}
               </button>
-              <button className="studio-secondary" onClick={onBack}>
+              <button
+                className="studio-secondary"
+                onClick={() => {
+                  onDirtyChange?.(false);
+                  onBack();
+                }}
+              >
                 {c("discard")}
               </button>
             </div>

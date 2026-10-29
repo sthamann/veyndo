@@ -705,8 +705,8 @@
     },
     "crates/cognition/src/prompts.rs": {
       "status": "unproved",
-      "sha256": "43583a7417c72783b98f770af37981b1cb626989aad30fdb7e5504af182ae645",
-      "review": "Customer scenarios: independent scenario_security_review completed; native signed-role, cohort, replay, injection, cancellation and post-lock lease-expiry regressions pass. Shared checkout preflight avoids nested-pool deadlock; authority is rechecked at the fenced transaction commit."
+      "sha256": "ea07b19be734247808e11c8df9a9da168ff7dabbf5c4bc8515949a2d3f87928b",
+      "review": "Task2 reviewed native view component admission and bounded private pins; unchanged extracted policies. Local native units, clippy and real users/providers/site HTTP pass; independent review fixes cover nested cancel and CRM address drafts."
     },
     "crates/commerce/src/discount.rs": {
       "status": "reviewed-binding",
@@ -1525,8 +1525,8 @@
     },
     "src/agent_runs/view.rs": {
       "status": "unproved",
-      "sha256": "25c89b8f78305a8b5e8f9711448a0761bc09b2cea0ef9ae95c56ee18e6908197",
-      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
+      "sha256": "877a525852793ff3b2349d4cf62c5dcf0b177fde37a9dc71ec16e8db0c4d5dc5",
+      "review": "Task2 reviewed native view component admission and bounded private pins; unchanged extracted policies. Local native units, clippy and real users/providers/site HTTP pass; independent review fixes cover nested cancel and CRM address drafts."
     },
     "src/agent_runs/work.rs": {
       "status": "unproved",
@@ -3820,8 +3820,8 @@
     },
     "src/planner.rs": {
       "status": "unproved",
-      "sha256": "79f349bfca904f89c04242b68c2bfd374f423023c9ff42f3f8343eb2848e2219",
-      "review": "Reviewed scheduled Flow proposal persistence through native ready tasks: current Flow membership, private scope, original grant ceiling and shop-stop lock; personal approval alone supplies execution authority. Actual product-event, graphical pipeline, isolated approval/replay and stop-during-provider tests pass. No extracted pure policy changed; SQL, async and authorization integration remain unproved."
+      "sha256": "c4d925c3f363c0a7bb00b15895504d36ece246aed3191b3cc328b3d04ad76944",
+      "review": "Task2 reviewed native view component admission and bounded private pins; unchanged extracted policies. Local native units, clippy and real users/providers/site HTTP pass; independent review fixes cover nested cancel and CRM address drafts."
     },
     "src/platform/ai.rs": {
       "status": "reviewed-binding",
@@ -4070,8 +4070,8 @@
     },
     "src/studio/personal/model.rs": {
       "status": "unproved",
-      "sha256": "8a9df1e647400b7c42adc74c25d87d03276cfda6884eb976d8003cf25f5931d9",
-      "review": "Reviewed contextual private-work contracts and independent findings: app opt-out, locked guidance, preserved manual actions, conversation lease and locale inheritance; native own/foreign, stale approval, narrowed rights, renewed login, killed-worker continuation and actual app-preview regressions passed. SQL, async runtime and providers remain unproved."
+      "sha256": "ae482abe85e75a27a6ea9647c43e18762a619776e9d583fba4208e55bb738443",
+      "review": "Task2 reviewed native view component admission and bounded private pins; unchanged extracted policies. Local native units, clippy and real users/providers/site HTTP pass; independent review fixes cover nested cancel and CRM address drafts."
     },
     "src/studio/personal.rs": {
       "status": "unproved",
@@ -4252,8 +4252,8 @@
       "review": "Reviewed native extension identity/private/unique anchors and current read/write/PII scopes; native projections use bounded fixed-store queries, exact indexed filters bind all input and fence the admitted package digest. Real four-object HTTP/MCP, role revocation, foreign reference, immutable upgrade, product/company clone and selected release tests passed. Added extracted configuration-only release predicate and operational false property; SQL and UI remain explicitly unproved. Reviewed canonical schema, preserved AI bindings and versioned grid prompt provenance without changing existing prompt revisions."
     },
     "crates/cognition/prompts/manifest.json": {
-      "sha256": "f2a4e8a4781368b8601e7747416f5c307a958074ba785b975abeac64a4d95ff2",
-      "review": "Customer scenarios: independently reviewed native authority and checkout changes; signed roles, post-lock lease expiry, cancellation, exact budgets and actual model/native purchases verified. Add registry-generated input contracts and digest-bound customer prompt."
+      "sha256": "8517b876f8093ff07facb063494e973f45f634a66aee4b6efd66ab7c3841b486",
+      "review": "Task2 reviewed native view component admission and bounded private pins; unchanged extracted policies. Local native units, clippy and real users/providers/site HTTP pass; independent review fixes cover nested cancel and CRM address drafts."
     },
     "crates/cognition/prompts/merchant-planner.v1.txt": {
       "sha256": "6fc1d69faed9342d8b95af531c3c3e0c597f1c4d18a311d3f62e5849236fdfaf",
@@ -4266,6 +4266,10 @@
     "crates/cognition/prompts/merchant-planner.v3.txt": {
       "sha256": "5591a2794cd421adfdb13a772e6ebc5c380e044b9a8e92c775d1224a82187dab",
       "review": "Reviewed final collection work and prompt contracts: scoped native IDs and prior reviewed creates, central provider preflight outside SQL transactions, atomic linked jobs, original actor/stop/cancellation guards, guarded leases, explicit ambiguous-call continuation and non-bypassable child controls. Native negative/restart tests and 724 UI tests; SQL NULL evidence fix follows a failing real skipped-product regression. New versioned prompt separates native private creation from CSV/image intake."
+    },
+    "crates/cognition/prompts/merchant-planner.v4.txt": {
+      "sha256": "4062797ca0aa59af510b0ab9f270047c03a60c373a3e96758d7300dd0ce7ee76",
+      "review": "Task2 reviewed native view component admission and bounded private pins; unchanged extracted policies. Local native units, clippy and real users/providers/site HTTP pass; independent review fixes cover nested cancel and CRM address drafts."
     },
     "crates/cognition/prompts/merchant-repair.v1.txt": {
       "sha256": "703a48219790f0746e893117dfeddc88438de3a6eb123af0722900a3b87220ef",

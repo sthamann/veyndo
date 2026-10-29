@@ -28,6 +28,10 @@ search text are deliberately excluded. Opening a pin uses a short-lived in-memor
 handoff, not a URL or a second saved-view database. Current server permissions
 still govern every resulting query. Column order/density keep the existing grid owner.
 
+An agent-composed pin can reopen a native directory with embedded record editing
+and, for products, catalogue intake. It stores the component layout beside the
+same private filter preference. [Working views and a concrete example](agentic-workspace.md#open-a-working-view).
+
 ## Work with the agent
 
 Add a goal, for example **Prepare the summer collection for our French shop**.

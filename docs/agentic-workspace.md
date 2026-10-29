@@ -13,6 +13,34 @@ check an app's connections in App Studio and try a saved private change with the
 [customer simulator](customer-scenarios.md). These entry points use the same
 native editors, current rights and selected publication path.
 
+## Open a working view
+
+Ask, for example: **Show active products with low stock, their details and a CSV
+import.** Review the proposal and choose **Open working view**. The agent selects
+registered records, details and product-intake components. Studio loads the real
+native directory, so search, filters, cursor pages and record editing work there.
+**Open editable list** remains available for full-page navigation.
+
+Enable **Open details here** to use the existing product, order or customer
+editor within the view. Unsaved editor changes require confirmation before Back,
+Close or Escape can discard them. For products, **Add products** opens the same
+CSV, source URL and described-demo workflow used elsewhere in Studio. Choose a
+private sandbox, review the preview and create the selected products there;
+publication stays a separate reviewed action.
+
+Choose **Pin this view**, then reopen it from **My workspace → Pinned views**.
+The saved private preference contains component IDs and general filters only.
+Customer names, search text, app predicates, records and credentials are excluded.
+Opening a pin always fetches current data with current shop/sandbox rights.
+Conflicting saves fail without overwriting another window's layout.
+
+The composition contract accepts only `records`, `details` and product-only
+`intake`. It rejects model-provided rows, tenant identity, executable HTML and
+unknown components. Native API admission remains authoritative. The model never
+sets a confirmed completion label or executes a rendered button itself.
+This uses native Studio components; the separate OpenUI experiment remains
+outside the production dependency tree. [Dated local acceptance](evidence/composed-workspace-2026-10-29.md).
+
 ## 1. Start from the work you are doing
 
 Open a product, order or customer and choose **Ask Veyndo / Frag Veyndo**. The

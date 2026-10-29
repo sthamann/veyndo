@@ -4,6 +4,11 @@ See the [connected AI workspace](agentic-workspace.md) for the 20 October contex
 reviewed private execution, complete app composition, real preview, editable list
 handoff and remembered merchant-guidance workflow. [Current status](status.md).
 
+The merchant agent can also compose these same directories into a
+[pinnable working view](agentic-workspace.md#open-a-working-view) with native
+details and private product intake. These are additional entry points to the
+same grids, not model-generated record tables.
+
 Orders, products and customers now share one grid instead of separate fixed lists.
 People and agents use the same native filter/sort contract. The grid never owns
 prices, customer identity, order states or a second database.

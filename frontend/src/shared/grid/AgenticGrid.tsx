@@ -37,6 +37,7 @@ export default function AgenticGrid<Row>({
   onNext,
   onFirst,
   onRefresh,
+  onPin,
   emptyAction,
   agent,
 }: GridProps<Row>) {
@@ -99,12 +100,14 @@ export default function AgenticGrid<Row>({
           {agent && (
             <button
               type="button"
-              onClick={() =>
-                window.dispatchEvent(
-                  new CustomEvent("veyndo.workspace.pin", {
-                    detail: { title, criteria },
-                  }),
-                )
+              onClick={
+                onPin ??
+                (() =>
+                  window.dispatchEvent(
+                    new CustomEvent("veyndo.workspace.pin", {
+                      detail: { title, criteria, entity: agent.entity },
+                    }),
+                  ))
               }
             >
               <Icon name="link" />

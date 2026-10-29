@@ -83,5 +83,6 @@ export function useGridPage(
     onNext: () => setCursor(next),
     onFirst: () => setCursor(""),
     onRefresh: () => setRefresh((n) => n + 1),
+    onPin: controlled?.onPin,
   };
 }

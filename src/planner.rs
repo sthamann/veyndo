@@ -108,7 +108,7 @@ async fn prepare(
     let (commerce_settings, _) = commerce::config(a, t).await?;
     schema["properties"]["translation"] = json!({"type":["string","null"],"enum":commerce_settings.locales.iter().filter(|l|*l!=&commerce_settings.main_locale).map(|l|json!(l)).chain(std::iter::once(Value::Null)).collect::<Vec<_>>()});
     schema["properties"]["translation_products"] = json!({"type":["array","null"],"minItems":1,"maxItems":1000,"uniqueItems":true,"items":{"type":"string","minLength":1,"maxLength":160}});
-    let system = include_str!("../crates/cognition/prompts/merchant-planner.v3.txt");
+    let system = include_str!("../crates/cognition/prompts/merchant-planner.v4.txt");
     let sandbox = staging::parent(a, t).await?.is_some();
     let system = format!(
         "{system} For questions about AI price boundaries, read merchant.commerce.read with area=aiPolicy when authorized before explaining the saved aiPolicy; follow nextAfterProductId with afterProductId to read more pages, and never call a partial page the entire policy; use merchant.product.content for the selected product. Treat an omitted field as unavailable evidence, not as an absent boundary. Explain manual approval versus bounded price-only autonomy; enabling it does not start a recurring agent. Do not claim that price boundaries configure promotions, customer-group prices or checkout rules. Current workspace: tenant={t}, sandbox={sandbox}, mainLocale={}, catalogueWrite={}, assistantUse={}. Never offer an action as available when its right is false.",

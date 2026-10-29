@@ -202,6 +202,8 @@ try:
         assert next(p for p in call('/api/search/product',{},personal(owner))['elements'] if p['id']=='lamp')['price']==71.23
         assert next(p for p in call('/api/search/product',{},personal(other))['elements'] if p['id']=='lamp')['price']==before
         passed('Personal reader can plan; only authorized editor executes in the owning shop')
+        from testing.workspace_composition import verify_composition_access
+        verify_composition_access(call, behavior, owner, personal, passed)
     behavior['mode']='normal'
     call('/api/apps',{'builtIn':'engraving'})
     before=call('/api/apps/engraving/entities/rules')['elements'][0]

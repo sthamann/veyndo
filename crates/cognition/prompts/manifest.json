@@ -70,6 +70,11 @@
       "id": "merchant-repair@1",
       "path": "prompts/merchant-repair.v1.txt",
       "sha256": "703a48219790f0746e893117dfeddc88438de3a6eb123af0722900a3b87220ef"
+    },
+    {
+      "id": "merchant-planner@4",
+      "path": "prompts/merchant-planner.v4.txt",
+      "sha256": "4062797ca0aa59af510b0ab9f270047c03a60c373a3e96758d7300dd0ce7ee76"
     }
   ]
 }

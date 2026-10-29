@@ -18,7 +18,9 @@ export default function ProductDataView({
   onEntityBack,
   onEntity,
   canWrite = true,
+  onDirtyChange,
 }: {
+  onDirtyChange?: (dirty: boolean) => void;
   request: RequestFn;
   canWrite?: boolean;
   initialId?: string;
@@ -56,6 +58,7 @@ export default function ProductDataView({
   if (id !== null)
     return (
       <ProductEditor
+        onDirtyChange={onDirtyChange}
         key={id}
         id={id}
         initialTab={initialTab}

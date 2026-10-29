@@ -2,20 +2,23 @@
 import { useEffect, useState } from "react";
 import type { RequestFn } from "../api/types";
 export function useGridAccess(request: RequestFn) {
-  const [rights, setRights] = useState<string[]>([]);
+  const [admission, setAdmission] = useState<{
+    request: RequestFn;
+    rights: string[];
+  }>();
   useEffect(() => {
     let current = true;
-    setRights([]);
+    setAdmission(undefined);
     request("/api/auth/access")
       .then((v) => {
-        if (current) setRights(v.permissions ?? []);
+        if (current) setAdmission({ request, rights: v.permissions ?? [] });
       })
       .catch(() => {
-        if (current) setRights([]);
+        if (current) setAdmission(undefined);
       });
     return () => {
       current = false;
     };
   }, [request]);
-  return rights;
+  return admission?.request === request ? admission.rights : [];
 }

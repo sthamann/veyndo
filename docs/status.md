@@ -18,6 +18,20 @@ comparison fixtures remain part of migration and native verification.
 
 [Complete architecture, app system and AI overview](platform-overview.md).
 
+The 29 October native CI partitioning is merged in
+[PR #225](https://github.com/sthamann/veyndo/pull/225). All partitions, measurement
+collection and unchanged final coverage floors passed in
+[run 40840531599](https://github.com/sthamann/veyndo/actions/runs/40840531599).
+Its native critical chain took 31m18s against the preceding 37m13s baseline.
+The documentation is published; runtime functional acceptance below keeps its
+original deployed version.
+
+The next working change adds agent-composed native views with embedded editors,
+private catalogue intake and saved component layouts. Real local model output,
+browser pin/reload and sandbox CSV creation have been observed. It is still a
+working branch, not a public Core release.
+[Exact local evidence and remaining delivery](evidence/composed-workspace-2026-10-29.md).
+
 The 23 October release expands selected Lean guarantees to **63 policies / 149
 properties**, splits their Rust/Lean owners and tightens Cargo dependency checks.
 The subsequent shared discount repair and batched marketplace order localization

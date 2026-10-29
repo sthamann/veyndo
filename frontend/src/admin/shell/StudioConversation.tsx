@@ -15,6 +15,9 @@ import "../styles/operations.css";
 import "../styles/studio.css";
 
 import { useStudio } from "./StudioContext";
+import AgentWorkSurface from "../workspace/AgentWorkSurface";
+import type { WorkspaceView } from "../../shared/grid/workspace-view";
+import type { RequestFn } from "./studio-types";
 
 export default function StudioConversation({
   compact = false,
@@ -48,7 +51,12 @@ export default function StudioConversation({
     savedRun,
     progressUnavailable,
     controlRun,
+    request,
   } = useStudio();
+  const [workingView, setWorkingView] = useState<{
+    view: WorkspaceView;
+    request: RequestFn;
+  }>();
   const [elapsed, setElapsed] = useState(0);
   useEffect(() => {
     if (!busy) {
@@ -171,6 +179,9 @@ export default function StudioConversation({
                 {m.data.preview && (
                   <>
                     <ProposalCard
+                      onOpenWorkspace={(view) =>
+                        setWorkingView({ view, request })
+                      }
                       onOpenView={(view) => {
                         const tab =
                           view.entity === "products"
@@ -263,6 +274,12 @@ export default function StudioConversation({
         <div ref={bottom} />
       </div>
       <StudioComposer context={context} />
+      {workingView && workingView.request === request && (
+        <AgentWorkSurface
+          candidate={workingView.view}
+          onClose={() => setWorkingView(undefined)}
+        />
+      )}
     </section>
   );
 }

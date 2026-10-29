@@ -1,18 +1,17 @@
 /** The shared grid pins criteria in the existing actor-private workspace; rows and credentials are never copied. */
-import {
-  safePinnedCriteria,
-  clearPinnedView,
-} from "../../shared/grid/pinned-view";
+import { clearPinnedView } from "../../shared/grid/pinned-view";
 import { clearGoalFlow } from "../automation/goal-template";
 import { useEffect } from "react";
 import { useStudio } from "../shell/StudioContext";
 import { canOpenStudio } from "../shell/permissions";
-import { newArea, type WorkspaceRecord } from "./workspace-model";
-import { useWorkspaceText } from "./workspace-i18n";
+import { pinWorkspaceView } from "./pin-workspace-view";
+import {
+  admitWorkspaceView,
+  type WorkspaceComponent,
+} from "../../shared/grid/workspace-view";
 export default function WorkspacePinBridge() {
   const { liveRequest, workspace, tab, access, setNotice, setError } =
-      useStudio(),
-    t = useWorkspaceText();
+    useStudio();
   useEffect(
     () => () => {
       clearPinnedView();
@@ -24,50 +23,52 @@ export default function WorkspacePinBridge() {
     let current = true,
       busy = false;
     const pin = async (event: Event) => {
-      if (busy || !canOpenStudio(tab, access)) return;
+      if (busy) return;
       const detail = (
         event as CustomEvent<{
           criteria: Record<string, string | boolean>;
           title: string;
+          entity?: string;
+          components?: WorkspaceComponent[];
         }>
       ).detail;
       if (!detail?.criteria) return;
+      const view = detail.entity
+        ? admitWorkspaceView(
+            {
+              entity: detail.entity,
+              criteria: detail.criteria,
+              components: detail.components,
+            },
+            access,
+          )
+        : null;
+      if (detail.entity && !view) return;
+      const target = view
+        ? view.entity === "products"
+          ? "productData"
+          : view.entity
+        : tab;
+      if (!canOpenStudio(target, access)) return;
       busy = true;
       try {
-        const value = (await liveRequest(
-          "/api/studio/workspace",
-        )) as WorkspaceRecord;
-        if (!current) return;
-        const area =
-          value.data.areas.find((a) => a.id === value.data.active) ??
-          value.data.areas[0] ??
-          newArea(t("title"), "owner", access);
-        if (area.pins.length >= 20) throw new Error(t("error"));
-        const next = {
-          ...area,
-          pins: [
-            ...area.pins,
-            {
-              tab,
-              title: detail.title.slice(0, 100),
-              query: JSON.stringify(safePinnedCriteria(detail.criteria)),
-            },
-          ],
-        };
-        await liveRequest(
-          "/api/studio/workspace",
+        const entity = target === "productData" ? "products" : target;
+        if (
+          entity !== "orders" &&
+          entity !== "customers" &&
+          entity !== "products"
+        )
+          return;
+        await pinWorkspaceView(
+          liveRequest,
+          access,
+          detail.title,
           {
-            revision: value.revision,
-            data: {
-              ...value.data,
-              active: area.id,
-              areas: [
-                ...value.data.areas.filter((a) => a.id !== area.id),
-                next,
-              ],
-            },
+            entity,
+            criteria: detail.criteria,
+            components: detail.components,
           },
-          "PUT",
+          () => current,
         );
         if (current) setNotice({ key: "workspacePinned" });
       } catch (e) {

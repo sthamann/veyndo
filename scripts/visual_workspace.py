@@ -44,11 +44,20 @@ try:
  verify_site_release(call,account,headers)
  a=account('visual'); other=account('foreign-visual'); ah=headers(a); bh=headers(other)
  empty=call('/api/studio/workspace',h=ah);assert empty['revision']==0
- layout={'active':'area_1','areas':[{'id':'area_1','name':'Content','cards':['productData','design'],'pins':[]}],'goals':[]}
+ layout={'active':'area_1','areas':[{'id':'area_1','name':'Content','cards':['productData','design'],'pins':[{'title':'Native product work','tab':'productData','query':'{}','components':['records','details','intake']}]}],'goals':[]}
  saved=call('/api/studio/workspace',{'revision':0,'data':layout},ah,method='PUT');assert saved['revision']==1
  call('/api/studio/workspace',{'revision':0,'data':layout},ah,409,'PUT')
  assert call('/api/studio/workspace',h=bh)['revision']==0
  assert call('/api/studio/workspace',h=ah)['versions'][0]['revision']==1
+ assert call('/api/studio/workspace',h=ah)['data']==layout
+ for components in [[],['details'],['records','script'],['records','records']]:
+  invalid=copy.deepcopy(layout);invalid['areas'][0]['pins'][0]['components']=components
+  call('/api/studio/workspace',{'revision':1,'data':invalid},ah,400,'PUT')
+ invalid=copy.deepcopy(layout);invalid['areas'][0]['pins'][0]['tab']='orders'
+ call('/api/studio/workspace',{'revision':1,'data':invalid},ah,400,'PUT')
+ invalid=copy.deepcopy(layout);invalid['areas'][0]['pins'][0]['tenant']=other['workspace']
+ call('/api/studio/workspace',{'revision':1,'data':invalid},ah,400,'PUT')
+ assert call('/api/studio/workspace',h=ah)['revision']==1
  unsafe=copy.deepcopy(layout);unsafe['areas'][0]['pins']=[{'title':'Private search','tab':'customers','query':json.dumps({'query':'buyer@example.test'})}]
  call('/api/studio/workspace',{'revision':1,'data':unsafe},ah,400,'PUT')
  key=call('/api/workspace/integrations',{'name':'Synthetic API reader','expiresInDays':1,'permissions':['catalog.read']},ah)['key']

@@ -7,6 +7,7 @@ export type GridQueryState = {
   onCriteria: (value: GridCriteria) => void;
   cursor?: string;
   onCursor?: (cursor: string) => void;
+  onPin?: () => void;
 };
 export type GridColumn<Row> = {
   id: string;
@@ -43,6 +44,7 @@ export type GridProps<Row> = {
   onNext?: () => void;
   onFirst?: () => void;
   onRefresh?: () => void;
+  onPin?: () => void;
   emptyAction?: ReactNode;
   agent?: { entity: GridEntity; request: RequestFn; enabled: boolean };
 };

@@ -1,10 +1,17 @@
 # Changelog
 
+## Composed native Studio workspaces — 29 October 2026
+
+- Extend reviewed agent views with a bounded selection of native records, details and product intake. Open real server-paged directories and original editors directly from the assistant; retain full-page navigation.
+- Pin component layouts through the existing actor-private, revisioned workspace preferences. Reload current data under current rights; exclude personal searches, records, credentials and executable content from saved layouts.
+- Fence stale shop/sandbox rights immediately. Preserve unsaved native editor drafts across Back, Close and Escape, and keep nested confirmation controls inside the active dialog.
+- Version the central merchant prompt as `merchant-planner@4`. Cover composition admission, malformed/injected output, role revocation, private persistence and native navigation through existing Rust, frontend and HTTP suites. Record actual local model and browser journeys separately from hosted rollout.
+
 ## Isolated native CI partitions — 29 October 2026
 
 - Split the registered native integration checks across independent core, signed-scope and transaction-pooler runners. Preserve every nested restricted-role repetition and each existing coverage floor.
 - Validate same-source raw measurement bundles before the official LLVM and Python coverage collectors combine them. Missing, modified, foreign-run and incompatible-toolchain inputs reject the final check.
-- Retain sequential local runs and existing subprocess cleanup checks. Record the 37m13s successful baseline; report the new duration only after its full successful CI acceptance.
+- Retain sequential local runs and existing subprocess cleanup checks. Accepted Linux run `40840531599` shortens the native critical chain from 37m13s to 31m18s, with all required jobs and unchanged coverage floors passing. This is one observed comparison across separate runners.
 
 ## 29 October 2026
 

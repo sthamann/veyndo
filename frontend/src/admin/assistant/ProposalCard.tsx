@@ -5,6 +5,8 @@ import { useLocale } from "../../shared/i18n/i18n";
 import { useBuildingText } from "../../shared/i18n/app-building-i18n";
 import Icon from "../../shared/ui/Icon";
 import type { Message } from "../shell/studio-types";
+import { useCompositionText } from "../workspace/composition-i18n";
+import type { WorkspaceView } from "../../shared/grid/workspace-view";
 export default function ProposalCard({
   message,
   onApply,
@@ -12,12 +14,14 @@ export default function ProposalCard({
   canApply,
   approvalStarted = false,
   onOpenView,
+  onOpenWorkspace,
 }: {
   message: Message;
   onApply: () => void;
   busy: boolean;
   canApply: boolean;
   approvalStarted?: boolean;
+  onOpenWorkspace?: (view: WorkspaceView) => void;
   onOpenView?: (
     view: NonNullable<
       NonNullable<Message["data"]["preview"]>["proposal"]["view"]
@@ -26,6 +30,7 @@ export default function ProposalCard({
 }) {
   const { t, money } = useLocale();
   const { a } = useAppText();
+  const composed = useCompositionText();
   const b = useBuildingText(),
     aw = useAgentWorkspaceText();
   const preview = message.data.preview;
@@ -74,7 +79,21 @@ export default function ProposalCard({
       ))}
       {preview.proposal.view && (
         <div className="review-product">
-          <pre>{JSON.stringify(preview.proposal.view.criteria, null, 2)}</pre>
+          {onOpenWorkspace && (
+            <button
+              type="button"
+              className="studio-primary"
+              disabled={busy}
+              onClick={() => onOpenWorkspace(preview.proposal.view!)}
+            >
+              <Icon name="box" />
+              {composed("open")}
+            </button>
+          )}
+          <details>
+            <summary>{t("details")}</summary>
+            <pre>{JSON.stringify(preview.proposal.view.criteria, null, 2)}</pre>
+          </details>
           {onOpenView && (
             <button
               type="button"
