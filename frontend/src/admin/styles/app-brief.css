@@ -1,0 +1,64 @@
+/** Description-led entry keeps one clear request above the optional visual app patterns. */
+.app-brief {
+  padding: 24px;
+  margin: 0 0 28px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--accent-soft, #eef6ff);
+}
+.app-brief-heading {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+.app-brief-heading > svg {
+  color: var(--accent);
+  flex: 0 0 auto;
+}
+.app-brief h3 {
+  font-size: 23px;
+  margin: 0 0 8px;
+}
+.app-brief p {
+  margin: 0;
+  color: var(--muted);
+}
+.app-brief form {
+  display: grid;
+  gap: 16px;
+}
+.app-brief label {
+  display: grid;
+  gap: 8px;
+  font-weight: 600;
+}
+.app-brief textarea {
+  width: 100%;
+  resize: vertical;
+}
+.app-brief small,
+.app-brief .app-brief-next {
+  font-size: 13px;
+  color: var(--muted);
+}
+.app-brief-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.app-brief-actions button {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+}
+@media (max-width: 600px) {
+  .app-brief {
+    padding: 16px;
+  }
+  .app-brief-actions button {
+    width: 100%;
+    justify-content: center;
+  }
+}

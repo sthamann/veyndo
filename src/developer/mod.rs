@@ -5,6 +5,8 @@ mod archive;
 mod builds;
 mod drafts;
 mod generation;
+mod generation_bindings;
+mod generation_brief;
 mod generation_contract;
 mod generation_edits;
 mod preview;

@@ -68,6 +68,11 @@ for (const file of files) {
       target.startsWith(appRoot + path.sep)
     )
       return;
+    if (
+      target ===
+      path.resolve(root, "../extensions/sdk/native-asset-actions.json")
+    )
+      return; // Immutable host/SDK contract shared with the Rust manifest compiler.
     if (target === path.resolve(root, "../extensions/sdk/analytics.js")) return; // Explicit public SDK boundary, contract-tested separately.
     if (
       !target.startsWith(source + path.sep) &&

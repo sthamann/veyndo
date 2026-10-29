@@ -1,5 +1,5 @@
 /** Visual App Studio orchestrates modular editors over the same executable schema used by coding agents. */
-import { useMemo, useState, useRef, useEffect } from "react";
+import { useMemo, useState, useEffect } from "react";
 import type { Environment } from "../environments/EnvironmentManager";
 import type { RequestFn } from "../shell/studio-types";
 import Icon from "../../shared/ui/Icon";
@@ -15,9 +15,7 @@ import { useAppStudio } from "./useAppStudio";
 import { problems } from "./app-model";
 import { AppFlowNavigation } from "./AppFlowNavigation";
 import AppDesignWorkspace from "./AppDesignWorkspace";
-import AppAssistant from "./AppAssistant";
-import ConfirmDialog from "../../shared/ui/ConfirmDialog";
-import { useAssistantText } from "../../shared/i18n/app-assistant-i18n";
+import AppDraftEntry from "./AppDraftEntry";
 import AppCapabilityEditor from "./AppCapabilityEditor";
 import AppSettingsEditor from "./AppSettingsEditor";
 import AppDataEditor from "./AppDataEditor";
@@ -66,10 +64,7 @@ export default function DeveloperView({
   useEffect(() => {
     if (homeRevision) setAssistant(true);
   }, [homeRevision]);
-  const pendingDraft = useRef<(() => void) | null>(null);
-  const { t } = useAssistantText();
-  const [assistant, setAssistant] = useState(true),
-    [replaceDraft, setReplaceDraft] = useState(false);
+  const [assistant, setAssistant] = useState(true);
   const { a, locale } = useAppStudioText(),
     { w } = useWorkbenchText();
   const studio = useAppStudio(request, environments[0]?.id ?? "", onRefresh),
@@ -139,36 +134,19 @@ export default function DeveloperView({
             locales={studio.locales}
             mainLocale={studio.mainLocale}
           >
-            <AppAssistant
+            <AppDraftEntry
+              key={agent.drawer.key}
+              studio={studio}
+              show={agent.show}
               onClose={() => setAssistant(false)}
-              onCreate={(draft) => {
-                const apply = () => {
-                  studio.startDraft(draft);
-                  setAssistant(false);
-                  setPreview(false);
-                  setSelected("");
-                  setSection("design");
-                };
-                if (studio.dirty && studio.history.past.length > 0) {
-                  pendingDraft.current = apply;
-                  setReplaceDraft(true);
-                } else apply();
+              onReady={() => {
+                setAssistant(false);
+                setPreview(false);
+                setSelected("");
+                setSection("design");
               }}
             />
           </ContentLanguage>
-        )}
-        {replaceDraft && (
-          <ConfirmDialog
-            title={t("draftWarning")}
-            confirmLabel={t("create")}
-            onCancel={() => setReplaceDraft(false)}
-            onConfirm={() => {
-              pendingDraft.current?.();
-              setReplaceDraft(false);
-            }}
-          >
-            <p>{t("draftWarningHint")}</p>
-          </ConfirmDialog>
         )}
         {assistant && (
           <AppLibrary
@@ -256,7 +234,9 @@ export default function DeveloperView({
                 className="app-new-sandbox"
                 onSubmit={(e) => {
                   e.preventDefault();
-                  void studio.run(() => studio.createSandbox(stageName));
+                  void studio.run(async () => {
+                    await studio.createSandbox(stageName);
+                  });
                 }}
               >
                 <label>

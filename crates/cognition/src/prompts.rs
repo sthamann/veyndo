@@ -35,12 +35,17 @@ const TEMPLATES: &[(&str, &str)] = &[
         include_str!("../prompts/app-generation.v3.txt"),
     ),
     (
+        "app-generation@4",
+        include_str!("../prompts/app-generation.v4.txt"),
+    ),
+    (
         "catalogue-translation@1",
         include_str!("../prompts/catalogue-translation.v1.txt"),
     ),
     ("app-edit@1", include_str!("../prompts/app-edit.v1.txt")),
     ("app-edit@2", include_str!("../prompts/app-edit.v2.txt")),
     ("app-edit@3", include_str!("../prompts/app-edit.v3.txt")),
+    ("app-brief@1", include_str!("../prompts/app-brief.v1.txt")),
     (
         "customer-scenario@1",
         include_str!("../prompts/customer-scenario.v1.txt"),
@@ -64,6 +69,11 @@ mod tests {
     #[test]
     fn workflow_edit_revision_binds_its_own_template_and_rendered_context() {
         for (id, template) in [
+            ("app-brief@1", include_str!("../prompts/app-brief.v1.txt")),
+            (
+                "app-generation@4",
+                include_str!("../prompts/app-generation.v4.txt"),
+            ),
             (
                 "app-generation@3",
                 include_str!("../prompts/app-generation.v3.txt"),

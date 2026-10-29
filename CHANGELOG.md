@@ -1,5 +1,12 @@
 # Changelog
 
+## Description-led native apps — 29 October 2026
+
+- Add a merchant description entry with an editable consultation example and shared contextual agent. Prepare a first private sandbox when needed; fence account and environment changes.
+- Compile bounded private data, settings and placements into the existing native views, context bindings and save handlers. Keep full native validation, explicit package consent and selected release. Existing-app edits retain their current contract.
+- Share canonical SDK asset actions between the visual compiler and generated builds, default new tools to MCP off, and preserve explicitly narrowed surface action lists.
+- Return structured binding locations with translated guidance and precise repair context. Record real local model, upload, private record, central setting, package release and interface restoration evidence separately from hosted delivery.
+
 ## Composed native Studio workspaces — 29 October 2026
 
 - Extend reviewed agent views with a bounded selection of native records, details and product intake. Open real server-paged directories and original editors directly from the assistant; retain full-page navigation.

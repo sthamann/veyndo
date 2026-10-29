@@ -34,3 +34,25 @@ call(p+'/actions/save_guides',{'id':'private','revision':0,'fields':{'title':{'e
 new=copy.deepcopy(m);new['version']='1.0.1';call('/api/apps',{'manifest':new},h);upload(s+'/assets',h,grant=grant,status=403);call(p+'/core/asset',{'id':a['id']},kh,401)
 other=t+'-other';u2=call('/api/auth/register',{'workspaceId':other,'name':'Other asset owner','email':other+'@example.test','password':'Synthetic-assets-password!'});oh={'x-tenant':other,'Authorization':'Bearer '+u2['token']};call('/api/apps',{'manifest':m},oh);call(p+'/core/asset',{'id':a['id']},oh,404);assert not call(p+'/core/assets',{},oh)['elements']
 print('PASS real >64 KiB product asset upload/export reads, native grant context, private image preview, public-field rejection, package/key fences and foreign tenant isolation')
+# Importing an explicitly restricted file form must not add upload/browsing authority.
+draft=json.loads((pathlib.Path(__file__).resolve().parents[1]/'extensions/apps/product-advisor/manifest.json').read_text());draft['id']='described_assets'
+draft['entities'][0]['publicRead']=False
+draft['entities'][0]['fields'].append({'name':'design','label':draft['name'],'kind':'file'})
+draft['surfaces']=draft['surfaces'][:1];draft['views']=draft['views'][:1];draft['apiRoutes']=[]
+draft.pop('actions',None)
+for block in draft['views'][0]['blocks'][:2]:block.pop('readAction',None);block.pop('writeAction',None)
+stage=call('/api/environments',{'name':'Described private app'},h)['id']
+build=call('/api/developer/import',{'environment':stage,'prompt':'Product consultation with private design file','summary':draft['name'],'manifest':draft},h)
+call('/api/developer/builds/'+build['id']+'/stage',{'approve':True,'digest':build['digest']},h)
+sh={**h,'x-tenant':stage};sp='/api/apps/described_assets';surface=sp+'/surfaces/workspace'
+sg=call(surface+'/grant',{'context':{'productId':'mug'}},sh)['token']
+assert build['manifest']['surfaces'][0]['actions']==draft['surfaces'][0]['actions']
+assert not any(p in build['manifest']['permissions'] for p in ['assets.read','assets.write'])
+upload(surface+'/assets',sh,grant=sg,status=403)
+call(surface+'/actions/assets',{'grant':sg,'input':{'productId':'mug'}},sh,status=403)
+call(surface+'/actions/save_entries',{'grant':sg,'input':{'id':'design_request','revision':0,'fields':{'product_id':'mug','title':{'en':'Private consultation'}}}},sh)
+record=call(surface+'/actions/list_entries',{'grant':sg,'input':{'filter':{'product_id':'mug'}}},sh)['elements'][0]
+assert not record.get('design') and record['product_id']=='mug'
+call(sp+'/actions/list_entries',{},h,status=404)
+call('/store-api/apps/described_assets/actions/list_entries',{}, {'x-tenant':stage},status=401)
+print('PASS explicit imported list/save-only file form retains its grant, refuses upload/browsing and preserves native save/reload and live/public isolation')

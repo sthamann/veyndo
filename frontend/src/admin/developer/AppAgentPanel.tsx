@@ -29,6 +29,7 @@ export type AppAgentRequest = {
   app: string;
   environment: string;
   prompt: string;
+  mode?: "edit" | "compose";
 };
 export default function AppAgentPanel({
   studio,
@@ -60,8 +61,10 @@ export default function AppAgentPanel({
     if (
       requestSeed.app === studio.manifest.id &&
       requestSeed.environment === studio.env
-    )
+    ) {
       setPrompt(requestSeed.prompt);
+      setMode(requestSeed.mode ?? "edit");
+    }
     onRequestConsumed?.();
   }, [requestSeed, studio.manifest.id, studio.env, onRequestConsumed]);
   const configured = studio.providers.find(

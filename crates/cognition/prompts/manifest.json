@@ -37,6 +37,11 @@
       "sha256": "5f55127630ef5f3726d9b6ea12430a3d7531bfd481e270030682fd34d273e960"
     },
     {
+      "id": "app-generation@4",
+      "path": "prompts/app-generation.v4.txt",
+      "sha256": "afe476e3c36fc0f04dd22b135e03fa4cf59af0e12c8e37066d4e37860c439dce"
+    },
+    {
       "id": "catalogue-translation@1",
       "path": "prompts/catalogue-translation.v1.txt",
       "sha256": "d50b1c4d06588f5cfc93baa2c06d27ea5d01f32d3fbd0104596f6f8dac9db68e"
@@ -75,6 +80,11 @@
       "id": "merchant-planner@4",
       "path": "prompts/merchant-planner.v4.txt",
       "sha256": "4062797ca0aa59af510b0ab9f270047c03a60c373a3e96758d7300dd0ce7ee76"
+    },
+    {
+      "id": "app-brief@1",
+      "path": "prompts/app-brief.v1.txt",
+      "sha256": "f914e49960a073fdef0e669fe46dea413fe8e4dcd9cc200d4f10629579218362"
     }
   ]
 }

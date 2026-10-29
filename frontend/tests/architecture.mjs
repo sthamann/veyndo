@@ -18,6 +18,12 @@ try{
  file('shared/api/base.ts','export const missingComment=1;\n');assert.match(check().stderr,/responsibility comment/);
  file('shared/api/base.ts','/** Too large. */\n'+Array.from({length:401},(_,i)=>`export const v${i}=1;`).join('\n'));assert.match(check().stderr,/exceeds 400/);
  file('shared/api/base.ts','/** Documented fixture. */\nexport const value=1;\n');
+ const sdk=path.resolve(import.meta.dirname,'../../extensions/sdk');
+ file('shared/api/base.ts',`/** Shared immutable native asset contract. */\nimport contract from ${JSON.stringify(path.relative(path.join(directory,'shared/api'),path.join(sdk,'native-asset-actions.json')))};\nexport const actions=contract;\n`);
+ assert.equal(check().status,0,check().stderr);
+ file('shared/api/base.ts',`/** Other SDK implementation remains outside the boundary. */\nimport client from ${JSON.stringify(path.relative(path.join(directory,'shared/api'),path.join(sdk,'browser.js')))};\nexport const actions=client;\n`);
+ assert.match(check().stderr,/outside the source ownership tree/);
+ file('shared/api/base.ts','/** Documented fixture. */\nexport const value=1;\n');
  fs.unlinkSync(path.join(directory,'shared/api/README.md'));assert.match(check().stderr,/folder contract/);
  console.log('PASS source ownership, runtime-cycle, missing-import, file-size, comment and documentation negative controls');
 }finally{fs.rmSync(directory,{recursive:true,force:true});}

@@ -23,6 +23,8 @@ class Model(BaseHTTPRequestHandler):
    state['composeCalls']=state.get('composeCalls',0)+1
    if state.get('repair') and state['composeCalls']==1:candidate['views'][0]['blocks'][0]['childBlocks']=['absent_child']
    out={'message':{'content':json.dumps({'manifest':candidate,'summary':candidate['name']})},'done_reason':'stop'}
+  if state.get('brief') and self.path!='/api/embed':
+   out={'message':{'content':json.dumps(state['brief'])},'done_reason':'stop'}
   if self.path=='/v1/responses':
    assert v['text']['format']['strict']
    out={'status':'completed','output':[{'type':'message','content':[{'type':'output_text','text':out['message']['content']}]}]}
@@ -75,7 +77,7 @@ try:
  full=call('/api/developer/generate',{**payload,'inference':{'provider':'openai','model':'synthetic-model'},'mode':'compose','prompt':'Add a private notes library and a region setting. Preserve the product editor.'})
  assert len(full['manifest']['entities'])==2 and full['manifest']['settings'][0]['key']=='region'
  assert state['composeCalls']==2 and 'Containers support one level of existing leaf blocks' in seen[-1]['input']
- assert seen[-1]['instructions'].startswith('[prompt:app-generation@3]')
+ assert seen[-1]['instructions'].startswith('[prompt:app-generation@4]')
  preview=call('/api/developer/preview',{'manifest':full['manifest']})
  private={**headers,'x-tenant':preview['environment']}
  call('/api/apps/'+m['id']+'/entities/notes',{'id':'tested_note','fields':{'title':{'en-GB':'Actual private generated note'}}},scope=private)
@@ -83,6 +85,31 @@ try:
  assert not any(s['app']==m['id'] for s in call('/api/apps/surfaces')['surfaces'])
  state.update(compose=False)
  print('PASS complete AI composition repairs one rejected native layout, validates data and settings, installs the real private preview and writes/reads its actual record without changing live')
+ # A new, empty app uses the bounded brief compiler, which explicitly owns its initial asset grants.
+ guided_entity=copy.deepcopy(json.loads((ROOT/'extensions/apps/product-advisor/manifest.json').read_text())['entities'][0])
+ guided_entity['publicRead']=False
+ guided_entity['fields'].append({'name':'design','kind':'file','label':m['name']})
+ empty={'id':'guided_'+u,'version':'0.1.0','coreApi':'1','runtime':'declarative','name':m['name'],'permissions':['data.read','data.write','admin.slot'],'entities':[],'views':[],'surfaces':[],'actions':[],'slots':[],'settings':[]}
+ state['brief']={'summary':m['name'],'manifest':{'name':m['name'],'entities':[guided_entity],'settings':[{'key':'team','kind':'string','label':m['name'],'required':True}],'placements':[{'location':'admin.product.tab','entity':'entries','label':m['name'],'saveLabel':m['name']}]}}
+ guided=call('/api/developer/generate',{**payload,'manifest':empty,'mode':'compose','prompt':'Private product consultation with design upload and responsible team setting'})
+ assert seen[-1]['messages'][0]['content'].startswith('[prompt:app-brief@1]')
+ assert 'actions' not in seen[-1]['format']['properties']['manifest']['properties']
+ assert guided['manifest']['id']==empty['id'] and len(guided['manifest']['settings'])==1
+ assert {'assets','preview_asset','upload_asset'}.issubset(guided['manifest']['surfaces'][0]['actions'])
+ gp=call('/api/developer/preview',{'manifest':guided['manifest']});gh={**headers,'x-tenant':gp['environment']}
+ surface='/api/apps/'+empty['id']+'/surfaces/view_0'
+ grant=call(surface+'/grant',{'context':{'productId':'mug'}},scope=gh)['token']
+ boundary=uuid.uuid4().hex
+ parts=[f'--{boundary}\r\nContent-Disposition: form-data; name="{k}"\r\n\r\n{v}\r\n'.encode() for k,v in {'productId':'mug','kind':'attachment','title':json.dumps(m['name']),'grant':grant}.items()]
+ parts += [f'--{boundary}\r\nContent-Disposition: form-data; name="file"; filename="design.txt"\r\nContent-Type: text/plain\r\n\r\nPrivate design fixture\r\n--{boundary}--\r\n'.encode()]
+ with urllib.request.urlopen(urllib.request.Request(base+surface+'/assets',data=b''.join(parts),headers={**gh,'Content-Type':'multipart/form-data; boundary='+boundary}),timeout=30) as response:asset=json.load(response)
+ call(surface+'/actions/save_entries',{'grant':grant,'input':{'id':'guided_request','revision':0,'fields':{'product_id':'mug','title':{'en-GB':'Private guided request'},'design':asset['id']}}},scope=gh)
+ saved=call(surface+'/actions/list_entries',{'grant':grant,'input':{'filter':{'product_id':'mug'}}},scope=gh)['elements'][0]
+ assert saved['design']==asset['id'] and saved['product_id']=='mug' and not asset['public']
+ call('/api/apps/'+empty['id']+'/actions/list_entries',{},404)
+ call('/store-api/apps/'+empty['id']+'/actions/list_entries',{},401,scope={'x-tenant':gp['environment']})
+ state.pop('brief')
+ print('PASS bounded new-app model HTTP → explicit native grants → private preview → scoped real upload/save/reload with live/public isolation')
  lifecycle=copy.deepcopy(json.loads((ROOT/'extensions/apps/production-review/manifest.json').read_text())['lifecycles'][0])
  state['edits']=[('/lifecycles',[lifecycle])]
  workflow_build=call('/api/developer/generate',{**payload,'prompt':'Add an order quality review requiring confirmed payment and delivered shipments. Preserve the current app and its data.'})

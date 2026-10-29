@@ -262,9 +262,13 @@ export function useAppStudio(
       setEnv(b.environment);
     },
     createSandbox: async (name: string) => {
+      const current = epoch.current;
       const v = await request("/api/environments", { name });
+      if (current !== epoch.current) return;
       await refresh();
+      if (current !== epoch.current) return;
       setEnv(v.id);
+      return v.id as string;
     },
     proposal,
     discardProposal: () => setProposal(null),

@@ -83,7 +83,7 @@ pub(super) fn actions(m: &mut Value) -> Result<()> {
             _ => "catalog",
         };
         let public = e["publicRead"] == true;
-        list.push(json!({"name":format!("list_{}",name.chars().take(27).collect::<String>()),"description":format!("List {name}"),"handler":"list","entity":name,"public":public,"mcp":false,"permission":if public {None}else{Some(format!("{scope}.read"))},"inputSchema":{"type":"object","properties":{"limit":{"type":"integer"},"after":{"type":"string"},"filter":{"type":"object"}},"additionalProperties":false}}));
+        list.push(json!({"name":format!("list_{}",name.chars().take(27).collect::<String>()),"description":format!("List {name}"),"handler":"list","entity":name,"readOnly":true,"public":public,"mcp":false,"permission":if public {None}else{Some(format!("{scope}.read"))},"inputSchema":{"type":"object","properties":{"limit":{"type":"integer"},"after":{"type":"string"},"filter":{"type":"object"}},"additionalProperties":false}}));
         list.push(json!({"name":format!("save_{}",name.chars().take(27).collect::<String>()),"description":format!("Save {name}"),"handler":"save","entity":name,"public":false,"mcp":false,"permission":format!("{scope}.write"),"flowAllowed":true,"inputSchema":{"type":"object","properties":{"id":{"type":"string"},"revision":{"type":"integer"},"fields":{"type":"object"}},"required":["id","fields"],"additionalProperties":false}}));
     }
     if m["paymentProvider"].is_object() {

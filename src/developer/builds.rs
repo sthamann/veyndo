@@ -54,6 +54,7 @@ pub(super) async fn save(
     staging::owned(a, t, stage).await?;
     let mut value = v["manifest"].clone();
     routes::actions(&mut value)?;
+    generation_bindings::complete(&mut value)?;
     let m: apps::Manifest = serde_json::from_value(value).map_err(|e| bad(e.to_string()))?;
     validate(&m)?;
     let prompt = v["prompt"]
