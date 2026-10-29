@@ -11,3 +11,5 @@ This folder owns the Rust modules listed below. Each source begins with its resp
 The [source inventory](../../docs/module-inventory.md) is checked in CI. [The behavioral map](../../docs/source-map.md) identifies integration suites, and [testing](../../docs/testing.md) describes actual coverage and limits. Every file is limited to 320 lines; `main.rs` to 120.
 
 Generation keeps existing same-identity action access settings; new synthesized native actions default to MCP off. Task exports include the editor reference, choice, automation and scope contracts documented in [guided apps](../../docs/app-assistants.md).
+
+`generation_brief` compiles bounded empty-private-app model/settings/placement descriptions into ordinary native views, bindings and handlers. It does not own an app business model or another executor. `generation_bindings` shares the SDK asset declarations and completes missing canonical data bindings without broadening explicitly restricted surface action lists. All outputs still pass the current native validator and package admission.

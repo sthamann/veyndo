@@ -1,5 +1,5 @@
 /** Contextual agent drawer retains the shared proposal workflow and draft while the native dialog manages focus. */
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Icon from "../../shared/ui/Icon";
 import { contentText } from "../../shared/i18n/content-language";
@@ -13,21 +13,32 @@ export function useAppAgentEntry(
   request: RequestFn,
   sandboxRequest?: (environment: string) => RequestFn,
 ) {
-  const [open, setOpen] = useState(false),
+  const requestScope = useMemo(() => crypto.randomUUID(), [request]);
+  const scope = `${requestScope}:${studio.env}`;
+  const [openScope, setOpenScope] = useState<string>(),
     [requestSeed, setSeed] = useState<AppAgentRequest>();
   return {
-    show: (prompt?: string) => {
+    show: (
+      prompt?: string,
+      target?: { app: string; mode: "edit" | "compose"; environment?: string },
+    ) => {
       if (prompt)
-        setSeed({ app: studio.manifest.id, environment: studio.env, prompt });
-      setOpen(true);
+        setSeed({
+          app: target?.app ?? studio.manifest.id,
+          environment: target?.environment ?? studio.env,
+          prompt,
+          mode: target?.mode,
+        });
+      setOpenScope(`${requestScope}:${target?.environment ?? studio.env}`);
     },
     drawer: {
+      key: scope,
       studio,
       request,
       sandboxRequest,
-      open,
-      onClose: () => setOpen(false),
-      requestSeed,
+      open: openScope === scope,
+      onClose: () => setOpenScope(undefined),
+      requestSeed: openScope === scope ? requestSeed : undefined,
       onRequestConsumed: () => setSeed(undefined),
     },
   };
@@ -63,7 +74,9 @@ export default function AppAgentDrawer({
       ref={dialog}
       className="app-studio app-agent-drawer"
       aria-labelledby={title}
-      onCancel={onClose}
+      onCancel={(event) => {
+        if (event.target === event.currentTarget) onClose();
+      }}
       onClose={onClose}
       onClick={(event) => {
         if (event.target !== event.currentTarget) return;

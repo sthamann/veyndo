@@ -17,6 +17,26 @@ screenshots, practical tests, agent prompts and the shared version/release loop.
 
 **Connected business pattern:** [configurable furniture](furniture-configurator.md) joins material records, dimensions, bounded surcharge rules, native company approval and saved-input reorder. Its local integration evidence and outstanding hosted checks are explicit.
 
+## Start from a description
+
+Open **Developers → New app**, name the app and describe the information, people
+and next steps. **Try a consultation app** fills an editable example with product
+requests, a design upload, review status and a responsible-team setting. **Prepare
+with AI** starts an ordinary private draft and opens the shared agent. If the shop
+has no sandbox yet, the same action creates its first private stage.
+
+For an empty private app, the model describes data, setting declarations and
+registered admin placements. The host connects the corresponding lists, forms and
+validated save buttons in the existing Manifest. Review the proposal, open the
+private preview, select a real test product and exercise the upload and saved
+record before publication. Continue editing any generated control in Design.
+
+Installation settings are declared in **App settings**; configure their values
+under **Apps → the installed app** after publishing. Product-bound uploads remain
+private. Package-only release leaves test records in their private environment.
+Restoring an earlier interface creates a new immutable version and preserves
+compatible current records. [Observed complete local journey](evidence/guided-app-2026-10-29.md).
+
 ## The development loop
 
 1. Choose a frontend/admin/combined/payment/shipping/integration/event/cron app

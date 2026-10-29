@@ -705,8 +705,8 @@
     },
     "crates/cognition/src/prompts.rs": {
       "status": "unproved",
-      "sha256": "ea07b19be734247808e11c8df9a9da168ff7dabbf5c4bc8515949a2d3f87928b",
-      "review": "Task2 reviewed native view component admission and bounded private pins; unchanged extracted policies. Local native units, clippy and real users/providers/site HTTP pass; independent review fixes cover nested cancel and CRM address drafts."
+      "sha256": "3ff5d16ca2e875938af0e8abe489b42cc373bc0b184eb3d002df2024ef3a77da",
+      "review": "Reviewed typed brief/native compiler and SDK asset bindings; retained existing merchant prompt registry order; no new proof claims."
     },
     "crates/commerce/src/discount.rs": {
       "status": "reviewed-binding",
@@ -1810,8 +1810,8 @@
     },
     "src/apps/native_views.rs": {
       "status": "reviewed-binding",
-      "sha256": "96cac801ed16a3c8ad18537bc5f554f0aa5cfcedbcfe48823ac38025146b0784",
-      "review": "Reviewed app authority and current creator rights, isolated schemas/RLS and atomic migration rollback, fenced job/event leases, minimized payloads, signature/digest pins, opaque UI grants, pinned DNS egress and bounded Wasm/WIT quote adapters. Actual isolated PostgreSQL own/foreign callback, schema, jobs, events, assets, export, distribution and production-foundation regressions passed. Added extracted package, surface, resource and exact callback-consent policies with negative Lean claims; async/network/UI and general Rust modules remain explicitly unproved."
+      "sha256": "26040649fcb241ec070335bacf1cca47e31e16005ea6089d9b1caf6b2126ec07",
+      "review": "Reviewed description-led native app compilation, typed handler generation, preserved surface restrictions, SDK asset contract and scoped draft UI; new compiler remains unproved Rust."
     },
     "src/apps/observability.rs": {
       "status": "unproved",
@@ -1950,8 +1950,8 @@
     },
     "src/apps/surfaces.rs": {
       "status": "reviewed-binding",
-      "sha256": "4491e884fd0fec3fbae5db99e5e628a850bf68fc593f5d70bd4cf78ec514a1bc",
-      "review": "App Studio integration review: existing multi-surface native views now include checkout mounts; declared settings reuse encrypted digest/CAS-bound app secrets and private service admission, redact secret reads, deny foreign/nonpersonal/stage writes. Permanent integration keys require the extracted personal/current-admin predicate, retain current membership intersection and revocation; explicit null expiry only at API presentation. Real app_surfaces, merchant_operations, app_studio and tenant_isolation HTTP/PostgreSQL assertions passed before the final inventory check. UI 530 tests passed. Added bounded package/index admission; SQL, crypto, browser and provider adapters remain unproved."
+      "sha256": "37660c0ceea139d461420f290dfe68bcddd5bd8cb786c2a352898c8bef2805b8",
+      "review": "Reviewed description-led native app compilation, typed handler generation, preserved surface restrictions, SDK asset contract and scoped draft UI; new compiler remains unproved Rust."
     },
     "src/apps/tool_contract.rs": {
       "status": "unproved",
@@ -2965,8 +2965,8 @@
     },
     "src/developer/builds.rs": {
       "status": "unproved",
-      "sha256": "116e93a9dd3504dc7b98ec8fbf98d320cbecd9f52d2ebee2599ee4fd222490ed",
-      "review": "Review native lifecycle labels across immutable builds, atomic installation, settings main-language edits and final selected-release validation. Existing aggregate configuration lock precedes package admission and private preview resets. Accepted historical snapshots retain their original language; the pure native-admission conjunction is unchanged."
+      "sha256": "b38e3c473f4f6645e3ae406a7253fea053f397a41373b2e93d61f796256b97ad",
+      "review": "Reviewed description-led native app compilation, typed handler generation, preserved surface restrictions, SDK asset contract and scoped draft UI; new compiler remains unproved Rust."
     },
     "src/developer/drafts.rs": {
       "status": "unproved",
@@ -2975,8 +2975,18 @@
     },
     "src/developer/generation.rs": {
       "status": "unproved",
-      "sha256": "e9b0246252a903e2a986d050c2be61132ac633f046da57ac2b3214b5153acd67",
-      "review": "Focused independent review accepted bounded native app proposal repair, canonical category admission and current task progress fences; fail-first generation/category/race regressions passed. These adapters remain outside proved business policies."
+      "sha256": "1abf3e7a19dd811c6c85569f812d46407411dad5c8b0646d0f23399a04162822",
+      "review": "Reviewed description-led native app compilation, typed handler generation, preserved surface restrictions, SDK asset contract and scoped draft UI; new compiler remains unproved Rust."
+    },
+    "src/developer/generation_bindings.rs": {
+      "status": "unproved",
+      "sha256": "e29341097f5833fa2f37ac98d8f12fb5fa3f906e1ca7caa4878d4ad511700792",
+      "review": "Reviewed description-led native app compilation, typed handler generation, preserved surface restrictions, SDK asset contract and scoped draft UI; new compiler remains unproved Rust."
+    },
+    "src/developer/generation_brief.rs": {
+      "status": "unproved",
+      "sha256": "f355066c125360cbb1a9637dd6ad3d08d5adb8eed1c571142aa2855b65811012",
+      "review": "Reviewed description-led native app compilation, typed handler generation, preserved surface restrictions, SDK asset contract and scoped draft UI; new compiler remains unproved Rust."
     },
     "src/developer/generation_contract.rs": {
       "status": "unproved",
@@ -2990,8 +3000,8 @@
     },
     "src/developer/mod.rs": {
       "status": "unproved",
-      "sha256": "df4a6c6eef0d0b7cf65d1bf6d86fcf5099e99d197dea8a778fc0bc45a804e029",
-      "review": "Separate signed role-bound SQL authority preserves old row/domain policies; bound short-lived tickets, personal actor fences, guarded native app DDL, fixed snapshot ordering and narrow language registry. Reviewed additive 099 and runtime pools; actual login attacks, two replicas, restart, app release and real PgBouncer/key rotation pass. SQL/HMAC/transport remain tested adapters outside pure Lean proofs."
+      "sha256": "4ef9832d550731f8a3f143ffc2140a0de342e80e70a8d61cea49839591fda9d0",
+      "review": "Reviewed description-led native app compilation, typed handler generation, preserved surface restrictions, SDK asset contract and scoped draft UI; new compiler remains unproved Rust."
     },
     "src/developer/preview.rs": {
       "status": "unproved",
@@ -3000,8 +3010,8 @@
     },
     "src/developer/routes.rs": {
       "status": "unproved",
-      "sha256": "61332c4420d8bf146f8aec6fe56f9ee90c55f091cfb2a8e681ac37a229242007",
-      "review": "Reviewed native app staging: retain live/stage/preview-owner checks on the existing privileged build transaction instead of recursively acquiring another system backend. Existing digest, actor, package fences and installation transaction unchanged; real PgBouncer staging and foreign-build rejection cover the path."
+      "sha256": "35b9052740ae7ea345024684e5a7a8005f971a0e1d5c1396c08a4413ae2cb277",
+      "review": "Reviewed description-led native app compilation, typed handler generation, preserved surface restrictions, SDK asset contract and scoped draft UI; new compiler remains unproved Rust."
     },
     "src/documents/content.rs": {
       "status": "unproved",
@@ -4211,6 +4221,10 @@
       "sha256": "4cf25b4a445c8df9c099efb9cdac0c2160b06e633256bc9d498edac67c11535d",
       "review": "Review compiler-enforced foundation crates with unchanged native owners; native provider read-tool aliases and current authorization, private checkpoint continuation and versioned prompt evidence; fixed subscriber acknowledgements preserve commit gaps, independent quarantine and explicit replay; traced requests/tasks/outbox without payloads; exact decimal-to-minor-unit rounding retains legacy price boundary; real SQL poison-isolation regression passes and workspace unit/clippy checks pass"
     },
+    "crates/cognition/prompts/app-brief.v1.txt": {
+      "sha256": "f914e49960a073fdef0e669fe46dea413fe8e4dcd9cc200d4f10629579218362",
+      "review": "Reviewed description-led native app compilation, typed handler generation, preserved surface restrictions, SDK asset contract and scoped draft UI; new compiler remains unproved Rust."
+    },
     "crates/cognition/prompts/app-coding-task.v1.txt": {
       "sha256": "7516c7400c12aabb3ab171fe4092a5025a9feacab85358bf05afac9b154c8f3c",
       "review": "Review compiler-enforced foundation crates with unchanged native owners; native provider read-tool aliases and current authorization, private checkpoint continuation and versioned prompt evidence; fixed subscriber acknowledgements preserve commit gaps, independent quarantine and explicit replay; traced requests/tasks/outbox without payloads; exact decimal-to-minor-unit rounding retains legacy price boundary; real SQL poison-isolation regression passes and workspace unit/clippy checks pass"
@@ -4239,6 +4253,10 @@
       "sha256": "5f55127630ef5f3726d9b6ea12430a3d7531bfd481e270030682fd34d273e960",
       "review": "Focused independent review accepted bounded native app proposal repair, canonical category admission and current task progress fences; fail-first generation/category/race regressions passed. These adapters remain outside proved business policies."
     },
+    "crates/cognition/prompts/app-generation.v4.txt": {
+      "sha256": "afe476e3c36fc0f04dd22b135e03fa4cf59af0e12c8e37066d4e37860c439dce",
+      "review": "Reviewed description-led native app compilation, typed handler generation, preserved surface restrictions, SDK asset contract and scoped draft UI; new compiler remains unproved Rust."
+    },
     "crates/cognition/prompts/catalogue-translation.v1.txt": {
       "sha256": "d50b1c4d06588f5cfc93baa2c06d27ea5d01f32d3fbd0104596f6f8dac9db68e",
       "review": "Reviewed scoped translation selection, original task authority, atomic child linking and completion, cancellation/explicit ambiguous continuation, lease fences, central provider admission outside transactions and bounded prompt evidence; real PostgreSQL/HTTP collection and interruption regressions plus 724 UI tests; skipped products store SQL NULL evidence rather than JSON null. Claude supplied code-only review, findings checked and fixed."
@@ -4252,8 +4270,8 @@
       "review": "Reviewed native extension identity/private/unique anchors and current read/write/PII scopes; native projections use bounded fixed-store queries, exact indexed filters bind all input and fence the admitted package digest. Real four-object HTTP/MCP, role revocation, foreign reference, immutable upgrade, product/company clone and selected release tests passed. Added extracted configuration-only release predicate and operational false property; SQL and UI remain explicitly unproved. Reviewed canonical schema, preserved AI bindings and versioned grid prompt provenance without changing existing prompt revisions."
     },
     "crates/cognition/prompts/manifest.json": {
-      "sha256": "8517b876f8093ff07facb063494e973f45f634a66aee4b6efd66ab7c3841b486",
-      "review": "Task2 reviewed native view component admission and bounded private pins; unchanged extracted policies. Local native units, clippy and real users/providers/site HTTP pass; independent review fixes cover nested cancel and CRM address drafts."
+      "sha256": "80701f7f1cb09328a42b0ba7b4733c287a8a2915e55e2a06cce33c98761923b4",
+      "review": "Reviewed description-led native app compilation, typed handler generation, preserved surface restrictions, SDK asset contract and scoped draft UI; new compiler remains unproved Rust."
     },
     "crates/cognition/prompts/merchant-planner.v1.txt": {
       "sha256": "6fc1d69faed9342d8b95af531c3c3e0c597f1c4d18a311d3f62e5849236fdfaf",
@@ -4291,9 +4309,13 @@
       "sha256": "32cff221980fddc3973e774760e28c3bc7dff414234d8b400fea9683b465a99e",
       "review": "Review compiler-enforced foundation crates with unchanged native owners; native provider read-tool aliases and current authorization, private checkpoint continuation and versioned prompt evidence; fixed subscriber acknowledgements preserve commit gaps, independent quarantine and explicit replay; traced requests/tasks/outbox without payloads; exact decimal-to-minor-unit rounding retains legacy price boundary; real SQL poison-isolation regression passes and workspace unit/clippy checks pass"
     },
+    "extensions/sdk/native-asset-actions.json": {
+      "sha256": "7b5834f31ac0b86a3808ef11f4ae122e38457081cf06c782a8f6d60a1027ee77",
+      "review": "Reviewed description-led native app compilation, typed handler generation, preserved surface restrictions, SDK asset contract and scoped draft UI; new compiler remains unproved Rust."
+    },
     "fixtures/app-studio-schema.json": {
-      "sha256": "f9a84dcb9492ef9ef7fc1863dca313f9298d8641781431a92b9b44d58109f459",
-      "review": "Reviewed public model-refusal follow-up: generation schema reads native machines, guard/replacement catalogues and registered team scopes from the existing validator; financial, terminal, quote acceptance and graph predicates are unchanged. Failure categories remain fail-closed and are localized inside the assistant. Real native lifecycle and provider-edit/private-release/order suites pass, including eight adversarial outputs; source/context and modal-error tests pass. No new pure policy or whole-adapter proof claim."
+      "sha256": "706f86aeb5ca2c8458c7a1d05be8dd03a7785bddca6b09c025337f2f5a308341",
+      "review": "Reviewed description-led native app compilation, typed handler generation, preserved surface restrictions, SDK asset contract and scoped draft UI; new compiler remains unproved Rust."
     },
     "fixtures/demo-catalog.json": {
       "sha256": "e5d5eea04a7693b3f92fa58be66ad36b7ad01d5920029c29f303693aa0032ba2",
@@ -4836,8 +4858,8 @@
       "review": "Reviewed original Shopware app controller, bounded fixed-origin lifecycle jobs and durable uncertain fences; opaque pinned app UI response CSP; operational records excluded by extracted release policy and native clone/publication path. Real container, native permissions/MCP, migration retention and app surface regressions passed; PHP and controller adapters remain unproved."
     },
     "scripts/formal/registry.py": {
-      "sha256": "360929ad96b6dd5de79076a16d52b650b69f1552f9042e2e875a6f5661762644",
-      "review": "Review domain proof import and size closure, explicit Rust registrations, all 149 theorem bindings, existing adapter truth conditions and unchanged 61 prior policy ASTs; negative controls reject extra imports, missing claims and hidden Cargo authority."
+      "sha256": "8f0bebf7a8fb1f4387a456f72634446cd615aa20a4f80778979c166c28fbf3de",
+      "review": "Reviewed description-led native app compilation, typed handler generation, preserved surface restrictions, SDK asset contract and scoped draft UI; new compiler remains unproved Rust."
     },
     "scripts/formal/runners.py": {
       "sha256": "c73bda913fb0c1949c25ad7589e5d156c05f7e0a89f39ca7be8b8e40ebd5f565",

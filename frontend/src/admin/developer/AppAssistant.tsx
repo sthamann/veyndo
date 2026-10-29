@@ -3,6 +3,7 @@ import "../styles/app-creation.css";
 import AppPlacementPicker from "./AppPlacementPicker";
 import AppCreationSummary from "./AppCreationSummary";
 import AppRecipes from "./AppRecipes";
+import AppBrief from "./AppBrief";
 import { useState } from "react";
 import LocalizedField from "../../shared/i18n/LocalizedField";
 import ContentLanguagePicker from "../../shared/i18n/ContentLanguagePicker";
@@ -30,7 +31,7 @@ export default function AppAssistant({
   onCreate,
   onClose,
 }: {
-  onCreate: (m: Manifest) => void;
+  onCreate: (m: Manifest, brief?: string) => void;
   onClose: () => void;
 }) {
   const { t } = useAssistantText();
@@ -66,6 +67,7 @@ export default function AppAssistant({
       </header>
       {!kind ? (
         <>
+          <AppBrief onCreate={onCreate} />
           <AppRecipes onCreate={onCreate} />
           <div className="app-assistant-grid">
             {appKinds.map((k) => (

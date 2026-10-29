@@ -8,7 +8,7 @@ def digest(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 def current_sources(root):return {str(p.relative_to(root)):p for p in sorted([*(root/'src').rglob('*.rs'),*(root/'crates').rglob('*.rs'),*(root/'extensions').rglob('*.rs')])}
 def inputs(root):
     files=[*(root/'reference').glob('automation-*.json'),root/'Cargo.toml',*(root/'crates').glob('*/Cargo.toml'),root/'Cargo.lock',*(root/'src').rglob('*.sql'),*(root/'src/ucp').glob('*.json'),*(root/'migrations').glob('*.sql'),*(root/'fixtures').glob('*.json'),
-           root/'frontend/package.json',root/'frontend/package-lock.json',root/'frontend/scripts/precompress.mjs',root/'deploy/Dockerfile',
+           root/'extensions/sdk/native-asset-actions.json',root/'frontend/package.json',root/'frontend/package-lock.json',root/'frontend/scripts/precompress.mjs',root/'deploy/Dockerfile',
            root/'proof/Commerce/Claims.lean',*(root/'proof/Commerce/Claims').glob('*.lean'),root/'proof/lakefile.toml',root/'proof/lean-toolchain',
            root/'scripts/formal.py',*(root/'scripts/formal').glob('*.py'),root/'.github/workflows/verify.yml',
            *(root/'crates/cognition/prompts').glob('*'),*(root/'crates/cognition/evals').glob('*.json'),root/'scripts/testing/prompt_governance.py']

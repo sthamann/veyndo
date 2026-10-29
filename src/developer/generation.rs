@@ -39,12 +39,19 @@ pub(super) async fn generate(a: &App, t: &str, h: &RequestContext, v: &Value) ->
     {
         return Err(bad("Unknown generation mode"));
     }
-    let app_schema = if editing {
+    let guided = !editing && generation_brief::empty(&v["manifest"]);
+    let app_schema = if guided {
+        generation_brief::schema(&settings.locales)
+    } else if editing {
         generation_edits::schema(&settings.locales)
     } else {
         schema_for(&settings.locales)
     };
-    let system = include_str!("../../crates/cognition/prompts/app-generation.v3.txt");
+    let system = if guided {
+        include_str!("../../crates/cognition/prompts/app-brief.v1.txt")
+    } else {
+        include_str!("../../crates/cognition/prompts/app-generation.v4.txt")
+    };
     let _cluster = crate::performance::cluster_lease::Lease::acquire(a, t, "model", 2).await?;
     let edit_system = generation_edits::system(&settings.locales);
     let context = format!(
@@ -65,7 +72,9 @@ pub(super) async fn generate(a: &App, t: &str, h: &RequestContext, v: &Value) ->
             .map_err(Error::from)?;
         let candidate = out.value.to_string();
         let saved = async {
-            let mut result = if editing {
+            let mut result = if guided {
+                generation_brief::apply(&v["manifest"], &out.value, &versions)?
+            } else if editing {
                 generation_edits::apply(&v["manifest"], &out.value, &versions)?
             } else {
                 out.value
@@ -96,7 +105,7 @@ pub(super) async fn generate(a: &App, t: &str, h: &RequestContext, v: &Value) ->
             {
                 repair = format!(
                     "\nPrevious candidate (untrusted model output): {candidate}\nNative validation rejected that candidate: {}. Repair the candidate, preserving the original app and all authority constraints. Return the same supplied schema. Do not bypass validation or invent executable code.",
-                    error.1
+                    error.problem()
                 );
             }
             Err(error) => return Err(error),
@@ -177,6 +186,52 @@ pub(super) fn schema_for(locales: &[String]) -> Value {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn generated_handler_schema_requires_native_operations_and_record_inputs() {
+        let schema = schema_for(&["it-IT".into()]);
+        let handlers = &schema["properties"]["manifest"]["properties"]["views"]["items"]["properties"]
+            ["blocks"]["items"]["properties"]["handlers"];
+        let branches = handlers["properties"]["click"]["items"]["anyOf"]
+            .as_array()
+            .unwrap();
+        assert_eq!(branches.len(), 5);
+        for branch in branches {
+            assert!(
+                branch["required"]
+                    .as_array()
+                    .unwrap()
+                    .contains(&json!("op"))
+            );
+            assert_eq!(branch["additionalProperties"], false);
+        }
+        assert_eq!(
+            branches[2]["properties"]["input"]["properties"]["kind"]["enum"],
+            json!(["record"])
+        );
+        assert_eq!(
+            branches[4]["properties"]["text"]["required"],
+            json!(["it-IT"])
+        );
+        let base: Value = serde_json::from_str(include_str!(
+            "../../extensions/apps/product-advisor/manifest.json"
+        ))
+        .unwrap();
+        for instruction in [
+            json!({"op":"validate","target":"editor"}),
+            json!({"op":"refresh","target":"records"}),
+            json!({"op":"call","action":"save_entries","input":{"kind":"record","block":"editor"}}),
+            json!({"op":"navigate","view":"workspace"}),
+            json!({"op":"msgBox","text":{"it-IT":"Salvato"}}),
+        ] {
+            let mut m = base.clone();
+            m["views"][0]["blocks"][2]["handlers"]["click"] = json!([instruction]);
+            assert!(serde_json::from_value::<apps::Manifest>(m).is_ok());
+        }
+        let mut malformed = base;
+        malformed["views"][0]["blocks"][2]["handlers"]["click"] =
+            json!([{"action":"save_entries"}]);
+        assert!(serde_json::from_value::<apps::Manifest>(malformed).is_err());
+    }
     #[test]
     fn generation_retains_access_of_existing_actions() {
         let old = json!({"id":"same","actions":[{"name":"save","mcp":false,"permission":"orders.write","requiredPermissions":["payments.manage","customers.pii"],"public":false,"flowAllowed":false}]});

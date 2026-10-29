@@ -284,16 +284,33 @@ export function responseError(
         )
       : null;
   const csvRow = problem?.pointer?.match(/^\/catalogIntake\/rows\/(\d+)$/);
-  const message = csvRow
-    ? catalogCsvRowError[i].replace("{row}", csvRow[1])
-    : example && Number(example[1]) < 12
-      ? appCapabilityWords.exampleFailure[i].replace(
-          "{example}",
-          String(Number(example[1]) + 1),
+  const binding =
+    status === 400 && problem?.kind === "validation_error"
+      ? problem.pointer?.match(
+          /^\/views\/(\d+)\/blocks\/(\d+)\/(?:readAction|writeAction)$/,
         )
-      : problem?.kind === "quota_exceeded" && problem.pointer === "/agentBudget"
-        ? agentAllowanceExhausted[i]
-        : (messages[detail] ?? fallback[String(status)] ?? fallback[500])[i];
+      : null;
+  const bindingText = [
+    "In view {view}, block {block} needs a valid data action. Select the block in Design and connect its read or save action under Connections, then prepare the proposal again.",
+    "In Ansicht {view} benötigt Baustein {block} eine gültige Datenaktion. Wähle den Baustein unter Gestaltung aus und verbinde seine Lese- oder Speicheraktion unter Verbindungen. Bereite den Vorschlag danach erneut vor.",
+    "Dans la vue {view}, le bloc {block} nécessite une action de données valide. Sélectionnez le bloc dans Design et reliez son action de lecture ou d’enregistrement dans Connexions, puis préparez à nouveau la proposition.",
+    "En la vista {view}, el bloque {block} necesita una acción de datos válida. Selecciona el bloque en Diseño y conecta su acción de lectura o guardado en Conexiones. Después prepara la propuesta de nuevo.",
+  ];
+  const message = binding
+    ? bindingText[i]
+        .replace("{view}", String(Number(binding[1]) + 1))
+        .replace("{block}", String(Number(binding[2]) + 1))
+    : csvRow
+      ? catalogCsvRowError[i].replace("{row}", csvRow[1])
+      : example && Number(example[1]) < 12
+        ? appCapabilityWords.exampleFailure[i].replace(
+            "{example}",
+            String(Number(example[1]) + 1),
+          )
+        : problem?.kind === "quota_exceeded" &&
+            problem.pointer === "/agentBudget"
+          ? agentAllowanceExhausted[i]
+          : (messages[detail] ?? fallback[String(status)] ?? fallback[500])[i];
   const error = new Error(message);
   Object.assign(error, {
     diagnostic: detail,

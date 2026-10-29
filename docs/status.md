@@ -26,11 +26,18 @@ Its native critical chain took 31m18s against the preceding 37m13s baseline.
 The documentation is published; runtime functional acceptance below keeps its
 original deployed version.
 
-The next working change adds agent-composed native views with embedded editors,
-private catalogue intake and saved component layouts. Real local model output,
-browser pin/reload and sandbox CSV creation have been observed. It is still a
-working branch, not a public Core release.
-[Exact local evidence and remaining delivery](evidence/composed-workspace-2026-10-29.md).
+Agent-composed native views are merged in [PR #226](https://github.com/sthamann/veyndo/pull/226).
+The complete required [Linux run 40848076210](https://github.com/sthamann/veyndo/actions/runs/40848076210)
+passed all partitions, collection and frontend checks. Real local model output,
+browser pin/reload and private CSV creation are recorded separately from hosted
+Core delivery. [Exact workspace evidence](evidence/composed-workspace-2026-10-29.md).
+
+Description-led app creation is the next working branch. A real local model
+produced a consultation app with product relation, private design upload, status,
+setting and two native views. The browser journey includes actual saved preview
+data, package-only release, central settings, a published request and restoration
+of the previous interface as a new version. It has not yet completed required CI
+or hosted delivery. [Exact local app evidence](evidence/guided-app-2026-10-29.md).
 
 The 23 October release expands selected Lean guarantees to **63 policies / 149
 properties**, splits their Rust/Lean owners and tightens Cargo dependency checks.

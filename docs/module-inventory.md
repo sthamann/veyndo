@@ -323,6 +323,8 @@ This lists every checked-in source module in these roots, including files with n
 | [src/developer/builds.rs](../src/developer/builds.rs) | Immutable development versions are validated before storage; installation targets only private environments. |
 | [src/developer/drafts.rs](../src/developer/drafts.rs) | Actor-private, optimistic mutable autosaves; these never install or alter a published package. |
 | [src/developer/generation.rs](../src/developer/generation.rs) | Structured provider output becomes a reviewable immutable manifest; it cannot write files or call shell tools. |
+| [src/developer/generation_bindings.rs](../src/developer/generation_bindings.rs) | Complete only deterministic native model/asset bindings; original validation and explicit consent remain authoritative. |
+| [src/developer/generation_brief.rs](../src/developer/generation_brief.rs) | Compile a bounded new-app brief into the existing native Manifest; no model-authored wiring or new executor. |
 | [src/developer/generation_contract.rs](../src/developer/generation_contract.rs) | Generated revisions preserve existing storage and access boundaries; destructive changes require manual schema review. |
 | [src/developer/generation_edits.rs](../src/developer/generation_edits.rs) | Bounded RFC 6902 edits modify the canonical Manifest; this is model wire adaptation, not an app runtime. |
 | [src/developer/mod.rs](../src/developer/mod.rs) | Prompt-generated declarative apps and native coding-agent handoff, never unsandboxed model code. |
@@ -746,6 +748,7 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/admin/developer/AppAgentPanel.tsx](../frontend/src/admin/developer/AppAgentPanel.tsx) | Coding agents receive the current Manifest IR and authoritative schema; imported edits round-trip to the canvas. |
 | [frontend/src/admin/developer/AppAssistant.tsx](../frontend/src/admin/developer/AppAssistant.tsx) | Guided app kinds create normal editable manifests; all changes follow private-stage versioning. |
 | [frontend/src/admin/developer/AppAutomation.tsx](../frontend/src/admin/developer/AppAutomation.tsx) | Editable triggers are declared alongside UI and actions; secrets remain operator-managed. |
+| [frontend/src/admin/developer/AppBrief.tsx](../frontend/src/admin/developer/AppBrief.tsx) | A plain merchant brief opens an empty ordinary draft in the existing contextual agent. |
 | [frontend/src/admin/developer/AppCanvas.tsx](../frontend/src/admin/developer/AppCanvas.tsx) | Accessible click-to-add canvas with selectable blocks and keyboard-accessible ordering controls. |
 | [frontend/src/admin/developer/AppCapabilityChecks.tsx](../frontend/src/admin/developer/AppCapabilityChecks.tsx) | Frozen pure-decision expectations remain advanced, read-only metadata; no fake execution result is inferred. |
 | [frontend/src/admin/developer/AppCapabilityEditor.tsx](../frontend/src/admin/developer/AppCapabilityEditor.tsx) | Merchant ideas, requirements and explicit agent handoff edit the canonical versioned Manifest without executing changes. |
@@ -761,6 +764,7 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/admin/developer/AppDesignPreview.tsx](../frontend/src/admin/developer/AppDesignPreview.tsx) | Schema-based, non-interactive design illustration. Never fetches data or executes app actions. |
 | [frontend/src/admin/developer/AppDesignWorkspace.tsx](../frontend/src/admin/developer/AppDesignWorkspace.tsx) | Shared design workspace composes the existing preview, palette and inspector with bounded personal panel widths. |
 | [frontend/src/admin/developer/AppDiagnostics.tsx](../frontend/src/admin/developer/AppDiagnostics.tsx) | Declared package diagnostics link to their real editors; counts never claim a successful runtime test or installed secret. |
+| [frontend/src/admin/developer/AppDraftEntry.tsx](../frontend/src/admin/developer/AppDraftEntry.tsx) | Description and pattern entry share draft replacement confirmation before starting the existing workbench. |
 | [frontend/src/admin/developer/AppEditorNavigation.tsx](../frontend/src/admin/developer/AppEditorNavigation.tsx) | Consistent navigation between visual definitions, provider contracts and immutable versions. |
 | [frontend/src/admin/developer/AppEvents.tsx](../frontend/src/admin/developer/AppEvents.tsx) | Edits the validated subscription/filter/batch contract; delivery uses the existing leased outbox. |
 | [frontend/src/admin/developer/AppExpressionEditor.tsx](../frontend/src/admin/developer/AppExpressionEditor.tsx) | Expressions use typed source text and known form/control references, with a separate JSON editor for agent object ASTs. |
@@ -817,9 +821,11 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/admin/developer/assistant-model.ts](../frontend/src/admin/developer/assistant-model.ts) | Assistants compile to the public manifest contract, with no hidden runtime or provider code. |
 | [frontend/src/admin/developer/assistant-placements.ts](../frontend/src/admin/developer/assistant-placements.ts) | Multiple assistant placements remain ordinary independent views/models in one immutable package. |
 | [frontend/src/admin/developer/basic-code.ts](../frontend/src/admin/developer/basic-code.ts) | Small BASIC-style surface syntax compiles into the same bounded AST as visual and agent edits; no JavaScript execution. |
+| [frontend/src/admin/developer/brief-i18n.ts](../frontend/src/admin/developer/brief-i18n.ts) | Typed merchant vocabulary for description-led app creation; no extra agent or execution path. |
 | [frontend/src/admin/developer/control-model.ts](../frontend/src/admin/developer/control-model.ts) | Pure control construction and bounded code-behind discovery keep visual edits and agent manifests identical. |
 | [frontend/src/admin/developer/core-extension-model.ts](../frontend/src/admin/developer/core-extension-model.ts) | Visual extension bindings compile into the canonical model and current native action scopes. |
 | [frontend/src/admin/developer/model-workspace.ts](../frontend/src/admin/developer/model-workspace.ts) | Form wizard emits the standard manifest IR; the ordinary compiler supplies all actions, APIs and permission allowlists. |
+| [frontend/src/admin/developer/start-described-app.ts](../frontend/src/admin/developer/start-described-app.ts) | A merchant brief begins in an owned private stage and uses the existing reviewed app agent. |
 | [frontend/src/admin/developer/useAppPreview.ts](../frontend/src/admin/developer/useAppPreview.ts) | F5/hot reload uses the existing native runtime in an actor-private staging environment, never an immutable build. |
 | [frontend/src/admin/developer/useAppStudio.ts](../frontend/src/admin/developer/useAppStudio.ts) | Tenant-scoped build lifecycle; immutable saved snapshots gate sandbox previews and selected app-only releases. |
 | [frontend/src/admin/developer/useDesignerKeys.ts](../frontend/src/admin/developer/useDesignerKeys.ts) | Designer keyboard shortcuts leave native input and rich-editor undo behavior intact. |
@@ -950,6 +956,7 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/admin/styles/app-agent-drawer.css](../frontend/src/admin/styles/app-agent-drawer.css) | Contextual AI dialog presentation; native dialog owns modal focus and the editing canvas remains mounted. |
 | [frontend/src/admin/styles/app-artwork.css](../frontend/src/admin/styles/app-artwork.css) | Category cover and app icon artwork, with local deterministic fallbacks. |
 | [frontend/src/admin/styles/app-assistant.css](../frontend/src/admin/styles/app-assistant.css) | Guided extension workspace: restrained colour, clear choices and responsive setup. |
+| [frontend/src/admin/styles/app-brief.css](../frontend/src/admin/styles/app-brief.css) | Description-led entry keeps one clear request above the optional visual app patterns. |
 | [frontend/src/admin/styles/app-building.css](../frontend/src/admin/styles/app-building.css) | Modern recipe cards and structural AI review reuse Studio colors and responsive interaction rules. |
 | [frontend/src/admin/styles/app-capability.css](../frontend/src/admin/styles/app-capability.css) | Merchant-friendly idea brief, explicit next steps and optional bounded rule checks share Studio tokens. |
 | [frontend/src/admin/styles/app-catalog.css](../frontend/src/admin/styles/app-catalog.css) | App library/detail presentation: bounded cards, passive artwork, accessible filters and theme-aware forms. |

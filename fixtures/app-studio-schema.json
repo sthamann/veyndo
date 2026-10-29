@@ -569,14 +569,288 @@
                         "click": {
                           "type": "array",
                           "items": {
-                            "type": "object"
+                            "anyOf": [
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "op": {
+                                    "type": "string",
+                                    "enum": [
+                                      "validate"
+                                    ]
+                                  },
+                                  "target": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "op",
+                                  "target"
+                                ],
+                                "additionalProperties": false
+                              },
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "op": {
+                                    "type": "string",
+                                    "enum": [
+                                      "refresh"
+                                    ]
+                                  },
+                                  "target": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "op",
+                                  "target"
+                                ],
+                                "additionalProperties": false
+                              },
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "op": {
+                                    "type": "string",
+                                    "enum": [
+                                      "call"
+                                    ]
+                                  },
+                                  "action": {
+                                    "type": "string"
+                                  },
+                                  "input": {
+                                    "type": "object",
+                                    "properties": {
+                                      "kind": {
+                                        "type": "string",
+                                        "enum": [
+                                          "record"
+                                        ]
+                                      },
+                                      "block": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "kind",
+                                      "block"
+                                    ],
+                                    "additionalProperties": false
+                                  }
+                                },
+                                "required": [
+                                  "op",
+                                  "action",
+                                  "input"
+                                ],
+                                "additionalProperties": false
+                              },
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "op": {
+                                    "type": "string",
+                                    "enum": [
+                                      "navigate"
+                                    ]
+                                  },
+                                  "view": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "op",
+                                  "view"
+                                ],
+                                "additionalProperties": false
+                              },
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "op": {
+                                    "type": "string",
+                                    "enum": [
+                                      "msgBox"
+                                    ]
+                                  },
+                                  "text": {
+                                    "type": "object",
+                                    "properties": {
+                                      "en": {
+                                        "type": "string"
+                                      },
+                                      "de": {
+                                        "type": "string"
+                                      },
+                                      "fr": {
+                                        "type": "string"
+                                      },
+                                      "es": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "en",
+                                      "de",
+                                      "fr",
+                                      "es"
+                                    ],
+                                    "additionalProperties": false
+                                  }
+                                },
+                                "required": [
+                                  "op",
+                                  "text"
+                                ],
+                                "additionalProperties": false
+                              }
+                            ]
                           },
                           "maxItems": 32
                         },
                         "change": {
                           "type": "array",
                           "items": {
-                            "type": "object"
+                            "anyOf": [
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "op": {
+                                    "type": "string",
+                                    "enum": [
+                                      "validate"
+                                    ]
+                                  },
+                                  "target": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "op",
+                                  "target"
+                                ],
+                                "additionalProperties": false
+                              },
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "op": {
+                                    "type": "string",
+                                    "enum": [
+                                      "refresh"
+                                    ]
+                                  },
+                                  "target": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "op",
+                                  "target"
+                                ],
+                                "additionalProperties": false
+                              },
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "op": {
+                                    "type": "string",
+                                    "enum": [
+                                      "call"
+                                    ]
+                                  },
+                                  "action": {
+                                    "type": "string"
+                                  },
+                                  "input": {
+                                    "type": "object",
+                                    "properties": {
+                                      "kind": {
+                                        "type": "string",
+                                        "enum": [
+                                          "record"
+                                        ]
+                                      },
+                                      "block": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "kind",
+                                      "block"
+                                    ],
+                                    "additionalProperties": false
+                                  }
+                                },
+                                "required": [
+                                  "op",
+                                  "action",
+                                  "input"
+                                ],
+                                "additionalProperties": false
+                              },
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "op": {
+                                    "type": "string",
+                                    "enum": [
+                                      "navigate"
+                                    ]
+                                  },
+                                  "view": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "op",
+                                  "view"
+                                ],
+                                "additionalProperties": false
+                              },
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "op": {
+                                    "type": "string",
+                                    "enum": [
+                                      "msgBox"
+                                    ]
+                                  },
+                                  "text": {
+                                    "type": "object",
+                                    "properties": {
+                                      "en": {
+                                        "type": "string"
+                                      },
+                                      "de": {
+                                        "type": "string"
+                                      },
+                                      "fr": {
+                                        "type": "string"
+                                      },
+                                      "es": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "en",
+                                      "de",
+                                      "fr",
+                                      "es"
+                                    ],
+                                    "additionalProperties": false
+                                  }
+                                },
+                                "required": [
+                                  "op",
+                                  "text"
+                                ],
+                                "additionalProperties": false
+                              }
+                            ]
                           },
                           "maxItems": 32
                         }
