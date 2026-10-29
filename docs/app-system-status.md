@@ -92,9 +92,16 @@ invariants, not the app's material or furniture business rules.
 | Isolated source builds | Manifest admission and component validation exist. | Supported Rust/TypeScript source → real isolated build without production secrets → validated immutable artifact → actual runtime consumer; bounded resources, malicious input/egress cases and cleanup verified. |
 | Managed services | Approved independent services have guarded egress, jobs and secrets. | Platform-owned isolated execution, current capability admission, leases, monitoring, costs, restart and uncertain-effect reconciliation. |
 | Commerce Crater | Package-owned frozen cases execute on admission/install. | A Core candidate executes supported app/version cases and authorized tenant replay corpora, detects incompatibility and creates a reviewed repair; report the actual evaluated population. |
-| Shopware porting | Selected native behavior ports and original PHP comparison fixtures exist. | Inventory a real supported extension, port its intent and compare the actual scenarios against the original; unsupported API/Twig/plugin behavior remains explicit. |
 | Enterprise cells | Cell/relocation architecture and worker roles are documented. | Real provisioning, isolation, update, backup/restore and fenced tenant movement; measured workload/fairness and one authoritative writer. No tenant Core fork. |
 | Complete business-capability release | Existing app versions and selected publication exist. | Data/UI/decision/migration changes remain coordinated, old carts/orders have defined behavior, and measured canary routing/rollback respects irreversible effects. |
+
+## Separate experiments
+
+Original Shopware execution and native PHP-plugin translation are parked on
+[`experiment/shopware-compatibility`](https://github.com/sthamann/veyndo/tree/experiment/shopware-compatibility).
+They are outside the main app-system implementation gates. The native platform
+retains [inward shop migration](agentic-migration.md) and original PHP comparison
+fixtures for its own commerce calculations.
 
 ## Source and evidence map
 

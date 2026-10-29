@@ -184,10 +184,12 @@ and Payments product boundaries remain intact.
 | Contracts and decisions | Existing pricing/message/engraving examples use typed versioned decision artifacts and repeat the same frozen quote inputs deterministically. |
 | Complete B2B capability | The configurator works across shop, account, administration, approval, reorder, revisioned change and native release, with trace-based explanation. |
 | Operated individual software | A supported source build, guarded service runtime and core compatibility check work through their actual production consumer. |
-| Shopware migration | Inventory one supported extension, port its intent and compare actual scenarios against the original. Unchanged Symfony/plugin execution is a separate Enterprise-cell proposition. |
 
-Shopware app/script compatibility, PHP analysis/porting and third-party hosting
-claims need separately verified scope. The product is a publicly developed
+Original Shopware app/script execution and PHP-plugin translation are parked on
+[`experiment/shopware-compatibility`](https://github.com/sthamann/veyndo/tree/experiment/shopware-compatibility).
+They are separate from these main-platform gates. Inward shop-data migration and
+native original-PHP calculation comparisons remain available. Third-party hosting
+claims still need their own runtime acceptance. The product is a publicly developed
 experiment platform under the [Sustainable Use License](../LICENSE), not an
 assertion of production completeness or guaranteed maintenance for every extension.
 
