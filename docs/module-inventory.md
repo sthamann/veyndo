@@ -706,12 +706,14 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/admin/catalog/ProductDataView.tsx](../frontend/src/admin/catalog/ProductDataView.tsx) | Central catalog workspace uses shared server-paged grids, existing product editing and hierarchical categories. |
 | [frontend/src/admin/catalog/ProductEditor.tsx](../frontend/src/admin/catalog/ProductEditor.tsx) | Revision-aware product aggregate editor: one save, translation tabs and product-scoped linked capabilities. |
 | [frontend/src/admin/catalog/ProductEditorActions.tsx](../frontend/src/admin/catalog/ProductEditorActions.tsx) | Product mutation actions share the workspace write grant; read-only users can still inspect all product tabs. |
-| [frontend/src/admin/catalog/ProductEditorExtras.tsx](../frontend/src/admin/catalog/ProductEditorExtras.tsx) | Price-tax selection and permission-filtered extension slots attached to the product editor. |
+| [frontend/src/admin/catalog/ProductEditorExtras.tsx](../frontend/src/admin/catalog/ProductEditorExtras.tsx) | Permission-filtered extension slots retain the current product context. |
 | [frontend/src/admin/catalog/ProductEditorHeader.tsx](../frontend/src/admin/catalog/ProductEditorHeader.tsx) | Compact product identity, current save state and shared language context stay above every section. |
 | [frontend/src/admin/catalog/ProductEditorNav.tsx](../frontend/src/admin/catalog/ProductEditorNav.tsx) | Grouped product and installed-app sections share keyboard navigation and one compact mobile selector. |
 | [frontend/src/admin/catalog/ProductLocalizedContent.tsx](../frontend/src/admin/catalog/ProductLocalizedContent.tsx) | Consistent main-language inheritance for product rich documents, specification groups and individual SEO fields. |
 | [frontend/src/admin/catalog/ProductMediaWorkspace.tsx](../frontend/src/admin/catalog/ProductMediaWorkspace.tsx) | One product-media workspace: cover, ordered gallery, multilingual image metadata, drag/drop and optional reviewed AI drafts. |
 | [frontend/src/admin/catalog/ProductPanels.tsx](../frontend/src/admin/catalog/ProductPanels.tsx) | Native commerce, media, translated SEO/specifications and category panels for one editable product. |
+| [frontend/src/admin/catalog/ProductPriceTiers.tsx](../frontend/src/admin/catalog/ProductPriceTiers.tsx) | Native rule-bound price tiers edit the existing revisioned product aggregate. |
+| [frontend/src/admin/catalog/ProductPricing.tsx](../frontend/src/admin/catalog/ProductPricing.tsx) | Grouped native pricing inputs preserve stock-safe aggregate saves and optional price contracts. |
 | [frontend/src/admin/catalog/ProductTextFields.tsx](../frontend/src/admin/catalog/ProductTextFields.tsx) | Product text uses the shared single-language editor and field inheritance; product number stays language independent. |
 | [frontend/src/admin/catalog/ProductVariants.tsx](../frontend/src/admin/catalog/ProductVariants.tsx) | Native variant family browser with cursor pagination, explicit editing and a bounded creation wizard. |
 | [frontend/src/admin/catalog/ReferencePriceFields.tsx](../frontend/src/admin/catalog/ReferencePriceFields.tsx) | Native reference-unit inputs feed the same server-calculated unit price displayed on product pages. |
@@ -724,6 +726,7 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/admin/catalog/media-model.ts](../frontend/src/admin/catalog/media-model.ts) | Pure gallery operations preserve order, explicit alt translations and upload bounds without fabricating language values. |
 | [frontend/src/admin/catalog/preparation-i18n.ts](../frontend/src/admin/catalog/preparation-i18n.ts) | Preparation vocabulary describes persisted native progress, never an invented publication approval. |
 | [frontend/src/admin/catalog/product-editor-i18n.ts](../frontend/src/admin/catalog/product-editor-i18n.ts) | Product workspace guidance shares the interface locale, never the product's content language. |
+| [frontend/src/admin/catalog/product-pricing-i18n.ts](../frontend/src/admin/catalog/product-pricing-i18n.ts) | Interface guidance for native product prices, optional conditions and availability. |
 | [frontend/src/admin/catalog/useImageJob.ts](../frontend/src/admin/catalog/useImageJob.ts) | Restore and reconcile native image jobs across request/locale changes; only explicit merchant actions create provider work. |
 | [frontend/src/admin/catalog/variant-family.ts](../frontend/src/admin/catalog/variant-family.ts) | Cursor-based family lookup for duplicate review, bounded independently of the 50-row creation limit. |
 | [frontend/src/admin/catalog/variant-i18n.ts](../frontend/src/admin/catalog/variant-i18n.ts) | Guided variant creation and editing vocabulary; content still follows shop language inheritance. |
@@ -997,6 +1000,7 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/admin/styles/legal-settings.css](../frontend/src/admin/styles/legal-settings.css) | Light legal workspace: compact readiness, sector chips, linked sources and single-language editors. |
 | [frontend/src/admin/styles/media-workspace.css](../frontend/src/admin/styles/media-workspace.css) | Gallery workspace: airy tiles, focused image inspector and accessible upload surfaces using Studio theme tokens. |
 | [frontend/src/admin/styles/operations.css](../frontend/src/admin/styles/operations.css) | Operational screens share the studio's light surface and clear focus states. |
+| [frontend/src/admin/styles/product-pricing.css](../frontend/src/admin/styles/product-pricing.css) | Product pricing follows the native save path with grouped basics and optional conditions. |
 | [frontend/src/admin/styles/product-workspace.css](../frontend/src/admin/styles/product-workspace.css) | Product-only layout: compact identity, grouped sections and a fluid editing surface. |
 | [frontend/src/admin/styles/provider-account.css](../frontend/src/admin/styles/provider-account.css) | Shared provider onboarding layout works independently of the lazy-loaded visual App Studio. |
 | [frontend/src/admin/styles/sales-channels.css](../frontend/src/admin/styles/sales-channels.css) | Sales-channel cards, onboarding and scoped settings use the same responsive, accessible Studio design. |

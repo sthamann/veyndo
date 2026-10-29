@@ -53,3 +53,32 @@ shared browser credentials were used.
 
 This is local native/browser acceptance. It does not claim a production rollout,
 real payment acceptance, exhaustive physical-device coverage or new app privileges.
+
+
+## Price and availability follow-up
+
+The native price panel groups selling price, tax rate and the actual configured
+tax class together. Stock and delivery follow. Comparison prices, order quantities,
+reference units, currency-specific prices and existing rule-based discount tiers
+have named expandable sections. Existing configured values open their section.
+No new pricing, tax, currency, inventory or permission owner is introduced.
+
+In the same isolated local workspace, the browser opened synthetic product
+`UI-20261029`, changed its gross base price to EUR 27.95 and its lowest 30-day
+price to EUR 24.95, then saved through the ordinary native endpoint. A full
+reload retained both amounts, revision 2 and stock 12; the comparison-price
+section opened automatically. No hosted product record was changed.
+
+At 390 × 844px the product section picker and individual fields remain inside the
+viewport: both `innerWidth` and document width are 390px. The temporary viewport
+was reset after the check. The main Studio menu was closed for the capture.
+
+![Grouped native product prices](../assets/product-workspace-20261029/prices-desktop.png)
+
+[Mobile prices](../assets/product-workspace-20261029/prices-mobile.png).
+
+Targeted product/editor/currency checks passed: 22 distinct tests across the
+three affected suites, including a moved tax-class write/read-only regression,
+cent-step comparison editing and stock omission on content saves. Production
+frontend build, localization and architecture passed; the Impeccable source
+scan reported no findings. The daily complete test/coverage schedule is retained.

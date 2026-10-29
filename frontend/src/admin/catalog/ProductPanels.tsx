@@ -1,13 +1,9 @@
 /** Native commerce, media, translated SEO/specifications and category panels for one editable product. */
-import ProductCurrencyPrices from "./ProductCurrencyPrices";
+import ProductPricing from "./ProductPricing";
 import type { RequestFn } from "../shell/studio-types";
-import {
-  useCatalogText,
-  type CatalogWord,
-} from "../../shared/i18n/catalog-i18n";
+import { useCatalogText } from "../../shared/i18n/catalog-i18n";
 import type { Category, ProductDraft } from "./catalog-model";
 import PairFields from "./PairFields";
-import ReferencePriceFields from "./ReferencePriceFields";
 
 import {
   ProductRich,
@@ -34,33 +30,6 @@ export default function ProductPanels({
 }) {
   const { c } = useCatalogText();
   const d = draft;
-  const field = (key: string, label: CatalogWord, optional = false) => (
-    <label key={key}>
-      {c(label)}
-      <input
-        type="number"
-        min={0}
-        step={
-          key === "price" || key === "taxRate" || key === "listPrice"
-            ? "0.01"
-            : "1"
-        }
-        value={d.commerce[key] ?? ""}
-        onChange={(e) =>
-          onChange({
-            ...d,
-            commerce: {
-              ...d.commerce,
-              [key]:
-                optional && e.target.value === ""
-                  ? null
-                  : Number(e.target.value),
-            },
-          })
-        }
-      />
-    </label>
-  );
   const extra = (v: any) => onChange({ ...d, extra: { ...d.extra, ...v } });
   if (tab === "general")
     return (
@@ -106,107 +75,7 @@ export default function ProductPanels({
     );
   if (tab === "prices")
     return (
-      <>
-        <div className="catalog-form-grid">
-          {field("price", "price")}
-          {field("taxRate", "tax")}
-          {field("stock", "stock")}
-          {field("listPrice", "listPrice", true)}
-          {field("minPurchase", "min")}
-          {field("purchaseSteps", "steps")}
-          {field("maxPurchase", "max", true)}
-          {field("deliveryDays", "delivery")}
-          {field("regulationPrice", "regulationPrice", true)}
-        </div>
-        <ReferencePriceFields draft={draft} onChange={onChange} />
-        <ProductCurrencyPrices
-          request={request}
-          draft={draft}
-          onChange={onChange}
-        />
-        <h2>{c("tiers")}</h2>
-        {d.commerce.advancedPrices.map((tier: any, i: number) => (
-          <div className="catalog-form-grid catalog-tier" key={i}>
-            {(
-              ["rule_id", "quantity_start", "quantity_end", "discount"] as const
-            ).map((k, j) => (
-              <label key={k}>
-                {c((["rule", "from", "to", "discount"] as const)[j])}
-                <input
-                  type={j ? "number" : "text"}
-                  min={0}
-                  max={k === "discount" ? 100 : undefined}
-                  step={k === "discount" ? "0.01" : "1"}
-                  value={k === "discount" ? tier[k] * 100 : (tier[k] ?? "")}
-                  onChange={(e) =>
-                    onChange({
-                      ...d,
-                      commerce: {
-                        ...d.commerce,
-                        advancedPrices: d.commerce.advancedPrices.map(
-                          (v: any, n: number) =>
-                            n === i
-                              ? {
-                                  ...v,
-                                  [k]: j
-                                    ? k === "quantity_end" &&
-                                      e.target.value === ""
-                                      ? null
-                                      : Number(e.target.value) /
-                                        (k === "discount" ? 100 : 1)
-                                    : e.target.value,
-                                }
-                              : v,
-                        ),
-                      },
-                    })
-                  }
-                />
-              </label>
-            ))}
-            <button
-              type="button"
-              className="studio-secondary"
-              onClick={() =>
-                onChange({
-                  ...d,
-                  commerce: {
-                    ...d.commerce,
-                    advancedPrices: d.commerce.advancedPrices.filter(
-                      (_: any, n: number) => n !== i,
-                    ),
-                  },
-                })
-              }
-            >
-              {c("remove")}
-            </button>
-          </div>
-        ))}
-        <button
-          type="button"
-          className="studio-secondary"
-          onClick={() =>
-            onChange({
-              ...d,
-              commerce: {
-                ...d.commerce,
-                advancedPrices: [
-                  ...d.commerce.advancedPrices,
-                  {
-                    rule_id: "",
-                    quantity_start: 1,
-                    quantity_end: null,
-                    discount: 0,
-                  },
-                ],
-              },
-            })
-          }
-        >
-          + {c("add")}
-        </button>
-      </>
+      <ProductPricing request={request} draft={draft} onChange={onChange} />
     );
   if (tab === "assignments")
     return (

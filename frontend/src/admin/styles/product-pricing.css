@@ -1,0 +1,56 @@
+/* Product pricing follows the native save path with grouped basics and optional conditions. */
+.product-pricing {
+  display: grid;
+  gap: 1.5rem;
+}
+.product-pricing-section {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.product-pricing-section legend {
+  padding: 0;
+  font-size: 1rem;
+  font-weight: 650;
+}
+.product-pricing-section > p,
+.product-pricing-options > p {
+  max-width: 72ch;
+  margin: 0.375rem 0 1rem;
+  color: var(--muted);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+.product-pricing .catalog-form-grid {
+  margin: 0;
+}
+.product-pricing-options {
+  min-width: 0;
+  border-top: 1px solid var(--border);
+  padding-top: 1rem;
+}
+.product-pricing-options > summary {
+  padding: 0.25rem 0;
+  font-weight: 600;
+  cursor: pointer;
+}
+.product-pricing-options > summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+.product-pricing-options[open] > summary {
+  margin-bottom: 1rem;
+}
+.product-pricing-options > h2,
+.product-pricing-options > .currency-feed > h2 {
+  font-size: 1rem;
+}
+@media (min-width: 1100px) {
+  .product-pricing .product-pricing-main {
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1.5fr);
+  }
+  .product-pricing .product-pricing-quantities {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

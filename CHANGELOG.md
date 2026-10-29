@@ -1,5 +1,15 @@
 # Changelog
 
+## Product price and availability workflow (29 October 2026)
+
+- Group selling price, tax rate and native tax-class selection together, followed
+  by stock and delivery. Move comparison prices, purchasing quantities, reference
+  units, currency prices and rule-based tiers into named expandable sections;
+  existing configured values open immediately.
+- Keep revisioned aggregate saves, current rights, stock omission and existing
+  currency/price owners. Accept fractional cents-step input for the lowest
+  30-day comparison price. Ship guidance in EN/DE/FR/ES.
+
 ## Daily full verification (29 October 2026)
 
 - Run complete frontend, Rust, formal, differential, native database and coverage

@@ -27,7 +27,7 @@ protection, app authorization and field inheritance keep their existing owners.
 
 
 - **General:** name, unique shop-local product number, short description, visual rich description, manufacturer identity, manufacturer number, EAN/GTIN, digital product and free-shipping flags.
-- **Prices & stock:** gross base price, tax rate, stock, quantity minimum/steps/maximum, delivery days, list/regulation price, reference units and rule-bound discount tiers.
+- **Prices & stock:** selling price, tax rate and the actual tax class appear together, followed by stock and delivery time. Comparison prices, order quantities, reference units, currency-specific prices and rule-bound discounts have separate expandable sections. Configured sections open immediately. The lowest 30-day price accepts cent steps; native stock-safe saving and tax/currency calculation remain unchanged.
 - **Media:** ordered gallery, cover image, external HTTPS image URLs and actual PNG/JPEG/WebP uploads for saved products. Uploaded bytes start private and the gallery action explicitly publishes the selected digest.
 - **Variants:** list native child SKUs; create a child with its own number, option values, prices and stock; open its independent editor. A reviewable generator creates up to 50 Cartesian combinations per batch; existing combinations are skipped, child option edits are supported, and the server rejects concurrent duplicates.
 - **Categories & channels:** multiple category assignments and per-product sales-channel visibility. Existing channel-level explicit product lists can restrict this further; an empty channel-level list means the whole catalog. The persisted default storefront also respects activation and per-product channel visibility.
@@ -41,6 +41,8 @@ protection, app authorization and field inheritance keep their existing owners.
 ![Product reviews without nested cards](assets/product-workspace-20261029/reviews-desktop.png)
 
 [Mobile product editor](assets/product-workspace-20261029/general-mobile.png).
+[Grouped price and availability editor](assets/product-workspace-20261029/prices-desktop.png) ·
+[Mobile prices](assets/product-workspace-20261029/prices-mobile.png).
 These captures show the local isolated test shop, not a hosted deployment.
 [Verification details](evidence/product-workspace-2026-10-29.md).
 

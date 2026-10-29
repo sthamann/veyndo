@@ -353,12 +353,9 @@ export default function ProductEditor({
               </fieldset>
               <ProductEditorExtras
                 extensions={extensions}
-                canWrite={canWrite}
                 id={id}
                 tab={tab}
-                draft={draft}
                 request={request}
-                change={change}
                 selectedApp={!!selectedApp}
               />
               {id && (
