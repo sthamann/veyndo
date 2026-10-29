@@ -18,6 +18,13 @@ comparison fixtures remain part of migration and native verification.
 
 [Complete architecture, app system and AI overview](platform-overview.md).
 
+## Verification cadence
+
+Complete tests and coverage run daily at 02:17 UTC or on manual dispatch.
+Ordinary pushes and PRs run short structural/governance checks; a green `verify`
+on those events is not a fresh full-suite acceptance. Publishing an image retains
+its packaged-runtime smoke check. [Cadence and exact scope](testing.md#daily-full-verification-and-short-per-change-checks).
+
 ## 29 October connected platform work
 
 The eight approved follow-ups use the existing native owners, authorization,

@@ -13,7 +13,8 @@ from ci_gate import REPORTS, check_jobs, check_reports, provenance_path, stamp
 
 
 def outcome(scope):
-    required = {'docs': {'documentation'}, 'frontend': {'frontend'}, 'full': {'frontend', 'native'}}[scope]
+    required = {'quick': set(), 'docs': {'documentation'}, 'frontend': {'frontend'},
+                'full': {'frontend', 'native'}}[scope]
     needs = {job: {'result': 'success' if job in required else 'skipped', 'outputs': {}}
              for job in ('documentation', 'frontend', 'native')}
     needs['admission'] = {'result': 'success', 'outputs': {'lane': scope}}
@@ -23,12 +24,21 @@ def outcome(scope):
 
 
 class RequiredJobs(unittest.TestCase):
-    def test_all_three_scopes(self):
-        for scope in ('docs', 'frontend', 'full'):
+    def test_all_scopes(self):
+        for scope in ('quick', 'docs', 'frontend', 'full'):
             self.assertEqual(check_jobs(outcome(scope)), scope)
 
+    def test_daily_and_manual_runs_cannot_pass_with_quick_checks(self):
+        for event in ('schedule', 'workflow_dispatch', 'unknown'):
+            self.assertEqual(check_jobs(outcome('full'), event), 'full')
+            for scope in ('quick', 'docs', 'frontend'):
+                with self.subTest(event=event, scope=scope), self.assertRaises(ValueError):
+                    check_jobs(outcome(scope), event)
+        for event in ('push', 'pull_request'):
+            self.assertEqual(check_jobs(outcome('quick'), event), 'quick')
+
     def test_every_required_job_failure_cancellation_skip_and_missing_result(self):
-        for scope in ('docs', 'frontend', 'full'):
+        for scope in ('quick', 'docs', 'frontend', 'full'):
             base = outcome(scope)
             for job in [name for name, value in base.items() if value['result'] == 'success']:
                 for result in ('failure', 'cancelled', 'skipped', '', None):
@@ -39,7 +49,9 @@ class RequiredJobs(unittest.TestCase):
                             check_jobs(changed)
 
     def test_unexpected_running_or_failed_lane_is_not_a_fast_path(self):
-        for scope, job in (('docs', 'native'), ('docs', 'frontend'), ('frontend', 'native')):
+        for scope, job in (('quick', 'native'), ('quick', 'frontend'),
+                           ('quick', 'documentation'), ('docs', 'native'),
+                           ('docs', 'frontend'), ('frontend', 'native')):
             for result in ('success', 'failure', 'cancelled', 'in_progress'):
                 changed = outcome(scope)
                 changed[job]['result'] = result

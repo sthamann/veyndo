@@ -107,27 +107,40 @@ two previously invalid sequence labels were repaired without changing their
 meaning. This real browser check complements the complete static site check:
 `python3 scripts/build_site.py && python3 scripts/check_site.py`.
 
-The required `verify` check selects one of three scopes from the complete Git diff:
+### Daily full verification and short per-change checks
 
-| Change | Required verification |
+Since 29 October 2026, the prototype runs its complete test suite **once daily
+at 02:17 UTC** on the default branch. **Run workflow** starts the same complete
+suite manually, including on a selected branch when a change needs it. A normal
+push or PR update no longer starts complete frontend coverage, Rust compilation,
+Lean/mutation tests, PHP differential tests or PostgreSQL/provider integration.
+
+| Trigger | What actually runs |
 | --- | --- |
-| Documentation, public handbook assets and its renderer | Render every page, validate links/assets/search/sitemap and test the scope/coverage helpers. No commerce database, Rust compile or PHP reference is started. |
-| Ordinary frontend components/styles and trusted app Studio components, optionally with documentation | Complete frontend formatting, TypeScript/Vite build, architecture, localization, unit tests and the existing frontend coverage floors/full-module requirements. |
-| Rust, schema, manifests, runtime scripts, dependencies, authentication/session/checkout UI, workflow or classification policy; any unknown path or unavailable diff | The unchanged complete formal, differential, real database/provider and coverage suite. |
+| Pull request update or main push | Short source structure, ownership, localization, API/source inventory, reviewed-source and prompt/documentation governance checks. No full tests or new coverage. |
+| Daily schedule or manual workflow dispatch | Complete frontend tests/coverage, Rust/formal/differential checks, every native integration partition and same-source coverage admission. Existing coverage floors are unchanged. |
+| Main publication or manually requested image | Actual image build and its small packaged-runtime smoke checks. These validate the artifact being published; they do not repeat the full suite. |
 
-PR branches run once through `pull_request`, rather than duplicating the same
-head on both branch push and PR. A newer revision cancels an older run of the
-same PR. Separate PRs and the main/nightly/manual runs do not cancel one another.
-Main pushes are also classified; nightly and manually requested runs always use
-the complete suite. The required check is not removed for fast paths.
+The required `verify` name stays in place for branch protection. On pushes/PRs,
+it means **quick checks passed**, as stated in the run summary. It does not claim
+that the current commit passed the full suite. Daily/manual runs must select the
+full lane; failed, cancelled, missing or unexpectedly skipped jobs still reject
+admission. Quick runs never download old coverage or label it as current evidence.
 
-`scripts/testing/ci_scope.py` uses the actual base/checkout commit, includes both
-names of renamed files and falls back to full verification for missing history,
-unknown events or paths. Admission fetches complete history to compare the actual
-base of multi-commit pushes; unavailable history deliberately uses the full path.
-Changes to CI itself also require the full path.
-The registered scope regression uses real Git commits/renames and mixed sensitive
-changes, rather than trusting a filename count or an untrusted PR label.
+PR branches run through `pull_request`, without duplicate branch-push runs. A new
+PR revision cancels its old quick run. Daily/manual full runs remain independent.
+Documentation is built and checked when published from main or requested manually,
+not again on every PR revision.
+
+Local development follows the same cadence: run targeted tests for changed
+behavior while fixing it, but do not repeat the whole suite for every commit or
+wait on nightly tests to continue ordinary prototype work. Run another complete
+suite only for an explicit acceptance request, a broad regression or a concrete
+failure needing that scope. Record whether a result is targeted or complete.
+
+`scripts/testing/ci_scope.py` still classifies actual Git diffs for image admission
+and retains conservative full selection for scheduled/manual verification. Its
+rename, missing-history and sensitive-change controls remain in the daily suite.
 
 ### Image publication scope
 
@@ -150,23 +163,13 @@ PRs touching image admission exercise the actual images without registry login o
 publication. Existing packaged signup, private sandbox, session restart and non-root
 Rust migration health checks still run whenever an image is built.
 
-### Independent frontend feedback
+### Complete daily run
 
-Cheap admission checks run first. Frontend formatting, build, architecture,
-localization, all unit tests and frontend coverage then run in parallel with the
-Rust/formal/native job. Both depend only on admission. The existing required
-`verify` job waits for the selected work and rejects failed, cancelled, missing or
-unexpectedly skipped jobs, unknown scopes and missing coverage artifact IDs.
-Documentation-only changes still build and check the whole handbook.
-
-Main pushes start admission and the selected documentation/frontend checks without
-waiting for a previous push's native tests. Only the native job queues behind
-another native job for the same event and branch. Running native tests are preserved;
-documentation-only runs skip that job and never enter its queue. Newer PR heads still
-cancel the preceding PR run. Scheduled and manually dispatched workflows retain
-their existing serialization. GitHub keeps one pending native job per group, so a
-newer full push replaces an older pending job; a cancelled run cannot pass `verify`.
-This separates feedback queues without shortening or omitting the native suite.
+After admission, complete frontend verification runs in parallel with the
+Rust/formal/native jobs. The existing required `verify` job waits for all full-run
+results, checks immutable coverage artifact IDs and rejects incomplete evidence.
+These full jobs are skipped intentionally in the documented quick lane only.
+No full daily scope or coverage floor was removed by changing the cadence.
 
 Native integration uses three independent CI partitions with separate PostgreSQL,
 Qdrant, files and ports on separate runners. `core` runs the ordinary registry;
@@ -230,7 +233,7 @@ Each integration child logs its start and elapsed time, with unbuffered Python
 output, so a slow suite is visible instead of hidden inside one long CI block.
 The exact generated source inventory is checked before compilation or integration
 tests, as well as in the existing structure gate. Missing inventory updates fail
-immediately without waiting for the database suites; no verification is skipped.
+immediately without waiting for the daily database suites.
 The existing reviewed source/build-input registry is also checked before compiling.
 The later complete formal proof, conformance and mutation checks remain required.
 
@@ -271,7 +274,7 @@ small-pool transactions, current authority and two-replica/key-rotation behavior
 Removing these repetitions would remove meaningful production-boundary coverage.
 The next optimization to measure is concurrent independent database/runner lanes,
 with separate logs and complete merged coverage. No such speedup is claimed yet;
-the active release keeps the existing complete verification unchanged.
+the complete daily/manual run keeps this verification scope unchanged.
 
 **Merchant catalogue setup:** [Current source/upload workflow, native CSV/model/media suites and evidence limits](merchant-catalogue-setup.md#verification-and-limits).
 

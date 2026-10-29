@@ -9,7 +9,7 @@ on:
 permissions:
   contents: read
 concurrency:
-  # Main admission, docs and UI must not queue behind another run's native suite.
+  # Daily/manual full runs do not hold up the short per-change checks.
   group: verify-${{ github.workflow }}-${{ github.event_name }}-${{ github.event.pull_request.number || (github.event_name == 'push' && github.run_id) || github.ref }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 jobs:
@@ -24,8 +24,14 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
       - name: Verify conservative scope, final admission and coverage helpers
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         run: python3 scripts/testing/test_ci_scope.py && python3 scripts/testing/test_ci_gate.py && python3 scripts/testing/tooling_tests.py && python3 scripts/testing/test_parallel_check.py && python3 scripts/testing/test_integration_partitions.py && python3 scripts/testing/test_partition_coverage.py
+      - name: Check source structure without compiling or starting test services
+        run: python3 scripts/structure.py
       - run: python3 scripts/testing/documentation_hygiene.py
       - name: Check exact source inventory before compiling or integration tests
         run: python3 scripts/testing/source_inventory.py
@@ -37,9 +43,19 @@ jobs:
       - run: python3 scripts/testing/prompt_governance.py
         env:
           PROMPT_BASE: ${{ github.event.pull_request.base.sha }}
-      - name: Choose required verification scope
+      - name: Select daily full verification or short per-change checks
         id: scope
-        run: python3 scripts/testing/ci_scope.py
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          case "$EVENT_NAME" in
+            push|pull_request)
+              echo 'lane=quick' >> "$GITHUB_OUTPUT"
+              echo '## Quick checks only' >> "$GITHUB_STEP_SUMMARY"
+              echo 'Source structure, localization, inventories and prompt/documentation governance passed. Full tests and coverage run daily at 02:17 UTC or through Run workflow; this run does not certify full-system behavior.' >> "$GITHUB_STEP_SUMMARY"
+              ;;
+            *) python3 scripts/testing/ci_scope.py ;;
+          esac
 
   documentation:
     needs: admission
@@ -272,7 +288,7 @@ jobs:
         env:
           VERIFY_NEEDS: ${{ toJSON(needs) }}
       - name: Download this frontend job's immutable coverage artifact
-        if: needs.admission.outputs.lane != 'docs'
+        if: needs.admission.outputs.lane == 'frontend' || needs.admission.outputs.lane == 'full'
         uses: actions/download-artifact@v4
         with:
           artifact-ids: ${{ needs.frontend.outputs.artifact-id }}
@@ -285,7 +301,7 @@ jobs:
           path: artifacts
           merge-multiple: true
       - name: Check source/run provenance and unchanged coverage policy
-        if: needs.admission.outputs.lane != 'docs'
+        if: needs.admission.outputs.lane == 'frontend' || needs.admission.outputs.lane == 'full'
         env:
           VERIFY_LANE: ${{ needs.admission.outputs.lane }}
         run: |
@@ -306,4 +322,13 @@ jobs:
             artifacts/integration-server.log
             artifacts/signed-pooler
           if-no-files-found: warn
+      - name: State the actual verification level
+        env:
+          VERIFY_LANE: ${{ needs.admission.outputs.lane }}
+        run: |
+          if [ "$VERIFY_LANE" = quick ]; then
+            echo 'Quick checks passed. No full tests or new coverage were run. The complete suite runs daily at 02:17 UTC or manually.' >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo 'Complete tests and same-source coverage passed for this workflow source.' >> "$GITHUB_STEP_SUMMARY"
+          fi
       # External model/payment/OAuth checks remain opt-in; these reports do not certify live credentials.
