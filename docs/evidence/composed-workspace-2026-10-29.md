@@ -45,3 +45,11 @@ revocation with the original session, rejected injected compositions, personal
 pin CAS/history and foreign-tenant denial. The provider wire checks use synthetic
 HTTP providers; the separate Qwen/browser journey above uses the actual local model.
 Final CI and hosted delivery are recorded as they complete.
+
+## Public follow-through
+
+The configured public `gpt-6.1-sol` model prepared the native working view on
+29 October. Open, pin, full reload, reuse, CSV preview, private product creation
+and the actual native editor were observed. The imported product then completed
+a simulated public sandbox purchase with return and an empty basket.
+[Exact public steps and screenshots](platform-followups-hosted-2026-10-29.md).

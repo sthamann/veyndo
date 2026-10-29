@@ -171,3 +171,11 @@ The same native path is also checked with separate restricted database connectio
 Browser acceptance and actual-model observations are recorded separately in
 [the scenario evidence](evidence/customer-scenarios-2026-10-22.md).
 [Current status](status.md) remains authoritative for public delivery.
+
+## Public follow-through on 29 October
+
+The configured public model ran two saved fictional profiles in a fresh private
+sandbox. A EUR 1.00 German buyer stopped at the actual EUR 19.90 product price; a
+EUR 25.00 English buyer read details, built the basket and completed one simulated
+purchase. Full reload and selecting the saved test retained both outcomes and the
+same order reference. [Exact steps and screenshots](evidence/platform-followups-hosted-2026-10-29.md#public-saved-customer-scenarios).
