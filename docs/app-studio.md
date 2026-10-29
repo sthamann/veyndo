@@ -140,7 +140,7 @@ JSON-encoded only on the model wire. No-op, unauthorized and conflicting edits a
 rejected. If a generated candidate fails native validation, the same provider may
 make **one bounded repair** with the exact error and original Manifest, under the
 same quota/lease. The result must pass the same admission; this is not an open
-repair loop. Prompt `app-generation@3` and rendered-context provenance identify it.
+repair loop. Prompt `app-generation@4` and rendered-context provenance identify it.
 
 Use **Test this version privately** to try the proposed immutable build in the
 actor-private native runtime before adoption. The [connected workspace guide](agentic-workspace.md#3-generate-and-test-a-complete-native-app)

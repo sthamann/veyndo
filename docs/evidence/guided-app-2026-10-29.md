@@ -63,7 +63,7 @@ consultation-specific business model is implemented in the Rust core.
 
 ## Validation and remaining delivery
 
-- Complete local suites passed 837 frontend tests and the native Rust tests. Strict
+- Complete local suites passed 839 frontend tests and 339 native Rust tests. Strict
   Clippy, source boundaries, prompt hashes, Lean/conformance and the complete
   generated handbook are checked separately from required remote CI.
 - Native tests cover real Manifest validation, exact record-input AST, unknown
@@ -76,5 +76,14 @@ consultation-specific business model is implemented in the Rust core.
 - Operational setting values remain live-only and package-bound. They are not
   copied from preview or restored by changing a UI definition.
 
-The working branch still needs final complete checks, independent review, required
-CI and hosted rollout. These local results are not a new public acceptance.
+Independent whole-branch review found two defects. Import completion widened
+explicit surface asset grants, and a non-main app translation could produce an
+empty or oversized first-sandbox name. Both were reproduced as failing tests and
+fixed. Import completion now preserves surface grants and package permissions;
+only new empty-app construction declares initial asset access. The stage name is
+a bounded interface translation, independent of the merchant's app translations.
+The registered provider fixture exercises the bounded proposal schema and actual
+private upload/save/reload; an imported list/save-only form refuses uploads.
+
+Local complete checks and independent review are finished. Required remote CI and
+hosted rollout remain separate; these local results are not a public acceptance.

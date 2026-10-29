@@ -1,7 +1,6 @@
 /** A merchant brief begins in an owned private stage and uses the existing reviewed app agent. */
 import type { AppStudio } from "./useAppStudio";
 import type { Manifest } from "../../shared/apps/native/types";
-import { contentText } from "../../shared/i18n/content-language";
 export async function startDescribedApp(
   studio: AppStudio,
   show: (
@@ -11,6 +10,7 @@ export async function startDescribedApp(
   draft: Manifest,
   brief: string | undefined,
   ready: () => void,
+  sandboxName: string,
 ) {
   const start = () => {
     studio.startDraft(draft);
@@ -21,11 +21,7 @@ export async function startDescribedApp(
     return;
   }
   await studio.run(async () => {
-    const environment =
-      studio.env ||
-      (await studio.createSandbox(
-        contentText(draft.name, studio.mainLocale, studio.mainLocale),
-      ));
+    const environment = studio.env || (await studio.createSandbox(sandboxName));
     if (!environment) return; // A changed account invalidated the asynchronous creation.
     start();
     show(brief, { app: draft.id, mode: "compose", environment });

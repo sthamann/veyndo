@@ -3,33 +3,6 @@ use super::*;
 pub(super) fn complete(value: &mut Value) -> Result<()> {
     let mut m: apps::Manifest =
         serde_json::from_value(value.clone()).map_err(|e| bad(e.to_string()))?;
-    let has_assets = m.entities.iter().any(|e| {
-        e.fields
-            .iter()
-            .any(|f| ["image", "file"].contains(&f.kind.as_str()))
-    });
-    if has_assets {
-        for permission in ["assets.read", "assets.write"] {
-            if !m.permissions.iter().any(|p| p == permission) {
-                m.permissions.push(permission.into());
-            }
-        }
-        let contracts: Vec<Value> = serde_json::from_str(include_str!(
-            "../../extensions/sdk/native-asset-actions.json"
-        ))
-        .expect("native asset action contracts");
-        for contract in contracts {
-            if !m.actions.iter().any(|a| a.handler == contract["handler"]) {
-                if m.actions.iter().any(|a| a.name == contract["name"]) {
-                    return Err(bad(
-                        "Native asset action name conflicts with an existing action",
-                    ));
-                }
-                m.actions
-                    .push(serde_json::from_value(contract).expect("native asset action"));
-            }
-        }
-    }
     for view in &mut m.views {
         for block in &mut view.blocks {
             let Some(entity) = block
@@ -57,6 +30,40 @@ pub(super) fn complete(value: &mut Value) -> Result<()> {
                 {
                     *field = Some(name);
                 }
+            }
+        }
+    }
+    *value = json!(m);
+    Ok(())
+}
+// Only the empty-app compiler owns these initial grants. Imports retain explicit restrictions.
+pub(super) fn new_app_assets(value: &mut Value) -> Result<()> {
+    let mut m: apps::Manifest =
+        serde_json::from_value(value.clone()).map_err(|e| bad(e.to_string()))?;
+    let has_assets = m.entities.iter().any(|e| {
+        e.fields
+            .iter()
+            .any(|f| ["image", "file"].contains(&f.kind.as_str()))
+    });
+    if has_assets {
+        for permission in ["assets.read", "assets.write"] {
+            if !m.permissions.iter().any(|p| p == permission) {
+                m.permissions.push(permission.into());
+            }
+        }
+        let contracts: Vec<Value> = serde_json::from_str(include_str!(
+            "../../extensions/sdk/native-asset-actions.json"
+        ))
+        .expect("native asset action contracts");
+        for contract in contracts {
+            if !m.actions.iter().any(|a| a.handler == contract["handler"]) {
+                if m.actions.iter().any(|a| a.name == contract["name"]) {
+                    return Err(bad(
+                        "Native asset action name conflicts with an existing action",
+                    ));
+                }
+                m.actions
+                    .push(serde_json::from_value(contract).expect("native asset action"));
             }
         }
     }
@@ -124,6 +131,7 @@ mod tests {
     #[test]
     fn described_file_forms_compile_to_the_same_private_asset_contract_as_visual_forms() {
         let mut value = upload_draft();
+        new_app_assets(&mut value).unwrap();
         complete(&mut value).unwrap();
         let m: apps::Manifest = serde_json::from_value(value.clone()).unwrap();
         apps::validate(&m).unwrap();
@@ -233,6 +241,19 @@ mod tests {
                 .contains(&json!("save_entries"))
         );
         assert!(apps::validate(&serde_json::from_value(value).unwrap()).is_err());
+    }
+    #[test]
+    fn valid_import_with_file_field_does_not_gain_asset_authority() {
+        let mut value = upload_draft();
+        let declared = value["surfaces"][0]["actions"].clone();
+        let permissions = value["permissions"].clone();
+        complete(&mut value).unwrap();
+        apps::validate(&serde_json::from_value(value.clone()).unwrap()).unwrap();
+        assert_eq!(value["surfaces"][0]["actions"], declared);
+        assert_eq!(value["permissions"], permissions);
+        assert!(value["actions"].as_array().unwrap().iter().all(|a| {
+            !["assets", "asset_preview", "asset_upload"].contains(&a["handler"].as_str().unwrap())
+        }));
     }
     #[test]
     fn a_surface_missing_native_view_points_at_the_target() {

@@ -2980,13 +2980,13 @@
     },
     "src/developer/generation_bindings.rs": {
       "status": "unproved",
-      "sha256": "e29341097f5833fa2f37ac98d8f12fb5fa3f906e1ca7caa4878d4ad511700792",
-      "review": "Reviewed description-led native app compilation, typed handler generation, preserved surface restrictions, SDK asset contract and scoped draft UI; new compiler remains unproved Rust."
+      "sha256": "05f4938e6c8cf6878d79e649c7c7e1d73b03ce31b6af8f7a441ae2e1b62a3f3a",
+      "review": "Reviewed guided creation asset grants restricted to new empty app construction; ordinary import keeps explicit surface and package authority. Added real upload denial and bounded translated sandbox regressions. No additional proof claims."
     },
     "src/developer/generation_brief.rs": {
       "status": "unproved",
-      "sha256": "f355066c125360cbb1a9637dd6ad3d08d5adb8eed1c571142aa2855b65811012",
-      "review": "Reviewed description-led native app compilation, typed handler generation, preserved surface restrictions, SDK asset contract and scoped draft UI; new compiler remains unproved Rust."
+      "sha256": "755fb2dbf7f01d7c775535eeeb3f78ecdf79ee769ae6bee14ed9c99231f35328",
+      "review": "Reviewed guided creation asset grants restricted to new empty app construction; ordinary import keeps explicit surface and package authority. Added real upload denial and bounded translated sandbox regressions. No additional proof claims."
     },
     "src/developer/generation_contract.rs": {
       "status": "unproved",

@@ -158,9 +158,10 @@ pub(super) fn apply(old: &Value, output: &Value, versions: &Value) -> Result<Val
         ]}));
         surfaces.push(json!({"id":id,"location":p.location,"label":p.label,"uiPath":format!("native/{id}"),"actions":[read,write]}));
     }
-    Ok(
-        json!({"summary":brief.summary,"manifest":{"id":old["id"],"version":version.to_string(),"coreApi":"1","runtime":"declarative","category":"operations","name":brief.name,"permissions":["data.read","data.write","admin.slot"],"entities":brief.entities,"settings":brief.settings,"views":views,"surfaces":surfaces,"slots":[],"apiRoutes":[],"intelligence":{"description":brief.summary,"tools":[],"entities":[]}}}),
-    )
+    let mut result = json!({"summary":brief.summary,"manifest":{"id":old["id"],"version":version.to_string(),"coreApi":"1","runtime":"declarative","category":"operations","name":brief.name,"permissions":["data.read","data.write","admin.slot"],"entities":brief.entities,"settings":brief.settings,"views":views,"surfaces":surfaces,"slots":[],"apiRoutes":[],"intelligence":{"description":brief.summary,"tools":[],"entities":[]}}});
+    routes::actions(&mut result["manifest"])?;
+    generation_bindings::new_app_assets(&mut result["manifest"])?;
+    Ok(result)
 }
 #[cfg(test)]
 mod tests {

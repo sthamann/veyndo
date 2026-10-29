@@ -99,8 +99,15 @@ it("creates a first private sandbox before opening a new merchant brief", async 
     run: async (fn: () => Promise<void>) => fn(),
   } as any;
   const draft = { id: "brief_app", name: { "en-GB": "Consultation" } } as any;
-  await startDescribedApp(studio, show, draft, "Our private app", ready);
-  expect(studio.createSandbox).toHaveBeenCalledWith("Consultation");
+  await startDescribedApp(
+    studio,
+    show,
+    draft,
+    "Our private app",
+    ready,
+    "App development",
+  );
+  expect(studio.createSandbox).toHaveBeenCalledWith("App development");
   expect(startDraft).toHaveBeenCalledWith(draft);
   expect(show).toHaveBeenCalledWith("Our private app", {
     app: "brief_app",
@@ -117,6 +124,7 @@ it("creates a first private sandbox before opening a new merchant brief", async 
     draft,
     "Cancelled by a changed account",
     ready,
+    "App development",
   );
   expect(startDraft).not.toHaveBeenCalled();
   expect(show).not.toHaveBeenCalled();
@@ -144,3 +152,29 @@ it("keeps an explicitly created sandbox brief open but fences a later environmen
   expect(hook.result.current.drawer.open).toBe(false);
   expect(hook.result.current.drawer.requestSeed).toBeUndefined();
 });
+it.each(["Beratungsanfragen", "設計相談".repeat(30)])(
+  "uses a bounded localized sandbox label independently of the selected app translation: %s",
+  async (name) => {
+    const { startDescribedApp } =
+      await import("../../src/admin/developer/start-described-app");
+    const studio = {
+      env: "",
+      mainLocale: "en-GB",
+      createSandbox: vi.fn().mockResolvedValue("private_stage"),
+      startDraft: vi.fn(),
+      run: async (fn: () => Promise<void>) => fn(),
+    } as any;
+    const draft = { id: "translated_app", name: { "de-DE": name } } as any;
+    await startDescribedApp(
+      studio,
+      vi.fn(),
+      draft,
+      "Private app",
+      vi.fn(),
+      "App-Entwicklung",
+    );
+    expect(studio.createSandbox).toHaveBeenCalledWith("App-Entwicklung");
+    expect(studio.startDraft).toHaveBeenCalledWith(draft);
+    expect(draft.name).toEqual({ "de-DE": name });
+  },
+);
