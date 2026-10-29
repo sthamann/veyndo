@@ -49,7 +49,9 @@ export default function DesignAgent({
   const [style, setStyle] = useState(true),
     [structure, setStructure] = useState(true),
     [content, setContent] = useState(false),
-    [scope, setScope] = useState<"page" | "selected">("page");
+    [scope, setScope] = useState<"page" | "selected">(
+      selected ? "selected" : "page",
+    );
   const [plan, setPlan] = useState<Plan>(),
     [index, setIndex] = useState(-1),
     [busy, setBusy] = useState(false),
@@ -62,6 +64,9 @@ export default function DesignAgent({
   latest.current = fingerprint;
   currentRequest.current = request;
   const prepared = useRef<string | undefined>(undefined);
+  useEffect(() => {
+    setScope(selected ? "selected" : "page");
+  }, [selected]);
   useEffect(() => {
     if (prepared.current && prepared.current !== fingerprint) {
       setPlan(undefined);

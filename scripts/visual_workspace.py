@@ -19,6 +19,7 @@ class Model(BaseHTTPRequestHandler):
    for b in content['blocks']:
     if b['kind']=='products': b['productMode']='all'
    if state.get('selected'):content={'blocks':[content['blocks'][0]]}
+   if state.get('styleOnly'):content={}
    out={'message':{'content':json.dumps({'interpretation':'Synthetic reference analysis; no fetched source available.','variants':[{'summary':'Airy blue layout','content_json':json.dumps(content),'theme_json':json.dumps({'accent':'#0877e8','spacing':56})},{'summary':'Editorial layout','content_json':json.dumps(content),'theme_json':json.dumps({'accent':'#14283d','spacing':64})}]})},'done_reason':'stop'}
   self.send_response(200);self.send_header('Content-Type','application/json');self.end_headers();self.wfile.write(json.dumps(out).encode())
 model=ThreadingHTTPServer(('127.0.0.1',0),Model);threading.Thread(target=model.serve_forever,daemon=True).start()
@@ -145,7 +146,9 @@ try:
  plan=call('/api/merchant/site/plan',{'id':'home','revision':stage_revision,'instruction':'Make it airier','urls':['http://127.0.0.1/private'],'style':True,'content':True},sh)
  assert len(plan['variants'])==2 and plan['approvalRequired'];assert rows(sh)[0]['content']['blocks'][0]['text']['de-DE']=='Neue Kollektion'
  image='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+aS5cAAAAASUVORK5CYII='
+ state['styleOnly']=True
  visual=call('/api/merchant/site/plan',{'id':'home','revision':stage_revision,'instruction':'Adapt the screenshot style','images':[image],'style':True,'content':False,'structure':False},sh)
+ state.pop('styleOnly')
  assert any(s['status']=='provided' and s['kind']=='image' for s in visual['sources'])
  assert seen[-1]['messages'][-1]['images']==[image.split(',',1)[1]]
  assert all(v['fields']['content']==current_stage['content'] for v in visual['variants'])

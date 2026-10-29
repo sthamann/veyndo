@@ -705,8 +705,8 @@
     },
     "crates/cognition/src/prompts.rs": {
       "status": "unproved",
-      "sha256": "3ff5d16ca2e875938af0e8abe489b42cc373bc0b184eb3d002df2024ef3a77da",
-      "review": "Reviewed typed brief/native compiler and SDK asset bindings; retained existing merchant prompt registry order; no new proof claims."
+      "sha256": "73640eed9a0f70312e652701d23e1430f38e7c0dcbb7f10743e59a6129f9d24a",
+      "review": "Designer acceptance: app-owned versioned style prompt, bounded style-only schema preserving native page content/structure, shared proposal validation unchanged for content edits. Registered visual_workspace RED to GREEN and real Qwen screenshot returns three review-only alternatives. Prompt registry/governance extends app-owned version files. SQL/inference/rendering remain unproved."
     },
     "crates/commerce/src/discount.rs": {
       "status": "reviewed-binding",
@@ -1260,8 +1260,8 @@
     },
     "extensions/apps/site-builder/design_agent.rs": {
       "status": "unproved",
-      "sha256": "1ac93ee1a90804f7541527140c9ff10d25c465fdc814c8364176e80eceeaf525",
-      "review": "Reviewed native designer transport and shared proposal path: sandbox/current rights and positive saved-page revision before export/import, content/theme-only external results, active tenant-owned public native element references, existing CAS/history/release. Preview grants narrow existing allowed actions using the unchanged verified read policy. Real PostgreSQL/app-surface regressions and clippy pass; async adapters remain unproved."
+      "sha256": "0a09a707d22d9adab86cf718bc4a37861d8a51ee2cc10aade50acb781e2054fe",
+      "review": "Designer acceptance: app-owned versioned style prompt, bounded style-only schema preserving native page content/structure, shared proposal validation unchanged for content edits. Registered visual_workspace RED to GREEN and real Qwen screenshot returns three review-only alternatives. Prompt registry/governance extends app-owned version files. SQL/inference/rendering remain unproved."
     },
     "extensions/apps/site-builder/elements.rs": {
       "status": "unproved",
@@ -1275,8 +1275,8 @@
     },
     "extensions/apps/site-builder/proposals.rs": {
       "status": "unproved",
-      "sha256": "352a4e21ac0e29c13e46f9481585ce6032a73c7e65351d74922479b5bd179d7a",
-      "review": "Reviewed scoped translation selection, original task authority, atomic child linking and completion, cancellation/explicit ambiguous continuation, lease fences, central provider admission outside transactions and bounded prompt evidence; real PostgreSQL/HTTP collection and interruption regressions plus 724 UI tests; skipped products store SQL NULL evidence rather than JSON null. Claude supplied code-only review, findings checked and fixed."
+      "sha256": "230392f452bccc6b838209f2e6d7c26d9fba672e573ba126214440281d5ee6c4",
+      "review": "Designer acceptance: app-owned versioned style prompt, bounded style-only schema preserving native page content/structure, shared proposal validation unchanged for content edits. Registered visual_workspace RED to GREEN and real Qwen screenshot returns three review-only alternatives. Prompt registry/governance extends app-owned version files. SQL/inference/rendering remain unproved."
     },
     "extensions/apps/site-builder/references.rs": {
       "status": "unproved",
@@ -4875,8 +4875,8 @@
       "review": "Review domain proof import and size closure, explicit Rust registrations, all 149 theorem bindings, existing adapter truth conditions and unchanged 61 prior policy ASTs; negative controls reject extra imports, missing claims and hidden Cargo authority."
     },
     "scripts/testing/prompt_governance.py": {
-      "sha256": "9bf329f9ca7cc4cf04bc8b5db16129b796c8e4203f70d8cf371b7e12559e5897",
-      "review": "Review compiler-enforced foundation crates with unchanged native owners; native provider read-tool aliases and current authorization, private checkpoint continuation and versioned prompt evidence; fixed subscriber acknowledgements preserve commit gaps, independent quarantine and explicit replay; traced requests/tasks/outbox without payloads; exact decimal-to-minor-unit rounding retains legacy price boundary; real SQL poison-isolation regression passes and workspace unit/clippy checks pass"
+      "sha256": "a9ece67d4975e6c5e44cf26f4d6e397a3780449d8e3f8fbb3860627211b9fda5",
+      "review": "Designer acceptance: app-owned versioned style prompt, bounded style-only schema preserving native page content/structure, shared proposal validation unchanged for content edits. Registered visual_workspace RED to GREEN and real Qwen screenshot returns three review-only alternatives. Prompt registry/governance extends app-owned version files. SQL/inference/rendering remain unproved."
     },
     "src/auth/identity.sql": {
       "sha256": "0ec0ba5c629ccaff103d09302f79d77223a36cd197ea04d6b41065ecd4847b7a",

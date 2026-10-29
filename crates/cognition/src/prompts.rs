@@ -54,6 +54,10 @@ const TEMPLATES: &[(&str, &str)] = &[
         "grid-filter@1",
         include_str!("../prompts/grid-filter.v1.txt"),
     ),
+    (
+        "site-design@1",
+        include_str!("../../../extensions/apps/site-builder/prompts/site-design.v1.txt"),
+    ),
 ];
 pub fn evidence(system: &str) -> Value {
     let templates = TEMPLATES
@@ -69,6 +73,10 @@ mod tests {
     #[test]
     fn workflow_edit_revision_binds_its_own_template_and_rendered_context() {
         for (id, template) in [
+            (
+                "site-design@1",
+                include_str!("../../../extensions/apps/site-builder/prompts/site-design.v1.txt"),
+            ),
             ("app-brief@1", include_str!("../prompts/app-brief.v1.txt")),
             (
                 "app-generation@4",

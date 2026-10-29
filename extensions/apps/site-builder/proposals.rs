@@ -38,9 +38,13 @@ pub(super) async fn prepare(
     .await?;
     for candidate in variants {
         let mut next = fields.clone();
-        let mut content: Value =
+        let mut content: Value = if v["structure"] != true && v["content"] != true {
+            // Style-only generation never needs to reproduce merchant documents.
+            fields["content"].clone()
+        } else {
             serde_json::from_str(candidate["content_json"].as_str().unwrap_or(""))
-                .map_err(|_| bad("Invalid design blocks"))?;
+                .map_err(|_| bad("Invalid design blocks"))?
+        };
         let theme: Value = serde_json::from_str(candidate["theme_json"].as_str().unwrap_or(""))
             .map_err(|_| bad("Invalid design theme"))?;
         if let Some(id) = selected {

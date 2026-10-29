@@ -1,0 +1,9 @@
+{
+  "templates": [
+    {
+      "id": "site-design@1",
+      "path": "prompts/site-design.v1.txt",
+      "sha256": "83355d38042164ff0b0329cc494e9200d8ce8c9ede6cd7ee3ea7a434d70165e8"
+    }
+  ]
+}
