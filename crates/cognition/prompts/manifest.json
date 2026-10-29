@@ -85,6 +85,11 @@
       "id": "app-brief@1",
       "path": "prompts/app-brief.v1.txt",
       "sha256": "f914e49960a073fdef0e669fe46dea413fe8e4dcd9cc200d4f10629579218362"
+    },
+    {
+      "id": "app-brief@2",
+      "path": "prompts/app-brief.v2.txt",
+      "sha256": "c0a5dd1195985f9c150e49105a18fc533dfe516b690e84a81b9ea0b12ccba8fd"
     }
   ]
 }

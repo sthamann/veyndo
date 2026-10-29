@@ -1,5 +1,11 @@
 # Visual App Studio
 
+First-app AI preparation uses typed native field constraints for lengths, numeric
+bounds and item counts. Required flags and status choices remain their own field
+properties. The versioned `app-brief@2` contract constrains provider output before
+the ordinary native Manifest checks; it does not bypass validation or change the
+existing-app editing and advanced package-import contracts.
+
 See the [connected AI workspace](agentic-workspace.md) for the 20 October context,
 reviewed private execution, complete app composition, real preview, editable list
 handoff and remembered merchant-guidance workflow. [Current status](status.md).

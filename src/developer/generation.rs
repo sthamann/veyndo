@@ -48,7 +48,7 @@ pub(super) async fn generate(a: &App, t: &str, h: &RequestContext, v: &Value) ->
         schema_for(&settings.locales)
     };
     let system = if guided {
-        include_str!("../../crates/cognition/prompts/app-brief.v1.txt")
+        include_str!("../../crates/cognition/prompts/app-brief.v2.txt")
     } else {
         include_str!("../../crates/cognition/prompts/app-generation.v4.txt")
     };
