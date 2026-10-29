@@ -1,5 +1,11 @@
 # Changelog
 
+## Actual WooCommerce migration and native rich content — 29 October 2026
+
+- Preserve authored product HTML as a plain summary plus editable native rich document using the migration app’s existing bounded page parser. Reject executable/unsupported content; retain generic native validation and language ownership.
+- Include source-owned rich product content in current-field reconciliation. Keep immutable prior imports and explicit changed-snapshot review.
+- Add the disposable actual WooCommerce source recipe and record eight-area import, process interruption/recovery, stable replay, selected catalogue release and simulated browser purchase/return/empty basket.
+
 ## Contextual design and real reference acceptance — 29 October 2026
 
 - Default the shop agent to the selected section while preserving an explicit whole-page choice until selection changes. Verify the same target in prepared coding-agent tasks.

@@ -16,7 +16,11 @@ use serde_json::{Value, json};
 pub fn normalize(c: &Context, kind: &str, v: &Value) -> Result<Vec<Record>> {
     c.validate()?;
     if kind == "products" {
-        return products::normalize(c, v);
+        let mut rows = products::normalize(c, v)?;
+        for row in &mut rows {
+            pages::product_content(&mut row.data)?;
+        }
+        return Ok(rows);
     }
     Ok(vec![records::normalize(c, kind, v)?])
 }

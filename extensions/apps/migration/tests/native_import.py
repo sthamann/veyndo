@@ -36,6 +36,7 @@ exec(compile(Path(__file__).with_name('pii_projection.py').read_text(),'pii_proj
 # Real products enter only a private sandbox and preserve native creation/release semantics.
 stage=call('/api/environments',{'name':'Migration preview'},h)['id'];sh={**h,'x-tenant':stage}
 product={'version':1,'source':'woocommerce','sourceShop':'source-woo','kind':'products','sourceId':'product-9','data':{'name':{'en-GB':'Migrated mug'},'description':{'en-GB':'Original description'},'sku':'MIG-9','price':{'currency':'EUR','scale':2,'minor':1990},'stock':7},'warnings':[]}
+product['data']['richDescription']={'en-GB':[{'type':'paragraph','text':'Original description'}]}
 pbody={'approve':True,'record':product,'options':{'channelId':'default','taxRate':19}}
 call('/api/merchant/imports',pbody,h,400)
 p=call('/api/merchant/imports',pbody,sh);pid=p['id']

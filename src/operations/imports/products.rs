@@ -115,13 +115,27 @@ pub(super) async fn mapped(a: &App, t: &str, r: &SourceRecord, options: &Value) 
             )
         })
         .collect();
+    let mut rich = serde_json::Map::new();
+    if let Some(value) = r.data.get("richDescription") {
+        let values = value
+            .as_object()
+            .ok_or(bad("Translated native rich descriptions required"))?;
+        for (locale, blocks) in values {
+            rich.insert(
+                commerce::product_language_key(locale, &settings),
+                blocks.clone(),
+            );
+        }
+    }
     let sku = r.data["sku"]
         .as_str()
         .filter(|s| !s.is_empty())
         .map(str::to_owned)
         .unwrap_or_else(|| format!("IMPORT-{id}"));
     let relations = super::relations::product(r, &namespace)?;
-    Ok(
-        json!({"id":id,"revision":0,"settingsRevision":revision,"translations":translations,"extra":{"priceCurrency":code,"identity":{"migrationDigest":digest,"importSource":{"system":r.source,"shop":r.source_shop,"id":r.source_id},"sourceRecordVersion":r.version,"sourceRecordDigest":hash(&json!(r).to_string()),"sourceStock":r.data["stock"].as_i64(),"sourcePriceBasis":basis,"sourcePrice":amount}},"catalog":{"active":active,"productNumber":sku,"categoryIds":relations["categoryIds"],"parentId":relations["parentId"],"options":relations["options"]},"commerce":{"price":price,"taxRate":tax,"stock":0,"minPurchase":1,"purchaseSteps":1,"maxPurchase":null,"deliveryDays":0,"listPrice":null,"advancedPrices":[],"media":[],"properties":{}}}),
-    )
+    let mut payload = json!({"id":id,"revision":0,"settingsRevision":revision,"translations":translations,"extra":{"priceCurrency":code,"identity":{"migrationDigest":digest,"importSource":{"system":r.source,"shop":r.source_shop,"id":r.source_id},"sourceRecordVersion":r.version,"sourceRecordDigest":hash(&json!(r).to_string()),"sourceStock":r.data["stock"].as_i64(),"sourcePriceBasis":basis,"sourcePrice":amount}},"catalog":{"active":active,"productNumber":sku,"categoryIds":relations["categoryIds"],"parentId":relations["parentId"],"options":relations["options"]},"commerce":{"price":price,"taxRate":tax,"stock":0,"minPurchase":1,"purchaseSteps":1,"maxPurchase":null,"deliveryDays":0,"listPrice":null,"advancedPrices":[],"media":[],"properties":{}}});
+    if !rich.is_empty() {
+        payload["extra"]["richDescription"] = json!(rich);
+    }
+    Ok(payload)
 }

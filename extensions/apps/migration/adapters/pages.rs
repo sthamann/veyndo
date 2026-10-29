@@ -16,20 +16,62 @@ pub fn destination(c: &Context, data: &Value) -> Result<Value> {
         .ok_or("Translated page content required")?;
     let mut rich = serde_json::Map::new();
     for (locale, html) in bodies {
-        let html = html.as_str().ok_or("Invalid source page body")?;
-        if html.len() > 64 * 1024 {
-            return Err("Page exceeds editable content limit".into());
-        }
-        let fragment = Html::parse_fragment(html);
-        let nodes = blockify(children(fragment.root_element(), &[], 0)?);
         rich.insert(
             locale.clone(),
-            json!([{"type":"document","doc":{"type":"doc","content":nodes}}]),
+            document(html.as_str().ok_or("Invalid source page body")?)?,
         );
     }
     Ok(
         json!({"app":"site_builder","action":"save_page","fields":{"channel":"default","slug":slug,"title":data["title"],"kind":"page","status":"draft","starts_at":null,"content":{"blocks":[{"id":"source_content","kind":"text","text":{},"rich":rich,"image":"","products":[],"fields":[]}]},"theme":{},"seo":null,"author":null,"category":null}}),
     )
+}
+/// Product HTML uses the same bounded native document parser as authored pages.
+pub(super) fn product_content(data: &mut Value) -> Result<()> {
+    let bodies = data["description"].as_object().cloned().unwrap_or_default();
+    let mut rich = serde_json::Map::new();
+    for (locale, value) in bodies {
+        let Some(html) = value.as_str().filter(|s| s.contains('<')) else {
+            continue;
+        };
+        let doc = document(html)?;
+        data["description"][&locale] = json!(
+            plain(&doc[0]["doc"])
+                .split_whitespace()
+                .collect::<Vec<_>>()
+                .join(" ")
+        );
+        rich.insert(locale, doc);
+    }
+    if !rich.is_empty() {
+        data["richDescription"] = json!(rich);
+    }
+    Ok(())
+}
+fn document(html: &str) -> Result<Value> {
+    if html.len() > 64 * 1024 {
+        return Err("Page exceeds editable content limit".into());
+    }
+    let fragment = Html::parse_fragment(html);
+    let nodes = blockify(children(fragment.root_element(), &[], 0)?);
+    Ok(json!([{"type":"document","doc":{"type":"doc","content":nodes}}]))
+}
+fn plain(node: &Value) -> String {
+    if node["type"] == "text" {
+        return node["text"].as_str().unwrap_or("").into();
+    }
+    let mut out = node["content"]
+        .as_array()
+        .into_iter()
+        .flatten()
+        .map(plain)
+        .collect::<String>();
+    if ["paragraph", "heading", "listItem", "hardBreak"]
+        .iter()
+        .any(|t| node["type"] == *t)
+    {
+        out.push('\n');
+    }
+    out
 }
 fn children(element: ElementRef<'_>, marks: &[Value], depth: usize) -> Result<Vec<Value>> {
     if depth > 24 {

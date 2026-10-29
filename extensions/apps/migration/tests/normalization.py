@@ -35,6 +35,14 @@ class Normalization(unittest.TestCase):
         self.assertEqual(r['data']['categorySourceIds'],['8'])
         c=self.read('prestashop','categories',{'id':8,'name':[{'id':'1','value':'Tassen'}],'link_rewrite':[{'id':'1','value':'tassen'}],'id_parent':'0'})[0]
         self.assertEqual(c['data']['slug'],{'de-DE':'tassen'});self.assertIsNone(c['data']['parentSourceId'])
+    def test_product_html_becomes_native_text_and_editable_document(self):
+        r=self.read('woocommerce','products',{'id':9,'name':'Cup','price':'19.90','description':'<p>Made in our <strong>workshop</strong> &amp; studio.</p>'})[0]
+        self.assertEqual(r['data']['description']['de-DE'],'Made in our workshop & studio.')
+        doc=r['data']['richDescription']['de-DE'][0]
+        self.assertEqual(doc['type'],'document')
+        self.assertIn({'type':'bold'},doc['doc']['content'][0]['content'][1]['marks'])
+        for raw in ('<script>alert(1)</script>','<p><a href="javascript:alert(1)">Click</a></p>','<iframe src="https://source.example"></iframe>'):
+            self.assertNotEqual(normalize('woocommerce','products',{'id':9,'name':'Cup','price':'19.90','description':raw}).returncode,0)
     def test_woocommerce_decimal_and_variation_identity(self):
         r=self.read('woocommerce','products',{'id':9,'name':'Tasse','type':'simple','sku':'CUP','regular_price':'21.95','stock_quantity':3})[0]
         self.assertEqual(r['data']['price']['minor'],2195);self.assertEqual(r['sourceId'],'9')

@@ -37,3 +37,11 @@ does not erase them. A read-only reconciliation job cannot create even a missing
 target. Differences remain visible and are never silently repaired. Product stock,
 unsupported mappings, source-wide final deltas/cutover and public hosting acceptance
 remain separate. No new table or queue is introduced.
+
+Product HTML uses the same bounded native document parser as authored pages. A
+plain summary accompanies the editable native rich description; generic Core
+intake maps current language keys and compares source-owned rich content during
+reconciliation. Original imported snapshots retain explicit review/conflict rules.
+`tests/woocommerce-live/` contains the actual disposable WordPress/WooCommerce source
+recipe. See `docs/evidence/woocommerce-source-2026-10-29.md` for interruption, all
+eight areas, replay and browser purchase acceptance.

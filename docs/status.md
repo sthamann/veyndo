@@ -58,6 +58,12 @@ deletion/undo, selected agent targets and three real screenshot-derived style
 alternatives. Applying one alternative saved a private revision with exact content
 preservation and no live changes. [Designer evidence](evidence/designer-2026-10-29.md).
 
+The actual local WooCommerce source acceptance now covers eight supported areas,
+interrupted Rust service recovery, exact replay/current-field comparison and a
+native browser purchase/return/empty basket. A discovered product HTML display
+error is fixed through the app-owned parser and existing native rich-content owner.
+[Exact source and browser evidence](evidence/woocommerce-source-2026-10-29.md).
+
 The 23 October release expands selected Lean guarantees to **63 policies / 149
 properties**, splits their Rust/Lean owners and tightens Cargo dependency checks.
 The subsequent shared discount repair and batched marketplace order localization
