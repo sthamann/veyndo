@@ -148,6 +148,10 @@ try:
  image='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+aS5cAAAAASUVORK5CYII='
  state['styleOnly']=True
  visual=call('/api/merchant/site/plan',{'id':'home','revision':stage_revision,'instruction':'Adapt the screenshot style','images':[image],'style':True,'content':False,'structure':False},sh)
+ calls_before=len(seen)
+ rejected=call('/api/merchant/site/plan',{'id':'home','revision':stage_revision,'selected':'hero','instruction':'Only change this section style','style':True,'content':False,'structure':False},sh,400)
+ assert 'whole page' in json.dumps(rejected),rejected
+ assert len(seen)==calls_before,'Unsupported section theme must not spend a model call'
  state.pop('styleOnly')
  assert any(s['status']=='provided' and s['kind']=='image' for s in visual['sources'])
  assert seen[-1]['messages'][-1]['images']==[image.split(',',1)[1]]

@@ -1260,8 +1260,8 @@
     },
     "extensions/apps/site-builder/design_agent.rs": {
       "status": "unproved",
-      "sha256": "0a09a707d22d9adab86cf718bc4a37861d8a51ee2cc10aade50acb781e2054fe",
-      "review": "Designer acceptance: app-owned versioned style prompt, bounded style-only schema preserving native page content/structure, shared proposal validation unchanged for content edits. Registered visual_workspace RED to GREEN and real Qwen screenshot returns three review-only alternatives. Prompt registry/governance extends app-owned version files. SQL/inference/rendering remain unproved."
+      "sha256": "5adb8ba8ba52bfa648e27432ebba088ca1d45b17f13a2a1ae2917e94550687d7",
+      "review": "Review selected-section admission before inference; page-wide theme is never widened into a selected request. SQL/provider adapters remain unproved."
     },
     "extensions/apps/site-builder/elements.rs": {
       "status": "unproved",

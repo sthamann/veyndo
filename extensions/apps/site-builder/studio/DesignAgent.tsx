@@ -46,9 +46,9 @@ export default function DesignAgent({
     [task, setTask] = useState<unknown>(),
     [urls, setUrls] = useState(initialReference ?? ""),
     [images, setImages] = useState<string[]>([]);
-  const [style, setStyle] = useState(true),
+  const [style, setStyle] = useState(!selected),
     [structure, setStructure] = useState(true),
-    [content, setContent] = useState(false),
+    [content, setContent] = useState(!!selected),
     [scope, setScope] = useState<"page" | "selected">(
       selected ? "selected" : "page",
     );
@@ -67,6 +67,10 @@ export default function DesignAgent({
   useEffect(() => {
     setScope(selected ? "selected" : "page");
   }, [selected]);
+  useEffect(() => {
+    setStyle(scope === "page");
+    setContent(scope === "selected");
+  }, [scope]);
   useEffect(() => {
     if (prepared.current && prepared.current !== fingerprint) {
       setPlan(undefined);
@@ -88,6 +92,13 @@ export default function DesignAgent({
     setPlan(undefined);
     onPreview(null);
     try {
+      if (
+        engine === "platform" &&
+        scope === "selected" &&
+        !structure &&
+        !content
+      )
+        throw new Error(w("sectionTheme"));
       let references: string[] = [];
       if (engine === "platform") {
         try {
@@ -191,6 +202,7 @@ export default function DesignAgent({
         )}
         {engine === "platform" && (
           <div className="designer-reference-options-panel">
+            {scope === "selected" && <p>{w("sectionTheme")}</p>}
             <div className="designer-reference-options">
               {(
                 [
@@ -203,6 +215,7 @@ export default function DesignAgent({
                   <input
                     type="checkbox"
                     checked={value}
+                    disabled={scope === "selected" && key === "style"}
                     onChange={(event) => set(event.target.checked)}
                   />
                   {t(key)}

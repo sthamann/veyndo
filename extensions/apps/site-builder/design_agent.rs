@@ -124,6 +124,11 @@ pub(crate) async fn invoke(a: &App, h: &RequestContext, name: &str, v: &Value) -
     if name == "merchant.site.propose" {
         return agent_handoff::propose(a, h, &m, entity, &fields, v, instruction).await;
     }
+    if selected.is_some() && v["structure"] != true && v["content"] != true {
+        return Err(bad(
+            "Choose the whole page for theme changes, or enable content or structure for the selected section",
+        ));
+    }
     let (sources, images) = references::capture(v).await?;
     let mut schema = json!({"type":"object","additionalProperties":false,"required":["interpretation","variants"],"properties":{"interpretation":{"type":"string","maxLength":2000},"variants":{"type":"array","minItems":2,"maxItems":3,"items":{"type":"object","additionalProperties":false,"required":["summary","content_json","theme_json"],"properties":{"summary":{"type":"string","maxLength":500},"content_json":{"type":"string","maxLength":8192},"theme_json":{"type":"string","maxLength":1024}}}}}});
     if v["structure"] != true && v["content"] != true {

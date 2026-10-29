@@ -104,6 +104,12 @@ const words = {
     "Section sélectionnée",
     "Sección seleccionada",
   ],
+  sectionTheme: [
+    "Colors, typography and spacing apply to the whole page. Choose Whole page to adapt the style, or edit the selected section's content and layout.",
+    "Farben, Schrift und Abstände gelten für die ganze Seite. Wähle Ganze Seite für den Stil oder bearbeite Inhalt und Aufbau des ausgewählten Bereichs.",
+    "Les couleurs, polices et espacements concernent toute la page. Choisissez Toute la page pour le style ou modifiez le contenu et la structure de la section.",
+    "Colores, tipografía y espaciado se aplican a toda la página. Elige Toda la página para el estilo o edita el contenido y diseño de la sección.",
+  ],
   scope: ["Work on", "Bearbeitungsumfang", "Portée", "Alcance"],
   saveFirst: [
     "The agent saves your current private draft before preparing reviewable changes. Publishing remains separate.",

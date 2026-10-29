@@ -150,6 +150,11 @@ it("targets the selected section by default and keeps an explicit whole-page cho
   expect(screen.getByRole("combobox", { name: "Work on" })).toHaveValue(
     "selected",
   );
+  expect(screen.getByRole("checkbox", { name: "Content" })).toBeChecked();
+  expect(screen.getByRole("checkbox", { name: "Style" })).toBeDisabled();
+  expect(
+    screen.getByText(/Colors, typography and spacing apply to the whole page/),
+  ).toBeVisible();
   fireEvent.change(screen.getByRole("combobox", { name: "Work on" }), {
     target: { value: "page" },
   });

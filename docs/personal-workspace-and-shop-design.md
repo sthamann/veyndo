@@ -326,7 +326,9 @@ Drag an illustrated element onto the preview and follow the highlighted insertio
 position. Existing sections expose a grip, move arrows and deletion; Undo restores
 the prior edit. App form canvases also accept palette drags and movable controls.
 Selecting a shop section targets the agent at that section automatically. Choose
-Whole page explicitly to work on the complete design.
+Whole page explicitly to work on the complete design. Colors, typography and
+spacing apply to the whole page; selected sections default to content editing and
+show that distinction beside the controls.
 
 For style-only references, disable Structure and Content. The host keeps the exact
 native page document and asks the model only for style alternatives. Review the
