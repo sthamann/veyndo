@@ -31,10 +31,10 @@ public acceptance are recorded separately.
 
 | Work | What connects it |
 | --- | --- |
-| **Ask, review, act** | Start from the selected product, describe the work and open a working view with real records, native editing and private catalogue intake. Pin its layout for later; reviewed changes keep their original approval path. [AI workspace](docs/agentic-workspace.md). |
+| **Ask, review, act** | Describe the work and open a view with real records, native editing and private catalogue intake. Pin it for later; changes retain their approval path. [AI workspace](docs/agentic-workspace.md). |
 | **Prepare the catalogue** | Inspect each product's enabled-language coverage and saved image-job progress, then open its native editor to repair missing content. [Catalogue preparation](docs/product-management.md#preparing-a-catalogue-together). |
 | **Bring your shop** | The [Migration Assistant](docs/agentic-migration.md) connects versioned source profiles, saved background inspection, readable variant review and native imports into private previews. |
-| **Build the business** | Describe a private app and review connected forms, uploads, settings and views. Connect its data to native commerce: for example, materials and custom dimensions flow through company approval, checkout and saved-list reorder. Visual editing and coding agents share its versioned definition. [App Studio](docs/app-studio.md), [connected configurator](docs/furniture-configurator.md), [native object extensions](docs/app-core-extensions.md). |
+| **Build the business** | Describe an app with forms, uploads, settings and views. Connect materials and dimensions to company approval, checkout and reorder. Visual editing and coding agents share one versioned definition. [App Studio](docs/app-studio.md), [configurator](docs/furniture-configurator.md), [object extensions](docs/app-core-extensions.md). |
 | **Shape the shop** | Drag components onto the actual preview, rearrange and undo changes, or review screenshot-derived design proposals. Use original Storyfront for connected Experiences. [Visual design](docs/personal-workspace-and-shop-design.md). |
 | **Automate the work** | Repeat reviewed work as a Flow and compare rule drafts with recorded order inputs before saving. [Automation](docs/automation.md), [reusable work](docs/personal-workspace-and-shop-design.md#repeat-completed-work-as-a-flow), [rule comparison](docs/rule-history-comparison.md). |
 | **Shop by intent** | Describe a gift, budget or comparison; edit the visual selection with real product cards, then use native variants, app configuration and checkout. [Shopper workspace](docs/ui-experience.md#standard-storefront-and-customer-account). |
@@ -46,7 +46,7 @@ public acceptance are recorded separately.
 **Films:** [AI commerce · 1:56](docs/assets/showcase/ai-commerce-20261024/veyndo-ai-commerce.mp4) · [Concept · 1:12](docs/assets/showcase/product-films-20261023/veyndo-concept.mp4) · [Merchant journey · 1:36](docs/assets/showcase/product-films-20261023/veyndo-workspace.mp4) · [App platform · 1:24](docs/assets/showcase/product-films-20261023/veyndo-app-platform.mp4). English subtitles, no sound.
 
 Films use actual dated UI captures, demo data and simulated payments. Timing is editorial.
-[Latest public journey and screenshots](docs/evidence/platform-followups-hosted-2026-10-29.md) · [Film sources](docs/assets/showcase/ai-commerce-20261024/README.md).
+[Latest public journey and screenshots](docs/status.md#29-october-connected-platform-work) · [Film sources](docs/assets/showcase/ai-commerce-20261024/README.md).
 
 ## Try one complete round
 
