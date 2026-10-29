@@ -1,5 +1,17 @@
 # Changelog
 
+## Product editing workspace (29 October 2026)
+
+- Reorganized product editing around a compact identity and save bar, one shared
+  content-language selector and grouped product/app sections. Narrow screens use
+  a compact section selector; keyboard navigation keeps manual activation.
+- Aligned name and product number, removed nested review/attachment card styling,
+  added a clear empty review state and moved history into the current editing panel.
+- Creation defaults no longer mark an untouched draft as edited or overwrite input
+  typed while shop settings load.
+- Kept native revisions, stock-safe saves, inherited content, unsaved-edit guards
+  and installed app permissions on the existing paths.
+
 ## Embedded app table controls — 29 October 2026
 
 - Keep shared grid tools at the inline end when a native app omits search. The right-aligned column chooser then opens within its narrow table card instead of clipping its labels outside the embedded view. Data, permissions and saved layout contracts remain unchanged.

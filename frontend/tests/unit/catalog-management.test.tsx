@@ -113,7 +113,7 @@ it("retains dirty edits after a conflict and requires an explicit discard when l
   await user.click(screen.getByRole("button", { name: "Save product" }));
   expect(await screen.findByRole("alert")).toHaveTextContent("Product changed");
   expect(screen.getByLabelText("Name")).toHaveValue("Oak chair edited");
-  await user.click(screen.getByRole("button", { name: /^← Back$/ }));
+  await user.click(screen.getByRole("button", { name: "Back to products" }));
   expect(back).not.toHaveBeenCalled();
   await user.click(screen.getByRole("button", { name: "Discard changes" }));
   expect(back).toHaveBeenCalledOnce();
@@ -311,7 +311,7 @@ it("keeps read-only catalog navigation without offering creation or mutable prod
   expect(
     screen.queryByRole("button", { name: "Generate combinations" }),
   ).not.toBeInTheDocument();
-  await user.click(screen.getByRole("button", { name: /^← Back$/ }));
+  await user.click(screen.getByRole("button", { name: "Back to products" }));
   await user.click(screen.getByRole("tab", { name: "Categories" }));
   expect(
     screen.queryByRole("button", { name: /New category/ }),

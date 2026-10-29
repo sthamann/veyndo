@@ -18,6 +18,7 @@ Files and their individual responsibilities are listed in [the generated source 
 - [`app-studio.css`](app-studio.css): App Studio: restrained light canvas, compact control density and responsive palette/inspector workspaces.
 - [`automation-lifecycle.css`](automation-lifecycle.css): Configuration workspace: readable definitions, clear selection and contextual actions.
 - [`automation.css`](automation.css): Actual graph nodes and original rule forms use the Studio theme and independent responsive columns.
+- [`product-workspace.css`](product-workspace.css): Scoped compact product header, grouped navigation, responsive section selection and flat editing panels.
 - [`catalog-editor.css`](catalog-editor.css): Visual editor and category workspace responsive styles.
 - [`catalog.css`](catalog.css): Light, precise catalog workspace with accessible tables, focused detail panels and visual authoring.
 - [`commerce-manager.css`](commerce-manager.css): commerce manager: Studio visual system and merchant operational layouts.

@@ -8,6 +8,24 @@ The interface supports English, German, French and Spanish. Content editors use 
 
 ## Product detail workspace
 
+The product header keeps the image, name, product number, version, unsaved state,
+activation and save action together. The shared **Content language** picker stays
+above every section. There is no separate back row or language card pushing the
+editor down the screen. The desktop header stays visible while scrolling.
+
+The section navigation groups product information, sales and availability, and
+content and trust. Installed product-tab apps appear in their own group and retain
+the same product context and permissions. Arrow keys move focus; Enter or Space
+opens the focused section. On narrow screens, a grouped **Product section** selector
+replaces the sidebar. Both controls retain the same unsaved draft and content locale.
+
+Name and product number share the first row; the short description follows at full
+width. Each section explains its purpose, review moderation has an explicit empty
+state, and version history remains accessible inside the editing panel. These are
+presentation changes: native save/CAS, untouched-stock omission, rich-text buffer
+protection, app authorization and field inheritance keep their existing owners.
+
+
 - **General:** name, unique shop-local product number, short description, visual rich description, manufacturer identity, manufacturer number, EAN/GTIN, digital product and free-shipping flags.
 - **Prices & stock:** gross base price, tax rate, stock, quantity minimum/steps/maximum, delivery days, list/regulation price, reference units and rule-bound discount tiers.
 - **Media:** ordered gallery, cover image, external HTTPS image URLs and actual PNG/JPEG/WebP uploads for saved products. Uploaded bytes start private and the gallery action explicitly publishes the selected digest.
@@ -17,6 +35,14 @@ The interface supports English, German, French and Spanish. Content editors use 
 - **SEO:** translated title, description and slug metadata. This does not implement complete original Shopware SEO URL generation.
 - **Cross-selling:** search and select products from this tenant.
 - **Attachments & downloads / Reviews:** existing product-scoped asset publication, digital entitlement and review moderation capabilities inside the same workspace.
+
+![Compact product editor with grouped sections](assets/product-workspace-20261029/general-desktop.png)
+
+![Product reviews without nested cards](assets/product-workspace-20261029/reviews-desktop.png)
+
+[Mobile product editor](assets/product-workspace-20261029/general-mobile.png).
+These captures show the local isolated test shop, not a hosted deployment.
+[Verification details](evidence/product-workspace-2026-10-29.md).
 
 The TipTap editor writes a bounded JSON document, not arbitrary HTML. Supported formatting includes bold, italic, underline, headings, lists, links, images, video and undo/redo. Server admission validates document node types, marks, attributes, URL schemes, depth and size; the public React renderer uses explicit safe elements. Unsupported pasted HTML cannot become executable product content.
 
