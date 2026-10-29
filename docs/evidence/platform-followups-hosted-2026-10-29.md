@@ -182,6 +182,14 @@ Local registered native suites, 340 Rust tests, strict Clippy, formal checks and
 184 broken-policy mutation controls passed. Independent review found no issue.
 Its final hosted installation and record acceptance is recorded separately below.
 
+The first complete CI attempt also caught test-fixture interference: retained
+durable work from earlier suites reached the app-generation model before its own
+first request. That provider fixture now owns a separate disposable database,
+retains all real workers and wire assertions and cleans up its owned database.
+The mixed native sequence of customer scenarios, durable agents, authority checks,
+app assistance and generation passes. The incremental independent review found no
+issue. The complete final CI result is recorded with the final rollout below.
+
 ## Apple callback configuration
 
 After explicit action-time approval, the existing `ai.vendune.web` Service ID
