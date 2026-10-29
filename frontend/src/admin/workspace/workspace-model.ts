@@ -3,7 +3,12 @@ import type { Tab } from "../shell/navigation";
 import { canOpenStudio } from "../shell/permissions";
 export type Preset =
   "owner" | "service" | "purchasing" | "content" | "development";
-export type Pin = { title: string; tab: Tab; query: string };
+export type Pin = {
+  title: string;
+  tab: Tab;
+  query: string;
+  components?: import("../../shared/grid/workspace-view").WorkspaceComponent[];
+};
 export type Area = { id: string; name: string; cards: Tab[]; pins: Pin[] };
 export type Goal = {
   id: string;

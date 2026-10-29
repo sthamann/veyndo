@@ -1,0 +1,94 @@
+/** Composed native work surfaces retain a large canvas, ordinary controls and contained responsive overflow. */
+.agent-work-surface {
+  width: min(1440px, calc(100vw - 48px));
+  max-width: none;
+  max-height: calc(100dvh - 48px);
+  padding: 24px;
+  color: var(--ink);
+  background: var(--surface, #fff);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  overflow: auto;
+}
+.agent-work-surface::backdrop {
+  background: rgb(13 35 55 / 36%);
+  backdrop-filter: blur(5px);
+}
+.agent-work-surface-heading,
+.agent-work-surface-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+.agent-work-surface-heading {
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+}
+.agent-work-surface-heading p,
+.agent-work-surface-heading h2 {
+  margin: 0 0 8px;
+}
+.agent-work-surface-heading span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 13px;
+}
+.agent-work-surface-heading h2 {
+  font-size: 26px;
+  line-height: 1.2;
+}
+.agent-work-surface-toolbar {
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+.agent-work-surface-toolbar > div,
+.agent-work-surface-intake {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.agent-work-surface-toolbar button,
+.agent-work-surface-intake button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.agent-work-surface-toolbar button[aria-pressed="true"] {
+  background: var(--accent-soft, #e6f3ff);
+  border-color: var(--accent);
+}
+.agent-work-surface-privacy {
+  color: var(--muted);
+  font-size: 13px;
+  margin: 12px 0 20px;
+}
+.agent-work-surface-intake {
+  padding: 16px;
+  margin: 0 0 18px;
+  background: var(--accent-soft, #e6f3ff);
+  border-radius: 14px;
+}
+.agent-work-surface-intake h3 {
+  flex-basis: 100%;
+  margin: 0 0 4px;
+}
+.agent-work-surface .agent-grid {
+  margin: 0;
+}
+@media (max-width: 700px) {
+  .agent-work-surface {
+    width: calc(100vw - 16px);
+    max-height: calc(100dvh - 16px);
+    padding: 14px;
+    border-radius: 14px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .agent-work-surface::backdrop {
+    backdrop-filter: none;
+  }
+}

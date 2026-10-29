@@ -16,7 +16,9 @@ export default function OrdersManager({
   initialId,
   onEntity,
   onEntityBack,
+  onDirtyChange,
 }: {
+  onDirtyChange?: (dirty: boolean) => void;
   request: RequestFn;
   headers: Record<string, string>;
   initialId?: string;
@@ -90,6 +92,7 @@ export default function OrdersManager({
             context={{ orderId: selected }}
           />
           <OrderDetail
+            onDirtyChange={onDirtyChange}
             id={selected}
             request={request}
             rights={rights}

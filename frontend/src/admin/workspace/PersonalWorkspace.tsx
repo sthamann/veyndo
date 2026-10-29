@@ -17,6 +17,9 @@ import {
 } from "./workspace-model";
 import WorkSuggestions from "./WorkSuggestions";
 import WorkspaceGoals from "./WorkspaceGoals";
+import AgentWorkSurface from "./AgentWorkSurface";
+import type { WorkspaceView } from "../../shared/grid/workspace-view";
+import type { RequestFn } from "../shell/studio-types";
 import "./workspace.css";
 export default function PersonalWorkspace() {
   const {
@@ -31,6 +34,10 @@ export default function PersonalWorkspace() {
     setDraft,
   } = useStudio();
   const t = useWorkspaceText();
+  const [workingView, setWorkingView] = useState<{
+    view: WorkspaceView;
+    request: RequestFn;
+  }>();
   const [record, setRecord] = useState<WorkspaceRecord>(),
     [draft, setLayout] = useState<Workspace>(),
     [error, setError] = useState(""),
@@ -261,19 +268,32 @@ export default function PersonalWorkspace() {
         <section>
           <h2>{t("pins")}</h2>
           <div className="personal-pins">
-            {area.pins
-              .filter(
-                (p) =>
-                  nav.some((n) => n.id === p.tab) &&
-                  canOpenStudio(p.tab, access),
-              )
-              .map((p, i) => (
+            {area.pins.map((p, i) =>
+              nav.some((n) => n.id === p.tab) &&
+              canOpenStudio(p.tab, access) ? (
                 <span key={`${p.tab}_${i}`}>
                   <button
                     onClick={() => {
                       try {
-                        openPinnedView(p.tab, p.query);
-                        void open(p.tab);
+                        if (
+                          p.components &&
+                          ["productData", "orders", "customers"].includes(p.tab)
+                        ) {
+                          setWorkingView({
+                            view: {
+                              entity:
+                                p.tab === "productData"
+                                  ? "products"
+                                  : (p.tab as "orders" | "customers"),
+                              criteria: JSON.parse(p.query || "{}"),
+                              components: p.components,
+                            },
+                            request,
+                          });
+                        } else {
+                          openPinnedView(p.tab, p.query);
+                          void open(p.tab);
+                        }
                       } catch {
                         setError(t("error"));
                       }
@@ -290,7 +310,8 @@ export default function PersonalWorkspace() {
                     ×
                   </button>
                 </span>
-              ))}
+              ) : null,
+            )}
           </div>
         </section>
       )}
@@ -349,6 +370,12 @@ export default function PersonalWorkspace() {
           </p>
         ))}
       </details>
+      {workingView && workingView.request === request && (
+        <AgentWorkSurface
+          candidate={workingView.view}
+          onClose={() => setWorkingView(undefined)}
+        />
+      )}
     </div>
   );
 }

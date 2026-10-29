@@ -79,6 +79,8 @@ export default function ConfirmDialog({
         </footer>
       </div>
     </div>,
-    document.querySelector(".studio") ?? document.body,
+    document.activeElement?.closest("dialog[open]") ??
+      document.querySelector(".studio") ??
+      document.body,
   );
 }

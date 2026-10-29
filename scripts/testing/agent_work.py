@@ -61,9 +61,16 @@ def verify_agent_work(call, behavior, headers, passed):
     assert refused['run']['state']=='failed' and refused['run']['error']['status']==400,refused
     assert not call('/api/apps/work_optout/entities/guides',headers=scoped)['elements']
     passed('Explicit app agent opt-out is enforced at work binding, beyond hiding discovery metadata')
-    behavior.update(mode='view-plan',view={'entity':'orders','criteria':{'customer':'Synthetic Alex','state':'open'}})
+    behavior.update(mode='view-plan',view={'entity':'orders','criteria':{'customer':'Synthetic Alex','state':'open'},'components':['records','details']})
     view=call('/api/agent/chat',{'message':'Show open orders for Synthetic Alex','workspaceContext':{'view':'orders'},'inference':{'provider':'openai'}},headers)['messages'][-1]['data']['preview']
     assert view['proposal']['view']['criteria']['customer']=='Synthetic Alex' and view['workspaceContext']['view']=='orders',view
+    assert view['proposal']['view']['components']==['records','details']
+    admitted=copy.deepcopy(behavior['view'])
+    for forged in [{**admitted,'components':['records','script']},{**admitted,'components':['records','intake']},{**admitted,'tenant':'atelier'},{**admitted,'rows':[{'id':'invented-order'}]}]:
+        behavior['view']=forged
+        refused=call('/api/agent/chat',{'message':'Injected composition must reject','inference':{'provider':'openai'}},headers)
+        assert refused['run']['state']=='failed' and refused['run']['error']['status']==400,refused
+    behavior['view']=admitted
     behavior['view']['criteria']['tenant']='atelier'
     refused=call('/api/agent/chat',{'message':'Forged filters','inference':{'provider':'openai'}},headers)
     assert refused['run']['state']=='failed' and refused['run']['error']['status']==400,refused

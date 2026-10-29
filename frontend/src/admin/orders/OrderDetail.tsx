@@ -17,6 +17,7 @@ import type { ShipmentPosition } from "./ShipmentSplit";
 import ReceiptPanel from "./ReceiptPanel";
 import ConfigurationSummary from "../../shared/apps/ConfigurationSummary";
 import { configurationSnapshots } from "../../shared/api/configuration-types";
+import { useUnsavedWorkspace } from "../../shared/ui/useUnsavedWorkspace";
 export default function OrderDetail({
   id,
   request,
@@ -25,7 +26,9 @@ export default function OrderDetail({
   download,
   onCustomer,
   onProduct,
+  onDirtyChange,
 }: {
+  onDirtyChange?: (dirty: boolean) => void;
   onCustomer?: (email: string) => void;
   onProduct?: (id: string) => void;
   id: string;
@@ -45,6 +48,7 @@ export default function OrderDetail({
     [note, setNote] = useState(""),
     [pendingJob, setPendingJob] = useState<string>();
   const inflight = useRef(false);
+  useUnsavedWorkspace(!!note.trim(), onDirtyChange);
   const retry = useRef<
     { signature: string; key: string; body: any } | undefined
   >(undefined);

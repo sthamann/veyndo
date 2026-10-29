@@ -4,6 +4,7 @@ import type { RequestFn } from "../api/types";
 import { useCustomerText } from "../i18n/customer-i18n";
 import { useCrmText } from "../i18n/crm-i18n";
 import ConfirmDialog from "../ui/ConfirmDialog";
+import { useUnsavedWorkspace } from "../ui/useUnsavedWorkspace";
 import AddressCard from "./AddressCard";
 import AddressFields from "./AddressFields";
 import {
@@ -18,12 +19,14 @@ export default function AddressBook({
   countries,
   canEdit = true,
   onChange,
+  onDirtyChange,
 }: {
   request: RequestFn;
   path: string;
   countries: string[];
   canEdit?: boolean;
   onChange?: () => void;
+  onDirtyChange?: (dirty: boolean) => void;
 }) {
   const { c } = useCustomerText();
   const { r } = useCrmText();
@@ -37,6 +40,13 @@ export default function AddressBook({
     [error, setError] = useState(""),
     [message, setMessage] = useState("");
   const inflight = useRef(false);
+  const initialDraft = useRef("");
+  useUnsavedWorkspace(
+    busy ||
+      (!!draft &&
+        JSON.stringify([draft, billing, shipping]) !== initialDraft.current),
+    onDirtyChange,
+  );
   const load = useCallback(
     async () => setList(await request(path)),
     [request, path],
@@ -62,6 +72,11 @@ export default function AddressBook({
     }
   };
   const edit = (entry?: AddressEntry) => {
+    initialDraft.current = JSON.stringify([
+      entry?.address ?? emptyAddress(countries[0] ?? "DE"),
+      !!entry && entry.id === list?.defaultBillingAddressId,
+      !!entry && entry.id === list?.defaultShippingAddressId,
+    ]);
     setEditing(entry);
     setDraft(entry?.address ?? emptyAddress(countries[0] ?? "DE"));
     setBilling(!!entry && entry.id === list?.defaultBillingAddressId);

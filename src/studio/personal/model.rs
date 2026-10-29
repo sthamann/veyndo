@@ -21,6 +21,8 @@ struct Pin {
     title: String,
     tab: String,
     query: String,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    components: Option<Vec<String>>,
 }
 #[derive(Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -58,6 +60,15 @@ pub(super) fn validate(v: &Value) -> Result<Value> {
                 !text(&p.title, 100)
                     || !apps::identifier(&p.tab.to_lowercase())
                     || !safe_pin(&p.query)
+                    || p.components.as_ref().is_some_and(|components| {
+                        let entity = match p.tab.as_str() {
+                            "productData" => "products",
+                            "orders" => "orders",
+                            "customers" => "customers",
+                            _ => return true,
+                        };
+                        agent_runs::view::validate_components(entity, components).is_err()
+                    })
             })
         {
             return Err(bad("Invalid workspace area, card or pinned view"));
@@ -132,6 +143,42 @@ pub(crate) fn schema(n: &str) -> Option<Value> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn composed_pins_preserve_layout_but_never_authority_or_personal_search() {
+        let original = json!({"areas":[{"id":"service","name":"Service","cards":[],"pins":[
+            {"title":"Products","tab":"productData","query":"{}","components":["records","details","intake"]}
+        ]}],"active":"service","goals":[]});
+        assert_eq!(validate(&original).unwrap(), original);
+        for components in [
+            json!([]),
+            json!(["details"]),
+            json!(["records", "records"]),
+            json!(["records", "html"]),
+        ] {
+            let mut v = original.clone();
+            v["areas"][0]["pins"][0]["components"] = components;
+            assert!(validate(&v).is_err());
+        }
+        for tab in ["orders", "customers", "settings"] {
+            let mut v = original.clone();
+            v["areas"][0]["pins"][0]["tab"] = json!(tab);
+            assert!(validate(&v).is_err());
+        }
+        for key in ["tenant", "rows", "permissions", "code"] {
+            let mut v = original.clone();
+            v["areas"][0]["pins"][0][key] = json!("forged");
+            assert!(validate(&v).is_err());
+        }
+        let mut v = original.clone();
+        v["areas"][0]["pins"][0]["query"] = json!(r#"{"customer":"buyer@example.test"}"#);
+        assert!(validate(&v).is_err());
+        let mut legacy = original;
+        legacy["areas"][0]["pins"][0]
+            .as_object_mut()
+            .unwrap()
+            .remove("components");
+        assert_eq!(validate(&legacy).unwrap(), legacy);
+    }
     #[test]
     fn actor_preferences_are_bounded_and_not_authority() {
         assert!(validate(&empty()).is_ok());

@@ -1012,11 +1012,16 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/admin/team/permission-i18n.ts](../frontend/src/admin/team/permission-i18n.ts) | Role interface vocabulary uses the shared permission label catalogue. |
 | [frontend/src/admin/team/permission-labels.ts](../frontend/src/admin/team/permission-labels.ts) | Shared readable labels and exact permission identifiers for Studio, app actions and API keys. |
 | [frontend/src/admin/team/permission-picker.css](../frontend/src/admin/team/permission-picker.css) | Shared readable permission groups replace flat scope walls in roles and API credentials. |
+| [frontend/src/admin/workspace/AgentViewDirectory.tsx](../frontend/src/admin/workspace/AgentViewDirectory.tsx) | Composition mounts existing domain directories, filters and native entity editors without a second renderer. |
+| [frontend/src/admin/workspace/AgentWorkSurface.tsx](../frontend/src/admin/workspace/AgentWorkSurface.tsx) | Reviewed composition binds real native views to the current Studio scope and private workspace preferences. |
 | [frontend/src/admin/workspace/PersonalWorkspace.tsx](../frontend/src/admin/workspace/PersonalWorkspace.tsx) | Personal entry point on the existing shell; requests and linked views retain current scope and rights. |
 | [frontend/src/admin/workspace/WorkSuggestions.tsx](../frontend/src/admin/workspace/WorkSuggestions.tsx) | Actual permission-filtered work links open native owners; late responses cannot survive a scope change. |
 | [frontend/src/admin/workspace/WorkspaceGoals.tsx](../frontend/src/admin/workspace/WorkspaceGoals.tsx) | Goals reference the existing proposal owner; no parallel worker, executor or approval queue. |
 | [frontend/src/admin/workspace/WorkspacePinBridge.tsx](../frontend/src/admin/workspace/WorkspacePinBridge.tsx) | The shared grid pins criteria in the existing actor-private workspace; rows and credentials are never copied. |
 | [frontend/src/admin/workspace/WorkspaceTask.tsx](../frontend/src/admin/workspace/WorkspaceTask.tsx) | Personal goals open the native proposal review and apply owner; no second approval/execution path. |
+| [frontend/src/admin/workspace/composition-i18n.ts](../frontend/src/admin/workspace/composition-i18n.ts) | Host-owned composition controls never repeat model claims about completed commerce actions. |
+| [frontend/src/admin/workspace/composition.css](../frontend/src/admin/workspace/composition.css) | Composed native work surfaces retain a large canvas, ordinary controls and contained responsive overflow. |
+| [frontend/src/admin/workspace/pin-workspace-view.ts](../frontend/src/admin/workspace/pin-workspace-view.ts) | Native grids and composed views share actor-private layout CAS; records and personal criteria never persist. |
 | [frontend/src/admin/workspace/workspace-i18n.ts](../frontend/src/admin/workspace/workspace-i18n.ts) | Personal workspace vocabulary; UI language never changes saved content language. |
 | [frontend/src/admin/workspace/workspace-model.ts](../frontend/src/admin/workspace/workspace-model.ts) | Layouts are private presentation preferences, never roles or delegated permissions. |
 | [frontend/src/admin/workspace/workspace.css](../frontend/src/admin/workspace/workspace.css) | Personal workspace: stable shell, accessible rearrangement and scoped cards. |
@@ -1126,6 +1131,7 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/shared/grid/types.ts](../frontend/src/shared/grid/types.ts) | Shared read-only grid contracts; domains own rows, permissions and server query semantics. |
 | [frontend/src/shared/grid/useGridAccess.ts](../frontend/src/shared/grid/useGridAccess.ts) | Current Studio rights only control presentation; each native list/model operation rechecks server authority. |
 | [frontend/src/shared/grid/useGridPage.ts](../frontend/src/shared/grid/useGridPage.ts) | Debounced server paging with generation fences: old searches and revoked reads never retain stale rows. |
+| [frontend/src/shared/grid/workspace-view.ts](../frontend/src/shared/grid/workspace-view.ts) | Validated presentation bindings reuse native directories; model output never contains data or authority. |
 | [frontend/src/shared/history/EntityHistory.tsx](../frontend/src/shared/history/EntityHistory.tsx) | On-demand entity history, field comparisons and explicitly confirmed revision-checked restoration. |
 | [frontend/src/shared/history/history-model.ts](../frontend/src/shared/history/history-model.ts) | Bounded structural changes for database snapshots; no HTML from historical content is executed. |
 | [frontend/src/shared/history/history.css](../frontend/src/shared/history/history.css) | Shared history deliberately stays secondary to editing and loads only when opened. |
@@ -1245,6 +1251,7 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/shared/ui/WorkspaceBoundary.tsx](../frontend/src/shared/ui/WorkspaceBoundary.tsx) | Contain a workspace render failure and let the user retry without losing the application shell. |
 | [frontend/src/shared/ui/brand.css](../frontend/src/shared/ui/brand.css) | Shared Veyndo brand palette and vector sizing; light UI text uses the contrast-safe blue. |
 | [frontend/src/shared/ui/confirm-dialog.css](../frontend/src/shared/ui/confirm-dialog.css) | Modal surface shared by settings, media and future destructive actions. |
+| [frontend/src/shared/ui/useUnsavedWorkspace.ts](../frontend/src/shared/ui/useUnsavedWorkspace.ts) | Native dirty state protects reloads and informs an optional embedded host without owning editor data. |
 | [frontend/src/storefront/account/AccountDownloads.tsx](../frontend/src/storefront/account/AccountDownloads.tsx) | Paid download entitlements are fetched by the server and retrieved with customer headers, never URL tokens. |
 | [frontend/src/storefront/account/AccountOrderDetail.tsx](../frontend/src/storefront/account/AccountOrderDetail.tsx) | Purchase detail uses immutable addresses, current fulfillment, issued PDFs and paid order entitlements. |
 | [frontend/src/storefront/account/AccountOrderList.tsx](../frontend/src/storefront/account/AccountOrderList.tsx) | Clickable purchase cards show the live server status and lead to a protected order detail. |
@@ -1850,6 +1857,7 @@ This lists every checked-in source module in these roots, including files with n
 | [scripts/testing/tooling_tests.py](../scripts/testing/tooling_tests.py) | Ordered Studio layout. |
 | [scripts/testing/workspace_boundaries.py](../scripts/testing/workspace_boundaries.py) | Enforce reviewed Cargo owners and dependency capabilities, including aliases and unnamed helper crates. |
 | [scripts/testing/workspace_boundary_tests.py](../scripts/testing/workspace_boundary_tests.py) | Mutation controls against real Cargo metadata: aliases, hidden helpers, build scripts and source-owner escapes. |
+| [scripts/testing/workspace_composition.py](../scripts/testing/workspace_composition.py) | Current-role and foreign-shop admission through the real merchant planner and directory. |
 | [scripts/transaction_pooler.py](../scripts/transaction_pooler.py) | Repeat the real strict-runtime and multi-replica regressions through a one-backend transaction pooler. |
 | [scripts/translations.py](../scripts/translations.py) | Durable translation jobs against a local provider fixture, real SQL, native MCP and a cold restart; no paid calls. |
 | [scripts/users.py](../scripts/users.py) | Real multi-user, workspace isolation and role/revocation regression tests. |

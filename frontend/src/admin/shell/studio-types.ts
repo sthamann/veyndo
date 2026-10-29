@@ -111,6 +111,7 @@ export type Preview = {
     view?: {
       entity: "orders" | "customers" | "products";
       criteria: Record<string, string | boolean>;
+      components?: import("../../shared/grid/workspace-view").WorkspaceComponent[];
     } | null;
     operations?: { name: string; label: string; arguments_json: string }[];
     summary: string;

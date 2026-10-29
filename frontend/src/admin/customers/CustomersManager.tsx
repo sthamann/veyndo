@@ -19,12 +19,15 @@ import { inheritedText } from "../../shared/geography/geography-types";
 import type { OpenEntity } from "../shell/useEntityNavigation";
 import { useOperationsText } from "../../shared/i18n/operations-i18n";
 import type { RequestFn } from "../shell/studio-types";
+import { useUnsavedWorkspace } from "../../shared/ui/useUnsavedWorkspace";
 export default function CustomersManager({
   request,
   initialEmail,
   onEntity,
   onEntityBack,
+  onDirtyChange,
 }: {
+  onDirtyChange?: (dirty: boolean) => void;
   request: RequestFn;
   initialEmail?: string;
   onEntity?: OpenEntity;
@@ -47,6 +50,7 @@ export default function CustomersManager({
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false);
   const editable = canEdit && customer?.guest !== true;
+  const [addressDirty, setAddressDirty] = useState(false);
   const dirty =
     !!customer &&
     JSON.stringify([
@@ -56,9 +60,10 @@ export default function CustomersManager({
       customer.active,
     ]) !== baseline;
   const navigate = (action: () => void) => {
-    if (dirty) setPending(() => action);
+    if (dirty || addressDirty) setPending(() => action);
     else action();
   };
+  useUnsavedWorkspace(dirty || addressDirty, onDirtyChange);
   useEffect(() => {
     request("/store-api/checkout/options")
       .then((v) => setCountries(v.countries))
@@ -246,6 +251,7 @@ export default function CustomersManager({
               <GuestContact customer={customer} />
             ) : (
               <AddressBook
+                onDirtyChange={setAddressDirty}
                 request={request}
                 path={`/api/merchant/customers/${encodeURIComponent(customer.email)}/addresses`}
                 countries={countries}
@@ -323,6 +329,7 @@ export default function CustomersManager({
           confirmLabel={r("discard")}
           onCancel={() => setPending(null)}
           onConfirm={() => {
+            onDirtyChange?.(false);
             pending();
             setPending(null);
           }}

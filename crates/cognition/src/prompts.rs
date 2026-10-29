@@ -7,6 +7,10 @@ const TEMPLATES: &[(&str, &str)] = &[
         include_str!("../prompts/merchant-planner.v1.txt"),
     ),
     (
+        "merchant-planner@4",
+        include_str!("../prompts/merchant-planner.v4.txt"),
+    ),
+    (
         "merchant-planner@3",
         include_str!("../prompts/merchant-planner.v3.txt"),
     ),
