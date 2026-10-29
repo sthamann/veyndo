@@ -65,6 +65,14 @@ journeys below retain their accepted versions.
 
 ## What is online now
 
+The actual public homepage also runs the current four-language explanation and
+29 October app/customer screenshots. Its existing Experience owner deployed
+`5c1afc2` (`wild-party-5333`) at **17:08:29 CET**; English/German copy, current
+proof links and the app image were checked on the live page. The handbook and
+README are published from their separate public Core owner.
+[Homepage ownership and observed rollout](evidence/platform-followups-hosted-2026-10-29.md#actual-public-homepage-owner).
+
+
 The latest observed Core is **`69fd4568` (PR #234)**, image
 `united-toys-4065`, started on **29 October at 16:53:22 CET**. Its ordinary
 snapshot-backed release completed at **16:54:31 CET**, with a successful migration
