@@ -4,6 +4,7 @@
 
 - Check selected-stage ownership through the existing system metadata owner inside the rollback-only installation review. Preserve current app/developer rights, exact parent identity and exclusion of foreign or actor-private stages.
 - Reproduce the public `Environment unavailable` failure with actual separate restricted logins. Cover first installation, existing-stage data, unchanged package/outbox state and denied contexts; repeat the same app-schema suite through transaction poolers.
+- Isolate the app-generation provider fixture in its own disposable database so durable work intentionally retained by earlier suites cannot call its model. Preserve real worker execution, all protocol assertions and owned cleanup.
 
 ## Typed first-app field constraints — 29 October 2026
 

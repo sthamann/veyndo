@@ -176,6 +176,13 @@ real one-backend PgBouncer checks. The single suite registry remains authoritati
 Partition validation rejects duplicates and missing special suites. A newly
 registered suite automatically enters `core`; it cannot disappear between jobs.
 
+The app-generation provider fixture additionally owns a fresh disposable database
+inside its partition. Earlier suites intentionally leave durable tasks for recovery
+tests; restarting all workers against that shared state could send unrelated
+requests to a newly rebound loopback model. Generation keeps real workers and the
+complete provider-wire assertions, starts with no unrelated model requests and
+drops only its own uniquely named database after stopping its process.
+
 The native collector waits for every partition. It checks source commit, workflow
 run, producer attempt, Rust toolchain, absolute workspace paths, registry digest
 and every raw profile checksum before copying any measurement. It rebuilds the

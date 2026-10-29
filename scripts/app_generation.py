@@ -2,7 +2,9 @@
 """Native AI proposal contract with local model HTTP, real Rust/SQL and no paid model calls."""
 import copy,json,os,socket,subprocess,threading,time,urllib.request,urllib.error,uuid
 from http.server import BaseHTTPRequestHandler,ThreadingHTTPServer
-from testing.runtime import ROOT,serve,stop
+from urllib.parse import urlsplit,urlunsplit
+from testing.database import psql
+from testing.runtime import ROOT,artifact_path,serve,stop
 from testing.app_approval import consent
 state={'invalid':False};seen=[]
 class Model(BaseHTTPRequestHandler):
@@ -32,7 +34,14 @@ class Model(BaseHTTPRequestHandler):
 model=ThreadingHTTPServer(('127.0.0.1',0),Model);threading.Thread(target=model.serve_forever,daemon=True).start()
 with socket.socket() as s:s.bind(('127.0.0.1',0));port=s.getsockname()[1]
 base=f'http://127.0.0.1:{port}';env={**os.environ,'BIND_ADDR':f'127.0.0.1:{port}','OLLAMA_URL':f'http://127.0.0.1:{model.server_port}','OPENAI_BASE_URL':f'http://127.0.0.1:{model.server_port}/v1','OPENAI_API_KEY':'synthetic-app-generation-only','PROCESS_ROLE':'all'}
-(ROOT/'artifacts').mkdir(exist_ok=True);log=(ROOT/'artifacts/app-generation.log').open('w');process=serve(env,base,log);headers={}
+# Earlier suites leave durable work intentionally. It must not reach this model fixture.
+database='app_generation_'+uuid.uuid4().hex;source=urlsplit(env['DATABASE_URL'])
+assert not env.get('DATABASE_RUNTIME_URL') and not env.get('DATABASE_TENANT_URL'),'Use the owned provider fixture, not existing restricted runtime databases'
+env['DATABASE_URL']=urlunsplit(source._replace(path='/'+database))
+def database_sql(statement):
+ subprocess.run(psql(os.environ.get('TEST_DB_CONTAINER','veyndo-postgres-1'),source.username or 'commerce','postgres','-v','ON_ERROR_STOP=1'),input=statement,text=True,check=True,stdout=subprocess.DEVNULL)
+database_sql('CREATE DATABASE '+database)
+process=None;log=None;headers={}
 def call(path,body=None,expected=200,scope=None):
  r=urllib.request.Request(base+path,data=None if body is None else json.dumps(body).encode(),headers={'Content-Type':'application/json',**(headers if scope is None else scope)})
  try:
@@ -40,6 +49,7 @@ def call(path,body=None,expected=200,scope=None):
  except urllib.error.HTTPError as e:status=e.code;value=json.load(e)
  assert status==expected,(path,status,value);return value
 try:
+ log=artifact_path('app-generation.log').open('w');process=serve(env,base,log)
  u=uuid.uuid4().hex[:10];a=call('/api/auth/register',{'workspaceId':'generation-'+u,'workspaceName':'Proposal fixture','name':'Fixture','email':u+'@example.test','password':'Synthetic-generation-2026!'})
  headers={'x-tenant':a['workspace'],'Authorization':'Bearer '+a['token']}
  stage=call('/api/environments',{'name':'AI proposal fixture'})['id']
@@ -53,6 +63,7 @@ try:
  m=json.loads((ROOT/'extensions/apps/assistant-examples/admin.json').read_text());m['id']='generated_'+u
  state['manifest']=m
  payload={'environment':stage,'prompt':'Improve this product editor with native controls while preserving data and permissions','manifest':m,'inference':{'provider':'ollama','model':'synthetic-model'}}
+ assert not seen,'Unrelated work reached the app-generation model before its first request'
  b=call('/api/developer/generate',payload);generated=b['manifest']
  assert b['state']=='draft' and b['environment']==stage
  assert not generated['entities'][0]['publicRead'] and generated['entities'][0]['fields'][0]['coreReference']=='product'
@@ -176,4 +187,7 @@ try:
  persisted=call(path)
  assert persisted['state']==order['state'] and persisted['nativeLifecycle']==order['nativeLifecycle']
  print('PASS model proposal → explicit private install → selected package release → native simulated order review; missing delivery blocks completion and the accepted workflow survives reload')
-finally:stop(process);log.close();model.shutdown()
+finally:
+ if process is not None:stop(process)
+ if log is not None:log.close()
+ model.shutdown();database_sql('DROP DATABASE '+database+' WITH (FORCE)')
