@@ -1,5 +1,10 @@
 # Changelog
 
+## Private browser customer acceptance — 29 October 2026
+
+- Accept the same saved English/German customer profiles before and after a native private stock repair using the actual local model. Record separate rendered product, German simulated checkout, localized confirmation, return and empty-basket screenshots.
+- Keep sandbox and channel-preview journeys out of Google Analytics configuration discovery in the existing app-owned bridge. Retain native server admission and ordinary live consent. Verify cancellation, restart/recovery, foreign scopes and emergency stop in the registered native scenario suite.
+
 ## App upgrade preflight — 29 October 2026
 
 - Add rollback-only native installation checks to package consent and App Studio, showing record counts, explicit migration requirements and blocking diagnostics without returning record contents.

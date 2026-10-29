@@ -44,6 +44,12 @@ consent and App Studio, plus active Flow consumer admission. The actual browser 
 version and preserved private/live records. Local validation is recorded separately
 from independent review and required CI; it is not a hosted deployment. [Upgrade contract](app-platform.md#check-an-upgrade-before-installation), [local acceptance](evidence/app-upgrade-2026-10-29.md).
 
+The next local acceptance reuses two saved customer profiles with the actual local
+model, inspects the rendered stock obstacle, repairs it in Studio and completes a
+German simulated browser purchase with return to an empty basket. Sandbox GA4
+configuration discovery was removed after that browser finding. [Exact browser
+and native-task evidence](evidence/customer-browser-2026-10-29.md).
+
 The 23 October release expands selected Lean guarantees to **63 policies / 149
 properties**, splits their Rust/Lean owners and tightens Cargo dependency checks.
 The subsequent shared discount repair and batched marketplace order localization

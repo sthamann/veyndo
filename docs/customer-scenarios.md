@@ -89,6 +89,13 @@ stock, other sandbox edits may occur, and model output may vary. Use equivalent
 starting conditions when comparing a change and read the individual actions.
 There is no conversion forecast or causal revenue estimate.
 
+The [29 October local browser acceptance](evidence/customer-browser-2026-10-29.md)
+reuses two exactly saved profiles before and after a private stock repair, then
+separately inspects the rendered product, completes a German simulated purchase
+and verifies return with an empty basket. Its screenshots are actual browser
+captures. Native AI shopper execution and rendered browser acceptance are recorded
+separately; the native task journal is not a browser recording.
+
 This version exercises the **native commerce API**. It does not render the shop,
 judge a screenshot, click a mobile UI or run an authenticated company-buyer journey.
 A design change still needs browser testing. The simulator can already find native
