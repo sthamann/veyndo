@@ -87,9 +87,19 @@ Wasm code; no external provider action is executed.
 Every installation transport and selected release also checks active Flow actions
 against the proposed package under the existing automation fence. The same Flow
 argument construction and native field validation apply to configuration save and
-replacement. A missing or incompatible action blocks activation. Queued work
+replacement. The stored Flow actor's current membership, primary and additional
+action rights and core-extension access must still permit that action. A missing
+or incompatible action blocks activation. Queued work
 continues to use its ordinary current-rights and package admission; checking an
 upgrade does not grant future authority or replay a previous external effect.
+
+Changing a field's validation rules also requires an explicit schema migration.
+The bounded migration checks stored values through the ordinary field/language
+validator and retains its recovery snapshot. Invalid old values must be repaired
+before activation. An update cannot remove an enabled payment provider/method or
+narrow its configured currency/country coverage, including channel overrides.
+Disable or reconfigure the affected method first. Disabled methods and immutable
+historical payment attempts retain their existing contracts.
 
 The report is a snapshot, not approval. Installation rechecks current state and
 still needs exact candidate digest/permissions. Restore a previous interface as a

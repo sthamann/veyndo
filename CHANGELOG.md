@@ -5,6 +5,7 @@
 - Add rollback-only native installation checks to package consent and App Studio, showing record counts, explicit migration requirements and blocking diagnostics without returning record contents.
 - Check stored data, deferred constraints, saved examples and existing package dependencies through the actual installer. Preserve complete digest consent and repeat admission when installing.
 - Protect active Flow actions and saved argument fields on all installation transports and selected releases. Restore previous presentation only as a new immutable version; retain operational data and settings.
+- Recheck saved Flow actors against current primary/additional rights, require explicit migrations for changed field validation and protect enabled provider methods from removal or country/currency narrowing, including channel overrides.
 
 ## Description-led native apps — 29 October 2026
 

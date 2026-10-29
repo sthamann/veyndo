@@ -32,12 +32,12 @@ passed all partitions, collection and frontend checks. Real local model output,
 browser pin/reload and private CSV creation are recorded separately from hosted
 Core delivery. [Exact workspace evidence](evidence/composed-workspace-2026-10-29.md).
 
-Description-led app creation is under [PR #227](https://github.com/sthamann/veyndo/pull/227). A real local model
+Description-led app creation merged through [PR #227](https://github.com/sthamann/veyndo/pull/227) after complete required Linux verification. A real local model
 produced a consultation app with product relation, private design upload, status,
 setting and two native views. The browser journey includes actual saved preview
 data, package-only release, central settings, a published request and restoration
-of the previous interface as a new version. It has not yet completed required CI
-or hosted delivery. [Exact local app evidence](evidence/guided-app-2026-10-29.md).
+of the previous interface as a new version. Hosted Core delivery is still separate.
+[Exact local app evidence](evidence/guided-app-2026-10-29.md).
 
 A subsequent local branch adds real rollback-only upgrade checks to installed app
 consent and App Studio, plus active Flow consumer admission. The actual browser refused a missing migration, installed the compatible private

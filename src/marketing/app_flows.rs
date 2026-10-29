@@ -17,6 +17,14 @@ pub(super) fn validate_manifest_flow(
         .ok_or(bad("Unknown flow app action"))?;
     eligible(act)?;
     auth::permit(h, act.permission.as_deref().unwrap_or("catalog"))?;
+    apps::additional_permissions(h, act)?;
+    if let Some(entity) = m
+        .entities
+        .iter()
+        .find(|e| Some(&e.name) == act.entity.as_ref())
+    {
+        apps::core_extensions::access(entity, h, act.handler == "save")?;
+    }
     validate_contract(f, m)
 }
 fn validate_contract(f: &flows::Flow, m: &apps::Manifest) -> Result<()> {
@@ -95,14 +103,16 @@ pub(crate) async fn validate_replacement(
     let rows =
         sqlx::query("SELECT data FROM commerce_flows WHERE tenant=$1 AND data->>'active'='true'")
             .bind(t)
-            .fetch_all(conn)
+            .fetch_all(&mut *conn)
             .await?;
     for row in rows {
         let f: flows::Flow =
             serde_json::from_value(row.get("data")).map_err(|_| bad("Invalid stored flow"))?;
         for step in steps(&f) {
             if step.app_action.as_ref().is_some_and(|a| a.app == m.id) {
-                validate_contract(&step, m).map_err(|_| conflict("Upgrade would invalidate an active flow; update its action and arguments first"))?;
+                let h = super::flow_access::headers_on(&mut *conn, t, f.actor.as_deref()).await
+                    .map_err(|_| conflict("Upgrade would invalidate an active flow; update its action and arguments first"))?;
+                validate_manifest_flow(&h, &step, m).map_err(|_| conflict("Upgrade would invalidate an active flow; update its action and arguments first"))?;
             }
         }
     }

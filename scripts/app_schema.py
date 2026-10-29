@@ -87,3 +87,49 @@ assert not review['upgrade']['ready'] and 'active flow' in review['upgrade']['is
 call('/api/apps',{'manifest':removed},h,409)
 assert next(p for p in call('/api/apps',h=h)['packages'] if p['id']==m['id'])['version']=='1.2.2'
 print('PASS rollback-only admission checks actual data and required migration, rejects stale consent and active-flow breakage, hides record contents and preserves foreign/stage isolation')
+
+def field_rules():
+ rules=copy.deepcopy(m);rules.update(id='validation_fixture',version='1.0.0')
+ rules['entities'][0]['fields']=[{'name':'count','kind':'integer'}]
+ call('/api/apps',{'manifest':rules},h)
+ path='/api/apps/validation_fixture/actions/save'
+ call(path,{'id':'old_value','fields':{'count':1}},h)
+ candidate=copy.deepcopy(rules);candidate['version']='1.1.0';candidate['entities'][0]['fields'][0]['validation']={'minimum':10}
+ report=call('/api/apps/review',{'manifest':candidate},h)['upgrade']
+ assert not report['ready'] and report['migrationRequired'],report
+ call('/api/apps',{'manifest':candidate},h,409)
+ candidate['schemaMigrations']=[{'fromVersion':'1.0.0','steps':[{'op':'convert','entity':'entries','field':'count'}]}]
+ assert not call('/api/apps/review',{'manifest':candidate},h)['upgrade']['ready']
+ call('/api/apps',{'manifest':candidate},h,400)
+ assert next(p for p in call('/api/apps',h=h)['packages'] if p['id']==rules['id'])['version']=='1.0.0'
+ call(path,{'id':'old_value','revision':1,'fields':{'count':15}},h)
+ assert call('/api/apps/review',{'manifest':candidate},h)['upgrade']['ready']
+ call('/api/apps',{'manifest':candidate},h)
+ call(path,{'id':'old_value','revision':3,'fields':{'count':16}},h)
+ print('PASS tightened validation requires explicit migration, checks old values, rolls back invalid records and permits a repaired value')
+
+def flow_actor():
+ scopes=['apps.manage','automation.manage','catalog.read','catalog.write']
+ call('/api/workspace/roles/flow_editor',{'revision':0,'data':{'name':{'en-GB':'Flow editor'},'permissions':scopes,'active':True}},h,method='PUT')
+ invitation=call('/api/workspace/invitations',{'role':'flow_editor','email':tenant+'-flow@example.test'},h)
+ member=call('/api/auth/accept',{'name':'Flow editor','password':'Synthetic-flow-fixture-2026!','invitationToken':invitation['token']})
+ restricted={'x-tenant':tenant,'Authorization':'Bearer '+member['token']}
+ limited=copy.deepcopy(consumer);limited['id']='flow_authority';limited['version']='1.0.0'
+ limited['schemaMigrations']=[]
+ action=next(a for a in limited['actions'] if a['handler']=='save');action['permission']='catalog.write'
+ call('/api/apps',{'manifest':limited},h)
+ saved=copy.deepcopy(flow);saved['appAction']['app']=limited['id']
+ call('/api/automation/flows/restricted_consumer',{'revision':0,'data':saved},restricted,method='PUT')
+ for change in [{'permission':'orders.write'},{'requiredPermissions':['customers.pii']}]:
+  proposed=copy.deepcopy(limited);proposed['version']='1.1.0';next(a for a in proposed['actions'] if a['handler']=='save').update(change)
+  report=call('/api/apps/review',{'manifest':proposed},h)['upgrade']
+  assert not report['ready'],(change,report)
+  call('/api/apps',{'manifest':proposed},h,409)
+  assert next(p for p in call('/api/apps',h=h)['packages'] if p['id']==limited['id'])['version']=='1.0.0'
+ print('PASS owner upgrades cannot strand an active Flow with a restricted actor by changing primary or additional action rights')
+
+failures=[]
+for case in [field_rules,flow_actor]:
+ try:case()
+ except AssertionError as error:failures.append((case.__name__,str(error)))
+assert not failures,failures

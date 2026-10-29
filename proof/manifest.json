@@ -1640,8 +1640,8 @@
     },
     "src/apps/core_extensions.rs": {
       "status": "reviewed-binding",
-      "sha256": "46325a211a7a3d52a4155cd3e375d65325957af0e3a759f1ed0faeb2d5a57a5d",
-      "review": "Reviewed original Shopware app controller, bounded fixed-origin lifecycle jobs and durable uncertain fences; opaque pinned app UI response CSP; operational records excluded by extracted release policy and native clone/publication path. Real container, native permissions/MCP, migration retention and app surface regressions passed; PHP and controller adapters remain unproved."
+      "sha256": "97b857b73d725f51e8716533c0a1ddfa41af0a65a1207bee6eb51081764b6bca",
+      "review": "App upgrade final review: current saved Flow membership and shared additional/core rights on the existing locked connection; explicit validation-rule schema migration reuses bounded native field checks; payment registry preserves active basis/channel method coverage. Real PostgreSQL negative fixtures reproduced old admission and pass after fixes. SQL/async admission remains unproved."
     },
     "src/apps/credentials.rs": {
       "status": "reviewed-binding",
@@ -1725,8 +1725,8 @@
     },
     "src/apps/gateway.rs": {
       "status": "reviewed-binding",
-      "sha256": "a866ba5c8dcaa71ee3921b51ec5cb0ecb61954e58dcf1f175a1e9fc3a6ddb58c",
-      "review": "Reviewed native extension identity/private/unique anchors and current read/write/PII scopes; native projections use bounded fixed-store queries, exact indexed filters bind all input and fence the admitted package digest. Real four-object HTTP/MCP, role revocation, foreign reference, immutable upgrade, product/company clone and selected release tests passed. Added extracted configuration-only release predicate and operational false property; SQL and UI remain explicitly unproved. Reviewed canonical schema, preserved AI bindings and versioned grid prompt provenance without changing existing prompt revisions."
+      "sha256": "8331401ebe5e8ddb22ac6f4d8ddcbea8837aac762d395de7050436d3a1498e0a",
+      "review": "App upgrade final review: current saved Flow membership and shared additional/core rights on the existing locked connection; explicit validation-rule schema migration reuses bounded native field checks; payment registry preserves active basis/channel method coverage. Real PostgreSQL negative fixtures reproduced old admission and pass after fixes. SQL/async admission remains unproved."
     },
     "src/apps/hosted.rs": {
       "status": "unproved",
@@ -1775,8 +1775,8 @@
     },
     "src/apps/mod.rs": {
       "status": "unproved",
-      "sha256": "c0f070fb35c357a5587a2cea6116ccb3eebec809fee437266779de78aad4453e",
-      "review": "Reviewed rollback-only installer probe, explicit deferred constraint check, metadata-only response, current permissions/owned-stage admission and shared Flow replacement validation under existing automation lock. Actual schema/consent/examples/Flow HTTP checks and frontend tests passed. SQL and async behavior remain unproved."
+      "sha256": "3c70c6459e1690c81ad319999177264d8bc83fa1d62125ca37d3fee4adfc5805",
+      "review": "App upgrade final review: current saved Flow membership and shared additional/core rights on the existing locked connection; explicit validation-rule schema migration reuses bounded native field checks; payment registry preserves active basis/channel method coverage. Real PostgreSQL negative fixtures reproduced old admission and pass after fixes. SQL/async admission remains unproved."
     },
     "src/apps/native_data.rs": {
       "status": "unproved",
@@ -1895,8 +1895,8 @@
     },
     "src/apps/schema_changes.rs": {
       "status": "unproved",
-      "sha256": "406d638b6e6bec3fe13be0f4c4cc2c2f278fbc4771c5b7b5e0230c863064ffe3",
-      "review": "Reviewed native extension identity/private/unique anchors and current read/write/PII scopes; native projections use bounded fixed-store queries, exact indexed filters bind all input and fence the admitted package digest. Real four-object HTTP/MCP, role revocation, foreign reference, immutable upgrade, product/company clone and selected release tests passed. Added extracted configuration-only release predicate and operational false property; SQL and UI remain explicitly unproved. Reviewed canonical schema, preserved AI bindings and versioned grid prompt provenance without changing existing prompt revisions."
+      "sha256": "ac89e48ec8d1e5d6306da944ebe2be322f724685736a87be1cd3cbea7a651a90",
+      "review": "App upgrade final review: current saved Flow membership and shared additional/core rights on the existing locked connection; explicit validation-rule schema migration reuses bounded native field checks; payment registry preserves active basis/channel method coverage. Real PostgreSQL negative fixtures reproduced old admission and pass after fixes. SQL/async admission remains unproved."
     },
     "src/apps/schema_upgrade.rs": {
       "status": "unproved",
@@ -3230,8 +3230,8 @@
     },
     "src/marketing/app_flows.rs": {
       "status": "reviewed-binding",
-      "sha256": "30df137a6b2d74b364d9e9aae3a2b09e1897cb8427c31a4073918eac64df19a8",
-      "review": "Reviewed rollback-only installer probe, explicit deferred constraint check, metadata-only response, current permissions/owned-stage admission and shared Flow replacement validation under existing automation lock. Actual schema/consent/examples/Flow HTTP checks and frontend tests passed. SQL and async behavior remain unproved."
+      "sha256": "f30caa0e306025d981d49dfce6a694aff5f92c0163dffc33f352cc4968690267",
+      "review": "App upgrade final review: current saved Flow membership and shared additional/core rights on the existing locked connection; explicit validation-rule schema migration reuses bounded native field checks; payment registry preserves active basis/channel method coverage. Real PostgreSQL negative fixtures reproduced old admission and pass after fixes. SQL/async admission remains unproved."
     },
     "src/marketing/catalog.rs": {
       "status": "unproved",
@@ -3285,8 +3285,8 @@
     },
     "src/marketing/flow_access.rs": {
       "status": "unproved",
-      "sha256": "4c8f22c8ffc02e7811e6358f79d892e61bf8f0d9c4415c1832e22be701037324",
-      "review": "Reviewed Flow source job propagation and transaction-locked current lease fence. Actual HTTP/PostgreSQL regressions reproduce rejected late results after expiry, with and without second-worker recovery; personal approval and native replay remain unchanged. SQL authority is outside extracted pure proof scope."
+      "sha256": "8480c18449a5fa0395141dbe86855d41c9bfca944134f87aa58a3969751f2dee",
+      "review": "App upgrade final review: current saved Flow membership and shared additional/core rights on the existing locked connection; explicit validation-rule schema migration reuses bounded native field checks; payment registry preserves active basis/channel method coverage. Real PostgreSQL negative fixtures reproduced old admission and pass after fixes. SQL/async admission remains unproved."
     },
     "src/marketing/flow_actions.rs": {
       "status": "unproved",
@@ -3725,8 +3725,8 @@
     },
     "src/payments/registry.rs": {
       "status": "unproved",
-      "sha256": "c4ade4012bcfc310e86b1967bc75bd0b689d41bc4ed60e00554acae5e9454f6c",
-      "review": "Reviewed eighteen core findings: typed trusted identity and explicit route rights; consolidated current grants; durable auth and fenced shared limits; scoped transactions and one-backend PgBouncer including nested borrow fixes; bounded Wasm/PNG work; notified workers, savepoint quarantine and conservative retention; separate runtime roles and startup configuration. Real PostgreSQL/provider regressions preserve current tenant/customer/payment behavior. SQL/network adapters remain unproved."
+      "sha256": "1dad151f8a50ef65e8e73c04c42cda4e0c479a7e55c30039b469951f71bd70dc",
+      "review": "App upgrade final review: current saved Flow membership and shared additional/core rights on the existing locked connection; explicit validation-rule schema migration reuses bounded native field checks; payment registry preserves active basis/channel method coverage. Real PostgreSQL negative fixtures reproduced old admission and pass after fixes. SQL/async admission remains unproved."
     },
     "src/payments/remote.rs": {
       "status": "unproved",

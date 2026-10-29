@@ -1,5 +1,19 @@
 /** Native upgrade failures retain specific guidance across consent, Studio and API transports. */
 export const appUpgradeErrors: Record<string, readonly string[]> = {
+  "Upgrade would invalidate an active payment method; update its configuration first":
+    [
+      "An enabled payment method needs this provider contract. Disable or reconfigure it in Settings before installing this version.",
+      "Eine aktive Zahlungsart benötigt diesen Anbieter. Deaktiviere sie oder passe sie in den Einstellungen an, bevor du diese Version installierst.",
+      "Un moyen de paiement actif utilise ce prestataire. Désactivez-le ou adaptez-le dans les paramètres avant l’installation.",
+      "Un método de pago activo necesita este proveedor. Desactívalo o ajústalo en Configuración antes de instalar esta versión.",
+    ],
+  "Upgrade would narrow an active payment method; update its configuration first":
+    [
+      "This update removes a configured country or currency from an enabled payment method. Adjust its settings first.",
+      "Dieses Update entfernt ein konfiguriertes Land oder eine Währung einer aktiven Zahlungsart. Passe zuerst deren Einstellungen an.",
+      "Cette mise à jour supprime un pays ou une devise configurés pour un moyen de paiement actif. Adaptez d’abord ses paramètres.",
+      "Esta actualización elimina un país o una moneda configurados para un método de pago activo. Ajusta primero su configuración.",
+    ],
   "Upgrade would invalidate an active flow; update its action and arguments first":
     [
       "An active flow needs its current action and inputs. Update it under Rules & flows before installing this version.",

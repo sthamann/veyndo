@@ -30,6 +30,9 @@ The actual installer now validates active Flow consumers under the existing
 automation lock. It shares app-step construction and native argument/field
 validation with Flow configuration. Removing an action or making its current
 inputs incompatible rejects all installation transports and selected release.
+The stored actor is reloaded on the same transaction connection and checked for
+current primary/additional action rights and native core-extension access. An
+owner cannot approve an update that strands a restricted member's active Flow.
 Existing dependency, immutable version, package consent and private preview owners
 remain authoritative. No additional migration executor or queue is introduced.
 
@@ -49,8 +52,20 @@ and incompatible required inputs reject without changing the installed package.
 The broader app, consent, signed distribution, service and automation suites retain
 current rights, isolation and queued-package fences.
 
+Independent branch review identified three further admission gaps. The registered
+HTTP regressions reproduced them against the previous binary: stricter field rules,
+changed Flow actor rights and removal of an enabled payment provider were reported
+ready. The shared owners now reject those updates. Explicit field migration checks
+the old value, refuses an invalid value, leaves the previous package intact and
+accepts the same migration after a native record repair. Provider tests cover
+whole-contract and method removal, currency/country narrowing, channel-only
+activation, compatible widening and disabled methods. Review and failed installs
+leave settings/packages unchanged and make no provider calls. Existing attempt
+contracts still pass the ordinary capture/authorization/void/refund fixture.
+
 Frontend tests also fence changed account requests and stages. All interface
 vocabulary is EN/DE/FR/ES; native diagnostics use shared translated guidance with
 an expandable technical explanation. Complete local checks cover 842 frontend
 tests, 339 Rust tests, strict Clippy, source boundaries and the generated handbook.
-Independent branch review and required CI are recorded separately when completed.
+The independent findings were fixed in one consolidated pass. Required CI and
+hosted runtime delivery are recorded separately when completed.
