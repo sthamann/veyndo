@@ -14,6 +14,9 @@
 
 ## Current release
 - [Current status and recorded public journeys](https://www.veyndo.ai/docs/status.html): Canonical current deployment, observed acceptance and remaining work.
+- [Connected public journeys, 29 October](https://www.veyndo.ai/docs/evidence/platform-followups-hosted-2026-10-29.html): Actual model-composed native views, pinned layout, CSV intake, private design revisions, saved customer tests and localized simulated checkout with return/reload/empty basket.
+- [Description-led private apps](https://www.veyndo.ai/docs/evidence/guided-app-2026-10-29.html): Merchant brief to native product relation, private file upload, status, team setting, selected package publication and restoration. Local complete journey and public model generation are recorded separately.
+- [Native app upgrade admission](https://www.veyndo.ai/docs/evidence/app-upgrade-2026-10-29.html): Existing installer checks saved records, explicit migrations, examples and active Flow/payment consumers in a rollback-only review.
 - [Visual shopper selection](https://www.veyndo.ai/docs/ui-experience.html#standard-storefront-and-customer-account): Catalogue-grounded intent produces editable native product cards; variants, app configuration, basket and checkout keep their existing owners.
 - [Private customer scenarios](https://www.veyndo.ai/docs/customer-scenarios.html): One to six fictional shopping agents, exact budgets, native simulated orders and saved before/after observations. This is native API testing, not visual usability or a real-customer conversion forecast.
 - [Catalogue preparation](https://www.veyndo.ai/docs/product-management.html): Paged product language coverage, durable image-job progress and native repair links.
