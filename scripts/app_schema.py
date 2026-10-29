@@ -63,6 +63,31 @@ print('PASS explicit rename/remove/type/default migration retains recovery data,
 assert call('/api/apps/review',{'manifest':changed},foreign)['upgrade']['models']==[]
 stage=call('/api/environments',{'name':'Upgrade review stage'},h)['id']
 call('/api/apps/review',{'manifest':changed,'environment':stage},foreign,404)
+# The ownership metadata belongs to the system pool; signed tenant logins cannot read a child tenant's row.
+stage_candidate=copy.deepcopy(changed);stage_candidate['version']='1.1.1'
+call('/api/apps/schema_fixture/actions/save',{'id':'stage_only','fields':{'caption':'Private stage title','count':7,'active':True}},{**h,'x-tenant':stage})
+before_review=sql(f"SELECT count(*) FROM outbox WHERE tenant='{stage}'")
+staged=call('/api/apps/review',{'manifest':stage_candidate,'environment':stage},h)
+assert staged['upgrade']['ready'] and staged['upgrade']['models']==[{'name':'entries','records':1}],staged
+assert 'Private stage title' not in json.dumps(staged)
+assert sql(f"SELECT manifest->>'version' FROM app_packages WHERE tenant='{stage}' AND id='{m['id']}'")=='1.1.0'
+new_stage_app=copy.deepcopy(m);new_stage_app['id']='new_stage_review'
+fresh=call('/api/apps/review',{'manifest':new_stage_app,'environment':stage},h)
+assert fresh['upgrade']['ready'] and fresh['previousVersion'] is None and fresh['upgrade']['models']==[]
+assert sql(f"SELECT count(*) FROM app_packages WHERE id='new_stage_review' AND tenant IN ('{tenant}','{stage}')")=='0'
+assert sql(f"SELECT count(*) FROM app_models WHERE app='new_stage_review' AND tenant='{stage}'")=='0'
+assert sql(f"SELECT count(*) FROM outbox WHERE tenant='{stage}'")==before_review
+call('/api/apps/review',{'manifest':new_stage_app,'environment':'stage-unavailable'},h,404)
+preview_manifest=copy.deepcopy(new_stage_app)
+preview_manifest['entities'][0]['label']={'en-GB':'Review entries'}
+for field in preview_manifest['entities'][0]['fields']:field['label']={'en-GB':field['name']}
+personal=call('/api/developer/preview',{'manifest':preview_manifest},h)['environment']
+call('/api/apps/review',{'manifest':new_stage_app,'environment':personal},h,404)
+call('/api/workspace/roles/app_review_only',{'revision':0,'data':{'name':{'en-GB':'App review only'},'permissions':['apps.manage'],'active':True}},h,method='PUT')
+invite=call('/api/workspace/invitations',{'role':'app_review_only','email':tenant+'-review@example.test'},h)
+reviewer=call('/api/auth/accept',{'name':'App reviewer','password':'Synthetic-app-review-2026!','invitationToken':invite['token']})
+call('/api/apps/review',{'manifest':new_stage_app,'environment':stage},{'x-tenant':tenant,'Authorization':'Bearer '+reviewer['token']},403)
+print('PASS own-stage new app and upgrade admission rolls back all writes, requires developer rights and refuses foreign or missing stages')
 # The same gate protects installed consumers, not just the definition under review.
 consumer=copy.deepcopy(changed);consumer['version']='1.2.0'
 next(a for a in consumer['actions'] if a['handler']=='save')['flowAllowed']=True

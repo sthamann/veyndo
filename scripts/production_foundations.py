@@ -102,7 +102,7 @@ try:
         # retains native app stage/reactivation/diffs and linked translation work
         # as well as the two-replica/restart/rotation path below.
         registered=json.loads((ROOT/'scripts/testing/suites.json').read_text())['http']
-        suites=['workspace_roles','staging','app_core_extensions','app_ontology','business_capability','b2b_ucp','translations'] if tenant_pooler else registered
+        suites=['workspace_roles','staging','app_schema','app_core_extensions','app_ontology','business_capability','b2b_ucp','translations'] if tenant_pooler else registered
         if selected:=env.get('TEST_SIGNED_HTTP_SUITES'):
             requested=selected.split(',')
             assert set(requested)<=set(registered),'Only registered HTTP suites can be selected'
