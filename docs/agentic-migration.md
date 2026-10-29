@@ -9,6 +9,16 @@ This is an implementation and local acceptance record, **not a declaration that
 all source shops or the entire migration concept are already accepted publicly**.
 See [current status](status.md) for deployed journeys.
 
+## Actual WooCommerce source acceptance
+
+The 29 October local journey uses a disposable real WooCommerce installation,
+all eight implemented areas, an actual killed Rust service/retry, current-field
+replay comparison and a native browser purchase/return/empty basket. Product HTML
+now becomes a plain summary plus editable native rich content through the app-owned
+bounded parser; generic Core intake and inspection retain the native language and
+validation owners. Existing imported snapshots are not rewritten automatically.
+[Exact source, counts, screenshots and acceptance](evidence/woocommerce-source-2026-10-29.md).
+
 ## Compare one product with its actual private target
 
 [Local browser acceptance and screenshots](evidence/design-migration-2026-10-20.md).

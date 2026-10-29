@@ -45,10 +45,11 @@ pub(crate) async fn inspect(a: &App, h: &RequestContext, v: &Value) -> Result<Va
             if translations[&main].is_object() && translations[&main]["description"].is_null() {
                 translations[&main]["description"] = json!("");
             }
-            (
-                json!({"translations":translations,"catalog":catalog,"extra":{"priceCurrency":mapped["extra"]["priceCurrency"],"identity":{"migrationDigest":mapped["extra"]["identity"]["migrationDigest"]}},"commerce":{"price":mapped["commerce"]["price"],"taxRate":mapped["commerce"]["taxRate"]}}),
-                actual,
-            )
+            let mut expected = json!({"translations":translations,"catalog":catalog,"extra":{"priceCurrency":mapped["extra"]["priceCurrency"],"identity":{"migrationDigest":mapped["extra"]["identity"]["migrationDigest"]}},"commerce":{"price":mapped["commerce"]["price"],"taxRate":mapped["commerce"]["taxRate"]}});
+            if let Some(rich) = mapped["extra"].get("richDescription") {
+                expected["extra"]["richDescription"] = rich.clone();
+            }
+            (expected, actual)
         }
         "categories" => {
             auth::permit(h, "catalog.read")?;

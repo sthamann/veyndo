@@ -1,0 +1,39 @@
+# Disposable source only. Never attach these volumes to an existing shop.
+services:
+  db:
+    image: mariadb:11.4
+    environment:
+      MARIADB_DATABASE: wordpress
+      MARIADB_USER: wordpress
+      MARIADB_PASSWORD: ${WOO_FIXTURE_DB_PASSWORD:?Set a disposable password}
+      MARIADB_ROOT_PASSWORD: ${WOO_FIXTURE_ROOT_PASSWORD:?Set a disposable password}
+    volumes: [db:/var/lib/mysql]
+  shop:
+    image: wordpress:6.8.3-php8.3-apache
+    ports: ["127.0.0.1:18887:80"]
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_PASSWORD: ${WOO_FIXTURE_DB_PASSWORD}
+      WORDPRESS_CONFIG_EXTRA: |
+        // Explicit loopback fixture models a TLS-terminating ingress for WC key auth.
+        if (strpos($$_SERVER['REQUEST_URI'] ?? '', '/wp-json/') === 0) { $$_SERVER['HTTPS'] = 'on'; }
+    volumes:
+      - site:/var/www/html
+      - ./ingress.php:/var/www/html/wp-content/mu-plugins/acceptance-ingress.php:ro
+  cli:
+    image: wordpress:cli-php8.3
+    user: "33:33"
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_PASSWORD: ${WOO_FIXTURE_DB_PASSWORD}
+    volumes:
+      - site:/var/www/html
+      - ./seed.php:/fixture/seed.php:ro
+    profiles: [tools]
+volumes:
+  db:
+  site:

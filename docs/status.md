@@ -58,6 +58,25 @@ deletion/undo, selected agent targets and three real screenshot-derived style
 alternatives. Applying one alternative saved a private revision with exact content
 preservation and no live changes. [Designer evidence](evidence/designer-2026-10-29.md).
 
+The actual local WooCommerce source acceptance now covers eight supported areas,
+interrupted Rust service recovery, exact replay/current-field comparison and a
+native browser purchase/return/empty basket. A discovered product HTML display
+error is fixed through the app-owned parser and existing native rich-content owner.
+[Exact source and browser evidence](evidence/woocommerce-source-2026-10-29.md).
+
+An isolated local database restore matched all 150 public tables, retained app
+packages/records and passed a new simulated order, actual local SMTP delivery,
+native invoice, idempotent refund and separate cancellation. The restored Core
+then ran with separate restricted system/tenant logins and mandatory signed
+scope; its Rust connector has no Commerce data grants. This is an actual local
+restore drill, separate from restoring a hosted disk snapshot.
+[Recorded restore and operational chain](evidence/restore-drill-2026-10-29.md).
+
+Apple's existing Service ID now includes both new Veyndo domains and exact
+callbacks, saved after explicit approval on 29 October. Both public entry routes
+reach Apple's authorization page without the previous invalid redirect error.
+An authenticated Apple sign-in and return remain a separate acceptance.
+
 The 23 October release expands selected Lean guarantees to **63 policies / 149
 properties**, splits their Rust/Lean owners and tightens Cargo dependency checks.
 The subsequent shared discount repair and batched marketplace order localization
@@ -190,7 +209,7 @@ are included in the combined public artifact; [implementation and browser eviden
 | Native app extensions and workflows | Visual product fields, retained data on upgrade, native grid/filter integration, selected publication and distinct old/new order workflows were accepted publicly. | [Product fields](evidence/native-app-fields-hosted-2026-10-17.md), [app workflows](evidence/native-app-workflows-hosted-2026-10-17.md) |
 | Inward agentic commerce | Native UCP transfer purchase, private Shopify variant intake, app declaration diagnostics and original embedded checkout passed. | [18 October acceptance](evidence/agentic-commerce-hosted-2026-10-18.md) |
 | Native POS and documents | Fictional POS sale, native invoice/PDF and guarded app-bound completion passed on 17 October. Physical printers and real settlement were not part of that acceptance. | [Buyer/POS evidence](evidence/buyer-pos-hosted-2026-10-17.md), [PDF follow-up](evidence/receipt-pdf-hosted-2026-10-17.md) |
-| Browser entry and retained sessions | Public Google entry, workspace selection and single-use Studio handoff repeated on 22 October; reload after rollout retained the authenticated workspace. Password sign-in/reload/logout last passed publicly on 16 October. Apple still awaits its Service ID Save and actual sign-in. | [22 October evidence](evidence/merchant-journey-2026-10-22.md), [browser session contract](browser-sessions.md) |
+| Browser entry and retained sessions | Public Google entry, workspace selection and single-use Studio handoff repeated on 22 October; reload after rollout retained the authenticated workspace. Password sign-in/reload/logout last passed publicly on 16 October. Apple callbacks saved on 29 October; both public entry routes pass redirect admission. Actual Apple sign-in remains separate. | [22 October evidence](evidence/merchant-journey-2026-10-22.md), [browser session contract](browser-sessions.md) |
 
 ## App system and architecture
 
@@ -226,9 +245,10 @@ are proposals, separate from this implementation.
    documents on the same deployed code. Preserve both observations; the cause of
    those earlier pauses and a broader reliability rate are not yet established.
 2. **Complete Apple login configuration.** The new `start.veyndo.ai` callback
-   returns `invalid_request: Invalid web redirect url`. The existing Service ID review now contains both new domains and their
-   callback URLs; its final Save awaits the requested action-time approval.
-   An actual Apple sign-in must then be observed.
+   previously returned `invalid_request: Invalid web redirect url`. Both new
+   domains and callbacks are now saved in the existing Service ID; both public
+   entry routes pass Apple's redirect admission. An actual authenticated Apple
+   sign-in, return, reload and logout must still be observed.
 3. **Accept the separate hosted migration service.** The Rust application and
    five source protocol fixtures reach private native products, media, pages,
    customer/address records, history, reviews and coupons. Saved mapping/comparison
@@ -240,10 +260,11 @@ are proposals, separate from this implementation.
    activation, Nexus execution and external Vercel checkout need their own
    recorded outcomes. [Integration guide](service-integrations.md)
 5. **Measure remaining operational claims.** Real provider payment/mail/refund,
-   a recorded restore drill, large-catalogue/multi-worker throughput, complete
+   recovery from a hosted snapshot, large-catalogue/multi-worker throughput, complete
    historical checkout repricing and isolated arbitrary-source builds are not
    established by the public demo journeys. Current payment testing deliberately
-   remains simulated. [Ordered follow-ups](connected-merchant-followups.md)
+   remains simulated. The isolated local restore and local Rust SMTP/provider
+   chain are now recorded above. [Ordered follow-ups](connected-merchant-followups.md)
 
 The earlier fresh-cart privacy regression is fixed and accepted in the public
 native purchase above. Same-buyer company continuation, expiry and withdrawal

@@ -8,7 +8,7 @@ Do not read every row as still open or as already publicly accepted.
 
 | Order | Merchant outcome | Completion evidence |
 | --- | --- | --- |
-| 0 | Apple sign-in returns to the selected Studio shop | Correct Service ID return URLs, real sign-in, reload and logout. The authenticated Service ID review is prepared; final Save awaits action-time approval. No successful Apple sign-in is claimed. |
+| 0 | Apple sign-in returns to the selected Studio shop | Both Veyndo domains and callbacks saved in the existing Service ID on 29 October after approval. Both public entry routes pass redirect admission. Authenticated sign-in, return, reload and logout remain separate acceptance. |
 | 1 | Prepare a selected collection, translations and landing page together | Exact product scope, private native/app drafts, progress, interrupted task continuation, current rights, real preview and selected publication. |
 | 2 | A material/dimensions app works throughout the shop | Product configuration, surcharge, cart, order, saved selection, reorder, rights, API/MCP, relevant UCP/knowledge projection and immutable upgrade. |
 | 3 | Find actual missing data and prepare useful corrections | Native current records, identified gaps, explicit evidence and reviewed bounded proposals; no invented product facts. |

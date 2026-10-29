@@ -1060,8 +1060,8 @@
     },
     "extensions/apps/migration/adapters/mod.rs": {
       "status": "unproved",
-      "sha256": "aa1bd489c9e544f5f5b1309aec5bab5776b3d8a61f7f0f18bf25261cdbfb80b3",
-      "review": "Reviewed app-owned Vercel/Klaviyo/HubSpot/Contentful/Algolia fixed transports, bounded redacted receipts, native compound action rights and encrypted CAS/lease fences; Shopware 6 read-only OAuth/currency/language projection delegates exact native import/reconciliation; generic tenant/app source reset and bounded source count use existing storage/admission owners. Provider protocols and SQL remain outside the extracted Lean proof scope; native two-worker, private/foreign, signed-login, migration and checkout regressions exercised."
+      "sha256": "ad521ce10097c980edf248888bbf4a08a3fe0cd29206b92112a86faaf462c9c6",
+      "review": "App-owned bounded HTML normalizer and generic native rich-description mapping/comparison; actual WooCommerce browser exposed raw HTML. SQL/native write adapters remain unproved."
     },
     "extensions/apps/migration/adapters/order_lines.rs": {
       "status": "unproved",
@@ -1070,8 +1070,8 @@
     },
     "extensions/apps/migration/adapters/pages.rs": {
       "status": "unproved",
-      "sha256": "3a612458e50fb4d898ebb76a92e2ff874f79d9a80d1e5c752e0e37e202bccb6c",
-      "review": "Migration intake reviewed: native private catalogue/category/page owners, exact historical provenance without purchase effects, current package/creator/lease/hash fences and native replay lock order; independent Rust package uses shared money/network policy only; new HTML rich blocks preserve text and list structure. Real source/Core HTTP, signed roles, cancellation, replay, concurrent callbacks and simulated purchase regressions passed. External source completeness and SQL are not claimed proved."
+      "sha256": "5c57bedd33be720fc5146fed6667dc04a119a8e25c125a4ad0020d0ed8dc0814",
+      "review": "Independent Task7 review repairs preserve HTML block boundaries and decode entity-only descriptions once in the existing app parser; CLI and native import regressions cover fidelity and unsafe-content denial, without expanding any proved-policy claim"
     },
     "extensions/apps/migration/adapters/products.rs": {
       "status": "unproved",
@@ -3540,8 +3540,8 @@
     },
     "src/operations/imports/inspect.rs": {
       "status": "unproved",
-      "sha256": "19482d31f56f056a0acdf28e224d9f2ee341a0cdc992463b1f2b6ce5244aacba",
-      "review": "Reviewed product inspection diff: explicit catalogue-only bounded projection under existing apps.manage/catalog.read and tenant admission; default comparison stays values-free. Actual migration HTTP tests verify changed price/text, missing targets, foreign and no-catalogue denial; no native write/release is added."
+      "sha256": "5dd8f6c12fad287932224be3d5e3e7c00e98f8308d365e3f49df00c01397fd11",
+      "review": "App-owned bounded HTML normalizer and generic native rich-description mapping/comparison; actual WooCommerce browser exposed raw HTML. SQL/native write adapters remain unproved."
     },
     "src/operations/imports/inspect_history.rs": {
       "status": "unproved",
@@ -3565,8 +3565,8 @@
     },
     "src/operations/imports/products.rs": {
       "status": "unproved",
-      "sha256": "9222b9bcd6650ef6356fdf90ea54485be6a149bbe5433a21cd9ba980203338f2",
-      "review": "2026-10-19 reviewed native read-only import projection against shared product/category/address owners; paired CRM/history PII and private target/package/digest checks; generic completion evidence atomically uses existing job creator/lease/package and record CAS, platform AEAD, native actual-field verification, no new app table or queue. Actual eight-domain migration/archival/restart/tamper and native app callback/jobs/admin creation tests pass; pure cancelled-success policy has exact Lean claim, all boolean cases and a true-return negative mutation. SQL, cryptography, async service correctness and public hosting remain outside formal proof."
+      "sha256": "1aea40a04fe1a12c340dad4bef3772fee0d818a5c44cfd9512fc4c7074168156",
+      "review": "App-owned bounded HTML normalizer and generic native rich-description mapping/comparison; actual WooCommerce browser exposed raw HTML. SQL/native write adapters remain unproved."
     },
     "src/operations/imports/relations.rs": {
       "status": "unproved",

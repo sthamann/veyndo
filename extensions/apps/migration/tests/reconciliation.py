@@ -48,3 +48,34 @@ mc=call('/mcp',{'jsonrpc':'2.0','id':2,'method':'tools/call','params':{'name':'m
 assert not mc.get('isError'),mc
 assert json.loads(mc['content'][0]['text'])['status']=='matching',mc
 print('PASS native read-only reconciliation is consistent through HTTP and MCP discovery/invocation')
+
+# Source-owned rich product content participates in creation and actual comparison.
+assert original['extra']['richDescription']['en']==pbody['record']['data']['richDescription']['en-GB']
+rich_edit=call('/api/merchant/products/'+pid,h=sh)
+rich_edit['commerce'].pop('stock',None)
+rich_edit['extra']['richDescription']['en']=[{'type':'paragraph','text':'Changed native rich content'}]
+call('/api/merchant/products/'+pid,rich_edit,sh,method='PUT')
+rich_report=inspect(pbody)
+assert rich_report['status']=='changed' and '/extra/richDescription/en' in rich_report['differences'],rich_report
+rich_edit=call('/api/merchant/products/'+pid,h=sh);rich_edit['commerce'].pop('stock',None);rich_edit['extra']['richDescription']=original['extra']['richDescription']
+call('/api/merchant/products/'+pid,rich_edit,sh,method='PUT')
+assert inspect(pbody)['status']=='matching'
+print('PASS native imported rich description: localized storage, current-field change detection and deliberate restoration')
+
+for value in ([], {'en-GB':[{'type':'document','doc':{'type':'doc','content':[{'type':'paragraph','content':[{'type':'text','text':'Unsafe link','marks':[{'type':'link','attrs':{'href':'javascript:alert(1)'}}]}]}]}}]}):
+    rejected=json.loads(json.dumps(pbody));rejected['record']['sourceId']='invalid-rich-'+uuid.uuid4().hex;rejected['record']['data']['richDescription']=value
+    call('/api/merchant/imports',rejected,sh,status=400)
+print('PASS malformed rich mapping and executable links reject through native product validation')
+
+# Real CLI output must retain readable summaries and native document structure on intake.
+import subprocess
+for raw,expected,kinds in [('<div>One</div><div>Two</div>','One Two',['paragraph','paragraph']),('<p>Before</p><pre>A\nB</pre><p>After</p>','Before A B After',['paragraph','codeBlock','paragraph']),('Tea &amp; coffee','Tea & coffee',['paragraph'])]:
+    normalized=json.loads(subprocess.check_output([str(Path(__file__).resolve().parents[4]/'target/debug/migration-assistant'),'normalize','woocommerce','products','EUR','en-GB','content-fidelity'],input=json.dumps({'id':uuid.uuid4().hex,'name':'Readable cup','price':'19.90','description':raw})+'\n',text=True))
+    assert normalized['data']['description']['en-GB']==expected
+    doc=normalized['data']['richDescription']['en-GB'][0]['doc']
+    assert [n['type'] for n in doc['content']]==kinds
+    accepted=call('/api/merchant/imports',{'approve':True,'record':normalized,'options':pbody['options']},sh)
+    actual=call('/api/merchant/products/'+accepted['id'],h=sh)
+    assert actual['translations']['en']['description']==expected
+    assert actual['extra']['richDescription']['en'][0]['doc']==doc
+print('PASS actual normalized HTML blocks, code boundaries and entities retain native summary/document content')

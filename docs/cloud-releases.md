@@ -35,6 +35,14 @@ catalog size grows.
 
 On 17 October the persisted daily schedule was verified as **Snapshot at 00:00 UTC, seven-day retention**. The old failing daily dump schedule was removed after explicit approval; backup history and databases were retained. The main-release workflow also uses Snapshot and waits for completion. A successful snapshot does not replace an isolated restore test.
 
+The [29 October local recovery exercise](evidence/restore-drill-2026-10-29.md)
+restored an actual custom PostgreSQL dump into a separate database, matched all
+150 public tables and retained app data and orders. Simulated capture/refund,
+actual local SMTP, invoice and separate cancellation completed through existing
+Rust services. Separate restricted system/tenant logins and mandatory signed
+scope were verified in the restored copy. This local dump drill does not replace
+a future restore from the hosted disk snapshot.
+
 The manual `vendune-benchmark` job builds `deploy/Dockerfile.benchmark`. It has
 no public port or schedule. Runtime-only database linkage must never be granted
 to a build. Set `BENCHMARK_ENVIRONMENT=veyndo-northflank-test` and
@@ -92,7 +100,7 @@ Runtime origins are `https://app.veyndo.ai` and `https://experience.veyndo.ai`; 
 
 [The reviewed frontend-origin transaction](operations/update-hosted-frontend-origins.sql) updates only the three configured, owned previous Experience origins. Run it as an authorized operator with the existing runtime database link, never a build credential. The operator transaction must set the established RLS system context to `on`; `true` does not satisfy that policy. Production execution updated 11 mounts and invalidated 10 tenants, committed and exited successfully. Repeating the transaction makes no additional changes.
 
-Cloudflare manages DNS; United Domains retains registration. The apex redirects to HTTPS `www.veyndo.ai` with path and query preserved. Northflank serves www, team, start, Experience, Studio and wildcard shops. Its certificate was issued after the temporary Universal SSL verification conflict was cleared; Universal SSL is enabled again. Automatic renewal through the overlapping DCV configuration has not yet been demonstrated. Old root/team DNS and Apple callback updates remain pending provider-account access.
+Cloudflare manages DNS; United Domains retains registration. The apex redirects to HTTPS `www.veyndo.ai` with path and query preserved. Northflank serves www, team, start, Experience, Studio and wildcard shops. Its certificate was issued after the temporary Universal SSL verification conflict was cleared; Universal SSL is enabled again. Automatic renewal through the overlapping DCV configuration has not yet been demonstrated. Old root/team DNS remains a separate operational follow-up. The existing Apple Service ID now retains old callbacks and includes both current start/experience Veyndo domains and callbacks, saved on 29 October after explicit approval. Both public entries pass redirect admission; authenticated Apple sign-in is not inferred.
 
 The Google callback on `start.veyndo.ai` returned successfully to the existing merchant workspace. [The native-shop URL transaction](operations/update-native-shop-urls.sql) corrected eight stored links whose HTTPS host exactly matched their own tenant under an earlier configured domain. Custom domains, foreign-tenant URLs, Experience renderer bindings and owner identity remain unchanged. Its isolated PostgreSQL check covered those exclusions and idempotence. Run this transaction through the Experience service's existing database connection: its registry lives in a separate database from Core. No provider key is printed or copied. The first Core-database attempt failed before updating any row; the correct Experience transaction committed successfully and a browser reload confirmed the new links.
 
