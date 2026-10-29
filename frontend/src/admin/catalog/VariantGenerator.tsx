@@ -48,11 +48,12 @@ export default function VariantGenerator({
       <p>{v("hint")}</p>
       <fieldset disabled={busy}>
         {axes.map((axis, index) => (
-          <div className="catalog-form-grid" key={index}>
+          <div className="variant-axis-row" key={index}>
             <label>
               {v("axis")}
               <input
                 maxLength={100}
+                placeholder={v("axisExample")}
                 value={axis.name}
                 onChange={(e) => {
                   setRows([]);
@@ -67,6 +68,7 @@ export default function VariantGenerator({
             <label>
               {v("values")}
               <input
+                placeholder={v("valuesExample")}
                 value={axis.values}
                 onChange={(e) => {
                   setRows([]);

@@ -1,5 +1,6 @@
 /** Accessible multi-file upload with drag/drop, visible progress and the same validated asset API as attachments. */
 import { useRef, useState } from "react";
+import Icon from "../../shared/ui/Icon";
 import { useWorkspaceText } from "../../shared/i18n/workspace-i18n";
 import type { RequestFn } from "../shell/studio-types";
 import { validImages, type GalleryImage } from "./media-model";
@@ -73,7 +74,7 @@ export default function MediaDropzone({
   };
   return (
     <div
-      className={`media-dropzone ${drag ? "is-dragging" : ""}`}
+      className={`media-dropzone ${drag ? "is-dragging" : ""} ${count ? "has-images" : ""}`}
       aria-busy={!!progress}
       onDragOver={(e) => {
         e.preventDefault();
@@ -87,7 +88,7 @@ export default function MediaDropzone({
       }}
     >
       <span className="media-drop-icon" aria-hidden="true">
-        ↥
+        <Icon name="plus" />
       </span>
       <strong>{w("drop")}</strong>
       <p>{w("uploadHint")}</p>

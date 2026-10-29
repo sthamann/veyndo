@@ -294,3 +294,38 @@ it("recognizes existing combinations before creating and avoids existing SKU def
     screen.getByRole("button", { name: /Create selected variants/ }),
   ).toHaveTextContent("(1)");
 });
+
+it("introduces variant creation explicitly and keeps read-only families browsable", async () => {
+  const parent = { ...newDraft(), id: "parent" },
+    request = vi.fn(async () => ({ elements: [], nextCursor: null }));
+  const view = (canWrite: boolean) => (
+    <LocaleProvider>
+      <ProductVariants
+        draft={parent}
+        request={request}
+        onOpen={vi.fn()}
+        onChange={vi.fn()}
+        canWrite={canWrite}
+      />
+    </LocaleProvider>
+  );
+  const { rerender } = render(view(true));
+  expect(
+    await screen.findByRole("heading", { name: "No variants yet" }),
+  ).toBeVisible();
+  expect(
+    screen.getByRole("textbox", { name: "Option group" }),
+  ).not.toBeVisible();
+  await userEvent.click(
+    screen.getByText("Add variants", { selector: "summary" }),
+  );
+  expect(screen.getByRole("textbox", { name: "Option group" })).toBeVisible();
+  expect(screen.getByPlaceholderText("e.g. S, M, L")).toBeVisible();
+  rerender(view(false));
+  expect(
+    screen.queryByText("Add variants", { selector: "summary" }),
+  ).not.toBeInTheDocument();
+  expect(
+    screen.getByRole("heading", { name: "No variants yet" }),
+  ).toBeVisible();
+});

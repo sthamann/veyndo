@@ -254,3 +254,133 @@ it("renders the assistant preview from the real gallery and removes the image wh
   expect(screen.queryByRole("img")).not.toBeInTheDocument();
   expect(screen.getByText("No saved gallery images")).toBeVisible();
 });
+
+it("reorders only a local gallery drag and keeps image metadata and selection", async () => {
+  let last = newDraft();
+  last.commerce.media = [
+    {
+      id: "a",
+      url: "/media/a.png",
+      view: "Front",
+      alt: { "en-GB": "Front", "de-DE": "Vorne" },
+    },
+    { id: "b", url: "/media/b.png", view: "Back" },
+    { id: "c", url: "/media/c.png", view: "Side" },
+  ];
+  function Harness() {
+    const [draft, setDraft] = useState(last);
+    return (
+      <LocaleProvider>
+        <ContentLanguage locales={["en-GB", "de-DE"]} mainLocale="en-GB">
+          <ProductMediaWorkspace
+            draft={draft}
+            request={vi.fn()}
+            onChange={(next) => {
+              last = next;
+              setDraft(next);
+            }}
+          />
+        </ContentLanguage>
+      </LocaleProvider>
+    );
+  }
+  render(<Harness />);
+  const source = screen.getByRole("button", { name: "Back" }),
+    target = screen.getByRole("button", { name: "Front" }),
+    transfer = { setData: vi.fn(), dropEffect: "", effectAllowed: "" };
+  // A forged/external text payload is not a gallery reorder.
+  fireEvent.drop(target, { dataTransfer: transfer });
+  expect(last.commerce.media[0].id).toBe("a");
+  fireEvent.dragStart(source, { dataTransfer: transfer });
+  fireEvent.dragOver(target, { dataTransfer: transfer });
+  expect(screen.getByText("Drop at position 1")).toBeVisible();
+  fireEvent.drop(target, { dataTransfer: transfer });
+  expect(last.commerce.media.map((image: { id: string }) => image.id)).toEqual([
+    "b",
+    "a",
+    "c",
+  ]);
+  expect(last.commerce.media[1].alt).toEqual({
+    "en-GB": "Front",
+    "de-DE": "Vorne",
+  });
+  expect(source).toHaveAttribute("aria-pressed", "true");
+  expect(screen.getByRole("status")).toHaveTextContent(
+    "Image moved to position 1",
+  );
+  expect(screen.queryByText("Drop at position 1")).not.toBeInTheDocument();
+});
+
+it("cancels a pending gallery drag when write access is revoked", () => {
+  const draft = newDraft(),
+    change = vi.fn();
+  draft.commerce.media = [
+    { id: "a", url: "/media/a.png", view: "Front" },
+    { id: "b", url: "/media/b.png", view: "Back" },
+  ];
+  const view = (canWrite: boolean) => (
+    <LocaleProvider>
+      <ContentLanguage locales={["en-GB"]} mainLocale="en-GB">
+        <ProductMediaWorkspace
+          draft={draft}
+          request={vi.fn()}
+          onChange={change}
+          canWrite={canWrite}
+        />
+      </ContentLanguage>
+    </LocaleProvider>
+  );
+  const { rerender } = render(view(true)),
+    transfer = { setData: vi.fn() };
+  fireEvent.dragStart(screen.getByRole("button", { name: "Back" }), {
+    dataTransfer: transfer,
+  });
+  rerender(view(false));
+  expect(screen.getByRole("button", { name: "Back" })).toHaveAttribute(
+    "draggable",
+    "false",
+  );
+  fireEvent.drop(screen.getByRole("button", { name: "Front" }), {
+    dataTransfer: transfer,
+  });
+  expect(change).not.toHaveBeenCalled();
+});
+
+it("keeps the initially selected image while moving it with keyboard or touch controls", async () => {
+  let last = newDraft();
+  last.commerce.media = [
+    { id: "a", url: "/media/a.png", view: "Front" },
+    { id: "b", url: "/media/b.png", view: "Back" },
+  ];
+  function Harness() {
+    const [draft, setDraft] = useState(last);
+    return (
+      <LocaleProvider>
+        <ContentLanguage locales={["en-GB"]} mainLocale="en-GB">
+          <ProductMediaWorkspace
+            draft={draft}
+            request={vi.fn()}
+            onChange={(next) => {
+              last = next;
+              setDraft(next);
+            }}
+          />
+        </ContentLanguage>
+      </LocaleProvider>
+    );
+  }
+  render(<Harness />);
+  await userEvent.click(screen.getByRole("button", { name: "Move later" }));
+  expect(last.commerce.media[1].id).toBe("a");
+  expect(screen.getByRole("button", { name: "Front" })).toHaveAttribute(
+    "aria-pressed",
+    "true",
+  );
+  expect(screen.getByLabelText("Image URL")).toHaveValue("/media/a.png");
+  await userEvent.click(screen.getByRole("button", { name: "Move earlier" }));
+  expect(last.commerce.media[0].id).toBe("a");
+  expect(screen.getByRole("button", { name: "Front" })).toHaveAttribute(
+    "aria-pressed",
+    "true",
+  );
+});

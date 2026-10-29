@@ -28,8 +28,8 @@ protection, app authorization and field inheritance keep their existing owners.
 
 - **General:** name, unique shop-local product number, short description, visual rich description, manufacturer identity, manufacturer number, EAN/GTIN, digital product and free-shipping flags.
 - **Prices & stock:** selling price, tax rate and the actual tax class appear together, followed by stock and delivery time. Comparison prices, order quantities, reference units, currency-specific prices and rule-bound discounts have separate expandable sections. Configured sections open immediately. The lowest 30-day price accepts cent steps; native stock-safe saving and tax/currency calculation remain unchanged.
-- **Media:** ordered gallery, cover image, external HTTPS image URLs and actual PNG/JPEG/WebP uploads for saved products. Uploaded bytes start private and the gallery action explicitly publishes the selected digest.
-- **Variants:** list native child SKUs; create a child with its own number, option values, prices and stock; open its independent editor. A reviewable generator creates up to 50 Cartesian combinations per batch; existing combinations are skipped, child option edits are supported, and the server rejects concurrent duplicates.
+- **Media:** drag images onto another gallery position to reorder, or select an image and use Move earlier / Move later. The first image is the cover; visible positions and a drop target explain the result. Save the product to retain the order. The upload area becomes compact once images exist. Supports external HTTPS image URLs and actual PNG/JPEG/WebP uploads for saved products. Uploaded bytes start private and the gallery action explicitly publishes the selected digest.
+- **Variants:** see existing child SKUs first, with separate option, number, price and stock information. Open **Add variants** for the optional creation form; create a child with its own number, option values, prices and stock; open its independent editor. A reviewable generator creates up to 50 Cartesian combinations per batch; existing combinations are skipped, child option edits are supported, and the server rejects concurrent duplicates.
 - **Categories & channels:** multiple category assignments and per-product sales-channel visibility. Existing channel-level explicit product lists can restrict this further; an empty channel-level list means the whole catalog. The persisted default storefront also respects activation and per-product channel visibility.
 - **Specifications:** translated specifications, generic product properties and native automation metadata including dimensions/weight.
 - **SEO:** translated title, description and slug metadata. This does not implement complete original Shopware SEO URL generation.
@@ -43,6 +43,9 @@ protection, app authorization and field inheritance keep their existing owners.
 [Mobile product editor](assets/product-workspace-20261029/general-mobile.png).
 [Grouped price and availability editor](assets/product-workspace-20261029/prices-desktop.png) ·
 [Mobile prices](assets/product-workspace-20261029/prices-mobile.png).
+[Ordered product gallery](assets/product-workspace-20261029/media-desktop.png) ·
+[Variant overview](assets/product-workspace-20261029/variants-desktop.png) ·
+[Mobile variants](assets/product-workspace-20261029/variants-mobile.png).
 These captures show the local isolated test shop, not a hosted deployment.
 [Verification details](evidence/product-workspace-2026-10-29.md).
 

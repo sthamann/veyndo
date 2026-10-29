@@ -82,3 +82,45 @@ three affected suites, including a moved tax-class write/read-only regression,
 cent-step comparison editing and stock omission on content saves. Production
 frontend build, localization and architecture passed; the Impeccable source
 scan reported no findings. The daily complete test/coverage schedule is retained.
+
+
+## Gallery ordering and variant creation follow-up
+
+The product gallery now supports a local image drag onto another image position.
+The destination is visible during the drag; the first position remains the cover.
+Selection, translated alt text and the native aggregate save remain shared with the
+existing inspector controls. A revoked write grant closes a pending drag. Uploads
+use a compact row when the gallery already has images.
+
+The actual Chrome browser dragged the third chair image (`space`) onto the first
+position in the isolated local tenant. Saving returned revision 3, and a full
+reload retained `space`, `front`, `detail` in that order. The ordinary product save
+owned the change; no hosted product records were modified.
+
+Variants show existing children first. The optional **Add variants** section opens
+option groups and reviewable combinations. In the same native browser, one `Finish:
+Sand` combination was reviewed, assigned number `UI-VARIANT-20261029`, price EUR
+219.95 and stock 4, then created. Its independent product editor retained those
+values and inactive status; the parent link returned to the original family. A
+full reload showed three saved variants. Existing duplicate detection and
+partial-batch retry remain covered by the targeted suite.
+
+At 1440px the family actions and gallery fit beside the section navigation.
+At 390px the gallery becomes two columns and the image inspector follows below;
+both viewport and document width are 390px. The same controls support keyboard
+and touch ordering. The mobile test also exposed and fixed an existing selection
+jump after moving the initial image with the arrows.
+
+![Ordered product gallery](../assets/product-workspace-20261029/media-desktop.png)
+
+![Variant overview](../assets/product-workspace-20261029/variants-desktop.png)
+
+[Mobile gallery](../assets/product-workspace-20261029/media-mobile.png).
+
+Nineteen distinct targeted tests cover the affected media and variant suites,
+including internal-only drops, metadata preservation, write revocation, initial
+selection after arrow movement, explicit variant setup, existing combinations and
+partial failure. Frontend build, localization, architecture, source inventory and
+Impeccable checks pass. Complete tests/coverage retain the daily workflow cadence.
+These screenshots and mutations are local native browser evidence; public delivery
+is verified separately against the deployed build.

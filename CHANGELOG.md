@@ -1,5 +1,16 @@
 # Changelog
 
+## Product gallery and variant usability (29 October 2026)
+
+- Add gallery drag reordering with a visible destination, stable selection,
+  translated position feedback and the existing keyboard/touch movement buttons.
+  Retain multilingual metadata, current write access and revisioned product saves.
+- Compact the upload area when images exist. Replace decorative text symbols with
+  shared icons and make the first-image cover rule explicit.
+- Show existing variants before the optional creation form; add loading and empty
+  states, clearer option examples and separated number, price, stock and edit action.
+  Preserve bounded generation, existing-combination detection and partial-failure retry.
+
 ## Product price and availability workflow (29 October 2026)
 
 - Group selling price, tax rate and native tax-class selection together, followed
