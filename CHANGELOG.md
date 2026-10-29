@@ -1,5 +1,9 @@
 # Changelog
 
+## Embedded app table controls — 29 October 2026
+
+- Keep shared grid tools at the inline end when a native app omits search. The right-aligned column chooser then opens within its narrow table card instead of clipping its labels outside the embedded view. Data, permissions and saved layout contracts remain unchanged.
+
 ## Stage app review with strict database scope — 29 October 2026
 
 - Check selected-stage ownership through the existing system metadata owner inside the rollback-only installation review. Preserve current app/developer rights, exact parent identity and exclusion of foreign or actor-private stages.
