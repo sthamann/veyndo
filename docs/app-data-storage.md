@@ -53,8 +53,7 @@ runtime records. These rows remain in shared storage but are excluded from sandb
 cloning and configuration snapshots used by selected publication. An installed
 operational entity cannot become publishable by removing or disabling that flag.
 Omitting it retains the previous manifest serialization and package digest.
-This is used by [original Shopware environments](shopware-compatibility.md);
-their separate original databases are not part of native app storage.
+Operational data stays separate from the configuration selected for publication.
 
 Existing limits remain: 128 registered packages/shop, 12 models/package,
 16 fields/model, 64 declared indexed/unique fields/package, 100,000 accounted rows

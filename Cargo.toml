@@ -112,7 +112,3 @@ codegen-units = 1
 [[bin]]
 name = "marketplace-gateway"
 path = "extensions/apps/marketplaces/service/main.rs"
-
-[[bin]]
-name = "shopware-compat"
-path = "extensions/apps/shopware-compat/service/main.rs"

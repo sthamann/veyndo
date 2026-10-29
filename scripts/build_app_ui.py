@@ -8,7 +8,7 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'extensions/sdk'))
 from ui_bundle import bundle
 parser=argparse.ArgumentParser()
-parser.add_argument('app',choices=['product-lab','service-example','shopware-compat'])
+parser.add_argument('app',choices=['product-lab','service-example'])
 parser.add_argument('--output',type=Path)
 args=parser.parse_args()
 directory=ROOT/'extensions/apps'/args.app
