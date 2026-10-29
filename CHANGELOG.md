@@ -1,5 +1,10 @@
 # Changelog
 
+## Stage app review with strict database scope — 29 October 2026
+
+- Check selected-stage ownership through the existing system metadata owner inside the rollback-only installation review. Preserve current app/developer rights, exact parent identity and exclusion of foreign or actor-private stages.
+- Reproduce the public `Environment unavailable` failure with actual separate restricted logins. Cover first installation, existing-stage data, unchanged package/outbox state and denied contexts; repeat the same app-schema suite through transaction poolers.
+
 ## Typed first-app field constraints — 29 October 2026
 
 - Replace the open-ended field-validation object in guided new-app generation with typed native length, number and item constraints. Keep required flags and status choices in their existing fields; retain native rejection of malformed model output.

@@ -77,6 +77,13 @@ installing** for each immutable build in its owned stage. The report shows store
 record counts, whether a migration is needed, its declared step count and the
 first blocking diagnostic. It returns no record contents or credentials.
 
+For a selected stage, ownership metadata is checked inside the same privileged,
+rollback-only transaction as installation admission. The parent still comes from
+the authenticated workspace; `apps.manage` and `developer.manage` remain required.
+Foreign, missing and actor-private preview stages retain the ordinary rejection.
+The check runs with actual separate system/tenant logins and transaction poolers;
+the tenant connection is not granted cross-stage metadata access.
+
 This is the actual migration/admission path, including stored-value conversion,
 fixed-storage constraints, publisher/dependency checks and saved configuration or
 commerce examples. Deferred constraints are checked before the entire transaction

@@ -1620,8 +1620,8 @@
     },
     "src/apps/consent.rs": {
       "status": "unproved",
-      "sha256": "814205ed7e1368f23ce18f027a8686b161f0de009e52c3f2b96b689538a4856d",
-      "review": "Reviewed rollback-only installer probe, explicit deferred constraint check, metadata-only response, current permissions/owned-stage admission and shared Flow replacement validation under existing automation lock. Actual schema/consent/examples/Flow HTTP checks and frontend tests passed. SQL and async behavior remain unproved."
+      "sha256": "c4257414695ef28003d19fe914cbf1832ebf0376071272fc0e10775146f3ac6a",
+      "review": "Selected-stage app review checks exact owned-stage metadata inside its existing privileged rollback transaction; current compound rights and private-preview exclusion remain unchanged, actual restricted-role regression reproduced and repaired"
     },
     "src/apps/core_callbacks.rs": {
       "status": "unproved",
@@ -1990,8 +1990,8 @@
     },
     "src/apps/upgrade_review.rs": {
       "status": "unproved",
-      "sha256": "e519f72f1a7d5dd421d0bdb9d5f79c1e615a2562b3c33560ba42165479f0e156",
-      "review": "Reviewed rollback-only installer probe, explicit deferred constraint check, metadata-only response, current permissions/owned-stage admission and shared Flow replacement validation under existing automation lock. Actual schema/consent/examples/Flow HTTP checks and frontend tests passed. SQL and async behavior remain unproved."
+      "sha256": "b3852399d6465f308bcd2d89b5d2e6b53d6aa4c29e55397c221fc7c0df4b2e4d",
+      "review": "Selected-stage app review checks exact owned-stage metadata inside its existing privileged rollback transaction; current compound rights and private-preview exclusion remain unchanged, actual restricted-role regression reproduced and repaired"
     },
     "src/apps/webhook_scope.rs": {
       "status": "unproved",
