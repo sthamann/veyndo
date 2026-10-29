@@ -709,6 +709,7 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/admin/catalog/ProductEditorExtras.tsx](../frontend/src/admin/catalog/ProductEditorExtras.tsx) | Permission-filtered extension slots retain the current product context. |
 | [frontend/src/admin/catalog/ProductEditorHeader.tsx](../frontend/src/admin/catalog/ProductEditorHeader.tsx) | Compact product identity, current save state and shared language context stay above every section. |
 | [frontend/src/admin/catalog/ProductEditorNav.tsx](../frontend/src/admin/catalog/ProductEditorNav.tsx) | Grouped product and installed-app sections share keyboard navigation and one compact mobile selector. |
+| [frontend/src/admin/catalog/ProductGallery.tsx](../frontend/src/admin/catalog/ProductGallery.tsx) | Local gallery drag ordering edits the same product draft; arrows remain available in the image inspector. |
 | [frontend/src/admin/catalog/ProductLocalizedContent.tsx](../frontend/src/admin/catalog/ProductLocalizedContent.tsx) | Consistent main-language inheritance for product rich documents, specification groups and individual SEO fields. |
 | [frontend/src/admin/catalog/ProductMediaWorkspace.tsx](../frontend/src/admin/catalog/ProductMediaWorkspace.tsx) | One product-media workspace: cover, ordered gallery, multilingual image metadata, drag/drop and optional reviewed AI drafts. |
 | [frontend/src/admin/catalog/ProductPanels.tsx](../frontend/src/admin/catalog/ProductPanels.tsx) | Native commerce, media, translated SEO/specifications and category panels for one editable product. |
@@ -726,6 +727,7 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/admin/catalog/media-model.ts](../frontend/src/admin/catalog/media-model.ts) | Pure gallery operations preserve order, explicit alt translations and upload bounds without fabricating language values. |
 | [frontend/src/admin/catalog/preparation-i18n.ts](../frontend/src/admin/catalog/preparation-i18n.ts) | Preparation vocabulary describes persisted native progress, never an invented publication approval. |
 | [frontend/src/admin/catalog/product-editor-i18n.ts](../frontend/src/admin/catalog/product-editor-i18n.ts) | Product workspace guidance shares the interface locale, never the product's content language. |
+| [frontend/src/admin/catalog/product-media-i18n.ts](../frontend/src/admin/catalog/product-media-i18n.ts) | Gallery ordering guidance shares interface locales without changing product image translations. |
 | [frontend/src/admin/catalog/product-pricing-i18n.ts](../frontend/src/admin/catalog/product-pricing-i18n.ts) | Interface guidance for native product prices, optional conditions and availability. |
 | [frontend/src/admin/catalog/useImageJob.ts](../frontend/src/admin/catalog/useImageJob.ts) | Restore and reconcile native image jobs across request/locale changes; only explicit merchant actions create provider work. |
 | [frontend/src/admin/catalog/variant-family.ts](../frontend/src/admin/catalog/variant-family.ts) | Cursor-based family lookup for duplicate review, bounded independently of the 50-row creation limit. |

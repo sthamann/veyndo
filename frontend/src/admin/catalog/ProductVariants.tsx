@@ -5,6 +5,7 @@ import { useCatalogText } from "../../shared/i18n/catalog-i18n";
 import { type ProductDraft } from "./catalog-model";
 import PairFields from "./PairFields";
 import VariantGenerator from "./VariantGenerator";
+import Icon from "../../shared/ui/Icon";
 import { useVariantText } from "./variant-i18n";
 import "../styles/variants.css";
 export default function ProductVariants({
@@ -78,9 +79,26 @@ export default function ProductVariants({
       </>
     );
   return (
-    <>
-      <p>{c("variantHint")}</p>
+    <div className="product-variants">
+      <p className="variant-family-hint">{c("variantHint")}</p>
       {dirty && <p role="status">{c("unsaved")}</p>}
+      {busy && <p role="status">{v("loading")}</p>}
+      {!busy && !error && !items.length && (
+        <div className="variant-empty">
+          <Icon name="layers" size={28} />
+          <h3>{v("empty")}</h3>
+          <p>{v("emptyHint")}</p>
+        </div>
+      )}
+      {!!items.length && (
+        <h3 className="variant-family-title">
+          {v("family")}{" "}
+          <span>
+            ({items.length}
+            {cursor ? "+" : ""})
+          </span>
+        </h3>
+      )}
       {items.map((p) => (
         <button
           type="button"
@@ -89,15 +107,19 @@ export default function ProductVariants({
           disabled={dirty || busy}
           onClick={() => onOpen(p.id)}
         >
-          <strong>
-            {Object.entries(p.options)
-              .map(([k, value]) => `${k}: ${value}`)
-              .join(" · ")}
-          </strong>
-          <span>
-            {p.productNumber} · {money(p.price)} · {p.stock} {c("stock")}
+          <span className="variant-identity">
+            <strong>
+              {Object.entries(p.options)
+                .map(([k, value]) => `${k}: ${value}`)
+                .join(" · ")}
+            </strong>
+            <span>
+              {p.productNumber} · {money(p.price)} · {p.stock} {c("stock")}
+            </span>
           </span>
-          <span>{v("edit")} ↗</span>
+          <span className="variant-open">
+            {v("edit")} <Icon name="arrow" size={16} />
+          </span>
         </button>
       ))}
       {cursor && (
@@ -126,14 +148,23 @@ export default function ProductVariants({
       )}
       {error && <p role="alert">{error}</p>}
       {canWrite && (
-        <fieldset disabled={dirty || busy}>
-          <VariantGenerator
-            parent={draft}
-            request={request}
-            onCreated={async () => setReload((n) => n + 1)}
-          />
-        </fieldset>
+        <details className="variant-create">
+          <summary>
+            <Icon name="plus" size={18} />
+            {v("start")}
+          </summary>
+          <fieldset
+            className="catalog-permission-fields"
+            disabled={dirty || busy}
+          >
+            <VariantGenerator
+              parent={draft}
+              request={request}
+              onCreated={async () => setReload((n) => n + 1)}
+            />
+          </fieldset>
+        </details>
       )}
-    </>
+    </div>
   );
 }

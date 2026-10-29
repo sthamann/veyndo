@@ -20,6 +20,8 @@ Files and their individual responsibilities are listed in [the generated source 
 - [`ProductEditorNav.tsx`](ProductEditorNav.tsx): Grouped native/app sections, manual keyboard activation and compact mobile selection.
 - [`product-editor-i18n.ts`](product-editor-i18n.ts): Four-language section guidance and empty review states.
 - [`ProductLocalizedContent.tsx`](ProductLocalizedContent.tsx): Consistent main-language inheritance for product rich documents, specification groups and individual SEO fields.
+- [`ProductGallery.tsx`](ProductGallery.tsx): Local drag ordering with visible drop positions and native-draft updates; inspector arrows remain the keyboard/touch alternative.
+- [`product-media-i18n.ts`](product-media-i18n.ts): Four-language gallery ordering and position guidance.
 - [`ProductMediaWorkspace.tsx`](ProductMediaWorkspace.tsx): One product-media workspace: cover, ordered gallery, multilingual image metadata, drag/drop and optional reviewed AI drafts.
 - [`ProductPricing.tsx`](ProductPricing.tsx): Grouped native price, tax-class and availability inputs with expandable optional pricing conditions.
 - [`ProductPriceTiers.tsx`](ProductPriceTiers.tsx): Existing rule and quantity-bound discount edits in the revisioned aggregate.
@@ -46,7 +48,7 @@ Files and their individual responsibilities are listed in [the generated source 
 
 ## Verification
 
-Run `npm run build`, `npm test`, `npm run test:coverage` and `npm run architecture` from `frontend/`. Coverage includes untested source files; a module in this folder is not automatically fully tested. See the root [testing guide](../../../../docs/testing.md) for backend integration and coverage limits.
+During development, run affected frontend test suites, `npm run build` and `npm run architecture` from `frontend/`. Complete tests and coverage run daily through the existing workflow. Coverage includes untested source files; a module in this folder is not automatically fully tested. See the root [testing guide](../../../../docs/testing.md) for backend integration and coverage limits.
 
 `ProductTextFields.tsx` edits nullable per-field names/descriptions.
 `ProductLocalizedContent.tsx` owns main-language rich/specification/SEO inheritance;

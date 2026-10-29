@@ -25,6 +25,16 @@ Ordinary pushes and PRs run short structural/governance checks; a green `verify`
 on those events is not a fresh full-suite acceptance. Publishing an image retains
 its packaged-runtime smoke check. [Cadence and exact scope](testing.md#daily-full-verification-and-short-per-change-checks).
 
+## Product editing improvements
+
+The product editor uses a compact header, grouped sections and a mobile selector.
+Price and tax fields are grouped with expandable optional conditions. Gallery images
+can be reordered by dragging or inspector controls, and variant creation opens from
+the existing family overview. These use the same native product saves, current
+permissions and enabled content languages.
+[Product workflow and screenshots](product-management.md#product-detail-workspace),
+[scoped native browser checks](evidence/product-workspace-2026-10-29.md).
+
 ## 29 October connected platform work
 
 The eight approved follow-ups use the existing native owners, authorization,
@@ -80,11 +90,13 @@ README are published from their separate public Core owner.
 [Homepage ownership and observed rollout](evidence/platform-followups-hosted-2026-10-29.md#actual-public-homepage-owner).
 
 
-The latest observed Core is **`69fd4568` (PR #234)**, image
-`united-toys-4065`, started on **29 October at 16:53:22 CET**. Its ordinary
-snapshot-backed release completed at **16:54:31 CET**, with a successful migration
-and one passing instance with zero restarts. The final correction makes the
-column controls readable inside narrow installed-app tables.
+The product pricing release **`dd03e76b` (PR #238)** was observed publicly on
+29 October after the snapshot-backed workflow completed at **20:12:55 CET**.
+Image `hungry-flame-954` passed migration and readiness. The actual public Studio
+showed the new price/tax groups and retained the signed-in private stage, product
+revision 6 and stock 2. These observations concern product editing, not a repeated
+complete checkout acceptance. The preceding **`69fd4568` (PR #234)** release fixed
+column controls inside narrow installed-app tables.
 
 The preceding functional release **`d65bc050` (PR #232)** also passed complete
 main CI. The original public model request creates and saves the native

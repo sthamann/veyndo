@@ -1,6 +1,43 @@
 /** Guided variant creation and editing vocabulary; content still follows shop language inheritance. */
 import { useLocale } from "../../shared/i18n/i18n";
 const words = {
+  loading: [
+    "Loading variants…",
+    "Varianten werden geladen…",
+    "Chargement des variantes…",
+    "Cargando variantes…",
+  ],
+  empty: [
+    "No variants yet",
+    "Noch keine Varianten",
+    "Aucune variante pour le moment",
+    "Todavía no hay variantes",
+  ],
+  emptyHint: [
+    "Add sizes, colours or other options. Review the combinations before creating individual products.",
+    "Ergänze Größen, Farben oder andere Optionen. Prüfe die Kombinationen, bevor du einzelne Produkte anlegst.",
+    "Ajoutez des tailles, couleurs ou autres options. Vérifiez les combinaisons avant de créer les produits.",
+    "Añade tallas, colores u otras opciones. Revisa las combinaciones antes de crear los productos.",
+  ],
+  family: [
+    "Existing variants",
+    "Vorhandene Varianten",
+    "Variantes existantes",
+    "Variantes existentes",
+  ],
+  start: [
+    "Add variants",
+    "Varianten hinzufügen",
+    "Ajouter des variantes",
+    "Añadir variantes",
+  ],
+  axisExample: ["e.g. Size", "z. B. Größe", "p. ex. Taille", "p. ej. Talla"],
+  valuesExample: [
+    "e.g. S, M, L",
+    "z. B. S, M, L",
+    "p. ex. S, M, L",
+    "p. ej. S, M, L",
+  ],
   existing: ["Already exists", "Bereits vorhanden", "Existe déjà", "Ya existe"],
   familyLimit: [
     "This family exceeds 10,000 variants. Use the product API in batches for this import.",

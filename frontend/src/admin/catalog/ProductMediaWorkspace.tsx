@@ -8,6 +8,9 @@ import type { RequestFn } from "../shell/studio-types";
 import type { ProductDraft } from "./catalog-model";
 import { mediaAlt, moveImage, type GalleryImage } from "./media-model";
 import MediaDropzone from "./MediaDropzone";
+import ProductGallery from "./ProductGallery";
+import { useProductMediaText } from "./product-media-i18n";
+import Icon from "../../shared/ui/Icon";
 import AiImageStudio from "./AiImageStudio";
 import "../styles/media-workspace.css";
 export default function ProductMediaWorkspace({
@@ -23,6 +26,7 @@ export default function ProductMediaWorkspace({
   onChange: (draft: ProductDraft) => void;
   unsaved?: boolean;
 }) {
+  const t = useProductMediaText();
   const { w } = useWorkspaceText(),
     { language, mainLocale } = useContentLanguage();
   const [selected, setSelected] = useState(""),
@@ -51,9 +55,7 @@ export default function ProductMediaWorkspace({
       <header className="media-workspace-heading">
         <div>
           <h3>{w("gallery")}</h3>
-          <p>
-            {media.length}/20 · {w("cover")}
-          </p>
+          <p>{t("count", media.length)}</p>
         </div>
         <button
           type="button"
@@ -111,36 +113,20 @@ export default function ProductMediaWorkspace({
       )}
       {!media.length ? (
         <div className="media-empty">
-          <span aria-hidden="true">◇</span>
+          <Icon name="image" size={32} />
           <h3>{w("noImages")}</h3>
           <p>{w("placeholder")}</p>
         </div>
       ) : (
         <div className="media-gallery">
-          <div className="media-image-grid">
-            {media.map((m, n) => (
-              <button
-                type="button"
-                className={`media-tile ${image?.id === m.id ? "is-selected" : ""}`}
-                key={m.id}
-                aria-label={mediaAlt(m, language, mainLocale) || `${n + 1}`}
-                aria-pressed={image?.id === m.id}
-                onClick={() => setSelected(m.id)}
-              >
-                <img
-                  src={m.url}
-                  alt={mediaAlt(m, language, mainLocale)}
-                  loading="lazy"
-                />
-                {n === 0 && (
-                  <span className="media-cover-tag">{w("cover")}</span>
-                )}
-                <span className="media-tile-caption">
-                  {mediaAlt(m, language, mainLocale) || `${n + 1}`}
-                </span>
-              </button>
-            ))}
-          </div>
+          <ProductGallery
+            key={draft.id ?? "new"}
+            media={media}
+            selected={image?.id ?? ""}
+            canReorder={canWrite && !busy}
+            onSelect={setSelected}
+            onChange={change}
+          />
           {image && (
             <aside className="media-inspector">
               <img
@@ -179,9 +165,10 @@ export default function ProductMediaWorkspace({
                     type="button"
                     className="studio-secondary"
                     disabled={media[0].id === image.id || busy}
-                    onClick={() =>
-                      change(moveImage(media, media.indexOf(image), 0))
-                    }
+                    onClick={() => {
+                      setSelected(image.id);
+                      change(moveImage(media, media.indexOf(image), 0));
+                    }}
                   >
                     {w("makeCover")}
                   </button>
@@ -195,16 +182,20 @@ export default function ProductMediaWorkspace({
                         media.indexOf(image) + delta < 0 ||
                         media.indexOf(image) + delta >= media.length
                       }
-                      onClick={() =>
+                      onClick={() => {
+                        setSelected(image.id);
                         change(
                           moveImage(
                             media,
                             media.indexOf(image),
                             media.indexOf(image) + delta,
                           ),
-                        )
-                      }
+                        );
+                      }}
                     >
+                      <span className={delta < 0 ? "media-previous-icon" : ""}>
+                        <Icon name="arrow" size={16} />
+                      </span>
                       {w(delta < 0 ? "previous" : "next")}
                     </button>
                   ))}
