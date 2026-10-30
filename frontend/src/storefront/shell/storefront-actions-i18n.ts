@@ -37,6 +37,12 @@ const words = {
     "Lire le panier sans données privées ni de session.",
     "Consulta el carrito sin datos privados ni de sesión.",
   ],
+  add: [
+    "Add a product on buyer request, preserving existing items. Creates a cart when needed. Does not place an order.",
+    "Füge auf Kundenwunsch ein Produkt hinzu und behalte vorhandene Positionen. Erstellt bei Bedarf einen Warenkorb. Löst keine Bestellung aus.",
+    "Ajouter un produit à la demande du client en conservant les articles existants. Crée un panier si nécessaire. Ne passe pas de commande.",
+    "Añade un producto a petición del cliente conservando los artículos existentes. Crea un carrito si es necesario. No realiza pedidos.",
+  ],
   update: [
     "Replace cart items on buyer request. Does not place an order.",
     "Ersetze Warenkorbpositionen auf Kundenwunsch. Löst keine Bestellung aus.",

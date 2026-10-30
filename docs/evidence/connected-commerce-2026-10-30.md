@@ -91,3 +91,18 @@ caused reflow, so the retained evidence is the actual top and scrolled viewport.
 
 These captures do not establish production deployment, product/category/cart
 template editing or a rendered autonomous purchase.
+
+## Browser-agent cart entry
+
+The registered `veyndo_add_product` tool now uses the native UI command to create
+an absent/completed cart and add items without replacing the current basket.
+Twelve targeted command and React-hook tests pass: concurrent additions, invalid
+IDs/quantities before creation, cancellation after creation, retained old handles
+after changing shop, private-preview suppression, token exclusion and normal
+shopping when `document.modelContext` is absent. TypeScript and frontend ownership
+checks pass. Merchant-provided names are explicitly annotated as untrusted output.
+
+The current Chrome imperative-API documentation was checked on 30 October.
+Native browser discovery/call acceptance is pending: the browser controller timed
+out while obtaining browser state. No browser result is inferred from the hook
+fixtures, and no customer manual test is required to complete the future check.

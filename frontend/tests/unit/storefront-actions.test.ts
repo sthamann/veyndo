@@ -4,6 +4,104 @@ import {
   createStorefrontActions,
   registerStorefrontTools,
 } from "../../src/storefront/shell/storefront-actions";
+
+it("adds through the registered browser tool from an empty session and preserves concurrent additions", async () => {
+  let current: any;
+  const registered = new Map<string, any>();
+  const request = vi.fn(
+    async (_path: string, body: any, token?: string, method?: string) => {
+      if (method !== "PUT") {
+        expect(body).toEqual({ session: "browser-session" });
+        return {
+          status: "open",
+          token: "private-cart",
+          revision: 0,
+          lineItems: [],
+          price: {},
+        };
+      }
+      expect(token).toBe("private-cart");
+      expect(body.revision).toBe(current?.revision ?? 0);
+      return {
+        status: "open",
+        token,
+        revision: body.revision + 1,
+        lineItems: body.items.map((item: any) => ({ ...item, label: item.id })),
+        price: { currency: "EUR", totalPrice: 12 },
+      };
+    },
+  );
+  const review = vi.fn();
+  const actions = createStorefrontActions({
+    request: request as any,
+    getCart: () => current,
+    saveCart: (cart) => {
+      current = cart;
+    },
+    reviewCheckout: review,
+    session: "browser-session",
+  });
+  const dispose = registerStorefrontTools(
+    {
+      registerTool: (tool: any) => {
+        registered.set(tool.name, tool);
+      },
+    },
+    actions,
+  );
+  const add = registered.get("veyndo_add_product");
+  for (const id of ["", " ", "x".repeat(201), 42]) {
+    await expect(add.execute({ id, quantity: 1 })).rejects.toThrow();
+  }
+  expect(request).not.toHaveBeenCalled();
+  const results = await Promise.all([
+    add.execute({ id: "lamp", quantity: 1 }),
+    add.execute({ id: "desk", quantity: 2 }),
+    add.execute({ id: "lamp", quantity: 3 }),
+  ]);
+  expect(request).toHaveBeenCalledTimes(4);
+  expect(current.lineItems).toEqual([
+    { id: "lamp", label: "lamp", quantity: 4 },
+    { id: "desk", label: "desk", quantity: 2 },
+  ]);
+  expect(current.revision).toBe(3);
+  expect(JSON.stringify(results)).not.toContain("private-cart");
+  expect(review).not.toHaveBeenCalled();
+  const abort = new AbortController();
+  abort.abort();
+  await expect(
+    add.execute({ id: "desk", quantity: 1 }, { signal: abort.signal }),
+  ).rejects.toThrow();
+  expect(request).toHaveBeenCalledTimes(4);
+  dispose();
+});
+
+it("stops an aborted browser addition after cart creation and before adding items", async () => {
+  const abort = new AbortController();
+  const request = vi.fn(async () => {
+    abort.abort();
+    return {
+      status: "open",
+      token: "secret",
+      revision: 0,
+      lineItems: [],
+      price: {},
+    };
+  });
+  const save = vi.fn();
+  const actions = createStorefrontActions({
+    request: request as any,
+    getCart: () => undefined,
+    saveCart: save,
+    reviewCheckout: vi.fn(),
+  });
+  await expect(
+    actions.addProduct("desk", 1, { signal: abort.signal }),
+  ).rejects.toThrow();
+  expect(request).toHaveBeenCalledTimes(1);
+  expect(save).not.toHaveBeenCalled();
+});
+
 it("serializes native cart updates and keeps the token and buyer out of results", async () => {
   let current: any = {
     id: "cart",
@@ -62,6 +160,7 @@ it("registers scoped browser tools, unregisters on teardown and exposes checkout
   expect([...names]).toEqual([
     "veyndo_search_catalog",
     "veyndo_get_cart",
+    "veyndo_add_product",
     "veyndo_update_cart",
     "veyndo_review_checkout",
   ]);

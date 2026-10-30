@@ -6,6 +6,7 @@
 - Compare the existing publishable configuration at test start, finish and result review. Show current, changed-during-run, stale and legacy-unverified evidence without treating test orders or inventory changes as configuration edits.
 - Add the dedicated 13-area connected-commerce checklist, native source-admission/regression cases and generated operation contracts.
 - Add a bounded home/content page overview using the shared shop renderer, inherited appearance and unsaved drafts. Returning to the current page retains dirty state, selection, undo and the agent prompt.
+- Add the missing WebMCP first-product operation through the shared native cart command, preserving concurrent additions and cancellation. Retain ordinary shopping without browser support and suppress tools in private previews.
 
 ## Current product films and public screenshots (30 October 2026)
 

@@ -87,10 +87,10 @@ knowledge projections and the existing shared grid/report UI.
 
 ### 6. WebMCP completion
 
-- [ ] Inventory registered browser tools and extend missing supported shopper operations.
-- [ ] Keep browser requests on native cart/checkout permission and revision paths.
+- [x] Inventory registered browser tools: search, read cart, add product, replace items and open checkout review. Add the missing first-product operation through the existing native command.
+- [x] Keep these browser requests on native cart/checkout permission and revision paths, with cancellation and shop-context fences.
 - [ ] Test actual supported browser discovery/calls, unavailable-browser fallback and hostile inputs.
-- [ ] Document exact browser and operation coverage.
+- [x] Document operation coverage and distinguish local adapter tests from pending browser acceptance.
 
 ### 7. Optional Shop customer login
 
