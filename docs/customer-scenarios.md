@@ -163,7 +163,19 @@ opening a test does not activate an old build. App-owned code stays in its packa
 Migration opens the same simulator for its authorized private target and channel.
 Imported products and configured rules therefore use the same cart and checkout
 owners as other products. Publication remains a separate, selected staging review.
-A successful customer test never grants publication rights or publishes a package.
+In **Staging & releases**, choose a private sandbox and a saved customer test.
+Its observed steps, simulated order and current configuration comparison appear
+beside the native changes. **Refresh tests and configuration check** reads the
+saved result again; it does not run another purchase. **Open this test and repeat**
+returns to the same sandbox, sales channel and saved report, where you can load its
+customers and start a new test. A failed read or navigation shows a retry message.
+
+Only users with every scenario permission see this panel. Changing sandbox or
+request scope immediately removes old selections/results; the backend remains the
+authority for actor-private access and digest-bound publication. A successful
+customer test never grants publication rights or publishes a package. The report
+covers native Commerce API behavior, not rendered page layout or every selected
+release item. Inspect those changes and use the existing preview before publishing.
 
 See [App Studio](app-studio.md), [migration](agentic-migration.md),
 [shop design](personal-workspace-and-shop-design.md) and

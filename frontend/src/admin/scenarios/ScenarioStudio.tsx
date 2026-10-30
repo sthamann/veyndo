@@ -22,10 +22,12 @@ export default function ScenarioStudio({
   request: baseRequest,
   channel = "default",
   sourceTaskId,
+  initialScenarioId,
 }: {
   request: RequestFn;
   channel?: string;
   sourceTaskId?: string;
+  initialScenarioId?: string;
 }) {
   const request = useMemo<RequestFn>(
     () => (path, body, method, options) =>
@@ -59,7 +61,7 @@ export default function ScenarioStudio({
     const scope = ++generation.current;
     setReport(undefined);
     setComparison(undefined);
-    setSelected("");
+    setSelected(initialScenarioId ?? "");
     setBaseline("");
     setProfiles([]);
     setConfig(undefined);
@@ -97,10 +99,10 @@ export default function ScenarioStudio({
     return () => {
       generation.current++;
     };
-  }, [request, environment, allowed, sourceTaskId]);
+  }, [request, environment, allowed, sourceTaskId, initialScenarioId]);
   useEffect(() => {
     setReport(undefined);
-    if (!selected) return;
+    if (!selected || !environment || !allowed) return;
     let active = true,
       timer: ReturnType<typeof setTimeout>;
     const load = async () => {
@@ -121,7 +123,7 @@ export default function ScenarioStudio({
       active = false;
       clearTimeout(timer);
     };
-  }, [request, selected, refresh]);
+  }, [request, selected, refresh, environment, allowed]);
   useEffect(() => {
     let active = true;
     let timer: ReturnType<typeof setTimeout>;
@@ -139,12 +141,12 @@ export default function ScenarioStudio({
         .catch((e) => {
           if (active) setError(e.message);
         });
-    if (baseline) void load();
+    if (baseline && environment && allowed) void load();
     return () => {
       active = false;
       clearTimeout(timer);
     };
-  }, [request, baseline]);
+  }, [request, baseline, environment, allowed]);
   const start = async () => {
     if (busy || !config) return;
     setBusy(true);

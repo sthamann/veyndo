@@ -15,6 +15,7 @@ export function useScenarioNavigation() {
     channel = "default",
     target?: string,
     sourceTaskId?: string,
+    scenarioId?: string,
   ) => {
     const started = request;
     if (sourceTaskId) {
@@ -34,6 +35,8 @@ export function useScenarioNavigation() {
     url.searchParams.set("scenarioChannel", channel);
     if (sourceTaskId) url.searchParams.set("scenarioSource", sourceTaskId);
     else url.searchParams.delete("scenarioSource");
+    if (scenarioId) url.searchParams.set("scenarioId", scenarioId);
+    else url.searchParams.delete("scenarioId");
     history.replaceState(null, "", url);
     selectTab("knowledge");
   };

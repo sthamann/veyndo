@@ -60,7 +60,7 @@ These are component previews, not automatic browser-customer evidence.
 ## Remaining task 1 acceptance
 
 Automatic rendered shopper journeys and captured screenshots, authenticated B2B
-profiles, and a combined proposal/diff/test/publication workspace are still open.
+profiles, and the complete combined rendered proposal/preview/test/publication journey are still open. Saved API results and native diffs are now connected as described below.
 The existing API simulation and these component images do not establish those
 capabilities. The checklist records their acceptance separately.
 
@@ -118,3 +118,33 @@ again. The test tab was closed and the owned local fixture stopped. This is loca
 browser acceptance, not public deployment or cross-browser certification.
 
 ![Actual native checkout opened through browser tools](../assets/connected-commerce-20261030/webmcp-native-checkout.png)
+
+## Saved tests beside selective publication
+
+The native `EnvironmentManager` now reads saved customer tests through a
+sandbox-scoped request and embeds the existing report renderer. No release path,
+permission or publication gate is replaced. The exact sandbox/channel/report is
+retained on return to the simulator. Changes in request scope hide earlier report,
+history and selection state; late responses cannot repopulate another scope.
+
+Targeted React checks cover compound rights and revocation, current/stale refresh,
+late responses after a sandbox switch, retry after read/navigation failure, selected
+changes cleared before the next diff arrives, exact saved-report navigation,
+channel-scoped initial report loading and denied URL report access. TypeScript,
+frontend architecture and all four interface language catalogues pass. Full suite
+execution remains on the daily cadence. The 19 affected release-review, scenario
+and navigation component tests pass. The scoped Impeccable detector reports no
+findings; independent UI and documentation reviews returned ship at component scope.
+
+The in-app browser rendered the actual components at 1280-pixel desktop width and
+in a 390-pixel mobile iframe. The outer white area in the mobile capture is the
+fixture page, not the component. Synthetic display data was used for this UI review;
+selection, current/stale refresh, callback arguments and empty sandbox switching
+were exercised. These images do not establish a native selected publication or an
+automatic browser-customer journey.
+
+![Saved test beside publication controls](../assets/connected-commerce-20261030/release-test-desktop.png)
+
+![Stale evidence and native before/after diff](../assets/connected-commerce-20261030/release-test-diff-desktop.png)
+
+![390-pixel component layout](../assets/connected-commerce-20261030/release-test-mobile.png)

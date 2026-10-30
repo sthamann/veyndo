@@ -28,7 +28,8 @@ Inward migration remains Shopify/other systems → Veyndo.
 - [x] Reuse saved fictional customers; show observed outcomes, errors and native order references.
 - [ ] Add rendered desktop/mobile checks with actual screenshots and failed steps.
 - [ ] Cover design, discount rules, company purchasing, app behavior and checkout through their owners.
-- [ ] Show the actual preview, changes, test scope and stale-test warnings together; allow correction and selected release.
+- [x] Show saved actor-private API customer tests and freshness beside native selected-release diffs; reopen the exact sandbox, channel and test.
+- [ ] Include actual rendered preview and captured browser evidence in that same review; verify the complete selected publication journey.
 - [x] Verify native API denied rights, source changes during inference, configuration changes, cancellation, retry/restart and no live side effects.
 - [ ] Verify those same boundaries for the new rendered browser path.
 
@@ -188,3 +189,10 @@ in-app browser against the isolated native Rust/PostgreSQL shop. Product additio
 quantity changes, checkout review, negative/unknown product rejection, empty-cart
 restoration and re-registration after reload passed. Screenshot and exact scope
 are recorded in the linked evidence. Public deployment remains separate.
+
+30 October, task 1 release-review slice: saved customer results and freshness now
+appear beside the existing native selective-release diff. Opening a result retains
+its sandbox, channel and saved test. Environment/request changes immediately hide
+old selections, reports and history; rejected reads and navigation remain retryable.
+Targeted component tests and desktop/mobile component previews cover this slice.
+The complete rendered shopper and publication journey remains open.

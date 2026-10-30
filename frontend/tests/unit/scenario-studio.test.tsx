@@ -531,3 +531,80 @@ it("includes the explicit proposal reference and allows an independent test with
   const posts = request.mock.calls.filter((c) => c[2] === "POST");
   expect(posts.at(-1)?.[1]).not.toHaveProperty("sourceTaskId");
 });
+
+it("opens a saved publication test in its channel and keeps its repeatable brief", async () => {
+  studio.environment = "private-test";
+  const saved = {
+    id: "publication-test",
+    runs: [
+      {
+        taskId: "one",
+        revision: 1,
+        state: "ready",
+        scenario: {
+          profile: {
+            id: "budget",
+            name: "Saved customer",
+            goal: "Buy a bag",
+            budgetMinor: 20000,
+            country: "DE",
+            locale: "de-DE",
+          },
+          instruction: "Find the summer collection",
+          channel: "summer",
+          index: 0,
+          currency: "EUR",
+          scale: 2,
+        },
+      },
+    ],
+  };
+  const scoped = vi.fn(async (path: string) =>
+    path.endsWith("/publication-test")
+      ? saved
+      : {
+          scenarios: [{ id: saved.id, title: "Summer", members: 1 }],
+          configuration: {
+            channel: "summer",
+            mainLocale: "de-DE",
+            locales: ["de-DE"],
+            countries: ["DE"],
+            currency: "EUR",
+            scale: 2,
+          },
+        },
+  );
+  render(
+    <LocaleProvider>
+      <ScenarioStudio
+        request={scoped}
+        channel="summer"
+        initialScenarioId="publication-test"
+      />
+    </LocaleProvider>,
+  );
+  expect(await screen.findByText("Saved customer")).toBeVisible();
+  expect(scoped).toHaveBeenCalledWith(
+    "/api/agent/scenarios/publication-test",
+    undefined,
+    undefined,
+    { salesChannel: "summer" },
+  );
+});
+it("does not load a saved URL report without the current compound rights", async () => {
+  studio.environment = "private-test";
+  const previous = studio.access;
+  studio.access = [];
+  try {
+    const denied = vi.fn();
+    render(
+      <LocaleProvider>
+        <ScenarioStudio request={denied} initialScenarioId="private-report" />
+      </LocaleProvider>,
+    );
+    await Promise.resolve();
+    expect(denied).not.toHaveBeenCalled();
+  } finally {
+    studio.access = previous;
+  }
+});

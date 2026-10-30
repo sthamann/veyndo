@@ -23,8 +23,11 @@ comparison fixtures remain part of migration and native verification.
 The [dedicated implementation checklist](plans/2026-10-30-connected-commerce.md)
 tracks all 13 areas from the Fall 2026 comparison. Development starts with linking
 applied agent proposals to private customer tests and detecting outdated test
-configuration. That slice has local native PostgreSQL/HTTP checks and targeted UI
-tests. It is not a completed acceptance of all 13 areas or a new public deployment.
+configuration. Saved results now appear beside native release diffs with a direct
+return to the exact test. The branch also adds a bounded home/content page overview
+and the first-product WebMCP operation. Native PostgreSQL/HTTP checks, targeted UI
+tests, component previews and an actual local browser cart/checkout-review path
+are recorded in the [implementation evidence](evidence/connected-commerce-2026-10-30.md). It is not a completed acceptance of all 13 areas or a new public deployment.
 
 ## Verification cadence
 
