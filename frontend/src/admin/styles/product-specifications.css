@@ -1,0 +1,101 @@
+/* Product facts use compact labelled groups, explicit add rows and a native definition-list preview within the existing editor surface. */
+.product-specifications {
+  display: grid;
+  gap: 28px;
+  min-width: 0;
+}
+.product-specifications section + section {
+  border-top: 1px solid var(--border);
+  padding-top: 24px;
+}
+.product-specifications h3 {
+  font-size: 16px;
+  margin: 0 0 8px;
+}
+.product-spec-heading {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+.product-spec-heading h3 {
+  margin: 0;
+}
+.product-spec-hint {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+  max-width: 72ch;
+  margin: 8px 0 16px;
+}
+.product-spec-pairs .catalog-pair {
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.product-spec-pairs .catalog-pair button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.product-spec-pairs svg {
+  width: 16px;
+  height: 16px;
+}
+.product-spec-add {
+  border-top: 1px solid var(--border);
+  padding-top: 14px;
+}
+.product-spec-error {
+  color: var(--danger);
+  font-size: 13px;
+  margin: 8px 0;
+}
+.product-spec-preview {
+  margin-top: 20px;
+}
+.product-spec-preview h4 {
+  font-size: 13px;
+  margin: 0 0 10px;
+  color: var(--muted);
+}
+.product-spec-preview dl {
+  margin: 0;
+}
+.product-spec-preview dl > div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: 16px;
+  padding: 10px 0;
+  border-top: 1px solid var(--border);
+  overflow-wrap: anywhere;
+}
+.product-spec-preview dt {
+  font-weight: 600;
+}
+.product-spec-preview dd {
+  margin: 0;
+  white-space: pre-wrap;
+}
+@media (max-width: 700px) {
+  .product-spec-pairs .catalog-pair {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+  }
+  .product-spec-pairs .catalog-pair label {
+    grid-column: 1;
+  }
+  .product-spec-pairs .catalog-pair label:first-child,
+  .product-spec-pairs .product-spec-add label {
+    grid-column: 1/-1;
+  }
+  .product-spec-pairs .catalog-pair button {
+    grid-column: 2;
+  }
+  .product-spec-add button {
+    grid-column: 1/-1 !important;
+  }
+}

@@ -1,9 +1,8 @@
-/** Consistent main-language inheritance for product rich documents and specification groups. */
+/** Consistent main-language inheritance for product rich documents. */
 import RichDescription from "../../shared/content/RichDescription";
 import { lazy, Suspense, useState } from "react";
 import { useEditorBuffer } from "../../shared/content/editor/EditorBuffer";
 const RichEditor = lazy(() => import("../../shared/content/editor/RichEditor"));
-import PairFields from "./PairFields";
 import { useInternationalText } from "../../shared/i18n/international-i18n";
 import type { ProductDraft } from "./catalog-model";
 import "../styles/international.css";
@@ -16,10 +15,6 @@ type Props = {
   lang: string;
   onChange: (d: ProductDraft) => void;
 };
-function source(d: ProductDraft) {
-  const main = d.mainLocale ?? "en-GB";
-  return d.translations[main] ? main : main.split("-")[0];
-}
 export function ProductRich({
   draft: d,
   lang,
@@ -80,38 +75,6 @@ export function ProductRich({
           onChange={set}
         />
       </Suspense>
-    </div>
-  );
-}
-export function ProductSpecifications({ draft: d, lang, onChange }: Props) {
-  const { i } = useInternationalText();
-  const main = source(d),
-    map = d.extra.specifications ?? {},
-    inherited = lang !== main && map[lang] == null;
-  const set = (v: any) =>
-    onChange({ ...d, extra: { ...d.extra, specifications: v } });
-  return (
-    <div>
-      {lang !== main && (
-        <button
-          type="button"
-          className="intl-inherit"
-          aria-pressed={inherited}
-          onClick={() => {
-            const next = { ...map };
-            if (inherited) next[lang] = structuredClone(map[main] ?? {});
-            else delete next[lang];
-            set(next);
-          }}
-        >
-          {i(inherited ? "inheritedFrom" : "customText")}{" "}
-          {inherited ? d.mainLocale : ""} ↗
-        </button>
-      )}
-      <PairFields
-        value={map[lang] ?? map[main] ?? {}}
-        onChange={(value) => set({ ...map, [lang]: value })}
-      />
     </div>
   );
 }

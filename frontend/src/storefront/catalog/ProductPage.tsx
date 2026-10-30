@@ -1,4 +1,5 @@
 /** Product family, gallery, context pricing and moderated customer reviews. */
+import { productSpecifications } from "../../shared/content/product-specifications";
 import { productSeoFields } from "../../shared/content/product-seo";
 import { productURL, collectionURL } from "./product-url";
 import { BRAND } from "../../shared/ui/Brand";
@@ -161,10 +162,10 @@ export default function ProductPage({
       </main>
     );
   const p = data.product;
-  const specs =
-    p.extra?.specifications?.[contentLanguage] ??
-    p.extra?.specifications?.en ??
-    {};
+  const specs = productSpecifications(
+    p.extra?.specifications,
+    getContentLocale(),
+  );
   const effective = Math.max(
     p.min_purchase,
     Math.floor(

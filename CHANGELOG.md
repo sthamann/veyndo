@@ -1,5 +1,12 @@
 # Changelog
 
+## Product specifications and safe property editing (30 October 2026)
+
+- Group visible localized product details, shared technical properties and unit-labelled weight/dimensions, with an effective product-page preview and responsive row layout.
+- Resolve specification language keys independently of plain product text and share native field-level fallback with the storefront. Retain explicit empty values and inherited fields.
+- Create map rows explicitly and rename on blur without overwriting duplicate names. Enforce native byte/count limits before accepting a row, and retain existing native aggregate saves and stock omission.
+- Update the product guide, module responsibilities and scoped native browser evidence.
+
 ## Product SEO editing and storefront metadata (30 October 2026)
 
 - Add a translated single-language SEO workspace with multiline description, encoded product-path preview, automatic product-text defaults and per-field inheritance controls.

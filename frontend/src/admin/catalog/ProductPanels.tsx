@@ -2,11 +2,9 @@
 import ProductPricing from "./ProductPricing";
 import ProductAssignments from "./ProductAssignments";
 import type { RequestFn } from "../shell/studio-types";
-import { useCatalogText } from "../../shared/i18n/catalog-i18n";
 import type { Category, ProductDraft } from "./catalog-model";
-import PairFields from "./PairFields";
+import ProductSpecifications from "./ProductSpecifications";
 
-import { ProductSpecifications } from "./ProductLocalizedContent";
 import ProductGeneral from "./ProductGeneral";
 import ProductSeo from "./ProductSeo";
 export default function ProductPanels({
@@ -26,9 +24,7 @@ export default function ProductPanels({
   categories: Category[];
   onChange: (d: ProductDraft) => void;
 }) {
-  const { c } = useCatalogText();
   const d = draft;
-  const extra = (v: any) => onChange({ ...d, extra: { ...d.extra, ...v } });
   if (tab === "general")
     return (
       <ProductGeneral
@@ -54,38 +50,12 @@ export default function ProductPanels({
     );
   if (tab === "specs")
     return (
-      <>
-        <h2>
-          {c("specs")} · {lang.toUpperCase()}
-        </h2>
-        <ProductSpecifications draft={d} lang={lang} onChange={onChange} />
-        <h2>{c("key")}</h2>
-        <PairFields
-          value={d.commerce.properties}
-          onChange={(properties) =>
-            onChange({ ...d, commerce: { ...d.commerce, properties } })
-          }
-        />
-        <div className="catalog-form-grid">
-          {(["weight", "width", "height", "length"] as const).map((k) => (
-            <label key={k}>
-              {c(k)}
-              <input
-                type="number"
-                min={0}
-                step="0.01"
-                value={d.extra.automation?.[k] ?? ""}
-                onChange={(e) => {
-                  const automation = { ...d.extra.automation };
-                  if (e.target.value === "") delete automation[k];
-                  else automation[k] = Number(e.target.value);
-                  extra({ automation });
-                }}
-              />
-            </label>
-          ))}
-        </div>
-      </>
+      <ProductSpecifications
+        draft={d}
+        lang={lang}
+        onChange={onChange}
+        canWrite={canWrite}
+      />
     );
   if (tab === "seo")
     return <ProductSeo draft={d} lang={lang} onChange={onChange} />;
