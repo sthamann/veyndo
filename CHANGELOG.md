@@ -1,5 +1,11 @@
 # Changelog
 
+## Native shop preview in publication review (30 October 2026)
+
+- Open the current native sandbox storefront beside a saved customer test, using its selected profile’s channel and language. Recheck report access and configuration freshness before loading.
+- Switch between desktop and mobile widths, follow real product links, close/reload the preview and keep the normal selective-publication path. Discard pending previews after closing or switching profiles, reports or request scope.
+- Keep saved API observations distinct from the current rendering. No historical screenshot, automated layout verdict or customer impersonation is implied. Update the guide, checklist and screenshots with actual native browser evidence.
+
 ## Proposal-linked customer tests and configuration freshness (30 October 2026, development)
 
 - Open customer tests from an applied private agent proposal, retaining its channel and an actor-checked source revision/digest through the native worker. Changed or inaccessible sources stop subsequent actions.

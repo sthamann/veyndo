@@ -238,3 +238,25 @@ sandbox. A EUR 1.00 German buyer stopped at the actual EUR 19.90 product price; 
 EUR 25.00 English buyer read details, built the basket and completed one simulated
 purchase. Full reload and selecting the saved test retained both outcomes and the
 same order reference. [Exact steps and screenshots](evidence/platform-followups-hosted-2026-10-29.md#public-saved-customer-scenarios).
+
+## Inspect the shop before publication
+
+In **Staging & publications**, choose the private environment and a saved customer
+test. **Preview shop** rechecks access to that exact report and opens the current
+native storefront in the selected profile’s channel and content language. For a
+report with several customers, choose the profile before opening.
+
+Switch the preview between desktop and mobile widths, follow product links, or
+open the shop in another tab. **Recheck and reload** retrieves current configuration
+freshness and reloads the shop. Closing, changing profile or changing report/scope
+removes the previous frame and discards late responses. Native shop admission and
+browser sessions remain responsible for access. Credentials are never placed in
+the preview URL.
+
+The preview shows the current sandbox. It is not an archived rendering or an
+automatic browser test; saved API observations remain separate. Country, currency
+and customer account are chosen in the storefront itself. Reviewing this preview
+does not publish anything or automatically place an order. Continue with the
+existing change selection and explicit publication after inspection.
+
+[Native preview screenshots and acceptance](evidence/connected-commerce-2026-10-30.md#native-shop-preview-in-the-release-review).

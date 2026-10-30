@@ -38,7 +38,7 @@ public acceptance are recorded separately.
 | **Shape the shop** | Drag components onto the actual preview, compare home and content pages, undo edits and review screenshot-based proposals. Original Storyfront powers connected Experiences. [Visual design](docs/personal-workspace-and-shop-design.md). |
 | **Automate the work** | Repeat reviewed work as a Flow and compare rule drafts with recorded order inputs before saving. [Automation](docs/automation.md), [reusable work](docs/personal-workspace-and-shop-design.md#repeat-completed-work-as-a-flow), [rule comparison](docs/rule-history-comparison.md). |
 | **Shop by intent** | Describe a gift, budget or comparison; edit the visual selection with real product cards, then use native variants, app configuration and checkout. [Shopper workspace](docs/ui-experience.md#standard-storefront-and-customer-account). |
-| **Test before release** | Let fictional customers try private proposals with native baskets and simulated purchases. Review saved outcomes and configuration freshness beside selected changes. [Customer simulator](docs/customer-scenarios.md). |
+| **Test before release** | Let fictional customers try private proposals with native baskets and simulated purchases. Review outcomes, configuration freshness and the shop preview before publication. [Customer simulator](docs/customer-scenarios.md). |
 | **Stay in control** | Current roles, private sandboxes, immutable versions, saved-data upgrade checks and selected publication govern changes. [Security](docs/security.md). |
 
 [![Veyndo: AI commerce in 1:56](docs/assets/showcase/product-films-20261030/veyndo-ai-commerce.jpg)](https://www.veyndo.ai/docs/video-tours.html)

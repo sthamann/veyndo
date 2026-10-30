@@ -197,3 +197,38 @@ automatic browser-customer journey.
 ![Stale evidence and native before/after diff](../assets/connected-commerce-20261030/release-test-diff-desktop.png)
 
 ![390-pixel component layout](../assets/connected-commerce-20261030/release-test-mobile.png)
+
+## Native shop preview in the release review
+
+The current sandbox storefront opens inline beside a saved API customer test.
+Opening/reloading first reads the actor-private report again; the selected run
+supplies its channel and language without a default-channel fallback. The iframe
+uses the normal native storefront and browser session. No tokens enter its URL.
+A close, profile change or parent scope/report refresh removes the frame and
+invalidates pending responses. The original digest-bound release remains unchanged.
+
+On 30 October, the in-app browser signed into a fresh disposable native Rust /
+PostgreSQL fixture, selected the saved price-proposal test and opened the actual
+storefront. Optional tracking was rejected. Home and product navigation retained
+the private tenant, default channel and en-GB language. The lamp detail showed
+EUR 71.23. Desktop and 390-pixel inner mobile widths rendered in a 1280-pixel Studio
+window. Closing the frame and selecting only the tested product completed the
+normal publication flow. Native readback verified the live product price and
+retained one private test order with no live order.
+
+Thirteen affected React tests cover report revalidation, denied access with retry,
+late closed requests, missing-run rejection, profile switching, scope/rights
+changes and publication selections. TypeScript, build, structure, inventory and
+localization checks pass. The scoped Impeccable detector reports no findings.
+The browser used the supported HTTP localhost development session profile. The
+previous separate strict native database acceptance is not replaced by this UI check.
+
+These screenshots are acceptance artifacts, not automatically captured product
+evidence. Automatic rendered customer journeys and stored run-bound screenshots
+remain open in the checklist. Public Core deployment is recorded separately.
+
+![Actual sandbox shop beside its saved test](../assets/connected-commerce-20261030/release-shop-preview-desktop.png)
+
+![Native shop at mobile width in the publication review](../assets/connected-commerce-20261030/release-shop-preview-mobile.png)
+
+![Selected publication completed after inspecting the preview](../assets/connected-commerce-20261030/release-preview-published.png)

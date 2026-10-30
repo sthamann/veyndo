@@ -34,7 +34,10 @@ is tracked separately. Native acceptance now continues from the tested price pro
 through selected publication while retaining orders, stock and unselected changes.
 An actual local Studio browser journey also verified saved-test navigation,
 selected publication and history after reload, with native readback and screenshots.
-This does not complete all 13 areas or the automatic rendered-customer journey.
+The same review now opens the actual current sandbox shop in the saved profile’s
+channel and language, with desktop/mobile widths and a fresh configuration check.
+Native local browser acceptance covers the embedded shop, product navigation and
+subsequent selected publication. Automatic recorded browser journeys remain open.
 
 ## Verification cadence
 

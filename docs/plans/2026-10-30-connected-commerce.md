@@ -31,7 +31,8 @@ Inward migration remains Shopify/other systems → Veyndo.
 - [x] Show saved actor-private API customer tests and freshness beside native selected-release diffs; reopen the exact sandbox, channel and test.
 - [x] Verify native proposal → approved private price → attributed purchase → selected publication, including revoked authority, stale/replayed selections, retained unrelated changes and unchanged operational state.
 - [x] Verify the real Studio login, saved-result reopening, private channel context, selected publication and retained history after reload against native APIs.
-- [ ] Include actual rendered preview and captured browser evidence in that same review; verify the complete selected publication journey.
+- [x] Open the actual current sandbox storefront beside a saved test with its channel/language, fresh report admission and desktop/mobile widths; verify navigation and selected publication.
+- [ ] Persist automatic browser captures and failed rendered steps as version-bound test evidence in the same review.
 - [x] Verify native API denied rights, source changes during inference, configuration changes, cancellation, retry/restart and no live side effects.
 - [ ] Verify those same boundaries for the new rendered browser path.
 
