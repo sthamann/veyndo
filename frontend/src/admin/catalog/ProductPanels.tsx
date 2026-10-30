@@ -6,8 +6,9 @@ import { useCatalogText } from "../../shared/i18n/catalog-i18n";
 import type { Category, ProductDraft } from "./catalog-model";
 import PairFields from "./PairFields";
 
-import { ProductSeo, ProductSpecifications } from "./ProductLocalizedContent";
+import { ProductSpecifications } from "./ProductLocalizedContent";
 import ProductGeneral from "./ProductGeneral";
+import ProductSeo from "./ProductSeo";
 export default function ProductPanels({
   request,
   tab,

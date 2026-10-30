@@ -712,11 +712,12 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/admin/catalog/ProductEditorNav.tsx](../frontend/src/admin/catalog/ProductEditorNav.tsx) | Grouped product and installed-app sections share keyboard navigation and one compact mobile selector. |
 | [frontend/src/admin/catalog/ProductGallery.tsx](../frontend/src/admin/catalog/ProductGallery.tsx) | Local gallery drag ordering edits the same product draft; arrows remain available in the image inspector. |
 | [frontend/src/admin/catalog/ProductGeneral.tsx](../frontend/src/admin/catalog/ProductGeneral.tsx) | Product basics and full content remain primary; optional identifiers and shipping flags share one expandable native-draft section. |
-| [frontend/src/admin/catalog/ProductLocalizedContent.tsx](../frontend/src/admin/catalog/ProductLocalizedContent.tsx) | Consistent main-language inheritance for product rich documents, specification groups and individual SEO fields. |
+| [frontend/src/admin/catalog/ProductLocalizedContent.tsx](../frontend/src/admin/catalog/ProductLocalizedContent.tsx) | Consistent main-language inheritance for product rich documents and specification groups. |
 | [frontend/src/admin/catalog/ProductMediaWorkspace.tsx](../frontend/src/admin/catalog/ProductMediaWorkspace.tsx) | One product-media workspace: cover, ordered gallery, multilingual image metadata, drag/drop and optional reviewed AI drafts. |
 | [frontend/src/admin/catalog/ProductPanels.tsx](../frontend/src/admin/catalog/ProductPanels.tsx) | Native commerce, media, translated SEO/specifications and category panels for one editable product. |
 | [frontend/src/admin/catalog/ProductPriceTiers.tsx](../frontend/src/admin/catalog/ProductPriceTiers.tsx) | Native rule-bound price tiers edit the existing revisioned product aggregate. |
 | [frontend/src/admin/catalog/ProductPricing.tsx](../frontend/src/admin/catalog/ProductPricing.tsx) | Grouped native pricing inputs preserve stock-safe aggregate saves and optional price contracts. |
+| [frontend/src/admin/catalog/ProductSeo.tsx](../frontend/src/admin/catalog/ProductSeo.tsx) | Single-language optional SEO edits share effective fields and encoded paths with the storefront; previewing never mutates the product draft. |
 | [frontend/src/admin/catalog/ProductTextFields.tsx](../frontend/src/admin/catalog/ProductTextFields.tsx) | Product text uses the shared single-language editor and field inheritance; product number stays language independent. |
 | [frontend/src/admin/catalog/ProductVariants.tsx](../frontend/src/admin/catalog/ProductVariants.tsx) | Native variant family browser with cursor pagination, explicit editing and a bounded creation wizard. |
 | [frontend/src/admin/catalog/ReferencePriceFields.tsx](../frontend/src/admin/catalog/ReferencePriceFields.tsx) | Native reference-unit inputs feed the same server-calculated unit price displayed on product pages. |
@@ -735,6 +736,7 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/admin/catalog/product-editor-i18n.ts](../frontend/src/admin/catalog/product-editor-i18n.ts) | Product workspace guidance shares the interface locale, never the product's content language. |
 | [frontend/src/admin/catalog/product-media-i18n.ts](../frontend/src/admin/catalog/product-media-i18n.ts) | Gallery ordering guidance shares interface locales without changing product image translations. |
 | [frontend/src/admin/catalog/product-pricing-i18n.ts](../frontend/src/admin/catalog/product-pricing-i18n.ts) | Interface guidance for native product prices, optional conditions and availability. |
+| [frontend/src/admin/catalog/product-seo-i18n.ts](../frontend/src/admin/catalog/product-seo-i18n.ts) | Product search-preview labels and automatic SEO guidance in all Studio interface languages. |
 | [frontend/src/admin/catalog/useImageJob.ts](../frontend/src/admin/catalog/useImageJob.ts) | Restore and reconcile native image jobs across request/locale changes; only explicit merchant actions create provider work. |
 | [frontend/src/admin/catalog/variant-family.ts](../frontend/src/admin/catalog/variant-family.ts) | Cursor-based family lookup for duplicate review, bounded independently of the 50-row creation limit. |
 | [frontend/src/admin/catalog/variant-i18n.ts](../frontend/src/admin/catalog/variant-i18n.ts) | Guided variant creation and editing vocabulary; content still follows shop language inheritance. |
@@ -1011,6 +1013,7 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/admin/styles/product-assignments.css](../frontend/src/admin/styles/product-assignments.css) | Product assignments use compact searchable choices, native checkboxes and the Studio theme. |
 | [frontend/src/admin/styles/product-content.css](../frontend/src/admin/styles/product-content.css) | Product content keeps a compact vertical rhythm and uses the incumbent Studio surfaces and native disclosures. |
 | [frontend/src/admin/styles/product-pricing.css](../frontend/src/admin/styles/product-pricing.css) | Product pricing follows the native save path with grouped basics and optional conditions. |
+| [frontend/src/admin/styles/product-seo.css](../frontend/src/admin/styles/product-seo.css) | Product SEO uses one readable field column and a responsive search-preview area on existing Studio theme surfaces. |
 | [frontend/src/admin/styles/product-workspace.css](../frontend/src/admin/styles/product-workspace.css) | Product-only layout: compact identity, grouped sections and a fluid editing surface. |
 | [frontend/src/admin/styles/provider-account.css](../frontend/src/admin/styles/provider-account.css) | Shared provider onboarding layout works independently of the lazy-loaded visual App Studio. |
 | [frontend/src/admin/styles/sales-channels.css](../frontend/src/admin/styles/sales-channels.css) | Sales-channel cards, onboarding and scoped settings use the same responsive, accessible Studio design. |
@@ -1131,6 +1134,7 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/shared/content/editor/editor-i18n.ts](../frontend/src/shared/content/editor/editor-i18n.ts) | Four-language controls for visual/Markdown editing without changing content-language inheritance. |
 | [frontend/src/shared/content/editor/markdown-content.ts](../frontend/src/shared/content/editor/markdown-content.ts) | Markdown admission shares the public rich-document node/URL boundary; rich-only features never silently disappear. |
 | [frontend/src/shared/content/editor/rich-conversion.ts](../frontend/src/shared/content/editor/rich-conversion.ts) | Lossless import of legacy blocks into structured WYSIWYG content, preserving inline emphasis. |
+| [frontend/src/shared/content/product-seo.ts](../frontend/src/shared/content/product-seo.ts) | Shared SEO field fallback and encoded product paths keep Studio previews and native storefront presentation consistent. |
 | [frontend/src/shared/content/rich-document.tsx](../frontend/src/shared/content/rich-document.tsx) | Safe structured editor rendering. Only known nodes/marks produce elements; URLs are never executable. |
 | [frontend/src/shared/customer/AddressBook.tsx](../frontend/src/shared/customer/AddressBook.tsx) | Tenant-owned address cards, defaults and revision-aware CRUD shared by account and CRM. |
 | [frontend/src/shared/customer/AddressCard.tsx](../frontend/src/shared/customer/AddressCard.tsx) | Human-readable address used in order snapshots and address books. |

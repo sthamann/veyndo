@@ -4,14 +4,12 @@ import userEvent from "@testing-library/user-event";
 import { useState } from "react";
 import { expect, it, vi } from "vitest";
 import { LocaleProvider } from "../../src/shared/i18n/i18n";
-import {
-  ProductSeo,
-  ProductSpecifications,
-} from "../../src/admin/catalog/ProductLocalizedContent";
+import { ProductSpecifications } from "../../src/admin/catalog/ProductLocalizedContent";
 import {
   newDraft,
   type ProductDraft,
 } from "../../src/admin/catalog/catalog-model";
+import ProductSeo from "../../src/admin/catalog/ProductSeo";
 import TranslationJobs from "../../src/admin/settings/TranslationJobs";
 import settings from "../../../fixtures/demo-settings.json";
 it("inherits SEO per field from Spanish and preserves explicit blanks and independent source fields", async () => {

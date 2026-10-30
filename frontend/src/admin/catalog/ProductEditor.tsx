@@ -1,5 +1,7 @@
 /** Revision-aware product aggregate editor: one save, translation tabs and product-scoped linked capabilities. */
 import { useCoreExtensions } from "../../shared/apps/CoreExtensions";
+import { invalidProductSeo } from "../../shared/content/product-seo";
+import { useProductSeoText } from "./product-seo-i18n";
 import ProductEditorHeader from "./ProductEditorHeader";
 import { useProductEditorText } from "./product-editor-i18n";
 import "../styles/product-workspace.css";
@@ -51,7 +53,8 @@ export default function ProductEditor({
   const appTabs = useAppSurfaces().filter(
     (s) => s.surface.location === "admin.product.tab",
   );
-  const e = useProductEditorText();
+  const e = useProductEditorText(),
+    seoText = useProductSeoText();
   const panelId = useId();
   const { l } = useLegalText();
   const [draft, setDraft] = useState<ProductDraft>(newDraft);
@@ -146,6 +149,10 @@ export default function ProductEditor({
   };
   const save = async () => {
     if (!canWrite) return;
+    if (invalidProductSeo(draft.extra.seo)) {
+      setError(seoText("invalid"));
+      return;
+    }
     setBusy(true);
     setError("");
     try {

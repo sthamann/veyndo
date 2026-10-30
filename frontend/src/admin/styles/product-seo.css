@@ -1,0 +1,74 @@
+/* Product SEO uses one readable field column and a responsive search-preview area on existing Studio theme surfaces. */
+.product-seo-workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 28px;
+  align-items: start;
+}
+.product-seo-fields {
+  display: grid;
+  gap: 20px;
+  min-width: 0;
+}
+.product-seo-workspace .product-seo-hint {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--muted);
+  margin: 0 0 12px;
+  max-width: 72ch;
+}
+.product-seo-workspace .product-seo-field .product-seo-hint {
+  margin: 8px 0 0;
+}
+.product-seo-count {
+  display: block;
+  text-align: end;
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 6px;
+  font-variant-numeric: tabular-nums;
+}
+.product-seo-preview {
+  min-width: 0;
+  position: sticky;
+  top: 160px;
+  padding-top: 2px;
+}
+.product-seo-preview h3 {
+  margin: 0 0 8px;
+  font-size: 16px;
+}
+.product-seo-result {
+  padding: 18px 0;
+  border-top: 1px solid var(--border);
+  overflow-wrap: anywhere;
+}
+.product-seo-result strong {
+  display: block;
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 1.5;
+}
+.product-seo-result > span {
+  display: block;
+  font-size: 12px;
+  line-height: 1.6;
+  margin: 6px 0;
+  color: var(--muted);
+}
+.product-seo-result > p {
+  font-size: 14px;
+  line-height: 1.7;
+  margin: 8px 0 0;
+  white-space: pre-wrap;
+}
+@media (max-width: 1250px) {
+  .product-seo-workspace {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+  .product-seo-preview {
+    position: static;
+  }
+}

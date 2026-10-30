@@ -43,6 +43,17 @@ Preview directly beside visual/Markdown editing. Creating an own rich translatio
 retains the displayed source text, and empty rich content is consistent with the
 product page. [Scoped content checks and captures](evidence/product-content-2026-10-30.md).
 
+Product SEO now has a single-language form, automatic product-text defaults,
+per-field inheritance and a search preview using the same metadata/path resolution
+as the storefront. Invalid slugs and UTF-8 field limits are explained before saving.
+Actual native save/reload and page metadata match; stock is retained.
+[Scoped SEO checks and captures](evidence/product-seo-2026-10-30.md).
+
+The content-editing release **`a9b48d18` (PR #242)** was observed publicly on
+30 October at **06:27:25 CET**, in image `mammoth-thread-2908`, after a fresh snapshot,
+successful migration and Core readiness. The hosted Studio retained the signed-in
+private stage, product revision and saved state while opening the new content preview.
+
 The category/channel release **`eae42b39` (PR #241)** was observed publicly on
 30 October at **05:59:45 CET**, in image `delicate-twist-6266`, after a fresh snapshot,
 successful migration and Core readiness. The public Studio retained its signed-in

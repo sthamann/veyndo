@@ -25,7 +25,9 @@ Files and their individual responsibilities are listed in [the generated source 
 - [`ProductEditorHeader.tsx`](ProductEditorHeader.tsx): Compact product identity, current save state and shared language context above every section.
 - [`ProductEditorNav.tsx`](ProductEditorNav.tsx): Grouped native/app sections, manual keyboard activation and compact mobile selection.
 - [`product-editor-i18n.ts`](product-editor-i18n.ts): Four-language section guidance and empty review states.
-- [`ProductLocalizedContent.tsx`](ProductLocalizedContent.tsx): Consistent main-language inheritance for product rich documents, specification groups and individual SEO fields.
+- [`ProductLocalizedContent.tsx`](ProductLocalizedContent.tsx): Consistent main-language inheritance for product rich documents and specification groups.
+- [`ProductSeo.tsx`](ProductSeo.tsx): Single-language SEO fields, native-limit feedback and a responsive search preview use the native aggregate save.
+- [`product-seo-i18n.ts`](product-seo-i18n.ts): Four-language preview, automatic-field and validation guidance.
 - [`ProductGallery.tsx`](ProductGallery.tsx): Local drag ordering with visible drop positions and native-draft updates; inspector arrows remain the keyboard/touch alternative.
 - [`product-media-i18n.ts`](product-media-i18n.ts): Four-language gallery ordering and position guidance.
 - [`ProductMediaWorkspace.tsx`](ProductMediaWorkspace.tsx): One product-media workspace: cover, ordered gallery, multilingual image metadata, drag/drop and optional reviewed AI drafts.

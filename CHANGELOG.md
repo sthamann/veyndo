@@ -1,5 +1,12 @@
 # Changelog
 
+## Product SEO editing and storefront metadata (30 October 2026)
+
+- Add a translated single-language SEO workspace with multiline description, encoded product-path preview, automatic product-text defaults and per-field inheritance controls.
+- Share regional/main-language SEO resolution with storefront URLs and metadata; preserve explicit blanks and clear stale tags when navigating between products.
+- Explain invalid URL characters and native UTF-8 field limits before saving, retaining the existing native revisioned aggregate and untouched-stock omission.
+- Validate 41 affected tests and an actual native save/reload/product-page journey, plus desktop and narrow-screen rendering.
+
 ## Product content editing and translation preservation (30 October 2026)
 
 - Product basics and full content use a compact workspace with optional identifiers and shipping flags in one disclosure. All controls and guidance support EN/DE/FR/ES.

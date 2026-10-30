@@ -7,8 +7,9 @@ Each file starts with its responsibility. See [the source inventory](../../../..
 ## Modules
 
 - [`RichDescription.tsx`](RichDescription.tsx): Safe rich blocks with native image/video rendering; no HTML interpretation or script execution.
+- [`product-seo.ts`](product-seo.ts): Shared per-field SEO inheritance, encoded product paths and client feedback matching native metadata limits.
 - [`rich-document.tsx`](rich-document.tsx): Safe structured editor rendering. Only known nodes/marks produce elements; URLs are never executable.
 
 ## Verification
 
-Run `npm run build`, `npm test`, `npm run test:coverage` and `npm run architecture` from `frontend/`. Coverage includes untested source files. See [testing and limitations](../../../../docs/testing.md); file presence does not mean full test coverage.
+Run affected tests, `npm run build` and `npm run architecture` from `frontend/` during development. Full tests and coverage run daily through the existing workflow. Coverage includes untested source files. See [testing and limitations](../../../../docs/testing.md); file presence does not mean full test coverage.
