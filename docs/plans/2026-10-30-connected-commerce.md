@@ -214,3 +214,13 @@ release view and published only the product. History survived reload. Final nati
 reads confirmed the new live price, one private order and zero live orders. These
 new screenshots contain real fixture data. Automatic rendered shopper execution
 and combined captured preview evidence remain open.
+
+
+30 October, public acceptance: the existing release workflow deployed PR 250 as
+`d56d6633` at 14:11 CET. The public Studio repeated two saved API customers with
+current configuration evidence, then its native embedded release preview completed
+an actual browser purchase, return and empty-cart check. Desktop and mobile-width
+captures are in the [public receipt](../evidence/connected-commerce-2026-10-30.md#public-release-preview-and-completed-browser-purchase).
+Automatic run-bound browser execution is still open. The walkthrough also found
+and prompted a repair for stale report IDs after starting a test and ambiguous
+repeated titles in the release selector; 20 affected component tests pass.

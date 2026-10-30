@@ -260,3 +260,16 @@ does not publish anything or automatically place an order. Continue with the
 existing change selection and explicit publication after inspection.
 
 [Native preview screenshots and acceptance](evidence/connected-commerce-2026-10-30.md#native-shop-preview-in-the-release-review).
+
+## Saved tests and public preview acceptance
+
+Saved-test selectors distinguish repeated titles with a localized date and a short
+run ID. Starting or selecting a test retains its ID and channel in the current
+Studio link, so reload returns to that result. Rejected starts retain the current
+link and edited brief; late responses from a previous sandbox cannot change it.
+
+The 30 October hosted release preview completed a simulated cup purchase, returned
+to the collection and showed an empty basket. [Public walkthrough and screenshots](evidence/connected-commerce-2026-10-30.md#public-release-preview-and-completed-browser-purchase).
+This native interactive preview is available beside publication review. The agent's
+existing automatic test execution still uses the Commerce API; automatic rendered
+browser recordings are the next separate implementation item.

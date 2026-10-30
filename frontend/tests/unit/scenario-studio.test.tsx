@@ -21,7 +21,14 @@ const studio = vi.hoisted(() => ({
 vi.mock("../../src/admin/shell/StudioContext", () => ({
   useStudio: () => studio,
 }));
-beforeEach(() => localStorage.setItem("rac-locale", "de-DE"));
+beforeEach(() => {
+  localStorage.setItem("rac-locale", "de-DE");
+  history.replaceState(
+    { marker: "kept" },
+    "",
+    "/?shop=unit-shop&studio=knowledge&scenarioId=old#merchant",
+  );
+});
 afterEach(() => {
   cleanup();
   vi.clearAllMocks();
@@ -79,6 +86,7 @@ it("keeps edited goals after a rejected start and never reports an unobserved su
   );
   expect(await screen.findByRole("alert")).toHaveTextContent("Capacity busy");
   expect(field).toHaveValue("Eine Lampe unter 100 Euro kaufen");
+  expect(new URL(location.href).searchParams.get("scenarioId")).toBe("old");
   expect(screen.queryByText("Kauf abgeschlossen")).not.toBeInTheDocument();
 });
 
@@ -206,6 +214,12 @@ it("repeats saved customer conditions and uses the selected native channel", asy
   await userEvent.click(
     screen.getByRole("button", { name: "Kunden testen lassen" }),
   );
+  const url = new URL(location.href);
+  expect(url.searchParams.get("scenarioId")).toBe("candidate");
+  expect(url.searchParams.get("scenarioChannel")).toBe("web");
+  expect(url.searchParams.get("shop")).toBe("unit-shop");
+  expect(url.hash).toBe("#merchant");
+  expect(history.state).toEqual({ marker: "kept" });
   const post = api.mock.calls.find((call) => call[1]);
   expect(post?.[1]).toMatchObject({
     profiles: [profile],

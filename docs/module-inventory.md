@@ -927,6 +927,7 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/admin/preview/PreviewPanel.tsx](../frontend/src/admin/preview/PreviewPanel.tsx) | PreviewPanel renders verified shop state and typed user actions. |
 | [frontend/src/admin/scenarios/ScenarioComparison.tsx](../frontend/src/admin/scenarios/ScenarioComparison.tsx) | Matching test inputs and changed observed snapshots are separate evidence. |
 | [frontend/src/admin/scenarios/ScenarioEvidence.tsx](../frontend/src/admin/scenarios/ScenarioEvidence.tsx) | Configuration freshness is independent of whether a fictional purchase succeeded. |
+| [frontend/src/admin/scenarios/ScenarioHistory.tsx](../frontend/src/admin/scenarios/ScenarioHistory.tsx) | Distinguishable saved-run and comparison selection for the customer lab. |
 | [frontend/src/admin/scenarios/ScenarioLaunch.tsx](../frontend/src/admin/scenarios/ScenarioLaunch.tsx) | Shared customer-test entry; installing/saving a draft remains the owning workspace's action. |
 | [frontend/src/admin/scenarios/ScenarioProfiles.tsx](../frontend/src/admin/scenarios/ScenarioProfiles.tsx) | Editable fictional customers share the channel's actual languages, countries and currency. |
 | [frontend/src/admin/scenarios/ScenarioReport.tsx](../frontend/src/admin/scenarios/ScenarioReport.tsx) | Native findings stay separate from simulated customer reasoning. |
@@ -934,6 +935,7 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/admin/scenarios/ScenarioStudio.tsx](../frontend/src/admin/scenarios/ScenarioStudio.tsx) | A compact private customer lab on the existing Studio scope and durable run controls. |
 | [frontend/src/admin/scenarios/ScenarioSuggestions.tsx](../frontend/src/admin/scenarios/ScenarioSuggestions.tsx) | Catalogue-derived drafts are previewed before adoption; native commerce still decides actual prices and purchases. |
 | [frontend/src/admin/scenarios/scenario-access.ts](../frontend/src/admin/scenarios/scenario-access.ts) | Keep every scenario entry aligned with the native compound admission. |
+| [frontend/src/admin/scenarios/scenario-history.ts](../frontend/src/admin/scenarios/scenario-history.ts) | Saved-test labels and reload links share the existing Studio URL without storing briefs or customer data. |
 | [frontend/src/admin/scenarios/scenario-i18n.ts](../frontend/src/admin/scenarios/scenario-i18n.ts) | Simulator vocabulary distinguishes actual native outcomes from fictional customer reasoning. |
 | [frontend/src/admin/scenarios/scenario-types.ts](../frontend/src/admin/scenarios/scenario-types.ts) | Safe public projections; cart tokens and provider checkpoints are never part of this contract. |
 | [frontend/src/admin/scenarios/scenarios.css](../frontend/src/admin/scenarios/scenarios.css) | Private customer lab: compact profiles, scoped progress and evidence comparison. |
