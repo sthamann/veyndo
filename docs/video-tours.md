@@ -14,7 +14,7 @@ Contextual working views, shop intelligence, catalogue intake, reference-assiste
 <a href="assets/showcase/product-films-20261030/veyndo-ai-commerce.mp4">Watch or download the film</a>
 </video>
 
-[Download MP4](assets/showcase/product-films-20261030/veyndo-ai-commerce.mp4) · [English VTT](assets/showcase/product-films-20261030/veyndo-ai-commerce.en.vtt) · [English SRT](assets/showcase/product-films-20261030/veyndo-ai-commerce.en.srt)
+[Download MP4](assets/showcase/product-films-20261030/veyndo-ai-commerce.mp4) · [English VTT](https://www.veyndo.ai/docs/assets/showcase/product-films-20261030/veyndo-ai-commerce.en.vtt) · [English SRT](https://www.veyndo.ai/docs/assets/showcase/product-films-20261030/veyndo-ai-commerce.en.srt)
 
 ## Commerce that thinks and acts
 
@@ -28,7 +28,7 @@ Follow one product through the merchant assistant, a native working view, an ins
 <a href="assets/showcase/product-films-20261030/veyndo-concept.mp4">Watch or download the film</a>
 </video>
 
-[Download MP4](assets/showcase/product-films-20261030/veyndo-concept.mp4) · [English VTT](assets/showcase/product-films-20261030/veyndo-concept.en.vtt) · [English SRT](assets/showcase/product-films-20261030/veyndo-concept.en.srt)
+[Download MP4](assets/showcase/product-films-20261030/veyndo-concept.mp4) · [English VTT](https://www.veyndo.ai/docs/assets/showcase/product-films-20261030/veyndo-concept.en.vtt) · [English SRT](https://www.veyndo.ai/docs/assets/showcase/product-films-20261030/veyndo-concept.en.srt)
 
 ## From product work to a connected shop
 
@@ -42,7 +42,7 @@ Current content editing, gallery ordering, SEO preview, ordered recommendations,
 <a href="assets/showcase/product-films-20261030/veyndo-workspace.mp4">Watch or download the film</a>
 </video>
 
-[Download MP4](assets/showcase/product-films-20261030/veyndo-workspace.mp4) · [English VTT](assets/showcase/product-films-20261030/veyndo-workspace.en.vtt) · [English SRT](assets/showcase/product-films-20261030/veyndo-workspace.en.srt)
+[Download MP4](assets/showcase/product-films-20261030/veyndo-workspace.mp4) · [English VTT](https://www.veyndo.ai/docs/assets/showcase/product-films-20261030/veyndo-workspace.en.vtt) · [English SRT](https://www.veyndo.ai/docs/assets/showcase/product-films-20261030/veyndo-workspace.en.srt)
 
 ## Build a consultation app
 
@@ -56,11 +56,11 @@ Describe an app, arrange its native interface, open the coding assistant, config
 <a href="assets/showcase/product-films-20261030/veyndo-app-platform.mp4">Watch or download the film</a>
 </video>
 
-[Download MP4](assets/showcase/product-films-20261030/veyndo-app-platform.mp4) · [English VTT](assets/showcase/product-films-20261030/veyndo-app-platform.en.vtt) · [English SRT](assets/showcase/product-films-20261030/veyndo-app-platform.en.srt)
+[Download MP4](assets/showcase/product-films-20261030/veyndo-app-platform.mp4) · [English VTT](https://www.veyndo.ai/docs/assets/showcase/product-films-20261030/veyndo-app-platform.en.vtt) · [English SRT](https://www.veyndo.ai/docs/assets/showcase/product-films-20261030/veyndo-app-platform.en.srt)
 
 ## Files and current screenshots
 
-[All four editable projects](assets/showcase/product-films-20261030/editable-projects.zip) · [Sources and encoding](assets/showcase/product-films-20261030/README.md) · [File metadata and hashes](assets/showcase/product-films-20261030/manifest.json).
+[All four editable projects](https://www.veyndo.ai/docs/assets/showcase/product-films-20261030/editable-projects.zip) · [Sources and encoding](assets/showcase/product-films-20261030/README.md) · [File metadata and hashes](https://www.veyndo.ai/docs/assets/showcase/product-films-20261030/manifest.json).
 
 The films are editorial sequences of actual interface stills captured on **29 and 30 October**. The public Studio captures were made on 30 October; selected native acceptance captures are dated 29 and 30 October. Interface text is English and German, with English explanation. All data is synthetic and payments are simulated. Saved scenario results were reopened, not rerun for this recording. The dated [software acceptance](status.md) remains the evidence for the underlying workflows.
 
