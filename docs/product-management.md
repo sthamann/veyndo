@@ -30,7 +30,7 @@ protection, app authorization and field inheritance keep their existing owners.
 - **Prices & stock:** selling price, tax rate and the actual tax class appear together, followed by stock and delivery time. Comparison prices, order quantities, reference units, currency-specific prices and rule-bound discounts have separate expandable sections. Configured sections open immediately. The lowest 30-day price accepts cent steps; native stock-safe saving and tax/currency calculation remain unchanged.
 - **Media:** drag images onto another gallery position to reorder, or select an image and use Move earlier / Move later. The first image is the cover; visible positions and a drop target explain the result. Save the product to retain the order. The upload area becomes compact once images exist. Supports external HTTPS image URLs and actual PNG/JPEG/WebP uploads for saved products. Uploaded bytes start private and the gallery action explicitly publishes the selected digest.
 - **Variants:** see existing child SKUs first, with separate option, number, price and stock information. Open **Add variants** for the optional creation form; create a child with its own number, option values, prices and stock; open its independent editor. A reviewable generator creates up to 50 Cartesian combinations per batch; existing combinations are skipped, child option edits are supported, and the server rejects concurrent duplicates.
-- **Categories & channels:** multiple category assignments and per-product sales-channel visibility. Existing channel-level explicit product lists can restrict this further; an empty channel-level list means the whole catalog. The persisted default storefront also respects activation and per-product channel visibility.
+- **Categories & channels:** search full translated category paths, retain and remove selections above the results, or show selected categories only. Choices render in batches of 50 over the existing bounded category tree. Read-only users can search while assignment controls remain disabled. Channel names use the selected enabled content locale and shop main-language fallback. Each channel shows its kind, inactive/private state and any explicit catalogue exclusion. An empty product channel selection hides the product from every channel. Existing channel-level explicit product lists can restrict this further; an empty channel-level list means the whole catalog. The persisted default storefront also respects activation and per-product channel visibility.
 - **Specifications:** translated specifications, generic product properties and native automation metadata including dimensions/weight.
 - **SEO:** translated title, description and slug metadata. This does not implement complete original Shopware SEO URL generation.
 - **Cross-selling:** search and select products from this tenant.
@@ -46,8 +46,11 @@ protection, app authorization and field inheritance keep their existing owners.
 [Ordered product gallery](assets/product-workspace-20261029/media-desktop.png) ·
 [Variant overview](assets/product-workspace-20261029/variants-desktop.png) ·
 [Mobile variants](assets/product-workspace-20261029/variants-mobile.png).
+[Searchable categories and channels](assets/product-assignments-20261030/assignments-desktop.png) ·
+[Mobile assignments](assets/product-assignments-20261030/assignments-mobile.png).
 These captures show the local isolated test shop, not a hosted deployment.
-[Verification details](evidence/product-workspace-2026-10-29.md).
+[Product workspace verification](evidence/product-workspace-2026-10-29.md) ·
+[Category/channel browser and Store API checks](evidence/product-assignments-2026-10-30.md).
 
 The TipTap editor writes a bounded JSON document, not arbitrary HTML. Supported formatting includes bold, italic, underline, headings, lists, links, images, video and undo/redo. Server admission validates document node types, marks, attributes, URL schemes, depth and size; the public React renderer uses explicit safe elements. Unsupported pasted HTML cannot become executable product content.
 
