@@ -28,16 +28,20 @@ return to the exact test. Main also includes a bounded home/content page overvie
 and the first-product WebMCP operation. Native PostgreSQL/HTTP checks, targeted UI
 tests, component previews and an actual local browser cart/checkout-review path
 are recorded in the [implementation evidence](evidence/connected-commerce-2026-10-30.md).
-PR 248 merged as `4e0366ea`; quick checks, documentation publication and both image
-builds succeeded. The public handbook contains this work. Core production rollout
-is tracked separately. Native acceptance now continues from the tested price proposal
-through selected publication while retaining orders, stock and unselected changes.
-An actual local Studio browser journey also verified saved-test navigation,
-selected publication and history after reload, with native readback and screenshots.
-The same review now opens the actual current sandbox shop in the saved profile’s
+PRs 248–250 are integrated. On 30 October at 14:11 CET the existing release
+workflow deployed Core `d56d6633`; its instance and public health check passed,
+and the hosted Studio served the new frontend. The public saved-customer repeat
+stopped a EUR 1.00 buyer before purchase and completed one EUR 19.90 simulated
+purchase for the EUR 25.00 buyer, with current configuration evidence.
+
+The release review opens the actual current sandbox shop in the saved profile's
 channel and language, with desktop/mobile widths and a fresh configuration check.
-Native local browser acceptance covers the embedded shop, product navigation and
-subsequent selected publication. Automatic recorded browser journeys remain open.
+An actual public Chrome journey completed a second EUR 19.90 simulated purchase
+inside that native preview, returned to the collection and verified the empty bag.
+[Public captures and exact acceptance](evidence/connected-commerce-2026-10-30.md#public-release-preview-and-completed-browser-purchase).
+Native and local browser checks also cover selected publication while retaining
+orders, stock and unselected changes. Automatic recorded customer-agent browser
+journeys remain open.
 
 ## Verification cadence
 

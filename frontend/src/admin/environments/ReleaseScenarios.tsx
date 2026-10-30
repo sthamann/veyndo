@@ -5,6 +5,8 @@ import type { Report, Scenario } from "../scenarios/scenario-types";
 import { canTestCustomers } from "../scenarios/scenario-access";
 import ReleaseShopPreview from "./ReleaseShopPreview";
 import ScenarioReport from "../scenarios/ScenarioReport";
+import { useLocale } from "../../shared/i18n/i18n";
+import { scenarioLabel } from "../scenarios/scenario-history";
 import { useReleaseTestText } from "./release-tests-i18n";
 import "../scenarios/scenarios.css";
 import "./release-tests.css";
@@ -48,6 +50,7 @@ function Review({
   ) => void | Promise<void>;
 }) {
   const t = useReleaseTestText();
+  const { locale } = useLocale();
   const [refresh, setRefresh] = useState(0);
   const [navigation, setNavigation] = useState<{
     request: RequestFn;
@@ -152,7 +155,7 @@ function Review({
             <option value="">{t("choose")}</option>
             {currentList?.items.map((item) => (
               <option key={item.id} value={item.id}>
-                {item.title}
+                {scenarioLabel(item, locale)}
               </option>
             ))}
           </select>

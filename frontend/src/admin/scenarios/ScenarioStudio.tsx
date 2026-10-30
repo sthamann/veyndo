@@ -1,10 +1,12 @@
 /** A compact private customer lab on the existing Studio scope and durable run controls. */
 import { useEffect, useMemo, useRef, useState } from "react";
+import { rememberScenario } from "./scenario-history";
 import { useStudio } from "../shell/StudioContext";
 import type { RequestFn } from "../shell/studio-types";
 import Icon from "../../shared/ui/Icon";
 import { useScenarioText } from "./scenario-i18n";
 import { canTestCustomers } from "./scenario-access";
+import ScenarioHistory from "./ScenarioHistory";
 import ScenarioProfiles from "./ScenarioProfiles";
 import ScenarioSuggestions from "./ScenarioSuggestions";
 import ScenarioReport from "./ScenarioReport";
@@ -99,7 +101,11 @@ export default function ScenarioStudio({
     return () => {
       generation.current++;
     };
-  }, [request, environment, allowed, sourceTaskId, initialScenarioId]);
+  }, [request, environment, allowed, sourceTaskId]);
+  useEffect(() => {
+    if (initialScenarioId !== currentSelection.current)
+      setSelected(initialScenarioId ?? "");
+  }, [initialScenarioId]);
   useEffect(() => {
     setReport(undefined);
     if (!selected || !environment || !allowed) return;
@@ -169,6 +175,7 @@ export default function ScenarioStudio({
         "POST",
       );
       if (scope !== generation.current) return;
+      rememberScenario(value.id, channel);
       setSelected(value.id);
       setReport(value);
       retry.current = undefined;
@@ -227,8 +234,6 @@ export default function ScenarioStudio({
     comparison?.id === baseline && baseline !== selected
       ? comparison
       : undefined;
-  const testLabel = (s: Scenario) =>
-    `${s.title} · ${s.updatedAt ? new Date(s.updatedAt).toLocaleString() : s.id.slice(0, 8)}`;
   return (
     <section className="scenario-studio">
       <header className="scenario-intro">
@@ -308,38 +313,16 @@ export default function ScenarioStudio({
             </button>
           </footer>
           {!!scenarios.length && (
-            <div className="scenario-history">
-              <label>
-                {t("history")}
-                <select
-                  value={selected}
-                  onChange={(e) => setSelected(e.target.value)}
-                >
-                  <option value="">{t("history")}</option>
-                  {scenarios.map((s) => (
-                    <option key={s.id} value={s.id}>
-                      {testLabel(s)}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <label>
-                {t("compare")}
-                <select
-                  value={baseline}
-                  onChange={(e) => setBaseline(e.target.value)}
-                >
-                  <option value="">{t("none")}</option>
-                  {scenarios
-                    .filter((s) => s.id !== selected)
-                    .map((s) => (
-                      <option key={s.id} value={s.id}>
-                        {testLabel(s)}
-                      </option>
-                    ))}
-                </select>
-              </label>
-            </div>
+            <ScenarioHistory
+              scenarios={scenarios}
+              selected={selected}
+              baseline={baseline}
+              onSelect={(id) => {
+                rememberScenario(id, channel);
+                setSelected(id);
+              }}
+              onCompare={setBaseline}
+            />
           )}
           {currentReport && (
             <div className="scenario-actions">

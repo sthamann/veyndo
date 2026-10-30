@@ -76,7 +76,7 @@ it("requires every native scenario right and stops exposing results on revocatio
       onOpen={vi.fn()}
     />,
   );
-  await screen.findByRole("option", { name: "Summer customers" });
+  await screen.findByRole("option", { name: /Summer customers/ });
   view.rerender(
     <ReleaseScenarios
       environment="draft"
@@ -101,7 +101,7 @@ it("refreshes configuration evidence and opens the exact saved test without rele
       onOpen={onOpen}
     />,
   );
-  await screen.findByRole("option", { name: "Summer customers" });
+  await screen.findByRole("option", { name: /Summer customers/ });
   fireEvent.change(screen.getByRole("combobox"), {
     target: { value: "saved" },
   });
@@ -149,7 +149,7 @@ it("discards a late report after switching sandbox requests", async () => {
       onOpen={vi.fn()}
     />,
   );
-  await screen.findByRole("option", { name: "Summer customers" });
+  await screen.findByRole("option", { name: /Summer customers/ });
   fireEvent.change(screen.getByRole("combobox"), {
     target: { value: "saved" },
   });
@@ -215,7 +215,7 @@ it("drops cached reports when the owning session changes with the same sandbox f
     onOpen: vi.fn(),
   };
   const view = render(<ReleaseScenarios {...props} scope={{}} />);
-  await screen.findByRole("option", { name: "Summer customers" });
+  await screen.findByRole("option", { name: /Summer customers/ });
   fireEvent.change(screen.getByRole("combobox"), {
     target: { value: "saved" },
   });

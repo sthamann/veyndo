@@ -1,5 +1,15 @@
 # Changelog
 
+## Reloadable customer tests and hosted preview acceptance (30 October 2026)
+
+- Saved customer tests retain the current result in the Studio URL after creation
+  and selection. Reload opens that result without resetting edited inputs when
+  the parent reads back the URL. Late responses from previous sandboxes stay fenced.
+- Customer-test selectors in the lab and publication review share localized dates
+  and short run IDs, making repeated briefs distinguishable.
+- Document the hosted native release-preview purchase, return and empty basket
+  from 30 October, with current public screenshots.
+
 ## Native shop preview in publication review (30 October 2026)
 
 - Open the current native sandbox storefront beside a saved customer test, using its selected profile’s channel and language. Recheck report access and configuration freshness before loading.

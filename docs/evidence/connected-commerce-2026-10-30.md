@@ -1,7 +1,7 @@
 # Connected commerce: first implementation slice
 
 30 October 2026. Branch `feat/connected-commerce-followups-20261030`, based on
-`20dd5dad`. Local development evidence; public deployment has not been claimed.
+`20dd5dad`. Local development and subsequent public observations are separated below.
 The [13-area checklist](../plans/2026-10-30-connected-commerce.md) remains open.
 
 ## Native behavior
@@ -232,3 +232,62 @@ remain open in the checklist. Public Core deployment is recorded separately.
 ![Native shop at mobile width in the publication review](../assets/connected-commerce-20261030/release-shop-preview-mobile.png)
 
 ![Selected publication completed after inspecting the preview](../assets/connected-commerce-20261030/release-preview-published.png)
+
+
+## Public saved-test continuity
+
+On 30 October at 14:10 CET, Chrome reopened the existing private **Abnahme 29
+Oktober** sandbox in the hosted Studio and repeated its two saved fictional
+customers through the configured public model. The EUR 1.00 German profile
+stopped before purchasing the EUR 19.90 cup. The EUR 25.00 English profile
+completed one simulated order for EUR 19.90, recorded as
+`24342063fe7b4c89b9a706af1fac054d`. Both new results reported matching start, finish
+and current publishable configuration. The older 29 October report remained
+readable with explicitly unavailable historical configuration evidence.
+
+This exercised the native API shopper worker from the real public Studio. It did
+not convert its journal into a rendered browser test or publish sandbox changes.
+
+## Public release preview and completed browser purchase
+
+The existing Northflank release workflow deployed main `d56d6633` (PR 250), image
+`divine-sock-5900`, at **14:11:47 CET on 30 October**. The Core instance reached
+Running with 1/1 health checks and zero restarts. The hosted Studio served
+`index-DDtRqbuj.js`, matching the new frontend. Full reload retained the merchant
+session and the selected private sandbox. No duplicate manual deployment or
+change to the CD setting was necessary.
+
+In the public **Staging & publications** workspace, the selected saved customer
+result opened the actual private shop in its `default` channel and `en-GB`
+language. Native Chrome input then followed product detail → add one cup →
+contact/address → pickup → Demo payment → review → completion. The resulting
+confirmation **RAC-c742b982** showed **EUR 19.90**, including EUR 3.18 VAT and zero
+shipping. Returning to the collection retained **Bag 0**; opening it displayed
+“Your bag is waiting for something good.” The mobile-width preview was also
+opened. No real payment was made and no sandbox configuration was published.
+
+![Public private-shop preview with completed simulated order](../assets/connected-commerce-20261030/public-release-preview-confirmation.png)
+
+![Empty basket after returning from the completed purchase](../assets/connected-commerce-20261030/public-release-preview-empty-basket.png)
+
+![Current native shop in the mobile-width release preview](../assets/connected-commerce-20261030/public-release-preview-mobile.png)
+
+These are cropped captures of the actual hosted Studio, with browser chrome
+removed. This journey verifies the native release-review iframe. It is a separate
+surface from original Storyfront checkout and does not constitute a new Storyfront
+acceptance or automatically recorded customer-agent browser execution.
+
+## Saved-test navigation repair
+
+The public walkthrough exposed two usability defects: starting a new test kept
+the previous report ID in the address, and repeated test titles were indistinguishable
+in the publication selector. The follow-up keeps the selected/new test in the
+existing URL while preserving shop, channel, fragment and history state. A parent's
+subsequent URL read no longer resets the edited brief. Scope changes still discard
+late start responses. Both selectors share localized dates and short run IDs,
+including a safe fallback for old reports without usable dates.
+
+The four affected component suites pass **20 tests**. They cover failed starts,
+late responses, reload selection, retained input, repeated titles, permission
+withdrawal and saved-test navigation. TypeScript and the production frontend build
+pass. This follow-up's public delivery is recorded separately from PR 250 above.
