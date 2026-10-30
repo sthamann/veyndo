@@ -43,4 +43,26 @@ is intentional. Final encoding and targeted website checks are complete:
 These checks concern publication and media playback. They do not rerun commerce
 acceptance, payment providers or customer-agent scenarios.
 
+## Public verification · 30 October 2026
+
+Core [PR 246](https://github.com/sthamann/veyndo/pull/246) merged as
+`e04fa6b671fb1d2b5f236121303dd2e10eb8b9f1`; the documentation publication completed.
+The website and Team hub merged in Experience PR 83 as
+`022f20b90f964d796813c8a1d09efc80eb08ca9c`. Northflank build
+`gainful-love-5017` completed and the public service became healthy after restart.
+
+- All twelve public film URLs (four films on each of website, Team and handbook)
+  returned HTTP 200 with SHA-256 hashes identical to the final local files.
+  Every URL also returned HTTP 206 for a byte-range request with the correct size.
+- Chrome played all four films on the public Team hub at their expected durations.
+  Chapter selection worked. The public homepage and handbook also played the AI
+  overview, with advancing playback time and no media error.
+- The public homepage displayed the current gallery and changed its selected
+  screenshot. Public screenshots were retained with the local media outputs.
+- Safari on macOS played all four files through the locally served final Team
+  build, including chapter seeking. No physical iPhone playback was tested.
+- Experience GitHub Actions could not start because of account billing or spending
+  limits. They are not recorded as passing tests. The targeted local checks above
+  and the separate successful Northflank production build are the available checks.
+
 [Film guide](../video-tours.md) · [Actual captures](../assets/current-workspace-20261030/README.md).
