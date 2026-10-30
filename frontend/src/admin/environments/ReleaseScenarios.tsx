@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import type { RequestFn } from "../shell/studio-types";
 import type { Report, Scenario } from "../scenarios/scenario-types";
 import { canTestCustomers } from "../scenarios/scenario-access";
+import ReleaseShopPreview from "./ReleaseShopPreview";
 import ScenarioReport from "../scenarios/ScenarioReport";
 import { useReleaseTestText } from "./release-tests-i18n";
 import "../scenarios/scenarios.css";
@@ -189,6 +190,12 @@ function Review({
             {t("checked")}: <time>{currentResult?.at}</time>
           </p>
           <ScenarioReport report={report} />
+          <ReleaseShopPreview
+            key={`${report.id}:${refresh}`}
+            environment={environment}
+            request={request}
+            report={report}
+          />
         </>
       )}
     </section>

@@ -858,6 +858,9 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/admin/developer/useDraftStorage.ts](../frontend/src/admin/developer/useDraftStorage.ts) | Actor-private server autosaves serialize writes and preserve optimistic revisions across app switches. |
 | [frontend/src/admin/environments/EnvironmentManager.tsx](../frontend/src/admin/environments/EnvironmentManager.tsx) | Private environment creation and digest-bound selective release. |
 | [frontend/src/admin/environments/ReleaseScenarios.tsx](../frontend/src/admin/environments/ReleaseScenarios.tsx) | Actor-private saved scenario evidence sits beside native release diffs without becoming an approval gate. |
+| [frontend/src/admin/environments/ReleaseShopPreview.tsx](../frontend/src/admin/environments/ReleaseShopPreview.tsx) | Explicit native sandbox preview rechecks the saved run; it never attests a historical render. |
+| [frontend/src/admin/environments/release-preview-i18n.ts](../frontend/src/admin/environments/release-preview-i18n.ts) | Native preview controls distinguish current rendering from saved API test evidence. |
+| [frontend/src/admin/environments/release-preview.css](../frontend/src/admin/environments/release-preview.css) | Native shop preview stays contained in the release review at both viewport sizes. |
 | [frontend/src/admin/environments/release-tests-i18n.ts](../frontend/src/admin/environments/release-tests-i18n.ts) | Release review vocabulary keeps simulated commerce evidence distinct from publication approval. |
 | [frontend/src/admin/environments/release-tests.css](../frontend/src/admin/environments/release-tests.css) | Existing release workbench typography with bounded, responsive test controls. |
 | [frontend/src/admin/intelligence/EvidenceReview.tsx](../frontend/src/admin/intelligence/EvidenceReview.tsx) | Review source-bound candidates through shared HTTP/MCP contracts; changed sources block publication. |
