@@ -1,0 +1,275 @@
+[
+  {
+    "name": "veyndo-concept",
+    "durationSeconds": 72,
+    "frames": 2160,
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "codec": "h264",
+    "profile": "High",
+    "level": 41,
+    "pixelFormat": "yuv420p",
+    "audioStreams": 0,
+    "sizeBytes": 3278934,
+    "sha256": "5b35b9b3c884b9f57b78a5ea8eda857af8ca07ccdc680f679be2829fe8bc82d3",
+    "fullDecode": "passed",
+    "fastStart": true,
+    "compositionCheck": "passed",
+    "captureWindow": "2026-10-29/2026-10-30",
+    "productionDate": "2026-10-30",
+    "sourceMain": "3ff4b3cd25fb73724572ca6b0d0dac9f3ed61de2",
+    "renderer": "HyperFrames 0.8.186 / GSAP 3.14.2",
+    "captions": "English burned-in plus VTT/SRT",
+    "format": "Editorial film using actual dated UI captures",
+    "chapters": {
+      "name": "veyndo-concept",
+      "title": "Veyndo \u2014 Commerce that thinks and acts",
+      "purpose": "Understand the shared platform through a real product and the work around it.",
+      "duration": 72,
+      "chapters": [
+        {
+          "id": "c-product",
+          "duration": 12,
+          "kind": "actual UI"
+        },
+        {
+          "id": "c-agent",
+          "duration": 12,
+          "kind": "actual UI"
+        },
+        {
+          "id": "c-work",
+          "duration": 12,
+          "kind": "actual UI"
+        },
+        {
+          "id": "c-app",
+          "duration": 12,
+          "kind": "actual UI"
+        },
+        {
+          "id": "c-design",
+          "duration": 12,
+          "kind": "actual UI"
+        },
+        {
+          "id": "c-close",
+          "duration": 12,
+          "kind": "brand"
+        }
+      ]
+    }
+  },
+  {
+    "name": "veyndo-workspace",
+    "durationSeconds": 96,
+    "frames": 2880,
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "codec": "h264",
+    "profile": "High",
+    "level": 41,
+    "pixelFormat": "yuv420p",
+    "audioStreams": 0,
+    "sizeBytes": 4621047,
+    "sha256": "d8cff1f4eebb04e552ce6ff2b5fb7843cf530de208d77336eba1df1aa738938e",
+    "fullDecode": "passed",
+    "fastStart": true,
+    "compositionCheck": "passed",
+    "captureWindow": "2026-10-29/2026-10-30",
+    "productionDate": "2026-10-30",
+    "sourceMain": "3ff4b3cd25fb73724572ca6b0d0dac9f3ed61de2",
+    "renderer": "HyperFrames 0.8.186 / GSAP 3.14.2",
+    "captions": "English burned-in plus VTT/SRT",
+    "format": "Editorial film using actual dated UI captures",
+    "chapters": {
+      "name": "veyndo-workspace",
+      "title": "Veyndo \u2014 From product work to a connected shop",
+      "purpose": "Follow current product editing, visual design and saved customer-agent results.",
+      "duration": 96,
+      "chapters": [
+        {
+          "id": "w-content",
+          "duration": 12,
+          "kind": "actual UI"
+        },
+        {
+          "id": "w-gallery",
+          "duration": 12,
+          "kind": "actual UI"
+        },
+        {
+          "id": "w-seo",
+          "duration": 12,
+          "kind": "actual UI"
+        },
+        {
+          "id": "w-recommend",
+          "duration": 12,
+          "kind": "actual UI"
+        },
+        {
+          "id": "w-shop",
+          "duration": 12,
+          "kind": "actual UI"
+        },
+        {
+          "id": "w-design",
+          "duration": 12,
+          "kind": "actual UI"
+        },
+        {
+          "id": "w-test",
+          "duration": 12,
+          "kind": "actual UI"
+        },
+        {
+          "id": "w-close",
+          "duration": 12,
+          "kind": "brand"
+        }
+      ]
+    }
+  },
+  {
+    "name": "veyndo-app-platform",
+    "durationSeconds": 84,
+    "frames": 2520,
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "codec": "h264",
+    "profile": "High",
+    "level": 41,
+    "pixelFormat": "yuv420p",
+    "audioStreams": 0,
+    "sizeBytes": 4121861,
+    "sha256": "355cacf776dd4b7f67622661b8ad63806ce507374f31e956c18d333b98d4671e",
+    "fullDecode": "passed",
+    "fastStart": true,
+    "compositionCheck": "passed",
+    "captureWindow": "2026-10-29/2026-10-30",
+    "productionDate": "2026-10-30",
+    "sourceMain": "3ff4b3cd25fb73724572ca6b0d0dac9f3ed61de2",
+    "renderer": "HyperFrames 0.8.186 / GSAP 3.14.2",
+    "captions": "English burned-in plus VTT/SRT",
+    "format": "Editorial film using actual dated UI captures",
+    "chapters": {
+      "name": "veyndo-app-platform",
+      "title": "Veyndo \u2014 Build a consultation app",
+      "purpose": "Follow one consultation app from the creation entry to its actual stored request.",
+      "duration": 84,
+      "chapters": [
+        {
+          "id": "a-start",
+          "duration": 12,
+          "kind": "actual UI"
+        },
+        {
+          "id": "a-design",
+          "duration": 12,
+          "kind": "actual UI"
+        },
+        {
+          "id": "a-agent",
+          "duration": 12,
+          "kind": "actual UI"
+        },
+        {
+          "id": "a-settings",
+          "duration": 12,
+          "kind": "actual UI"
+        },
+        {
+          "id": "a-record",
+          "duration": 12,
+          "kind": "actual UI"
+        },
+        {
+          "id": "a-upgrade",
+          "duration": 12,
+          "kind": "actual UI"
+        },
+        {
+          "id": "a-close",
+          "duration": 12,
+          "kind": "brand"
+        }
+      ]
+    }
+  },
+  {
+    "name": "veyndo-ai-commerce",
+    "durationSeconds": 116,
+    "frames": 3480,
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "codec": "h264",
+    "profile": "High",
+    "level": 41,
+    "pixelFormat": "yuv420p",
+    "audioStreams": 0,
+    "sizeBytes": 5712854,
+    "sha256": "045965803bef4c7ab11a1874abfb5c08434289824561a151c51d428ec9f20ca8",
+    "fullDecode": "passed",
+    "fastStart": true,
+    "compositionCheck": "passed",
+    "captureWindow": "2026-10-29/2026-10-30",
+    "productionDate": "2026-10-30",
+    "sourceMain": "3ff4b3cd25fb73724572ca6b0d0dac9f3ed61de2",
+    "renderer": "HyperFrames 0.8.186 / GSAP 3.14.2",
+    "captions": "English burned-in plus VTT/SRT",
+    "format": "Editorial film using actual dated UI captures",
+    "chapters": {
+      "name": "veyndo-ai-commerce",
+      "title": "Veyndo \u2014 AI across the working shop",
+      "purpose": "Explain contextual agents through existing merchant, design, app and simulator workflows.",
+      "duration": 116,
+      "chapters": [
+        {
+          "id": "i-work",
+          "duration": 14,
+          "kind": "actual UI"
+        },
+        {
+          "id": "i-context",
+          "duration": 14,
+          "kind": "actual UI"
+        },
+        {
+          "id": "i-catalogue",
+          "duration": 14,
+          "kind": "actual UI"
+        },
+        {
+          "id": "i-reference",
+          "duration": 14,
+          "kind": "actual UI"
+        },
+        {
+          "id": "i-proposal",
+          "duration": 14,
+          "kind": "actual UI"
+        },
+        {
+          "id": "i-app",
+          "duration": 14,
+          "kind": "actual UI"
+        },
+        {
+          "id": "i-buyers",
+          "duration": 14,
+          "kind": "actual UI"
+        },
+        {
+          "id": "i-close",
+          "duration": 18,
+          "kind": "brand"
+        }
+      ]
+    }
+  }
+]

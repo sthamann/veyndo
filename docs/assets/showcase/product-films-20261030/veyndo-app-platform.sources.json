@@ -1,0 +1,56 @@
+{
+  "sourceRepo": "sthamann/veyndo",
+  "sourceMain": "3ff4b3cd25fb73724572ca6b0d0dac9f3ed61de2",
+  "captureWindow": "2026-10-29/2026-10-30",
+  "assets": [
+    {
+      "id": "app-record",
+      "path": "assets/app-record.png",
+      "source": "captures/app-record.png",
+      "sha256": "ff1ab851ea8f3562f8c4ab707011a9fd1d90cba560e6d852430820da11d99ada",
+      "kind": "actual product capture",
+      "treatment": "CSS focus framing only; original pixels unchanged"
+    },
+    {
+      "id": "app-designer",
+      "path": "assets/app-designer.png",
+      "source": "captures/app-designer.png",
+      "sha256": "bf5c95504004a2ee567c40234b26e19f0d4e7c3ad8b4379b4f1f44068ef3908d",
+      "kind": "actual product capture",
+      "treatment": "CSS focus framing only; original pixels unchanged"
+    },
+    {
+      "id": "app-agent",
+      "path": "assets/app-agent.png",
+      "source": "captures/app-agent.png",
+      "sha256": "adbb27bba0a8d5dedb3a5a067f46f60ccfeea765c2ca864a561dd0963f38c35d",
+      "kind": "actual product capture",
+      "treatment": "CSS focus framing only; original pixels unchanged"
+    },
+    {
+      "id": "app-settings",
+      "path": "assets/app-settings.png",
+      "source": "captures/app-settings.png",
+      "sha256": "986c88e84e96b4da98e0ff6b10c6cded095d00ee3c4e29c2dd9d34be6a62bfe2",
+      "kind": "actual product capture",
+      "treatment": "CSS focus framing only; original pixels unchanged"
+    },
+    {
+      "id": "app-start",
+      "path": "assets/app-start.png",
+      "source": "docs/assets/guided-app-20261029/entry.png",
+      "sha256": "d2667eef4c970a678a7ef14dbd0e7e7341e536395e9bbf2a0fca5a2bbaa87be4",
+      "kind": "actual product capture",
+      "treatment": "CSS focus framing only; original pixels unchanged"
+    },
+    {
+      "id": "release",
+      "path": "assets/release.png",
+      "source": "docs/assets/app-upgrade-20261029/admission.png",
+      "sha256": "717735c12d26d0bdb6e1aaa749076577fde5123560c93f26141495eaab5c06b2",
+      "kind": "actual product capture",
+      "treatment": "CSS focus framing only; original pixels unchanged"
+    }
+  ],
+  "scope": "Actual public private-stage UI captures on 30 October; dated local native captures on 29\u201330 October. Synthetic data, editorial timing, no new model call or purchase."
+}

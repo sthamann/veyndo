@@ -1,0 +1,47 @@
+1
+00:00:00,250 --> 00:00:05,800
+Products connect content, selling channels and customer journeys.
+
+2
+00:00:06,150 --> 00:00:11,700
+Veyndo brings that work together on a native Rust commerce core.
+
+3
+00:00:12,250 --> 00:00:17,800
+The merchant assistant works with the current shop context.
+
+4
+00:00:18,150 --> 00:00:23,700
+A saved proposal opens real tools without changing shop data.
+
+5
+00:00:24,250 --> 00:00:29,800
+An agent can assemble a working view from native components.
+
+6
+00:00:30,150 --> 00:00:35,700
+Open products, inspect details and prepare a reviewed catalogue import.
+
+7
+00:00:36,250 --> 00:00:41,800
+An installed consultation app retains its product request and private file.
+
+8
+00:00:42,150 --> 00:00:47,700
+Apps use shared data, rights, settings and versioned definitions.
+
+9
+00:00:48,250 --> 00:00:53,800
+Design on the real storefront preview with graphical elements.
+
+10
+00:00:54,150 --> 00:00:59,700
+Prices, stock and orders continue through native commerce operations.
+
+11
+00:01:00,250 --> 00:01:05,700
+Explore the current product and try the connected workflows.
+
+12
+00:01:06,000 --> 00:01:11,700
+Read the handbook, open a private workspace, and review your changes.

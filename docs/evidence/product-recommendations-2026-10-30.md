@@ -54,3 +54,17 @@ coverage retain their daily cadence.
 
 These writes and captures establish local native acceptance. Public image readiness
 and the final read-only hosted Studio observation are recorded on the associated PR.
+
+## Public release
+
+The existing [PR #245 publication record](https://github.com/sthamann/veyndo/pull/245)
+was checked on 30 October: merged main `3ff4b3cd25fb73724572ca6b0d0dac9f3ed61de2`,
+all four reported GitHub workflows successful, Northflank image
+`intrepid-verse-6271`. Workflow `b1639bcc-057a-4ccf-917c-df0896af5e7a` completed
+at 07:59:55 CET after 12m15s. Snapshot `26-10-30-065710-backup` preceded the
+successful migration; Core was Running with health 200.
+
+The recorded read-only public observation retained private stage `Abnahme 29 Oktober`,
+product `Keramiktasse Abnahme`, revision 6 and disabled save state. No hosted product
+was mutated. This paragraph consolidates the existing rollout evidence; the media
+refresh did not repeat the migration or product write acceptance.
