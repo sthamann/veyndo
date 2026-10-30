@@ -1,4 +1,5 @@
 /** Bounded category paths and current product-channel choices preserve native IDs and language inheritance. */
+import { contentLocale } from "../../shared/i18n/content-language";
 import { inheritedText } from "../../shared/geography/geography-types";
 import type { Category, ProductDraft } from "./catalog-model";
 export function categoryChoices(
@@ -43,8 +44,5 @@ export function assignmentSearch(value: string) {
 
 /** Product fields use short keys only when a single enabled region exists; channel names retain full locales. */
 export function assignmentLanguage(draft: ProductDraft, language: string) {
-  const matches = (draft.availableLocales ?? []).filter(
-    (locale) => locale.split("-")[0] === language,
-  );
-  return matches.length === 1 ? matches[0] : language;
+  return contentLocale(language, draft.availableLocales ?? []);
 }

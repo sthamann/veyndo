@@ -22,3 +22,9 @@ export function contentText(
     ""
   );
 }
+
+/** Resolve a short editor key only when exactly one enabled regional locale matches. */
+export function contentLocale(language: string, locales: string[]) {
+  const matches = locales.filter((locale) => locale.split("-")[0] === language);
+  return matches.length === 1 ? matches[0] : language;
+}

@@ -32,7 +32,7 @@ protection, app authorization and field inheritance keep their existing owners.
 - **Variants:** see existing child SKUs first, with separate option, number, price and stock information. Open **Add variants** for the optional creation form; create a child with its own number, option values, prices and stock; open its independent editor. A reviewable generator creates up to 50 Cartesian combinations per batch; existing combinations are skipped, child option edits are supported, and the server rejects concurrent duplicates.
 - **Categories & channels:** search full translated category paths, retain and remove selections above the results, or show selected categories only. Choices render in batches of 50 over the existing bounded category tree. Read-only users can search while assignment controls remain disabled. Channel names use the selected enabled content locale and shop main-language fallback. Each channel shows its kind, inactive/private state and any explicit catalogue exclusion. An empty product channel selection hides the product from every channel. Existing channel-level explicit product lists can restrict this further; an empty channel-level list means the whole catalog. The persisted default storefront also respects activation and per-product channel visibility.
 - **Specifications:** translated specifications, generic product properties and native automation metadata including dimensions/weight.
-- **SEO:** translated title, description and slug metadata. This does not implement complete original Shopware SEO URL generation.
+- **SEO:** edit one enabled content language at a time, with automatic product-text defaults, explicit own/blank values and per-field reset to inheritance. A multiline description and search preview share regional/main-language resolution with the storefront. The preview shows the actual encoded product path; a new product must first be saved. Invalid URL separators and native UTF-8 size limits are explained before save.
 - **Cross-selling:** search and select products from this tenant.
 - **Attachments & downloads / Reviews:** existing product-scoped asset publication, digital entitlement and review moderation capabilities inside the same workspace.
 
@@ -48,9 +48,12 @@ protection, app authorization and field inheritance keep their existing owners.
 [Mobile variants](assets/product-workspace-20261029/variants-mobile.png).
 [Searchable categories and channels](assets/product-assignments-20261030/assignments-desktop.png) ·
 [Mobile assignments](assets/product-assignments-20261030/assignments-mobile.png).
+[SEO fields and search preview](assets/product-seo-20261030/seo-desktop.png) ·
+[Mobile SEO editing](assets/product-seo-20261030/seo-mobile.png).
 These captures show the local isolated test shop, not a hosted deployment.
 [Product workspace verification](evidence/product-workspace-2026-10-29.md) ·
-[Category/channel browser and Store API checks](evidence/product-assignments-2026-10-30.md).
+[Category/channel browser and Store API checks](evidence/product-assignments-2026-10-30.md) ·
+[SEO save and storefront metadata checks](evidence/product-seo-2026-10-30.md).
 
 The General section keeps the product name, number and short description together.
 The full description follows with direct **Visual editor / Markdown / Preview**

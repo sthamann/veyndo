@@ -1,14 +1,15 @@
 /** Product rich content resolves its own language keys and preserves explicit blanks and legacy text on translation. */
-import { contentKey, contentText } from "../../shared/i18n/content-language";
+import {
+  contentKey,
+  contentText,
+  contentLocale,
+} from "../../shared/i18n/content-language";
 import type { RichBlock } from "../../shared/content/RichDescription";
 import type { ProductDraft } from "./catalog-model";
 export function productRichContent(draft: ProductDraft, language: string) {
   const main = draft.mainLocale ?? "en-GB";
   const locales = draft.availableLocales ?? [main, language];
-  const matching = locales.filter(
-    (locale) => locale.split("-")[0] === language,
-  );
-  const locale = matching.length === 1 ? matching[0] : language;
+  const locale = contentLocale(language, locales);
   const map: Record<string, RichBlock[]> = draft.extra.richDescription ?? {};
   const resolved = contentKey(map, locale, locales);
   const key = resolved in map ? resolved : language;

@@ -1,4 +1,5 @@
 /** Product family, gallery, context pricing and moderated customer reviews. */
+import { productSeoFields } from "../../shared/content/product-seo";
 import { productURL, collectionURL } from "./product-url";
 import { BRAND } from "../../shared/ui/Brand";
 import RichDescription from "../../shared/content/RichDescription";
@@ -138,8 +139,8 @@ export default function ProductPage({
       }
       link.href = new URL(canonical, location.origin).href;
     }
-    const seo = data?.product.extra?.seo?.[contentLanguage];
-    if (seo) {
+    if (data) {
+      const seo = productSeoFields(data.product.extra?.seo, getContentLocale());
       document.title = seo.title ?? data?.product.name ?? "Veyndo";
       let meta = document.querySelector<HTMLMetaElement>(
         'meta[name="description"]',

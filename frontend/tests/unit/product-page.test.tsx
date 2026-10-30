@@ -352,3 +352,77 @@ it.each([false, true])(
     ).toBe(!blank);
   },
 );
+
+it("replaces metadata when navigating to a product without SEO and preserves deliberate blanks", async () => {
+  vi.stubGlobal(
+    "fetch",
+    fixture({
+      ...detail,
+      product: {
+        ...product,
+        extra: {
+          seo: {
+            "en-GB": {
+              title: "First SEO title",
+              description: "First SEO description",
+              slug: "",
+            },
+          },
+        },
+      },
+    }),
+  );
+  const view = (id: string) => (
+    <LocaleProvider>
+      <ProductPage
+        id={id}
+        cart={cart}
+        busy={false}
+        onAdd={() => {}}
+        onConfigure={vi.fn()}
+      />
+    </LocaleProvider>
+  );
+  const { rerender } = render(view("lamp"));
+  await screen.findByRole("heading", { name: "Unit lamp", level: 1 });
+  expect(document.title).toBe("First SEO title");
+  vi.stubGlobal(
+    "fetch",
+    fixture({
+      ...detail,
+      product: {
+        ...product,
+        id: "second",
+        name: "Second product",
+        description: "Second description",
+        extra: {},
+      },
+    }),
+  );
+  rerender(view("second"));
+  await screen.findByRole("heading", { name: "Second product", level: 1 });
+  expect(document.title).toBe("Second product");
+  expect(document.querySelector('meta[name="description"]')).toHaveAttribute(
+    "content",
+    "Second description",
+  );
+  vi.stubGlobal(
+    "fetch",
+    fixture({
+      ...detail,
+      product: {
+        ...product,
+        id: "third",
+        name: "Third product",
+        extra: { seo: { "en-GB": { title: "", description: "", slug: "" } } },
+      },
+    }),
+  );
+  rerender(view("third"));
+  await screen.findByRole("heading", { name: "Third product", level: 1 });
+  expect(document.title).toBe("");
+  expect(document.querySelector('meta[name="description"]')).toHaveAttribute(
+    "content",
+    "",
+  );
+});
