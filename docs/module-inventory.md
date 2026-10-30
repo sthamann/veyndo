@@ -722,7 +722,8 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/admin/catalog/ProductTextFields.tsx](../frontend/src/admin/catalog/ProductTextFields.tsx) | Product text uses the shared single-language editor and field inheritance; product number stays language independent. |
 | [frontend/src/admin/catalog/ProductVariants.tsx](../frontend/src/admin/catalog/ProductVariants.tsx) | Native variant family browser with cursor pagination, explicit editing and a bounded creation wizard. |
 | [frontend/src/admin/catalog/ReferencePriceFields.tsx](../frontend/src/admin/catalog/ReferencePriceFields.tsx) | Native reference-unit inputs feed the same server-calculated unit price displayed on product pages. |
-| [frontend/src/admin/catalog/RelatedProducts.tsx](../frontend/src/admin/catalog/RelatedProducts.tsx) | Search-backed related-product selection, avoiding comma-separated opaque IDs. |
+| [frontend/src/admin/catalog/RelatedProductRow.tsx](../frontend/src/admin/catalog/RelatedProductRow.tsx) | A selected product resolves through the native merchant read; missing/forbidden records remain explicitly removable without losing the selection. |
+| [frontend/src/admin/catalog/RelatedProducts.tsx](../frontend/src/admin/catalog/RelatedProducts.tsx) | Ordered recommendations retain selected native records across cursor-paginated searches, content-language changes and read-only inspection. |
 | [frontend/src/admin/catalog/ReviewModeration.tsx](../frontend/src/admin/catalog/ReviewModeration.tsx) | Product-scoped review publication; authoritative authorization stays in the API. |
 | [frontend/src/admin/catalog/TaxClassSelect.tsx](../frontend/src/admin/catalog/TaxClassSelect.tsx) | Assign a product to an actual tenant tax class; legacy standard/reduced mapping remains explicit. |
 | [frontend/src/admin/catalog/VariantGenerator.tsx](../frontend/src/admin/catalog/VariantGenerator.tsx) | Reviewable, bounded batch creation uses saved parent data and keeps successful rows on partial failure. |
@@ -739,6 +740,7 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/admin/catalog/product-pricing-i18n.ts](../frontend/src/admin/catalog/product-pricing-i18n.ts) | Interface guidance for native product prices, optional conditions and availability. |
 | [frontend/src/admin/catalog/product-seo-i18n.ts](../frontend/src/admin/catalog/product-seo-i18n.ts) | Product search-preview labels and automatic SEO guidance in all Studio interface languages. |
 | [frontend/src/admin/catalog/product-specification-i18n.ts](../frontend/src/admin/catalog/product-specification-i18n.ts) | Four-language specification guidance, safe key editing and explicit draft-row actions. |
+| [frontend/src/admin/catalog/related-products-i18n.ts](../frontend/src/admin/catalog/related-products-i18n.ts) | Related-product selection and current-state guidance in all Studio interface languages. |
 | [frontend/src/admin/catalog/useImageJob.ts](../frontend/src/admin/catalog/useImageJob.ts) | Restore and reconcile native image jobs across request/locale changes; only explicit merchant actions create provider work. |
 | [frontend/src/admin/catalog/variant-family.ts](../frontend/src/admin/catalog/variant-family.ts) | Cursor-based family lookup for duplicate review, bounded independently of the 50-row creation limit. |
 | [frontend/src/admin/catalog/variant-i18n.ts](../frontend/src/admin/catalog/variant-i18n.ts) | Guided variant creation and editing vocabulary; content still follows shop language inheritance. |
@@ -1019,6 +1021,7 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/admin/styles/product-specifications.css](../frontend/src/admin/styles/product-specifications.css) | Product facts use compact labelled groups, explicit add rows and a native definition-list preview within the existing editor surface. |
 | [frontend/src/admin/styles/product-workspace.css](../frontend/src/admin/styles/product-workspace.css) | Product-only layout: compact identity, grouped sections and a fluid editing surface. |
 | [frontend/src/admin/styles/provider-account.css](../frontend/src/admin/styles/provider-account.css) | Shared provider onboarding layout works independently of the lazy-loaded visual App Studio. |
+| [frontend/src/admin/styles/related-products.css](../frontend/src/admin/styles/related-products.css) | Ordered product choices use retained compact rows, visible move/remove controls and bounded native search results. |
 | [frontend/src/admin/styles/sales-channels.css](../frontend/src/admin/styles/sales-channels.css) | Sales-channel cards, onboarding and scoped settings use the same responsive, accessible Studio design. |
 | [frontend/src/admin/styles/service-integrations.css](../frontend/src/admin/styles/service-integrations.css) | Compact, responsive provider setup and explicit operation feedback. |
 | [frontend/src/admin/styles/settings.css](../frontend/src/admin/styles/settings.css) | Independent settings navigation, grouped native forms and save feedback in Studio theme tokens. |
@@ -1308,6 +1311,7 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/storefront/account/account-types.ts](../frontend/src/storefront/account/account-types.ts) | Shopper-only account responses deliberately exclude cart/session credentials and internal order activity. |
 | [frontend/src/storefront/account/account.css](../frontend/src/storefront/account/account.css) | Customer workspace: quiet fashion palette, clear purchase cards and an accessible mobile sheet. |
 | [frontend/src/storefront/account/useCustomerAccount.ts](../frontend/src/storefront/account/useCustomerAccount.ts) | Tenant-scoped account loading and mutation lifecycle; expired sessions clear private data and reopen sign-in. |
+| [frontend/src/storefront/catalog/CrossSelling.tsx](../frontend/src/storefront/catalog/CrossSelling.tsx) | Merchant-selected recommendations use native channel/buyer-aware detail reads and the existing product tile; hidden or removed products never become ID links. |
 | [frontend/src/storefront/catalog/ImagePlaceholder.tsx](../frontend/src/storefront/catalog/ImagePlaceholder.tsx) | Honest empty-media state for newly created products; never invent a product photograph. |
 | [frontend/src/storefront/catalog/MemoryRecommendations.tsx](../frontend/src/storefront/catalog/MemoryRecommendations.tsx) | Public consumer of merchant-approved learned associations, hydrated with current product state. |
 | [frontend/src/storefront/catalog/ProductAttachments.tsx](../frontend/src/storefront/catalog/ProductAttachments.tsx) | Public attachment list follows the active storefront tenant and channel; private downloads are never listed. |
@@ -1368,6 +1372,7 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/storefront/styles/checkout.css](../frontend/src/storefront/styles/checkout.css) | One-page checkout: calm responsive workspace with a sticky, readable order review. |
 | [frontend/src/storefront/styles/company-identity.css](../frontend/src/storefront/styles/company-identity.css) | Public company branding and readable legal identity across storefront channels. |
 | [frontend/src/storefront/styles/concierge-selection.css](../frontend/src/storefront/styles/concierge-selection.css) | Native product shortlist: responsive cards and reversible selection controls. |
+| [frontend/src/storefront/styles/cross-selling.css](../frontend/src/storefront/styles/cross-selling.css) | Merchant-selected product tiles retain the storefront grid and its native responsive breakpoints. |
 | [frontend/src/storefront/styles/experience-polish.css](../frontend/src/storefront/styles/experience-polish.css) | Shared storefront interaction layer: stable navigation, editorial surfaces and catalogue-grounded AI discovery. |
 | [frontend/src/storefront/styles/legal.css](../frontend/src/storefront/styles/legal.css) | Responsive, equally weighted consent controls and readable legal/customer forms. |
 | [frontend/src/storefront/styles/order-completion.css](../frontend/src/storefront/styles/order-completion.css) | Order receipt page and finite transform-only celebration; honors reduced motion. |

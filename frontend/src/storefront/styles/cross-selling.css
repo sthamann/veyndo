@@ -1,0 +1,12 @@
+/* Merchant-selected product tiles retain the storefront grid and its native responsive breakpoints. */
+.cross-selling-products {
+  padding: 28px 0;
+  border-top: 1px solid var(--line);
+}
+.cross-selling-products h2 {
+  margin: 0 0 20px;
+  font-size: 24px;
+}
+.cross-selling-products .shop-grid {
+  margin-top: 0;
+}

@@ -33,7 +33,7 @@ protection, app authorization and field inheritance keep their existing owners.
 - **Categories & channels:** search full translated category paths, retain and remove selections above the results, or show selected categories only. Choices render in batches of 50 over the existing bounded category tree. Read-only users can search while assignment controls remain disabled. Channel names use the selected enabled content locale and shop main-language fallback. Each channel shows its kind, inactive/private state and any explicit catalogue exclusion. An empty product channel selection hides the product from every channel. Existing channel-level explicit product lists can restrict this further; an empty channel-level list means the whole catalog. The persisted default storefront also respects activation and per-product channel visibility.
 - **Specifications:** separate visible details in the selected content language, shared technical properties and structured weight/dimensions with explicit kg/mm units. The preview combines shared properties and effective translated details like the product page. Missing detail keys inherit individually from the main language; removing an own key restores that fallback. Add each new name/value row explicitly; renaming commits on blur and refuses a duplicate without overwriting either value. Native limits remain 40 entries, 100 UTF-8 bytes per key and 1,000 per value.
 - **SEO:** edit one enabled content language at a time, with automatic product-text defaults, explicit own/blank values and per-field reset to inheritance. A multiline description and search preview share regional/main-language resolution with the storefront. The preview shows the actual encoded product path; a new product must first be saved. Invalid URL separators and native UTF-8 size limits are explained before save.
-- **Cross-selling:** search and select products from this tenant.
+- **Cross-selling:** search by product name or number in the selected content language. Keep selected names/images above the results, reorder with arrows and remove explicitly. Native cursor pagination loads more matches; failures offer retry. Select up to 20 products and save through the ordinary aggregate. Read-only users can search without changing assignments. On the product page, manual recommendations use the existing product tile, native contextual prices and current cart/channel/company admission. Removed or unavailable products are omitted; no technical ID links are rendered.
 - **Attachments & downloads / Reviews:** existing product-scoped asset publication, digital entitlement and review moderation capabilities inside the same workspace.
 
 ![Compact product editor with grouped sections](assets/product-workspace-20261029/general-desktop.png)
@@ -52,11 +52,15 @@ protection, app authorization and field inheritance keep their existing owners.
 [Mobile SEO editing](assets/product-seo-20261030/seo-mobile.png).
 [Product details and properties](assets/product-specifications-20261030/specifications-desktop.png) ·
 [Mobile product details](assets/product-specifications-20261030/specifications-mobile.png).
+[Ordered recommendation selection](assets/product-recommendations-20261030/recommendations-desktop.png) ·
+[Mobile recommendations](assets/product-recommendations-20261030/recommendations-mobile.png) ·
+[Actual storefront cards](assets/product-recommendations-20261030/recommendations-storefront.png).
 These captures show the local isolated test shop, not a hosted deployment.
 [Product workspace verification](evidence/product-workspace-2026-10-29.md) ·
 [Category/channel browser and Store API checks](evidence/product-assignments-2026-10-30.md) ·
 [SEO save and storefront metadata checks](evidence/product-seo-2026-10-30.md) ·
-[Specification editing and storefront checks](evidence/product-specifications-2026-10-30.md).
+[Specification editing and storefront checks](evidence/product-specifications-2026-10-30.md) ·
+[Recommendation native journey](evidence/product-recommendations-2026-10-30.md).
 
 The General section keeps the product name, number and short description together.
 The full description follows with direct **Visual editor / Markdown / Preview**

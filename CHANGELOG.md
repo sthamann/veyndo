@@ -1,5 +1,12 @@
 # Changelog
 
+## Ordered product recommendations and native storefront cards (30 October 2026)
+
+- Retain selected product names, images and order across catalogue searches; add accessible movement/removal controls, cursor pagination, retry and the native 20-product selection limit.
+- Use the selected enabled content language for merchant search/detail requests, and allow read-only searching with disabled write controls.
+- Replace manual cross-selling ID links with existing product cards hydrated through the native detail owner, current cart identity, prices and channel/company admission. Bound reads to four concurrent requests and clear old-context results immediately.
+- Document actual native save/reload, storefront links and deactivate/reactivate checks, plus desktop/mobile captures.
+
 ## Product specifications and safe property editing (30 October 2026)
 
 - Group visible localized product details, shared technical properties and unit-labelled weight/dimensions, with an effective product-page preview and responsive row layout.

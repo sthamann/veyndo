@@ -1,4 +1,5 @@
 /** Product family, gallery, context pricing and moderated customer reviews. */
+import CrossSelling from "./CrossSelling";
 import { productSpecifications } from "../../shared/content/product-specifications";
 import { productSeoFields } from "../../shared/content/product-seo";
 import { productURL, collectionURL } from "./product-url";
@@ -274,15 +275,9 @@ export default function ProductPage({
       </div>
       <ProductSafety value={p.extra?.compliance} />
       <ProductQuestion productId={p.id} />
-      {p.extra?.crossSelling?.length ? (
-        <section className="app-slot">
-          {p.extra.crossSelling.map((id) => (
-            <a key={id} href={productURL({ id })}>
-              {id} ↗
-            </a>
-          ))}
-        </section>
-      ) : null}
+      {!!p.extra?.crossSelling?.length && (
+        <CrossSelling ids={p.extra.crossSelling} sourceId={p.id} cart={cart} />
+      )}
       <MemoryRecommendations productId={p.id} />
       <ProductReviews
         s={s}

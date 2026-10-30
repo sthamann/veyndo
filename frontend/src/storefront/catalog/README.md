@@ -6,6 +6,7 @@ Each file starts with its responsibility. See [the source inventory](../../../..
 
 ## Modules
 
+- [`CrossSelling.tsx`](CrossSelling.tsx): Merchant-selected recommendations use bounded current-cart detail reads and the shared native product tile; unavailable products disappear.
 - [`ImagePlaceholder.tsx`](ImagePlaceholder.tsx): Honest empty-media state for newly created products; never invent a product photograph.
 - [`MemoryRecommendations.tsx`](MemoryRecommendations.tsx): Public consumer of merchant-approved learned associations, hydrated with current product state.
 - [`ProductAttachments.tsx`](ProductAttachments.tsx): Public attachment list follows the active storefront tenant and channel; private downloads are never listed.
@@ -16,4 +17,4 @@ Each file starts with its responsibility. See [the source inventory](../../../..
 
 ## Verification
 
-Run `npm run build`, `npm test`, `npm run test:coverage` and `npm run architecture` from `frontend/`. Coverage includes untested source files. See [testing and limitations](../../../../docs/testing.md); file presence does not mean full test coverage.
+Run affected tests, `npm run build` and `npm run architecture` from `frontend/` during development. Complete tests and coverage run daily through the existing workflow. Coverage includes untested source files. See [testing and limitations](../../../../docs/testing.md); file presence does not mean full test coverage.

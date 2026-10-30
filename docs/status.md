@@ -55,6 +55,18 @@ plain product text; a preview includes the effective inherited values. Safe row
 creation and duplicate-name checks retain existing values before native saving.
 [Scoped specification checks](evidence/product-specifications-2026-10-30.md).
 
+Manual product recommendations now retain readable selections across searches,
+allow explicit ordering and use the selected content locale. The product page
+renders native product cards through current cart/channel admission, with bounded
+reads and no stale buyer-context results. Actual native save/reload, link opening
+and deactivate/reactivate checks pass locally.
+[Recommendation journey](evidence/product-recommendations-2026-10-30.md).
+
+The specification release **`7eeafda7` (PR #244)** was observed publicly on
+30 October at **07:26:08 CET**, in image `ordinary-rake-9060`, after fresh snapshot,
+successful migration and Core readiness. The three groups retained the signed-in
+private stage, product revision and saved state without hosted product mutations.
+
 The SEO release **`b595992e` (PR #243)** was observed publicly on 30 October at
 **06:58:45 CET**, in image `gifted-bed-5657`, after a fresh snapshot, successful
 migration and Core readiness. The new form and preview retained the signed-in
