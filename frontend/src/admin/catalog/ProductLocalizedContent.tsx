@@ -10,6 +10,9 @@ import { useCatalogText } from "../../shared/i18n/catalog-i18n";
 import { useInternationalText } from "../../shared/i18n/international-i18n";
 import type { ProductDraft } from "./catalog-model";
 import "../styles/international.css";
+import { productRichContent } from "./product-content-model";
+import { useProductContentText } from "./product-content-i18n";
+import { editorDocument } from "../../shared/content/editor/rich-conversion";
 type Props = {
   canWrite?: boolean;
   draft: ProductDraft;
@@ -27,60 +30,56 @@ export function ProductRich({
   canWrite = true,
 }: Props) {
   const [reset, setReset] = useState(0);
-  const { i } = useInternationalText();
+  const { i, locale } = useInternationalText();
   const buffer = useEditorBuffer();
-  const main = source(d),
-    map = d.extra.richDescription ?? {},
-    inherited = lang !== main && map[lang] == null;
+  const t = useProductContentText();
+  const { key, main, isMain, fromShortText, map, inherited, blocks } =
+    productRichContent(d, lang);
   const set = (value: any) =>
     onChange({ ...d, extra: { ...d.extra, richDescription: value } });
-  if (!canWrite)
-    return (
-      <RichDescription
-        blocks={
-          map[lang] ??
-          map[main] ?? [
-            {
-              type: "paragraph",
-              text:
-                d.translations[lang]?.description ??
-                d.translations[main]?.description ??
-                "",
-            },
-          ]
-        }
-      />
-    );
+  if (!canWrite) return <RichDescription blocks={blocks} />;
   return (
     <div>
-      {lang !== main && (
-        <button
-          type="button"
-          disabled={buffer.pending}
-          className="intl-inherit"
-          aria-pressed={inherited}
-          onClick={() => {
-            const next = { ...map };
-            if (inherited) next[lang] = structuredClone(map[main] ?? []);
-            else delete next[lang];
-            set(next);
-            setReset((n) => n + 1);
-          }}
-        >
-          {i(inherited ? "inheritedFrom" : "customText")}{" "}
-          {inherited ? d.mainLocale : ""} ↗
-        </button>
+      <div className="product-rich-language">
+        {!isMain && (
+          <button
+            type="button"
+            disabled={buffer.pending}
+            className="intl-inherit"
+            aria-pressed={inherited}
+            onClick={() => {
+              const next = { ...map };
+              if (inherited) next[key] = structuredClone(blocks);
+              else delete next[key];
+              set(next);
+              setReset((n) => n + 1);
+            }}
+          >
+            {fromShortText
+              ? t("shortSource")
+              : i(inherited ? "inheritedFrom" : "customText")}{" "}
+            {inherited && !fromShortText
+              ? (new Intl.DisplayNames([locale], { type: "language" }).of(
+                  main,
+                ) ?? main)
+              : ""}{" "}
+            ↗
+          </button>
+        )}
+      </div>
+      {inherited && (
+        <p className="product-content-hint">
+          {t(fromShortText ? "shortSourceHint" : "inheritedHint")}
+        </p>
       )}
       <Suspense fallback={<p role="status">{i("loading")}</p>}>
         <RichEditor
-          key={`${lang}:${reset}`}
-          language={lang}
-          fallback={
-            d.translations[lang]?.description ??
-            d.translations[main]?.description ??
-            ""
-          }
-          value={inherited ? { ...map, [lang]: map[main] ?? [] } : map}
+          key={`${key}:${reset}`}
+          language={key}
+          value={{
+            ...map,
+            [key]: [{ type: "document", doc: editorDocument(blocks) }],
+          }}
           onChange={set}
         />
       </Suspense>

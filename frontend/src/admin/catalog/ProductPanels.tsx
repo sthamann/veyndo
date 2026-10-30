@@ -6,12 +6,8 @@ import { useCatalogText } from "../../shared/i18n/catalog-i18n";
 import type { Category, ProductDraft } from "./catalog-model";
 import PairFields from "./PairFields";
 
-import {
-  ProductRich,
-  ProductSeo,
-  ProductSpecifications,
-} from "./ProductLocalizedContent";
-import ProductTextFields from "./ProductTextFields";
+import { ProductSeo, ProductSpecifications } from "./ProductLocalizedContent";
+import ProductGeneral from "./ProductGeneral";
 export default function ProductPanels({
   request,
   tab,
@@ -34,45 +30,12 @@ export default function ProductPanels({
   const extra = (v: any) => onChange({ ...d, extra: { ...d.extra, ...v } });
   if (tab === "general")
     return (
-      <>
-        <ProductTextFields draft={d} lang={lang} onChange={onChange} />
-        <h2>
-          {c("rich")} · {lang.toUpperCase()}
-        </h2>
-        <ProductRich
-          canWrite={canWrite}
-          draft={d}
-          lang={lang}
-          onChange={onChange}
-        />
-        <div className="catalog-form-grid">
-          {(["manufacturer", "manufacturerNumber", "ean"] as const).map((k) => (
-            <label key={k}>
-              {c(k)}
-              <input
-                value={d.extra.identity?.[k] ?? ""}
-                onChange={(e) =>
-                  extra({
-                    identity: { ...d.extra.identity, [k]: e.target.value },
-                  })
-                }
-              />
-            </label>
-          ))}
-        </div>
-        <div className="catalog-flags">
-          {(["digital", "shippingFree"] as const).map((k) => (
-            <label className="checkbox-label" key={k}>
-              <input
-                type="checkbox"
-                checked={!!d.extra[k]}
-                onChange={(e) => extra({ [k]: e.target.checked })}
-              />
-              {c(k)}
-            </label>
-          ))}
-        </div>
-      </>
+      <ProductGeneral
+        draft={draft}
+        lang={lang}
+        onChange={onChange}
+        canWrite={canWrite}
+      />
     );
   if (tab === "prices")
     return (

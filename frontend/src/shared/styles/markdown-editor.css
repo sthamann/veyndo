@@ -1,6 +1,8 @@
 /* Shared visual/Markdown product editor treatment using existing Studio theme tokens. */
 .catalog-editor-mode {
   display: flex;
+  flex-wrap: wrap;
+  max-width: 100%;
   gap: 4px;
   padding: 5px;
   background: var(--panel);

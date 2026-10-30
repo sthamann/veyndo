@@ -1,0 +1,90 @@
+/* Product content keeps a compact vertical rhythm and uses the incumbent Studio surfaces and native disclosures. */
+.product-content-workspace {
+  display: grid;
+  gap: 22px;
+  min-width: 0;
+}
+.product-content-workspace .catalog-form-grid {
+  gap: 16px;
+}
+.product-content-workspace h3 {
+  font-size: 16px;
+  margin: 0 0 6px;
+  line-height: 1.4;
+}
+.product-content-workspace .product-content-hint {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 0 0 12px;
+  max-width: 72ch;
+}
+.product-content-short-hint {
+  margin-top: 6px !important;
+}
+.product-content-description {
+  min-width: 0;
+}
+.product-content-description .catalog-rich {
+  margin-bottom: 0;
+  overflow: visible;
+}
+.product-rich-language {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.product-rich-language .intl-inherit {
+  min-height: 36px;
+}
+.product-content-workspace .product-rich-language + .product-content-hint {
+  margin-bottom: 10px;
+}
+.product-content-details {
+  border: 0;
+  border-top: 1px solid var(--border);
+  padding-top: 8px;
+}
+.product-content-details > summary {
+  min-height: 44px;
+  padding: 10px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+}
+.product-content-details > summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+.product-content-details .catalog-flags {
+  margin: 16px 0 0;
+}
+.product-content-description .catalog-editor-mode {
+  flex-wrap: wrap;
+  max-width: 100%;
+}
+.product-content-description .catalog-editor-mode button {
+  min-height: 40px;
+  padding: 7px 12px;
+}
+.product-content-description .rich-description {
+  overflow-wrap: anywhere;
+}
+@media (max-width: 600px) {
+  .product-content-workspace {
+    gap: 18px;
+  }
+  .product-content-workspace .catalog-form-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .product-content-description .catalog-editor-mode {
+    width: 100%;
+  }
+  .product-content-description .catalog-editor-mode button {
+    flex: 1;
+    padding: 7px;
+  }
+}

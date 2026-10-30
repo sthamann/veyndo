@@ -1,5 +1,12 @@
 # Changelog
 
+## Product content editing and translation preservation (30 October 2026)
+
+- Product basics and full content use a compact workspace with optional identifiers and shipping flags in one disclosure. All controls and guidance support EN/DE/FR/ES.
+- The shared rich editor exposes Preview next to visual and Markdown modes, preserves unapplied source buffers and hides editing controls during preview.
+- Own rich translations preserve displayed legacy content, resolve regional keys independently from plain text, and identify short-description starting points. Explicit empty rich content stays empty on the product page.
+- Scoped tests and native browser/API checks cover preservation, read-only rendering, regional/fifth languages, stock-safe aggregate saving and desktop/mobile layout.
+
 ## Product category and channel assignments (30 October 2026)
 
 - Replace flat category checkboxes with searchable translated paths, retained
