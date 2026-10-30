@@ -99,3 +99,20 @@
 .designer-overview .designer-frame-space {
   box-shadow: none;
 }
+
+.designer-overview-product {
+  display: grid;
+  gap: 6px;
+  margin-block-end: 12px;
+  font-size: 13px;
+}
+.designer-overview-product select {
+  width: 100%;
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid var(--studio-line, #ccdded);
+  border-radius: 10px;
+  background: var(--studio-card, #fff);
+  color: inherit;
+  font: inherit;
+}

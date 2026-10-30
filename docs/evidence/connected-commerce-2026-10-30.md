@@ -291,3 +291,41 @@ The four affected component suites pass **20 tests**. They cover failed starts,
 late responses, reload selection, retained input, repeated titles, permission
 withdrawal and saved-test navigation. TypeScript and the production frontend build
 pass. This follow-up's public delivery is recorded separately from PR 250 above.
+
+
+## Native product presentation in the page overview
+
+The follow-up adds a selected channel product beside the existing home/content
+previews. ProductGallery and ProductPurchase share the live storefront presentation.
+The read uses the editor request with explicit channel and content locale; it does
+not mount the shopper controller, telemetry or cart session. Late responses from
+previous workspace/request/channel scopes are discarded. Purchase and app actions
+remain inactive; the native gallery remains usable.
+
+Four affected test files passed 31 cases: product page, native product preview,
+site designer and storefront canvas. After the delivery-note guard changed, the
+13 affected product/preview cases passed again. Assertions cover scoped requests,
+no global shopper transport, disabled purchase actions, late foreign responses
+and retry after denied reads.
+
+The actual React editor was inspected in the local in-app browser using explicitly
+synthetic products and fixture responses. Changing the selected product updated
+the native heading/image. Mobile preview measured 375 CSS pixels of content and
+375 scroll width, without horizontal overflow. These are renderer/component checks,
+not a live database or hosted acceptance of this increment. Lower product sections,
+recommendations, category/cart templates and editable product templates remain open.
+
+![Local page overview with native product presentation and synthetic data](../assets/connected-commerce-20261030/native-product-overview-local.png)
+
+![Local mobile product preview after changing the selected product](../assets/connected-commerce-20261030/native-product-mobile-local.png)
+
+### Delivery connection finding
+
+PR 251 merged as `d2891136c617509260b71555d82ec88f6d021433`; GitHub verification,
+documentation and packaged image jobs passed. Northflank release runs
+`d76e4528-ecbf-4102-a068-d75df8c69d64` and
+`b420f79b-d41c-46d0-a49c-f85a68ca53a9` failed at repository access before the build.
+The existing GitHub installation `84002493` is active and grants all repositories.
+Northflank still reports Git sync error after re-entering its existing linking flow.
+No installation was removed, access broadened or release safety step skipped.
+The last verified public Core remains `d56d6633`.

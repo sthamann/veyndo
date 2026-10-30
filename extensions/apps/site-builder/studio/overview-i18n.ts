@@ -1,6 +1,31 @@
 /** Page overview controls use the same interface locales as the surrounding editor. */
 import { useLocale } from "../../../../frontend/src/shared/i18n/i18n";
 const words = {
+  product: [
+    "Product detail",
+    "Produktdetail",
+    "Fiche produit",
+    "Ficha de producto",
+  ],
+  chooseProduct: [
+    "Preview product",
+    "Produkt für die Vorschau",
+    "Produit de l’aperçu",
+    "Producto de la vista previa",
+  ],
+  productHint: [
+    "Native gallery, prices and variants with the home design. Purchasing and app actions are inactive.",
+    "Originale Galerie, Preise und Varianten mit der Gestaltung der Startseite. Kauf und App-Aktionen sind inaktiv.",
+    "Galerie, prix et variantes natifs avec le style de l’accueil. Achats et actions des apps inactifs.",
+    "Galería, precios y variantes nativos con el diseño del inicio. Compras y acciones de apps inactivas.",
+  ],
+  retry: ["Try again", "Erneut versuchen", "Réessayer", "Reintentar"],
+  productUnavailable: [
+    "No product price is available for this preview.",
+    "Für diese Vorschau ist kein Produktpreis verfügbar.",
+    "Aucun prix n’est disponible pour cet aperçu.",
+    "No hay precio disponible para esta vista previa.",
+  ],
   overview: [
     "Page overview",
     "Seitenübersicht",
@@ -10,10 +35,10 @@ const words = {
   edit: ["Edit page", "Seite bearbeiten", "Modifier la page", "Editar página"],
   home: ["Home", "Startseite", "Accueil", "Inicio"],
   hint: [
-    "Compare your home and content pages. Open a preview to continue editing.",
-    "Vergleiche Startseite und Inhaltsseiten. Öffne eine Vorschau zum Bearbeiten.",
-    "Comparez l’accueil et les pages de contenu. Ouvrez un aperçu pour modifier.",
-    "Compara el inicio y las páginas de contenido. Abre una vista previa para editar.",
+    "Compare home, content pages and a product. Open a content page to continue editing.",
+    "Vergleiche Startseite, Inhaltsseiten und ein Produkt. Öffne eine Inhaltsseite zum Bearbeiten.",
+    "Comparez l’accueil, les pages de contenu et un produit. Ouvrez une page de contenu pour la modifier.",
+    "Compara el inicio, las páginas de contenido y un producto. Abre una página de contenido para editarla.",
   ],
   shared: [
     "Uses the home page design",

@@ -43,6 +43,14 @@ Native and local browser checks also cover selected publication while retaining
 orders, stock and unselected changes. Automatic recorded customer-agent browser
 journeys remain open.
 
+The next source increment adds a native product preview to the page overview: gallery,
+prices and variants share storefront components and the selected home design.
+Product changes and mobile rendering have local component/browser checks.
+PR 251 is merged, but its Core release stopped before building because Northflank
+cannot synchronize its existing GitHub connection. GitHub installation access was
+checked and remains active for all repositories. Core remains on `d56d6633`; neither
+PR 251 nor this later product preview is counted as publicly deployed.
+
 ## Verification cadence
 
 Complete tests and coverage run daily at 02:17 UTC or on manual dispatch.

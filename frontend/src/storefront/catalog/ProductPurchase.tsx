@@ -8,6 +8,7 @@ import AppSlot from "../../shared/apps/AppSlot";
 import { AppSurfaceSlot } from "../../shared/apps/AppSurfaces";
 import Icon from "../../shared/ui/Icon";
 export type ProductPurchaseProps = {
+  preview?: boolean;
   s: ReturnType<typeof useShopText>["s"];
   p: import("../../shared/api/shop-api").Product;
   data: import("../../shared/api/shop-api").Detail;
@@ -35,6 +36,7 @@ export type ProductPurchaseProps = {
   onAdd: (id: string, q: number) => void;
 };
 export default function ProductPurchase({
+  preview = false,
   s,
   p,
   data,
@@ -63,6 +65,7 @@ export default function ProductPurchase({
       <h1>{p.name}</h1>
       <button
         className="rating-link"
+        disabled={preview}
         onClick={() =>
           document
             .getElementById("product-reviews")
@@ -113,9 +116,9 @@ export default function ProductPurchase({
                     key={option}
                     aria-pressed={p.options[group] === option}
                     title={!match ? s("invalidOption") : undefined}
-                    disabled={!match}
+                    disabled={preview || !match}
                     onClick={() => {
-                      if (match) {
+                      if (match && !preview) {
                         history.pushState(null, "", productURL(match));
                         window.dispatchEvent(new PopStateEvent("popstate"));
                       }
@@ -135,8 +138,9 @@ export default function ProductPurchase({
       {data.variantsPagination.nextCursor && (
         <button
           className="shop-secondary"
-          disabled={variantsLoading}
+          disabled={preview || variantsLoading}
           onClick={async () => {
+            if (preview) return;
             const request = detailRequest.current;
             setVariantsLoading(true);
             try {
@@ -178,18 +182,26 @@ export default function ProductPurchase({
         <span>SKU {p.product_number || p.id}</span>
       </div>
       {!p.stock && <small>{s("soldHint")}</small>}
-      <AppSurfaceSlot location="product.detail" context={{ productId: p.id }} />
-      <AppSlot
-        productId={p.id}
-        familyId={p.parent_id ?? p.id}
-        cart={cart}
-        onConfigure={onConfigure}
-      />
+      {!preview && (
+        <>
+          <AppSurfaceSlot
+            location="product.detail"
+            context={{ productId: p.id }}
+          />
+          <AppSlot
+            productId={p.id}
+            familyId={p.parent_id ?? p.id}
+            cart={cart}
+            onConfigure={onConfigure}
+          />
+        </>
+      )}
       <div className="pdp-buy">
         <label>
           {s("quantity")}
           <input
             type="number"
+            disabled={preview}
             min={p.min_purchase}
             max={p.max_purchase ?? 10000}
             step={p.purchase_steps}
@@ -204,7 +216,7 @@ export default function ProductPurchase({
         </label>
         <button
           className="shop-primary"
-          disabled={busy || !cart || effective > p.stock}
+          disabled={preview || busy || !cart || effective > p.stock}
           onClick={() => onAdd(p.id, effective)}
         >
           {s("add")}
@@ -246,21 +258,23 @@ export default function ProductPurchase({
           </table>
         </div>
       )}
-      <div className="delivery-note">
-        <Icon name="box" />
-        <div>
-          <strong>{s("delivery")}</strong>
-          <p>
-            {data.delivery?.maxDays === 0
-              ? s("readyToday")
-              : `${data.delivery?.minDays}–${data.delivery?.maxDays} ${s("days")}`}{" "}
-            · {s(data.delivery?.method.name ?? "shipping")}
-          </p>
-          <small>
-            {s("shippingExtra")} · {s(data.country)}
-          </small>
+      {data.delivery && (
+        <div className="delivery-note">
+          <Icon name="box" />
+          <div>
+            <strong>{s("delivery")}</strong>
+            <p>
+              {data.delivery?.maxDays === 0
+                ? s("readyToday")
+                : `${data.delivery?.minDays}–${data.delivery?.maxDays} ${s("days")}`}{" "}
+              · {s(data.delivery?.method.name ?? "shipping")}
+            </p>
+            <small>
+              {s("shippingExtra")} · {s(data.country)}
+            </small>
+          </div>
         </div>
-      </div>
+      )}
     </section>
   );
 }
