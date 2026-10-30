@@ -702,6 +702,7 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/admin/catalog/MediaDropzone.tsx](../frontend/src/admin/catalog/MediaDropzone.tsx) | Accessible multi-file upload with drag/drop, visible progress and the same validated asset API as attachments. |
 | [frontend/src/admin/catalog/PairFields.tsx](../frontend/src/admin/catalog/PairFields.tsx) | Accessible key/value rows for product properties, specifications and variant options. |
 | [frontend/src/admin/catalog/ProductAssets.tsx](../frontend/src/admin/catalog/ProductAssets.tsx) | Bounded upload and explicit digest-bound publication of attachments and paid files. |
+| [frontend/src/admin/catalog/ProductAssignments.tsx](../frontend/src/admin/catalog/ProductAssignments.tsx) | Searchable product category paths and explicit channel choices share the native revisioned aggregate save. |
 | [frontend/src/admin/catalog/ProductCurrencyPrices.tsx](../frontend/src/admin/catalog/ProductCurrencyPrices.tsx) | Exact per-currency decimals live in the same revisioned product draft, including variants. |
 | [frontend/src/admin/catalog/ProductDataView.tsx](../frontend/src/admin/catalog/ProductDataView.tsx) | Central catalog workspace uses shared server-paged grids, existing product editing and hierarchical categories. |
 | [frontend/src/admin/catalog/ProductEditor.tsx](../frontend/src/admin/catalog/ProductEditor.tsx) | Revision-aware product aggregate editor: one save, translation tabs and product-scoped linked capabilities. |
@@ -726,6 +727,8 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/admin/catalog/catalog-model.ts](../frontend/src/admin/catalog/catalog-model.ts) | Editable native product aggregate and defaults shared by creation, detail and variant workflows. |
 | [frontend/src/admin/catalog/media-model.ts](../frontend/src/admin/catalog/media-model.ts) | Pure gallery operations preserve order, explicit alt translations and upload bounds without fabricating language values. |
 | [frontend/src/admin/catalog/preparation-i18n.ts](../frontend/src/admin/catalog/preparation-i18n.ts) | Preparation vocabulary describes persisted native progress, never an invented publication approval. |
+| [frontend/src/admin/catalog/product-assignment-i18n.ts](../frontend/src/admin/catalog/product-assignment-i18n.ts) | Product category/channel assignment guidance in every supported Studio interface language. |
+| [frontend/src/admin/catalog/product-assignment-model.ts](../frontend/src/admin/catalog/product-assignment-model.ts) | Bounded category paths and current product-channel choices preserve native IDs and language inheritance. |
 | [frontend/src/admin/catalog/product-editor-i18n.ts](../frontend/src/admin/catalog/product-editor-i18n.ts) | Product workspace guidance shares the interface locale, never the product's content language. |
 | [frontend/src/admin/catalog/product-media-i18n.ts](../frontend/src/admin/catalog/product-media-i18n.ts) | Gallery ordering guidance shares interface locales without changing product image translations. |
 | [frontend/src/admin/catalog/product-pricing-i18n.ts](../frontend/src/admin/catalog/product-pricing-i18n.ts) | Interface guidance for native product prices, optional conditions and availability. |
@@ -1002,6 +1005,7 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/admin/styles/legal-settings.css](../frontend/src/admin/styles/legal-settings.css) | Light legal workspace: compact readiness, sector chips, linked sources and single-language editors. |
 | [frontend/src/admin/styles/media-workspace.css](../frontend/src/admin/styles/media-workspace.css) | Gallery workspace: airy tiles, focused image inspector and accessible upload surfaces using Studio theme tokens. |
 | [frontend/src/admin/styles/operations.css](../frontend/src/admin/styles/operations.css) | Operational screens share the studio's light surface and clear focus states. |
+| [frontend/src/admin/styles/product-assignments.css](../frontend/src/admin/styles/product-assignments.css) | Product assignments use compact searchable choices, native checkboxes and the Studio theme. |
 | [frontend/src/admin/styles/product-pricing.css](../frontend/src/admin/styles/product-pricing.css) | Product pricing follows the native save path with grouped basics and optional conditions. |
 | [frontend/src/admin/styles/product-workspace.css](../frontend/src/admin/styles/product-workspace.css) | Product-only layout: compact identity, grouped sections and a fluid editing surface. |
 | [frontend/src/admin/styles/provider-account.css](../frontend/src/admin/styles/provider-account.css) | Shared provider onboarding layout works independently of the lazy-loaded visual App Studio. |

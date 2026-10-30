@@ -1,5 +1,6 @@
 /** Native commerce, media, translated SEO/specifications and category panels for one editable product. */
 import ProductPricing from "./ProductPricing";
+import ProductAssignments from "./ProductAssignments";
 import type { RequestFn } from "../shell/studio-types";
 import { useCatalogText } from "../../shared/i18n/catalog-i18n";
 import type { Category, ProductDraft } from "./catalog-model";
@@ -79,63 +80,13 @@ export default function ProductPanels({
     );
   if (tab === "assignments")
     return (
-      <>
-        <h2>{c("categories")}</h2>
-        <p>{c("categoryHint")}</p>
-        <div className="catalog-category-checks">
-          {categories.map((cat) => (
-            <label className="checkbox-label" key={cat.id}>
-              <input
-                type="checkbox"
-                checked={d.catalog.categoryIds.includes(cat.id)}
-                onChange={(e) =>
-                  onChange({
-                    ...d,
-                    catalog: {
-                      ...d.catalog,
-                      categoryIds: e.target.checked
-                        ? [...d.catalog.categoryIds, cat.id]
-                        : d.catalog.categoryIds.filter((id) => id !== cat.id),
-                    },
-                  })
-                }
-              />
-              {cat.data.translations[lang]?.name ??
-                cat.data.translations.en.name}
-            </label>
-          ))}
-        </div>
-        <h2>{c("assignments")}</h2>
-        <div className="catalog-category-checks">
-          {d.channels?.map((channel) => (
-            <label className="checkbox-label" key={channel.id}>
-              <input
-                type="checkbox"
-                checked={
-                  d.catalog.salesChannelIds?.includes(channel.id) ??
-                  channel.visible
-                }
-                onChange={(e) => {
-                  const ids =
-                    d.catalog.salesChannelIds ??
-                    d.channels!.filter((c) => c.visible).map((c) => c.id);
-                  onChange({
-                    ...d,
-                    catalog: {
-                      ...d.catalog,
-                      salesChannelIds: e.target.checked
-                        ? [...ids, channel.id]
-                        : ids.filter((id) => id !== channel.id),
-                    },
-                  });
-                }}
-              />
-              {channel.data.name[lang] ?? channel.data.name.en}
-            </label>
-          ))}
-        </div>
-        <p>{c("channelsHint")}</p>
-      </>
+      <ProductAssignments
+        draft={draft}
+        categories={categories}
+        language={lang}
+        canWrite={canWrite}
+        onChange={onChange}
+      />
     );
   if (tab === "specs")
     return (

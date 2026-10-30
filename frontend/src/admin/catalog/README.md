@@ -13,6 +13,9 @@ Files and their individual responsibilities are listed in [the generated source 
 - [`MarkdownSource.tsx`](../../shared/content/editor/MarkdownSource.tsx): Live Markdown buffer updates the same structured product document; no raw HTML is rendered or persisted.
 - [`MediaDropzone.tsx`](MediaDropzone.tsx): Accessible multi-file upload with drag/drop, visible progress and the same validated asset API as attachments.
 - [`PairFields.tsx`](PairFields.tsx): Accessible key/value rows for product properties, specifications and variant options.
+- [`ProductAssignments.tsx`](ProductAssignments.tsx): Searchable category paths, retained selection and explicit channel restrictions in the native product draft.
+- [`product-assignment-model.ts`](product-assignment-model.ts): Cycle-bounded category paths, enabled-region language resolution and current channel IDs.
+- [`product-assignment-i18n.ts`](product-assignment-i18n.ts): Four-language assignment guidance and read-only search states.
 - [`ProductAssets.tsx`](ProductAssets.tsx): Bounded upload and explicit digest-bound publication of attachments and paid files.
 - [`ProductDataView.tsx`](ProductDataView.tsx): Central catalog workspace: server-filtered cursor list, product details and hierarchical categories.
 - [`ProductEditor.tsx`](ProductEditor.tsx): Revision-aware product aggregate editor: one save, translation tabs and product-scoped linked capabilities.

@@ -1,5 +1,16 @@
 # Changelog
 
+## Product category and channel assignments (30 October 2026)
+
+- Replace flat category checkboxes with searchable translated paths, retained
+  selections, selected-only filtering and bounded result batches. Keep hidden
+  selections when searching; reuse the native aggregate save and stock-safe CAS.
+- Separate sales channels from categories. Resolve their names through the actual
+  enabled content locale/main-language fallback, and show inactive/private state
+  and explicit per-channel catalogue exclusion. Preserve explicit empty selection.
+- Allow read-only category searches while assignment mutations remain disabled.
+  Keep current server-side admission, revision history, events and publication.
+
 ## Product gallery and variant usability (29 October 2026)
 
 - Add gallery drag reordering with a visible destination, stable selection,

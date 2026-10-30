@@ -282,7 +282,7 @@ export default function ProductEditor({
                 disabled={
                   !canWrite &&
                   !selectedApp &&
-                  !["media", "variants"].includes(tab)
+                  !["media", "variants", "assignments"].includes(tab)
                 }
               >
                 {selectedApp ? (

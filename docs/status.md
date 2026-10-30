@@ -1,6 +1,6 @@
 # Veyndo: current status
 
-Updated 29 October 2026. Start here for the public product, observed journeys and
+Updated 30 October 2026. Start here for the public product, observed journeys and
 remaining delivery work. Source code, passing tests and a successful public
 journey are tracked separately. All purchases below use **simulated payments**.
 
@@ -30,10 +30,13 @@ its packaged-runtime smoke check. [Cadence and exact scope](testing.md#daily-ful
 The product editor uses a compact header, grouped sections and a mobile selector.
 Price and tax fields are grouped with expandable optional conditions. Gallery images
 can be reordered by dragging or inspector controls, and variant creation opens from
-the existing family overview. These use the same native product saves, current
+the existing family overview. Category assignments now use searchable translated
+paths and retained selections; channel choices explain inactive/private state and
+explicit catalogue restrictions. These use the same native product saves, current
 permissions and enabled content languages.
 [Product workflow and screenshots](product-management.md#product-detail-workspace),
-[scoped native browser checks](evidence/product-workspace-2026-10-29.md).
+[scoped native browser checks](evidence/product-workspace-2026-10-29.md),
+[category/channel consumer checks](evidence/product-assignments-2026-10-30.md).
 
 ## 29 October connected platform work
 
@@ -89,6 +92,12 @@ proof links and the app image were checked on the live page. The handbook and
 README are published from their separate public Core owner.
 [Homepage ownership and observed rollout](evidence/platform-followups-hosted-2026-10-29.md#actual-public-homepage-owner).
 
+
+The gallery/variant release **`3425ddcf` (PR #240)** was observed publicly on
+29 October in image `educated-water-3744`. Its snapshot-backed workflow finished
+at **20:41:42 CET**, with a successful migration and running Core. The browser
+retained the signed-in private stage and product revision, and showed the new
+variant entry and gallery controls. This is a scoped editing observation.
 
 The product pricing release **`dd03e76b` (PR #238)** was observed publicly on
 29 October after the snapshot-backed workflow completed at **20:12:55 CET**.
