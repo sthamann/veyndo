@@ -40,7 +40,9 @@ Files and their individual responsibilities are listed in [the generated source 
 - [`ProductTextFields.tsx`](ProductTextFields.tsx): Product text uses the shared single-language editor and field inheritance; product number stays language independent.
 - [`ProductVariants.tsx`](ProductVariants.tsx): Native variant family browser with cursor pagination, explicit editing and a bounded creation wizard.
 - [`ReferencePriceFields.tsx`](ReferencePriceFields.tsx): Native reference-unit inputs feed the same server-calculated unit price displayed on product pages.
-- [`RelatedProducts.tsx`](RelatedProducts.tsx): Search-backed related-product selection, avoiding comma-separated opaque IDs.
+- [`RelatedProducts.tsx`](RelatedProducts.tsx): Retained ordered selections, scoped content-language search, cursor pagination and read-only browsing.
+- [`RelatedProductRow.tsx`](RelatedProductRow.tsx): Native merchant detail reads resolve selected names/media and retain unavailable IDs for explicit removal.
+- [`related-products-i18n.ts`](related-products-i18n.ts): Four-language selection, ordering, retry and native-limit guidance.
 - [`ReviewModeration.tsx`](ReviewModeration.tsx): Product-scoped review publication; authoritative authorization stays in the API.
 - [`RichEditor.tsx`](../../shared/content/editor/RichEditor.tsx): Actual Tiptap WYSIWYG editor with structured safe content, media, formatting and per-language drafts.
 - [`TaxClassSelect.tsx`](TaxClassSelect.tsx): Assign a product to an actual tenant tax class; legacy standard/reduced mapping remains explicit.

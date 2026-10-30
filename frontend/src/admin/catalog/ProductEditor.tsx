@@ -1,5 +1,6 @@
 /** Revision-aware product aggregate editor: one save, translation tabs and product-scoped linked capabilities. */
 import { useCoreExtensions } from "../../shared/apps/CoreExtensions";
+import { contentLocale } from "../../shared/i18n/content-language";
 import { invalidProductSeo } from "../../shared/content/product-seo";
 import { useProductSeoText } from "./product-seo-i18n";
 import ProductEditorHeader from "./ProductEditorHeader";
@@ -289,7 +290,7 @@ export default function ProductEditor({
                 disabled={
                   !canWrite &&
                   !selectedApp &&
-                  !["media", "variants", "assignments"].includes(tab)
+                  !["media", "variants", "assignments", "related"].includes(tab)
                 }
               >
                 {selectedApp ? (
@@ -336,6 +337,11 @@ export default function ProductEditor({
                   )
                 ) : tab === "related" ? (
                   <RelatedProducts
+                    canWrite={canWrite}
+                    language={contentLocale(
+                      lang,
+                      draft.availableLocales ?? [draft.mainLocale ?? lang],
+                    )}
                     request={request}
                     id={id}
                     value={draft.extra.crossSelling}

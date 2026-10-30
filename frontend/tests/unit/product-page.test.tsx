@@ -149,11 +149,21 @@ function fixture(data: Detail) {
           }
         : path === "/store-api/apps/slots"
           ? { slots: [] }
-          : path.endsWith("/reviews")
-            ? { id: "review-fixture" }
-            : path.startsWith("/store-api/product/")
-              ? data
-              : undefined;
+          : path === "/store-api/product/fixture-cross"
+            ? {
+                ...data,
+                product: {
+                  ...data.product,
+                  id: "fixture-cross",
+                  name: "Manual recommendation",
+                  extra: {},
+                },
+              }
+            : path.endsWith("/reviews")
+              ? { id: "review-fixture" }
+              : path.startsWith("/store-api/product/")
+                ? data
+                : undefined;
     if (!value) throw new Error(`Unspecified product fixture: ${path}`);
     return { ok: true, status: 200, json: async () => value };
   });
