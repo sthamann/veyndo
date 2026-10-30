@@ -256,5 +256,5 @@ pub(super) fn project(row: &sqlx::postgres::PgRow) -> Value {
         result["steps"] = cp["scenario-state"]["steps"].clone();
         result
     });
-    json!({"taskId":row.get::<String,_>("id"),"agentId":row.get::<Value,_>("run_request")["agentId"],"state":state,"revision":row.get::<i64,_>("run_revision"),"completedModelSteps":steps,"scenario":scenario,"execution":execution,"error":row.get::<Option<Value>,_>("run_error"),"conversationId":row.get::<Option<String>,_>("conversation_id"),"approvalRequired":!row.get::<bool,_>("applied"),"preview":if state=="ready" {row.get::<Value,_>("proposal")}else{Value::Null},"updatedAt":row.get::<String,_>("updated_text")})
+    json!({"taskId":row.get::<String,_>("id"),"agentId":row.get::<Value,_>("run_request")["agentId"],"channel":request["channel"],"state":state,"revision":row.get::<i64,_>("run_revision"),"completedModelSteps":steps,"scenario":scenario,"execution":execution,"error":row.get::<Option<Value>,_>("run_error"),"conversationId":row.get::<Option<String>,_>("conversation_id"),"approvalRequired":!row.get::<bool,_>("applied"),"preview":if state=="ready" {row.get::<Value,_>("proposal")}else{Value::Null},"updatedAt":row.get::<String,_>("updated_text")})
 }

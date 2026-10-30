@@ -103,12 +103,20 @@ explicit failed preparations without a new executable task.
    or home section you selected; draft content and credentials do not enter the URL.
 4. The existing storefront is visible immediately, including the native header, hero, product cards and footer. Saved home pages open automatically. Click the hero or collection to prepare a private home-page document; **New page** remains a separate action for additional pages. No blank CMS form is required before seeing the shop.
    Additional pages use lowercase letters, numbers and dashes for their addresses.
-5. Select a section in the real shared preview. Edit its heading inline or use the
+5. **Page overview** compares the home and content pages using the same renderer.
+   Open a page with **Edit page** or click its preview. The overview includes your
+   unsaved draft; returning to that page preserves changes, selected section and
+   undo history. Labels distinguish the home design, inherited appearance and
+   page-specific settings. At most four previews are mounted together; pagination
+   and **Load more saved pages** handle larger sites. Desktop, tablet and mobile controls
+   apply to every preview. Product/category/cart template editing is not included
+   in this first overview.
+6. Select a section in the real shared preview. Edit its heading inline or use the
    localized inspector; rich text uses the existing Tiptap/Markdown editor.
-6. Open **Elements** and drag an illustrated card into the preview. Blue drop gutters show the insertion boundary; release to insert there. Click a card as a keyboard/touch alternative to insert after the selected section. Reorder using the section grip or its up/down controls; remove with the bin button. Undo/redo covers all these gestures. The palette also contains installed apps’ registered public elements; only their app/surface reference enters the page.
-7. Pick actual channel products, appearance, spacing, typography and images. Switch
+7. Open **Elements** and drag an illustrated card into the preview. Blue drop gutters show the insertion boundary; release to insert there. Click a card as a keyboard/touch alternative to insert after the selected section. Reorder using the section grip or its up/down controls; remove with the bin button. Undo/redo covers all these gestures. The palette also contains installed apps’ registered public elements; only their app/surface reference enters the page.
+8. Pick actual channel products, appearance, spacing, typography and images. Switch
    desktop/tablet/mobile. Preview controls cannot place orders or submit forms.
-8. Save, then choose **Review publication**. Select the intended app/page changes
+9. Save, then choose **Review publication**. Select the intended app/page changes
    in the native staging review and publish explicitly.
 
 ![Guided private setup keeps the actual storefront visible](assets/design-migration-20261020/design-start.jpg)

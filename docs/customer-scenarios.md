@@ -101,6 +101,43 @@ judge a screenshot, click a mobile UI or run an authenticated company-buyer jour
 A design change still needs browser testing. The simulator can already find native
 catalogue, price, stock, country/shipping and purchase failures beneath that design.
 
+## Testing an applied agent proposal
+
+In a private sandbox, an applied proposal offers **Customer simulator**. It opens
+the existing simulator on the proposal's channel. Starting a test optionally sends
+`sourceTaskId`; the server resolves its owning actor, agent identity and current
+permissions, applied state, revision and proposal digest. It rejects another
+customer test, an unapplied proposal, another actor or another channel. The worker
+rechecks that reference before and after inference and before completing its report.
+A changed proposal stops subsequent actions; it does not undo a prior private order.
+
+The reference is visible in setup and each result. **Test without this reference**
+starts an independent test and retains the edited customer brief. Repeating saved
+customers restores their original reference, rather than attributing an old test
+to an unrelated currently open proposal. A proposal reference identifies the origin
+of a test; it does not establish that every original edit is still present.
+
+Each new run also hashes the existing staging configuration projection at start
+and finish. Status compares that finish against the current private configuration:
+
+| State | Meaning |
+| --- | --- |
+| `current` | Start, finish and current publishable configuration match. |
+| `changed_during_run` | The start and finish configurations differ. |
+| `stale` | Start and finish matched, but the configuration has since changed. |
+| `unverified` | A complete start, finish or current comparison is unavailable. |
+
+This uses the release owner's projection, including design, rules and permitted
+app configuration. Orders, inventory movement, secrets and operational app records
+remain outside that projection. Ordinary test purchases therefore do not make the
+configuration comparison stale. Capture is bounded to three seconds, with a short lock wait. A large release
+projection, busy configuration or unavailable comparison leaves the native journey
+and saved report intact, with `unverified` evidence. No partial digest is accepted.
+Only the digests are stored in the existing task
+checkpoint/report. This is a boundary comparison, not a frozen test environment:
+a change that is made and reverted entirely between the two captures is not detected.
+It also does not certify rendered UI or grant release authority.
+
 ## Resume and control
 
 Runs reuse Veyndo's durable agent tasks and inference accounting. Leaving Studio
@@ -126,7 +163,19 @@ opening a test does not activate an old build. App-owned code stays in its packa
 Migration opens the same simulator for its authorized private target and channel.
 Imported products and configured rules therefore use the same cart and checkout
 owners as other products. Publication remains a separate, selected staging review.
-A successful customer test never grants publication rights or publishes a package.
+In **Staging & releases**, choose a private sandbox and a saved customer test.
+Its observed steps, simulated order and current configuration comparison appear
+beside the native changes. **Refresh tests and configuration check** reads the
+saved result again; it does not run another purchase. **Open this test and repeat**
+returns to the same sandbox, sales channel and saved report, where you can load its
+customers and start a new test. A failed read or navigation shows a retry message.
+
+Only users with every scenario permission see this panel. Changing sandbox or
+request scope immediately removes old selections/results; the backend remains the
+authority for actor-private access and digest-bound publication. A successful
+customer test never grants publication rights or publishes a package. The report
+covers native Commerce API behavior, not rendered page layout or every selected
+release item. Inspect those changes and use the existing preview before publishing.
 
 See [App Studio](app-studio.md), [migration](agentic-migration.md),
 [shop design](personal-workspace-and-shop-design.md) and

@@ -34,6 +34,8 @@ export type Run = {
   taskId: string;
   state: string;
   revision: number;
+  configurationReview?:
+    "current" | "stale" | "changed_during_run" | "unverified";
   scenario?: {
     profile: Profile;
     instruction: string;
@@ -41,6 +43,11 @@ export type Run = {
     currency: string;
     scale: number;
     channel: string;
+    source?: {
+      taskId: string;
+      revision: number;
+      proposalDigest: string;
+    } | null;
     inference?: { provider: string; model?: string };
     comparisonDigest?: string;
     steps?: Finding["steps"];

@@ -28,9 +28,11 @@ This lists every checked-in source module in these roots, including files with n
 | [src/agent_runs/controls.rs](../src/agent_runs/controls.rs) | Live-only agent stop and existing-key admission; no control becomes a sandbox release or credential snapshot. |
 | [src/agent_runs/flow_proposals.rs](../src/agent_runs/flow_proposals.rs) | Scheduled Flow results become native reviewable tasks; only personal approval supplies execution authority. |
 | [src/agent_runs/scenarios/catalogue.rs](../src/agent_runs/scenarios/catalogue.rs) | A bounded native channel sample seeds editable fictional profiles; it never reads customer data or invokes inference. |
+| [src/agent_runs/scenarios/evidence.rs](../src/agent_runs/scenarios/evidence.rs) | Scenario evidence uses the release owner's configuration projection, never orders or inventory. |
 | [src/agent_runs/scenarios/journey.rs](../src/agent_runs/scenarios/journey.rs) | Each fictional customer has an independent durable provider journal and an authoritative native journey. |
 | [src/agent_runs/scenarios/mod.rs](../src/agent_runs/scenarios/mod.rs) | Fictional shopper cohorts reuse native task authority, checkpoints and private commerce operations. |
 | [src/agent_runs/scenarios/shopper.rs](../src/agent_runs/scenarios/shopper.rs) | A closed shopper adapter uses native carts and exact reviewed totals; no model-supplied authority or payment mode. |
+| [src/agent_runs/scenarios/source.rs](../src/agent_runs/scenarios/source.rs) | A customer test can reference only its actor's completed, applied native proposal in this sandbox. |
 | [src/agent_runs/translation.rs](../src/agent_runs/translation.rs) | Translation child work reuses native draft storage, original authority and the existing task scheduler. |
 | [src/agent_runs/view.rs](../src/agent_runs/view.rs) | A reviewed grid view contains only native filter criteria; current domain and PII rights are checked before persistence. |
 | [src/agent_runs/work.rs](../src/agent_runs/work.rs) | Approved work uses the existing task lease; each native write is fenced against cancellation and recorded before advancing. |
@@ -855,6 +857,9 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/admin/developer/useDesignerKeys.ts](../frontend/src/admin/developer/useDesignerKeys.ts) | Designer keyboard shortcuts leave native input and rich-editor undo behavior intact. |
 | [frontend/src/admin/developer/useDraftStorage.ts](../frontend/src/admin/developer/useDraftStorage.ts) | Actor-private server autosaves serialize writes and preserve optimistic revisions across app switches. |
 | [frontend/src/admin/environments/EnvironmentManager.tsx](../frontend/src/admin/environments/EnvironmentManager.tsx) | Private environment creation and digest-bound selective release. |
+| [frontend/src/admin/environments/ReleaseScenarios.tsx](../frontend/src/admin/environments/ReleaseScenarios.tsx) | Actor-private saved scenario evidence sits beside native release diffs without becoming an approval gate. |
+| [frontend/src/admin/environments/release-tests-i18n.ts](../frontend/src/admin/environments/release-tests-i18n.ts) | Release review vocabulary keeps simulated commerce evidence distinct from publication approval. |
+| [frontend/src/admin/environments/release-tests.css](../frontend/src/admin/environments/release-tests.css) | Existing release workbench typography with bounded, responsive test controls. |
 | [frontend/src/admin/intelligence/EvidenceReview.tsx](../frontend/src/admin/intelligence/EvidenceReview.tsx) | Review source-bound candidates through shared HTTP/MCP contracts; changed sources block publication. |
 | [frontend/src/admin/intelligence/ExperimentStudio.tsx](../frontend/src/admin/intelligence/ExperimentStudio.tsx) | Immutable experiment designs and lifecycle controls share the core HTTP/MCP owner and current settings rights. |
 | [frontend/src/admin/intelligence/ExternalKnowledge.tsx](../frontend/src/admin/intelligence/ExternalKnowledge.tsx) | Private connected-app evidence browser shows active-source provenance without exposing it to shoppers. |
@@ -918,9 +923,11 @@ This lists every checked-in source module in these roots, including files with n
 | [frontend/src/admin/preview/PreviewDialog.tsx](../frontend/src/admin/preview/PreviewDialog.tsx) | PreviewDialog keeps merchant interaction separate from workspace orchestration. |
 | [frontend/src/admin/preview/PreviewPanel.tsx](../frontend/src/admin/preview/PreviewPanel.tsx) | PreviewPanel renders verified shop state and typed user actions. |
 | [frontend/src/admin/scenarios/ScenarioComparison.tsx](../frontend/src/admin/scenarios/ScenarioComparison.tsx) | Matching test inputs and changed observed snapshots are separate evidence. |
+| [frontend/src/admin/scenarios/ScenarioEvidence.tsx](../frontend/src/admin/scenarios/ScenarioEvidence.tsx) | Configuration freshness is independent of whether a fictional purchase succeeded. |
 | [frontend/src/admin/scenarios/ScenarioLaunch.tsx](../frontend/src/admin/scenarios/ScenarioLaunch.tsx) | Shared customer-test entry; installing/saving a draft remains the owning workspace's action. |
 | [frontend/src/admin/scenarios/ScenarioProfiles.tsx](../frontend/src/admin/scenarios/ScenarioProfiles.tsx) | Editable fictional customers share the channel's actual languages, countries and currency. |
 | [frontend/src/admin/scenarios/ScenarioReport.tsx](../frontend/src/admin/scenarios/ScenarioReport.tsx) | Native findings stay separate from simulated customer reasoning. |
+| [frontend/src/admin/scenarios/ScenarioSource.tsx](../frontend/src/admin/scenarios/ScenarioSource.tsx) | Explicit source attribution; removing it does not change or undo the approved proposal. |
 | [frontend/src/admin/scenarios/ScenarioStudio.tsx](../frontend/src/admin/scenarios/ScenarioStudio.tsx) | A compact private customer lab on the existing Studio scope and durable run controls. |
 | [frontend/src/admin/scenarios/ScenarioSuggestions.tsx](../frontend/src/admin/scenarios/ScenarioSuggestions.tsx) | Catalogue-derived drafts are previewed before adoption; native commerce still decides actual prices and purchases. |
 | [frontend/src/admin/scenarios/scenario-access.ts](../frontend/src/admin/scenarios/scenario-access.ts) | Keep every scenario entry aligned with the native compound admission. |
@@ -1604,12 +1611,14 @@ This lists every checked-in source module in these roots, including files with n
 | [extensions/apps/site-builder/studio/DesignerHeader.tsx](../extensions/apps/site-builder/studio/DesignerHeader.tsx) | Channel, private save and agent entry remain visible above the shared preview. |
 | [extensions/apps/site-builder/studio/DesignerInspector.tsx](../extensions/apps/site-builder/studio/DesignerInspector.tsx) | Visible edit, element, agent and history modes share the same native draft and approval path. |
 | [extensions/apps/site-builder/studio/DesignerPreview.tsx](../extensions/apps/site-builder/studio/DesignerPreview.tsx) | Preview composes the shared storefront renderer with editor-only gesture controls. |
+| [extensions/apps/site-builder/studio/DesignerPreviewBar.tsx](../extensions/apps/site-builder/studio/DesignerPreviewBar.tsx) | Stable preview navigation shares the current editor history across overview and page modes. |
 | [extensions/apps/site-builder/studio/EditableSection.tsx](../extensions/apps/site-builder/studio/EditableSection.tsx) | Preview-only controls decorate the actual storefront renderer; the published renderer has no editor UI. |
 | [extensions/apps/site-builder/studio/NativeHomePreview.tsx](../extensions/apps/site-builder/studio/NativeHomePreview.tsx) | Preview composes the actual native header, hero, product cards and footer, without a live cart or commands. |
 | [extensions/apps/site-builder/studio/PageHistory.tsx](../extensions/apps/site-builder/studio/PageHistory.tsx) | Whole-page and section restoration use retained native app revisions; restoration is an editable draft. |
 | [extensions/apps/site-builder/studio/PageInspector.tsx](../extensions/apps/site-builder/studio/PageInspector.tsx) | Property edits and WYSIWYG content update the same structured page record as agents and MCP. |
 | [extensions/apps/site-builder/studio/PageTree.tsx](../extensions/apps/site-builder/studio/PageTree.tsx) | Compact page hierarchy with a graphical creation dialog and stable, permission-bound section ordering. |
 | [extensions/apps/site-builder/studio/ShopDesigner.tsx](../extensions/apps/site-builder/studio/ShopDesigner.tsx) | Three-panel standard-shop editor inside the native shell; Storyfront retains its separate original editor. |
+| [extensions/apps/site-builder/studio/ShopOverview.tsx](../extensions/apps/site-builder/studio/ShopOverview.tsx) | Bounded side-by-side previews reuse the live page renderer and native editor's private read scope. |
 | [extensions/apps/site-builder/studio/StorefrontCanvas.tsx](../extensions/apps/site-builder/studio/StorefrontCanvas.tsx) | Isolated viewport for native presentational components and the shared app renderer; no cart, analytics or orders run here. |
 | [extensions/apps/site-builder/studio/canvas.css](../extensions/apps/site-builder/studio/canvas.css) | Canvas sizing uses real iframe viewports; mobile tools follow the preview rather than obscure it. |
 | [extensions/apps/site-builder/studio/design-i18n.ts](../extensions/apps/site-builder/studio/design-i18n.ts) | Complete interface vocabulary for the standard-shop designer, independent of page translations. |
@@ -1621,6 +1630,9 @@ This lists every checked-in source module in these roots, including files with n
 | [extensions/apps/site-builder/studio/interaction-i18n.ts](../extensions/apps/site-builder/studio/interaction-i18n.ts) | Editor gesture and reference guidance stays localized independently of merchant content. |
 | [extensions/apps/site-builder/studio/interactions.css](../extensions/apps/site-builder/studio/interactions.css) | These controls decorate only the sandbox canvas. Stable drop gutters avoid shifting the target mid-drag. |
 | [extensions/apps/site-builder/studio/navigation.css](../extensions/apps/site-builder/studio/navigation.css) | Compact page hierarchy, section ordering and page-creation cards. |
+| [extensions/apps/site-builder/studio/overview-i18n.ts](../extensions/apps/site-builder/studio/overview-i18n.ts) | Page overview controls use the same interface locales as the surrounding editor. |
+| [extensions/apps/site-builder/studio/overview-model.ts](../extensions/apps/site-builder/studio/overview-model.ts) | The overview follows the editor's channel inheritance and includes its current unsaved draft. |
+| [extensions/apps/site-builder/studio/overview.css](../extensions/apps/site-builder/studio/overview.css) | Page comparison uses the existing Studio palette and keeps each real viewport contained. |
 | [extensions/apps/site-builder/studio/palette.css](../extensions/apps/site-builder/studio/palette.css) | Graphical insertion gallery for built-in and registered app-owned elements. |
 | [extensions/apps/site-builder/studio/references.css](../extensions/apps/site-builder/studio/references.css) | References are a first-class design starting point in the existing agent rail. |
 | [extensions/apps/site-builder/studio/review-i18n.ts](../extensions/apps/site-builder/studio/review-i18n.ts) | Design comparison vocabulary keeps automated structural counts distinct from visual and functional acceptance. |
@@ -1637,6 +1649,7 @@ This lists every checked-in source module in these roots, including files with n
 | [extensions/apps/site-builder/tests/designer-cases.tsx](../extensions/apps/site-builder/tests/designer-cases.tsx) | Initial native storefront, automatic home selection and inherited-draft copy regressions. |
 | [extensions/apps/site-builder/tests/interactions-cases.tsx](../extensions/apps/site-builder/tests/interactions-cases.tsx) | Real editor commands: insertion positions, stale/untrusted drags, caps and native undo remain consistent. |
 | [extensions/apps/site-builder/tests/onboarding-cases.tsx](../extensions/apps/site-builder/tests/onboarding-cases.tsx) | New-shop setup uses real consent and private handoff, never a live edit or implicit installation. |
+| [extensions/apps/site-builder/tests/overview-cases.tsx](../extensions/apps/site-builder/tests/overview-cases.tsx) | Overview follows real channel inheritance and preserves the existing editor when moving between pages. |
 | [extensions/apps/site-builder/tests/pointer-cases.tsx](../extensions/apps/site-builder/tests/pointer-cases.tsx) | Mouse/touch placement converts scaled iframe coordinates and excludes clipped/outside targets. |
 | [extensions/apps/site-builder/tests/published-language-cases.tsx](../extensions/apps/site-builder/tests/published-language-cases.tsx) | Published pages use the selected content language even when Studio/store controls use another locale. |
 | [extensions/apps/site-builder/tests/workspace-cases.tsx](../extensions/apps/site-builder/tests/workspace-cases.tsx) | Graphical insertion and shared agent controls exercise the same native editor state. |
@@ -1889,6 +1902,7 @@ This lists every checked-in source module in these roots, including files with n
 | [scripts/testing/role_races.py](../scripts/testing/role_races.py) | Force real HTTP delegation to wait behind the same PostgreSQL lifecycle lock as role edits. |
 | [scripts/testing/rule_history.py](../scripts/testing/rule_history.py) | Frozen comparison against real checkout/Flow snapshots; no current-data fallback or effects. |
 | [scripts/testing/runtime.py](../scripts/testing/runtime.py) | Owned synthetic server lifetime, child checks and loopback readiness for verification. |
+| [scripts/testing/scenario_source.py](../scripts/testing/scenario_source.py) | Native task ownership and applied-proposal admission for customer-test references. |
 | [scripts/testing/site_release.py](../scripts/testing/site_release.py) | Actual selective publication resolves page dependencies atomically; no provider calls. |
 | [scripts/testing/sitecustomize.py](../scripts/testing/sitecustomize.py) | Opt-in subprocess instrumentation for synthetic verification; never loaded by production. |
 | [scripts/testing/source_inventory.py](../scripts/testing/source_inventory.py) | Generate/check exact production and verification module inventory; listings are not coverage. |

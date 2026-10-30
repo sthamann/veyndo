@@ -1,5 +1,6 @@
 /** Private environment creation and digest-bound selective release. */
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import ReleaseScenarios from "./ReleaseScenarios";
 import { useWorkbenchText } from "../../shared/i18n/workbench-i18n";
 import { contentText } from "../../shared/i18n/content-language";
 import type { RequestFn } from "../shell/studio-types";
@@ -19,6 +20,8 @@ export default function EnvironmentManager({
   rights,
   onSelect,
   initialId,
+  sandboxRequest,
+  onTest,
 }: {
   request: RequestFn;
   environments: Environment[];
@@ -27,6 +30,12 @@ export default function EnvironmentManager({
   rights?: string[];
   onSelect: (id: string) => void;
   initialId?: string;
+  sandboxRequest?: (environment: string) => RequestFn;
+  onTest?: (
+    environment: string,
+    channel: string,
+    scenario?: string,
+  ) => void | Promise<void>;
 }) {
   const { w, date, locale } = useWorkbenchText();
   const [mainLocale, setMainLocale] = useState("");
@@ -41,6 +50,13 @@ export default function EnvironmentManager({
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState(false);
+  const scope = useMemo(() => ({}), [request, id]);
+  const currentScope = useRef(scope);
+  currentScope.current = scope;
+  const [loadedScope, setLoadedScope] = useState<object>();
+  const visibleChanges = loadedScope === scope ? changes : [];
+  const visibleSelected = loadedScope === scope ? selected : [];
+  const [historyRequest, setHistoryRequest] = useState<RequestFn>();
   const [history, setHistory] = useState<
     {
       id: string;
@@ -54,19 +70,29 @@ export default function EnvironmentManager({
     : ["owner", "admin"].includes(role);
   const load = async () => {
     const data = await request("/api/environments");
+    if (currentScope.current !== scope) return;
     setHistory(data.releases);
+    setHistoryRequest(() => request);
     if (id) {
       const diff = await request(`/api/environments/${id}/diff`);
+      if (currentScope.current !== scope) return;
       setChanges(diff.changes);
       setMainLocale(diff.mainLocale ?? "");
       setSelected([]);
+      setLoadedScope(scope);
     }
   };
   useEffect(() => {
     let active = true;
+    setError("");
+    setNotice(false);
+    setBusy(false);
     request("/api/environments")
       .then((v) => {
-        if (active) setHistory(v.releases);
+        if (active) {
+          setHistory(v.releases);
+          setHistoryRequest(() => request);
+        }
       })
       .catch((e) => {
         if (active) setError(e.message);
@@ -78,6 +104,7 @@ export default function EnvironmentManager({
             setChanges(v.changes);
             setMainLocale(v.mainLocale ?? "");
             setSelected([]);
+            setLoadedScope(scope);
           }
         })
         .catch((e) => {
@@ -86,7 +113,7 @@ export default function EnvironmentManager({
     return () => {
       active = false;
     };
-  }, [request, id]);
+  }, [request, id, scope]);
   const run = async (fn: () => Promise<void>) => {
     setBusy(true);
     setError("");
@@ -94,15 +121,14 @@ export default function EnvironmentManager({
     try {
       await fn();
     } catch (e) {
-      setError((e as Error).message);
+      if (currentScope.current === scope) setError((e as Error).message);
     } finally {
-      setBusy(false);
+      if (currentScope.current === scope) setBusy(false);
     }
   };
   return (
     <div className="studio-page workbench">
       <div className="page-intro">
-        <span className="kicker">{w("stage")}</span>
         <h1>{w("environments")}</h1>
         <p>{w("stageHint")}</p>
       </div>
@@ -114,6 +140,7 @@ export default function EnvironmentManager({
             void run(async () => {
               const env = await request("/api/environments", { name });
               await onRefresh();
+              if (currentScope.current !== scope) return;
               setId(env.id);
               setName("");
             });
@@ -163,17 +190,32 @@ export default function EnvironmentManager({
             >
               {w("preview")} ↗
             </a>
-            <button className="studio-secondary" onClick={() => void run(load)}>
+            <button
+              className="studio-secondary"
+              disabled={busy || !id}
+              onClick={() => void run(load)}
+            >
               {w("changes")}
             </button>
           </div>
-          {!changes.length && <p>{w("noChanges")}</p>}
-          {changes.map((c) => (
+          {id && sandboxRequest && onTest && (
+            <ReleaseScenarios
+              environment={id}
+              scope={scope}
+              rights={rights ?? []}
+              sandboxRequest={sandboxRequest}
+              onOpen={onTest}
+            />
+          )}
+          {loadedScope === scope && !visibleChanges.length && (
+            <p>{w("noChanges")}</p>
+          )}
+          {visibleChanges.map((c) => (
             <article className="release-change" key={c.key}>
               <label>
                 <input
                   type="checkbox"
-                  checked={selected.includes(c.key)}
+                  checked={visibleSelected.includes(c.key)}
                   disabled={c.conflict || busy || !manage}
                   onChange={(e) =>
                     setSelected(
@@ -204,21 +246,21 @@ export default function EnvironmentManager({
           ))}
           <button
             className="studio-primary"
-            disabled={!selected.length || busy || !manage}
+            disabled={!visibleSelected.length || busy || !manage}
             onClick={() =>
               void run(async () => {
                 await request(`/api/environments/${id}/release`, {
                   approve: true,
-                  selections: changes
-                    .filter((c) => selected.includes(c.key))
+                  selections: visibleChanges
+                    .filter((c) => visibleSelected.includes(c.key))
                     .map((c) => ({ key: c.key, digest: c.digest })),
                 });
                 await load();
-                setNotice(true);
+                if (currentScope.current === scope) setNotice(true);
               })
             }
           >
-            {w("release")} · {selected.length}
+            {w("release")} · {visibleSelected.length}
           </button>
         </section>
       )}
@@ -226,7 +268,7 @@ export default function EnvironmentManager({
       {error && <p role="alert">{error}</p>}
       <section className="studio-card">
         <h2>{w("history")}</h2>
-        {history.map((r) => (
+        {(historyRequest === request ? history : []).map((r) => (
           <p key={r.id}>
             {date(r.createdAt)} · {r.selections.join(", ")}
           </p>

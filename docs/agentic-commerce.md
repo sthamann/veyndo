@@ -98,6 +98,7 @@ cart commands and serialized current revisions. Supported browsers can discover:
 
 - `veyndo_search_catalog`: bounded public product search in the current shop/channel.
 - `veyndo_get_cart`: product IDs/names, quantities and totals; no bearer or buyer details.
+- `veyndo_add_product`: add a selected product, creating a cart when necessary and preserving existing items. Concurrent additions share the native revision queue; cancellation stops subsequent writes.
 - `veyndo_update_cart`: replace items, using native validation and recalculation.
 - `veyndo_review_checkout`: open checkout for the buyer to review and decide.
 
@@ -106,6 +107,17 @@ There is **no automatic order, charge or refund tool**. Registration uses
 contexts cannot save into a newly selected shop. Unsupported experimental APIs
 leave ordinary shopping available. These tools are not exposed to other origins.
 See [Chrome’s current imperative API](https://developer.chrome.com/docs/ai/webmcp/imperative-api).
+
+The registered add action validates IDs and quantities before creating a cart.
+Search and cart results mark merchant content as untrusted. Twelve targeted command
+and hook tests cover registration, empty and completed carts, concurrent changes,
+cancellation, shop switching, private previews and ordinary shopping without the
+experimental API. All five tools were also discovered and called in the in-app browser against a
+local native Rust/PostgreSQL shop: search, add, quantity change, cart read and
+checkout review. Negative quantities and unknown products were rejected. See the
+[actual browser evidence](evidence/connected-commerce-2026-10-30.md#browser-agent-cart-entry).
+Public deployment remains tracked in the
+[connected-commerce checklist](plans/2026-10-30-connected-commerce.md#6-webmcp-completion).
 
 ## Agent proposals and app diagnostics
 

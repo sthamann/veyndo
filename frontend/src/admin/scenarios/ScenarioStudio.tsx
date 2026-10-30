@@ -9,6 +9,7 @@ import ScenarioProfiles from "./ScenarioProfiles";
 import ScenarioSuggestions from "./ScenarioSuggestions";
 import ScenarioReport from "./ScenarioReport";
 import ScenarioComparison from "./ScenarioComparison";
+import ScenarioSource from "./ScenarioSource";
 import type {
   Profile,
   Configuration,
@@ -20,9 +21,13 @@ import "./scenarios.css";
 export default function ScenarioStudio({
   request: baseRequest,
   channel = "default",
+  sourceTaskId,
+  initialScenarioId,
 }: {
   request: RequestFn;
   channel?: string;
+  sourceTaskId?: string;
+  initialScenarioId?: string;
 }) {
   const request = useMemo<RequestFn>(
     () => (path, body, method, options) =>
@@ -43,6 +48,7 @@ export default function ScenarioStudio({
   const [error, setError] = useState(""),
     [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState("");
+  const [source, setSource] = useState(sourceTaskId);
   const [refresh, setRefresh] = useState(0);
   const [inference, setInference] = useState<
     { provider: string; model?: string } | undefined
@@ -55,7 +61,7 @@ export default function ScenarioStudio({
     const scope = ++generation.current;
     setReport(undefined);
     setComparison(undefined);
-    setSelected("");
+    setSelected(initialScenarioId ?? "");
     setBaseline("");
     setProfiles([]);
     setConfig(undefined);
@@ -65,6 +71,7 @@ export default function ScenarioStudio({
     setNotice("");
     setInference(undefined);
     setInstruction("");
+    setSource(sourceTaskId);
     retry.current = undefined;
     if (!environment || !allowed) return;
     request("/api/agent/scenarios")
@@ -92,10 +99,10 @@ export default function ScenarioStudio({
     return () => {
       generation.current++;
     };
-  }, [request, environment, allowed]);
+  }, [request, environment, allowed, sourceTaskId, initialScenarioId]);
   useEffect(() => {
     setReport(undefined);
-    if (!selected) return;
+    if (!selected || !environment || !allowed) return;
     let active = true,
       timer: ReturnType<typeof setTimeout>;
     const load = async () => {
@@ -116,7 +123,7 @@ export default function ScenarioStudio({
       active = false;
       clearTimeout(timer);
     };
-  }, [request, selected, refresh]);
+  }, [request, selected, refresh, environment, allowed]);
   useEffect(() => {
     let active = true;
     let timer: ReturnType<typeof setTimeout>;
@@ -134,12 +141,12 @@ export default function ScenarioStudio({
         .catch((e) => {
           if (active) setError(e.message);
         });
-    if (baseline) void load();
+    if (baseline && environment && allowed) void load();
     return () => {
       active = false;
       clearTimeout(timer);
     };
-  }, [request, baseline]);
+  }, [request, baseline, environment, allowed]);
   const start = async () => {
     if (busy || !config) return;
     setBusy(true);
@@ -149,6 +156,7 @@ export default function ScenarioStudio({
       title: instruction.trim().slice(0, 80),
       instruction: instruction.trim(),
       profiles,
+      ...(source ? { sourceTaskId: source } : {}),
       ...(inference ? { inference } : {}),
     };
     const digest = JSON.stringify(body);
@@ -210,6 +218,7 @@ export default function ScenarioStudio({
     setProfiles(saved.map((s) => s.profile));
     setInstruction(saved[0].instruction);
     setInference(saved[0].inference ?? undefined);
+    setSource(saved[0].source?.taskId);
     setBaseline(report!.id);
     setNotice(t("repeated"));
   };
@@ -251,6 +260,12 @@ export default function ScenarioStudio({
             </p>
           )}
           {notice && <p role="status">{notice}</p>}
+          {source && (
+            <ScenarioSource
+              taskId={source}
+              onClear={() => setSource(undefined)}
+            />
+          )}
           <label className="scenario-brief">
             {t("goal")}
             <textarea

@@ -199,6 +199,15 @@ export function KnowledgeView({
               {tab === "scenarios" && (
                 <ScenarioStudio
                   request={request}
+                  initialScenarioId={
+                    new URLSearchParams(location.search).get("scenarioId") ||
+                    undefined
+                  }
+                  sourceTaskId={
+                    new URLSearchParams(location.search).get(
+                      "scenarioSource",
+                    ) || undefined
+                  }
                   channel={
                     new URLSearchParams(location.search).get(
                       "scenarioChannel",

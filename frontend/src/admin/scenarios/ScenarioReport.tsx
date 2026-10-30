@@ -1,6 +1,8 @@
 /** Native findings stay separate from simulated customer reasoning. */
 import { useScenarioText, type ScenarioWord } from "./scenario-i18n";
 import type { Report, Run } from "./scenario-types";
+import ScenarioEvidence from "./ScenarioEvidence";
+import ScenarioSource from "./ScenarioSource";
 export default function ScenarioReport({
   report,
   onControl,
@@ -46,6 +48,10 @@ export default function ScenarioReport({
                     : state(run.state)}
                 </span>
               </header>
+              <ScenarioEvidence run={run} />
+              {run.scenario?.source && (
+                <ScenarioSource taskId={run.scenario.source.taskId} />
+              )}
               {run.error && <p role="alert">{run.error.detail}</p>}
               {steps && (
                 <ol>

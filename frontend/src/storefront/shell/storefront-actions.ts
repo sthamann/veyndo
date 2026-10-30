@@ -171,19 +171,34 @@ export function createStorefrontActions(owner: Owner) {
           .filter((item) => item.quantity > 0),
       );
     },
-    addProduct(id: string, quantity: number) {
-      if (!Number.isInteger(quantity) || quantity < 1 || quantity > 10000)
+    addProduct(
+      id: string,
+      quantity: number,
+      options?: { signal?: AbortSignal },
+    ) {
+      if (
+        typeof id !== "string" ||
+        !id.trim() ||
+        id.length > 200 ||
+        !Number.isInteger(quantity) ||
+        quantity < 1 ||
+        quantity > 10000
+      )
         return Promise.reject(new Error(text("items")));
-      return mutate((cart) => {
-        const items = cart.lineItems.map((item) => ({
-          id: item.id,
-          quantity: item.quantity,
-        }));
-        const item = items.find((item) => item.id === id);
-        if (item) item.quantity += quantity;
-        else items.push({ id, quantity });
-        return items;
-      }, true);
+      return mutate(
+        (cart) => {
+          const items = cart.lineItems.map((item) => ({
+            id: item.id,
+            quantity: item.quantity,
+          }));
+          const item = items.find((item) => item.id === id);
+          if (item) item.quantity += quantity;
+          else items.push({ id, quantity });
+          return items;
+        },
+        true,
+        options?.signal,
+      );
     },
     reviewCheckout: async (
       _input?: unknown,
@@ -228,8 +243,30 @@ export function registerStorefrontTools(
         properties: {},
         additionalProperties: false,
       },
-      annotations: { readOnlyHint: true },
+      annotations: { readOnlyHint: true, untrustedContentHint: true },
       execute: actions.getCart,
+    },
+    {
+      name: "veyndo_add_product",
+      description: text("add"),
+      inputSchema: {
+        type: "object",
+        additionalProperties: false,
+        properties: {
+          id: { type: "string", minLength: 1, maxLength: 200 },
+          quantity: { type: "integer", minimum: 1, maximum: 10000 },
+        },
+        required: ["id", "quantity"],
+      },
+      annotations: {
+        readOnlyHint: false,
+        consequentialHint: false,
+        untrustedContentHint: true,
+      },
+      execute: (
+        input: { id: string; quantity: number },
+        options?: { signal?: AbortSignal },
+      ) => actions.addProduct(input.id, input.quantity, options),
     },
     {
       name: "veyndo_update_cart",
@@ -254,7 +291,11 @@ export function registerStorefrontTools(
         },
         required: ["items"],
       },
-      annotations: { readOnlyHint: false, consequentialHint: false },
+      annotations: {
+        readOnlyHint: false,
+        consequentialHint: false,
+        untrustedContentHint: true,
+      },
       execute: actions.updateCart,
     },
     {

@@ -225,6 +225,7 @@ export interface Inputs7 {
       name: string;
     }>;
     requestId: string;
+    sourceTaskId?: string;
     title: string;
   };
 }

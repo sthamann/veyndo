@@ -7,6 +7,7 @@ import Icon from "../../shared/ui/Icon";
 import type { Message } from "../shell/studio-types";
 import { useCompositionText } from "../workspace/composition-i18n";
 import type { WorkspaceView } from "../../shared/grid/workspace-view";
+import { useScenarioText } from "../scenarios/scenario-i18n";
 export default function ProposalCard({
   message,
   onApply,
@@ -15,12 +16,14 @@ export default function ProposalCard({
   approvalStarted = false,
   onOpenView,
   onOpenWorkspace,
+  onTest,
 }: {
   message: Message;
   onApply: () => void;
   busy: boolean;
   canApply: boolean;
   approvalStarted?: boolean;
+  onTest?: () => void;
   onOpenWorkspace?: (view: WorkspaceView) => void;
   onOpenView?: (
     view: NonNullable<
@@ -34,6 +37,7 @@ export default function ProposalCard({
   const b = useBuildingText(),
     aw = useAgentWorkspaceText();
   const preview = message.data.preview;
+  const scenarioText = useScenarioText();
   if (!preview) return null;
   const changes = preview.proposal.changes;
   const translations = new URL(location.href);
@@ -213,6 +217,14 @@ export default function ProposalCard({
           >
             {t("approve")}
             <Icon name="check" size={18} />
+          </button>
+        </footer>
+      )}
+      {message.applied && onTest && (
+        <footer>
+          <button className="studio-secondary" onClick={onTest}>
+            <Icon name="people" />
+            {scenarioText("title")}
           </button>
         </footer>
       )}

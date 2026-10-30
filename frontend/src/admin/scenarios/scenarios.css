@@ -221,3 +221,30 @@
   color: var(--muted);
   overflow-wrap: anywhere;
 }
+
+.scenario-source {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 12px 16px;
+  border: 1px solid var(--border, #d6e2ef);
+  border-radius: 10px;
+  background: var(--studio-panel, #fff);
+  line-height: 1.5;
+}
+.scenario-source details {
+  min-width: 0;
+}
+.scenario-source summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+.scenario-source code {
+  display: block;
+  margin-block-start: 8px;
+  overflow-wrap: anywhere;
+  font-size: 12px;
+  color: var(--muted, #63768c);
+}
