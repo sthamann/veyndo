@@ -1,0 +1,55 @@
+1
+00:00:00,250 --> 00:00:05,800
+Start with the merchant task and the information the app needs.
+
+2
+00:00:06,150 --> 00:00:11,700
+The description becomes a reviewed native app definition.
+
+3
+00:00:12,250 --> 00:00:17,800
+Arrange graphical components and select their properties.
+
+4
+00:00:18,150 --> 00:00:23,700
+The visual designer and coding agents share one versioned definition.
+
+5
+00:00:24,250 --> 00:00:29,800
+Open the app assistant beside the current work.
+
+6
+00:00:30,150 --> 00:00:35,700
+Use Veyndo AI, Codex or Claude Code, then review the proposed change.
+
+7
+00:00:36,250 --> 00:00:41,800
+Declare the settings a merchant fills after installing the app.
+
+8
+00:00:42,150 --> 00:00:47,700
+Credentials remain server side and do not become browser or agent data.
+
+9
+00:00:48,250 --> 00:00:53,800
+The installed app contains a saved consultation request.
+
+10
+00:00:54,150 --> 00:00:59,700
+Its product relationship, private upload and reviewed status stay connected.
+
+11
+00:01:00,250 --> 00:01:05,800
+An upgrade is checked against existing app records and active consumers.
+
+12
+00:01:06,150 --> 00:01:11,700
+An incompatible package is refused before replacing the installed version.
+
+13
+00:01:12,250 --> 00:01:17,700
+Explore the current product and try the connected workflows.
+
+14
+00:01:18,000 --> 00:01:23,700
+Read the handbook, open a private workspace, and review your changes.

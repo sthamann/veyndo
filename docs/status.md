@@ -25,6 +25,17 @@ Ordinary pushes and PRs run short structural/governance checks; a green `verify`
 on those events is not a fresh full-suite acceptance. Publishing an image retains
 its packaged-runtime smoke check. [Cadence and exact scope](testing.md#daily-full-verification-and-short-per-change-checks).
 
+## Current product films and screenshots
+
+The four [product films](video-tours.md) were refreshed on 30 October with actual
+29 and 30 October interface captures. They cover the shared platform, current
+product editor, consultation app and contextual AI. English subtitles, silent
+1080p output, downloadable captions and editable projects are shared by README,
+the documentation, the public website and the bilingual Team hub. The new gallery
+shows product editing, Shop intelligence and App Studio in the public private test
+shop. Saved customer results were reopened without another purchase or model call.
+[Media scope and publication checks](evidence/product-media-2026-10-30.md).
+
 ## Product editing improvements
 
 The product editor uses a compact header, grouped sections and a mobile selector.
@@ -61,6 +72,12 @@ renders native product cards through current cart/channel admission, with bounde
 reads and no stale buyer-context results. Actual native save/reload, link opening
 and deactivate/reactivate checks pass locally.
 [Recommendation journey](evidence/product-recommendations-2026-10-30.md).
+
+The recommendation release **`3ff4b3cd` (PR #245)** was observed publicly on
+30 October at **07:59:55 CET**, in image `intrepid-verse-6271`, after fresh snapshot,
+successful migration and Core readiness. The hosted private stage and product
+revision 6 were retained without modifying hosted products.
+[Release evidence](evidence/product-recommendations-2026-10-30.md#public-release).
 
 The specification release **`7eeafda7` (PR #244)** was observed publicly on
 30 October at **07:26:08 CET**, in image `ordinary-rake-9060`, after fresh snapshot,

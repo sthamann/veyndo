@@ -1,0 +1,64 @@
+{
+  "sourceRepo": "sthamann/veyndo",
+  "sourceMain": "3ff4b3cd25fb73724572ca6b0d0dac9f3ed61de2",
+  "captureWindow": "2026-10-29/2026-10-30",
+  "assets": [
+    {
+      "id": "product-seo",
+      "path": "assets/product-seo.png",
+      "source": "captures/product-seo.png",
+      "sha256": "95cfc544d6ecbd6a01f3b71f4855e23d2c932ab52d8fc4363fe4932f00a9daf2",
+      "kind": "actual product capture",
+      "treatment": "CSS focus framing only; original pixels unchanged"
+    },
+    {
+      "id": "designer-elements",
+      "path": "assets/designer-elements.png",
+      "source": "captures/designer-elements.png",
+      "sha256": "6176f778a94015b232059ea5caeade1c5b8ad88b7522411393b388dcf6315689",
+      "kind": "actual product capture",
+      "treatment": "CSS focus framing only; original pixels unchanged"
+    },
+    {
+      "id": "product-general",
+      "path": "assets/product-general.png",
+      "source": "captures/product-general.png",
+      "sha256": "441878cca8c93bdd8ca00d8bb28af63d3d58b75307507d6cd6166ececc4b89e1",
+      "kind": "actual product capture",
+      "treatment": "CSS focus framing only; original pixels unchanged"
+    },
+    {
+      "id": "customer-results",
+      "path": "assets/customer-results.png",
+      "source": "captures/customer-results.png",
+      "sha256": "e561d3a0a169d89f54c78be34e2ca31179a510c99faf08aa90373424a6063fcf",
+      "kind": "actual product capture",
+      "treatment": "CSS focus framing only; original pixels unchanged"
+    },
+    {
+      "id": "recommendations",
+      "path": "assets/recommendations.png",
+      "source": "docs/assets/product-recommendations-20261030/recommendations-desktop.png",
+      "sha256": "3d5e7db146c7b199d8546f137d3f0ec91070a719e51d4654145a010a1a7b74a7",
+      "kind": "actual product capture",
+      "treatment": "CSS focus framing only; original pixels unchanged"
+    },
+    {
+      "id": "storefront",
+      "path": "assets/storefront.png",
+      "source": "docs/assets/product-recommendations-20261030/recommendations-storefront.png",
+      "sha256": "a338598f9c6b9f3cda10d0ae36728aec3224160ffe22087bfd1f31116141692e",
+      "kind": "actual product capture",
+      "treatment": "CSS focus framing only; original pixels unchanged"
+    },
+    {
+      "id": "gallery",
+      "path": "assets/gallery.png",
+      "source": "docs/assets/product-workspace-20261029/media-desktop.png",
+      "sha256": "af5d22b805c0df0b038bbaf58e6a5ac567f81f1723222e48e061e2953126dfb0",
+      "kind": "actual product capture",
+      "treatment": "CSS focus framing only; original pixels unchanged"
+    }
+  ],
+  "scope": "Actual public private-stage UI captures on 30 October; dated local native captures on 29\u201330 October. Synthetic data, editorial timing, no new model call or purchase."
+}

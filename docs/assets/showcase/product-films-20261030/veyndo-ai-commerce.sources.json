@@ -1,0 +1,64 @@
+{
+  "sourceRepo": "sthamann/veyndo",
+  "sourceMain": "3ff4b3cd25fb73724572ca6b0d0dac9f3ed61de2",
+  "captureWindow": "2026-10-29/2026-10-30",
+  "assets": [
+    {
+      "id": "designer-agent",
+      "path": "assets/designer-agent.png",
+      "source": "captures/designer-agent.png",
+      "sha256": "9ee3d2088c12fddfdda1b5b14106dea5590e5fd4e2882218b0c00b16d081462d",
+      "kind": "actual product capture",
+      "treatment": "CSS focus framing only; original pixels unchanged"
+    },
+    {
+      "id": "shop-intelligence",
+      "path": "assets/shop-intelligence.png",
+      "source": "captures/shop-intelligence.png",
+      "sha256": "387206eefd8ae3e58c8918003f9bdb8a227677f74e82f092aea17d21cf6ccfc1",
+      "kind": "actual product capture",
+      "treatment": "CSS focus framing only; original pixels unchanged"
+    },
+    {
+      "id": "agent-working-view",
+      "path": "assets/agent-working-view.png",
+      "source": "captures/agent-working-view.png",
+      "sha256": "12777e3fdb43e3d4a3131e8a9d1c543e59aac87f10b05d2b82c617142a20fe32",
+      "kind": "actual product capture",
+      "treatment": "CSS focus framing only; original pixels unchanged"
+    },
+    {
+      "id": "merchant-agent",
+      "path": "assets/merchant-agent.png",
+      "source": "captures/merchant-agent.png",
+      "sha256": "f87e8c654c6eb9238e2a2f66ea2e7a3f5489c3fb1956d405d2488c01337dc5ec",
+      "kind": "actual product capture",
+      "treatment": "CSS focus framing only; original pixels unchanged"
+    },
+    {
+      "id": "app-agent",
+      "path": "assets/app-agent.png",
+      "source": "captures/app-agent.png",
+      "sha256": "adbb27bba0a8d5dedb3a5a067f46f60ccfeea765c2ca864a561dd0963f38c35d",
+      "kind": "actual product capture",
+      "treatment": "CSS focus framing only; original pixels unchanged"
+    },
+    {
+      "id": "customer-results",
+      "path": "assets/customer-results.png",
+      "source": "captures/customer-results.png",
+      "sha256": "e561d3a0a169d89f54c78be34e2ca31179a510c99faf08aa90373424a6063fcf",
+      "kind": "actual product capture",
+      "treatment": "CSS focus framing only; original pixels unchanged"
+    },
+    {
+      "id": "design-proposal",
+      "path": "assets/design-proposal.png",
+      "source": "docs/assets/designer-20261029/reference-desktop.png",
+      "sha256": "15f5966543c74cd5cb587f4766602b027a22c469d4e711fb1be68e054d828784",
+      "kind": "actual product capture",
+      "treatment": "CSS focus framing only; original pixels unchanged"
+    }
+  ],
+  "scope": "Actual public private-stage UI captures on 30 October; dated local native captures on 29\u201330 October. Synthetic data, editorial timing, no new model call or purchase."
+}

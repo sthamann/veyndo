@@ -1,5 +1,10 @@
 # Changelog
 
+## Current product films and public screenshots (30 October 2026)
+
+- Refresh four English, silent product films with current product editing, App Studio, contextual AI and saved customer scenario views. Provide captions, editable projects and source provenance.
+- Update README and the film guide, show current screenshots and consolidate the recommendation release evidence in the status page.
+
 ## Ordered product recommendations and native storefront cards (30 October 2026)
 
 - Retain selected product names, images and order across catalogue searches; add accessible movement/removal controls, cursor pagination, retry and the native 20-product selection limit.

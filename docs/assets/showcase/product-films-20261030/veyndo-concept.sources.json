@@ -1,0 +1,48 @@
+{
+  "sourceRepo": "sthamann/veyndo",
+  "sourceMain": "3ff4b3cd25fb73724572ca6b0d0dac9f3ed61de2",
+  "captureWindow": "2026-10-29/2026-10-30",
+  "assets": [
+    {
+      "id": "app-record",
+      "path": "assets/app-record.png",
+      "source": "captures/app-record.png",
+      "sha256": "ff1ab851ea8f3562f8c4ab707011a9fd1d90cba560e6d852430820da11d99ada",
+      "kind": "actual product capture",
+      "treatment": "CSS focus framing only; original pixels unchanged"
+    },
+    {
+      "id": "agent-working-view",
+      "path": "assets/agent-working-view.png",
+      "source": "captures/agent-working-view.png",
+      "sha256": "12777e3fdb43e3d4a3131e8a9d1c543e59aac87f10b05d2b82c617142a20fe32",
+      "kind": "actual product capture",
+      "treatment": "CSS focus framing only; original pixels unchanged"
+    },
+    {
+      "id": "merchant-agent",
+      "path": "assets/merchant-agent.png",
+      "source": "captures/merchant-agent.png",
+      "sha256": "f87e8c654c6eb9238e2a2f66ea2e7a3f5489c3fb1956d405d2488c01337dc5ec",
+      "kind": "actual product capture",
+      "treatment": "CSS focus framing only; original pixels unchanged"
+    },
+    {
+      "id": "designer-elements",
+      "path": "assets/designer-elements.png",
+      "source": "captures/designer-elements.png",
+      "sha256": "6176f778a94015b232059ea5caeade1c5b8ad88b7522411393b388dcf6315689",
+      "kind": "actual product capture",
+      "treatment": "CSS focus framing only; original pixels unchanged"
+    },
+    {
+      "id": "recommendations",
+      "path": "assets/recommendations.png",
+      "source": "docs/assets/product-recommendations-20261030/recommendations-desktop.png",
+      "sha256": "3d5e7db146c7b199d8546f137d3f0ec91070a719e51d4654145a010a1a7b74a7",
+      "kind": "actual product capture",
+      "treatment": "CSS focus framing only; original pixels unchanged"
+    }
+  ],
+  "scope": "Actual public private-stage UI captures on 30 October; dated local native captures on 29\u201330 October. Synthetic data, editorial timing, no new model call or purchase."
+}

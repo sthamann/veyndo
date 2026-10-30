@@ -41,12 +41,13 @@ public acceptance are recorded separately.
 | **Test before release** | Preview editable fictional customers from the selected catalogue, adjust their goals and budgets, then let them try native search, baskets and simulated purchases in a private shop. Compare saved runs and inspect actual failures. [Customer simulator](docs/customer-scenarios.md). |
 | **Stay in control** | Current roles, private sandboxes, immutable versions, saved-data upgrade checks and selected publication govern changes. [Security](docs/security.md). |
 
-[![Veyndo: AI commerce in 1:56](docs/assets/showcase/ai-commerce-20261024/veyndo-ai-commerce.jpg)](https://www.veyndo.ai/docs/video-tours.html)
+[![Veyndo: AI commerce in 1:56](docs/assets/showcase/product-films-20261030/veyndo-ai-commerce.jpg)](https://www.veyndo.ai/docs/video-tours.html)
 
-**Films:** [AI commerce · 1:56](docs/assets/showcase/ai-commerce-20261024/veyndo-ai-commerce.mp4) · [Concept · 1:12](docs/assets/showcase/product-films-20261023/veyndo-concept.mp4) · [Merchant journey · 1:36](docs/assets/showcase/product-films-20261023/veyndo-workspace.mp4) · [App platform · 1:24](docs/assets/showcase/product-films-20261023/veyndo-app-platform.mp4). English subtitles, no sound.
+**Films:** [AI commerce · 1:56](docs/assets/showcase/product-films-20261030/veyndo-ai-commerce.mp4) · [Concept · 1:12](docs/assets/showcase/product-films-20261030/veyndo-concept.mp4) · [Product workspace · 1:36](docs/assets/showcase/product-films-20261030/veyndo-workspace.mp4) · [Consultation app · 1:24](docs/assets/showcase/product-films-20261030/veyndo-app-platform.mp4). English subtitles, no sound.
 
-Films use actual dated UI captures, demo data and simulated payments. Timing is editorial.
-[Latest public journey and screenshots](docs/status.md#29-october-connected-platform-work) · [Film sources](docs/assets/showcase/ai-commerce-20261024/README.md).
+Films were refreshed on 30 October with actual UI captures from 29 and 30 October,
+English subtitles and no sound. Demo data and simulated payments; timing is editorial.
+[Latest public journey and screenshots](docs/status.md#current-product-films-and-screenshots) · [Film sources](docs/assets/showcase/product-films-20261030/README.md).
 
 ## Try one complete round
 
