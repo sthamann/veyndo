@@ -1,5 +1,16 @@
 # Changelog
 
+## Native product preview in the design overview (30 October 2026)
+
+- Compare a selected channel product alongside home/content pages. Share the native
+  gallery and price/variant presentation, inherited home design and responsive preview.
+- Read through the private editor scope and selected language. Discard late results
+  after scope changes; retry failed reads without shopper sessions or cart writes.
+- Keep purchase/app actions inactive in the preview and retain normal live behavior.
+  Avoid displaying missing delivery bounds when no delivery choice is returned.
+- Update the guide, status, checklist and local screenshots; hosted delivery remains
+  separate from local component acceptance.
+
 ## Reloadable customer tests and hosted preview acceptance (30 October 2026)
 
 - Saved customer tests retain the current result in the Studio URL after creation

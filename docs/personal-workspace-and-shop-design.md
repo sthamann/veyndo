@@ -103,14 +103,20 @@ explicit failed preparations without a new executable task.
    or home section you selected; draft content and credentials do not enter the URL.
 4. The existing storefront is visible immediately, including the native header, hero, product cards and footer. Saved home pages open automatically. Click the hero or collection to prepare a private home-page document; **New page** remains a separate action for additional pages. No blank CMS form is required before seeing the shop.
    Additional pages use lowercase letters, numbers and dashes for their addresses.
-5. **Page overview** compares the home and content pages using the same renderer.
+5. **Page overview** compares home, content pages and native product presentation using the same renderer.
    Open a page with **Edit page** or click its preview. The overview includes your
    unsaved draft; returning to that page preserves changes, selected section and
    undo history. Labels distinguish the home design, inherited appearance and
    page-specific settings. At most four previews are mounted together; pagination
    and **Load more saved pages** handle larger sites. Desktop, tablet and mobile controls
-   apply to every preview. Product/category/cart template editing is not included
-   in this first overview.
+   apply to every preview. Choose **Preview product** to inspect a product from the
+   current channel catalogue with its native gallery, price and variants. Gallery
+   images remain selectable; purchasing and app actions are inactive. This preview
+   inherits the home design, including an unsaved home draft. It reads through the
+   private workspace and selected language without creating a shopper session.
+   Product recommendations, lower detail sections, category/cart templates and
+   product template editing are not included.
+   [Local product-preview checks and screenshots](evidence/connected-commerce-2026-10-30.md#native-product-presentation-in-the-page-overview).
 6. Select a section in the real shared preview. Edit its heading inline or use the
    localized inspector; rich text uses the existing Tiptap/Markdown editor.
 7. Open **Elements** and drag an illustrated card into the preview. Blue drop gutters show the insertion boundary; release to insert there. Click a card as a keyboard/touch alternative to insert after the selected section. Reorder using the section grip or its up/down controls; remove with the bin button. Undo/redo covers all these gestures. The palette also contains installed apps’ registered public elements; only their app/surface reference enters the page.

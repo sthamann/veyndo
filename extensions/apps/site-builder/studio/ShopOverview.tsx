@@ -5,13 +5,14 @@ import { contentText } from "../../../../frontend/src/shared/i18n/content-langua
 import SiteRenderer from "../Renderer";
 import { explicitTheme, type Page } from "../model";
 import usePageProducts from "../usePageProducts";
+import NativeProductPreview from "./NativeProductPreview";
 import StorefrontCanvas from "./StorefrontCanvas";
 import type { Designer } from "./useDesigner";
 import { overviewPages, overviewTheme } from "./overview-model";
 import { useOverviewText } from "./overview-i18n";
 import "./overview.css";
 
-type Props = {
+export type OverviewProps = {
   d: Designer;
   request: RequestFn;
   workspace: string;
@@ -26,7 +27,7 @@ function PagePreview({
   page,
   pages,
   ...props
-}: Props & { page?: Page; pages: Page[] }) {
+}: OverviewProps & { page?: Page; pages: Page[] }) {
   const { d, request, workspace, language, mainLocale, onOpen } = props;
   const t = useOverviewText();
   const theme = overviewTheme(d.pages, d.channel, page, d.draft);
@@ -101,15 +102,23 @@ function PagePreview({
   );
 }
 
-export default function ShopOverview(props: Props) {
+export default function ShopOverview(props: OverviewProps) {
   const t = useOverviewText();
   const [offset, setOffset] = useState(0);
+  const [productId, setProductId] = useState("");
+  const products = props.d.context!.catalogue.elements;
+  const product = products.find((p) => p.id === productId) ?? products[0];
   const pages = overviewPages(props.d.pages, props.d.channel, props.d.draft);
-  const entries: (Page | undefined)[] = pages.some(
+  const pageEntries: (Page | undefined)[] = pages.some(
     (page) => page.slug === "home",
   )
     ? pages
     : [undefined, ...pages];
+  const entries = [
+    ...pageEntries.slice(0, 1),
+    ...(product ? ["product" as const] : []),
+    ...pageEntries.slice(1),
+  ];
   const start = Math.min(
     offset,
     Math.max(0, Math.ceil(entries.length / 4) - 1) * 4,
@@ -118,14 +127,64 @@ export default function ShopOverview(props: Props) {
     <section className="designer-overview" aria-label={t("overview")}>
       <p>{t("hint")}</p>
       <div className="designer-overview-grid">
-        {entries.slice(start, start + 4).map((page) => (
-          <PagePreview
-            key={page?.id ?? "native-home"}
-            {...props}
-            page={page}
-            pages={pages}
-          />
-        ))}
+        {entries.slice(start, start + 4).map((page) =>
+          page === "product" && product ? (
+            <article className="designer-overview-page" key="native-product">
+              <header>
+                <div>
+                  <h3>{t("product")}</h3>
+                  <p>{t("productHint")}</p>
+                </div>
+              </header>
+              <label className="designer-overview-product">
+                {t("chooseProduct")}
+                <select
+                  value={product.id}
+                  onChange={(event) => setProductId(event.target.value)}
+                >
+                  {products.map((p) => (
+                    <option value={p.id} key={p.id}>
+                      {p.name}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <div className="designer-overview-viewport">
+                <StorefrontCanvas
+                  request={props.request}
+                  workspace={props.workspace}
+                  shopName={props.shopName}
+                  channel={props.d.channel}
+                  language={props.language}
+                  device={props.device}
+                  appearance={overviewTheme(
+                    props.d.pages,
+                    props.d.channel,
+                    undefined,
+                    props.d.draft,
+                  )}
+                  products={products}
+                  onHome={() => {}}
+                >
+                  <NativeProductPreview
+                    id={product.id}
+                    request={props.request}
+                    workspace={props.workspace}
+                    channel={props.d.channel}
+                    language={props.language}
+                  />
+                </StorefrontCanvas>
+              </div>
+            </article>
+          ) : (
+            <PagePreview
+              key={typeof page === "object" ? page.id : "native-home"}
+              {...props}
+              page={typeof page === "object" ? page : undefined}
+              pages={pages}
+            />
+          ),
+        )}
       </div>
       <nav className="designer-overview-paging" aria-label={t("overview")}>
         <button

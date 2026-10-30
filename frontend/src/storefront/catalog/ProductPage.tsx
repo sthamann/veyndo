@@ -5,7 +5,7 @@ import { productSeoFields } from "../../shared/content/product-seo";
 import { productURL, collectionURL } from "./product-url";
 import { BRAND } from "../../shared/ui/Brand";
 import RichDescription from "../../shared/content/RichDescription";
-import ImagePlaceholder from "./ImagePlaceholder";
+import ProductGallery from "./ProductGallery";
 import {
   analyticsItems,
   commerceEvent,
@@ -188,38 +188,7 @@ export default function ProductPage({
         ← {s("back")}
       </a>
       <div className="pdp-main">
-        <section className="pdp-gallery" aria-label={s("images")}>
-          <div className="gallery-main">
-            {p.media[image]?.url ? (
-              <img
-                src={p.media[image].url}
-                alt={`${p.name} · ${Object.values(p.options).map(s).join(" / ")} · ${s(p.media[image].view ?? "front")}`}
-                width="780"
-                height="600"
-              />
-            ) : (
-              <ImagePlaceholder label={s("noImage")} />
-            )}
-            {p.media.length > 0 && (
-              <span>
-                {s("images")} · {image + 1} / {p.media.length}
-              </span>
-            )}
-          </div>
-          <div className="gallery-thumbs">
-            {p.media.map((m, i) => (
-              <button
-                key={m.id}
-                aria-label={s(m.view)}
-                aria-pressed={i === image}
-                onClick={() => setImage(i)}
-              >
-                <img src={m.url} alt="" width="90" height="70" />
-                <span>{s(m.view)}</span>
-              </button>
-            ))}
-          </div>
-        </section>
+        <ProductGallery p={p} image={image} setImage={setImage} />
         <ProductPurchase
           s={s}
           p={p}
