@@ -323,10 +323,11 @@ with (ROOT / 'artifacts/scenarios.log').open('w') as log:
         sql(f"UPDATE products SET description='{restored}' WHERE tenant='{stage}' AND id='lamp'")
         assert call('/api/agent/scenarios/' + editing['requestId'], headers=headers)['runs'][0]['configurationReview'] == 'changed_during_run'
         print('PASS configuration edits during inference remain visible even after restoring the original content', flush=True)
-        from testing.scenario_source import verify_source, verify_unavailable_evidence, verify_reviewed_proposal
+        from testing.scenario_source import verify_source, verify_unavailable_evidence, verify_reviewed_proposal, verify_selected_release
         verify_source(call, sql, wait, body, headers, stage, task, mode)
         verify_unavailable_evidence(call, sql, wait, body, headers, stage)
-        verify_reviewed_proposal(call, wait, body, headers, live, mode)
+        report_id, proposal_run = verify_reviewed_proposal(call, wait, body, headers, live, mode)
+        verify_selected_release(call, sql, headers, live, stage, actor, report_id, proposal_run)
         another = call('/api/environments', {'name': 'Other scenario sandbox'}, live)['id']
         call('/api/agent/scenarios/' + suffix, headers={**headers, 'x-tenant': another}, expected=404)
         control = call('/api/agent/control', headers=live)

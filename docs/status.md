@@ -21,13 +21,20 @@ comparison fixtures remain part of migration and native verification.
 ## Connected commerce follow-ups
 
 The [dedicated implementation checklist](plans/2026-10-30-connected-commerce.md)
-tracks all 13 areas from the Fall 2026 comparison. Development starts with linking
+tracks all 13 areas from the Fall 2026 comparison. The first delivery links
 applied agent proposals to private customer tests and detecting outdated test
 configuration. Saved results now appear beside native release diffs with a direct
-return to the exact test. The branch also adds a bounded home/content page overview
+return to the exact test. Main also includes a bounded home/content page overview
 and the first-product WebMCP operation. Native PostgreSQL/HTTP checks, targeted UI
 tests, component previews and an actual local browser cart/checkout-review path
-are recorded in the [implementation evidence](evidence/connected-commerce-2026-10-30.md). It is not a completed acceptance of all 13 areas or a new public deployment.
+are recorded in the [implementation evidence](evidence/connected-commerce-2026-10-30.md).
+PR 248 merged as `4e0366ea`; quick checks, documentation publication and both image
+builds succeeded. The public handbook contains this work. Core production rollout
+is tracked separately. Native acceptance now continues from the tested price proposal
+through selected publication while retaining orders, stock and unselected changes.
+An actual local Studio browser journey also verified saved-test navigation,
+selected publication and history after reload, with native readback and screenshots.
+This does not complete all 13 areas or the automatic rendered-customer journey.
 
 ## Verification cadence
 

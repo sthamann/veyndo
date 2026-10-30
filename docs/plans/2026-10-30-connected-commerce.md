@@ -29,6 +29,8 @@ Inward migration remains Shopify/other systems → Veyndo.
 - [ ] Add rendered desktop/mobile checks with actual screenshots and failed steps.
 - [ ] Cover design, discount rules, company purchasing, app behavior and checkout through their owners.
 - [x] Show saved actor-private API customer tests and freshness beside native selected-release diffs; reopen the exact sandbox, channel and test.
+- [x] Verify native proposal → approved private price → attributed purchase → selected publication, including revoked authority, stale/replayed selections, retained unrelated changes and unchanged operational state.
+- [x] Verify the real Studio login, saved-result reopening, private channel context, selected publication and retained history after reload against native APIs.
 - [ ] Include actual rendered preview and captured browser evidence in that same review; verify the complete selected publication journey.
 - [x] Verify native API denied rights, source changes during inference, configuration changes, cancellation, retry/restart and no live side effects.
 - [ ] Verify those same boundaries for the new rendered browser path.
@@ -196,3 +198,18 @@ its sandbox, channel and saved test. Environment/request changes immediately hid
 old selections, reports and history; rejected reads and navigation remain retryable.
 Targeted component tests and desktop/mobile component previews cover this slice.
 The complete rendered shopper and publication journey remains open.
+
+30 October, native publication acceptance: the actual proposal/apply/customer-test
+path now continues through the existing digest-bound release endpoint. Only the
+tested product price reaches the live fixture. Private and live order snapshots
+and stock remain identical; unselected channel/app changes retain their digests.
+Saved attribution and configuration evidence remain readable and current. Missing
+approval, stale selections, revoked authority and replay reject; the successful
+publication creates exactly one release and one native outbox event.
+
+The separate actual-browser acceptance signed into a native development shop,
+opened the saved result, followed it to the same sandbox/channel, returned to the
+release view and published only the product. History survived reload. Final native
+reads confirmed the new live price, one private order and zero live orders. These
+new screenshots contain real fixture data. Automatic rendered shopper execution
+and combined captured preview evidence remain open.
