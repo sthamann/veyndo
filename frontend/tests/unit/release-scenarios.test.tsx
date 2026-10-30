@@ -202,3 +202,26 @@ it("offers retry after loading or navigation fails", async () => {
     screen.getByRole("button", { name: "Prepare customer test" }),
   ).toBeEnabled();
 });
+
+it("drops cached reports when the owning session changes with the same sandbox factory", async () => {
+  const request = vi.fn(async (path: string) =>
+    path.endsWith("/saved") ? report() : list,
+  );
+  const factory = () => request;
+  const props = {
+    environment: "draft",
+    rights: scenarioRights,
+    sandboxRequest: factory,
+    onOpen: vi.fn(),
+  };
+  const view = render(<ReleaseScenarios {...props} scope={{}} />);
+  await screen.findByRole("option", { name: "Summer customers" });
+  fireEvent.change(screen.getByRole("combobox"), {
+    target: { value: "saved" },
+  });
+  await screen.findByText("Careful customer");
+  view.rerender(<ReleaseScenarios {...props} scope={{}} />);
+  expect(screen.queryByText("Careful customer")).not.toBeInTheDocument();
+  await waitFor(() => expect(request).toHaveBeenCalledTimes(3));
+  expect(screen.getByRole("combobox")).toHaveValue("");
+});

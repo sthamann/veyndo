@@ -201,6 +201,7 @@ export default function EnvironmentManager({
           {id && sandboxRequest && onTest && (
             <ReleaseScenarios
               environment={id}
+              scope={scope}
               rights={rights ?? []}
               sandboxRequest={sandboxRequest}
               onOpen={onTest}

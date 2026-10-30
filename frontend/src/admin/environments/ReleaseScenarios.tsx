@@ -9,11 +9,13 @@ import "../scenarios/scenarios.css";
 import "./release-tests.css";
 export default function ReleaseScenarios({
   environment,
+  scope,
   rights,
   sandboxRequest,
   onOpen,
 }: {
   environment: string;
+  scope?: object;
   rights: string[];
   sandboxRequest: (environment: string) => RequestFn;
   onOpen: (
@@ -22,10 +24,10 @@ export default function ReleaseScenarios({
     scenario?: string,
   ) => void | Promise<void>;
 }) {
-  const request = useMemo(
-    () => sandboxRequest(environment),
-    [sandboxRequest, environment],
-  );
+  const request = useMemo<RequestFn>(() => {
+    const scoped = sandboxRequest(environment);
+    return (...args) => scoped(...args);
+  }, [sandboxRequest, environment, scope]);
   const allowed = !!environment && canTestCustomers(rights);
   return allowed ? (
     <Review request={request} environment={environment} onOpen={onOpen} />

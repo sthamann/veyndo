@@ -132,7 +132,7 @@ late responses after a sandbox switch, retry after read/navigation failure, sele
 changes cleared before the next diff arrives, exact saved-report navigation,
 channel-scoped initial report loading and denied URL report access. TypeScript,
 frontend architecture and all four interface language catalogues pass. Full suite
-execution remains on the daily cadence. The 19 affected release-review, scenario
+execution remains on the daily cadence. The 20 affected release-review, scenario
 and navigation component tests pass. The scoped Impeccable detector reports no
 findings; independent UI and documentation reviews returned ship at component scope.
 

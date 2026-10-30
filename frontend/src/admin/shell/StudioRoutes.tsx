@@ -292,6 +292,7 @@ export default function StudioRoutes() {
     />
   ) : tab === "environments" ? (
     <EnvironmentManager
+      key={workspace}
       sandboxRequest={sandboxRequest}
       onTest={(target, channel, scenario) =>
         openScenarios(channel, target, undefined, scenario)
