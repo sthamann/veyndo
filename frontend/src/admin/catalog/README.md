@@ -18,6 +18,9 @@ Files and their individual responsibilities are listed in [the generated source 
 - [`product-assignment-i18n.ts`](product-assignment-i18n.ts): Four-language assignment guidance and read-only search states.
 - [`ProductAssets.tsx`](ProductAssets.tsx): Bounded upload and explicit digest-bound publication of attachments and paid files.
 - [`ProductDataView.tsx`](ProductDataView.tsx): Central catalog workspace: server-filtered cursor list, product details and hierarchical categories.
+- [`ProductGeneral.tsx`](ProductGeneral.tsx): Compact basics and full description with expandable identifiers and shipping flags.
+- [`product-content-model.ts`](product-content-model.ts): Rich-content language resolution preserves explicit blanks and legacy text when creating translations.
+- [`product-content-i18n.ts`](product-content-i18n.ts): Four-language guidance for short text, full descriptions and optional product fields.
 - [`ProductEditor.tsx`](ProductEditor.tsx): Revision-aware product aggregate editor: one save, translation tabs and product-scoped linked capabilities.
 - [`ProductEditorHeader.tsx`](ProductEditorHeader.tsx): Compact product identity, current save state and shared language context above every section.
 - [`ProductEditorNav.tsx`](ProductEditorNav.tsx): Grouped native/app sections, manual keyboard activation and compact mobile selection.

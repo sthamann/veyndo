@@ -243,7 +243,7 @@ export default function ProductPage({
         <section>
           <p className="shop-kicker">01 / {s("description")}</p>
           <h2>{s("description")}</h2>
-          {p.extra?.richDescription?.[contentLanguage]?.length ? (
+          {Array.isArray(p.extra?.richDescription?.[contentLanguage]) ? (
             <RichDescription
               blocks={p.extra.richDescription[contentLanguage]}
             />

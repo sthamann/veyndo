@@ -2,6 +2,7 @@
 import { ContentLanguage } from "../../shared/i18n/ContentLanguage";
 import LocalizedField from "../../shared/i18n/LocalizedField";
 import { useCatalogText } from "../../shared/i18n/catalog-i18n";
+import { useProductContentText } from "./product-content-i18n";
 import type { ProductDraft } from "./catalog-model";
 export default function ProductTextFields({
   draft: d,
@@ -12,7 +13,8 @@ export default function ProductTextFields({
   lang: string;
   onChange: (d: ProductDraft) => void;
 }) {
-  const { c } = useCatalogText();
+  const { c } = useCatalogText(),
+    t = useProductContentText();
   const mainLocale = d.mainLocale ?? "en-GB",
     mainKey = d.translations[mainLocale]
       ? mainLocale
@@ -75,7 +77,12 @@ export default function ProductTextFields({
             }
           />
         </label>
-        <div className="catalog-span">{localized("description")}</div>
+        <div className="catalog-span">
+          {localized("description")}
+          <p className="product-content-hint product-content-short-hint">
+            {t("shortHint")}
+          </p>
+        </div>
       </div>
     </ContentLanguage>
   );

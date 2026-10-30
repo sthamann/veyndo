@@ -34,14 +34,10 @@ function Glyph({ name }: { name: keyof typeof glyphs }) {
 export default function RichToolbar({
   editor,
   label,
-  preview,
-  onPreview,
   onMedia,
 }: {
   editor: Editor;
   label: string;
-  preview: boolean;
-  onPreview: () => void;
   onMedia: (kind: "image" | "video" | "link") => void;
 }) {
   const { c } = useCatalogText(),
@@ -145,10 +141,6 @@ export default function RichToolbar({
               {c(kind)}
             </button>
           ))}
-          <button type="button" aria-pressed={preview} onClick={onPreview}>
-            <Glyph name="preview" />
-            {c("preview")}
-          </button>
           {(["quote", "code", "divider", "strike"] as const).map((kind) => (
             <button
               key={kind}

@@ -139,31 +139,43 @@ export default function RichEditor({
         <button
           type="button"
           disabled={buffer.pending}
-          aria-pressed={mode === "visual"}
-          onClick={() => setMode("visual")}
+          aria-pressed={!preview && mode === "visual"}
+          onClick={() => {
+            setMode("visual");
+            setPreview(false);
+          }}
         >
           {e("visual")}
         </button>
         <button
           type="button"
           disabled={!compatible}
-          aria-pressed={mode === "markdown"}
-          onClick={() => setMode("markdown")}
+          aria-pressed={!preview && mode === "markdown"}
+          onClick={() => {
+            setMode("markdown");
+            setPreview(false);
+          }}
         >
           {e("markdown")}
         </button>
+        <button
+          type="button"
+          disabled={buffer.pending}
+          aria-pressed={preview}
+          onClick={() => setPreview(true)}
+        >
+          {c("preview")}
+        </button>
       </div>
       {!compatible && <p className="muted">{e("unsupported")}</p>}
-      {mode === "visual" && (
+      {mode === "visual" && !preview && (
         <RichToolbar
           editor={editor}
           label={label ?? c("rich")}
-          preview={preview}
-          onPreview={() => setPreview(!preview)}
           onMedia={(kind) => setMedia(media === kind ? null : kind)}
         />
       )}
-      {media && mode === "visual" && (
+      {media && mode === "visual" && !preview && (
         <div className="catalog-pair">
           <label>
             {c("url")}

@@ -318,3 +318,37 @@ it("renders an honest empty gallery and merchant product number for a new produc
     "1 / 0",
   );
 });
+
+it.each([false, true])(
+  "respects explicit blank rich content on the actual product page (%s)",
+  async (blank) => {
+    vi.stubGlobal(
+      "fetch",
+      fixture({
+        ...detail,
+        product: {
+          ...product,
+          description: "Short description retained",
+          extra: { richDescription: blank ? { en: [] } : {} },
+        },
+      }),
+    );
+    const { container } = render(
+      <ProductPage
+        id="lamp"
+        cart={cart}
+        busy={false}
+        onAdd={() => {}}
+        onConfigure={vi.fn()}
+      />,
+      { wrapper: LocaleProvider },
+    );
+    await screen.findByRole("heading", { name: "Unit lamp", level: 1 });
+    const description = container.querySelector(
+      ".pdp-details > section:first-child",
+    )!;
+    expect(
+      description.textContent?.includes("Short description retained"),
+    ).toBe(!blank);
+  },
+);

@@ -38,6 +38,17 @@ permissions and enabled content languages.
 [scoped native browser checks](evidence/product-workspace-2026-10-29.md),
 [category/channel consumer checks](evidence/product-assignments-2026-10-30.md).
 
+Product content editing now groups optional identifiers/shipping flags and exposes
+Preview directly beside visual/Markdown editing. Creating an own rich translation
+retains the displayed source text, and empty rich content is consistent with the
+product page. [Scoped content checks and captures](evidence/product-content-2026-10-30.md).
+
+The category/channel release **`eae42b39` (PR #241)** was observed publicly on
+30 October at **05:59:45 CET**, in image `delicate-twist-6266`, after a fresh snapshot,
+successful migration and Core readiness. The public Studio retained its signed-in
+private stage/product revision, selection during zero-result searches and readable
+main-channel name. Hosted products were not mutated by that public observation.
+
 ## 29 October connected platform work
 
 The eight approved follow-ups use the existing native owners, authorization,

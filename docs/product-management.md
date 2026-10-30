@@ -52,6 +52,24 @@ These captures show the local isolated test shop, not a hosted deployment.
 [Product workspace verification](evidence/product-workspace-2026-10-29.md) ·
 [Category/channel browser and Store API checks](evidence/product-assignments-2026-10-30.md).
 
+The General section keeps the product name, number and short description together.
+The full description follows with direct **Visual editor / Markdown / Preview**
+controls. Preview uses the shared shop content renderer and does not change the
+draft. Unapplied Markdown blocks preview until applied or discarded. Manufacturer,
+GTIN and optional shipping flags are grouped in an expandable section; configured
+values open it automatically.
+
+Rich descriptions resolve their own regional language keys independently of the
+plain product text. Creating an own translation retains the currently displayed
+legacy text or rich document. An own short description used as a starting point is
+labelled explicitly. Missing rich content inherits; an explicit empty rich array
+stays empty in both the editor and product page, while an absent rich value falls
+back to the ordinary description. Viewing or switching preview creates no saved
+translation. [Content editing checks](evidence/product-content-2026-10-30.md).
+
+[Content editing on desktop](assets/product-content-20261030/content-desktop.png) ·
+[Mobile content editing](assets/product-content-20261030/content-mobile.png).
+
 The TipTap editor writes a bounded JSON document, not arbitrary HTML. Supported formatting includes bold, italic, underline, headings, lists, links, images, video and undo/redo. Server admission validates document node types, marks, attributes, URL schemes, depth and size; the public React renderer uses explicit safe elements. Unsupported pasted HTML cannot become executable product content.
 
 One product save atomically writes translations, priced fields, metadata, categories, channel overrides, knowledge-graph synchronization and a `product.created` or `product.updated` outbox event. Revision conflicts retain the browser draft and require a deliberate reload/review. Creation and updates share this operation with MCP. Durable flows can subscribe to the committed product events.
