@@ -55,6 +55,13 @@ active security incident. Further release attempts stopped. Core remains on
 `d56d6633`; these two increments are not counted as publicly deployed.
 [Delivery evidence and incident link](evidence/connected-commerce-2026-10-30.md#registry-recovery-attempt-and-provider-incident).
 
+A further local increment shares native product descriptions, specifications, public
+attachment lists, safety facts and published reviews with the design overview.
+It includes scoped attachment retries and language/sandbox switching checks.
+Desktop and mobile captures use synthetic data in the actual preview components.
+[Exact local checks](evidence/product-design-details-2026-10-30.md). This increment
+is not publicly deployed while the provider incident remains open.
+
 ## Verification cadence
 
 Complete tests and coverage run daily at 02:17 UTC or on manual dispatch.

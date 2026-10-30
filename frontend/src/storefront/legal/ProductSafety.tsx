@@ -9,8 +9,12 @@ import { contentText } from "../../shared/i18n/content-language";
 import { getContentLocale } from "../../shared/api/shop-api";
 export default function ProductSafety({
   value,
+  language,
+  mainLocale,
 }: {
   value?: Record<string, unknown>;
+  language?: string;
+  mainLocale?: string;
 }) {
   const { l } = useLegalText(),
     { p } = useProductLegalText(),
@@ -21,8 +25,8 @@ export default function ProductSafety({
       k,
       text: contentText(
         (value[k] ?? {}) as Record<string, string>,
-        getContentLocale(),
-        policy?.mainLocale ?? "en-GB",
+        language ?? getContentLocale(),
+        mainLocale ?? policy?.mainLocale ?? "en-GB",
       ),
     }))
     .filter((v) => v.text);

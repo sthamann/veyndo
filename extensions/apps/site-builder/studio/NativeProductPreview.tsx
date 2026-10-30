@@ -5,6 +5,7 @@ import type { Detail } from "../../../../frontend/src/shared/api/shop-api";
 import { useShopText } from "../../../../frontend/src/shared/i18n/shop-i18n";
 import ProductGallery from "../../../../frontend/src/storefront/catalog/ProductGallery";
 import ProductPurchase from "../../../../frontend/src/storefront/catalog/ProductPurchase";
+import NativeProductDetails from "./NativeProductDetails";
 import { useOverviewText } from "./overview-i18n";
 
 type Props = {
@@ -13,6 +14,7 @@ type Props = {
   workspace: string;
   channel: string;
   language: string;
+  mainLocale: string;
 };
 export default function NativeProductPreview(props: Props) {
   const t = useOverviewText();
@@ -104,6 +106,11 @@ export default function NativeProductPreview(props: Props) {
           onAdd={() => {}}
         />
       </div>
+      <NativeProductDetails
+        key={`${scope}:${attempt}`}
+        {...props}
+        data={data}
+      />
     </main>
   );
 }

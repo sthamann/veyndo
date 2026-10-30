@@ -1,0 +1,13 @@
+/* Public files remain readable in private previews even though download actions are disabled. */
+.product-attachments .shop-secondary {
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-align: start;
+  margin-block-end: 8px;
+}
+.is-design-preview .product-attachments button:disabled {
+  opacity: 1;
+  color: var(--muted);
+  cursor: default;
+}

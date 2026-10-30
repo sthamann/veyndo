@@ -1,5 +1,17 @@
 # Changelog
 
+## Complete native product information in the design preview (30 October 2026)
+
+- Share rich descriptions, specifications, public attachment lists, safety facts and
+  published reviews between the storefront and private design overview.
+- Use exact regional content first, then the actual main language, while retaining
+  explicit empty content. Attachment reads retain the sandbox, channel and language;
+  late results are discarded and failures can be retried independently.
+- Keep download, consent/navigation and review actions inactive in the preview.
+  Preserve live downloads and review submission through their existing owners.
+- Add targeted tests, desktop/mobile captures and updated documentation. This is
+  local acceptance; public delivery remains paused during the hosting incident.
+
 ## Native product preview in the design overview (30 October 2026)
 
 - Compare a selected channel product alongside home/content pages. Share the native

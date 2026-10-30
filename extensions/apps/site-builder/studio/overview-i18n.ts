@@ -14,10 +14,22 @@ const words = {
     "Producto de la vista previa",
   ],
   productHint: [
-    "Native gallery, prices and variants with the home design. Purchasing and app actions are inactive.",
-    "Originale Galerie, Preise und Varianten mit der Gestaltung der Startseite. Kauf und App-Aktionen sind inaktiv.",
-    "Galerie, prix et variantes natifs avec le style de l’accueil. Achats et actions des apps inactifs.",
-    "Galería, precios y variantes nativos con el diseño del inicio. Compras y acciones de apps inactivas.",
+    "Preview the product, its details, downloads and reviews with the home design. Customer actions are inactive.",
+    "Produkt, Details, Downloads und Bewertungen mit der Gestaltung der Startseite prüfen. Kundenaktionen sind inaktiv.",
+    "Aperçu du produit, des détails, téléchargements et avis avec le style de l’accueil. Actions client inactives.",
+    "Vista del producto, detalles, descargas y reseñas con el diseño del inicio. Acciones de clientes inactivas.",
+  ],
+  loadingAttachments: [
+    "Loading product downloads…",
+    "Produktdownloads werden geladen…",
+    "Chargement des téléchargements…",
+    "Cargando descargas del producto…",
+  ],
+  retryAttachments: [
+    "Retry product downloads",
+    "Produktdownloads erneut laden",
+    "Recharger les téléchargements",
+    "Volver a cargar las descargas",
   ],
   retry: ["Try again", "Erneut versuchen", "Réessayer", "Reintentar"],
   productUnavailable: [
