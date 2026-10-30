@@ -112,8 +112,11 @@ The registered add action validates IDs and quantities before creating a cart.
 Search and cart results mark merchant content as untrusted. Twelve targeted command
 and hook tests cover registration, empty and completed carts, concurrent changes,
 cancellation, shop switching, private previews and ordinary shopping without the
-experimental API. These are local adapter tests. Actual browser discovery and calls
-on a delivered build remain a separate acceptance item in the
+experimental API. All five tools were also discovered and called in the in-app browser against a
+local native Rust/PostgreSQL shop: search, add, quantity change, cart read and
+checkout review. Negative quantities and unknown products were rejected. See the
+[actual browser evidence](evidence/connected-commerce-2026-10-30.md#browser-agent-cart-entry).
+Public deployment remains tracked in the
 [connected-commerce checklist](plans/2026-10-30-connected-commerce.md#6-webmcp-completion).
 
 ## Agent proposals and app diagnostics

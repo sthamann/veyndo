@@ -89,7 +89,7 @@ knowledge projections and the existing shared grid/report UI.
 
 - [x] Inventory registered browser tools: search, read cart, add product, replace items and open checkout review. Add the missing first-product operation through the existing native command.
 - [x] Keep these browser requests on native cart/checkout permission and revision paths, with cancellation and shop-context fences.
-- [ ] Test actual supported browser discovery/calls, unavailable-browser fallback and hostile inputs.
+- [x] Test all five actual browser tools against native Rust/PostgreSQL in the in-app browser, plus negative/unknown products and reload; test unavailable-browser fallback and shop fencing through the native React hook.
 - [x] Document operation coverage and distinguish local adapter tests from pending browser acceptance.
 
 ### 7. Optional Shop customer login
@@ -182,3 +182,9 @@ unsaved draft. Desktop and mobile component previews were inspected. The indepen
 review found a same-page return resetting the dirty baseline; the guarded return
 and a real editor regression now preserve dirty state and undo. Product/category/cart
 template editing and one agent request across pages remain open.
+
+30 October, task 6: all five actual WebMCP tools were discovered and called in the
+in-app browser against the isolated native Rust/PostgreSQL shop. Product addition,
+quantity changes, checkout review, negative/unknown product rejection, empty-cart
+restoration and re-registration after reload passed. Screenshot and exact scope
+are recorded in the linked evidence. Public deployment remains separate.

@@ -103,6 +103,18 @@ shopping when `document.modelContext` is absent. TypeScript and frontend ownersh
 checks pass. Merchant-provided names are explicitly annotated as untrusted output.
 
 The current Chrome imperative-API documentation was checked on 30 October.
-Native browser discovery/call acceptance is pending: the browser controller timed
-out while obtaining browser state. No browser result is inferred from the hook
-fixtures, and no customer manual test is required to complete the future check.
+The initial browser inventory timeout was resolved by selecting the existing
+in-app browser directly. All five tools were then discovered and called through
+the browser WebMCP capability against the actual local Rust server and a disposable
+PostgreSQL database with restricted signed system/tenant connections.
+
+The German catalogue returned the native bag product at EUR 169. Adding one bag
+and one scarf returned EUR 228; changing the bag quantity to two returned three
+items and EUR 397. Checkout review visibly displayed those same lines and total,
+with contact/address fields and simulated payment selected. No order was submitted.
+Negative quantity and an unknown product both failed without changing the basket.
+The native update cleared the basket; reload showed zero and registered five tools
+again. The test tab was closed and the owned local fixture stopped. This is local
+browser acceptance, not public deployment or cross-browser certification.
+
+![Actual native checkout opened through browser tools](../assets/connected-commerce-20261030/webmcp-native-checkout.png)
