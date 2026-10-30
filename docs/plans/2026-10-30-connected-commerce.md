@@ -46,7 +46,8 @@ or inspect pages and cannot prove mobile usability or a company-buyer journey.
 - [x] Compare native home and saved content pages in a bounded overview; overlay the unsaved draft and retain agent input, dirty state and undo when returning.
 - [x] Resolve global, channel-home and page-specific appearance through the existing renderer and content language.
 - [x] Add native product gallery, price and variant presentation to the overview with scoped reads, product selection and desktop/mobile widths.
-- [ ] Complete product detail sections and show category/cart templates using their actual renderer.
+- [x] Show native rich description, specifications, public attachment metadata, safety facts and published reviews with explicit main-language fallback; private preview actions remain inactive. [Local UI evidence](../evidence/product-design-details-2026-10-30.md).
+- [ ] Add contextual recommendations and show category/cart templates using their actual renderer.
 - [ ] Edit shared header/footer/type/colors/cards with visible inheritance and affected pages.
 - [ ] Apply one reviewed agent request across selected pages with individual revision conflicts.
 - [ ] Include installed app elements in the same selection, preview and inspector.
@@ -225,3 +226,11 @@ captures are in the [public receipt](../evidence/connected-commerce-2026-10-30.m
 Automatic run-bound browser execution is still open. The walkthrough also found
 and prompted a repair for stale report IDs after starting a test and ambiguous
 repeated titles in the release selector; 20 affected component tests pass.
+
+
+Delivery follow-up: PRs 251 and 252 and their packaged image checks are complete.
+The registry recovery after a fresh snapshot stopped before migration on an
+internal connection failure. The provider then reported an active security
+incident; further release attempts stopped. Public Core acceptance remains at
+PR 250 until access remediation and provider recovery allow the new release.
+[Exact recovery state](../evidence/connected-commerce-2026-10-30.md#registry-recovery-attempt-and-provider-incident).

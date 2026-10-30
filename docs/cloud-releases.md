@@ -75,6 +75,45 @@ full product rows. Effective field fallback, channel/category filters and cursor
 boundaries still apply before the page limit. Candidate scans can still grow with
 the number of matching translations; this is not a constant-work search claim.
 
+## Recovery when Git synchronization blocks the builder
+
+If the GitHub repository exists and the existing installation still has access,
+first refresh the existing link. Northflank documents that an already installed
+GitHub app may need its unchanged repository selection saved again to complete
+relinking. Do not uninstall the app or broaden permissions merely because a build
+reports a missing repository. [Provider instructions](https://www.northflank.ai/docs/v1/application/getting-started/link-your-git-account).
+
+The existing `preview-image.yml` workflow builds the same `deploy/Dockerfile`,
+checks the actual packaged signup/private workspace/restart path, then publishes
+`ghcr.io/sthamann/veyndo:sha-<full-source-sha>` for Linux amd64. When the Northflank
+Git integration cannot build, this provides an alternative artifact source:
+
+1. Check provider status before retrying. During an active security incident, stop
+   release attempts and address affected access before reusing the environment.
+2. Verify the exact merged source, successful image job and published image digest.
+   Prefer an immutable digest. If the UI only validates tags, use the exact full-SHA
+   tag and independently compare its registry digest before both consumers start.
+   Never use the moving `preview` tag or describe a mutable tag as digest-pinned.
+3. Complete a fresh disk snapshot of `postgres-compatibility`.
+4. Set the existing `vendune-migrate` image source to that external image. Retain
+   its command, runtime configuration and restricted database connections. Run
+   the job and inspect successful completion before proceeding.
+5. Set the existing `vendune-core` image source to the same verified image. Retain
+   existing environment, health checks, resources and routes; verify readiness
+   and the served frontend before checking the changed public journey.
+6. Record source, digest, snapshot, job result and browser acceptance. Keep the
+   broken Git integration visible as an operational follow-up. A later ordinary
+   workflow can again deploy its Northflank build; direct CI/CD stays disabled.
+
+On 30 October this recovery reached the migration job but did not deploy Core:
+the private Qdrant preflight failed before the commerce binary started. The
+provider subsequently inspected was reporting an active security incident; further
+release attempts were stopped. See the [dated evidence](evidence/connected-commerce-2026-10-30.md#registry-recovery-attempt-and-provider-incident).
+
+This is an ordered recovery procedure using existing resources, not a new
+automatic release pipeline. A snapshot failure, image mismatch or failed migration
+stops the deployment. [External image deployments](https://northflank.com/docs/v1/application/release/pipeline/configure-a-release-flow).
+
 ## Public Studio origin
 
 Set both `COMMERCE_PUBLIC_ORIGIN` and `PUBLIC_BASE_URL` on the runtime service to

@@ -9,8 +9,18 @@ const base = {
   workspace: "private-a",
   channel: "channel-a",
   language: "fr-FR",
+  mainLocale: "de-DE",
   id: detail.product.id,
 };
+const scoped = (value = detail) =>
+  vi.fn(
+    async (
+      path: string,
+      _body?: unknown,
+      _method?: string,
+      _options?: unknown,
+    ) => (path.endsWith("/attachments") ? { elements: [] } : value),
+  );
 const view = (request: any, props = base) => (
   <LocaleScope locale="en-GB">
     <Preview {...props} request={request} />
@@ -21,11 +31,11 @@ it("renders the native gallery, price and variants without cart, telemetry, app 
     .fn()
     .mockRejectedValue(new Error("Unexpected global transport"));
   vi.stubGlobal("fetch", fetch);
-  const request = vi.fn().mockResolvedValue(detail);
+  const request = scoped();
   const originalURL = location.href;
   render(view(request));
   await screen.findByRole("heading", { name: detail.product.name });
-  expect(request).toHaveBeenCalledExactlyOnceWith(
+  expect(request).toHaveBeenCalledWith(
     `/store-api/product/${encodeURIComponent(detail.product.id)}`,
     {},
     "POST",
@@ -36,7 +46,13 @@ it("renders the native gallery, price and variants without cart, telemetry, app 
   for (const button of buttons)
     if ((button as HTMLButtonElement).disabled) fireEvent.click(button);
   expect(fetch).not.toHaveBeenCalled();
-  expect(request).toHaveBeenCalledTimes(1);
+  expect(request).toHaveBeenCalledTimes(2);
+  expect(request).toHaveBeenCalledWith(
+    `/store-api/product/${detail.product.id}/attachments`,
+    undefined,
+    "GET",
+    { salesChannel: "channel-a", locale: "fr-FR" },
+  );
   expect(location.href).toBe(originalURL);
   expect(screen.getAllByRole("img").length).toBeGreaterThan(0);
 });
@@ -48,7 +64,7 @@ it("hides the previous scope immediately and discards a late foreign result", as
         finish = resolve;
       }),
   );
-  const newRequest = vi.fn().mockResolvedValue({
+  const newRequest = scoped({
     ...detail,
     product: { ...detail.product, name: "Current private product" },
   });
@@ -70,12 +86,13 @@ it("makes a rejected native read retryable without creating a cart", async () =>
   const request = vi
     .fn()
     .mockRejectedValueOnce(new Error("Access changed"))
-    .mockResolvedValueOnce(detail);
+    .mockResolvedValueOnce(detail)
+    .mockResolvedValueOnce({ elements: [] });
   render(view(request));
   expect(await screen.findByRole("alert")).toHaveTextContent("Access changed");
   fireEvent.click(screen.getByRole("button", { name: "Try again" }));
   await screen.findByRole("heading", { name: detail.product.name });
-  expect(request).toHaveBeenCalledTimes(2);
+  expect(request).toHaveBeenCalledTimes(3);
   expect(
     request.mock.calls.every(([path]) =>
       path.startsWith("/store-api/product/"),

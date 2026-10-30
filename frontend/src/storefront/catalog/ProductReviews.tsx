@@ -1,6 +1,7 @@
 /** ProductReviews: focused pdp-reviews view with explicit typed inputs and callbacks. */
 import { useShopText } from "../../shared/i18n/shop-i18n";
 
+import PublishedReviews from "./PublishedReviews";
 import { shopApi } from "../../shared/api/shop-api";
 export type ProductReviewsProps = {
   s: ReturnType<typeof useShopText>["s"];
@@ -28,29 +29,7 @@ export default function ProductReviews({
 }: ProductReviewsProps) {
   return (
     <section className="pdp-reviews" id="product-reviews">
-      <div>
-        <p className="shop-kicker">03 / {s("reviews")}</p>
-        <h2>
-          {s("reviews")} <span>{data.reviews.count}</span>
-        </h2>
-        {!data.reviews.count && <p>{s("noReviews")}</p>}
-        {data.reviews.elements.map((r) => (
-          <article className="review" key={r.id}>
-            <div>
-              <strong>{r.author}</strong>
-              <span aria-label={`${r.rating} / 5`}>
-                {"★".repeat(r.rating)}
-                {"☆".repeat(5 - r.rating)}
-              </span>
-            </div>
-            <h3>{r.title}</h3>
-            <p>{r.content}</p>
-            {r.verifiedPurchase && <small>{s("verified")}</small>}
-            {r.demo && <small>{s("demoReview")}</small>}
-            {r.imported && <small>{s("importedReview")}</small>}
-          </article>
-        ))}
-      </div>
+      <PublishedReviews reviews={data.reviews} />
       <div className="review-form">
         <h3>{s("review")}</h3>
         {reviewed ? (

@@ -1,10 +1,8 @@
 /** Product family, gallery, context pricing and moderated customer reviews. */
 import CrossSelling from "./CrossSelling";
-import { productSpecifications } from "../../shared/content/product-specifications";
 import { productSeoFields } from "../../shared/content/product-seo";
 import { productURL, collectionURL } from "./product-url";
-import { BRAND } from "../../shared/ui/Brand";
-import RichDescription from "../../shared/content/RichDescription";
+import ProductInformation from "./ProductInformation";
 import ProductGallery from "./ProductGallery";
 import {
   analyticsItems,
@@ -23,7 +21,7 @@ import {
 } from "../../shared/api/shop-api";
 import { useShopText } from "../../shared/i18n/shop-i18n";
 import MemoryRecommendations from "./MemoryRecommendations";
-import ProductSafety from "../legal/ProductSafety";
+import { useLegalPolicy } from "../legal/PrivacyProvider";
 import ProductQuestion from "./ProductQuestion";
 export default function ProductPage({
   id,
@@ -39,7 +37,7 @@ export default function ProductPage({
   onConfigure: import("../../shared/apps/AppSlot").Props["onConfigure"];
 }) {
   const { s, money, locale } = useShopText();
-  const contentLanguage = getContentLocale().split("-")[0];
+  const policy = useLegalPolicy();
   const [data, setData] = useState<Detail>();
   const [error, setError] = useState("");
   const [image, setImage] = useState(0);
@@ -163,10 +161,6 @@ export default function ProductPage({
       </main>
     );
   const p = data.product;
-  const specs = productSpecifications(
-    p.extra?.specifications,
-    getContentLocale(),
-  );
   const effective = Math.max(
     p.min_purchase,
     Math.floor(
@@ -211,38 +205,12 @@ export default function ProductPage({
           onAdd={onAdd}
         />
       </div>
-      <div className="pdp-details">
-        <section>
-          <p className="shop-kicker">01 / {s("description")}</p>
-          <h2>{s("description")}</h2>
-          {Array.isArray(p.extra?.richDescription?.[contentLanguage]) ? (
-            <RichDescription
-              blocks={p.extra.richDescription[contentLanguage]}
-            />
-          ) : (
-            <p>{p.description}</p>
-          )}
-          <ProductAttachments id={p.id} />
-          <p className="product-material">
-            {s(p.properties.material ?? "")} · {BRAND.name} /
-          </p>
-        </section>
-        <section>
-          <p className="shop-kicker">02 / {s("properties")}</p>
-          <h2>{s("properties")}</h2>
-          <dl>
-            {Object.entries({ ...p.properties, ...specs }).map(
-              ([key, value]) => (
-                <div key={key}>
-                  <dt>{s(key)}</dt>
-                  <dd>{s(value)}</dd>
-                </div>
-              ),
-            )}
-          </dl>
-        </section>
-      </div>
-      <ProductSafety value={p.extra?.compliance} />
+      <ProductInformation
+        product={p}
+        language={getContentLocale()}
+        mainLocale={policy?.mainLocale ?? getContentLocale()}
+        attachments={<ProductAttachments id={p.id} />}
+      />
       <ProductQuestion productId={p.id} />
       {!!p.extra?.crossSelling?.length && (
         <CrossSelling ids={p.extra.crossSelling} sourceId={p.id} cart={cart} />

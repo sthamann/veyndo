@@ -168,6 +168,7 @@ export default function ShopOverview(props: OverviewProps) {
                 >
                   <NativeProductPreview
                     id={product.id}
+                    mainLocale={props.mainLocale}
                     request={props.request}
                     workspace={props.workspace}
                     channel={props.d.channel}
