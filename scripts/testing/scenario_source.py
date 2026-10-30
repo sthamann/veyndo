@@ -31,6 +31,51 @@ def verify_reviewed_proposal(call, wait, body, headers, live, mode):
     assert run['scenario']['source']['taskId'] == task and run['configurationReview'] == 'current', report
     assert lamp(live)['price'] == live_price
     print('PASS actual model proposal → explicit native apply → attributed private purchase, with unchanged live price', flush=True)
+    return request['requestId'], run
+
+
+def verify_selected_release(call, sql, headers, live, stage, actor, report_id, run):
+    """Publish the tested proposal through native selection, keeping operational state private."""
+    diff_path = '/api/environments/' + stage + '/diff'
+    release_path = '/api/environments/' + stage + '/release'
+    changes = call(diff_path, headers=live)['changes']
+    change = next(c for c in changes if c['key'] == 'product:lamp')
+    remaining = {c['key']: c['digest'] for c in changes if c['key'] != 'product:lamp'}
+    assert 'channel:scenario_only_lamp' in remaining and 'app:engraving' in remaining
+    selection = {'approve': True, 'selections': [{'key': change['key'], 'digest': change['digest']}]}
+
+    def operational_state():
+        return sql(f"SELECT jsonb_build_object('orders',(SELECT jsonb_agg(jsonb_build_array(tenant,id,data) ORDER BY tenant,id) FROM orders WHERE tenant IN ('workshop','{stage}')),'stock',(SELECT jsonb_agg(jsonb_build_array(tenant,id,stock) ORDER BY tenant,id) FROM products WHERE tenant IN ('workshop','{stage}')))::text")
+
+    before = operational_state()
+    releases = sql("SELECT count(*) FROM shop_releases WHERE live_tenant='workshop'")
+    events = sql("SELECT count(*) FROM outbox WHERE tenant='workshop' AND kind='shop.release.published'")
+    call(release_path, {**selection, 'approve': False}, live, 400)
+    call(release_path, {'approve': True, 'selections': [{'key': change['key'], 'digest': 'stale'}]}, live, 409)
+    # Saved tests never grant release authority. Recheck the same authenticated user.
+    sql(f"UPDATE memberships SET role='viewer',permissions='[\"catalog.read\"]'::jsonb WHERE tenant='workshop' AND user_id='{actor}'")
+    try:
+        call(release_path, selection, live, 403)
+    finally:
+        sql(f"UPDATE memberships SET role='owner',permissions='null'::jsonb WHERE tenant='workshop' AND user_id='{actor}'")
+    assert operational_state() == before
+    assert sql("SELECT count(*) FROM shop_releases WHERE live_tenant='workshop'") == releases
+    result = call(release_path, selection, live)
+    assert result['published'] == ['product:lamp'], result
+    public_lamp = next(p for p in call('/store-api/product', {}, live)['elements'] if p['id'] == 'lamp')
+    assert public_lamp['price'] == 71.23
+    after = call(diff_path, headers=live)['changes']
+    assert {c['key']: c['digest'] for c in after} == remaining
+    assert operational_state() == before, 'Publication must not copy test orders or overwrite either stock'
+    saved = call('/api/agent/scenarios/' + report_id, headers=headers)['runs'][0]
+    assert saved['configurationReview'] == 'current'
+    assert saved['preview']['scenario']['orderId'] == run['preview']['scenario']['orderId']
+    assert saved['scenario']['source'] == run['scenario']['source']
+    call(release_path, selection, live, 409)
+    assert int(sql("SELECT count(*) FROM shop_releases WHERE live_tenant='workshop'")) == int(releases) + 1
+    assert int(sql("SELECT count(*) FROM outbox WHERE tenant='workshop' AND kind='shop.release.published'")) == int(events) + 1
+    assert operational_state() == before
+    print('PASS tested proposal → selected native publication: exact live price, unchanged orders/stock, unrelated changes retained, current saved evidence, revoked rights and stale/replayed requests rejected, one release/event', flush=True)
 
 
 def verify_source(call, sql, wait, body, headers, stage, task, mode):

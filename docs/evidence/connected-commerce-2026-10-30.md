@@ -41,9 +41,58 @@ native private purchase. Both remain usable with explicitly unavailable evidence
 The ownership and mid-inference mutation tests use a saved-task fixture. A second
 case now exercises the actual merchant model wire, native price proposal, explicit
 apply and an attributed private purchase. The proposal cannot start its customer
-test before approval; the live price remains unchanged. Only the provider response
-is synthetic in that case. A complete rendered journey and selected publication
-remain separate acceptance work.
+test before approval; the live price remains unchanged until the selected publication
+described below. Only the provider response is synthetic in that case. Automatic
+rendered customer journeys remain separate acceptance work.
+
+## Native proposal through selected publication
+
+The targeted `agentic_scenarios` suite now continues the same applied EUR 71.23
+lamp proposal and attributed purchase through `/api/environments/{id}/release`.
+It passed on 30 October against the compiled Rust server, isolated PostgreSQL
+and separate restricted system/tenant logins. Only inference is deterministic.
+
+- The exact reviewed `product:lamp` digest publishes and native storefront reads
+  return EUR 71.23 in the live fixture.
+- Full order data and every product's stock in both environments remain unchanged
+  across publication. The private test order is not imported into live.
+- Unselected channel and app changes retain the same keys and digests.
+- The saved test still identifies its original proposal and order and reports
+  current private configuration after publication.
+- Missing approval returns 400; stale and replayed selections return 409; revoking
+  the current actor's publication rights returns 403.
+- The successful request creates exactly one native release and one
+  `shop.release.published` outbox event; rejected requests add neither release.
+
+The existing script owns the regression in `scripts/testing/scenario_source.py`.
+The run also retained its cancellation, restart, source-fencing, foreign-sandbox
+and emergency-stop cases. No full suite or real payment was run for this change.
+These are API acceptance results, not an automatic rendered-customer recording.
+
+## Actual Studio publication
+
+The in-app browser then signed into a separate disposable native shop through the
+normal password form. A model-fixture proposal and native private purchase were
+prepared through the same handlers. In Studio, the saved result showed the order
+for EUR 71.23 beside the real product diff from EUR 79.90 to EUR 71.23.
+
+Opening **Open this test and repeat** retained the exact saved report, default
+channel and private sandbox. Returning through **Staging & releases**, selecting
+only the lamp and publishing produced the native success message and history row.
+Reload retained that history and showed no remaining unpublished change in this
+single-change fixture. A final native read confirmed live price EUR 71.23, exactly
+one private order and zero live orders. The owned server/database were removed.
+
+This browser fixture uses the supported HTTP-localhost development login profile.
+The preceding API regression separately exercises strict signed SQL scopes and
+restricted system/tenant logins. The strict profile intentionally rejects insecure
+browser login; no production setting was changed to make this local UI test work.
+The model response is deterministic. The browser exercises the merchant release
+journey; the customer purchase remains a native API scenario, not a rendered agent.
+
+![Actual Studio with selected product and saved private purchase](../assets/connected-commerce-20261030/native-release-review.png)
+
+![Native publication completed and recorded in history](../assets/connected-commerce-20261030/native-release-complete.png)
 
 ## Rendered component review
 

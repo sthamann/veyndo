@@ -177,6 +177,16 @@ customer test never grants publication rights or publishes a package. The report
 covers native Commerce API behavior, not rendered page layout or every selected
 release item. Inspect those changes and use the existing preview before publishing.
 
+The native acceptance connects a reviewed price proposal, its private customer
+purchase and selective publication in one run. The live product adopts the reviewed
+price; test orders, stock and unselected changes stay in their existing scope.
+Outdated or repeated selections and revoked publication rights reject. This
+checks the real Rust/PostgreSQL path with a deterministic model response.
+The separate browser acceptance signs into Studio, opens that saved test in its
+original private context, returns to the release view and publishes the selection.
+The publication history survives reload; the native live price reflects the change.
+[Exact scope and evidence](evidence/connected-commerce-2026-10-30.md#native-proposal-through-selected-publication).
+
 See [App Studio](app-studio.md), [migration](agentic-migration.md),
 [shop design](personal-workspace-and-shop-design.md) and
 [recorded rule comparison](rule-history-comparison.md) for the adjacent workflows.
