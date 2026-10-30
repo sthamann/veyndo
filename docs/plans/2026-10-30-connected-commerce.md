@@ -225,3 +225,11 @@ captures are in the [public receipt](../evidence/connected-commerce-2026-10-30.m
 Automatic run-bound browser execution is still open. The walkthrough also found
 and prompted a repair for stale report IDs after starting a test and ambiguous
 repeated titles in the release selector; 20 affected component tests pass.
+
+
+Delivery follow-up: PRs 251 and 252 and their packaged image checks are complete.
+The registry recovery after a fresh snapshot stopped before migration on an
+internal connection failure. The provider then reported an active security
+incident; further release attempts stopped. Public Core acceptance remains at
+PR 250 until access remediation and provider recovery allow the new release.
+[Exact recovery state](../evidence/connected-commerce-2026-10-30.md#registry-recovery-attempt-and-provider-incident).

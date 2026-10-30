@@ -329,3 +329,39 @@ The existing GitHub installation `84002493` is active and grants all repositorie
 Northflank still reports Git sync error after re-entering its existing linking flow.
 No installation was removed, access broadened or release safety step skipped.
 The last verified public Core remains `d56d6633`.
+
+
+### Registry recovery attempt and provider incident
+
+PR 252 merged as `c97941dc75d2b33f940d274e6a1720589ed88d08`. GitHub
+`verify`, documentation publication and packaged runtime workflow `41068347645`
+passed. The public registry image uses the same `deploy/Dockerfile` as Core:
+
+- Exact source tag: `ghcr.io/sthamann/veyndo:sha-c97941dc75d2b33f940d274e6a1720589ed88d08`.
+- Registry digest: `sha256:1e63adde489cc93b2428ec56ce35d5a5d074cff304a6d452f464e5b2ebfb371d`.
+- OCI source revision matched the merged SHA; architecture was `amd64`.
+- Snapshot `release-c97941dc-20261030` completed at 15:06:35 CET, 6 GB, PostgreSQL 17.
+
+The existing migration job accepted the public full-SHA tag. Its UI did not
+validate the digest-form input; therefore this was a source-tag deployment with
+an independently checked digest, not an immutable digest pin. The job retained
+its environment, restricted database access and migration-only mode. Both runs
+stopped in the existing Qdrant health preflight, before `exec /app/veyndo`:
+`b6b2acac-bb81-4fe1-a212-129b2617f057` and
+`c415c5c8-f1ac-42d8-9302-277e9d04ae59`. The second run allowed up to 60 seconds
+for connection retries, without persisting that command change. Both ended with
+curl exit 28. No database migration or Core replacement followed.
+
+At 15:22 CET the official [Northflank incident page](https://status.northflank.com/cmvv0rn5a092f14rutwccodpp)
+reported an active security incident, first published at 14:40 CET. Its 14:58 CET
+update instructed customers to treat environment variables as exposed and rotate
+keys. Further deployment attempts were stopped. This provider notice does not
+establish whether Veyndo data was accessed, or prove the cause of each connection
+failure. Access remediation and provider recovery are prerequisites for resuming
+this deployment. No credentials or new security access were created by the recovery.
+
+The new documentation and local component screenshots are published. Public Core
+remained `d56d6633` at the last check; its health endpoint answered successfully.
+The migration job's selected image is now the exact `c97941dc` source tag, while
+its run failed. The new product overview and navigation changes still require
+hosted acceptance after the release resumes.

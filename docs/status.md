@@ -46,10 +46,14 @@ journeys remain open.
 The next source increment adds a native product preview to the page overview: gallery,
 prices and variants share storefront components and the selected home design.
 Product changes and mobile rendering have local component/browser checks.
-PR 251 is merged, but its Core release stopped before building because Northflank
-cannot synchronize its existing GitHub connection. GitHub installation access was
-checked and remains active for all repositories. Core remains on `d56d6633`; neither
-PR 251 nor this later product preview is counted as publicly deployed.
+PRs 251 and 252 are merged. The exact `c97941dc` runtime image passed its packaged
+checks and was published, but Core delivery remains incomplete. Northflank Git
+synchronization failed; a recovery attempt using the existing registry image and
+a fresh snapshot stopped at the migration job’s internal Qdrant preflight. On
+30 October at 15:22 CET the provider status page was inspected and reported an
+active security incident. Further release attempts stopped. Core remains on
+`d56d6633`; these two increments are not counted as publicly deployed.
+[Delivery evidence and incident link](evidence/connected-commerce-2026-10-30.md#registry-recovery-attempt-and-provider-incident).
 
 ## Verification cadence
 
