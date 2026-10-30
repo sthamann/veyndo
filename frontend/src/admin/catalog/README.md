@@ -12,7 +12,7 @@ Files and their individual responsibilities are listed in [the generated source 
 - [`EditorBuffer.ts`](../../shared/content/editor/EditorBuffer.ts): Unsaved Markdown source participates in the aggregate's save/navigation guard without becoming product content.
 - [`MarkdownSource.tsx`](../../shared/content/editor/MarkdownSource.tsx): Live Markdown buffer updates the same structured product document; no raw HTML is rendered or persisted.
 - [`MediaDropzone.tsx`](MediaDropzone.tsx): Accessible multi-file upload with drag/drop, visible progress and the same validated asset API as attachments.
-- [`PairFields.tsx`](PairFields.tsx): Accessible key/value rows for product properties, specifications and variant options.
+- [`PairFields.tsx`](PairFields.tsx): Explicit key/value row creation and collision-safe names for properties, specifications and variant options.
 - [`ProductAssignments.tsx`](ProductAssignments.tsx): Searchable category paths, retained selection and explicit channel restrictions in the native product draft.
 - [`product-assignment-model.ts`](product-assignment-model.ts): Cycle-bounded category paths, enabled-region language resolution and current channel IDs.
 - [`product-assignment-i18n.ts`](product-assignment-i18n.ts): Four-language assignment guidance and read-only search states.
@@ -25,7 +25,9 @@ Files and their individual responsibilities are listed in [the generated source 
 - [`ProductEditorHeader.tsx`](ProductEditorHeader.tsx): Compact product identity, current save state and shared language context above every section.
 - [`ProductEditorNav.tsx`](ProductEditorNav.tsx): Grouped native/app sections, manual keyboard activation and compact mobile selection.
 - [`product-editor-i18n.ts`](product-editor-i18n.ts): Four-language section guidance and empty review states.
-- [`ProductLocalizedContent.tsx`](ProductLocalizedContent.tsx): Consistent main-language inheritance for product rich documents and specification groups.
+- [`ProductLocalizedContent.tsx`](ProductLocalizedContent.tsx): Consistent main-language inheritance for product rich documents.
+- [`ProductSpecifications.tsx`](ProductSpecifications.tsx): Localized visible details, shared technical properties, unit-labelled dimensions and effective product-page preview.
+- [`product-specification-i18n.ts`](product-specification-i18n.ts): Four-language specification guidance and safe map-editing feedback.
 - [`ProductSeo.tsx`](ProductSeo.tsx): Single-language SEO fields, native-limit feedback and a responsive search preview use the native aggregate save.
 - [`product-seo-i18n.ts`](product-seo-i18n.ts): Four-language preview, automatic-field and validation guidance.
 - [`ProductGallery.tsx`](ProductGallery.tsx): Local drag ordering with visible drop positions and native-draft updates; inspector arrows remain the keyboard/touch alternative.
@@ -59,7 +61,7 @@ Files and their individual responsibilities are listed in [the generated source 
 During development, run affected frontend test suites, `npm run build` and `npm run architecture` from `frontend/`. Complete tests and coverage run daily through the existing workflow. Coverage includes untested source files; a module in this folder is not automatically fully tested. See the root [testing guide](../../../../docs/testing.md) for backend integration and coverage limits.
 
 `ProductTextFields.tsx` edits nullable per-field names/descriptions.
-`ProductLocalizedContent.tsx` owns main-language rich/specification/SEO inheritance;
+`ProductLocalizedContent.tsx`, `ProductSpecifications.tsx` and `ProductSeo.tsx` own their respective content inheritance;
 `TaxClassSelect.tsx` loads assignable native tax classes. Product/category languages
 come from shop configuration. No inherited text is fabricated on save.
 

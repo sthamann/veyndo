@@ -4,7 +4,7 @@ import userEvent from "@testing-library/user-event";
 import { useState } from "react";
 import { expect, it, vi } from "vitest";
 import { LocaleProvider } from "../../src/shared/i18n/i18n";
-import { ProductSpecifications } from "../../src/admin/catalog/ProductLocalizedContent";
+import ProductSpecifications from "../../src/admin/catalog/ProductSpecifications";
 import {
   newDraft,
   type ProductDraft,
@@ -70,14 +70,14 @@ it("does not save specification fallback until a real edit, then resets the grou
   }
   render(<Harness />, { wrapper: LocaleProvider });
   expect(screen.getByDisplayValue("Madera")).toBeVisible();
-  expect((draft.extra.specifications as any).de).toBeUndefined();
+  expect((draft.extra.specifications as any)["de-DE"]).toBeUndefined();
   const user = userEvent.setup();
   await user.clear(screen.getByLabelText("Value"));
   await user.type(screen.getByLabelText("Value"), "Holz");
-  expect((draft.extra.specifications as any).de.Material).toBe("Holz");
+  expect((draft.extra.specifications as any)["de-DE"].Material).toBe("Holz");
   expect(draft.extra.specifications.es.Material).toBe("Madera");
   await user.click(screen.getByRole("button", { name: /Own translation/ }));
-  expect((draft.extra.specifications as any).de).toBeUndefined();
+  expect((draft.extra.specifications as any)["de-DE"]).toBeUndefined();
 });
 it("keeps expanded translation drafts when the progress poll refreshes the job list", async () => {
   const entries = Array.from({ length: 60 }, (_, n) => ({

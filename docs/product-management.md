@@ -31,7 +31,7 @@ protection, app authorization and field inheritance keep their existing owners.
 - **Media:** drag images onto another gallery position to reorder, or select an image and use Move earlier / Move later. The first image is the cover; visible positions and a drop target explain the result. Save the product to retain the order. The upload area becomes compact once images exist. Supports external HTTPS image URLs and actual PNG/JPEG/WebP uploads for saved products. Uploaded bytes start private and the gallery action explicitly publishes the selected digest.
 - **Variants:** see existing child SKUs first, with separate option, number, price and stock information. Open **Add variants** for the optional creation form; create a child with its own number, option values, prices and stock; open its independent editor. A reviewable generator creates up to 50 Cartesian combinations per batch; existing combinations are skipped, child option edits are supported, and the server rejects concurrent duplicates.
 - **Categories & channels:** search full translated category paths, retain and remove selections above the results, or show selected categories only. Choices render in batches of 50 over the existing bounded category tree. Read-only users can search while assignment controls remain disabled. Channel names use the selected enabled content locale and shop main-language fallback. Each channel shows its kind, inactive/private state and any explicit catalogue exclusion. An empty product channel selection hides the product from every channel. Existing channel-level explicit product lists can restrict this further; an empty channel-level list means the whole catalog. The persisted default storefront also respects activation and per-product channel visibility.
-- **Specifications:** translated specifications, generic product properties and native automation metadata including dimensions/weight.
+- **Specifications:** separate visible details in the selected content language, shared technical properties and structured weight/dimensions with explicit kg/mm units. The preview combines shared properties and effective translated details like the product page. Missing detail keys inherit individually from the main language; removing an own key restores that fallback. Add each new name/value row explicitly; renaming commits on blur and refuses a duplicate without overwriting either value. Native limits remain 40 entries, 100 UTF-8 bytes per key and 1,000 per value.
 - **SEO:** edit one enabled content language at a time, with automatic product-text defaults, explicit own/blank values and per-field reset to inheritance. A multiline description and search preview share regional/main-language resolution with the storefront. The preview shows the actual encoded product path; a new product must first be saved. Invalid URL separators and native UTF-8 size limits are explained before save.
 - **Cross-selling:** search and select products from this tenant.
 - **Attachments & downloads / Reviews:** existing product-scoped asset publication, digital entitlement and review moderation capabilities inside the same workspace.
@@ -50,10 +50,13 @@ protection, app authorization and field inheritance keep their existing owners.
 [Mobile assignments](assets/product-assignments-20261030/assignments-mobile.png).
 [SEO fields and search preview](assets/product-seo-20261030/seo-desktop.png) ·
 [Mobile SEO editing](assets/product-seo-20261030/seo-mobile.png).
+[Product details and properties](assets/product-specifications-20261030/specifications-desktop.png) ·
+[Mobile product details](assets/product-specifications-20261030/specifications-mobile.png).
 These captures show the local isolated test shop, not a hosted deployment.
 [Product workspace verification](evidence/product-workspace-2026-10-29.md) ·
 [Category/channel browser and Store API checks](evidence/product-assignments-2026-10-30.md) ·
-[SEO save and storefront metadata checks](evidence/product-seo-2026-10-30.md).
+[SEO save and storefront metadata checks](evidence/product-seo-2026-10-30.md) ·
+[Specification editing and storefront checks](evidence/product-specifications-2026-10-30.md).
 
 The General section keeps the product name, number and short description together.
 The full description follows with direct **Visual editor / Markdown / Preview**

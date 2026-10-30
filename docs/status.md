@@ -49,6 +49,17 @@ as the storefront. Invalid slugs and UTF-8 field limits are explained before sav
 Actual native save/reload and page metadata match; stock is retained.
 [Scoped SEO checks and captures](evidence/product-seo-2026-10-30.md).
 
+Specifications now separate localized product details, shared technical properties
+and structured dimensions. Regional specification keys resolve independently from
+plain product text; a preview includes the effective inherited values. Safe row
+creation and duplicate-name checks retain existing values before native saving.
+[Scoped specification checks](evidence/product-specifications-2026-10-30.md).
+
+The SEO release **`b595992e` (PR #243)** was observed publicly on 30 October at
+**06:58:45 CET**, in image `gifted-bed-5657`, after a fresh snapshot, successful
+migration and Core readiness. The new form and preview retained the signed-in
+private stage, product revision and saved state without mutating hosted products.
+
 The content-editing release **`a9b48d18` (PR #242)** was observed publicly on
 30 October at **06:27:25 CET**, in image `mammoth-thread-2908`, after a fresh snapshot,
 successful migration and Core readiness. The hosted Studio retained the signed-in

@@ -426,3 +426,33 @@ it("replaces metadata when navigating to a product without SEO and preserves del
     "",
   );
 });
+
+it("renders the effective regional specification instead of a legacy English map", async () => {
+  vi.stubGlobal(
+    "fetch",
+    fixture({
+      ...detail,
+      product: {
+        ...product,
+        extra: {
+          specifications: {
+            en: { Material: "Legacy oak" },
+            "en-GB": { Material: "Regional oak" },
+          },
+        },
+      },
+    }),
+  );
+  render(
+    <ProductPage
+      id="lamp"
+      cart={cart}
+      busy={false}
+      onAdd={() => {}}
+      onConfigure={vi.fn()}
+    />,
+    { wrapper: LocaleProvider },
+  );
+  expect(await screen.findByText("Regional oak")).toBeVisible();
+  expect(screen.queryByText("Legacy oak")).not.toBeInTheDocument();
+});
