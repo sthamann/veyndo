@@ -14,6 +14,7 @@ pub(crate) async fn execute(
     request: &Value,
 ) -> Result<Value> {
     admit(a, h).await?;
+    source::recheck(a, h, &request["scenario"]["source"]).await?;
     let profile = &request["scenario"]["profile"];
     let mut customer = profile.clone();
     let currency = veyndo::money::Currency::new(
@@ -33,6 +34,7 @@ pub(crate) async fn execute(
     let mut state = if let Some(saved) = checkpoint::load(a, "scenario-state").await? {
         saved
     } else {
+        let configuration = evidence::capture(a, t).await;
         let guest = shopper::headers(t, request, None)?;
         let cart = shopper::call(
             a,
@@ -46,7 +48,7 @@ pub(crate) async fn execute(
             commerce::scoped_config(a, t, request["channel"].as_str().unwrap_or("default")).await?;
         let extensions: String = sqlx::query_scalar("SELECT md5(coalesce(string_agg(stamp,'|' ORDER BY stamp),'')) FROM (SELECT 'app:'||id||':'||digest||':'||revision||':'||active AS stamp FROM app_packages WHERE tenant=$1 UNION ALL SELECT 'rule:'||id||':'||revision FROM commerce_rules WHERE tenant=$1 UNION ALL SELECT 'flow:'||id||':'||revision FROM commerce_flows WHERE tenant=$1 UNION ALL SELECT 'promotion:'||id||':'||revision FROM commerce_promotions WHERE tenant=$1 UNION ALL SELECT 'channel:'||id||':'||revision FROM sales_channels WHERE tenant=$1) versions")
             .bind(t).fetch_one(&a.db).await?;
-        let state = json!({"token":cart["token"],"products":products,"snapshotDigest":hash(&json!({"products":products,"settings":settings,"revision":revision,"extensions":extensions}).to_string()),"steps":[],"outcome":"step_limit","orderId":null,"totalMinor":null});
+        let state = json!({"token":cart["token"],"products":products,"configurationDigest":configuration,"snapshotDigest":hash(&json!({"products":products,"settings":settings,"revision":revision,"extensions":extensions}).to_string()),"steps":[],"outcome":"step_limit","orderId":null,"totalMinor":null});
         checkpoint::save(a, "scenario-state", &state).await?;
         state
     };
@@ -58,6 +60,7 @@ pub(crate) async fn execute(
         }
         checkpoint::authorize(a).await?;
         admit(a, h).await?;
+        source::recheck(a, h, &request["scenario"]["source"]).await?;
         let cart = shopper::call(a, &guest, "cart.quote", &json!({})).await?;
         let prompt = json!({"instruction":request["instruction"],"profile":customer,"currency":request["scenario"]["currency"],"minorUnitScale":request["scenario"]["scale"],"products":state["products"],"steps":state["steps"],"cart":shopper::observation(&cart)}).to_string();
         let action_key = format!("scenario-action-{index}");
@@ -81,6 +84,7 @@ pub(crate) async fn execute(
             };
         let action = &output.value;
         checkpoint::authorize(a).await?;
+        source::recheck(a, h, &request["scenario"]["source"]).await?;
         let run = CURRENT
             .try_with(Clone::clone)
             .map_err(|_| bad("Scenario requires worker admission"))?;
@@ -146,7 +150,9 @@ pub(crate) async fn execute(
             break;
         }
     }
-    let report = json!({"scenario":{"title":request["scenario"]["title"],"group":request["scenario"]["group"],"profile":profile,"inputDigest":request["scenario"]["inputDigest"],"comparisonDigest":request["scenario"]["comparisonDigest"],"currency":request["scenario"]["currency"],"scale":request["scenario"]["scale"],"snapshotDigest":state["snapshotDigest"],"steps":state["steps"],"outcome":state["outcome"],"orderId":state["orderId"],"totalMinor":state["totalMinor"],"synthetic":true,"execution":"native-commerce-api","prompt":veyndo_cognition::prompts::evidence(PROMPT)}});
+    source::recheck(a, h, &request["scenario"]["source"]).await?;
+    let finished_configuration = evidence::capture(a, t).await;
+    let report = json!({"scenario":{"title":request["scenario"]["title"],"group":request["scenario"]["group"],"profile":profile,"inputDigest":request["scenario"]["inputDigest"],"comparisonDigest":request["scenario"]["comparisonDigest"],"currency":request["scenario"]["currency"],"scale":request["scenario"]["scale"],"snapshotDigest":state["snapshotDigest"],"configurationEvidence":{"schemaVersion":1,"startedDigest":state["configurationDigest"],"finishedDigest":finished_configuration},"steps":state["steps"],"outcome":state["outcome"],"orderId":state["orderId"],"totalMinor":state["totalMinor"],"synthetic":true,"execution":"native-commerce-api","prompt":veyndo_cognition::prompts::evidence(PROMPT)}});
     checkpoint::authorize(a).await?;
     let run = CURRENT
         .try_with(Clone::clone)

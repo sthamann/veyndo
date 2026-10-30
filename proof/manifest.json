@@ -1485,8 +1485,8 @@
     },
     "src/agent_runs/contract.rs": {
       "status": "unproved",
-      "sha256": "689f4560624c3a97e0282f7bf03b2a701bcabc3cccd718b96c6ccb0702e4ab9f",
-      "review": "Customer scenarios: independent scenario_security_review completed; native signed-role, cohort, replay, injection, cancellation and post-lock lease-expiry regressions pass. Shared checkout preflight avoids nested-pool deadlock; authority is rechecked at the fenced transaction commit."
+      "sha256": "ab866459f3c1b5a4e2ebfae260c214f2c88e45e59a56e6971de62b44ab4b0b42",
+      "review": "Reviewed scenario source attribution and configuration evidence: native actor/channel/applied-state admission before and after inference; existing release projection excludes operational data; local strict split-role PostgreSQL purchase, cancellation, restart, stale-source and configuration-change cases pass. Async source checks and boundary digests remain outside Lean proof coverage."
     },
     "src/agent_runs/controls.rs": {
       "status": "reviewed-binding",
@@ -1503,20 +1503,30 @@
       "sha256": "ff6ee5b7a53894880ed6465882fd45eedd947fa64621435dd88aa6f93dd23764",
       "review": "Separate native channel metadata admission from the caller interface language: preserve tenant lookup, activation, type and preview guards; existing shopper channel calls retain their explicit enabled-language check, while scenario metadata uses the actual channel locales. Verify German Studio against French-only native catalogue and purchase without extra grants or inference during preview."
     },
+    "src/agent_runs/scenarios/evidence.rs": {
+      "status": "unproved",
+      "sha256": "0bafda3fd6a5a5aae80742799dd089214c01e61f4d310540b5fd963a6f508e32",
+      "review": "Reviewed source attribution and bounded optional release-projection evidence; native current rights and source checks retained around inference. Strict split-login HTTP regressions include changed sources and 1001 app records without losing native purchases or historical reports. Digests are boundary observations, not frozen execution or Lean-certified async code."
+    },
     "src/agent_runs/scenarios/journey.rs": {
       "status": "unproved",
-      "sha256": "07f7efe16356b111812e6e059d29adf02fdeba9662059b24c897ac51c35093d1",
-      "review": "Customer scenarios: independent scenario_security_review completed; native signed-role, cohort, replay, injection, cancellation and post-lock lease-expiry regressions pass. Shared checkout preflight avoids nested-pool deadlock; authority is rechecked at the fenced transaction commit."
+      "sha256": "7658597e1de0db1e066c6b2fdde78b5f3c7a6c8198ebf9b96efa621e7fd55e06",
+      "review": "Reviewed source attribution and bounded optional release-projection evidence; native current rights and source checks retained around inference. Strict split-login HTTP regressions include changed sources and 1001 app records without losing native purchases or historical reports. Digests are boundary observations, not frozen execution or Lean-certified async code."
     },
     "src/agent_runs/scenarios/mod.rs": {
       "status": "unproved",
-      "sha256": "f7aee62eb535bf5adc82394c864563e31da038e0279912e525fb94c59ca5e8c6",
-      "review": "Review actual channel language intersection for fictional-profile admission and native catalogue sampling; keep shared channel visibility and enabled-language checks fail-closed, no extra scopes or customer data, no new pricing path"
+      "sha256": "9aee02a16740079dbdbb04aac6af4c5df66a3d764b4e102f2d4a2827f12d2743",
+      "review": "Reviewed source attribution and bounded optional release-projection evidence; native current rights and source checks retained around inference. Strict split-login HTTP regressions include changed sources and 1001 app records without losing native purchases or historical reports. Digests are boundary observations, not frozen execution or Lean-certified async code."
     },
     "src/agent_runs/scenarios/shopper.rs": {
       "status": "unproved",
       "sha256": "8dbdb71e7fb49bd89295d32ed1cd38d3522810131200b6067c8b8a5375b2424a",
       "review": "Customer scenarios: independent scenario_security_review completed; native signed-role, cohort, replay, injection, cancellation and post-lock lease-expiry regressions pass. Shared checkout preflight avoids nested-pool deadlock; authority is rechecked at the fenced transaction commit."
+    },
+    "src/agent_runs/scenarios/source.rs": {
+      "status": "unproved",
+      "sha256": "1b76fb2ae71337ff35887dded94b20e2334c8d02c358fc9832ea470174896cf7",
+      "review": "Reviewed scenario proposal admission and optional bounded release-snapshot evidence; native source apply/purchase, revoked source and 1001-record regressions passed; SQL and async paths remain outside the extracted proof scope"
     },
     "src/agent_runs/translation.rs": {
       "status": "unproved",

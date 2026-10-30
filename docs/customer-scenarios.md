@@ -101,6 +101,43 @@ judge a screenshot, click a mobile UI or run an authenticated company-buyer jour
 A design change still needs browser testing. The simulator can already find native
 catalogue, price, stock, country/shipping and purchase failures beneath that design.
 
+## Testing an applied agent proposal
+
+In a private sandbox, an applied proposal offers **Customer simulator**. It opens
+the existing simulator on the proposal's channel. Starting a test optionally sends
+`sourceTaskId`; the server resolves its owning actor, agent identity and current
+permissions, applied state, revision and proposal digest. It rejects another
+customer test, an unapplied proposal, another actor or another channel. The worker
+rechecks that reference before and after inference and before completing its report.
+A changed proposal stops subsequent actions; it does not undo a prior private order.
+
+The reference is visible in setup and each result. **Test without this reference**
+starts an independent test and retains the edited customer brief. Repeating saved
+customers restores their original reference, rather than attributing an old test
+to an unrelated currently open proposal. A proposal reference identifies the origin
+of a test; it does not establish that every original edit is still present.
+
+Each new run also hashes the existing staging configuration projection at start
+and finish. Status compares that finish against the current private configuration:
+
+| State | Meaning |
+| --- | --- |
+| `current` | Start, finish and current publishable configuration match. |
+| `changed_during_run` | The start and finish configurations differ. |
+| `stale` | Start and finish matched, but the configuration has since changed. |
+| `unverified` | A complete start, finish or current comparison is unavailable. |
+
+This uses the release owner's projection, including design, rules and permitted
+app configuration. Orders, inventory movement, secrets and operational app records
+remain outside that projection. Ordinary test purchases therefore do not make the
+configuration comparison stale. Capture is bounded to three seconds, with a short lock wait. A large release
+projection, busy configuration or unavailable comparison leaves the native journey
+and saved report intact, with `unverified` evidence. No partial digest is accepted.
+Only the digests are stored in the existing task
+checkpoint/report. This is a boundary comparison, not a frozen test environment:
+a change that is made and reverted entirely between the two captures is not detected.
+It also does not certify rendered UI or grant release authority.
+
 ## Resume and control
 
 Runs reuse Veyndo's durable agent tasks and inference accounting. Leaving Studio

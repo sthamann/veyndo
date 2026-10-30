@@ -24,6 +24,15 @@ class Model(BaseHTTPRequestHandler):
 
     def do_POST(self):
         body = json.loads(self.rfile.read(int(self.headers['Content-Length'])))
+        if mode.get('proposal'):
+            from testing.native_tools import response
+            value = {'summary':'Reviewed private lamp price', 'changes':[{'product_id':'lamp','price':71.23}], 'operations':None, 'view':None, 'experience':None, 'expected_experience_revision':None}
+            answer = response(body, {'tool_calls':[]}, 'openai') if body.get('tools') else {'status':'completed','output':[{'type':'message','content':[{'type':'output_text','text':json.dumps(value)}]}],'usage':{'input_tokens':10,'output_tokens':20}}
+            self.send_response(200)
+            self.send_header('Content-Type','application/json')
+            self.end_headers()
+            self.wfile.write(json.dumps(answer).encode())
+            return
         assert body['instructions'].startswith('[prompt:customer-scenario@1]')
         context = json.loads(body['input'])
         assert 'token' not in json.dumps(context)
@@ -135,6 +144,18 @@ with (ROOT / 'artifacts/scenarios.log').open('w') as log:
         result = report['runs'][0]['preview']['scenario']
         assert result['outcome'] == 'purchased', result
         assert result['orderId'] and result['totalMinor'] > 0
+        assert report['runs'][0]['configurationReview'] == 'current', report
+        evidence = result['configurationEvidence']
+        assert evidence['schemaVersion'] == 1 and evidence['startedDigest'] == evidence['finishedDigest']
+        # Stock and test orders are operational state, not publishable configuration.
+        assert call('/api/agent/scenarios/' + suffix, headers=headers)['runs'][0]['configurationReview'] == 'current'
+        description = sql(f"SELECT to_json(description)::text FROM products WHERE tenant='{stage}' AND id='lamp'")
+        sql(f"UPDATE products SET description='Changed after customer test' WHERE tenant='{stage}' AND id='lamp'")
+        assert call('/api/agent/scenarios/' + suffix, headers=headers)['runs'][0]['configurationReview'] == 'stale'
+        restored = json.loads(description).replace("'", "''")
+        sql(f"UPDATE products SET description='{restored}' WHERE tenant='{stage}' AND id='lamp'")
+        assert call('/api/agent/scenarios/' + suffix, headers=headers)['runs'][0]['configurationReview'] == 'current'
+        print('PASS release configuration evidence detects later content edits without mistaking purchases or stock for a configuration change', flush=True)
         assert sql(f"SELECT count(*) FROM orders WHERE tenant='{stage}'") == '1'
         assert sql("SELECT jsonb_build_array((SELECT count(*) FROM orders WHERE tenant='workshop'),(SELECT stock FROM products WHERE tenant='workshop' AND id='lamp'))::text") == before
         assert 'synthetic-scenario-provider' not in json.dumps(report) and 'sw-context-token' not in json.dumps(report)
@@ -290,6 +311,22 @@ with (ROOT / 'artifacts/scenarios.log').open('w') as log:
         assert french_report['runs'][0]['preview']['scenario']['outcome'] == 'purchased', french_report
         assert int(sql(f"SELECT count(*) FROM orders WHERE tenant='{stage}'")) == int(orders)+1
         print('PASS German Studio prepares and purchases through a French-only channel; unsupported shopper languages still reject', flush=True)
+        mode.update(hold=threading.Event(), holdCheckout=False, entered=threading.Event())
+        editing = {**body, 'requestId': uuid.uuid4().hex}
+        call('/api/agent/scenarios', editing, headers)
+        assert mode['entered'].wait(timeout=5)
+        sql(f"UPDATE products SET description='Edited during customer run' WHERE tenant='{stage}' AND id='lamp'")
+        mode['hold'].set()
+        mode['hold'] = None
+        changed = wait(editing['requestId'], headers)
+        assert changed['runs'][0]['configurationReview'] == 'changed_during_run', changed
+        sql(f"UPDATE products SET description='{restored}' WHERE tenant='{stage}' AND id='lamp'")
+        assert call('/api/agent/scenarios/' + editing['requestId'], headers=headers)['runs'][0]['configurationReview'] == 'changed_during_run'
+        print('PASS configuration edits during inference remain visible even after restoring the original content', flush=True)
+        from testing.scenario_source import verify_source, verify_unavailable_evidence, verify_reviewed_proposal
+        verify_source(call, sql, wait, body, headers, stage, task, mode)
+        verify_unavailable_evidence(call, sql, wait, body, headers, stage)
+        verify_reviewed_proposal(call, wait, body, headers, live, mode)
         another = call('/api/environments', {'name': 'Other scenario sandbox'}, live)['id']
         call('/api/agent/scenarios/' + suffix, headers={**headers, 'x-tenant': another}, expected=404)
         control = call('/api/agent/control', headers=live)

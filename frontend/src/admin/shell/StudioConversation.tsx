@@ -1,5 +1,7 @@
 /** StudioConversation: focused Studio view; state and commands come from the session-scoped controller. */
 import { useCatalogIntakeText } from "../../shared/i18n/catalog-intake-i18n";
+import { useScenarioNavigation } from "../scenarios/useScenarioNavigation";
+import { canTestCustomers } from "../scenarios/scenario-access";
 import { useEffect, useState } from "react";
 import StudioComposer from "./StudioComposer";
 import AgentRunCard from "./AgentRunCard";
@@ -52,7 +54,10 @@ export default function StudioConversation({
     progressUnavailable,
     controlRun,
     request,
+    environment,
+    access,
   } = useStudio();
+  const openCustomerTests = useScenarioNavigation();
   const [workingView, setWorkingView] = useState<{
     view: WorkspaceView;
     request: RequestFn;
@@ -179,6 +184,18 @@ export default function StudioConversation({
                 {m.data.preview && (
                   <>
                     <ProposalCard
+                      onTest={
+                        environment && canTestCustomers(access) && m.data.taskId
+                          ? () =>
+                              run(() =>
+                                openCustomerTests(
+                                  "default",
+                                  undefined,
+                                  m.data.taskId,
+                                ),
+                              )
+                          : undefined
+                      }
                       onOpenWorkspace={(view) =>
                         setWorkingView({ view, request })
                       }

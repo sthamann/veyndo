@@ -11,8 +11,19 @@ export function useScenarioNavigation() {
   } = useStudio();
   const current = useRef(request);
   current.current = request;
-  return async (channel = "default", target?: string) => {
+  return async (
+    channel = "default",
+    target?: string,
+    sourceTaskId?: string,
+  ) => {
     const started = request;
+    if (sourceTaskId) {
+      const source = await request(
+        `/api/agent/runs/${encodeURIComponent(sourceTaskId)}`,
+      );
+      if (current.current !== started) return;
+      channel = source.channel ?? "default";
+    }
     if (target && target !== environment) {
       await refreshEnvironments();
       if (current.current !== started) return;
@@ -21,6 +32,8 @@ export function useScenarioNavigation() {
     const url = new URL(location.href);
     url.searchParams.set("knowledgeSection", "scenarios");
     url.searchParams.set("scenarioChannel", channel);
+    if (sourceTaskId) url.searchParams.set("scenarioSource", sourceTaskId);
+    else url.searchParams.delete("scenarioSource");
     history.replaceState(null, "", url);
     selectTab("knowledge");
   };

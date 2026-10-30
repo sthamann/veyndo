@@ -180,7 +180,11 @@ it("repeats saved customer conditions and uses the selected native channel", asy
   );
   render(
     <LocaleProvider>
-      <ScenarioStudio request={api} channel="web" />
+      <ScenarioStudio
+        request={api}
+        channel="web"
+        sourceTaskId="different-proposal"
+      />
     </LocaleProvider>,
   );
   await userEvent.selectOptions(
@@ -208,6 +212,7 @@ it("repeats saved customer conditions and uses the selected native channel", asy
     inference: { provider: "openai", model: "test-model" },
     instruction: "Office setup",
   });
+  expect(post?.[1]).not.toHaveProperty("sourceTaskId");
   expect(api).toHaveBeenCalledWith(
     "/api/agent/scenarios",
     expect.anything(),
@@ -497,4 +502,32 @@ it("reviews catalogue suggestions before adopting them, keeps the merchant brief
   expect(await screen.findByRole("alert")).toHaveTextContent(
     "Stop before execution",
   );
+});
+
+it("includes the explicit proposal reference and allows an independent test without losing the brief", async () => {
+  studio.environment = "source-stage";
+  render(
+    <LocaleProvider>
+      <ScenarioStudio request={request} sourceTaskId="applied-proposal" />
+    </LocaleProvider>,
+  );
+  const brief = await screen.findByLabelText(
+    "Was sollen die Kunden versuchen?",
+  );
+  await userEvent.type(brief, "Nach Änderung kaufen");
+  await userEvent.click(
+    screen.getByRole("button", { name: "Kunden testen lassen" }),
+  );
+  expect(request.mock.calls.find((c) => c[2] === "POST")?.[1]).toMatchObject({
+    sourceTaskId: "applied-proposal",
+  });
+  await userEvent.click(
+    screen.getByRole("button", { name: "Ohne diesen Bezug testen" }),
+  );
+  expect(brief).toHaveValue("Nach Änderung kaufen");
+  await userEvent.click(
+    screen.getByRole("button", { name: "Kunden testen lassen" }),
+  );
+  const posts = request.mock.calls.filter((c) => c[2] === "POST");
+  expect(posts.at(-1)?.[1]).not.toHaveProperty("sourceTaskId");
 });

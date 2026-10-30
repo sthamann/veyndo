@@ -12,3 +12,4 @@ vi.mock(
 );
 import "../../../extensions/apps/site-builder/tests/designer-cases";
 import "../../../extensions/apps/site-builder/tests/onboarding-cases";
+import "../../../extensions/apps/site-builder/tests/overview-cases";

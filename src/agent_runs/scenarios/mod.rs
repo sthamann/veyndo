@@ -1,8 +1,10 @@
 //! Fictional shopper cohorts reuse native task authority, checkpoints and private commerce operations.
 use super::*;
 mod catalogue;
+mod evidence;
 mod journey;
 mod shopper;
+mod source;
 pub(super) use journey::execute;
 pub(crate) const CAPABILITIES: &[(&str, &str)] = &[
     (
@@ -43,7 +45,7 @@ pub(crate) fn schema(name: &str) -> Option<Value> {
     Some(match name {
         "merchant.scenario.create" => {
             json!({"type":"object","required":["requestId","title","instruction","profiles"],"additionalProperties":false,"properties":{
-            "requestId":{"type":"string","minLength":1,"maxLength":40},"title":{"type":"string","minLength":1,"maxLength":100},
+            "sourceTaskId":{"type":"string","minLength":1,"maxLength":64},"requestId":{"type":"string","minLength":1,"maxLength":40},"title":{"type":"string","minLength":1,"maxLength":100},
             "instruction":{"type":"string","minLength":1,"maxLength":2000},"profiles":{"type":"array","minItems":1,"maxItems":6,"items":profile},
             "inference":{"type":"object","properties":{"provider":{"type":"string","enum":["platform","ollama","openai","anthropic"]},"model":{"type":["string","null"],"maxLength":128}},"required":["provider"],"additionalProperties":false}}})
         }
@@ -114,6 +116,10 @@ pub(crate) async fn invoke(a: &App, h: &RequestContext, name: &str, v: &Value) -
     let t = admit(a, h).await?;
     if name == "merchant.scenario.create" {
         let group = v["requestId"].as_str().unwrap();
+        let source = match v["sourceTaskId"].as_str() {
+            Some(id) => source::resolve(a, h, id).await?,
+            None => Value::Null,
+        };
         if !identifier(group) {
             return Err(bad("Invalid scenario request ID"));
         }
@@ -145,8 +151,9 @@ pub(crate) async fn invoke(a: &App, h: &RequestContext, name: &str, v: &Value) -
         // a partially queued cohort without recharging or duplicating earlier members.
         let mut runs = Vec::new();
         for (index, profile) in profiles.iter().enumerate() {
-            let request = json!({"instruction":v["instruction"],"requestId":format!("{group}-{index}"),"locale":profile["locale"],"channel":marketing::channel_id(h),"inference":v.get("inference"),
+            let mut request = json!({"instruction":v["instruction"],"requestId":format!("{group}-{index}"),"locale":profile["locale"],"channel":marketing::channel_id(h),"inference":v.get("inference"),
                 "scenario":{"group":group,"title":v["title"],"profile":profile,"instruction":v["instruction"],"channel":marketing::channel_id(h),"inference":v.get("inference"),"index":index,"comparisonDigest":comparison,"currency":currency.code,"scale":currency.scale,"inputDigest":digest,"members":profiles.len(),"stepLimit":8}});
+            request["scenario"]["source"] = source.clone();
             runs.push(enqueue(a, h, request, None).await?);
         }
         return Ok(json!({"id":group,"runs":runs,"private":true,"synthetic":true}));
@@ -208,6 +215,19 @@ pub(crate) async fn invoke(a: &App, h: &RequestContext, name: &str, v: &Value) -
             ))
             .await?,
         );
+    }
+    // Running polls stay cheap. Completed evidence uses the release projection.
+    if runs
+        .iter()
+        .all(|r| !matches!(r["state"].as_str(), Some("queued" | "running")))
+    {
+        let current = evidence::capture(a, &t).await;
+        for run in &mut runs {
+            run["configurationReview"] = json!(evidence::review(
+                &run["preview"]["scenario"]["configurationEvidence"],
+                current.as_deref(),
+            ));
+        }
     }
     Ok(json!({"id":v["id"],"runs":runs,"synthetic":true,"execution":"native-commerce-api"}))
 }

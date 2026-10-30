@@ -18,6 +18,14 @@ comparison fixtures remain part of migration and native verification.
 
 [Complete architecture, app system and AI overview](platform-overview.md).
 
+## Connected commerce follow-ups
+
+The [dedicated implementation checklist](plans/2026-10-30-connected-commerce.md)
+tracks all 13 areas from the Fall 2026 comparison. Development starts with linking
+applied agent proposals to private customer tests and detecting outdated test
+configuration. That slice has local native PostgreSQL/HTTP checks and targeted UI
+tests. It is not a completed acceptance of all 13 areas or a new public deployment.
+
 ## Verification cadence
 
 Complete tests and coverage run daily at 02:17 UTC or on manual dispatch.

@@ -541,6 +541,7 @@ interface inputs {
     %instruction: string,
     %profiles: list<merchant-scenario-create-input-profiles-item>,
     %request-id: string,
+    %source-task-id: option<string>,
     %title: string,
   }
   record merchant-scenario-status-input {

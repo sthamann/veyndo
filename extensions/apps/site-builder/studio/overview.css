@@ -1,0 +1,101 @@
+/* Page comparison uses the existing Studio palette and keeps each real viewport contained. */
+.designer-layout.is-overview {
+  grid-template-columns: minmax(0, 1fr);
+}
+.designer-overview {
+  padding: 20px;
+  min-width: 0;
+}
+.designer-overview > p {
+  margin: 0 0 20px;
+  color: var(--studio-muted, #60768d);
+  max-width: 70ch;
+}
+.designer-overview-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+.designer-overview-page {
+  min-width: 0;
+}
+.designer-overview-page > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-block-end: 12px;
+}
+.designer-overview-page h3 {
+  font-size: 16px;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.designer-overview-page header p {
+  margin: 4px 0 0;
+  color: var(--studio-muted, #60768d);
+  font-size: 12px;
+}
+.designer-overview-page header button {
+  flex-shrink: 0;
+}
+.designer-overview-viewport {
+  max-height: 520px;
+  overflow: hidden auto;
+  border: 1px solid var(--studio-line, #ccdded);
+  border-radius: 12px;
+  background: var(--studio-card, #fff);
+  scrollbar-color: var(--studio-line, #ccdded) transparent;
+}
+.designer-overview-note {
+  color: var(--studio-muted, #60768d);
+  font-size: 12px;
+  margin: 0 0 8px;
+}
+.designer-overview-paging {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-block-start: 24px;
+}
+.designer-overview-paging span {
+  font-variant-numeric: tabular-nums;
+}
+@media (max-width: 850px) {
+  .designer-layout.is-overview > .designer-canvas {
+    height: auto;
+    overflow: visible;
+  }
+  .designer-overview-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 450px) {
+  .designer-overview {
+    padding: 12px;
+  }
+  .designer-overview-page > header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+.designer-overview button {
+  border: 1px solid var(--studio-line, #ccdded);
+  border-radius: 10px;
+  background: var(--studio-card, #fff);
+  color: inherit;
+  padding: 8px 12px;
+  font: inherit;
+  font-size: 13px;
+}
+.designer-overview button:hover:not(:disabled) {
+  background: var(--studio-hover, #eaf3ff);
+}
+.designer-overview button:disabled {
+  opacity: 0.5;
+}
+.designer-overview .designer-frame-space {
+  box-shadow: none;
+}
